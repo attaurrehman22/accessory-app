@@ -13,7 +13,7 @@ export class AppComponent implements OnInit {
     console.log(' Title from marker ==> ', TRANSLATE_ME('home.title'));
   }
 
-  supportLanguages = ['en', 'fr', 'ta', 'hi'];
+  supportLanguages = ['en','ar', 'fr', 'ta', 'hi'];
 
   constructor(private translateService: TranslateService){
     this.translateService.addLangs(this.supportLanguages);
