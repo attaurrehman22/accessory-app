@@ -26,7 +26,7 @@
     "@ngx-translate/http-loader": "^8.0.0",
     "multilingualtestapp": "file:",
     "rxjs": "~6.5.4",
-    "tslib": "^2.0.0",
+    "tslib": "^2.6.3",
     "zone.js": "~0.14.8"
   },
   "devDependencies": {
