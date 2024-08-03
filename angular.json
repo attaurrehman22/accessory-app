@@ -62,18 +62,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "multilingualtestapp:build"
+            "buildTarget": "multilingualtestapp:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "multilingualtestapp:build:production"
+              "buildTarget": "multilingualtestapp:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "multilingualtestapp:build"
+            "buildTarget": "multilingualtestapp:build"
           }
         },
         "test": {
