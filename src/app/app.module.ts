@@ -6,15 +6,16 @@ import { AppComponent } from './app.component';
 import { TranslateModule, TranslateLoader, TranslateService } from "@ngx-translate/core";
 import { TranslateHttpLoader } from "@ngx-translate/http-loader";
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-
-
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { MatIconModule } from '@angular/material/icon';
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
+    MatIconModule,
     HttpClientModule,
     TranslateModule.forRoot({
       loader: {
@@ -24,7 +25,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
       }
     })
   ],
-  providers: [TranslateService],
+  providers: [TranslateService, provideAnimationsAsync()],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
