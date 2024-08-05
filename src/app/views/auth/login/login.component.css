@@ -125,11 +125,11 @@ ol {
   font-size: 15px;
   text-align: center;
   color: #fff;
-  background: var(--theme-color);
+  background: #1F2323;
   padding: 14px 18px;
   border-radius: 4px;
   transition: 0.3s ease;
-  border: 1px solid var(--theme-color);
+  border: 1px solid #1F2323;
 }
 
 .theme-button:hover {

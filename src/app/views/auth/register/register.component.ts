@@ -6,6 +6,7 @@ import {MatRadioModule} from '@angular/material/radio';
 import {FormsModule} from '@angular/forms';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatCardModule} from '@angular/material/card';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-register',
   standalone: true,
@@ -14,5 +15,11 @@ import {MatCardModule} from '@angular/material/card';
   styleUrl: './register.component.css'
 })
 export class RegisterComponent {
+  constructor(
+    public router: Router,
+  ){}
+  gotologin(){
+    this.router.navigateByUrl('/')
 
+  }
 }
