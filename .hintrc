@@ -9,6 +9,21 @@
         "label": "off"
       }
     ],
-    "button-type": "off"
-  }
+    "button-type": "off",
+    "compat-api/css": [
+      "off",
+      {
+        "ignore": [
+          "-moz-backface-visibility"
+        ]
+      }
+    ]
+  },
+  "browserslist": [
+    "defaults",
+    "not ie 11",
+    "not and_chr <= 127",
+    "not chrome <= 127",
+    "not samsung <= 25"
+  ]
 }

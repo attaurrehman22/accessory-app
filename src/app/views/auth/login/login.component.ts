@@ -23,4 +23,8 @@ export class LoginComponent {
     this.router.navigateByUrl('register')
 
   }
+  login(){
+    this.router.navigateByUrl('home')
+
+  }
 }

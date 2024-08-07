@@ -1,0 +1,17 @@
+.headerContainer .bg-light {
+  background-color: #fff !important;
+}
+.logo{
+  width: 140px;
+}
+@media (min-width: 992px) {
+  .navbar-expand-lg .navbar-collapse {
+      display: flex !important;
+      /* flex-basis: auto; */
+      justify-content: space-between;
+  }
+}
+
+.menu{
+  margin: 0 0 0 19vw
+}
