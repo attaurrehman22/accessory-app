@@ -1,44 +1,39 @@
-<div class="container headerContainer">
-  <div class="row">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <a class="navbar-brand" href="/"><img class="logo" src="./assets/images/logo.png" alt="Cronosuq"></a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav
+    #drawer
+    class="sidenav"
+    mode="over"
+    position="end"
+    [style]="{ top: '0', right: '0', position: 'fixed', height: 'auto' }"
+  >
+    <button class="drawer-btn" routerLink="/">Buy a watch</button>
+    <button class="drawer-btn" routerLink="/">Sell a watch</button>
+    <button class="drawer-btn" routerLink="/">Magazine</button>
+    <button class="drawer-btn" routerLink="/">Watch Collection</button>
+    <button class="drawer-btn" routerLink="/">ChronoPulse</button>
+    <button class="drawer-btn" routerLink="/">FAQ</button>
+    <button class="drawer-btn" routerLink="/">Security</button>
+  </mat-sidenav>
+
+  <mat-toolbar class="header-div">
+    <div class="logo">
+      <img class="logo-img" routerLink="/" src="./assets/images/logo.png" alt="Cronosuq" />
+    </div>
+    <div class="header-content gap-4" *ngIf="!isSmallScreen">
+      <button class="custom-btn" routerLink="/">Buy a watch</button>
+      <button class="custom-btn" routerLink="/">Sell a watch</button>
+      <button class="custom-btn" routerLink="/">Magazine</button>
+      <button class="custom-btn" routerLink="/">Watch Collection</button>
+      <button class="custom-btn" routerLink="/">ChronoPulse</button>
+      <button class="custom-btn" routerLink="/">FAQ</button>
+      <button class="custom-btn" routerLink="/">Security</button>
+    </div>
+    <div class="header-contact gap-4">
+      <img src="./assets/images/basket-icon.png" />
+      <img src="./assets/images/profile-icon.png" />
+      <button mat-icon-button class="menu-icon" (click)="drawer.toggle()" *ngIf="isSmallScreen">
+        <mat-icon>menu</mat-icon>
       </button>
-
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <div class="menu">
-          <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-              <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Link</a>
-            </li>
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-                aria-haspopup="true" aria-expanded="false">
-                Dropdown
-              </a>
-              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="#">Action</a>
-                <a class="dropdown-item" href="#">Another action</a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#">Something else here</a>
-              </div>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-            </li>
-          </ul>
-        </div>
-
-        <form class="form-inline my-2 my-lg-0">
-          <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-        </form>
-      </div>
-    </nav>
-  </div>
-</div>
+    </div>
+  </mat-toolbar>
+</mat-sidenav-container>

@@ -12,6 +12,18 @@ import { HomeComponent } from './views/website/home/home.component';
 import { HeaderComponent } from './views/website/header/header.component';
 import {MatButtonModule} from '@angular/material/button';
 import {MatTooltipModule} from '@angular/material/tooltip'
+import { FindDreamComponentComponent } from "./views/website/find-dream-component/find-dream-component.component";
+import { PopularBrandsComponentComponent } from "./views/website/popular-brands-component/popular-brands-component.component";
+import { ChronosouqBuyerProtectionComponentComponent } from "./views/website/chronosouq-buyer-protection-component/chronosouq-buyer-protection-component.component";
+import { MostPopularModelsComponentComponent } from "./views/website/most-popular-models-component/most-popular-models-component.component";
+import { ExploreChronosouqComponentComponent } from "./views/website/explore-chronosouq-component/explore-chronosouq-component.component";
+import { HowWorksComponentComponent } from "./views/website/how-works-component/how-works-component.component";
+import { PeopleSyaingComponentComponent } from "./views/website/people-syaing-component/people-syaing-component.component";
+import { StayLoopComponentComponent } from "./views/website/stay-loop-component/stay-loop-component.component";
+import { FooterComponentComponent } from "./views/website/footer-component/footer-component.component";
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatToolbarModule } from '@angular/material/toolbar';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -23,16 +35,27 @@ import {MatTooltipModule} from '@angular/material/tooltip'
     AppRoutingModule,
     MatIconModule,
     MatTooltipModule,
+    MatToolbarModule,
+    MatSidenavModule,
     MatButtonModule,
     HttpClientModule,
     TranslateModule.forRoot({
-      loader: {
-        provide: TranslateLoader,
-        useFactory: (http: HttpClient) => { return new TranslateHttpLoader(http, './assets/i18n/', '.json'); },
-        deps: [HttpClient]
-      }
-    })
-  ],
+        loader: {
+            provide: TranslateLoader,
+            useFactory: (http: HttpClient) => { return new TranslateHttpLoader(http, './assets/i18n/', '.json'); },
+            deps: [HttpClient]
+        }
+    }),
+    FindDreamComponentComponent,
+    PopularBrandsComponentComponent,
+    ChronosouqBuyerProtectionComponentComponent,
+    MostPopularModelsComponentComponent,
+    ExploreChronosouqComponentComponent,
+    HowWorksComponentComponent,
+    PeopleSyaingComponentComponent,
+    StayLoopComponentComponent,
+    FooterComponentComponent
+],
   providers: [TranslateService, provideAnimationsAsync()],
   bootstrap: [AppComponent]
 })
