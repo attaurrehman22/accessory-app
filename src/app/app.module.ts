@@ -10,13 +10,22 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { MatIconModule } from '@angular/material/icon';
 import { HomeComponent } from './views/website/home/home.component';
 import { HeaderComponent } from './views/website/header/header.component';
-import {MatButtonModule} from '@angular/material/button';
-import {MatTooltipModule} from '@angular/material/tooltip'
+import { MatButtonModule } from '@angular/material/button';
+import { MatTooltipModule } from '@angular/material/tooltip'
+import { BannarComponent } from './views/website/bannar/bannar.component';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { CommonModule } from '@angular/common';
+import { SliderComponent } from './views/website/slider/slider.component';
+import { RouterOutlet } from '@angular/router';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-     HeaderComponent
+    BannarComponent,
+    SliderComponent,
+    HeaderComponent
   ],
   imports: [
     BrowserModule,
@@ -25,6 +34,14 @@ import {MatTooltipModule} from '@angular/material/tooltip'
     MatTooltipModule,
     MatButtonModule,
     HttpClientModule,
+    MatFormField,
+    CommonModule,
+    RouterOutlet,
+    FormsModule,
+    ReactiveFormsModule,
+    CommonModule,
+    FontAwesomeModule,
+    MatLabel,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
