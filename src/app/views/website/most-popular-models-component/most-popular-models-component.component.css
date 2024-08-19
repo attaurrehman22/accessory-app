@@ -31,6 +31,8 @@
   width: 290px;
   height: 165px;
   object-fit: cover;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
 }
 .watch-details {
   padding: 5px 10px 0 10px;
@@ -38,7 +40,6 @@
   width: 290px;
   border-bottom-left-radius: 12px;
   border-bottom-right-radius: 12px;
-  
 }
 .watch-details .brand {
   font-size: 14px;
@@ -74,7 +75,6 @@
     gap: 15px;
   }
 }
-
 
 @media (max-width: 1024px) {
   .watch-grid {

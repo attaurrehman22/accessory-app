@@ -1,7 +1,4 @@
 <mat-sidenav-container class="sidenav-container">
-  <select (change)="useLang($event.target.value)">
-    <option *ngFor="let item of supportLanguages" [value]="item">{{item}}</option>
-  </select>
   <mat-sidenav
     #drawer
     class="sidenav"
@@ -9,32 +6,83 @@
     position="end"
     [style]="{ top: '0', right: '0', position: 'fixed', height: 'auto' }"
   >
-    <button class="drawer-btn" routerLink="/">{{ 'header.buy_watch' | translate }}</button>
-    <button class="drawer-btn" routerLink="/">{{ 'header.sell_watch' | translate }}</button>
-    <button class="drawer-btn" routerLink="/">{{ 'header.magazine' | translate }}</button>
-    <button class="drawer-btn" routerLink="/">{{ 'header.watch_collection' | translate }}</button>
-    <button class="drawer-btn" routerLink="/">{{ 'header.chronopulse' | translate }}</button>
-    <button class="drawer-btn" routerLink="/">{{ 'header.faq' | translate }}</button>
-    <button class="drawer-btn" routerLink="/">{{ 'header.security' | translate }}</button>
+    <button class="drawer-btn" routerLink="/">
+      {{ "header.buy_watch" | translate }}
+    </button>
+    <button class="drawer-btn" routerLink="/">
+      {{ "header.sell_watch" | translate }}
+    </button>
+    <button class="drawer-btn" routerLink="/">
+      {{ "header.magazine" | translate }}
+    </button>
+    <button class="drawer-btn" routerLink="/">
+      {{ "header.watch_collection" | translate }}
+    </button>
+    <button class="drawer-btn" routerLink="/">
+      {{ "header.chronopulse" | translate }}
+    </button>
+    <button class="drawer-btn" routerLink="/">
+      {{ "header.faq" | translate }}
+    </button>
+    <button class="drawer-btn" routerLink="/">
+      {{ "header.security" | translate }}
+    </button>
   </mat-sidenav>
 
   <mat-toolbar class="header-div">
     <div class="logo">
-      <img class="logo-img" routerLink="/" src="./assets/images/logo.png" alt="Cronosuq" />
+      <img
+        class="logo-img"
+        routerLink="/"
+        src="./assets/images/logo.png"
+        alt="Cronosuq"
+      />
     </div>
     <div class="header-content gap-4" *ngIf="!isSmallScreen">
-      <button class="custom-btn" routerLink="/">{{ 'header.buy_watch' | translate }}</button>
-      <button class="custom-btn" routerLink="/">{{ 'header.sell_watch' | translate }}</button>
-      <button class="custom-btn" routerLink="/">{{ 'header.magazine' | translate }}</button>
-      <button class="custom-btn" routerLink="/">{{ 'header.watch_collection' | translate }}</button>
-      <button class="custom-btn" routerLink="/">{{ 'header.chronopulse' | translate }}</button>
-      <button class="custom-btn" routerLink="/">{{ 'header.faq' | translate }}</button>
-      <button class="custom-btn" routerLink="/">{{ 'header.security' | translate }}</button>
+      <button class="custom-btn" routerLink="/">
+        {{ "header.buy_watch" | translate }}
+      </button>
+      <button class="custom-btn" routerLink="/">
+        {{ "header.sell_watch" | translate }}
+      </button>
+      <button class="custom-btn" routerLink="/">
+        {{ "header.magazine" | translate }}
+      </button>
+      <button class="custom-btn" routerLink="/">
+        {{ "header.watch_collection" | translate }}
+      </button>
+      <button class="custom-btn" routerLink="/">
+        {{ "header.chronopulse" | translate }}
+      </button>
+      <button class="custom-btn" routerLink="/">
+        {{ "header.faq" | translate }}
+      </button>
+      <button class="custom-btn" routerLink="/">
+        {{ "header.security" | translate }}
+      </button>
     </div>
     <div class="header-contact gap-4">
       <img src="./assets/images/basket-icon.png" />
       <img src="./assets/images/profile-icon.png" />
-      <button mat-icon-button class="menu-icon" (click)="drawer.toggle()" *ngIf="isSmallScreen">
+      <div class="dropdown">
+        <img
+          src="./assets/images/lan.png"
+          style="height: 25px"
+          (click)="toggleDropdown()"
+        />
+        <select *ngIf="dropdownOpen" (change)="useLang($event.target.value)">
+          <option *ngFor="let item of supportLanguages" [value]="item">
+            {{ item }}
+          </option>
+        </select>
+      </div>
+
+      <button
+        mat-icon-button
+        class="menu-icon"
+        (click)="drawer.toggle()"
+        *ngIf="isSmallScreen"
+      >
         <mat-icon>menu</mat-icon>
       </button>
     </div>

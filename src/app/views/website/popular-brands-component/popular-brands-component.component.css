@@ -6,7 +6,7 @@
 .brands-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(19.5%, 1fr));
-  gap: 5px;
+  gap: 2px;
   justify-items: center;
   align-items: center;
 }
@@ -19,7 +19,6 @@
 
 .brand-item img {
   width: 100%;
-  height: 18vh;
   border-radius: 10px;
   transition: transform 0.3s;
 }

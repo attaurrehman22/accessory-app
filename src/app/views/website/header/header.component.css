@@ -41,7 +41,7 @@
 }
 
 .sidenav-container {
-  /* height: 100%; */
+
 }
 
 .sidenav {
@@ -81,4 +81,17 @@
     justify-content: end;
     width: inherit;
   }
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+select {
+  display: block;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 1;
 }

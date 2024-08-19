@@ -35,8 +35,11 @@ export class HeaderComponent {
   useLang(lang: string) {
     console.log("Selected Language:", lang);
     this.translateService.use(lang);
-    this.translateService.get("header.buy_watch").subscribe((translation) => {
-      console.log("Translated Value:", translation);
-    });
+  }
+
+  dropdownOpen = false;
+
+  toggleDropdown() {
+    this.dropdownOpen = !this.dropdownOpen;
   }
 }

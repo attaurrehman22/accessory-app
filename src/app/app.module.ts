@@ -29,7 +29,14 @@ import { MatToolbarModule } from '@angular/material/toolbar';
     HomeComponent,
     HeaderComponent,
     FindDreamComponentComponent,
-    
+    FooterComponentComponent,
+    StayLoopComponentComponent,
+    PeopleSyaingComponentComponent,
+    HowWorksComponentComponent,
+    ExploreChronosouqComponentComponent,
+    MostPopularModelsComponentComponent,
+    ChronosouqBuyerProtectionComponentComponent,
+    PopularBrandsComponentComponent
   ],
   imports: [
     BrowserModule,
@@ -47,14 +54,8 @@ import { MatToolbarModule } from '@angular/material/toolbar';
             deps: [HttpClient]
         }
     }),
-    PopularBrandsComponentComponent,
-    ChronosouqBuyerProtectionComponentComponent,
-    MostPopularModelsComponentComponent,
-    ExploreChronosouqComponentComponent,
-    HowWorksComponentComponent,
-    PeopleSyaingComponentComponent,
-    StayLoopComponentComponent,
-    FooterComponentComponent,
+    
+    
 ],
   providers: [TranslateService, provideAnimationsAsync()],
   bootstrap: [AppComponent]

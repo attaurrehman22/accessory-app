@@ -1,7 +1,7 @@
 {
 	"header": {
-	  "buy_watch": "Buy a watch",
-	  "sell_watch": "Sell a watch",
+	  "buy_watch": "Buy Watch",
+	  "sell_watch": "Sell Watch",
 	  "magazine": "Magazine",
 	  "watch_collection": "Watch Collection",
 	  "chronopulse": "ChronoPulse",
@@ -9,26 +9,99 @@
 	  "security": "Security"
 	},
 	"find_dream": {
-		  "find": "FIND",
-		  "your_dream": "YOUR DREAM",
-		  "luxury": "LUXURY",
-		  "watches": "WATCHES",
-		  "grow_business": "Grow your business to the next level to improve your business performance to stay competitive",
-		  "search_placeholder": "Search through 600,000 watches...",
-		  "find_watch": "Find a watch now",
-		  "years_experience": "Years Experience",
-		  "satisfied_customers": "Satisfied Customers",
-		  "business_partners": "Business Partners",
-		  "img_alt": "Luxury Watches",
-		  "reviews": "4.8 out of 5 stars",
-		  "reviews_info": "From 160,000 Reviews Worldwide",
-		  "watch_enthusiasts": "9 million",
-		  "enthusiasts_info": "Watch Enthusiasts Use ChronoSouq Each Month",
-		  "buyer_protection": "Over 200,000",
-		  "protection_info": "Customers Choose Buyer Protection Annually",
-		  "trustworthy_sellers": "More than 25,000",
-		  "sellers_info": "Trustworthy Sellers"
-		}
-	  }
-	  
+	  "find": "Find",
+	  "your_dream": "Your Dream",
+	  "luxury": "Luxury",
+	  "watches": "Watches",
+	  "grow_business": "Grow your business to the next level to enhance your business performance and stay competitive",
+	  "search_placeholder": "Search among 600,000 watches...",
+	  "find_watch": "Find a watch now",
+	  "years_experience": "Years of Experience",
+	  "satisfied_customers": "Satisfied Customers",
+	  "business_partners": "Business Partners",
+	  "img_alt": "Luxury Watches",
+	  "reviews": "4.8 out of 5 Stars",
+	  "reviews_info": "From 160,000 reviews worldwide",
+	  "watch_enthusiasts": "9 million",
+	  "enthusiasts_info": "ChronoSouq users monthly",
+	  "buyer_protection": "Over 200,000",
+	  "protection_info": "Customers choosing buyer protection annually",
+	  "trustworthy_sellers": "Over 25,000",
+	  "sellers_info": "Trusted sellers"
+	},
+	"popular_brands": {
+	  "label": "Popular Brands",
+	  "rolex": "Rolex",
+	  "Patek_Philppe": "Patek Philippe",
+	  "display_all": "Display all"
+	},
+	"chrono_buyer": {
+	  "label": "ChronoSouq Buyer Protection",
+	  "paragraph": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy.",
+	  "span_payment": "Payment via the Escrow Service",
+	  "span_commitment": "Commitment to Authenticity",
+	  "span_global": "Global money-back guarantee",
+	  "span_strict": "Strict dealer guidelines",
+	  "span_insured": "Insured shipments",
+	  "span_chrono": "ChronoSouq's quality & security team"
+	},
+	"popular_models": {
+	  "label": "Our Most Popular Models",
+	  "Rolex": "Rolex",
+	  "Price": "Price",
+	  "Datejust": "Datejust"
+	},
+	"explore_chrono": {
+	  "label": "Explore ChronoSouq",
+	  "men_watches": "Men's Watches",
+	  "read_more": "Read More",
+	  "pre_owned": "Pre-Owned",
+	  "watches": "Watches",
+	  "pocket": "Pocket",
+	  "automatic": "Automatic",
+	  "womens": "Women's",
+	  "gold": "Gold",
+	  "moon": "Moon"
+	},
+	"people_saying": {
+	  "label": "What People Are Saying",
+	  "header": "Great app for transferring money!",
+	  "paragraph": "It is one of my favorite apps and the best money transfer apps. I recommend ChronoSouq to anyone who wants to send money abroad.",
+	  "aut_name": "John S."
+	},
+	"how_works": {
+	  "label": "How it Works?",
+	  "header": "Find Your Dream Watch",
+	  "paragraph": "Easily deposit funds into your account through our bank deposit feature. Safe and reliable transactions every time."
+	},
+	"stay_loop": {
+	  "label": "Stay in the Loop",
+	  "paragraph": "Subscribe to get the latest news and updates about ChronoSouq. We promise not to send you spam!",
+	  "enter_email": "Enter your email address.",
+	  "continue": "Continue"
+	},
+	"footer": {
+	  "all_rights_reserved": "All Rights Reserved",
+	  "buy_on_chronosouq": "Buy on ChronoSouq",
+	  "chronosouq_buyer_protection": "ChronoSouq Buyer Protection",
+	  "payment_via_methods": "Payment via Methods",
+	  "commitment_authenticity": "Commitment to Authenticity",
+	  "easy_returns": "Easy Returns",
+	  "sell_on_chronosouq": "Sell on ChronoSouq",
+	  "selling_watches_as_a_private_seller": "Selling Watches as a Private Seller",
+	  "selling_watches_commercially": "Selling Watches Commercially",
+	  "free_appraisal": "Free Appraisal",
+	  "advice_for_private_sellers": "Advice for Private Sellers",
+	  "about_chronosouq": "About ChronoSouq",
+	  "about_us": "About Us",
+	  "legal_details": "Legal Details",
+	  "security": "Security",
+	  "advices": "Advice",
+	  "personalized_support": "Personalized Support",
+	  "frequently_asked_questions": "Frequently Asked Questions",
+	  "contact": "Contact Us",
+	  "accessibility": "Accessibility",
+	  "payment_methods": "Payment Methods"
+	}
+  }
   

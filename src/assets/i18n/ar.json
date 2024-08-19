@@ -3,31 +3,106 @@
     "buy_watch": "شراء ساعة",
     "sell_watch": "بيع ساعة",
     "magazine": "مجلة",
-    "watch_collection": "مشاهدة المجموعة",
-    "chronopulse": "كرونوبالس",
-    "faq": "التعليمات",
-    "security": "حماية"
+    "watch_collection": "مجموعة الساعات",
+    "chronopulse": "كرونو بلس",
+    "faq": "الأسئلة الشائعة",
+    "security": "الأمان"
   },
-    "find_dream": {
-      "find": "يجد",
-      "your_dream": "حلمك",
-      "luxury": "رفاهية",
-      "watches": "الساعات",
-      "grow_business": "قم بتنمية عملك إلى المستوى التالي لتحسين أداء عملك لتظل قادرًا على المنافسة",
-      "search_placeholder": "ابحث في 600000 ساعة...",
-      "find_watch": "ابحث عن ساعة الآن",
-      "years_experience": "سنوات الخبرة",
-      "satisfied_customers": "العملاء الراضين",
-      "business_partners": "شركاء العمل",
-      "img_alt": "الساعات الفاخرة",
-      "reviews": "4.8 من أصل 5 نجوم",
-      "reviews_info": "من 160.000 تعليق حول العالم",
-      "watch_enthusiasts": "9 مليون",
-      "enthusiasts_info": "شاهد المتحمسين يستخدمون ChronoSouq كل شهر",
-      "buyer_protection": "أكثر من 200000",
-      "protection_info": "يختار العملاء حماية المشتري سنويًا",
-      "trustworthy_sellers": "أكثر من 25000",
-      "sellers_info": "بائعون جديرون بالثقة"
-    }
+  "find_dream": {
+    "find": "ابحث",
+    "your_dream": "عن حلمك",
+    "luxury": "الفاخرة",
+    "watches": "الساعات",
+    "grow_business": "نمو عملك إلى المستوى التالي لتحسين أداء عملك لتظل منافسًا",
+    "search_placeholder": "...ابحث في 600,000 ساعة",
+    "find_watch": "ابحث عن ساعة الآن",
+    "years_experience": "سنوات من الخبرة",
+    "satisfied_customers": "عملاء راضون",
+    "business_partners": "شركاء الأعمال",
+    "img_alt": "ساعات فاخرة",
+    "reviews": "4.8 من 5 نجوم",
+    "reviews_info": "من 160,000 تقييم حول العالم",
+    "watch_enthusiasts": "9 ملايين",
+    "enthusiasts_info": "مستخدمو ChronoSouq شهريًا",
+    "buyer_protection": "أكثر من 200,000",
+    "protection_info": "عميل يختارون حماية المشتري سنويًا",
+    "trustworthy_sellers": "أكثر من 25,000",
+    "sellers_info": "بائعين موثوقين"
+  },
+  "popular_brands": {
+    "label": "العلامات التجارية الشهيرة",
+    "rolex": "رولكس",
+    "Patek_Philppe": "باتيك فيليب",
+    "display_all": "عرض الكل"
+  },
+  "chrono_buyer": {
+    "label": "حماية المشتري في ChronoSouq",
+    "paragraph": "لوريم إيبسوم هو ببساطة نص وهمي من صناعة الطباعة والتنضيد. لوريم إيبسوم هو ببساطة وهمي.",
+    "span_payment": "الدفع عن طريق خدمة الضمان",
+    "span_commitment": "الالتزام بالأصالة",
+    "span_global": "ضمان استعادة الاموال العالمية",
+    "span_strict": "إرشادات صارمة للتاجر",
+    "span_insured": "الشحنات المؤمن عليها",
+    "span_chrono": "جودة كرونوسوق"
+  },
+  "popular_models": {
+    "label": "موديلاتنا الأكثر شهرة",
+    "Rolex": "رولكس",
+    "Price": "سعر",
+    "Datejust": "ديت جست"
+  },
+  "explore_chrono": {
+    "label": "اكتشف سوق كرونو",
+    "men_watches": "ساعات رجالية",
+    "read_more": "اقرأ المزيد",
+    "pre_owned": "مملوكة مسبقًا",
+    "watches": "الساعات",
+    "pocket": "جيب",
+    "automatic": "تلقائي",
+    "womens": "للنساء",
+    "gold": "ذهب",
+    "moon": "قمر"
+  },
+
+  "people_saying": {
+    "label": "ما يقوله الناس",
+    "header": "تطبيق رائع لتحويل الأموال!",
+    "paragraph": "إنه أحد تطبيقي المفضلين وأفضل تطبيقات تحويل الأموال. أوصي كل من يرغب في إرسال الأموال إلى الخارج باستخدام ChronoSouq.",
+    "aut_name": "جون س."
+  },
+
+  "how_works": {
+    "label": "كيف يعمل؟",
+    "header": "ابحث عن ساعة أحلامك",
+    "paragraph": "قم بإيداع الأموال بسهولة في حسابك من خلال وظيفة الإيداع البنكي لدينا. معاملات آمنة وموثوقة في كل مرة."
+  },
+  "stay_loop": {
+    "label": "البقاء في الحلقة",
+    "paragraph": "اشترك للحصول على آخر الأخبار والتحديثات حول ChronoSouq. نحن نعد بعدم إرسال رسائل غير مرغوب فيها إليك!",
+    "enter_email": "أدخل عنوان البريد الإلكتروني.",
+    "continue": "يكمل"
+  },
+  "footer": {
+    "all_rights_reserved": "جميع الحقوق محفوظة",
+    "buy_on_chronosouq": "الشراء على ChronoSouq",
+    "chronosouq_buyer_protection": "حماية المشتري من ChronoSouq",
+    "payment_via_methods": "الدفع عبر طرق",
+    "commitment_authenticity": "الالتزام بالأصالة",
+    "easy_returns": "سهولة الإرجاع",
+    "sell_on_chronosouq": "البيع على ChronoSouq",
+    "selling_watches_as_a_private_seller": "بيع الساعات كبائع خاص",
+    "selling_watches_commercially": "بيع الساعات بشكل تجاري",
+    "free_appraisal": "تقييم مجاني",
+    "advice_for_private_sellers": "نصائح للبائعين الخاصين",
+    "about_chronosouq": "حول ChronoSouq",
+    "about_us": "معلومات عنا",
+    "legal_details": "التفاصيل القانونية",
+    "security": "الأمان",
+    "advices": "النصائح",
+    "personalized_support": "الدعم المخصص",
+    "frequently_asked_questions": "الأسئلة الشائعة",
+    "contact": "اتصل بنا",
+    "accessibility": "إمكانية الوصول",
+    "payment_methods": "طرق الدفع"
   }
-  
+}
