@@ -1,7 +1,34 @@
 {
-	"home": {
-		"subheader": "",
-		"title": "Welcome to my multi lingual application",
-		"welcomeback": "Welcome back {{name}}"
-	}
-}
+	"header": {
+	  "buy_watch": "Buy a watch",
+	  "sell_watch": "Sell a watch",
+	  "magazine": "Magazine",
+	  "watch_collection": "Watch Collection",
+	  "chronopulse": "ChronoPulse",
+	  "faq": "FAQ",
+	  "security": "Security"
+	},
+	"find_dream": {
+		  "find": "FIND",
+		  "your_dream": "YOUR DREAM",
+		  "luxury": "LUXURY",
+		  "watches": "WATCHES",
+		  "grow_business": "Grow your business to the next level to improve your business performance to stay competitive",
+		  "search_placeholder": "Search through 600,000 watches...",
+		  "find_watch": "Find a watch now",
+		  "years_experience": "Years Experience",
+		  "satisfied_customers": "Satisfied Customers",
+		  "business_partners": "Business Partners",
+		  "img_alt": "Luxury Watches",
+		  "reviews": "4.8 out of 5 stars",
+		  "reviews_info": "From 160,000 Reviews Worldwide",
+		  "watch_enthusiasts": "9 million",
+		  "enthusiasts_info": "Watch Enthusiasts Use ChronoSouq Each Month",
+		  "buyer_protection": "Over 200,000",
+		  "protection_info": "Customers Choose Buyer Protection Annually",
+		  "trustworthy_sellers": "More than 25,000",
+		  "sellers_info": "Trustworthy Sellers"
+		}
+	  }
+	  
+  

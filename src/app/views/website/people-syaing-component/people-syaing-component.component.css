@@ -31,8 +31,8 @@
   }
   
   .how-it-works-icon {
-    width: 110px;
-    height: 110px;
+    width: 150px;
+    height: 150px;
     margin-bottom: 15px;
     object-fit: cover;
   }
@@ -55,8 +55,6 @@
     }
   }
   
-
-  /* Responsive Adjustments */
   @media (max-width: 1024px) {
     .how-it-works-card {
       width: 48%;

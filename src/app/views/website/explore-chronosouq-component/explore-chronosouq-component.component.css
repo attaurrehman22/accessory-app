@@ -1,3 +1,163 @@
+/* .wraper {
+  padding: 45px 220px 0 220px;
+}
+
+h1 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.pos-relative {
+  position: relative;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 10px;
+}
+
+.grid-item {
+  position: relative;
+  overflow: hidden;
+}
+
+.grid-item.large {
+  grid-column: span 2;
+  grid-row: span 2;
+}
+
+.grid-item.small {
+  grid-column: span 1;
+  grid-row: span 1;
+}
+
+.grid-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.overlay {
+  position: absolute;
+  bottom: 1px;
+  color: white;
+  background: rgba(0, 0, 0, 0.6);
+  padding: 5px 10px;
+  width: 100%;
+}
+
+.grid-item:hover .overlay {
+  opacity: 1;
+}
+
+.overlay h2 {
+  margin: 0;
+  font-size: 18px;
+}
+
+.overlay p {
+  margin: 5px 0 0;
+  font-size: 14px;
+}
+
+.display-all-btn {
+  margin-top: 20px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  background: none;
+}
+
+.cards-div {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+@media (max-width: 1500px) {
+  .wraper {
+    padding: 0 20px 0 20px;
+  }
+  .cards-div {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between !important;
+  }
+}
+
+@media (max-width: 1200px) {
+  .grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+ 
+}
+
+@media (max-width: 992px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .grid-item.large {
+    grid-column: span 2;
+    grid-row: span 1;
+  }
+
+  .cards-div {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .grid-item.large {
+    grid-column: span 1;
+    grid-row: span 1;
+  }
+
+  .cards-div {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center !important;
+  }
+}
+
+@media (max-width: 576px) {
+  .wraper {
+    padding: 20px 10px;
+  }
+
+  .cards-div {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center !important;
+  }
+
+  h1 {
+    font-size: 20px;
+  }
+
+  .overlay h2 {
+    font-size: 16px;
+  }
+
+  .overlay p {
+    font-size: 12px;
+  }
+
+  .display-all-btn {
+    font-size: 14px;
+  }
+} */
+
+
+
+
 .wraper {
   padding: 45px 220px 0 220px;
 }
@@ -154,3 +314,4 @@ h1 {
     font-size: 14px;
   }
 }
+

@@ -2,21 +2,29 @@
   padding: 45px 200px 0 200px;
 }
 
-.pos-relative {
-  position: relative;
-  height: 25vh;
-}
-
-.img-text-div{
+.pos-div {
+  height: auto;
   display: flex;
   flex-wrap: wrap;
-  height: 65vh
+  width: 100%;
+  justify-content: space-between;
+  padding: 35px 50px 10px 50px;
+}
+
+.dream-text-padding {
+  padding: 170px 0 0 0;
+}
+
+.img-text-div {
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .card-div {
-  width: 24%;
   background-color: #f5f5f5;
   border-radius: 15px;
+  padding: 15px;
+  width: 24%;
 }
 
 @media (max-width: 1500px) {
@@ -24,21 +32,36 @@
     padding: 25px 25px 0 25px;
   }
 
-  .pos-relative {
-    position: relative;
+  .responsive-img {
     height: auto !important;
+    border-radius: 10px;
+  }
+
+  .carousel-item {
+    height: auto;
+  }
+
+  .card-div {
+    width: 48%;
+    margin: 0 0 15px 0;
+  }
+  .pos-div {
+    padding: 30px 20px 0 20px;
   }
 
   .bus-details {
-    position: static;
     height: auto !important;
     bottom: 0px !important;
     display: flex;
     flex-wrap: wrap;
   }
 
-  .img-text-div{
+  .img-text-div {
     height: auto !important;
+  }
+
+  .dream-text-padding {
+    padding: 5px 0 0 0;
   }
 }
 
@@ -47,21 +70,43 @@
   max-width: 100%;
   object-fit: cover;
   height: 65vh;
+  border-top-right-radius: 25px;
+  border-bottom-left-radius: 25px;
 }
-
+.pos-feature {
+  position: absolute;
+  flex-direction: column;
+  top: 20px;
+  right: 20px;
+}
 @media (max-width: 768px) {
+  .pos-feature {
+    flex-direction: column;
+    top: 25px;
+    right: 10px;
+  }
+  .features-container {
+    display: flex;
+    gap: 15px;
+  }
+
   .responsive-img {
-    max-width: 90%;
     margin: 0 auto;
     display: block;
     margin-top: 20px;
+    border-radius: 10px;
+  }
+
+  .card-div {
+    width: 100%;
+    margin: 0 0 15px 0;
   }
 }
 
 @media (max-width: 480px) {
   .responsive-img {
-    max-width: 80%;
     margin-top: 20px;
+    border-radius: 10px;
   }
 }
 
@@ -69,22 +114,103 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  position: absolute;
-  width: 100%;
-  bottom: -68px;
   height: 25vh;
 }
 
-@media (max-width: 1500px) {
-  .bus-details {
-    position: relative;
-  }
+/* @media (max-width: 1500px) {
 
   .responsive-img {
     height: auto !important;
+    border-radius: 10px;
   }
-}
+} */
 
 .display-4 {
   font-weight: bold;
+}
+
+.features-container {
+  background-color: #d6e5c9;
+  border-radius: 20px;
+  text-align: center;
+  border: 1px solid #ffffff;
+  padding: 5px;
+}
+
+.feature-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.feature-item i {
+  font-size: 35px;
+  color: white;
+}
+
+.feature-item span {
+  font-size: 14px;
+  color: white;
+}
+
+.separator {
+  height: 1px;
+  background-color: white;
+  margin: 20px 0;
+}
+
+.icon-waterproof:before {
+  content: "\f2c7"; /* Replace with your desired icon */
+}
+
+.icon-sportwear:before {
+  content: "\f2c8"; /* Replace with your desired icon */
+}
+
+.icon-reviews:before {
+  content: "\f091"; /* Replace with your desired icon */
+}
+.carousel-inner img {
+  width: 100%;
+  height: auto;
+}
+
+.carousel-item {
+  height: auto;
+}
+
+.carousel-control-prev,
+.carousel-control-next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 5%;
+}
+
+.carousel-indicators {
+  bottom: 10px;
+  list-style: none; 
+  display: flex;
+  justify-content: center;
+  padding-left: 0; 
+  margin-bottom: 0;
+}
+
+.carousel-indicators li {
+  background-color: #000; 
+  border-radius: 50%;
+  width: 10px;
+  height: 10px;
+  display: inline-block;
+  margin: 0 5px;
+}
+
+.carousel-indicators li::before {
+  content: ""; 
+  display: none;
+}
+
+.carousel-indicators .active {
+  background-color: #fff; 
 }

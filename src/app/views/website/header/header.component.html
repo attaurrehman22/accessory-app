@@ -1,4 +1,7 @@
 <mat-sidenav-container class="sidenav-container">
+  <select (change)="useLang($event.target.value)">
+    <option *ngFor="let item of supportLanguages" [value]="item">{{item}}</option>
+  </select>
   <mat-sidenav
     #drawer
     class="sidenav"
@@ -6,13 +9,13 @@
     position="end"
     [style]="{ top: '0', right: '0', position: 'fixed', height: 'auto' }"
   >
-    <button class="drawer-btn" routerLink="/">Buy a watch</button>
-    <button class="drawer-btn" routerLink="/">Sell a watch</button>
-    <button class="drawer-btn" routerLink="/">Magazine</button>
-    <button class="drawer-btn" routerLink="/">Watch Collection</button>
-    <button class="drawer-btn" routerLink="/">ChronoPulse</button>
-    <button class="drawer-btn" routerLink="/">FAQ</button>
-    <button class="drawer-btn" routerLink="/">Security</button>
+    <button class="drawer-btn" routerLink="/">{{ 'header.buy_watch' | translate }}</button>
+    <button class="drawer-btn" routerLink="/">{{ 'header.sell_watch' | translate }}</button>
+    <button class="drawer-btn" routerLink="/">{{ 'header.magazine' | translate }}</button>
+    <button class="drawer-btn" routerLink="/">{{ 'header.watch_collection' | translate }}</button>
+    <button class="drawer-btn" routerLink="/">{{ 'header.chronopulse' | translate }}</button>
+    <button class="drawer-btn" routerLink="/">{{ 'header.faq' | translate }}</button>
+    <button class="drawer-btn" routerLink="/">{{ 'header.security' | translate }}</button>
   </mat-sidenav>
 
   <mat-toolbar class="header-div">
@@ -20,13 +23,13 @@
       <img class="logo-img" routerLink="/" src="./assets/images/logo.png" alt="Cronosuq" />
     </div>
     <div class="header-content gap-4" *ngIf="!isSmallScreen">
-      <button class="custom-btn" routerLink="/">Buy a watch</button>
-      <button class="custom-btn" routerLink="/">Sell a watch</button>
-      <button class="custom-btn" routerLink="/">Magazine</button>
-      <button class="custom-btn" routerLink="/">Watch Collection</button>
-      <button class="custom-btn" routerLink="/">ChronoPulse</button>
-      <button class="custom-btn" routerLink="/">FAQ</button>
-      <button class="custom-btn" routerLink="/">Security</button>
+      <button class="custom-btn" routerLink="/">{{ 'header.buy_watch' | translate }}</button>
+      <button class="custom-btn" routerLink="/">{{ 'header.sell_watch' | translate }}</button>
+      <button class="custom-btn" routerLink="/">{{ 'header.magazine' | translate }}</button>
+      <button class="custom-btn" routerLink="/">{{ 'header.watch_collection' | translate }}</button>
+      <button class="custom-btn" routerLink="/">{{ 'header.chronopulse' | translate }}</button>
+      <button class="custom-btn" routerLink="/">{{ 'header.faq' | translate }}</button>
+      <button class="custom-btn" routerLink="/">{{ 'header.security' | translate }}</button>
     </div>
     <div class="header-contact gap-4">
       <img src="./assets/images/basket-icon.png" />

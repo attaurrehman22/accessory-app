@@ -28,15 +28,17 @@
 }
 
 .watch-image {
-  width: 271px;
-  height: 150px;
+  width: 290px;
+  height: 165px;
   object-fit: cover;
 }
 .watch-details {
   padding: 5px 10px 0 10px;
   background: #cfead7;
-  width: 271px;
-  border-radius: 12px;
+  width: 290px;
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
+  
 }
 .watch-details .brand {
   font-size: 14px;

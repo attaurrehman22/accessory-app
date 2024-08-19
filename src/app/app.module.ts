@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule  } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -23,12 +23,13 @@ import { StayLoopComponentComponent } from "./views/website/stay-loop-component/
 import { FooterComponentComponent } from "./views/website/footer-component/footer-component.component";
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
-
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-     HeaderComponent
+    HeaderComponent,
+    FindDreamComponentComponent,
+    
   ],
   imports: [
     BrowserModule,
@@ -46,7 +47,6 @@ import { MatToolbarModule } from '@angular/material/toolbar';
             deps: [HttpClient]
         }
     }),
-    FindDreamComponentComponent,
     PopularBrandsComponentComponent,
     ChronosouqBuyerProtectionComponentComponent,
     MostPopularModelsComponentComponent,
@@ -54,7 +54,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
     HowWorksComponentComponent,
     PeopleSyaingComponentComponent,
     StayLoopComponentComponent,
-    FooterComponentComponent
+    FooterComponentComponent,
 ],
   providers: [TranslateService, provideAnimationsAsync()],
   bootstrap: [AppComponent]

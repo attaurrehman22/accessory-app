@@ -60,12 +60,12 @@
 
   @media (max-width: 1200px) {
     .testimonial-card {
-      width: 48%; /* Two cards per row on medium screens */
+      width: 48%; 
     }
   }
   
   @media (max-width: 768px) {
     .testimonial-card {
-      width: 100%; /* Full width on smaller screens */
+      width: 100%;
     }
   }

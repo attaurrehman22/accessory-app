@@ -1,5 +1,33 @@
 {
-    "home" : {
-        "title": "مرحبا بالعالم - arabic version"
+  "header": {
+    "buy_watch": "شراء ساعة",
+    "sell_watch": "بيع ساعة",
+    "magazine": "مجلة",
+    "watch_collection": "مشاهدة المجموعة",
+    "chronopulse": "كرونوبالس",
+    "faq": "التعليمات",
+    "security": "حماية"
+  },
+    "find_dream": {
+      "find": "يجد",
+      "your_dream": "حلمك",
+      "luxury": "رفاهية",
+      "watches": "الساعات",
+      "grow_business": "قم بتنمية عملك إلى المستوى التالي لتحسين أداء عملك لتظل قادرًا على المنافسة",
+      "search_placeholder": "ابحث في 600000 ساعة...",
+      "find_watch": "ابحث عن ساعة الآن",
+      "years_experience": "سنوات الخبرة",
+      "satisfied_customers": "العملاء الراضين",
+      "business_partners": "شركاء العمل",
+      "img_alt": "الساعات الفاخرة",
+      "reviews": "4.8 من أصل 5 نجوم",
+      "reviews_info": "من 160.000 تعليق حول العالم",
+      "watch_enthusiasts": "9 مليون",
+      "enthusiasts_info": "شاهد المتحمسين يستخدمون ChronoSouq كل شهر",
+      "buyer_protection": "أكثر من 200000",
+      "protection_info": "يختار العملاء حماية المشتري سنويًا",
+      "trustworthy_sellers": "أكثر من 25000",
+      "sellers_info": "بائعون جديرون بالثقة"
     }
-}
+  }
+  
