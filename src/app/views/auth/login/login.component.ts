@@ -25,6 +25,5 @@ export class LoginComponent {
   }
   login(){
     this.router.navigateByUrl('home')
-
   }
 }

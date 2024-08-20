@@ -19,7 +19,10 @@ export class RegisterComponent {
     public router: Router,
   ){}
   gotologin(){
-    this.router.navigateByUrl('/')
+    this.router.navigateByUrl('')
+  }
 
+  login(){
+    this.router.navigateByUrl('home')
   }
 }

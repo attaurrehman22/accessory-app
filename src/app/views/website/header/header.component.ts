@@ -1,4 +1,5 @@
 import { Component, HostListener } from "@angular/core";
+import { Router } from "@angular/router";
 import { TranslateService } from "@ngx-translate/core";
 
 @Component({
@@ -10,7 +11,7 @@ export class HeaderComponent {
   isSmallScreen: boolean = false;
   supportLanguages = ["en", "ar", "fr", "ta", "hi"];
 
-  constructor(private translateService: TranslateService) {
+  constructor(private translateService: TranslateService,public router: Router) {
     this.translateService.addLangs(this.supportLanguages);
     this.translateService.setDefaultLang("en");
 
@@ -41,5 +42,9 @@ export class HeaderComponent {
 
   toggleDropdown() {
     this.dropdownOpen = !this.dropdownOpen;
+  }
+
+  goToRegister(){
+    this.router.navigateByUrl('register')
   }
 }
