@@ -1,102 +1,39 @@
-<body>
-  <section class="w3l-form-36">
-    <div class="form-36-mian section-gap">
-      <div class="wrapper">
-        <div class="form-inner-cont">
-          <img src="../../../../assets/images/logo.png" alt="" style="margin: 24px;">
-          <h3>Login now</h3>
-          <br>
-          <form action="#" method="post" class="signin-form">
-            <div class="row">
-              <div class="col-md-12">
-                <mat-form-field class="example-full-width" appearance="outline">
-                  <mat-label>Username/Email</mat-label>
-                  <input type="text" matInput placeholder="">
-                  <mat-icon matSuffix>alternate_email</mat-icon>
-                </mat-form-field>
-
-              </div>
-              <div class="col-md-12">
-                <mat-form-field class="example-full-width" appearance="outline">
-                  <mat-label>Password</mat-label>
-                  <input type="password" matInput placeholder="">
-                  <mat-icon matSuffix>key</mat-icon>
-                </mat-form-field>
-
-              </div>
-            </div>
-
-            <div class="login-remember d-grid">
-              <label class="check-remaind">
-                <mat-checkbox class="example-margin">
-                  remenber me
-                </mat-checkbox>
-              </label>
-              <button (click)="login()" class="btn theme-button">Login</button>
-            </div>
-            <div class="new-signup">
-              <a href="#reload" class="signuplink">Forgot password?</a>
-            </div>
-          </form>
-
-
-          <div class="social-icons">
-            <p class="continue"><span>Or</span></p>
-            <div class="social-login">
-              <a href="#facebook">
-                <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="48" height="48" viewBox="0 0 48 48">
-                  <path fill="#039be5" d="M24 5A19 19 0 1 0 24 43A19 19 0 1 0 24 5Z"></path>
-                  <path fill="#fff"
-                    d="M26.572,29.036h4.917l0.772-4.995h-5.69v-2.73c0-2.075,0.678-3.915,2.619-3.915h3.119v-4.359c-0.548-0.074-1.707-0.236-3.897-0.236c-4.573,0-7.254,2.415-7.254,7.917v3.323h-4.701v4.995h4.701v13.729C22.089,42.905,23.032,43,24,43c0.875,0,1.729-0.08,2.572-0.194V29.036z">
-                  </path>
-                </svg>
-              </a>
-              <a href="#google">
-                <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="48" height="48" viewBox="0 0 48 48">
-                  <path fill="#f4511e" d="M24 4A20 20 0 1 0 24 44A20 20 0 1 0 24 4Z"></path>
-                  <path fill="#fff" d="M34 19H36V27H34z"></path>
-                  <path fill="#fff"
-                    d="M31 22H39V24H31zM27.815 22.2l-.05-.2H19v3h5.91c-.477 2.837-2.938 5-5.91 5-3.314 0-6-2.686-6-6s2.686-6 6-6c1.5 0 2.868.554 3.92 1.465l2.151-2.106C23.471 15.894 21.34 15 19 15c-4.971 0-9 4.029-9 9s4.029 9 9 9 9-4.029 9-9C28 23.383 27.934 22.782 27.815 22.2z">
-                  </path>
-                </svg>
-
-
-              </a>
-              <a href="#google">
-                <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="40" height="40" viewBox="0,0,256,256"
-                  style="fill:#000000; margin: 4px;">
-                  <g fill="#000000" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt"
-                    stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0"
-                    font-family="none" font-weight="none" font-size="none" text-anchor="none"
-                    style="mix-blend-mode: normal">
-                    <path
-                      d="M128,256c-70.69245,0 -128,-57.30755 -128,-128v0c0,-70.69245 57.30755,-128 128,-128v0c70.69245,0 128,57.30755 128,128v0c0,70.69245 -57.30755,128 -128,128z"
-                      id="shape"></path>
-                  </g>
-                  <g fill="#d6d6d6" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt"
-                    stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0"
-                    font-family="none" font-weight="none" font-size="none" text-anchor="none"
-                    style="mix-blend-mode: normal">
-                    <g transform="translate(-2.33958,9.5992) scale(10.66667,10.66667)">
-                      <path
-                        d="M16.125,1c-1.153,0.067 -2.47667,0.70934 -3.26367,1.52734c-0.711,0.744 -1.27197,1.84897 -1.04297,2.91797c1.253,0.033 2.51067,-0.62598 3.26367,-1.45898c0.703,-0.779 1.23597,-1.86633 1.04297,-2.98633zM16.19336,5.44336c-1.809,0 -2.56536,1.11133 -3.81836,1.11133c-1.289,0 -2.46734,-1.04102 -4.02734,-1.04102c-2.122,0.001 -5.34766,1.96666 -5.34766,6.59766c0,4.213 3.81766,8.88867 5.97266,8.88867c1.309,0.013 1.62634,-0.82303 3.40234,-0.83203c1.778,-0.013 2.16166,0.84303 3.47266,0.83203c1.476,-0.011 2.6287,-1.63297 3.4707,-2.91797c0.604,-0.92 0.85231,-1.38969 1.32031,-2.42969c-3.473,-0.88 -4.164,-6.48067 0,-7.63867c-0.786,-1.341 -3.08031,-2.57031 -4.44531,-2.57031z">
-                      </path>
-                    </g>
-                  </g>
-                </svg>
-
-              </a>
-            </div>
-          </div>
-          <p class="signup">Don’t have an account? <span (click)="gotoRegister()" class="signuplink">Sign up</span></p>
-        </div>
-
-        <!-- copyright -->
-        <div class="copy-right">
-          <p>© 2024 Login Form. All rights reserved |
-        </div>
-        <!-- //copyright -->
+<div class="login-container">
+  <div class="login-card">
+    <h2>Hey there!</h2>
+    <h1>Welcome Back</h1>
+    <form>
+      <div class="form-group">
+        <label class="d-flex">Email</label>
+        <input
+          type="email"
+          placeholder="Enter your email address..."
+          required
+        />
       </div>
+      <div class="form-group">
+        <label class="d-flex">Password</label>
+        <input type="password" placeholder="Enter your password" required />
+      </div>
+      <div class="mt-3" style="display: flex; justify-content: end">
+        <a href="#">Forgot password?</a>
+      </div>
+      <button class="login-btn mt-3" (click)="login()">Login</button>
+    </form>
+    <div class="separator">OR</div>
+    <div class="social-login">
+      <button class="social-btn facebook"><mat-icon>facebook</mat-icon></button>
+      <button class="social-btn apple"><mat-icon>apple</mat-icon></button>
+      <button class="social-btn google"><mat-icon>microsoft</mat-icon></button>
     </div>
-  </section>
-</body>
+    <div class="mt-5">
+      <p style="font-weight: 400; font-size: 14px; color: #909090">
+        Don't have an account?
+        <a style="color: #0f172a; font-weight: 500; font-size: 16px;cursor: pointer;"
+        (click)="gotoRegister()"
+          >Register now</a
+        >
+      </p>
+    </div>
+  </div>
+</div>
