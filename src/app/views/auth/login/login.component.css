@@ -91,8 +91,11 @@ input {
 }
 
 .google {
-  background-color: #db4437;
-  color: white;
+  background: #ffffff;
+  border: 1px solid black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 p {
