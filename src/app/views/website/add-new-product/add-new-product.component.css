@@ -1,0 +1,218 @@
+.full-width {
+    width: 100%;
+    margin-bottom: 16px;
+  }
+  
+  h2 {
+    font-size: 24px;
+    margin-bottom: 16px;
+  }
+  
+  h2 span {
+    font-size: 14px;
+    color: #666;
+  }
+  
+  a {
+    color: #007bff;
+    text-decoration: none;
+  }
+  
+  a:hover {
+    text-decoration: underline;
+  }
+  
+  mat-form-field {
+    display: block;
+  }
+  
+  mat-icon {
+    color: #666;
+  }
+  
+
+  .condition-container {
+    max-width: 800px;
+    margin: auto;
+    padding: 16px;
+  }
+  
+  h2 {
+    font-size: 24px;
+    margin-bottom: 16px;
+  }
+  
+  .condition-toggle {
+    margin-bottom: 24px;
+  }
+  
+  h3 {
+    font-size: 18px;
+    margin-bottom: 16px;
+  }
+  
+  .card-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 16px;
+  }
+  
+  .condition-card {
+    padding: 16px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+    border-radius: 8px;
+  }
+  
+  .condition-card mat-card-title {
+    font-size: 16px;
+    font-weight: bold;
+  }
+  
+  .condition-card mat-card-content {
+    font-size: 14px;
+    margin-bottom: 16px;
+  }
+  
+  .condition-card button {
+    color: #007bff;
+  }
+  
+  .more-info {
+    display: block;
+    margin-top: 24px;
+    color: #007bff;
+    text-decoration: none;
+  }
+  
+  .more-info:hover {
+    text-decoration: underline;
+  }
+  
+  .condition-card{
+    border-style: none !important;
+  }
+
+
+  .full-width {
+    width: 100%;
+  }
+  
+  .case-diameter {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  h2 {
+    font-size: 24px;
+    margin-bottom: 16px;
+  }
+  
+  mat-divider {
+    margin-bottom: 24px;
+  }
+  
+  mat-checkbox {
+    margin-left: 8px;
+  }
+
+ /* add-new-product.component.css */
+
+.price-container {
+    display: flex;
+    align-items: center;
+  }
+  
+  .price-input {
+    width: 100%;
+    max-width: 300px;
+  }
+  
+  .currency-select {
+    width: 60px;
+  }
+  
+  .info-icon {
+    cursor: pointer;
+    margin-left: 8px;
+  }
+  
+
+  /* add-new-product.component.css */
+
+.additional-info-form {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  h2 {
+    font-size: 1.5rem;
+    margin-bottom: 16px;
+  }
+  
+  h2 .optional {
+    font-size: 0.9rem;
+    color: gray;
+  }
+  
+  .mat-expansion-panel-header {
+    font-weight: bold;
+  }
+  
+  .full-width {
+    width: 100%;
+    margin-bottom: 16px;
+  }
+  
+  .half-width {
+    width: 48%;
+    margin-right: 2%;
+    margin-bottom: 16px;
+  }
+  
+  .half-width:last-child {
+    margin-right: 0;
+  }
+  
+  .other-details {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 16px;
+  }
+  
+  .other-details span {
+    margin-right: 16px;
+    font-weight: bold;
+  }
+  
+ .othr-chk {
+    margin-right: 16px;
+    width: 35%;
+  }
+  
+
+
+
+  .card {
+    border: 1px solid #dee2e6;
+    border-radius: 5px;
+    padding: 20px;
+  }
+  
+  .card-body i {
+    display: block;
+    margin: auto;
+  }
+  
+  .card-title {
+    color: #6c757d;
+  }
+  
+  .price {
+    font-size: 1.25rem;
+    font-weight: bold;
+  }
+  

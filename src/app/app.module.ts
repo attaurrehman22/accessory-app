@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule  } from '@angular/core';
+import { NgModule,CUSTOM_ELEMENTS_SCHEMA  } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -23,6 +23,22 @@ import { StayLoopComponentComponent } from "./views/website/stay-loop-component/
 import { FooterComponentComponent } from "./views/website/footer-component/footer-component.component";
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { NgxMasonryModule } from 'ngx-masonry';
+import { AddNewProductComponent } from './views/website/add-new-product/add-new-product.component';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatCardModule } from '@angular/material/card';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+
+
+import { MatCheckboxModule } from '@angular/material/checkbox';
+// import {MatExpansionModule} from '@angular/material/expansion';
+import { MatDividerModule } from '@angular/material/divider';
+import { LoginComponent } from './views/auth/login/login.component';
+import { RegisterComponent } from './views/auth/register/register.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -36,7 +52,10 @@ import { MatToolbarModule } from '@angular/material/toolbar';
     ExploreChronosouqComponentComponent,
     MostPopularModelsComponentComponent,
     ChronosouqBuyerProtectionComponentComponent,
-    PopularBrandsComponentComponent
+    PopularBrandsComponentComponent,
+    AddNewProductComponent,
+    LoginComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,
@@ -47,6 +66,16 @@ import { MatToolbarModule } from '@angular/material/toolbar';
     MatSidenavModule,
     MatButtonModule,
     HttpClientModule,
+    NgxMasonryModule,
+    MatSelectModule,
+    MatInputModule,
+    MatFormFieldModule,
+    MatCardModule,
+    MatButtonToggleModule,
+    ReactiveFormsModule,
+    MatDividerModule,
+    MatCheckboxModule,
+    // MatExpansionModule,
     TranslateModule.forRoot({
         loader: {
             provide: TranslateLoader,
@@ -55,9 +84,9 @@ import { MatToolbarModule } from '@angular/material/toolbar';
         }
     }),
     
-    
 ],
   providers: [TranslateService, provideAnimationsAsync()],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppModule { }

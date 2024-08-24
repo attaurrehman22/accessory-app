@@ -21,4 +21,22 @@ export class ExploreChronosouqComponentComponent {
   useLang(lang: string) {
     this.translateService.use(lang);
   }
+
+
+  masonryOptions = {
+    transitionDuration: '0.8s',
+    gutter: 20,
+    horizontalOrder: true,
+    fitWidth: true
+  };
+
+  watchCategories = [
+    { title: 'Men’s Watches', subtitle: 'Read More', image: 'assets/mens-watch.jpg' },
+    { title: 'Pre-Owned', subtitle: 'Watches', image: 'assets/pre-owned.jpg' },
+    { title: 'Pocket', subtitle: 'Watches', image: 'assets/pocket-watch.jpg' },
+    { title: 'Women’s', subtitle: 'Watches', image: 'assets/womens-watch.jpg' },
+    { title: 'Automatic', subtitle: 'Watches', image: 'assets/automatic-watch.jpg' },
+    { title: 'Gold', subtitle: 'Watches', image: 'assets/gold-watch.jpg' },
+    { title: 'Moon', subtitle: 'Watches', image: 'assets/moon-watch.jpg' },
+  ];
 }

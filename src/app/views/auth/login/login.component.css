@@ -2,7 +2,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 89vh;
+  height: 100%;
   background-color: #e8f1eb;
 }
 
@@ -31,15 +31,6 @@ h1 {
 
 .form-group {
   margin-bottom: 16px;
-}
-
-input {
-  width: 100%;
-  padding: 12px;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-  box-sizing: border-box;
-  font-size: 16px;
 }
 
 .login-btn {
