@@ -5,12 +5,13 @@ import {MatExpansionModule} from '@angular/material/expansion';
 @Component({
   selector: "app-add-new-product",
   templateUrl: "./add-new-product.component.html",
-  styleUrl: "./add-new-product.component.css",
+  styleUrls: ["./add-new-product.component.css"],
 })
+
 export class AddNewProductComponent {
   productForm: FormGroup;
   usedCondition: any = '';
-  newCondition: any = 'new';
+  newCondition: any = '';
   constructor(private fb: FormBuilder) {
     this.productForm = this.fb.group({
       type: ["", Validators.required],

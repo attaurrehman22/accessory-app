@@ -1,8 +1,4 @@
-.full-width {
-    width: 100%;
-    margin-bottom: 16px;
-  }
-  
+
   h2 {
     font-size: 24px;
     margin-bottom: 16px;
@@ -14,21 +10,22 @@
   }
   
   a {
-    color: #007bff;
+    color: #03181c;
     text-decoration: none;
   }
   
   a:hover {
     text-decoration: underline;
+    color: #c39052;
   }
   
-  mat-form-field {
+  /* mat-form-field {
     display: block;
   }
   
   mat-icon {
     color: #666;
-  }
+  } */
   
 
   .condition-container {
@@ -80,21 +77,17 @@
   .more-info {
     display: block;
     margin-top: 24px;
-    color: #007bff;
+    color: #03181c;
     text-decoration: none;
   }
   
   .more-info:hover {
     text-decoration: underline;
+    color: #c39052;
   }
   
   .condition-card{
     border-style: none !important;
-  }
-
-
-  .full-width {
-    width: 100%;
   }
   
   .case-diameter {
@@ -158,11 +151,6 @@
   
   .mat-expansion-panel-header {
     font-weight: bold;
-  }
-  
-  .full-width {
-    width: 100%;
-    margin-bottom: 16px;
   }
   
   .half-width {
