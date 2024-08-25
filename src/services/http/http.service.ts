@@ -12,4 +12,12 @@ export class HttpService {
   getusername(username: string){
     return this.http.get(this.apiUrl+'/api/usernames?name='+username);
   }
+  register(FormControl:any){
+    let formdate=new FormData()
+    formdate.append('name',FormControl.get('username').value);
+    formdate.append('email',FormControl.get('email').value);
+    formdate.append('password',FormControl.get('password').value);
+
+    return this.http.post(this.apiUrl+'/api/register',FormControl);
+  }
 }
