@@ -1,4 +1,4 @@
-import { Component, signal } from "@angular/core";
+import { Component, OnInit, signal } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import {MatExpansionModule} from '@angular/material/expansion';
 
@@ -8,10 +8,11 @@ import {MatExpansionModule} from '@angular/material/expansion';
   styleUrls: ["./add-new-product.component.css"],
 })
 
-export class AddNewProductComponent {
+export class AddNewProductComponent implements OnInit{
   productForm: FormGroup;
-  usedCondition: any = '';
+  usedCondition: any;
   newCondition: any = '';
+  selectedCondition: string | null = null;
   constructor(private fb: FormBuilder) {
     this.productForm = this.fb.group({
       type: ["", Validators.required],
@@ -67,6 +68,11 @@ export class AddNewProductComponent {
     });
   }
 
+  ngOnInit(): void {
+      this.newCondition='new';
+      this.selectedCondition='new'
+  }
+
   onSubmit() {
     if (this.productForm.valid) {
       console.log("Product Data:", this.productForm.value);
@@ -78,13 +84,15 @@ export class AddNewProductComponent {
 
   panelOpenState = false;
 
-  // openCondition(param: string) {
-  //   if (param === 'new') {
-  //     this.newCondition = 'new';
-  //     this.usedCondition = '';
-  //   } else {
-  //     this.usedCondition = 'used';
-  //     this.newCondition = '';
-  //   }
-  // }
+  openCondition(param: string) {
+    console.log(param)
+    this.selectedCondition = param;
+    if (param === 'new') {
+      this.newCondition = 'new';
+      this.usedCondition = '';
+    } else {
+      this.usedCondition = 'used';
+      this.newCondition = '';
+    }
+  }
 }

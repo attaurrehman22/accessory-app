@@ -3,7 +3,7 @@ import { TranslateService } from '@ngx-translate/core';
 @Component({
   selector: 'app-stay-loop-component',
   templateUrl: './stay-loop-component.component.html',
-  styleUrl: './stay-loop-component.component.css'
+  styleUrls: ['./stay-loop-component.component.css']
 })
 export class StayLoopComponentComponent {
   constructor(private translateService: TranslateService) {

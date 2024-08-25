@@ -4,7 +4,7 @@ import { TranslateService } from '@ngx-translate/core';
 @Component({
   selector: 'app-footer-component',
   templateUrl: './footer-component.component.html',
-  styleUrl: './footer-component.component.css'
+  styleUrls: ['./footer-component.component.css']
 })
 export class FooterComponentComponent {
 

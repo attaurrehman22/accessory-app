@@ -153,15 +153,15 @@
 }
 
 .icon-waterproof:before {
-  content: "\f2c7"; 
+  content: "\f2c7";
 }
 
 .icon-sportwear:before {
-  content: "\f2c8"; 
+  content: "\f2c8";
 }
 
 .icon-reviews:before {
-  content: "\f091"; 
+  content: "\f091";
 }
 .carousel-inner img {
   width: 100%;
@@ -182,15 +182,15 @@
 
 .carousel-indicators {
   bottom: 10px;
-  list-style: none; 
+  list-style: none;
   display: flex;
   justify-content: center;
-  padding-left: 0; 
+  padding-left: 0;
   margin-bottom: 0;
 }
 
 .carousel-indicators li {
-  background-color: #000; 
+  background-color: #000;
   border-radius: 50%;
   width: 10px;
   height: 10px;
@@ -199,10 +199,10 @@
 }
 
 .carousel-indicators li::before {
-  content: ""; 
+  content: "";
   display: none;
 }
 
 .carousel-indicators .active {
-  background-color: #fff; 
+  background-color: #fff;
 }

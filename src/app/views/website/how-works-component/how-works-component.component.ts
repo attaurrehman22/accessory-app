@@ -4,7 +4,7 @@ import { TranslateService } from '@ngx-translate/core';
 @Component({
   selector: 'app-how-works-component',
   templateUrl: './how-works-component.component.html',
-  styleUrl: './how-works-component.component.css'
+  styleUrls: ['./how-works-component.component.css']
 })
 export class HowWorksComponentComponent {
   constructor(private translateService: TranslateService) {

@@ -4,7 +4,7 @@ import { TranslateService } from '@ngx-translate/core';
 @Component({
   selector: 'app-explore-chronosouq-component',
   templateUrl: './explore-chronosouq-component.component.html',
-  styleUrl: './explore-chronosouq-component.component.css',
+  styleUrls: ['./explore-chronosouq-component.component.css'],
 })
 export class ExploreChronosouqComponentComponent {
   constructor(private translateService: TranslateService) {

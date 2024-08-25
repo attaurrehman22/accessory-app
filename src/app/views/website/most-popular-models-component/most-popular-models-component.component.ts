@@ -4,7 +4,7 @@ import { TranslateService } from '@ngx-translate/core';
 @Component({
   selector: 'app-most-popular-models-component',
   templateUrl: './most-popular-models-component.component.html',
-  styleUrl: './most-popular-models-component.component.css'
+  styleUrls: ['./most-popular-models-component.component.css']
 })
 export class MostPopularModelsComponentComponent {
   constructor(private translateService: TranslateService) {

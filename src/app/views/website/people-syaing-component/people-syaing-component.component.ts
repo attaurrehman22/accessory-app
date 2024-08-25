@@ -4,7 +4,7 @@ import { TranslateService } from '@ngx-translate/core';
 @Component({
   selector: 'app-people-syaing-component',
   templateUrl: './people-syaing-component.component.html',
-  styleUrl: './people-syaing-component.component.css'
+  styleUrls: ['./people-syaing-component.component.css']
 })
 export class PeopleSyaingComponentComponent {
   constructor(private translateService: TranslateService) {
