@@ -47,4 +47,8 @@ export class HeaderComponent {
   goToRegister(){
     this.router.navigateByUrl('register')
   }
+
+  routeToNewProduct(){
+    this.router.navigateByUrl('new-product')
+  }
 }

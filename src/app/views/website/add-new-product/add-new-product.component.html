@@ -1,13 +1,39 @@
-<div
-  class="col-lg-12 col-md-12 col-sm-12 d-flex flex-wrap"
-  style="padding: 0 220px 0 220px"
->
-  <div class="col-lg-7" style="padding: 15px 30px 0 30px">
+<div class="col-lg-12 col-md-12 col-sm-12 wraper">
+  <div class="col-lg-7 col-md-12 col-sm-12 form-section">
     <form [formGroup]="productForm">
       <!-- --------------------  offer Section ---------------------------- -->
 
       <h2>Offer <span>(* Required field)</span></h2>
       <hr />
+      <div class="d-flex" style="justify-content: space-between">
+        <mat-label>Name</mat-label>
+        <div style="width: 70%">
+          <mat-form-field style="width: 100%" appearance="outline">
+            <input formControlName="name" matInput placeholder="" />
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="d-flex" style="justify-content: space-between">
+        <mat-label>Slug</mat-label>
+        <div style="width: 70%">
+          <mat-form-field style="width: 100%" appearance="outline">
+            <input formControlName="slug" matInput placeholder="" />
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="d-flex" style="justify-content: space-between">
+        <mat-label>Upload Image</mat-label>
+        <div style="width: 70%">
+          <mat-form-field style="width: 100%" appearance="outline">
+            <input
+              type="file"
+              (change)="onFileChange($event)"
+              formControlName="image"
+              matInput
+            />
+          </mat-form-field>
+        </div>
+      </div>
       <div class="d-flex" style="justify-content: space-between">
         <mat-label>Type</mat-label>
         <mat-form-field
@@ -16,7 +42,10 @@
           class="full-width"
         >
           <mat-select formControlName="type">
-            <mat-option value="">Please select</mat-option>
+            <mat-option value="case">Case</mat-option>
+            <mat-option value="box">Box</mat-option>
+            <mat-option value="tools">Tools</mat-option>
+            <mat-option value="bracelet">Bracelet/Strap</mat-option>
           </mat-select>
         </mat-form-field>
       </div>
@@ -28,7 +57,9 @@
           class="full-width"
         >
           <mat-select formControlName="brand">
-            <mat-option value="">Please select</mat-option>
+            <mat-option *ngFor="let brand of brandsList" [value]="brand.id">
+              {{ brand.name }}
+            </mat-option>
           </mat-select>
           <mat-hint align="start"
             ><a href="#">Manufacturer not listed?</a>
@@ -117,6 +148,7 @@
               <button
                 style="border-radius: 75px; border: 1px solid black"
                 mat-button
+                (click)="selectUsedCondition('very-good')"
               >
                 Select
               </button>
@@ -135,6 +167,7 @@
               <button
                 style="border-radius: 75px; border: 1px solid black"
                 mat-button
+                (click)="selectUsedCondition('good')"
               >
                 Select
               </button>
@@ -153,6 +186,7 @@
               <button
                 style="border-radius: 75px; border: 1px solid black"
                 mat-button
+                (click)="selectUsedCondition('fair')"
               >
                 Select
               </button>
@@ -168,6 +202,7 @@
               <button
                 style="border-radius: 75px; border: 1px solid black"
                 mat-button
+                (click)="selectUsedCondition('incomplete')"
               >
                 Select
               </button>
@@ -356,10 +391,10 @@
       <mat-divider class="mat-divider"></mat-divider>
       <mat-accordion>
         <!-- ------------------- Caliber Information --------------------- -->
-        <mat-expansion-panel-header>
-          <mat-panel-title>Caliber</mat-panel-title>
-        </mat-expansion-panel-header>
-        <mat-expansion-panel>
+        <div>
+          <h2>Caliber</h2>
+        </div>
+        <div style="padding: 0 20px 0 20px">
           <div class="d-flex" style="justify-content: space-between">
             <mat-label>Caliber/movement</mat-label>
             <mat-form-field style="width: 70%" appearance="outline">
@@ -428,13 +463,13 @@
               >
             </div>
           </div>
-        </mat-expansion-panel>
+        </div>
 
         <!-- Case Section -->
-        <mat-expansion-panel-header class="mt-5">
-          <mat-panel-title>Case</mat-panel-title>
-        </mat-expansion-panel-header>
-        <mat-expansion-panel>
+        <div class="mt-5">
+          <h2>Case</h2>
+        </div>
+        <div style="padding: 0 20px 0 20px">
           <div class="d-flex" style="justify-content: space-between">
             <mat-label>Case material</mat-label>
             <mat-form-field
@@ -503,13 +538,13 @@
               </mat-checkbox>
             </div>
           </div>
-        </mat-expansion-panel>
+        </div>
 
         <!-- Dial and Hands Section -->
-        <mat-expansion-panel-header class="mt-5">
-          <mat-panel-title>Dial and hands</mat-panel-title>
-        </mat-expansion-panel-header>
-        <mat-expansion-panel>
+        <div class="mt-5">
+          <h2>Dial and hands</h2>
+        </div>
+        <div style="padding: 0 20px 0 20px">
           <div class="d-flex" style="justify-content: space-between">
             <mat-label>Dial</mat-label>
             <mat-form-field style="width: 70%" appearance="outline">
@@ -565,13 +600,13 @@
               </mat-checkbox>
             </div>
           </div>
-        </mat-expansion-panel>
+        </div>
 
         <!-- Bracelet/Strap Section -->
-        <mat-expansion-panel-header class="mt-5">
-          <mat-panel-title>Bracelet/Strap</mat-panel-title>
-        </mat-expansion-panel-header>
-        <mat-expansion-panel>
+        <div class="mt-5">
+          <h2>Bracelet/Strap</h2>
+        </div>
+        <div style="padding: 0 20px 0 20px">
           <div class="d-flex" style="justify-content: space-between">
             <mat-label>Bracelet material</mat-label>
             <mat-form-field style="width: 70%" appearance="outline">
@@ -607,14 +642,27 @@
               </mat-select>
             </mat-form-field>
           </div>
-        </mat-expansion-panel>
+        </div>
       </mat-accordion>
     </form>
+
+    <div class="d-flex justify-content-end" style="padding: 0 17px 0 0;">
+      <button
+        style="
+          background: #03181c;
+          color: white;
+          border: 1px solid rgba(0, 0, 0, 0);
+          padding: 15px 25px;
+          font-size: 0.875rem;
+          border-radius: 6px;
+        "
+        (click)="onSubmit()"
+      >
+        Accept Details and Continue
+      </button>
+    </div>
   </div>
-  <div
-    class="col-lg-5"
-    style="padding: 0 60px 0 25px; position: fixed; right: 310px; width: 450px"
-  >
+  <div class="col-lg-5 col-md-12 col-sm-12 save-draft-section">
     <div class="card" style="margin: auto">
       <div
         class="card-body"

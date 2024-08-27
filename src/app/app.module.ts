@@ -39,7 +39,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { LoginComponent } from './views/auth/login/login.component';
 import { RegisterComponent } from './views/auth/register/register.component';
 // import {MatExpansionModule} from '@angular/material/expansion';
-
+import { RouterModule } from '@angular/router';
 @NgModule({
   declarations: [
     AppComponent,
@@ -76,6 +76,7 @@ import { RegisterComponent } from './views/auth/register/register.component';
     ReactiveFormsModule,
     MatDividerModule,
     MatCheckboxModule,
+    RouterModule,
     // MatExpansionModule,
     TranslateModule.forRoot({
         loader: {
