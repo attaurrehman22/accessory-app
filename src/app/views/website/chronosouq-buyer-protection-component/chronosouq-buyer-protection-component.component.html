@@ -1,31 +1,43 @@
-<div class="wraper mt-3">
+<div class="wraper mt-3" [ngClass]="{'reverse-order': translateService.currentLang !== 'en'}">
   <div class="text-section">
     <h2>{{ "chrono_buyer.label" | translate }}</h2>
     <p>{{ "chrono_buyer.paragraph" | translate }}</p>
     <ul>
-      <li>
+      <li class="d-flex" [ngClass]="{'reverse-order-li': translateService.currentLang !== 'en'}">
         <span class="checkmark">&#10003;</span>
+        <p style="padding: 0 10px 0 10px;">
         {{ "chrono_buyer.span_payment" | translate }}
+      </p>
       </li>
-      <li>
+      <li class="d-flex" [ngClass]="{'reverse-order-li': translateService.currentLang !== 'en'}">
         <span class="checkmark">&#10003;</span>
+        <p style="padding: 0 10px 0 10px;">
         {{ "chrono_buyer.span_commitment" | translate }}
+      </p>
       </li>
-      <li>
+      <li class="d-flex" [ngClass]="{'reverse-order-li': translateService.currentLang !== 'en'}">
         <span class="checkmark">&#10003;</span>
+        <p style="padding: 0 10px 0 10px;">
         {{ "chrono_buyer.span_global" | translate }}
+      </p>
       </li>
-      <li>
+      <li class="d-flex" [ngClass]="{'reverse-order-li': translateService.currentLang !== 'en'}">
         <span class="checkmark">&#10003;</span>
+        <p style="padding: 0 10px 0 10px;">
         {{ "chrono_buyer.span_strict" | translate }}
+      </p>
       </li>
-      <li>
+      <li class="d-flex" [ngClass]="{'reverse-order-li': translateService.currentLang !== 'en'}">
         <span class="checkmark">&#10003;</span>
+        <p style="padding: 0 10px 0 10px;">
         {{ "chrono_buyer.span_insured" | translate }}
+      </p>
       </li>
-      <li>
+      <li class="d-flex" [ngClass]="{'reverse-order-li': translateService.currentLang !== 'en'}">
         <span class="checkmark">&#10003;</span>
+        <p style="padding: 0 10px 0 10px;">
         {{ "chrono_buyer.span_chrono" | translate }}
+      </p>
       </li>
     </ul>
   </div>

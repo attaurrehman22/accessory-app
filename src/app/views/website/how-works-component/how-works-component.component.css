@@ -69,3 +69,28 @@
       width: 100%;
     }
   }
+
+  .reverse-order {
+    flex-direction: row-reverse;
+  }
+
+  .reverse-order .testimonial-heading{
+    text-align: end !important;
+  }
+
+  .reverse-order .testimonial-description{
+    text-align: end !important;
+  }
+
+  .reverse-order .testimonial-description{
+    text-align: end !important;
+  }
+
+  .reverse-order .testimonial-author{
+    text-align: end !important;
+  }
+
+  .reverse-order .testimonial-date{
+    text-align: end !important;
+  }
+

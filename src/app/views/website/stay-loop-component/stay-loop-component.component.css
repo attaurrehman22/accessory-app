@@ -113,3 +113,14 @@
     font-size: 14px;
   }
 }
+
+
+.reverse-order {
+  flex-direction: row-reverse;
+}
+.reverse-order .subscribe-title{
+  text-align: end;
+}
+.reverse-order .subscribe-input{
+  text-align: end;
+}

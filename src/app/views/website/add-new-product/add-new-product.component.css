@@ -216,3 +216,14 @@ h2 .optional {
     padding: 0 0 0 0;
   }
 }
+
+.reverse-order {
+  flex-direction: row-reverse;
+}
+
+.reverse-order .save-draft-section{
+  padding: 0 60px 0 25px;
+    position: fixed;
+    left: 310px !important;
+    width: 450px;
+}

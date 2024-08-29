@@ -17,7 +17,7 @@
   
   .text-section p {
     font-size: 16px;
-    margin-bottom: 20px;
+    /* margin-bottom: 20px; */
   }
   
   .text-section ul {
@@ -27,15 +27,16 @@
   
   .text-section li {
     font-size: 16px;
-    margin-bottom: 10px;
   }
   
   .checkmark {
-    background: #2FAB73;
+    background: #2fab73;
     margin-right: 10px;
-    color: #FFFFFF;
-    border-radius: 100%;
-    padding: 5px;
+    color: #fff;
+    border-radius: 50%;
+    padding: 4px 0 0 9px;
+    height: 30px;
+    width: 30px;
   }
   
   .video-section {
@@ -111,3 +112,33 @@
       height: 150px;
     }
   }
+
+
+
+  .reverse-order {
+    flex-direction: row-reverse;
+  }
+
+  .reverse-order-li {
+    flex-direction: row-reverse;
+  }
+
+  .reverse-order h2{
+    text-align: end;
+  }
+
+  .reverse-order p{
+    text-align: end;
+  }
+
+@media (max-width: 1500px) {
+  .reverse-order {
+    flex-direction: column-reverse;
+  }
+}
+
+@media (max-width: 768px) {
+  .reverse-order {
+    flex-direction: column-reverse;
+  }
+}

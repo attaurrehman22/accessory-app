@@ -1,46 +1,14 @@
    <div class="brands-container mt-5">
     <h2>{{ 'popular_brands.label' | translate }}</h2>
-    <div class="brands-grid mt-4">
-      <div class="brand-item">
+    <div class="brands-grid mt-4" >
+      <div class="brand-item"
+       *ngFor="let brand of brandsList">
         <img src="./assets/images/how-works-watch.png" alt="{{ 'popular_brands.rolex' | translate }}" />
-        <div class="brand-label">{{ 'popular_brands.rolex' | translate }}</div>
-      </div>
-      <div class="brand-item">
-        <img src="./assets/images/how-works-watch.png" alt="{{ 'popular_brands.Patek_Philppe' | translate }}" />
-        <div class="brand-label">{{ 'popular_brands.Patek_Philppe' | translate }}</div>
-      </div>
-      <div class="brand-item">
-        <img src="./assets/images/how-works-watch.png" alt="{{ 'popular_brands.rolex' | translate }}" />
-        <div class="brand-label">{{ 'popular_brands.rolex' | translate }}</div>
-      </div>
-      <div class="brand-item">
-        <img src="./assets/images/how-works-watch.png" alt="{{ 'popular_brands.rolex' | translate }}" />
-        <div class="brand-label">{{ 'popular_brands.rolex' | translate }}</div>
-      </div>
-      <div class="brand-item">
-        <img src="./assets/images/how-works-watch.png" alt="{{ 'popular_brands.Patek_Philppe' | translate }}" />
-        <div class="brand-label">{{ 'popular_brands.Patek_Philppe' | translate }}</div>
-      </div>
-      <div class="brand-item">
-        <img src="./assets/images/how-works-watch.png" alt="{{ 'popular_brands.rolex' | translate }}" />
-        <div class="brand-label">{{ 'popular_brands.rolex' | translate }}</div>
-      </div>
-      <div class="brand-item">
-        <img src="./assets/images/how-works-watch.png" alt="{{ 'popular_brands.Patek_Philppe' | translate }}" />
-        <div class="brand-label">{{ 'popular_brands.Patek_Philppe' | translate }}</div>
-      </div>
-      <div class="brand-item">
-        <img src="./assets/images/how-works-watch.png" alt="{{ 'popular_brands.rolex' | translate }}" />
-        <div class="brand-label">{{ 'popular_brands.rolex' | translate }}</div>
-      </div>
-      <div class="brand-item">
-        <img src="./assets/images/how-works-watch.png" alt="{{ 'popular_brands.Patek_Philppe' | translate }}" />
-        <div class="brand-label">{{ 'popular_brands.Patek_Philppe' | translate }}</div>
-      </div>
-      <div class="brand-item">
-        <img src="./assets/images/how-works-watch.png" alt="{{ 'popular_brands.rolex' | translate }}" />
-        <div class="brand-label">{{ 'popular_brands.rolex' | translate }}</div>
+        <!-- <div class="brand-label">{{ 'popular_brands.rolex' | translate }}</div> -->
+        <div class="brand-label">{{ brand.name }}</div>
       </div>
     </div>
-    <button class="display-all-button">{{ 'popular_brands.display_all' | translate }}</button>
+    <button class="display-all-button">
+      {{ 'popular_brands.display_all' | translate }}
+    </button>
   </div>

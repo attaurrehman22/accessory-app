@@ -1,51 +1,64 @@
+
 <div class="footer">
-  <div class="footer-logo">
-    <img src="./assets/images/footer-logo.png" />
-    <p>{{ "footer.all_rights_reserved" | translate }}</p>
+  <div class="col-12 d-flex justify-content-center">
+    <div class="dropdown">
+          
+      <select (change)="useLang($event.target.value)" style="padding: 5px 20px 5px 20px;">
+        <option *ngFor="let item of supportLanguages" [value]="item.value">
+          {{ item.name }}
+        </option>
+      </select>
+    </div>
   </div>
-  <div class="footer-section">
-    <h4>{{ "footer.buy_on_chronosouq" | translate }}</h4>
-    <p>{{ "footer.chronosouq_buyer_protection" | translate }}</p>
-    <p>{{ "footer.payment_via_methods" | translate }}</p>
-    <p>{{ "footer.commitment_authenticity" | translate }}</p>
-    <p>{{ "footer.easy_returns" | translate }}</p>
-  </div>
-  <div class="footer-section">
-    <h4>{{ "footer.sell_on_chronosouq" | translate }}</h4>
-    <p>{{ "footer.selling_watches_as_a_private_seller" | translate }}</p>
-    <p>{{ "footer.selling_watches_commercially" | translate }}</p>
-    <p>{{ "footer.free_appraisal" | translate }}</p>
-    <p>{{ "footer.advice_for_private_sellers" | translate }}</p>
-  </div>
-  <div class="footer-section">
-    <h4>{{ "footer.about_chronosouq" | translate }}</h4>
-    <p>{{ "footer.about_us" | translate }}</p>
-    <p>{{ "footer.legal_details" | translate }}</p>
-    <p>{{ "footer.security" | translate }}</p>
-    <p>{{ "footer.advices" | translate }}</p>
-  </div>
-  <div class="footer-section">
-    <h4>{{ "footer.personalized_support" | translate }}</h4>
-    <p>{{ "footer.frequently_asked_questions" | translate }}</p>
-    <p>{{ "footer.contact" | translate }}</p>
-    <p>{{ "footer.accessibility" | translate }}</p>
-  </div>
-  <div class="footer-section payment-methods">
-    <h4>{{ "footer.payment_methods" | translate }}</h4>
-    <div class="payment-icons">
-      <img class="img-stl" src="./assets/images/visa-img.png" alt="Visa" />
-      <img
-        class="img-stl"
-        src="./assets/images/visa-img.png"
-        alt="MasterCard"
-      />
-      <img class="img-stl" src="./assets/images/visa-img.png" alt="AMEX" />
-      <img
-        class="img-stl"
-        src="./assets/images/visa-img.png"
-        alt="Wire Transfer"
-      />
-      <img class="img-stl" src="./assets/images/visa-img.png" alt="Affirm" />
+  <div style="display: flex;justify-content: space-between;flex-wrap: wrap;width: 100%;margin-top: 25px;" [ngClass]="{'reverse-order': translateService.currentLang !== 'en'}">
+    <div class="footer-logo">
+      <img src="./assets/images/footer-logo.png" />
+      <p>{{ "footer.all_rights_reserved" | translate }}</p>
+    </div>
+    <div class="footer-section">
+      <h4>{{ "footer.buy_on_chronosouq" | translate }}</h4>
+      <p>{{ "footer.chronosouq_buyer_protection" | translate }}</p>
+      <p>{{ "footer.payment_via_methods" | translate }}</p>
+      <p>{{ "footer.commitment_authenticity" | translate }}</p>
+      <p>{{ "footer.easy_returns" | translate }}</p>
+    </div>
+    <div class="footer-section">
+      <h4>{{ "footer.sell_on_chronosouq" | translate }}</h4>
+      <p>{{ "footer.selling_watches_as_a_private_seller" | translate }}</p>
+      <p>{{ "footer.selling_watches_commercially" | translate }}</p>
+      <p>{{ "footer.free_appraisal" | translate }}</p>
+      <p>{{ "footer.advice_for_private_sellers" | translate }}</p>
+    </div>
+    <div class="footer-section">
+      <h4>{{ "footer.about_chronosouq" | translate }}</h4>
+      <p>{{ "footer.about_us" | translate }}</p>
+      <p>{{ "footer.legal_details" | translate }}</p>
+      <p>{{ "footer.security" | translate }}</p>
+      <p>{{ "footer.advices" | translate }}</p>
+    </div>
+    <div class="footer-section">
+      <h4>{{ "footer.personalized_support" | translate }}</h4>
+      <p>{{ "footer.frequently_asked_questions" | translate }}</p>
+      <p>{{ "footer.contact" | translate }}</p>
+      <p>{{ "footer.accessibility" | translate }}</p>
+    </div>
+    <div class="footer-section payment-methods">
+      <h4>{{ "footer.payment_methods" | translate }}</h4>
+      <div class="payment-icons">
+        <img class="img-stl" src="./assets/images/visa-img.png" alt="Visa" />
+        <img
+          class="img-stl"
+          src="./assets/images/visa-img.png"
+          alt="MasterCard"
+        />
+        <img class="img-stl" src="./assets/images/visa-img.png" alt="AMEX" />
+        <img
+          class="img-stl"
+          src="./assets/images/visa-img.png"
+          alt="Wire Transfer"
+        />
+        <img class="img-stl" src="./assets/images/visa-img.png" alt="Affirm" />
+      </div>
     </div>
   </div>
 </div>

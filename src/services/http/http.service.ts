@@ -1,4 +1,4 @@
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { environment } from "src/environments/environment";
@@ -7,8 +7,8 @@ import { environment } from "src/environments/environment";
   providedIn: "root",
 })
 export class HttpService {
-  private apiUrl = environment.apipath;
-  constructor(private http: HttpClient) {}
+    private apiUrl = environment.apipath;
+    constructor(private http: HttpClient) {}
   getusername(username: string) {
     return this.http.get(`${this.apiUrl}/api/usernames?name=${username}`);
   }
@@ -23,11 +23,16 @@ export class HttpService {
   }
 
   login(formData: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/api/login`, formData);
+    const headers = new HttpHeaders({
+      'email': formData.email,
+      'password': formData.password
+    });
+    
+    return this.http.post(`${this.apiUrl}/api/login`, {}, { headers });
   }
 
   getAllBrands(): Observable<any> {
-    return this.http.get(`${this.apiUrl}/api/brands-dropdown`);
+    return this.http.get(`${this.apiUrl}/api/brands`);
   }
 
   addProduct(formData: any): Observable<any> {

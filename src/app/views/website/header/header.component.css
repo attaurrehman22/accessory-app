@@ -89,9 +89,32 @@
 }
 
 select {
-  display: block;
-  position: absolute;
-  top: 100%;
+  
+}
+
+
+.rtl-layout .header-div {
+  flex-direction: row-reverse;
+  padding: 0 45px 0 50px;
+}
+
+.rtl-layout .header-content {
+  justify-content: end;
+}
+
+.rtl-layout .logo {
+  justify-content: flex-end; 
+}
+
+.rtl-layout .header-contact {
+  justify-content: flex-start; 
+}
+
+.rtl-layout .sidenav {
   left: 0;
-  z-index: 1;
+  right: auto;
+}
+
+.rtl-layout .menu-icon {
+  margin-left: -188px;
 }

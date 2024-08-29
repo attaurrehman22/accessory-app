@@ -3,7 +3,7 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  apipath:"https://srv587519.hstgr.cloud",
+  apipath:"https://api.chronosouq.com",
   production: false
 };
 

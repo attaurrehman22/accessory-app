@@ -2,9 +2,6 @@
   background-color: #0d0d20;
   color: #fff;
   padding: 55px;
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
 }
 
 .footer-logo {
@@ -82,4 +79,8 @@
   .payment-methods img {
     margin: 10px;
   }
+}
+
+.reverse-order {
+  flex-direction: row-reverse;
 }

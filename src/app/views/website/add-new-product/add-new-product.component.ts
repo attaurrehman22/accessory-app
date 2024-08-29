@@ -6,6 +6,7 @@ import {
   Validators,
 } from "@angular/forms";
 import { MatExpansionModule } from "@angular/material/expansion";
+import { TranslateService } from "@ngx-translate/core";
 import { HttpService } from "src/services/http/http.service";
 
 @Component({
@@ -76,8 +77,32 @@ export class AddNewProductComponent implements OnInit {
   typeOfClasp: FormControl = new FormControl("");
   claspMaterial: FormControl = new FormControl("");
 
-  constructor(private fb: FormBuilder, private http: HttpService) {}
+  supportLanguages = ["en", "ar", "fr", "ta", "hi"];
+  currentLanguage: string;
 
+  constructor(private fb: FormBuilder, private http: HttpService,public  translateService: TranslateService) {
+    this.translateService.addLangs(this.supportLanguages);
+    this.translateService.setDefaultLang("ar");
+
+    const browserlang = this.translateService.getBrowserLang();
+
+    console.log("Browser Language => ", browserlang);
+    this.currentLanguage=browserlang;
+
+    if (this.supportLanguages.includes(browserlang)) {
+      this.translateService.use(browserlang);
+      
+    }
+  }
+
+  useLang(lang: string) {
+    console.log("Selected Language:", lang);
+    this.translateService.use(lang);
+    this.translateService.get("header.buy_watch").subscribe((translation) => {
+      console.log("Translated Value:", translation);
+    });
+  }
+  
   ngOnInit(): void {
     this.newCondition = "new";
     this.selectedCondition = "new";
@@ -161,7 +186,7 @@ export class AddNewProductComponent implements OnInit {
   }
 
   onSubmit() {
-   
+   this.productForm.markAllAsTouched();
     if (this.productForm.valid) {
       this.http.addProduct(this.productForm).subscribe((reponse)=>{
         console.log("Data saved")

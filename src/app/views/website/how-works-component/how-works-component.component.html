@@ -1,7 +1,7 @@
 <div class="wraper mt-3">
   <h2 class="testimonial-title">{{ 'people_saying.label' | translate }}</h2>
   <div class="testimonial-cards mt-4">
-    <div class="testimonial-card">
+    <div class="testimonial-card" [ngClass]="{'reverse-order': translateService.currentLang !== 'en'}">
       <div class="testimonial-stars">
         <span>&#9733;</span>
         <span>&#9733;</span>
@@ -16,7 +16,7 @@
       <p class="testimonial-author">{{ 'people_saying.aut_name' | translate }}</p>
       <p class="testimonial-date">9/12/2022</p>
     </div>
-    <div class="testimonial-card">
+    <div class="testimonial-card" [ngClass]="{'reverse-order': translateService.currentLang !== 'en'}">
       <div class="testimonial-stars">
         <span>&#9733;</span>
         <span>&#9733;</span>
@@ -31,7 +31,7 @@
       <p class="testimonial-author">{{ 'people_saying.aut_name' | translate }}</p>
       <p class="testimonial-date">9/12/2022</p>
     </div>
-    <div class="testimonial-card">
+    <div class="testimonial-card" [ngClass]="{'reverse-order': translateService.currentLang !== 'en'}">
       <div class="testimonial-stars">
         <span>&#9733;</span>
         <span>&#9733;</span>
@@ -46,7 +46,7 @@
       <p class="testimonial-author">{{ 'people_saying.aut_name' | translate }}</p>
       <p class="testimonial-date">9/12/2022</p>
     </div>
-    <div class="testimonial-card">
+    <div class="testimonial-card" [ngClass]="{'reverse-order': translateService.currentLang !== 'en'}">
       <div class="testimonial-stars">
         <span>&#9733;</span>
         <span>&#9733;</span>

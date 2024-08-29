@@ -183,7 +183,17 @@ h1 {
   }
 }   
 
+.reverse-order {
+  flex-direction: row-reverse;
+}
 
+.reverse-order h2{
+  text-align: end;
+}
+
+.reverse-order p{
+  text-align: end;
+}
 
 
 

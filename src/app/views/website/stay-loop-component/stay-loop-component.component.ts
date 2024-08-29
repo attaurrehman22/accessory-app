@@ -6,7 +6,7 @@ import { TranslateService } from '@ngx-translate/core';
   styleUrls: ['./stay-loop-component.component.css']
 })
 export class StayLoopComponentComponent {
-  constructor(private translateService: TranslateService) {
+  constructor(public translateService: TranslateService) {
     const supportedLanguages = ["en", "ar"]; // Add other languages if necessary
     this.translateService.addLangs(supportedLanguages);
     this.translateService.setDefaultLang('en');

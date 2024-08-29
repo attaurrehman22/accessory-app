@@ -140,3 +140,8 @@
     font-size: 13px;
   }
 }
+
+
+.reverse-order {
+  flex-direction: row-reverse;
+}

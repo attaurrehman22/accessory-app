@@ -7,7 +7,7 @@ import { TranslateService } from '@ngx-translate/core';
   styleUrls: ['./how-works-component.component.css']
 })
 export class HowWorksComponentComponent {
-  constructor(private translateService: TranslateService) {
+  constructor(public translateService: TranslateService) {
     const supportedLanguages = ["en", "ar"]; // Add other languages if necessary
     this.translateService.addLangs(supportedLanguages);
     this.translateService.setDefaultLang('en');

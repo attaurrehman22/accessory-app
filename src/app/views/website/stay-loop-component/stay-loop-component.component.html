@@ -1,5 +1,5 @@
 <div class="wraper mt-3">
-  <div class="subscribe-container">
+  <div class="subscribe-container" [ngClass]="{'reverse-order': translateService.currentLang !== 'en'}">
     <div class="subscribe-content">
       <h2 class="subscribe-title">{{ 'stay_loop.label' | translate }}</h2>
       <p class="subscribe-description">

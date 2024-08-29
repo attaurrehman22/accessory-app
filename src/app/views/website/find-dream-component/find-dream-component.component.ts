@@ -8,17 +8,20 @@ import { TranslateService } from "@ngx-translate/core";
 })
 export class FindDreamComponentComponent {
   supportLanguages = ["en", "ar", "fr", "ta", "hi"];
+  currentLanguage: string;
 
-  constructor(private translateService: TranslateService) {
+  constructor(public  translateService: TranslateService) {
     this.translateService.addLangs(this.supportLanguages);
-    this.translateService.setDefaultLang("en");
+    this.translateService.setDefaultLang("ar");
 
     const browserlang = this.translateService.getBrowserLang();
 
     console.log("Browser Language => ", browserlang);
+    this.currentLanguage=browserlang;
 
     if (this.supportLanguages.includes(browserlang)) {
       this.translateService.use(browserlang);
+      
     }
   }
   useLang(lang: string) {
