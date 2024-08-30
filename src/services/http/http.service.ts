@@ -13,7 +13,6 @@ export class HttpService {
     return this.http.get(`${this.apiUrl}/api/usernames?name=${username}`);
   }
   register(FormControl: any): Observable<any> {
-    console.log("hello", this.apiUrl);
     let formdate = new FormData();
     formdate.append("name", FormControl.get("username").value);
     formdate.append("email", FormControl.get("email").value);
@@ -23,12 +22,12 @@ export class HttpService {
   }
 
   login(formData: any): Observable<any> {
-    const headers = new HttpHeaders({
-      'email': formData.email,
-      'password': formData.password
-    });
+    // const headers = new HttpHeaders({
+    //   'email': formData.email,
+    //   'password': formData.password
+    // });
     
-    return this.http.post(`${this.apiUrl}/api/login`, {}, { headers });
+    return this.http.post(`${this.apiUrl}/api/login`,formData);
   }
 
   getAllBrands(): Observable<any> {
@@ -36,14 +35,19 @@ export class HttpService {
   }
 
   addProduct(formData: any): Observable<any> {
-
+   
     let formdate = new FormData();
     formdate.append("name", formData.get("name").value);
     formdate.append("slug", formData.get("slug").value);
 
-   
-    if (formData.get("image").value) {
-      formdate.append("image", formData.get("image").value);
+    console.log("formData.value",formData.value)
+    const images = formData.get("image").value as File[];
+    
+    console.log("images",images)
+    if (images && images.length > 0) {
+      images.forEach((file: File) => {
+        formdate.append("images", file, file.name);
+      });
     }
 
     const url = `${this.apiUrl}/api/brands/save/?name=${formData.get("name").value}&slug=${formData.get("slug").value}`;

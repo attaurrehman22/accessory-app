@@ -105,5 +105,19 @@
     "contact": "اتصل بنا",
     "accessibility": "إمكانية الوصول",
     "payment_methods": "طرق الدفع"
-  }
+  },
+  "offer_details": {
+    "offer_required_field": "عرض (* حقل مطلوب)",
+    "name": "الاسم",
+    "slug": "سبيكة",
+    "upload_image": "تحميل صورة",
+    "no_file_chosen": "لم يتم اختيار ملف",
+    "type": "النوع",
+    "brand": "العلامة التجارية *",
+    "manufacturer_not_listed": "الشركة المصنعة غير مدرجة؟",
+    "model": "النموذج *",
+    "model_description": "يمكنك أن تكون أكثر تحديدًا بشأن اسم النموذج وتحديد النموذج الدقيق.",
+    "reference_number": "رقم المرجع"
+		
+	}
 }

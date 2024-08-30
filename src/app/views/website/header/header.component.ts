@@ -10,6 +10,7 @@ import { LanguageService } from "src/services/lang-service/language.service";
 })
 export class HeaderComponent {
   isSmallScreen: boolean = false;
+  isUserLogin:any;
   supportLanguages = [
     {name:"English",value:"en"},
     {name:"العربية",value:"ar"},
@@ -48,6 +49,7 @@ export class HeaderComponent {
   }
 
   ngOnInit() {
+    this.isUserLogin=localStorage.getItem('Logged')
     this.isSmallScreen = window.innerWidth <= 1500;
   }
 
@@ -59,15 +61,25 @@ export class HeaderComponent {
     // this.isRtl = lang !== 'en';
   }
 
+  goToRegister() { 
+      this.router.navigateByUrl('register');
+  }
+
+  logout() {
+    localStorage.removeItem('Logged');
+    this.isUserLogin = null;
+    this.router.navigateByUrl('login');
+  }
+
   dropdownOpen = false;
 
   toggleDropdown() {
     this.dropdownOpen = !this.dropdownOpen;
   }
 
-  goToRegister(){
-    this.router.navigateByUrl('register')
-  }
+  // goToRegister(){
+  //   this.router.navigateByUrl('register')
+  // }
 
   routeToNewProduct(){
     console.log("----------------")

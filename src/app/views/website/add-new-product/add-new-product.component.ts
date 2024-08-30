@@ -19,11 +19,11 @@ export class AddNewProductComponent implements OnInit {
   usedCondition: any;
   newCondition: any = "";
   selectedCondition: string | null = null;
-  brandsList:any;
+  brandsList: any;
 
   name: FormControl = new FormControl("", Validators.required);
   slug: FormControl = new FormControl("", Validators.required);
-  image:FormControl = new FormControl(null);
+  image: FormControl = new FormControl([]);
   type: FormControl = new FormControl("", Validators.required);
   brand: FormControl = new FormControl("", Validators.required);
   model: FormControl = new FormControl("", [
@@ -80,29 +80,27 @@ export class AddNewProductComponent implements OnInit {
   supportLanguages = ["en", "ar", "fr", "ta", "hi"];
   currentLanguage: string;
 
-  constructor(private fb: FormBuilder, private http: HttpService,public  translateService: TranslateService) {
-    this.translateService.addLangs(this.supportLanguages);
-    this.translateService.setDefaultLang("ar");
+  constructor(
+    private fb: FormBuilder,
+    private http: HttpService,
+    public translateService: TranslateService
+  ) {
+    const supportedLanguages = ["en", "ar", "fr", "ta", "hi"];
+    this.translateService.addLangs(supportedLanguages);
+    this.translateService.setDefaultLang("en");
 
-    const browserlang = this.translateService.getBrowserLang();
-
-    console.log("Browser Language => ", browserlang);
-    this.currentLanguage=browserlang;
-
-    if (this.supportLanguages.includes(browserlang)) {
-      this.translateService.use(browserlang);
-      
+    const browserLang = this.translateService.getBrowserLang();
+    if (supportedLanguages.includes(browserLang)) {
+      this.translateService.use(browserLang);
     }
   }
 
+
+
   useLang(lang: string) {
-    console.log("Selected Language:", lang);
     this.translateService.use(lang);
-    this.translateService.get("header.buy_watch").subscribe((translation) => {
-      console.log("Translated Value:", translation);
-    });
   }
-  
+
   ngOnInit(): void {
     this.newCondition = "new";
     this.selectedCondition = "new";
@@ -110,19 +108,33 @@ export class AddNewProductComponent implements OnInit {
     this.getBrandsDropdown();
   }
 
-  onFileChange(event: any) {
-    const file = event.target.files[0];
-    if (file) {
+  imagePreview: string[] = [];
+
+  onFilesChange(event: Event): void {
+    const input = event.target as HTMLInputElement;
+  
+    if (input.files) {
+      const files = Array.from(input.files);
       this.productForm.patchValue({
-        image: file
+        image: files  
+      });
+  
+      this.imagePreview = [];
+      files.forEach(file => {
+        const reader = new FileReader();
+        reader.onload = () => {
+          this.imagePreview.push(reader.result as string);
+        };
+        reader.readAsDataURL(file);
       });
     }
   }
+  
 
   getBrandsDropdown() {
     this.http.getAllBrands().subscribe(
       (response: any) => {
-        this.brandsList=response.data;
+        this.brandsList = response.data;
         console.log(response);
       },
       (error: any) => {
@@ -133,9 +145,9 @@ export class AddNewProductComponent implements OnInit {
 
   createForm() {
     this.productForm = this.fb.group({
-      name:this.name,
-      slug:this.slug,
-      image:this.image,
+      name: this.name,
+      slug: this.slug,
+      image: this.image,
       type: this.type,
       brand: this.brand,
       model: this.model,
@@ -186,15 +198,15 @@ export class AddNewProductComponent implements OnInit {
   }
 
   onSubmit() {
-   this.productForm.markAllAsTouched();
-    if (this.productForm.valid) {
-      this.http.addProduct(this.productForm).subscribe((reponse)=>{
-        console.log("Data saved")
-      })
+    this.productForm.markAllAsTouched();
+    // if (this.productForm.valid) {
+      this.http.addProduct(this.productForm).subscribe((reponse) => {
+        console.log("Data saved");
+      });
       // console.log("Product Data:", this.productForm.value);
-    } else {
-      console.log("Form is invalid", this.productForm.value);
-    }
+    // } else {
+    //   console.log("Form is invalid", this.productForm.value);
+    // }
   }
 
   panelOpenState = false;
@@ -203,25 +215,44 @@ export class AddNewProductComponent implements OnInit {
   openCondition(param: string) {
     console.log(param);
     this.selectedCondition = param;
-    
+
     if (param === "new") {
       this.newCondition = "new";
       this.usedCondition = "";
-      this.productForm.get('condition')?.setValue('new');
+      this.productForm.get("condition")?.setValue("new");
     } else {
       this.usedCondition = "used";
       this.newCondition = "";
-      this.productForm.get('condition')?.setValue(this.selectedUsedCondition || 'used'); 
+      this.productForm
+        .get("condition")
+        ?.setValue(this.selectedUsedCondition || "used");
     }
 
-    console.log("condition value ", this.productForm.get('condition').value)
+    console.log("condition value ", this.productForm.get("condition").value);
   }
-
 
   selectUsedCondition(option: string) {
     this.selectedUsedCondition = option;
-    this.productForm.get('condition')?.setValue(option);
+    this.productForm.get("condition")?.setValue(option);
   }
 
+  // Inside your component class
+
+
+
+// onFileChange(event: Event): void {
+//   const input = event.target as HTMLInputElement;
+
+//   if (input.files && input.files[0]) {
+//     const file = input.files[0];
+//     const reader = new FileReader();
+    
+//     reader.onload = () => {
+//       this.imagePreview = reader.result; // Set the image preview source
+//     };
+
+//     reader.readAsDataURL(file); // Read the file as a data URL
+//   }
+// }
 
 }

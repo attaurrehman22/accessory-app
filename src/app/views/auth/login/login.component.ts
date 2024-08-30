@@ -40,6 +40,7 @@ export class LoginComponent {
     if (this.loginForm.valid) {
       this.http.login(this.loginForm.value).subscribe(
         (response) => {
+          localStorage.setItem('Logged','LogIn')
           console.log(
             "Login successful and token is = ",
             response.authorisation.token

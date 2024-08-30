@@ -2,7 +2,7 @@
   class="col-lg-12 col-md-12 col-sm-12 wraper"
   [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }"
 >
-  <div class="col-lg-7 col-md-12 col-sm-12 form-section">
+  <div class="col-lg-12 col-md-12 col-sm-12 form-section">
     <form [formGroup]="productForm">
       <!-- --------------------  offer Section ---------------------------- -->
 
@@ -43,18 +43,25 @@
         [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }"
         style="justify-content: space-between"
       >
-        <mat-label>Upload Image</mat-label>
+        <mat-label>Cover Images</mat-label>
         <div style="width: 70%">
           <mat-form-field style="width: 100%" appearance="outline">
             <input
               type="file"
-              (change)="onFileChange($event)"
+              (change)="onFilesChange($event)"
               formControlName="image"
               matInput
+              multiple
             />
             <mat-error *ngIf="productForm.get('image').hasError('required')">
               Please add Image
             </mat-error>
+            <!-- Image Preview inside the mat-form-field -->
+            <div *ngIf="imagePreview.length > 0" style="margin-top: 10px;">
+              <div *ngFor="let image of imagePreview" style="display: inline-block; margin-right: 10px;">
+                <img [src]="image" alt="Selected Image" style="width: 100px; height: 100px; object-fit: cover;" />
+              </div>
+            </div>
           </mat-form-field>
         </div>
       </div>
@@ -320,8 +327,10 @@
             placeholder="e.g., 2013"
             formControlName="yearOfProduction"
           />
-          <mat-error *ngIf="productForm.get('yearOfProduction').hasError('required')">
-           Add Year Of Production
+          <mat-error
+            *ngIf="productForm.get('yearOfProduction').hasError('required')"
+          >
+            Add Year Of Production
           </mat-error>
         </mat-form-field>
         <div
@@ -360,9 +369,11 @@
               formControlName="caseDiameterWidth"
               placeholder=""
             />
-            <mat-error *ngIf="productForm.get('caseDiameterWidth').hasError('required')">
+            <mat-error
+              *ngIf="productForm.get('caseDiameterWidth').hasError('required')"
+            >
               Add Case Diameter Width
-             </mat-error>
+            </mat-error>
           </mat-form-field>
           <mat-form-field style="width: 12%" appearance="outline">
             <input matInput readonly="true" placeholder="mm" />
@@ -374,9 +385,11 @@
               formControlName="caseDiameterHeight"
               placeholder=""
             />
-            <mat-error *ngIf="productForm.get('caseDiameterHeight').hasError('required')">
+            <mat-error
+              *ngIf="productForm.get('caseDiameterHeight').hasError('required')"
+            >
               Add Case Diameter Height
-             </mat-error>
+            </mat-error>
           </mat-form-field>
           <mat-form-field style="width: 12%" appearance="outline">
             <input matInput readonly="true" placeholder="mm" />
@@ -404,7 +417,7 @@
 
           <mat-error *ngIf="productForm.get('movement').hasError('required')">
             Select Movement
-           </mat-error>
+          </mat-error>
         </mat-form-field>
       </div>
 
@@ -424,9 +437,11 @@
             formControlName="description"
             placeholder="For example, where did you buy your watch? Does it still have a warranty? Has it been repaired? Is the watch damaged?"
           ></textarea>
-          <mat-error *ngIf="productForm.get('description').hasError('required')">
+          <mat-error
+            *ngIf="productForm.get('description').hasError('required')"
+          >
             Add Description
-           </mat-error>
+          </mat-error>
         </mat-form-field>
       </div>
 
@@ -457,7 +472,7 @@
             <input matInput formControlName="price" />
             <mat-error *ngIf="productForm.get('price').hasError('required')">
               Add price
-             </mat-error>
+            </mat-error>
           </mat-form-field>
           <mat-form-field style="width: 20%" appearance="outline">
             <span matSuffix>
@@ -854,7 +869,7 @@
       </mat-accordion>
     </form>
 
-    <div class="d-flex justify-content-end" style="padding: 0 17px 0 0">
+    <div class="d-flex justify-content-end" style="padding: 0 17px 35px 0">
       <button
         style="
           background: #03181c;
@@ -870,7 +885,7 @@
       </button>
     </div>
   </div>
-  <div class="col-lg-5 col-md-12 col-sm-12 save-draft-section">
+  <!-- <div class="col-lg-5 col-md-12 col-sm-12 save-draft-section">
     <div class="card" style="margin: auto">
       <div
         class="card-body"
@@ -885,5 +900,5 @@
         </button>
       </div>
     </div>
-  </div>
+  </div> -->
 </div>

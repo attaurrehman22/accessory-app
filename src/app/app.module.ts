@@ -32,7 +32,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 
-
+import { MatMenuModule } from '@angular/material/menu';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 // import {MatExpansionModule} from '@angular/material/expansion';
 import { MatDividerModule } from '@angular/material/divider';
@@ -77,6 +77,7 @@ import { RouterModule } from '@angular/router';
     MatDividerModule,
     MatCheckboxModule,
     RouterModule,
+    MatMenuModule,
     // MatExpansionModule,
     TranslateModule.forRoot({
         loader: {

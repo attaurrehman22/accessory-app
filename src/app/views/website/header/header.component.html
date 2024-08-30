@@ -36,13 +36,41 @@
     </div>
     <div class="header-contact gap-4">
       <img src="./assets/images/basket-icon.png" />
-      <img
+      <!-- <img
         src="./assets/images/profile-icon.png"
-        (click)="goToRegister()"
-        style="cursor: pointer;"
+        style="cursor: pointer"
+        [matMenuTriggerFor]="menu"
+        (click)="$event.stopPropagation()"
       />
+
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item>
+          <mat-icon>edit</mat-icon>
+          <span>Edit</span>
+        </button>
+        <button mat-menu-item>
+          <mat-icon>delete</mat-icon>
+          <span>Delete</span>
+        </button>
+        <button mat-menu-item>
+          <mat-icon>refresh</mat-icon>
+          <span>Reset Password</span>
+        </button>
+      </mat-menu> -->
+
+      <img
+      *ngIf="isUserLogin"
+      src="./assets/images/profile-icon.png"
+      (click)="logout()"
+      style="cursor: pointer;"
+    />
+     <img
+      *ngIf="!isUserLogin"
+      src="./assets/images/profile-icon.png"
+      (click)="goToRegister()"
+      style="cursor: pointer;"
+    />
       <div class="dropdown">
-        
         <select (change)="useLang($event.target.value)">
           <option *ngFor="let item of supportLanguages" [value]="item.value">
             {{ item.name }}
