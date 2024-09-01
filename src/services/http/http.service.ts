@@ -60,4 +60,16 @@ export class HttpService {
   getProducts(): Observable<any> {
     return this.http.get(`${this.apiUrl}/api/products`);
   }
+
+  getPopularModels(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/api/most-popular-models`);
+  }
+
+  getExploreChronoSouq(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/api/explore-chronosouq`);
+  }
+
+  getBuyerProtectionCommnts(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/api/comments`);
+  }
 }

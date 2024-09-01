@@ -9,7 +9,7 @@
     position="end"
     [style]="{ top: '0', right: '0', position: 'fixed', height: 'auto' }"
   >
-    <button class="drawer-btn" routerLink="/">
+    <button class="drawer-btn" (click)="routeToBuyProduct()">
       {{ "header.buy_watch" | translate }}
     </button>
     <button class="drawer-btn" (click)="routeToNewProduct()">
@@ -27,7 +27,7 @@
       />
     </div>
     <div class="header-content gap-4" *ngIf="!isSmallScreen">
-      <button class="custom-btn" routerLink="/">
+      <button class="custom-btn" (click)="routeToBuyProduct()">
         {{ "header.buy_watch" | translate }}
       </button>
       <button class="custom-btn" (click)="routeToNewProduct()">
@@ -35,7 +35,7 @@
       </button>
     </div>
     <div class="header-contact gap-4">
-      <img src="./assets/images/basket-icon.png" />
+      <!-- <img src="./assets/images/basket-icon.png" /> -->
       <!-- <img
         src="./assets/images/profile-icon.png"
         style="cursor: pointer"
@@ -58,12 +58,13 @@
         </button>
       </mat-menu> -->
 
-      <img
+      <mat-icon style="cursor: pointer;" (click)="logout()" *ngIf="isUserLogin">logout<span>logout</span></mat-icon>
+      <!-- <img
       *ngIf="isUserLogin"
       src="./assets/images/profile-icon.png"
       (click)="logout()"
       style="cursor: pointer;"
-    />
+    /> -->
      <img
       *ngIf="!isUserLogin"
       src="./assets/images/profile-icon.png"

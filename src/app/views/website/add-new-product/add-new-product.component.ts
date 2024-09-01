@@ -18,7 +18,7 @@ export class AddNewProductComponent implements OnInit {
   productForm: FormGroup;
   usedCondition: any;
   newCondition: any = "";
-  selectedCondition: string | null = null;
+  // selectedCondition: string | null = null;
   brandsList: any;
 
   name: FormControl = new FormControl("", Validators.required);
@@ -95,6 +95,14 @@ export class AddNewProductComponent implements OnInit {
     }
   }
 
+  selectedCondition: string | null = null;
+
+selectUsedCondition(condition: string) {
+  this.selectedCondition = condition;
+      this.selectedUsedCondition = condition;
+    this.productForm.get("condition")?.setValue(condition);
+}
+
 
 
   useLang(lang: string) {
@@ -102,8 +110,10 @@ export class AddNewProductComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.newCondition = "new";
-    this.selectedCondition = "new";
+    if(!this.newCondition){
+      this.newCondition = "new";
+    }
+    // this.selectedCondition = "new";
     this.createForm();
     this.getBrandsDropdown();
   }
@@ -199,6 +209,7 @@ export class AddNewProductComponent implements OnInit {
 
   onSubmit() {
     this.productForm.markAllAsTouched();
+    console.log(this.productForm.value)
     // if (this.productForm.valid) {
       this.http.addProduct(this.productForm).subscribe((reponse) => {
         console.log("Data saved");
@@ -231,10 +242,10 @@ export class AddNewProductComponent implements OnInit {
     console.log("condition value ", this.productForm.get("condition").value);
   }
 
-  selectUsedCondition(option: string) {
-    this.selectedUsedCondition = option;
-    this.productForm.get("condition")?.setValue(option);
-  }
+  // selectUsedCondition(option: string) {
+  //   this.selectedUsedCondition = option;
+  //   this.productForm.get("condition")?.setValue(option);
+  // }
 
   // Inside your component class
 

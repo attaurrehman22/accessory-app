@@ -1,7 +1,7 @@
 <div class="wraper mt-3">
   <h2>{{ "popular_models.label" | translate }}</h2>
   <div class="watch-grid mt-4">
-    <div class="watch-card">
+    <div class="watch-card" *ngFor="let model of popularModels | slice : 0 : 8">
       <div class="favorite-icon">
         <i class="fa fa-heart"></i>
       </div>
@@ -14,188 +14,23 @@
           class="watch-image"
         />
         <div class="watch-details">
-          <div class="watch-details-price" [ngClass]="{'reverse-order': translateService.currentLang !== 'en'}" >
-            <p class="brand">{{ "popular_models.Rolex" | translate }}</p>
-            <p class="price">{{ "popular_models.Price" | translate }}</p>
+          <div
+            class="watch-details-price"
+            [ngClass]="{
+              'reverse-order': translateService.currentLang !== 'en'
+            }"
+          >
+            <p class="brand">{{ model.name }}</p>
+            <p class="price">{{ model.price }}</p>
           </div>
-          <div class="watch-details-price" [ngClass]="{'reverse-order': translateService.currentLang !== 'en'}" >
-            <p class="brand">{{ "popular_models.Datejust" | translate }}</p>
-            <p class="price">$123.90</p>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="watch-card">
-      <div class="favorite-icon">
-        <i class="fa fa-heart"></i>
-      </div>
-      <div class="card-cntent">
-        <img
-          src="./assets/images/how-works-watch.png"
-          alt="{{ 'popular_models.Rolex' | translate }} {{
-            'popular_models.Datejust' | translate
-          }}"
-          class="watch-image"
-        />
-        <div class="watch-details">
-          <div class="watch-details-price" [ngClass]="{'reverse-order': translateService.currentLang !== 'en'}" >
-            <p class="brand">{{ "popular_models.Rolex" | translate }}</p>
-            <p class="price">{{ "popular_models.Price" | translate }}</p>
-          </div>
-          <div class="watch-details-price" [ngClass]="{'reverse-order': translateService.currentLang !== 'en'}" >
-            <p class="brand">{{ "popular_models.Datejust" | translate }}</p>
-            <p class="price">$123.90</p>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="watch-card">
-      <div class="favorite-icon">
-        <i class="fa fa-heart"></i>
-      </div>
-      <div class="card-cntent">
-        <img
-          src="./assets/images/how-works-watch.png"
-          alt="{{ 'popular_models.Rolex' | translate }} {{
-            'popular_models.Datejust' | translate
-          }}"
-          class="watch-image"
-        />
-        <div class="watch-details">
-          <div class="watch-details-price" [ngClass]="{'reverse-order': translateService.currentLang !== 'en'}" >
-            <p class="brand">{{ "popular_models.Rolex" | translate }}</p>
-            <p class="price">{{ "popular_models.Price" | translate }}</p>
-          </div>
-          <div class="watch-details-price" [ngClass]="{'reverse-order': translateService.currentLang !== 'en'}" >
-            <p class="brand">{{ "popular_models.Datejust" | translate }}</p>
-            <p class="price">$123.90</p>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="watch-card">
-      <div class="favorite-icon">
-        <i class="fa fa-heart"></i>
-      </div>
-      <div class="card-cntent">
-        <img
-          src="./assets/images/how-works-watch.png"
-          alt="{{ 'popular_models.Rolex' | translate }} {{
-            'popular_models.Datejust' | translate
-          }}"
-          class="watch-image"
-        />
-        <div class="watch-details">
-          <div class="watch-details-price" [ngClass]="{'reverse-order': translateService.currentLang !== 'en'}" >
-            <p class="brand">{{ "popular_models.Rolex" | translate }}</p>
-            <p class="price">{{ "popular_models.Price" | translate }}</p>
-          </div>
-          <div class="watch-details-price" [ngClass]="{'reverse-order': translateService.currentLang !== 'en'}" >
-            <p class="brand">{{ "popular_models.Datejust" | translate }}</p>
-            <p class="price">$123.90</p>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="watch-card">
-      <div class="favorite-icon">
-        <i class="fa fa-heart"></i>
-      </div>
-      <div class="card-cntent">
-        <img
-          src="./assets/images/how-works-watch.png"
-          alt="{{ 'popular_models.Rolex' | translate }} {{
-            'popular_models.Datejust' | translate
-          }}"
-          class="watch-image"
-        />
-        <div class="watch-details">
-          <div class="watch-details-price" [ngClass]="{'reverse-order': translateService.currentLang !== 'en'}" >
-            <p class="brand">{{ "popular_models.Rolex" | translate }}</p>
-            <p class="price">{{ "popular_models.Price" | translate }}</p>
-          </div>
-          <div class="watch-details-price" [ngClass]="{'reverse-order': translateService.currentLang !== 'en'}" >
-            <p class="brand">{{ "popular_models.Datejust" | translate }}</p>
-            <p class="price">$123.90</p>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="watch-card">
-      <div class="favorite-icon">
-        <i class="fa fa-heart"></i>
-      </div>
-      <div class="card-cntent">
-        <img
-          src="./assets/images/how-works-watch.png"
-          alt="{{ 'popular_models.Rolex' | translate }} {{
-            'popular_models.Datejust' | translate
-          }}"
-          class="watch-image"
-        />
-        <div class="watch-details">
-          <div class="watch-details-price" [ngClass]="{'reverse-order': translateService.currentLang !== 'en'}" >
-            <p class="brand">{{ "popular_models.Rolex" | translate }}</p>
-            <p class="price">{{ "popular_models.Price" | translate }}</p>
-          </div>
-          <div class="watch-details-price" [ngClass]="{'reverse-order': translateService.currentLang !== 'en'}" >
-            <p class="brand">{{ "popular_models.Datejust" | translate }}</p>
-            <p class="price">$123.90</p>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="watch-card">
-      <div class="favorite-icon">
-        <i class="fa fa-heart"></i>
-      </div>
-      <div class="card-cntent">
-        <img
-          src="./assets/images/how-works-watch.png"
-          alt="{{ 'popular_models.Rolex' | translate }} {{
-            'popular_models.Datejust' | translate
-          }}"
-          class="watch-image"
-        />
-        <div class="watch-details">
-          <div class="watch-details-price" [ngClass]="{'reverse-order': translateService.currentLang !== 'en'}" >
-            <p class="brand">{{ "popular_models.Rolex" | translate }}</p>
-            <p class="price">{{ "popular_models.Price" | translate }}</p>
-          </div>
-          <div class="watch-details-price" [ngClass]="{'reverse-order': translateService.currentLang !== 'en'}" >
-            <p class="brand">{{ "popular_models.Datejust" | translate }}</p>
-            <p class="price">$123.90</p>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="watch-card">
-      <div class="favorite-icon">
-        <i class="fa fa-heart"></i>
-      </div>
-      <div class="card-cntent">
-        <img
-          src="./assets/images/how-works-watch.png"
-          alt="{{ 'popular_models.Rolex' | translate }} {{
-            'popular_models.Datejust' | translate
-          }}"
-          class="watch-image"
-        />
-        <div class="watch-details">
-          <div class="watch-details-price" [ngClass]="{'reverse-order': translateService.currentLang !== 'en'}" >
-            <p class="brand">{{ "popular_models.Rolex" | translate }}</p>
-            <p class="price">{{ "popular_models.Price" | translate }}</p>
-          </div>
-          <div class="watch-details-price" [ngClass]="{'reverse-order': translateService.currentLang !== 'en'}" >
-            <p class="brand">{{ "popular_models.Datejust" | translate }}</p>
-            <p class="price">$123.90</p>
+          <div
+            class="watch-details-price"
+            [ngClass]="{
+              'reverse-order': translateService.currentLang !== 'en'
+            }"
+          >
+            <p class="brand">{{ model.gender }}</p>
+            <p class="price">{{ model.condition }}</p>
           </div>
         </div>
       </div>

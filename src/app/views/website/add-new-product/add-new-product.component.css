@@ -227,3 +227,8 @@ h2 .optional {
     left: 310px !important;
     width: 450px;
 }
+
+.selected-card {
+  
+  border: 2px solid #00838f !important; /* Example border color */
+}

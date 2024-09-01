@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+import { Router } from "@angular/router";
 import { TranslateService } from "@ngx-translate/core";
 import { HttpService } from "src/services/http/http.service";
 
@@ -10,7 +11,8 @@ import { HttpService } from "src/services/http/http.service";
 export class PopularBrandsComponentComponent implements OnInit {
   constructor(
     private translateService: TranslateService,
-    private http: HttpService
+    private http: HttpService,
+    private router: Router
   ) {
     const supportedLanguages = ["en", "ar"];
     this.translateService.addLangs(supportedLanguages);
@@ -30,12 +32,18 @@ export class PopularBrandsComponentComponent implements OnInit {
     this.getAllBrands();
   }
 
-  brandsList:any;
+  productDetails(brand: any) {
+    this.router.navigate(["/product-detail"], {
+      state: { data: brand },
+    });
+  }
+
+  brandsList: any;
 
   getAllBrands() {
     this.http.getAllBrands().subscribe(
       (response) => {
-        this.brandsList=response.data;
+        this.brandsList = response.data;
         console.log(response);
       },
       (error) => {

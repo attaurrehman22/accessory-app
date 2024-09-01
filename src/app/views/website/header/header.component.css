@@ -94,7 +94,7 @@
 }
 
 .rtl-layout .logo {
-  justify-content: flex-end; 
+  /* justify-content: flex-end;  */
 }
 
 .rtl-layout .header-contact {
@@ -107,5 +107,5 @@
 }
 
 .rtl-layout .menu-icon {
-  margin-left: -188px;
+  margin-left: -220px;
 }

@@ -197,7 +197,7 @@
           Overall Condition of the Watch
         </h3>
         <div *ngIf="usedCondition" class="card-container">
-          <mat-card class="condition-card">
+          <mat-card class="condition-card" [ngClass]="{'selected-card': selectedCondition === 'very-good'}">
             <mat-card-title>Very good (minor signs of wear)</mat-card-title>
             <mat-card-content>
               <p>
@@ -216,7 +216,7 @@
             </mat-card-actions>
           </mat-card>
 
-          <mat-card class="condition-card">
+          <mat-card class="condition-card" [ngClass]="{'selected-card': selectedCondition === 'good'}">
             <mat-card-title>Good (moderate signs of wear)</mat-card-title>
             <mat-card-content>
               <p>
@@ -235,7 +235,7 @@
             </mat-card-actions>
           </mat-card>
 
-          <mat-card class="condition-card">
+          <mat-card class="condition-card" [ngClass]="{'selected-card': selectedCondition === 'fair'}">
             <mat-card-title>Fair (major signs of wear)</mat-card-title>
             <mat-card-content>
               <p>
@@ -254,7 +254,7 @@
             </mat-card-actions>
           </mat-card>
 
-          <mat-card class="condition-card">
+          <mat-card class="condition-card" [ngClass]="{'selected-card': selectedCondition === 'incomplete'}">
             <mat-card-title>Incomplete</mat-card-title>
             <mat-card-content>
               <p>The item is missing some parts and is not functional.</p>

@@ -1,16 +1,37 @@
-import { Component } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
+import { Component, OnInit } from "@angular/core";
+import { TranslateService } from "@ngx-translate/core";
+import { HttpService } from "src/services/http/http.service";
 
 @Component({
-  selector: 'app-explore-chronosouq-component',
-  templateUrl: './explore-chronosouq-component.component.html',
-  styleUrls: ['./explore-chronosouq-component.component.css'],
+  selector: "app-explore-chronosouq-component",
+  templateUrl: "./explore-chronosouq-component.component.html",
+  styleUrls: ["./explore-chronosouq-component.component.css"],
 })
-export class ExploreChronosouqComponentComponent {
-  constructor(public translateService: TranslateService) {
+export class ExploreChronosouqComponentComponent implements OnInit {
+  exploreList: any;
+
+  ngOnInit(): void {
+    this.getExploreList();
+  }
+
+  getExploreList() {
+    this.http.getExploreChronoSouq().subscribe(
+      (res) => {
+        this.exploreList = res.data;
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
+  }
+
+  constructor(
+    public translateService: TranslateService,
+    private http: HttpService
+  ) {
     const supportedLanguages = ["en", "ar"]; // Add other languages if necessary
     this.translateService.addLangs(supportedLanguages);
-    this.translateService.setDefaultLang('en');
+    this.translateService.setDefaultLang("en");
 
     const browserLang = this.translateService.getBrowserLang();
     if (supportedLanguages.includes(browserLang)) {
@@ -22,21 +43,28 @@ export class ExploreChronosouqComponentComponent {
     this.translateService.use(lang);
   }
 
-
   masonryOptions = {
-    transitionDuration: '0.8s',
+    transitionDuration: "0.8s",
     gutter: 20,
     horizontalOrder: true,
-    fitWidth: true
+    fitWidth: true,
   };
 
   watchCategories = [
-    { title: 'Men’s Watches', subtitle: 'Read More', image: 'assets/mens-watch.jpg' },
-    { title: 'Pre-Owned', subtitle: 'Watches', image: 'assets/pre-owned.jpg' },
-    { title: 'Pocket', subtitle: 'Watches', image: 'assets/pocket-watch.jpg' },
-    { title: 'Women’s', subtitle: 'Watches', image: 'assets/womens-watch.jpg' },
-    { title: 'Automatic', subtitle: 'Watches', image: 'assets/automatic-watch.jpg' },
-    { title: 'Gold', subtitle: 'Watches', image: 'assets/gold-watch.jpg' },
-    { title: 'Moon', subtitle: 'Watches', image: 'assets/moon-watch.jpg' },
+    {
+      title: "Men’s Watches",
+      subtitle: "Read More",
+      image: "assets/mens-watch.jpg",
+    },
+    { title: "Pre-Owned", subtitle: "Watches", image: "assets/pre-owned.jpg" },
+    { title: "Pocket", subtitle: "Watches", image: "assets/pocket-watch.jpg" },
+    { title: "Women’s", subtitle: "Watches", image: "assets/womens-watch.jpg" },
+    {
+      title: "Automatic",
+      subtitle: "Watches",
+      image: "assets/automatic-watch.jpg",
+    },
+    { title: "Gold", subtitle: "Watches", image: "assets/gold-watch.jpg" },
+    { title: "Moon", subtitle: "Watches", image: "assets/moon-watch.jpg" },
   ];
 }

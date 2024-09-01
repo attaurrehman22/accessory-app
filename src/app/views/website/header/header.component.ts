@@ -61,12 +61,28 @@ export class HeaderComponent {
     // this.isRtl = lang !== 'en';
   }
 
+  routeToBuyProduct(){
+    console.log("hello")
+    const token=localStorage.getItem('token');
+    console.log("token",token)
+    if(token){
+      this.router.navigate(['/buy-product'])
+    }
+    else{
+      this.router.navigate(['/login'],{
+        state:{paramRoute:'buy-product'}
+      })
+      // this.router.navigateByUrl('login');
+    }
+  }
+
   goToRegister() { 
       this.router.navigateByUrl('register');
   }
 
   logout() {
     localStorage.removeItem('Logged');
+    localStorage.removeItem('token');
     this.isUserLogin = null;
     this.router.navigateByUrl('login');
   }

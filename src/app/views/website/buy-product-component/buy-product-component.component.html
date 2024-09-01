@@ -1,0 +1,11 @@
+
+  <div class="brands-container mt-5">
+    <h2>{{ 'popular_brands.label' | translate }}</h2>
+    <div class="brands-grid mt-4" >
+      <div class="brand-item" style="cursor: pointer;" 
+       *ngFor="let brand of productsList">
+        <img src="./assets/images/how-works-watch.png" alt="{{ 'popular_brands.rolex' }}" />
+        <div class="brand-label">{{ brand.name }}</div>
+      </div>
+    </div>
+  </div>

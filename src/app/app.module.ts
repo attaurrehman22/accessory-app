@@ -40,6 +40,9 @@ import { LoginComponent } from './views/auth/login/login.component';
 import { RegisterComponent } from './views/auth/register/register.component';
 // import {MatExpansionModule} from '@angular/material/expansion';
 import { RouterModule } from '@angular/router';
+import { ProductDetailComponentComponent } from './views/website/product-detail-component/product-detail-component.component';
+import { BuyProductComponentComponent } from './views/website/buy-product-component/buy-product-component.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -56,7 +59,9 @@ import { RouterModule } from '@angular/router';
     PopularBrandsComponentComponent,
     AddNewProductComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    ProductDetailComponentComponent,
+    BuyProductComponentComponent
   ],
   imports: [
     BrowserModule,

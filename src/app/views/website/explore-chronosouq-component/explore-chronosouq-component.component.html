@@ -16,7 +16,7 @@
         alt="{{ 'explore_chrono.men_watches' | translate }}"
       />
       <div class="overlay" [ngClass]="{'reverse-order': translateService.currentLang !== 'en'}" style="border-bottom-left-radius: 10px !important">
-        <h2>{{ 'explore_chrono.men_watches' | translate }}</h2>
+        <h2>{{ exploreList[0].name}}</h2>
         <p>{{ 'explore_chrono.read_more' | translate }}</p>
       </div>
     </div>
@@ -35,8 +35,8 @@
           alt="{{ 'explore_chrono.pre_owned' | translate }} {{ 'explore_chrono.watches' | translate }}"
         />
         <div class="overlay" [ngClass]="{'reverse-order': translateService.currentLang !== 'en'}">
-          <h2>{{ 'explore_chrono.pre_owned' | translate }}</h2>
-          <p>{{ 'explore_chrono.watches' | translate }}</p>
+          <h2>{{ exploreList[1].name}}</h2>
+           <p>{{ 'explore_chrono.read_more' | translate }}</p>
         </div>
       </div>
       <div class="pos-relative">
@@ -46,8 +46,8 @@
           alt="{{ 'explore_chrono.pocket' | translate }} {{ 'explore_chrono.watches' | translate }}"
         />
         <div class="overlay" [ngClass]="{'reverse-order': translateService.currentLang !== 'en'}">
-          <h2>{{ 'explore_chrono.pocket' | translate }}</h2>
-          <p>{{ 'explore_chrono.watches' | translate }}</p>
+          <h2>{{ exploreList[2].name}}</h2>
+           <p>{{ 'explore_chrono.read_more' | translate }}</p>
         </div>
       </div>
     </div>
@@ -58,8 +58,8 @@
         alt="{{ 'explore_chrono.automatic' | translate }} {{ 'explore_chrono.watches' | translate }}"
       />
       <div class="overlay" [ngClass]="{'reverse-order': translateService.currentLang !== 'en'}">
-        <h2>{{ 'explore_chrono.automatic' | translate }}</h2>
-        <p>{{ 'explore_chrono.watches' | translate }}</p>
+        <h2>{{ exploreList[3].name}}</h2>
+         <p>{{ 'explore_chrono.read_more' | translate }}</p>
       </div>
     </div>
     <div
@@ -83,8 +83,8 @@
           alt="{{ 'explore_chrono.womens' | translate }} {{ 'explore_chrono.watches' | translate }}"
         />
         <div class="overlay" [ngClass]="{'reverse-order': translateService.currentLang !== 'en'}">
-          <h2>{{ 'explore_chrono.womens' | translate }}</h2>
-          <p>{{ 'explore_chrono.watches' | translate }}</p>
+          <h2>{{ exploreList[4].name}}</h2>
+           <p>{{ 'explore_chrono.read_more' | translate }}</p>
         </div>
       </div>
       <div style="display: flex; justify-content: space-between">
@@ -95,8 +95,8 @@
             alt="{{ 'explore_chrono.gold' | translate }} {{ 'explore_chrono.watches' | translate }}"
           />
           <div class="overlay" [ngClass]="{'reverse-order': translateService.currentLang !== 'en'}">
-            <h2>{{ 'explore_chrono.gold' | translate }}</h2>
-            <p>{{ 'explore_chrono.watches' | translate }}</p>
+            <h2>{{ exploreList[5].name}}</h2>
+             <p>{{ 'explore_chrono.read_more' | translate }}</p>
           </div>
         </div>
         <div style="position: relative">
@@ -114,8 +114,8 @@
             class="overlay" [ngClass]="{'reverse-order': translateService.currentLang !== 'en'}"
             style="border-bottom-right-radius: 10px !important"
           >
-            <h2>{{ 'explore_chrono.moon' | translate }}</h2>
-            <p>{{ 'explore_chrono.watches' | translate }}</p>
+            <h2>{{ exploreList[6].name}}</h2>
+             <p>{{ 'explore_chrono.read_more' | translate }}</p>
           </div>
         </div>
       </div>
