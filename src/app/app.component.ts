@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { marker as TRANSLATE_ME } from "@biesbjerg/ngx-translate-extract-marker";
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -8,6 +9,10 @@ import { marker as TRANSLATE_ME } from "@biesbjerg/ngx-translate-extract-marker"
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
+
+  showHeader: boolean = true;
+  showFooter:boolean = true;
+  showSecondFooter:boolean=true; 
   ngOnInit(): void {
     const val = TRANSLATE_ME('home.title');
     console.log(' Title from marker ==> ', TRANSLATE_ME('home.title'));
@@ -15,7 +20,7 @@ export class AppComponent implements OnInit {
 
   supportLanguages = ['en','ar', 'fr', 'ta', 'hi'];
 
-  constructor(private translateService: TranslateService){
+  constructor(private translateService: TranslateService, private router: Router){
     this.translateService.addLangs(this.supportLanguages);
     this.translateService.setDefaultLang('en');
 
@@ -26,6 +31,21 @@ export class AppComponent implements OnInit {
     if (this.supportLanguages.includes(browserlang)) {
       this.translateService.use(browserlang);
     }
+
+    this.router.events.subscribe(() => {
+      const currentRoute = this.router.url;
+      this.showHeader = !['/login', '/register', '/'].includes(currentRoute);
+    });
+
+    this.router.events.subscribe(() => {
+      const currentRoute = this.router.url;
+      this.showFooter = !['/login', '/register', '/'].includes(currentRoute);
+    });
+
+    this.router.events.subscribe(() => {
+      const currentRoute = this.router.url;
+      this.showSecondFooter = !['/login', '/register','/new-product' ,'/'].includes(currentRoute);
+    });
   }
 
   useLang(lang: string) {

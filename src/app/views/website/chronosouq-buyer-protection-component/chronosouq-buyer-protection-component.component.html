@@ -1,15 +1,22 @@
-<div class="wraper mt-3" [ngClass]="{'reverse-order': translateService.currentLang !== 'en'}">
+<div
+  class="wraper mt-3"
+  [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }"
+>
   <div class="text-section">
     <h2>{{ "chrono_buyer.label" | translate }}</h2>
     <!-- <p>{{ "chrono_buyer.paragraph" | translate }}</p> -->
-    <ul *ngFor="let comment of commentsList | slice:0:5">
-      <li class="d-flex" [ngClass]="{'reverse-order-li': translateService.currentLang !== 'en'}">
+    <ul *ngFor="let comment of commentsList | slice : 0 : 5">
+      <li
+        class="d-flex"
+        [ngClass]="{
+          'reverse-order-li': translateService.currentLang !== 'en'
+        }"
+      >
         <span class="checkmark">&#10003;</span>
-        <p style="padding: 0 10px 0 10px;">
-        {{ comment.comment }}
-      </p>
+        <p style="padding: 0 10px 0 10px">
+          {{ comment.comment }}
+        </p>
       </li>
-
 
       <!-- <li class="d-flex" [ngClass]="{'reverse-order-li': translateService.currentLang !== 'en'}">
         <span class="checkmark">&#10003;</span>

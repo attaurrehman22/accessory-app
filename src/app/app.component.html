@@ -1,24 +1,13 @@
-<!-- Select Language:
-<select (change)="useLang($event.target.value)">
-  <option *ngFor="let item of supportLanguages" [value]="item">{{item}}</option>
-</select>
+<div *ngIf="showHeader">
+  <app-header></app-header>
+</div>
 
-<h2>{{ 'home.title' | translate }}</h2>
-<h1>{{ 'home.title' | translate }}</h1>
+<div *ngIf="showSecondFooter">
+  <app-second-header></app-second-header>
+</div>
 
-<h1>{{ 'home.welcomeback' | translate : { 'name': 'Ayyanar Jayabalan'} }}</h1>
-
-<h1>{{ 'home.subheader' | translate }}</h1>
-
-<p [translate]="'home.title'"></p>
-
-    translation: directive (key as content of element)
-<p translate>home.title</p>
-
-<h1>ERROR MESSAGE: </h1>
-
-
-
-<router-outlet></router-outlet> -->
-<!-- <app-header></app-header> -->
 <router-outlet></router-outlet>
+
+<div *ngIf="showFooter">
+  <app-footer-component></app-footer-component>
+</div>

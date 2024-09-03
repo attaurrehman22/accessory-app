@@ -1,85 +1,189 @@
-.brands-container {
-    text-align: center;
-    padding: 45px 220px 0 220px;
-  }
-  
-  .brands-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(33%, 1fr));
-    gap: 2px;
-    justify-items: center;
-    align-items: center;
-  }
-  
-  .brand-item {
-    position: relative;
-    border-radius: 10px;
-    overflow: hidden;
-  }
-  
-  .brand-item img {
-    width: 100%;
-    border-radius: 10px;
-    transition: transform 0.3s;
-  }
-  
-  .brand-item:hover img {
-    transform: scale(1.1);
-  }
-  
-  .brand-label {
-    position: absolute;
-    bottom: 1px;
-    color: white;
-    background: rgba(0, 0, 0, 0.6);
-    padding: 5px 10px;
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
-    width: 100%;
-  }
-  
-  .display-all-button {
-    margin-top: 20px;
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
-    background: none;
-    border-color: #030319;
-    border-radius: 6px;
-  } 
-  
-  @media (max-width: 1024px) {
-    .brands-container {
-      padding: 0 20px 0 20px;
-    }
-  
-    .brands-grid {
-      grid-template-columns: repeat(auto-fill, minmax(49.5%, 1fr));
-      gap: 20px;
-    }
-  }
-  
-  @media (max-width: 1500px) {
-    .brands-container {
-      padding: 0 20px 0 20px;
-    }
-  }
-  
-  
-  @media (max-width: 768px) {
-    .brands-grid {
-      grid-template-columns: repeat(auto-fill, minmax(98%, 1fr));
-    }
-  }
-  
-  @media (max-width: 600px) {
-    .brands-grid {
-      grid-template-columns: repeat(auto-fill, minmax(98%, 1fr));
-    }
-  }
-  
-  @media (max-width: 320px) {
-    .brands-grid {
-      grid-template-columns: repeat(auto-fill, minmax(100%, 1fr));
-    }
-  }
+img {
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 5px;
+  object-fit: fill;
+  height: 100%;
+  width: 100%;
+}
+
+.btn-lg {
+  width: 100%;
+}
+
+.alert ul {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.alert ul li {
+  margin-bottom: 5px;
+}
+
+.mt-5 {
+  margin-top: 3rem !important;
+}
+
+.header-h3 {
+  font-size: 1.75rem;
+}
+
+.card {
+  border: none;
+}
+
+.card-title {
+  font-weight: bold;
+  margin-bottom: 1.5rem;
+}
+
+.table th {
+  width: 40%;
+}
+
+.table td {
+  width: 60%;
+}
+
+.table a {
+  color: #0056b3;
+  text-decoration: none;
+}
+
+.table a:hover {
+  text-decoration: underline;
+}
+
+.nav-tabs .nav-link.active {
+  border-bottom: 3px solid #ffd700;
+}
+
+.nav-tabs .nav-link {
+  font-weight: bold;
+}
+
+.table tr {
+  border-bottom: 1px solid #e3e6e8;
+}
+
+.table tr:last-child {
+  border-bottom: none;
+}
+
+.table th,
+.table td {
+  padding: 10px 0;
+  font-weight: 500;
+}
+
+.card1 {
+  border: 1px solid #e3e6e8;
+  border-radius: 8px;
+}
+
+.card1 img {
+  width: 50px;
+  height: 50px;
+}
+
+.card1 h6 {
+  margin-top: 15px;
+  font-weight: bold;
+  color: #333;
+}
+
+.card1 p {
+  font-size: 14px;
+  color: #666;
+}
+
+.chart-container {
+  position: relative;
+  height: 400px;
+  width: 100%;
+}
+.performance-info {
+  font-size: 1rem;
+}
+.per-card {
+  border: none;
+}
+.per-card .card-subtitle {
+  font-size: 1rem;
+  color: #6c757d;
+}
+
+.int-card {
+  border: none;
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+  transition: transform 0.2s ease;
+}
+
+.int-card:hover {
+  transform: translateY(-5px);
+}
+
+.badge {
+  background-color: #fff;
+  font-size: 0.8rem;
+  color: #000;
+}
+
+.position-relative {
+  position: relative;
+}
+
+.btn-light {
+  color: #000;
+}
+
+.card-body p {
+  margin: 0;
+}
+
+.testimonial-section {
+  background-color: #07172d;
+  color: #ffffff;
+}
+
+/* .satis-card {
+  background-color: #ffffff; 
+  border: none;
+  border-radius: 8px;
+  max-width: 300px;
+} */
+
+.carousel-control-prev,
+.carousel-control-next {
+  filter: invert(1);
+}
+
+.fa-star {
+  font-size: 14px;
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  background-color: #f8f9fa;
+  border-radius: 50%;
+}
+
+.accordion-button:focus {
+  box-shadow: none;
+}
+
+
+.header-h5 {
+  font-weight: 500;
+}
+.un-ol {
+  padding-left: 0;
+}
+.un-ol li a {
+  text-decoration: none;
+  color: #000;
+}
+.un-ol li a:hover {
+  text-decoration: underline;
+  color: #007bff;
+}

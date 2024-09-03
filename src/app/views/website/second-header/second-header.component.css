@@ -1,0 +1,11 @@
+/* header.component.css */
+.navbar-brand img {
+    height: 30px; /* Adjust logo size */
+  }
+  .form-control {
+    border-radius: 20px;
+  }
+  .navbar .bi {
+    font-size: 1.2rem;
+  }
+  
