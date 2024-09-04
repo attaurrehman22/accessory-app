@@ -62,18 +62,17 @@ export class HeaderComponent {
   }
 
   routeToBuyProduct(){
-    console.log("hello")
-    const token=localStorage.getItem('token');
-    console.log("token",token)
-    if(token){
-      this.router.navigate(['/buy-product'])
-    }
-    else{
-      this.router.navigate(['/login'],{
-        state:{paramRoute:'buy-product'}
-      })
-      // this.router.navigateByUrl('login');
-    }
+    // console.log("hello")
+    // const token=localStorage.getItem('token');
+    // console.log("token",token)
+    // if(token){
+      this.router.navigate(['/product-list'])
+    // }
+    // else{
+    //   this.router.navigate(['/login'],{
+    //     state:{paramRoute:'buy-product'}
+    //   })
+    // }
   }
 
   goToRegister() { 

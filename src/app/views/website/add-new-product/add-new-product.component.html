@@ -57,9 +57,16 @@
               Please add Image
             </mat-error>
             <!-- Image Preview inside the mat-form-field -->
-            <div *ngIf="imagePreview.length > 0" style="margin-top: 10px;">
-              <div *ngFor="let image of imagePreview" style="display: inline-block; margin-right: 10px;">
-                <img [src]="image" alt="Selected Image" style="width: 100px; height: 100px; object-fit: cover;" />
+            <div *ngIf="imagePreview.length > 0" style="margin-top: 10px">
+              <div
+                *ngFor="let image of imagePreview"
+                style="display: inline-block; margin-right: 10px"
+              >
+                <img
+                  [src]="image"
+                  alt="Selected Image"
+                  style="width: 100px; height: 100px; object-fit: cover"
+                />
               </div>
             </div>
           </mat-form-field>
@@ -198,7 +205,10 @@
           Overall Condition of the Watch
         </h3>
         <div *ngIf="usedCondition" class="card-container">
-          <mat-card class="condition-card" [ngClass]="{'selected-card': selectedCondition === 'very-good'}">
+          <mat-card
+            class="condition-card"
+            [ngClass]="{ 'selected-card': selectedCondition === 'very-good' }"
+          >
             <mat-card-title>Very good (minor signs of wear)</mat-card-title>
             <mat-card-content>
               <p>
@@ -217,7 +227,10 @@
             </mat-card-actions>
           </mat-card>
 
-          <mat-card class="condition-card" [ngClass]="{'selected-card': selectedCondition === 'good'}">
+          <mat-card
+            class="condition-card"
+            [ngClass]="{ 'selected-card': selectedCondition === 'good' }"
+          >
             <mat-card-title>Good (moderate signs of wear)</mat-card-title>
             <mat-card-content>
               <p>
@@ -236,7 +249,10 @@
             </mat-card-actions>
           </mat-card>
 
-          <mat-card class="condition-card" [ngClass]="{'selected-card': selectedCondition === 'fair'}">
+          <mat-card
+            class="condition-card"
+            [ngClass]="{ 'selected-card': selectedCondition === 'fair' }"
+          >
             <mat-card-title>Fair (major signs of wear)</mat-card-title>
             <mat-card-content>
               <p>
@@ -255,7 +271,10 @@
             </mat-card-actions>
           </mat-card>
 
-          <mat-card class="condition-card" [ngClass]="{'selected-card': selectedCondition === 'incomplete'}">
+          <mat-card
+            class="condition-card"
+            [ngClass]="{ 'selected-card': selectedCondition === 'incomplete' }"
+          >
             <mat-card-title>Incomplete</mat-card-title>
             <mat-card-content>
               <p>The item is missing some parts and is not functional.</p>

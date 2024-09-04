@@ -43,6 +43,7 @@ import { RouterModule } from '@angular/router';
 import { ProductDetailComponentComponent } from './views/website/product-detail-component/product-detail-component.component';
 import { BuyProductComponentComponent } from './views/website/buy-product-component/buy-product-component.component';
 import { SecondHeaderComponent } from "./views/website/second-header/second-header.component";
+import { ProductListComponent } from './views/website/product-list/product-list.component';
 
 @NgModule({
   declarations: [
@@ -63,7 +64,8 @@ import { SecondHeaderComponent } from "./views/website/second-header/second-head
     RegisterComponent,
     ProductDetailComponentComponent,
     BuyProductComponentComponent,
-    SecondHeaderComponent
+    SecondHeaderComponent,
+    ProductListComponent
   ],
   imports: [
     BrowserModule,

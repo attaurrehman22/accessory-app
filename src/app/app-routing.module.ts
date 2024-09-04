@@ -6,6 +6,7 @@ import { HomeComponent } from './views/website/home/home.component';
 import { AddNewProductComponent } from './views/website/add-new-product/add-new-product.component';
 import { BuyProductComponentComponent } from './views/website/buy-product-component/buy-product-component.component';
 import { ProductDetailComponentComponent } from './views/website/product-detail-component/product-detail-component.component';
+import { ProductListComponent } from './views/website/product-list/product-list.component';
 
 
 const routes: Routes = [
@@ -14,6 +15,7 @@ const routes: Routes = [
   { path: '', component:  HomeComponent},
   { path: 'new-product', component:  AddNewProductComponent},
   { path: 'buy-product', component:  BuyProductComponentComponent},
+  { path: 'product-list', component:  ProductListComponent},
   { path: 'product-detail', component:  ProductDetailComponentComponent},
 ];
 

@@ -1,7 +1,82 @@
+<!-- Button to trigger the collapse -->
+<button
+  class="b-t-n btn-outline-secondary d-flex align-items-center"
+  type="button"
+  data-bs-toggle="collapse"
+  data-bs-target="#supportCollapse"
+  aria-expanded="false"
+  aria-controls="supportCollapse"
+>
+  <mat-icon class="mx-1"> message</mat-icon>
+  <span>Do you have any questions?</span>
+</button>
+
+<!-- Collapsible section -->
+<div
+  class="collapse mt-3"
+  id="supportCollapse"
+  style="
+    border-radius: 50px;
+    padding: 10px 20px;
+    position: fixed;
+    bottom: 60px;
+    right: 0;
+    width: 17%;
+  "
+>
+  <div class="card-fixed card-body">
+    <h5 class="card-title">Do you have any questions?</h5>
+    <p class="card-text">Our support team would be happy to help.</p>
+    <p class="card-text">
+      Please provide the following listing code when communicating with our
+      support team: <strong>KWQWY5</strong>
+    </p>
+    <div class="d-flex align-items-center mb-3">
+      <i class="bi bi-telephone-fill me-2"></i>
+      <div>
+        <p class="mb-0">+852 3002 0310</p>
+        <small class="text-muted"
+          >Be sure to have your PIN on hand when you call to request sensitive
+          information. <a href="#">View PIN</a></small
+        >
+      </div>
+    </div>
+    <div class="d-flex align-items-center">
+      <i class="bi bi-envelope-fill me-2"></i>
+      <a href="#">Contact ChronoSouq</a>
+    </div>
+  </div>
+</div>
+
 <div class="container mt-5">
   <div class="row">
     <div class="col-md-6" style="height: 550px">
       <img
+        [src]="selectedImage"
+        style="object-fit: cover; height: 100%; width: 100%"
+        class="img-fluid"
+        alt="Selected Watch"
+      />
+
+      <div class="row mt-3" style="display: flex">
+        <div class="col-3" *ngFor="let image of thumbnails">
+          <img
+            [src]="image"
+            class="img-fluid"
+            alt="thumbnail"
+            [ngClass]="{
+              'blur-image': image !== selectedImage,
+              'hover-remove-blur': true
+            }"
+            (click)="swapImages(image)"
+          />
+        </div>
+      </div>
+    </div>
+
+    <!-- <div class="col-md-6" style="height: 550px">
+      <img
+      style="object-fit: cover;"
         src="./assets/images/product-detail-img.png"
         class="img-fluid"
         alt="Rolex GMT-Master II"
@@ -32,7 +107,7 @@
           />
         </div>
       </div>
-    </div>
+    </div> -->
     <div class="col-md-6">
       <h3 class="header-h3">Rolex GMT-Master II</h3>
       <p class="text-muted">126710BLRO</p>
@@ -64,7 +139,7 @@
 <div class="container mt-5">
   <div class="card">
     <div class="card-body">
-      <h5 class="card-title">More About This Listing</h5>
+      <h5 class="card-title mt-5">More About This Listing</h5>
       <ul class="nav nav-tabs" id="myTab" role="tablist">
         <li class="nav-item" role="presentation">
           <button
@@ -434,24 +509,24 @@
 </div>
 
 <div class="container my-5">
-  <!-- Title -->
   <div class="row mb-3">
     <div class="col-12">
       <h3>You may also be interested in these watches</h3>
     </div>
   </div>
 
-  <!-- Carousel Wrapper -->
-  <div id="watchCarousel" class="carousel slide" data-bs-ride="carousel">
+  <div id="watchCarousel1" class="carousel slide" data-bs-ride="carousel">
     <div class="carousel-inner">
-      <!-- First Slide -->
       <div class="carousel-item active">
         <div class="row">
-          <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+          <div
+            class="col-lg-3 col-md-4 col-sm-6 mb-4 product-height"
+            *ngFor="let item of currentProducts1"
+          >
             <div class="int-card">
-              <div class="position-relative">
+              <div class="card-img-div">
                 <img
-                  src="./assets/images/how-works-watch.png"
+                  [src]="item.image"
                   class="card-img-top"
                   alt="Rolex GMT-Master II"
                 />
@@ -459,7 +534,7 @@
                   class="badge badge-pill badge-light position-absolute top-0 start-0 m-2"
                   >Promoted</span
                 >
-                <button class="btn btn-light position-absolute top-0 end-0 m-2">
+                <button style="background: none;" class="btn btn-light position-absolute top-0 end-0 m-2">
                   <i class="fas fa-heart"></i>
                 </button>
               </div>
@@ -477,242 +552,40 @@
               </div>
             </div>
           </div>
-          <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
-            <div class="int-card">
-              <div class="position-relative">
-                <img
-                  src="./assets/images/how-works-watch.png"
-                  class="card-img-top"
-                  alt="Rolex GMT-Master II"
-                />
-                <span
-                  class="badge badge-pill badge-light position-absolute top-0 start-0 m-2"
-                  >Promoted</span
-                >
-                <button class="btn btn-light position-absolute top-0 end-0 m-2">
-                  <i class="fas fa-heart"></i>
-                </button>
-              </div>
-              <div class="card-body">
-                <h6 class="card-title">Rolex GMT-Master II</h6>
-                <p class="card-text text-muted">
-                  II-40mm Steel "Pepsi" Black Dial Oyster
-                </p>
-                <p class="card-text">
-                  <strong>$23,050</strong> + $99 for shipping
-                </p>
-                <p class="card-text">
-                  <i class="fas fa-map-marker-alt"></i> US
-                </p>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
-            <div class="int-card">
-              <div class="position-relative">
-                <img
-                  src="./assets/images/how-works-watch.png"
-                  class="card-img-top"
-                  alt="Rolex GMT-Master II"
-                />
-                <span
-                  class="badge badge-pill badge-light position-absolute top-0 start-0 m-2"
-                  >Promoted</span
-                >
-                <button class="btn btn-light position-absolute top-0 end-0 m-2">
-                  <i class="fas fa-heart"></i>
-                </button>
-              </div>
-              <div class="card-body">
-                <h6 class="card-title">Rolex GMT-Master II</h6>
-                <p class="card-text text-muted">
-                  II-40mm Steel "Pepsi" Black Dial Oyster
-                </p>
-                <p class="card-text">
-                  <strong>$23,500</strong> + $99 for shipping
-                </p>
-                <p class="card-text">
-                  <i class="fas fa-map-marker-alt"></i> US
-                </p>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
-            <div class="int-card">
-              <div class="position-relative">
-                <img
-                  src="./assets/images/how-works-watch.png"
-                  class="card-img-top"
-                  alt="Rolex GMT-Master II"
-                />
-                <span
-                  class="badge badge-pill badge-light position-absolute top-0 start-0 m-2"
-                  >Promoted</span
-                >
-                <button class="btn btn-light position-absolute top-0 end-0 m-2">
-                  <i class="fas fa-heart"></i>
-                </button>
-              </div>
-              <div class="card-body">
-                <h6 class="card-title">Rolex GMT-Master II</h6>
-                <p class="card-text text-muted">
-                  II-40mm Steel "Pepsi" Black Dial Oyster
-                </p>
-                <p class="card-text">
-                  <strong>$23,050</strong> + $99 for shipping
-                </p>
-                <p class="card-text">
-                  <i class="fas fa-map-marker-alt"></i> US
-                </p>
-              </div>
-            </div>
-          </div>
-          <!-- Add more cards if necessary for this slide -->
-        </div>
-      </div>
-
-      <!-- Second Slide -->
-      <div class="carousel-item">
-        <div class="row">
-          <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
-            <div class="int-card">
-              <div class="position-relative">
-                <img
-                  src="../assets/images/man-watch-2.png"
-                  class="card-img-top"
-                  alt="Rolex GMT-Master II"
-                />
-                <span
-                  class="badge badge-pill badge-light position-absolute top-0 start-0 m-2"
-                  >Promoted</span
-                >
-                <button class="btn btn-light position-absolute top-0 end-0 m-2">
-                  <i class="fas fa-heart"></i>
-                </button>
-              </div>
-              <div class="card-body">
-                <h6 class="card-title">Rolex GMT-Master II</h6>
-                <p class="card-text text-muted">
-                  UNWORN GMT-Master II Pepsi Oyster
-                </p>
-                <p class="card-text">
-                  <strong>$21,720</strong> + $495 for shipping
-                </p>
-                <p class="card-text">
-                  <i class="fas fa-map-marker-alt"></i> US
-                </p>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
-            <div class="int-card">
-              <div class="position-relative">
-                <img
-                  src="../assets/images/man-watch-2.png"
-                  class="card-img-top"
-                  alt="Rolex GMT-Master II"
-                />
-                <span
-                  class="badge badge-pill badge-light position-absolute top-0 start-0 m-2"
-                  >Promoted</span
-                >
-                <button class="btn btn-light position-absolute top-0 end-0 m-2">
-                  <i class="fas fa-heart"></i>
-                </button>
-              </div>
-              <div class="card-body">
-                <h6 class="card-title">Rolex GMT-Master II</h6>
-                <p class="card-text text-muted">
-                  Pepsi Luxury Men's Watch 126710BLRO
-                </p>
-                <p class="card-text"><strong>$24,995</strong> Free shipping</p>
-                <p class="card-text">
-                  <i class="fas fa-map-marker-alt"></i> US
-                </p>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
-            <div class="int-card">
-              <div class="position-relative">
-                <img
-                  src="../assets/images/man-watch-2.png"
-                  class="card-img-top"
-                  alt="Rolex GMT-Master II"
-                />
-                <span
-                  class="badge badge-pill badge-light position-absolute top-0 start-0 m-2"
-                  >Promoted</span
-                >
-                <button class="btn btn-light position-absolute top-0 end-0 m-2">
-                  <i class="fas fa-heart"></i>
-                </button>
-              </div>
-              <div class="card-body">
-                <h6 class="card-title">Rolex GMT-Master II</h6>
-                <p class="card-text text-muted">
-                  UNWORN GMT-Master II Pepsi Oyster
-                </p>
-                <p class="card-text">
-                  <strong>$21,720</strong> + $495 for shipping
-                </p>
-                <p class="card-text">
-                  <i class="fas fa-map-marker-alt"></i> US
-                </p>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
-            <div class="int-card">
-              <div class="position-relative">
-                <img
-                  src="../assets/images/man-watch-2.png"
-                  class="card-img-top"
-                  alt="Rolex GMT-Master II"
-                />
-                <span
-                  class="badge badge-pill badge-light position-absolute top-0 start-0 m-2"
-                  >Promoted</span
-                >
-                <button class="btn btn-light position-absolute top-0 end-0 m-2">
-                  <i class="fas fa-heart"></i>
-                </button>
-              </div>
-              <div class="card-body">
-                <h6 class="card-title">Rolex GMT-Master II</h6>
-                <p class="card-text text-muted">
-                  Pepsi Luxury Men's Watch 126710BLRO
-                </p>
-                <p class="card-text"><strong>$24,995</strong> Free shipping</p>
-                <p class="card-text">
-                  <i class="fas fa-map-marker-alt"></i> US
-                </p>
-              </div>
-            </div>
-          </div>
-          <!-- Add more cards if necessary for this slide -->
         </div>
       </div>
     </div>
 
-    <!-- Carousel Controls -->
     <button
       class="carousel-control-prev"
       type="button"
-      data-bs-target="#watchCarousel"
+      data-bs-target="#watchCarousel1"
       data-bs-slide="prev"
+      (click)="previousSlide1()"
+      style="
+        padding: 0 0 0 5px;
+        display: flex;
+        align-items: center;
+        color: white !important;
+      "
     >
-      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Previous</span>
+      <mat-icon style="color: white !important">chevron_left</mat-icon>
     </button>
     <button
       class="carousel-control-next"
       type="button"
-      data-bs-target="#watchCarousel"
+      data-bs-target="#watchCarousel1"
       data-bs-slide="next"
+      (click)="nextSlide1()"
+      style="
+        padding: 0 5px 0 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white !important;
+      "
     >
-      <span class="carousel-control-next-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Next</span>
+      <mat-icon>chevron_right</mat-icon>
     </button>
   </div>
 </div>
@@ -728,11 +601,14 @@
     <div class="carousel-inner">
       <div class="carousel-item active">
         <div class="row">
-          <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+          <div
+            class="col-lg-3 col-md-4 col-sm-6 mb-4 product-height"
+            *ngFor="let item of currentProducts"
+          >
             <div class="int-card">
-              <div class="position-relative">
+              <div class="card-img-div">
                 <img
-                  src="./assets/images/how-works-watch.png"
+                  [src]="item.image"
                   class="card-img-top"
                   alt="Rolex GMT-Master II"
                 />
@@ -752,217 +628,6 @@
                 <p class="card-text">
                   <strong>$23,500</strong> + $99 for shipping
                 </p>
-                <p class="card-text">
-                  <i class="fas fa-map-marker-alt"></i> US
-                </p>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
-            <div class="int-card">
-              <div class="position-relative">
-                <img
-                  src="./assets/images/how-works-watch.png"
-                  class="card-img-top"
-                  alt="Rolex GMT-Master II"
-                />
-                <span
-                  class="badge badge-pill badge-light position-absolute top-0 start-0 m-2"
-                  >Promoted</span
-                >
-                <button class="btn btn-light position-absolute top-0 end-0 m-2">
-                  <i class="fas fa-heart"></i>
-                </button>
-              </div>
-              <div class="card-body">
-                <h6 class="card-title">Rolex GMT-Master II</h6>
-                <p class="card-text text-muted">
-                  II-40mm Steel "Pepsi" Black Dial Oyster
-                </p>
-                <p class="card-text">
-                  <strong>$23,050</strong> + $99 for shipping
-                </p>
-                <p class="card-text">
-                  <i class="fas fa-map-marker-alt"></i> US
-                </p>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
-            <div class="int-card">
-              <div class="position-relative">
-                <img
-                  src="./assets/images/how-works-watch.png"
-                  class="card-img-top"
-                  alt="Rolex GMT-Master II"
-                />
-                <span
-                  class="badge badge-pill badge-light position-absolute top-0 start-0 m-2"
-                  >Promoted</span
-                >
-                <button class="btn btn-light position-absolute top-0 end-0 m-2">
-                  <i class="fas fa-heart"></i>
-                </button>
-              </div>
-              <div class="card-body">
-                <h6 class="card-title">Rolex GMT-Master II</h6>
-                <p class="card-text text-muted">
-                  II-40mm Steel "Pepsi" Black Dial Oyster
-                </p>
-                <p class="card-text">
-                  <strong>$23,500</strong> + $99 for shipping
-                </p>
-                <p class="card-text">
-                  <i class="fas fa-map-marker-alt"></i> US
-                </p>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
-            <div class="int-card">
-              <div class="position-relative">
-                <img
-                  src="./assets/images/how-works-watch.png"
-                  class="card-img-top"
-                  alt="Rolex GMT-Master II"
-                />
-                <span
-                  class="badge badge-pill badge-light position-absolute top-0 start-0 m-2"
-                  >Promoted</span
-                >
-                <button class="btn btn-light position-absolute top-0 end-0 m-2">
-                  <i class="fas fa-heart"></i>
-                </button>
-              </div>
-              <div class="card-body">
-                <h6 class="card-title">Rolex GMT-Master II</h6>
-                <p class="card-text text-muted">
-                  II-40mm Steel "Pepsi" Black Dial Oyster
-                </p>
-                <p class="card-text">
-                  <strong>$23,050</strong> + $99 for shipping
-                </p>
-                <p class="card-text">
-                  <i class="fas fa-map-marker-alt"></i> US
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="carousel-item">
-        <div class="row">
-          <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
-            <div class="int-card">
-              <div class="position-relative">
-                <img
-                  src="../assets/images/man-watch-2.png"
-                  class="card-img-top"
-                  alt="Rolex GMT-Master II"
-                />
-                <span
-                  class="badge badge-pill badge-light position-absolute top-0 start-0 m-2"
-                  >Promoted</span
-                >
-                <button class="btn btn-light position-absolute top-0 end-0 m-2">
-                  <i class="fas fa-heart"></i>
-                </button>
-              </div>
-              <div class="card-body">
-                <h6 class="card-title">Rolex GMT-Master II</h6>
-                <p class="card-text text-muted">
-                  UNWORN GMT-Master II Pepsi Oyster
-                </p>
-                <p class="card-text">
-                  <strong>$21,720</strong> + $495 for shipping
-                </p>
-                <p class="card-text">
-                  <i class="fas fa-map-marker-alt"></i> US
-                </p>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
-            <div class="int-card">
-              <div class="position-relative">
-                <img
-                  src="../assets/images/man-watch-2.png"
-                  class="card-img-top"
-                  alt="Rolex GMT-Master II"
-                />
-                <span
-                  class="badge badge-pill badge-light position-absolute top-0 start-0 m-2"
-                  >Promoted</span
-                >
-                <button class="btn btn-light position-absolute top-0 end-0 m-2">
-                  <i class="fas fa-heart"></i>
-                </button>
-              </div>
-              <div class="card-body">
-                <h6 class="card-title">Rolex GMT-Master II</h6>
-                <p class="card-text text-muted">
-                  Pepsi Luxury Men's Watch 126710BLRO
-                </p>
-                <p class="card-text"><strong>$24,995</strong> Free shipping</p>
-                <p class="card-text">
-                  <i class="fas fa-map-marker-alt"></i> US
-                </p>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
-            <div class="int-card">
-              <div class="position-relative">
-                <img
-                  src="../assets/images/man-watch-2.png"
-                  class="card-img-top"
-                  alt="Rolex GMT-Master II"
-                />
-                <span
-                  class="badge badge-pill badge-light position-absolute top-0 start-0 m-2"
-                  >Promoted</span
-                >
-                <button class="btn btn-light position-absolute top-0 end-0 m-2">
-                  <i class="fas fa-heart"></i>
-                </button>
-              </div>
-              <div class="card-body">
-                <h6 class="card-title">Rolex GMT-Master II</h6>
-                <p class="card-text text-muted">
-                  UNWORN GMT-Master II Pepsi Oyster
-                </p>
-                <p class="card-text">
-                  <strong>$21,720</strong> + $495 for shipping
-                </p>
-                <p class="card-text">
-                  <i class="fas fa-map-marker-alt"></i> US
-                </p>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
-            <div class="int-card">
-              <div class="position-relative">
-                <img
-                  src="../assets/images/man-watch-2.png"
-                  class="card-img-top"
-                  alt="Rolex GMT-Master II"
-                />
-                <span
-                  class="badge badge-pill badge-light position-absolute top-0 start-0 m-2"
-                  >Promoted</span
-                >
-                <button class="btn btn-light position-absolute top-0 end-0 m-2">
-                  <i class="fas fa-heart"></i>
-                </button>
-              </div>
-              <div class="card-body">
-                <h6 class="card-title">Rolex GMT-Master II</h6>
-                <p class="card-text text-muted">
-                  Pepsi Luxury Men's Watch 126710BLRO
-                </p>
-                <p class="card-text"><strong>$24,995</strong> Free shipping</p>
                 <p class="card-text">
                   <i class="fas fa-map-marker-alt"></i> US
                 </p>
@@ -977,19 +642,30 @@
       class="carousel-control-prev"
       type="button"
       data-bs-target="#watchCarousel"
-      data-bs-slide="prev"
+      (click)="previousSlide()"
+      style="
+        padding: 0 0 0 5px;
+        display: flex;
+        align-items: center;
+        color: white !important;
+      "
     >
-      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Previous</span>
+      <mat-icon style="color: white !important">chevron_left</mat-icon>
     </button>
     <button
       class="carousel-control-next"
       type="button"
       data-bs-target="#watchCarousel"
-      data-bs-slide="next"
+      (click)="nextSlide()"
+      style="
+        padding: 0 5px 0 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white !important;
+      "
     >
-      <span class="carousel-control-next-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Next</span>
+      <mat-icon>chevron_right</mat-icon>
     </button>
   </div>
 </div>
@@ -998,7 +674,7 @@
   <div class="container text-center">
     <h2 class="mb-3">Over 800,000 satisfied watch buyers worldwide</h2>
     <p class="mb-4">
-      Chrono24 dealers receive great ratings: 4.8 out of 5
+      ChronoSouq dealers receive great ratings: 4.8 out of 5
       <i class="fa fa-star text-warning"></i>
     </p>
     <div
@@ -1008,36 +684,98 @@
     >
       <div class="carousel-inner">
         <div class="carousel-item active">
-          <div class="d-flex justify-content-center">
-            <!-- <div class="satis-card mx-3">
-              <div class="card-body">
-                <div class="d-flex align-items-center mb-2">
-                  <div class="me-2">
-                    <span class="fa fa-star text-warning"></span>
-                    <span class="fa fa-star text-warning"></span>
-                    <span class="fa fa-star text-warning"></span>
-                    <span class="fa fa-star text-warning"></span>
-                    <span class="fa fa-star text-warning"></span>
+          <div class="d-flex justify-content-center gap-2">
+            <div
+              class="card my-4 shadow-sm"
+              style="width: 22rem; height: 560px; background: none"
+            >
+              <div style="height: 250px">
+                <img
+                  style="
+                    height: 100%;
+                    width: 100%;
+                    object-fit: fill;
+                    border: none;
+                  "
+                  src="./assets/images/watches.png"
+                  class="card-img-top"
+                  alt="Vacheron Constantin Malte Watch"
+                />
+              </div>
+              <div
+                class="card-body"
+                style="
+                  position: absolute;
+                  height: 310px;
+                  margin-top: 165px;
+                  background: white;
+                  border-radius: 15px;
+                "
+              >
+                <div
+                  class="d-flex justify-content-between align-items-center mb-2"
+                >
+                  <div class="d-flex align-items-center">
+                    <span class="text-warning me-2">
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                    </span>
+                    <span class="text-muted">June 3, 2024</span>
                   </div>
-                  <div class="text-muted ms-auto">June 4, 2024</div>
                 </div>
-                <h5 class="card-title">Omega Seamaster Diver 300 M</h5>
-                <p class="card-text text-muted">Received: May 30, 2024<br>Shipped from: Italy</p>
-                <p class="card-text">Great dealer, everything was perfect, the watch was impeccable, and great communication all the time.</p>
-                <div class="d-flex align-items-center">
-                  <div class="me-2">OC</div>
-                  <small class="text-muted">Ovidio C., Mexico</small>
+                <h5 class="card-title mb-2">Vacheron Constantin Malte (1)</h5>
+                <p class="text-muted mb-1">Received: May 7, 2024</p>
+                <p class="text-muted mb-3">Shipped from: Spain</p>
+                <p class="card-text">
+                  Great communication and quick shipping. Watch was exactly as
+                  shown in the pictures. They even helped me fill out the
+                  customs forms. Thanks!
+                </p>
+                <div class="d-flex align-items-center mt-3">
+                  <div
+                    class="rounded-circle bg-secondary text-white d-flex justify-content-center align-items-center"
+                    style="width: 40px; height: 40px"
+                  >
+                    SC
+                  </div>
+                  <div class="ms-2">
+                    <p class="mb-0">Shawn C.</p>
+                    <small class="text-muted">United States of America</small>
+                  </div>
                 </div>
               </div>
-            </div> -->
+            </div>
 
-            <div class="card my-4 shadow-sm" style="width: 22rem">
-              <img
-                src="./assets/images/how-works-watch.png"
-                class="card-img-top"
-                alt="Vacheron Constantin Malte Watch"
-              />
-              <div class="card-body">
+            <div
+              class="card my-4 shadow-sm"
+              style="width: 22rem; height: 560px; background: none"
+            >
+              <div style="height: 250px">
+                <img
+                  style="
+                    height: 100%;
+                    width: 100%;
+                    object-fit: fill;
+                    border: none;
+                  "
+                  src="./assets/images/watches.png"
+                  class="card-img-top"
+                  alt="Vacheron Constantin Malte Watch"
+                />
+              </div>
+              <div
+                class="card-body"
+                style="
+                  position: absolute;
+                  height: 310px;
+                  margin-top: 165px;
+                  background: white;
+                  border-radius: 15px;
+                "
+              >
                 <div
                   class="d-flex justify-content-between align-items-center mb-2"
                 >
@@ -1075,7 +813,265 @@
               </div>
             </div>
 
-            <!-- Repeat card structure for additional testimonials -->
+            <div
+              class="card my-4 shadow-sm"
+              style="width: 22rem; height: 560px; background: none"
+            >
+              <div style="height: 250px">
+                <img
+                  style="
+                    height: 100%;
+                    width: 100%;
+                    object-fit: fill;
+                    border: none;
+                  "
+                  src="./assets/images/watches.png"
+                  class="card-img-top"
+                  alt="Vacheron Constantin Malte Watch"
+                />
+              </div>
+              <div
+                class="card-body"
+                style="
+                  position: absolute;
+                  height: 310px;
+                  margin-top: 165px;
+                  background: white;
+                  border-radius: 15px;
+                "
+              >
+                <div
+                  class="d-flex justify-content-between align-items-center mb-2"
+                >
+                  <div class="d-flex align-items-center">
+                    <span class="text-warning me-2">
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                    </span>
+                    <span class="text-muted">June 3, 2024</span>
+                  </div>
+                </div>
+                <h5 class="card-title mb-2">Vacheron Constantin Malte</h5>
+                <p class="text-muted mb-1">Received: May 7, 2024</p>
+                <p class="text-muted mb-3">Shipped from: Spain</p>
+                <p class="card-text">
+                  Great communication and quick shipping. Watch was exactly as
+                  shown in the pictures. They even helped me fill out the
+                  customs forms. Thanks!
+                </p>
+                <div class="d-flex align-items-center mt-3">
+                  <div
+                    class="rounded-circle bg-secondary text-white d-flex justify-content-center align-items-center"
+                    style="width: 40px; height: 40px"
+                  >
+                    SC
+                  </div>
+                  <div class="ms-2">
+                    <p class="mb-0">Shawn C.</p>
+                    <small class="text-muted">United States of America</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="carousel-item">
+          <div class="d-flex justify-content-center gap-2">
+            <div
+              class="card my-4 shadow-sm"
+              style="width: 22rem; height: 560px; background: none"
+            >
+              <div style="height: 250px">
+                <img
+                  style="
+                    height: 100%;
+                    width: 100%;
+                    object-fit: fill;
+                    border: none;
+                  "
+                  src="./assets/images/watches.png"
+                  class="card-img-top"
+                  alt="Vacheron Constantin Malte Watch"
+                />
+              </div>
+              <div
+                class="card-body"
+                style="
+                  position: absolute;
+                  height: 310px;
+                  margin-top: 165px;
+                  background: white;
+                  border-radius: 15px;
+                "
+              >
+                <div
+                  class="d-flex justify-content-between align-items-center mb-2"
+                >
+                  <div class="d-flex align-items-center">
+                    <span class="text-warning me-2">
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                    </span>
+                    <span class="text-muted">June 3, 2024</span>
+                  </div>
+                </div>
+                <h5 class="card-title mb-2">Vacheron Constantin (2) Malte</h5>
+                <p class="text-muted mb-1">Received: May 7, 2024</p>
+                <p class="text-muted mb-3">Shipped from: Spain</p>
+                <p class="card-text">
+                  Great communication and quick shipping. Watch was exactly as
+                  shown in the pictures. They even helped me fill out the
+                  customs forms. Thanks!
+                </p>
+                <div class="d-flex align-items-center mt-3">
+                  <div
+                    class="rounded-circle bg-secondary text-white d-flex justify-content-center align-items-center"
+                    style="width: 40px; height: 40px"
+                  >
+                    SC
+                  </div>
+                  <div class="ms-2">
+                    <p class="mb-0">Shawn C.</p>
+                    <small class="text-muted">United States of America</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div
+              class="card my-4 shadow-sm"
+              style="width: 22rem; height: 560px; background: none"
+            >
+              <div style="height: 250px">
+                <img
+                  style="
+                    height: 100%;
+                    width: 100%;
+                    object-fit: fill;
+                    border: none;
+                  "
+                  src="./assets/images/watches.png"
+                  class="card-img-top"
+                  alt="Vacheron Constantin Malte Watch"
+                />
+              </div>
+              <div
+                class="card-body"
+                style="
+                  position: absolute;
+                  height: 310px;
+                  margin-top: 165px;
+                  background: white;
+                  border-radius: 15px;
+                "
+              >
+                <div
+                  class="d-flex justify-content-between align-items-center mb-2"
+                >
+                  <div class="d-flex align-items-center">
+                    <span class="text-warning me-2">
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                    </span>
+                    <span class="text-muted">June 3, 2024</span>
+                  </div>
+                </div>
+                <h5 class="card-title mb-2">Vacheron Constantin Malte</h5>
+                <p class="text-muted mb-1">Received: May 7, 2024</p>
+                <p class="text-muted mb-3">Shipped from: Spain</p>
+                <p class="card-text">
+                  Great communication and quick shipping. Watch was exactly as
+                  shown in the pictures. They even helped me fill out the
+                  customs forms. Thanks!
+                </p>
+                <div class="d-flex align-items-center mt-3">
+                  <div
+                    class="rounded-circle bg-secondary text-white d-flex justify-content-center align-items-center"
+                    style="width: 40px; height: 40px"
+                  >
+                    SC
+                  </div>
+                  <div class="ms-2">
+                    <p class="mb-0">Shawn C.</p>
+                    <small class="text-muted">United States of America</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div
+              class="card my-4 shadow-sm"
+              style="width: 22rem; height: 560px; background: none"
+            >
+              <div style="height: 250px">
+                <img
+                  style="
+                    height: 100%;
+                    width: 100%;
+                    object-fit: fill;
+                    border: none;
+                  "
+                  src="./assets/images/watches.png"
+                  class="card-img-top"
+                  alt="Vacheron Constantin Malte Watch"
+                />
+              </div>
+              <div
+                class="card-body"
+                style="
+                  position: absolute;
+                  height: 310px;
+                  margin-top: 165px;
+                  background: white;
+                  border-radius: 15px;
+                "
+              >
+                <div
+                  class="d-flex justify-content-between align-items-center mb-2"
+                >
+                  <div class="d-flex align-items-center">
+                    <span class="text-warning me-2">
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                    </span>
+                    <span class="text-muted">June 3, 2024</span>
+                  </div>
+                </div>
+                <h5 class="card-title mb-2">Vacheron Constantin Malte</h5>
+                <p class="text-muted mb-1">Received: May 7, 2024</p>
+                <p class="text-muted mb-3">Shipped from: Spain</p>
+                <p class="card-text">
+                  Great communication and quick shipping. Watch was exactly as
+                  shown in the pictures. They even helped me fill out the
+                  customs forms. Thanks!
+                </p>
+                <div class="d-flex align-items-center mt-3">
+                  <div
+                    class="rounded-circle bg-secondary text-white d-flex justify-content-center align-items-center"
+                    style="width: 40px; height: 40px"
+                  >
+                    SC
+                  </div>
+                  <div class="ms-2">
+                    <p class="mb-0">Shawn C.</p>
+                    <small class="text-muted">United States of America</small>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -1241,11 +1237,8 @@
   </button>
 </div>
 
-
-<!-- categories.component.html -->
-<div class="container mt-5">
+<div class="container mt-5" style="margin-bottom: 3rem !important">
   <div class="row">
-    <!-- First Column: Brand -->
     <div class="col-md-4">
       <h5 class="header-h5">Brand</h5>
       <ul class="list-unstyled un-ol">
@@ -1254,8 +1247,7 @@
         <li><a href="#">Pre-owned Rolex watches</a></li>
       </ul>
     </div>
-    
-    <!-- Second Column: Top Categories -->
+
     <div class="col-md-4">
       <h5 class="header-h5">Top categories</h5>
       <ul class="list-unstyled un-ol">
@@ -1266,7 +1258,6 @@
       </ul>
     </div>
 
-    <!-- Third Column: More Watches -->
     <div class="col-md-4">
       <h5 class="header-h5">More watches</h5>
       <ul class="list-unstyled un-ol">

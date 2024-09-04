@@ -1,0 +1,45 @@
+.carousel {
+  margin-top: 20px;
+}
+.carousel-indicators {
+  list-style: none;
+}
+.carousel-indicators li {
+  background-color: #000;
+}
+
+.card-title {
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+.card-text {
+  font-size: 1rem;
+  color: #555;
+}
+
+.card {
+  border: none;
+}
+
+.badge {
+  font-size: 0.8rem;
+}
+
+
+.card-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.card-text {
+  color: #6c757d;
+}
+
+.card-footer small {
+  font-size: 0.875rem;
+}
+
+.border-end {
+  border-right: 1px solid #ddd; /* Customizes the right border line */
+}

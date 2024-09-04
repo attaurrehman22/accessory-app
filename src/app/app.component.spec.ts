@@ -22,8 +22,8 @@ describe('AppComponent', () => {
 
   it(`should have as title 'multilingualtestapp'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app.title).toEqual('multilingualtestapp');
+    const app:any = fixture.componentInstance;
+    expect(app.title).toEqual('ChronoSouq');
   });
 
   it('should render title', () => {
