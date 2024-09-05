@@ -6,6 +6,7 @@ import {
   Validators,
 } from "@angular/forms";
 import { MatExpansionModule } from "@angular/material/expansion";
+import { Router } from "@angular/router";
 import { TranslateService } from "@ngx-translate/core";
 import { HttpService } from "src/services/http/http.service";
 
@@ -22,10 +23,18 @@ export class AddNewProductComponent implements OnInit {
   brandsList: any;
 
   name: FormControl = new FormControl("", Validators.required);
+  warranty: FormControl = new FormControl("", Validators.required);
+  box: FormControl = new FormControl("", Validators.required);
+  papers: FormControl = new FormControl("", Validators.required);
+  availability: FormControl = new FormControl("", Validators.required);
+  sale_status: FormControl = new FormControl("", Validators.required);
+  stock_status: FormControl = new FormControl("", Validators.required);
+  category_id: FormControl = new FormControl(1, Validators.required);
+  meta_title: FormControl = new FormControl("", Validators.required);
   slug: FormControl = new FormControl("", Validators.required);
-  image: FormControl = new FormControl([]);
+  additional_images: FormControl = new FormControl([]);
   type: FormControl = new FormControl("", Validators.required);
-  brand: FormControl = new FormControl("", Validators.required);
+  brand_id: FormControl = new FormControl("", Validators.required);
   model: FormControl = new FormControl("", [
     Validators.required,
     Validators.min(0),
@@ -42,7 +51,7 @@ export class AddNewProductComponent implements OnInit {
   caseDiameterWidth: FormControl = new FormControl("", Validators.required);
   caseDiameterHeight: FormControl = new FormControl("", Validators.required);
   movement: FormControl = new FormControl("", Validators.required);
-  description: FormControl = new FormControl("", Validators.required);
+  meta_description: FormControl = new FormControl("", Validators.required);
   price: FormControl = new FormControl("", Validators.required);
   currency: FormControl = new FormControl("USD", Validators.required);
   caliberMovement: FormControl = new FormControl("");
@@ -77,13 +86,26 @@ export class AddNewProductComponent implements OnInit {
   typeOfClasp: FormControl = new FormControl("");
   claspMaterial: FormControl = new FormControl("");
 
+  // -------------- Extra ---------------------------
+
+  main_image: FormControl = new FormControl("", Validators.required);
+  // additional_images:FormControl= new FormControl([], Validators.required);
+  // meta_title:FormControl= new FormControl("", Validators.required);
+  // meta_description:FormControl= new FormControl("", Validators.required);
+  // meta_keywords:FormControl= new FormControl("");
+  location: FormControl = new FormControl("");
+  features: FormControl = new FormControl("");
+
+  // -------------- Extra End ---------------------------
+
   supportLanguages = ["en", "ar", "fr", "ta", "hi"];
   currentLanguage: string;
 
   constructor(
     private fb: FormBuilder,
     private http: HttpService,
-    public translateService: TranslateService
+    public translateService: TranslateService,
+    private router: Router
   ) {
     const supportedLanguages = ["en", "ar", "fr", "ta", "hi"];
     this.translateService.addLangs(supportedLanguages);
@@ -97,49 +119,67 @@ export class AddNewProductComponent implements OnInit {
 
   selectedCondition: string | null = null;
 
-selectUsedCondition(condition: string) {
-  this.selectedCondition = condition;
-      this.selectedUsedCondition = condition;
+  selectUsedCondition(condition: string) {
+    this.selectedCondition = condition;
+    this.selectedUsedCondition = condition;
     this.productForm.get("condition")?.setValue(condition);
-}
-
-
+  }
 
   useLang(lang: string) {
     this.translateService.use(lang);
   }
 
   ngOnInit(): void {
-    if(!this.newCondition){
+    if (!this.newCondition) {
       this.newCondition = "new";
     }
     // this.selectedCondition = "new";
     this.createForm();
     this.getBrandsDropdown();
+    this.getCategoryDropdown();
   }
 
   imagePreview: string[] = [];
 
   onFilesChange(event: Event): void {
     const input = event.target as HTMLInputElement;
-  
+
     if (input.files) {
-      const files = Array.from(input.files);
+      const files = Array.from(input.files); // Multiple files are selected
+
+      // Store the files directly in the form control
       this.productForm.patchValue({
-        image: files  
+        additional_images: files, // Store array of files in the form control
       });
-  
-      this.imagePreview = [];
-      files.forEach(file => {
+
+      console.log("files ", files);
+
+      this.imagePreview = []; // Initialize the image preview array
+
+      // Create preview for each image
+      files.forEach((file) => {
         const reader = new FileReader();
         reader.onload = () => {
-          this.imagePreview.push(reader.result as string);
+          this.imagePreview.push(reader.result as string); // Push base64 URL to imagePreview array
         };
-        reader.readAsDataURL(file);
+        reader.readAsDataURL(file); // Convert file to base64 URL
       });
     }
   }
-  
+
+  categoryList: any;
+
+  getCategoryDropdown() {
+    this.http.getCategory().subscribe(
+      (response: any) => {
+        this.categoryList = response.data;
+        console.log(response);
+      },
+      (error: any) => {
+        console.log(error);
+      }
+    );
+  }
 
   getBrandsDropdown() {
     this.http.getAllBrands().subscribe(
@@ -153,14 +193,33 @@ selectUsedCondition(condition: string) {
     );
   }
 
+  onmain_img_FileSelected(event: any) {
+    const file: File = event.target.files[0];
+    if (file) {
+      this.main_image.setValue(file);
+    }
+  }
+
   createForm() {
     this.productForm = this.fb.group({
       name: this.name,
+      warranty: this.warranty,
+      box: this.box,
+      papers: this.papers,
+      availability: this.availability,
+      sale_status: this.sale_status,
+      stock_status: this.stock_status,
+      category_id: this.category_id,
+      meta_title: this.meta_title,
       slug: this.slug,
-      image: this.image,
+      additional_images: this.additional_images,
       type: this.type,
-      brand: this.brand,
+      brand_id: this.brand_id,
       model: this.model,
+      main_image: this.main_image,
+      meta_description: this.meta_description,
+      location: this.location,
+      features: this.features,
       referenceNumber: this.referenceNumber,
       condition: this.condition,
       gender: this.gender,
@@ -170,7 +229,6 @@ selectUsedCondition(condition: string) {
       caseDiameterWidth: this.caseDiameterWidth,
       caseDiameterHeight: this.caseDiameterHeight,
       movement: this.movement,
-      description: this.description,
       price: this.price,
       currency: this.currency,
       caliberMovement: this.caliberMovement,
@@ -207,17 +265,38 @@ selectUsedCondition(condition: string) {
     });
   }
 
+  img_list: any[];
+
   onSubmit() {
     this.productForm.markAllAsTouched();
-    console.log(this.productForm.value)
-    // if (this.productForm.valid) {
-      this.http.addProduct(this.productForm).subscribe((reponse) => {
+
+    const formData: FormData = new FormData();
+    Object.keys(this.productForm.controls).forEach((key) => {
+      const controlValue = this.productForm.get(key)?.value;
+
+      if (key === "main_image") {
+        formData.append(key, controlValue);
+      } else if (key === "additional_images") {
+        const fileArray = [];
+        for (let i = 0; i < controlValue.length; i++) {
+          fileArray.push(controlValue[i]);
+        }
+        formData.append(key, JSON.stringify(fileArray));
+      } else {
+        formData.append(key, controlValue ?? "");
+      }
+    });
+
+    console.log("formData", formData);
+    if (this.productForm.valid) {
+      this.http.addProduct(formData).subscribe((reponse) => {
         console.log("Data saved");
+        this.router.navigate(["/product-list"]);
       });
-      // console.log("Product Data:", this.productForm.value);
-    // } else {
-    //   console.log("Form is invalid", this.productForm.value);
-    // }
+      console.log("Product Data:", this.productForm.value);
+    } else {
+      console.log("Form is invalid", this.productForm.value);
+    }
   }
 
   panelOpenState = false;
@@ -241,29 +320,4 @@ selectUsedCondition(condition: string) {
 
     console.log("condition value ", this.productForm.get("condition").value);
   }
-
-  // selectUsedCondition(option: string) {
-  //   this.selectedUsedCondition = option;
-  //   this.productForm.get("condition")?.setValue(option);
-  // }
-
-  // Inside your component class
-
-
-
-// onFileChange(event: Event): void {
-//   const input = event.target as HTMLInputElement;
-
-//   if (input.files && input.files[0]) {
-//     const file = input.files[0];
-//     const reader = new FileReader();
-    
-//     reader.onload = () => {
-//       this.imagePreview = reader.result; // Set the image preview source
-//     };
-
-//     reader.readAsDataURL(file); // Read the file as a data URL
-//   }
-// }
-
 }

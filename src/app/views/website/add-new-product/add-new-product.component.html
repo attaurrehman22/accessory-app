@@ -8,6 +8,7 @@
 
       <h2>Offer <span>(* Required field)</span></h2>
       <hr />
+
       <div
         class="d-flex"
         [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }"
@@ -28,6 +29,23 @@
         [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }"
         style="justify-content: space-between"
       >
+        <mat-label>Title</mat-label>
+        <div style="width: 70%">
+          <mat-form-field style="width: 100%" appearance="outline">
+            <input formControlName="meta_title" matInput placeholder="" />
+            <mat-error
+              *ngIf="productForm.get('meta_title').hasError('required')"
+            >
+              Please add Title
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div
+        class="d-flex"
+        [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }"
+        style="justify-content: space-between"
+      >
         <mat-label>Slug</mat-label>
         <div style="width: 70%">
           <mat-form-field style="width: 100%" appearance="outline">
@@ -38,40 +56,78 @@
           </mat-form-field>
         </div>
       </div>
+
       <div
         class="d-flex"
         [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }"
         style="justify-content: space-between"
       >
-        <mat-label>Cover Images</mat-label>
+        <mat-label>Features</mat-label>
         <div style="width: 70%">
           <mat-form-field style="width: 100%" appearance="outline">
-            <input
-              type="file"
-              (change)="onFilesChange($event)"
-              formControlName="image"
-              matInput
-              multiple
-            />
-            <mat-error *ngIf="productForm.get('image').hasError('required')">
-              Please add Image
-            </mat-error>
-            <!-- Image Preview inside the mat-form-field -->
-            <div *ngIf="imagePreview.length > 0" style="margin-top: 10px">
-              <div
-                *ngFor="let image of imagePreview"
-                style="display: inline-block; margin-right: 10px"
-              >
-                <img
-                  [src]="image"
-                  alt="Selected Image"
-                  style="width: 100px; height: 100px; object-fit: cover"
-                />
-              </div>
-            </div>
+            <input formControlName="features" matInput placeholder="" />
           </mat-form-field>
         </div>
       </div>
+
+      <div
+        class="d-flex"
+        [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }"
+        style="justify-content: space-between"
+      >
+        <mat-label>Cover Image</mat-label>
+        <div style="width: 70%">
+          <mat-form-field style="width: 100%" appearance="outline">
+            <input type="file" (change)="onmain_img_FileSelected($event)" formControlName="main_image" matInput />
+            <mat-error
+              *ngIf="productForm.get('main_image').hasError('required')"
+            >
+              Please add Image
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div
+  class="d-flex"
+  [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }"
+  style="justify-content: space-between"
+>
+  <mat-label>Additional Images</mat-label>
+  <div style="width: 70%">
+    <mat-form-field style="width: 100%" appearance="outline">
+      <!-- File input to accept multiple images -->
+      <input
+        type="file"
+        (change)="onFilesChange($event)"
+        formControlName="additional_images"
+        matInput
+        multiple
+      />
+      <mat-error *ngIf="productForm.get('additional_images').hasError('required')">
+        Please add Image
+      </mat-error>
+
+      <!-- Image Preview inside the mat-form-field -->
+      <div *ngIf="imagePreview.length > 0" style="margin-top: 10px">
+        <div
+          *ngFor="let image of imagePreview"
+          style="display: inline-block; margin-right: 10px"
+        >
+          <!-- Image preview display -->
+          <img
+            [src]="image"
+            alt="Selected Image"
+            style="width: 100px; height: 100px; object-fit: cover"
+          />
+        </div>
+      </div>
+    </mat-form-field>
+  </div>
+</div>
+
+
+
       <div
         class="d-flex"
         [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }"
@@ -100,13 +156,36 @@
         [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }"
         style="justify-content: space-between"
       >
-        <mat-label>Brand *</mat-label>
+        <mat-label>Select Category *</mat-label>
         <mat-form-field
           style="width: 70%"
           appearance="outline"
           class="full-width"
         >
-          <mat-select formControlName="brand">
+          <mat-select formControlName="category_id">
+            <mat-option *ngFor="let brand of categoryList" [value]="brand.id">
+              {{ brand.name }}
+            </mat-option>
+          </mat-select>
+          <mat-error
+            *ngIf="productForm.get('category_id').hasError('required')"
+          >
+            Select Brand
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div
+        class="d-flex"
+        [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }"
+        style="justify-content: space-between"
+      >
+        <mat-label>Select Brand *</mat-label>
+        <mat-form-field
+          style="width: 70%"
+          appearance="outline"
+          class="full-width"
+        >
+          <mat-select formControlName="brand_id">
             <mat-option *ngFor="let brand of brandsList" [value]="brand.id">
               {{ brand.name }}
             </mat-option>
@@ -114,11 +193,147 @@
           <mat-hint align="start"
             ><a href="#">Manufacturer not listed?</a>
           </mat-hint>
-          <mat-error *ngIf="productForm.get('brand').hasError('required')">
+          <mat-error *ngIf="productForm.get('brand_id').hasError('required')">
             Select Brand
           </mat-error>
         </mat-form-field>
       </div>
+
+      <div
+        class="d-flex"
+        [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }"
+        style="justify-content: space-between"
+      >
+        <mat-label>Select Warranty *</mat-label>
+        <mat-form-field
+          style="width: 70%"
+          appearance="outline"
+          class="full-width"
+        >
+          <mat-select formControlName="warranty">
+            <mat-option value="yes"> Yes </mat-option>
+            <mat-option value="no"> No </mat-option>
+          </mat-select>
+          <mat-error *ngIf="productForm.get('warranty').hasError('required')">
+            Select Warranty
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div
+        class="d-flex"
+        [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }"
+        style="justify-content: space-between"
+      >
+        <mat-label>Select Box *</mat-label>
+        <mat-form-field
+          style="width: 70%"
+          appearance="outline"
+          class="full-width"
+        >
+          <mat-select formControlName="box">
+            <mat-option value="yes"> Yes </mat-option>
+            <mat-option value="no"> No </mat-option>
+          </mat-select>
+          <mat-error *ngIf="productForm.get('box').hasError('required')">
+            Select Box
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div
+        class="d-flex"
+        [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }"
+        style="justify-content: space-between"
+      >
+        <mat-label>Select Availability *</mat-label>
+        <mat-form-field
+          style="width: 70%"
+          appearance="outline"
+          class="full-width"
+        >
+          <mat-select formControlName="availability">
+            <mat-option value="immediate"> Immediate </mat-option>
+            <mat-option value="1-3_days"> 1-3 Days </mat-option>
+            <mat-option value="1_week"> 1 Week </mat-option>
+            <mat-option value="on_request"> On Request </mat-option>
+          </mat-select>
+          <mat-error
+            *ngIf="productForm.get('availability').hasError('required')"
+          >
+            Select Availability
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div
+        class="d-flex"
+        [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }"
+        style="justify-content: space-between"
+      >
+        <mat-label>Select Sale Status *</mat-label>
+        <mat-form-field
+          style="width: 70%"
+          appearance="outline"
+          class="full-width"
+        >
+          <mat-select formControlName="sale_status">
+            <mat-option value="for_sale"> For Sale </mat-option>
+            <mat-option value="sold"> Sold </mat-option>
+            <mat-option value="reserved"> Reserved </mat-option>
+          </mat-select>
+          <mat-error
+            *ngIf="productForm.get('sale_status').hasError('required')"
+          >
+            Select Sale Status
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div
+        class="d-flex"
+        [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }"
+        style="justify-content: space-between"
+      >
+        <mat-label>Select Papers *</mat-label>
+        <mat-form-field
+          style="width: 70%"
+          appearance="outline"
+          class="full-width"
+        >
+          <mat-select formControlName="papers">
+            <mat-option value="yes"> Yes </mat-option>
+            <mat-option value="no"> No </mat-option>
+          </mat-select>
+          <mat-error *ngIf="productForm.get('papers').hasError('required')">
+            Select Brand
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div
+        class="d-flex"
+        [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }"
+        style="justify-content: space-between"
+      >
+        <mat-label>Select Stock Status *</mat-label>
+        <mat-form-field
+          style="width: 70%"
+          appearance="outline"
+          class="full-width"
+        >
+          <mat-select formControlName="stock_status">
+            <mat-option value="in_stock"> In Stock </mat-option>
+            <mat-option value="out_of_stock"> Out Of Stock </mat-option>
+          </mat-select>
+          <mat-error
+            *ngIf="productForm.get('stock_status').hasError('required')"
+          >
+            Select Stock Status
+          </mat-error>
+        </mat-form-field>
+      </div>
+
       <div
         class="d-flex"
         [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }"
@@ -324,8 +539,8 @@
         >
           <mat-select formControlName="gender">
             <mat-option value="">Please select</mat-option>
-            <mat-option value="male">Male</mat-option>
-            <mat-option value="female">Female</mat-option>
+            <mat-option value="mens">Men</mat-option>
+            <mat-option value="womens">Women</mat-option>
             <mat-option value="unisex">Unisex</mat-option>
           </mat-select>
 
@@ -454,11 +669,11 @@
         >
           <textarea
             matInput
-            formControlName="description"
+            formControlName="meta_description"
             placeholder="For example, where did you buy your watch? Does it still have a warranty? Has it been repaired? Is the watch damaged?"
           ></textarea>
           <mat-error
-            *ngIf="productForm.get('description').hasError('required')"
+            *ngIf="productForm.get('meta_description').hasError('required')"
           >
             Add Description
           </mat-error>

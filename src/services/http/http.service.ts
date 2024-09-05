@@ -7,8 +7,8 @@ import { environment } from "src/environments/environment";
   providedIn: "root",
 })
 export class HttpService {
-    private apiUrl = environment.apipath;
-    constructor(private http: HttpClient) {}
+  private apiUrl = environment.apipath;
+  constructor(private http: HttpClient) {}
   getusername(username: string) {
     return this.http.get(`${this.apiUrl}/api/usernames?name=${username}`);
   }
@@ -22,37 +22,29 @@ export class HttpService {
   }
 
   login(formData: any): Observable<any> {
-    // const headers = new HttpHeaders({
-    //   'email': formData.email,
-    //   'password': formData.password
-    // });
-    
-    return this.http.post(`${this.apiUrl}/api/login`,formData);
+    const headers = new HttpHeaders({
+      email: formData.email,
+      password: formData.password,
+    });
+
+    return this.http.post(`${this.apiUrl}/api/login`, formData);
   }
 
   getAllBrands(): Observable<any> {
     return this.http.get(`${this.apiUrl}/api/brands`);
   }
 
+  getCategory(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/api/categories`);
+  }
+
   addProduct(formData: any): Observable<any> {
-   
-    let formdate = new FormData();
-    formdate.append("name", formData.get("name").value);
-    formdate.append("slug", formData.get("slug").value);
-
-    console.log("formData.value",formData.value)
-    const images = formData.get("image").value as File[];
-    
-    console.log("images",images)
-    if (images && images.length > 0) {
-      images.forEach((file: File) => {
-        formdate.append("images", file, file.name);
-      });
-    }
-
-    const url = `${this.apiUrl}/api/brands/save/?name=${formData.get("name").value}&slug=${formData.get("slug").value}`;
-    return this.http.post(url, formdate, {
+    const token = localStorage.getItem("user_token");
+    const url = `${this.apiUrl}/api/products/save`;
+    return this.http.post(url, formData, {
       headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${token}`,
       },
     });
   }
@@ -71,5 +63,9 @@ export class HttpService {
 
   getBuyerProtectionCommnts(): Observable<any> {
     return this.http.get(`${this.apiUrl}/api/comments`);
+  }
+
+  getStatics(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/api/getStatistics`);
   }
 }

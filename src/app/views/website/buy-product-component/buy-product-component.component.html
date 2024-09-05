@@ -73,48 +73,13 @@
         </div>
       </div>
     </div>
-
-    <!-- <div class="col-md-6" style="height: 550px">
-      <img
-      style="object-fit: cover;"
-        src="./assets/images/product-detail-img.png"
-        class="img-fluid"
-        alt="Rolex GMT-Master II"
-      />
-      <div class="row mt-3">
-        <div class="col-3">
-          <img
-            src="./assets/images/how-works-watch.png"
-            class="img-fluid"
-            alt=""
-          />
-        </div>
-        <div class="col-3">
-          <img
-            src="./assets/images/how-works-watch.png"
-            class="img-fluid"
-            alt=""
-          />
-        </div>
-        <div class="col-3">
-          <img src="./assets/images/man-watch-2.png" class="img-fluid" alt="" />
-        </div>
-        <div class="col-3">
-          <img
-            src="./assets/images/how-works-watch.png"
-            class="img-fluid"
-            alt=""
-          />
-        </div>
-      </div>
-    </div> -->
     <div class="col-md-6">
-      <h3 class="header-h3">Rolex GMT-Master II</h3>
-      <p class="text-muted">126710BLRO</p>
-      <p class="text-success">$20,974</p>
-      <p><strong>Used (Very good)</strong></p>
-      <p>Year of production: 2019</p>
-      <p>Original box • Original papers</p>
+      <h3 class="header-h3">{{productDetails.name}}</h3>
+      <p class="text-muted">{{productDetails.name}}</p>
+      <p class="text-success">{{productDetails.price}}</p>
+      <p>Condition :<strong>{{productDetails.condition}}</strong></p>
+      <p>Year of production: {{productDetails.year_of_production}}</p>
+      <p>Box : {{productDetails.box}}</p>
       <div class="mt-4">
         <button class="btn btn-success btn-lg">Buy ...</button>
         <button class="btn btn-dark btn-lg mt-2">Suggest a price</button>
@@ -489,14 +454,14 @@
           alt="Rolex GMT-Master II"
         />
         <div class="card-body">
-          <h5 class="card-title">Rolex</h5>
+          <h5 class="card-title">{{productDetails.name}}</h5>
           <h6 class="card-subtitle mb-2 text-muted">GMT-Master II</h6>
           <p class="card-text">126710BLRO</p>
           <ul class="list-group list-group-flush">
             <li class="list-group-item"><strong>Case:</strong> Steel</li>
             <li class="list-group-item"><strong>Dial:</strong> Black</li>
             <li class="list-group-item">
-              <strong>Condition:</strong> Very good
+              <strong>Condition</strong> {{productDetails.condition}}
             </li>
           </ul>
           <a href="#" class="btn btn-outline-dark mt-3 w-100"

@@ -1,27 +1,46 @@
-import { Component, HostListener } from "@angular/core";
+import { Component, HostListener, OnInit } from "@angular/core";
 import { TranslateService } from "@ngx-translate/core";
+import { HttpService } from "src/services/http/http.service";
 
 @Component({
   selector: "app-find-dream-component",
   templateUrl: "./find-dream-component.component.html",
   styleUrls: ["./find-dream-component.component.css"],
 })
-export class FindDreamComponentComponent {
+export class FindDreamComponentComponent implements OnInit {
   supportLanguages = ["en", "ar", "fr", "ta", "hi"];
   currentLanguage: string;
+  staticList: any;
 
-  constructor(public  translateService: TranslateService) {
+  ngOnInit(): void {
+    this.getStatics();
+  }
+
+  getStatics() {
+    this.http.getStatics().subscribe(
+      (res) => {
+        this.staticList = res.statistics;
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
+  }
+
+  constructor(
+    public translateService: TranslateService,
+    private http: HttpService
+  ) {
     this.translateService.addLangs(this.supportLanguages);
     this.translateService.setDefaultLang("ar");
 
     const browserlang = this.translateService.getBrowserLang();
 
     console.log("Browser Language => ", browserlang);
-    this.currentLanguage=browserlang;
+    this.currentLanguage = browserlang;
 
     if (this.supportLanguages.includes(browserlang)) {
       this.translateService.use(browserlang);
-      
     }
   }
   useLang(lang: string) {

@@ -51,7 +51,7 @@ export class LoginComponent implements OnInit {
             "Login successful and token is = ",
             response.authorisation.token
           );
-          localStorage.setItem("token", response.authorisation.token);
+          localStorage.setItem("user_token", response.authorisation.token);
           if (this.routeTo) {
             this.router.navigateByUrl("buy-product");
           } else {

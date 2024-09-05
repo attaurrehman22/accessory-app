@@ -28,13 +28,26 @@ export class PopularBrandsComponentComponent implements OnInit {
     this.translateService.use(lang);
   }
 
+
+  goToProductList(){
+    this.router.navigate(['/product-list'],{
+      state:{data:this.brandsList}
+    })
+  }
+
+  goToProducDetailstList(brand){
+    this.router.navigate(['/product-list'],{
+      state:{data:brand}
+    })
+  }
+
   ngOnInit(): void {
     this.getAllBrands();
   }
 
   productDetails(brand: any) {
-    this.router.navigate(["/product-detail"], {
-      state: { data: brand },
+    this.router.navigate(['/product-list'], {
+      state: { singleBrand: brand },
     });
   }
 

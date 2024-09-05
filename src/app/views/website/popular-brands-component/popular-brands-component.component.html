@@ -2,13 +2,13 @@
     <h2>{{ 'popular_brands.label' | translate }}</h2>
     <div class="brands-grid mt-4" >
       <div class="brand-item" style="cursor: pointer;" (click)="productDetails(brand)"
-       *ngFor="let brand of brandsList">
+       *ngFor="let brand of brandsList" (click)="goToProducDetailstList(brand)">
         <img src="./assets/images/how-works-watch.png" alt="{{ 'popular_brands.rolex' | translate }}" />
         <!-- <div class="brand-label">{{ 'popular_brands.rolex' | translate }}</div> -->
         <div class="brand-label">{{ brand.name }}</div>
       </div>
     </div>
-    <button class="display-all-button">
+    <button (click)="goToProductList()" class="display-all-button">
       {{ 'popular_brands.display_all' | translate }}
     </button>
   </div>

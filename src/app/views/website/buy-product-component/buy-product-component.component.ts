@@ -222,7 +222,11 @@ export class BuyProductComponentComponent implements OnInit, OnDestroy {
     this.selectedImage = clickedImage;
   }
 
+  productDetails:any;
+
   ngOnInit(): void {
+this.productDetails=history.state.data;
+console.log("this.productDetails",this.productDetails)
     this.getAllProducts();
     this.startAutoSlide();
     this.startAutoSlide1();

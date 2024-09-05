@@ -24,7 +24,7 @@
         routerLink="/"
         src="./assets/images/logo.png"
         alt="Cronosuq"
-        style="cursor: pointer;"
+        style="cursor: pointer"
       />
     </div>
     <div class="header-content gap-4" *ngIf="!isSmallScreen">
@@ -59,19 +59,27 @@
         </button>
       </mat-menu> -->
 
-      <mat-icon style="cursor: pointer;" (click)="logout()" *ngIf="isUserLogin">logout<span>logout</span></mat-icon>
+      <button
+        style="background: none; border: none; font-size: 16px"
+        *ngIf="isUserLogin"
+        (click)="logout()"
+      >
+        Logout
+      </button>
+      <mat-icon style="cursor: pointer;">notification_important</mat-icon>
+      <!-- <mat-icon  style="cursor: pointer;"  ><span>logout</span></mat-icon> -->
       <!-- <img
       *ngIf="isUserLogin"
       src="./assets/images/profile-icon.png"
       (click)="logout()"
       style="cursor: pointer;"
     /> -->
-     <img
-      *ngIf="!isUserLogin"
-      src="./assets/images/profile-icon.png"
-      (click)="goToRegister()"
-      style="cursor: pointer;"
-    />
+      <img
+        *ngIf="!isUserLogin"
+        src="./assets/images/profile-icon.png"
+        (click)="goToRegister()"
+        style="cursor: pointer"
+      />
       <div class="dropdown">
         <select (change)="useLang($event.target.value)">
           <option *ngFor="let item of supportLanguages" [value]="item.value">

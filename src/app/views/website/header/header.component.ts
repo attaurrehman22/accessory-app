@@ -76,7 +76,7 @@ export class HeaderComponent {
   }
 
   goToRegister() { 
-      this.router.navigateByUrl('register');
+      this.router.navigateByUrl('login');
   }
 
   logout() {
