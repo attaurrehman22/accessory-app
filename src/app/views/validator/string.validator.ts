@@ -5,9 +5,9 @@ import {
   ValidationErrors,
   ValidatorFn,
 } from "@angular/forms";
-import { Observable } from "rxjs";
+import { Observable, of } from "rxjs";
 import { UserService } from "src/services/users/user.service";
-import { map } from "rxjs/operators";
+import { catchError, map } from "rxjs/operators";
 
 export class StringValidator {
   static noAllSpaces(control: AbstractControl): ValidationErrors | null {
@@ -213,11 +213,38 @@ export function envNameExists(envs: any, ignore = false): ValidatorFn {
   };
 }
 
+export function userEmailExists(userService: UserService): AsyncValidatorFn {
+  return (control: AbstractControl): Observable<ValidationErrors | null> => {
+    if (!control.value) {
+      return of(null); 
+    }
+
+    return userService.checkUserEmailExists(control.value).pipe(
+      map((emailExists: boolean) => {
+        // If emailExists is true, return the error object { emailExists: true }
+        return emailExists ? { emailExists: true } : null;
+      }),
+      catchError(() => of(null)) // In case of error, return null to indicate no error
+    );
+  };
+}
+
 export function usernameExists(userService: UserService): AsyncValidatorFn {
   return (control: AbstractControl): Observable<ValidationErrors | null> => {
-    return userService
-      .checkUsernameExists(control.value)
-      .pipe(map((exists) => (exists ? { usernameExists: true } : null)));
+    if (!control.value) {
+      return of(null); 
+    }
+
+    return userService.checkUserEmailExists(control.value).pipe(
+      map((usernameExists: boolean) => {
+        return usernameExists ? { usernameExists: true } : null;
+      }),
+      catchError(() => of(null))
+    );
+
+    // return userService
+    //   .checkUsernameExists(control.value)
+    //   .pipe(map((exists) => (exists ? { usernameExists: true } : null)));
   };
 }
 

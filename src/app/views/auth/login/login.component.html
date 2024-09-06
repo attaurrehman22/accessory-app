@@ -16,7 +16,7 @@
           <mat-error *ngIf="loginForm.get('email')?.hasError('required')">
             Enter Email
           </mat-error>
-          <mat-error *ngIf="loginForm.get('name')?.hasError('email')">
+          <mat-error *ngIf="loginForm.get('email')?.hasError('email')">
             Enter Valid Email
           </mat-error>
         </mat-form-field>

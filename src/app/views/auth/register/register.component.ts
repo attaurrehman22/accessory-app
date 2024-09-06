@@ -8,7 +8,7 @@ import {
   Validators,
 } from "@angular/forms";
 import { Router } from "@angular/router";
-import { usernameExists, notsame } from "../../validator/string.validator";
+import { usernameExists, notsame ,userEmailExists} from "../../validator/string.validator";
 import { UserService } from "src/services/users/user.service";
 import { HttpService } from "src/services/http/http.service";
 
@@ -19,8 +19,17 @@ import { HttpService } from "src/services/http/http.service";
 })
 export class RegisterComponent implements OnInit {
   registerForm: FormGroup;
-  username: FormControl = new FormControl("", {validators: [Validators.required],asyncValidators: [usernameExists(this.userService)],updateOn: "blur",});
-  email: FormControl = new FormControl("", [Validators.required]);
+  username = new FormControl("", 
+    {validators: [Validators.required],
+    asyncValidators: [usernameExists(this.userService)],updateOn: "blur",});
+  // email: FormControl = new FormControl("", {validators: [Validators.required,Validators.email],asyncValidators: [userEmailExists(this.userService)],updateOn: "blur",});
+  email = new FormControl("", {
+    validators: [Validators.required, Validators.email],
+    asyncValidators: [userEmailExists(this.userService)], // Async validator
+    updateOn: "blur", // Validate on blur
+  });
+  
+  // email: FormControl = new FormControl("", [Validators.required,Validators.email]);
   password: FormControl = new FormControl("", [
     Validators.required,
     Validators.minLength(6),

@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { environment } from "src/environments/environment";
@@ -9,9 +9,31 @@ import { environment } from "src/environments/environment";
 export class HttpService {
   private apiUrl = environment.apipath;
   constructor(private http: HttpClient) {}
-  getusername(username: string) {
-    return this.http.get(`${this.apiUrl}/api/usernames?name=${username}`);
+
+
+  getuserEmail(email: string) {
+    console.log("email in http Service", email);
+    
+    const formData = new FormData();
+    formData.append('email', email);
+  
+    return this.http.post(`${this.apiUrl}/api/check-email-existence`, formData);
   }
+
+  getusername(username: string) {
+    console.log("username in http Service", username);
+    
+    const formData = new FormData();
+    formData.append('email', username);
+  
+    return this.http.post(`${this.apiUrl}/api/check-user-existence`, formData);
+  }
+  
+
+  // getusername(username: string) {
+  //   console.log("Username in http Service",username)
+  //   return this.http.get(`${this.apiUrl}/api/usernames?name=${username}`);
+  // }
   register(FormControl: any): Observable<any> {
     let formdate = new FormData();
     formdate.append("name", FormControl.get("username").value);
@@ -23,11 +45,15 @@ export class HttpService {
 
   login(formData: any): Observable<any> {
     const headers = new HttpHeaders({
-      email: formData.email,
-      password: formData.password,
+      'Content-Type': 'application/x-www-form-urlencoded',
     });
-
-    return this.http.post(`${this.apiUrl}/api/login`, formData);
+  
+    // Encoding the form data
+    const body = new HttpParams()
+      .set('email', formData.email)
+      .set('password', formData.password);
+  
+    return this.http.post(`${this.apiUrl}/api/login`, body.toString(), { headers });
   }
 
   getAllBrands(): Observable<any> {
