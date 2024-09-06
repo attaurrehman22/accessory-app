@@ -276,27 +276,26 @@ export class AddNewProductComponent implements OnInit {
 
       if (key === "main_image") {
         formData.append(key, controlValue);
-      } else if (key === "additional_images") {
-        const fileArray = [];
+      }else if (key === "additional_images") {
         for (let i = 0; i < controlValue.length; i++) {
-          fileArray.push(controlValue[i]);
+          // Append each file to the FormData object with the key as 'additional_images[]'
+          formData.append(`${key}[]`, controlValue[i]);
         }
-        formData.append(key, JSON.stringify(fileArray));
       } else {
         formData.append(key, controlValue ?? "");
       }
     });
 
     console.log("formData", formData);
-    if (this.productForm.valid) {
+    // if (this.productForm.valid) {
       this.http.addProduct(formData).subscribe((reponse) => {
         console.log("Data saved");
         this.router.navigate(["/product-list"]);
       });
       console.log("Product Data:", this.productForm.value);
-    } else {
-      console.log("Form is invalid", this.productForm.value);
-    }
+    // } else {
+    //   console.log("Form is invalid", this.productForm.value);
+    // }
   }
 
   panelOpenState = false;

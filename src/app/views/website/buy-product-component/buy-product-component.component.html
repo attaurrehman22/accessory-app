@@ -48,11 +48,13 @@
   </div>
 </div>
 
+<!-- [src]="'https://api.chronosouq.com/' + watch.main_image" -->
+
 <div class="container mt-5">
   <div class="row">
     <div class="col-md-6" style="height: 550px">
       <img
-        [src]="selectedImage"
+      [src]="'https://api.chronosouq.com/' + selectedImage"
         style="object-fit: cover; height: 100%; width: 100%"
         class="img-fluid"
         alt="Selected Watch"
@@ -61,7 +63,7 @@
       <div class="row mt-3" style="display: flex">
         <div class="col-3" *ngFor="let image of thumbnails">
           <img
-            [src]="image"
+            [src]="'https://api.chronosouq.com/' + image"
             class="img-fluid"
             alt="thumbnail"
             [ngClass]="{
@@ -449,7 +451,7 @@
     <div class="col-md-4">
       <div class="per-card">
         <img
-          src="./assets/images/how-works-watch.png"
+        [src]="'https://api.chronosouq.com/' + productDetails.main_image"
           class="card-img-top"
           alt="Rolex GMT-Master II"
         />

@@ -73,7 +73,6 @@ export class ProductListComponent implements OnInit {
     this.http.getProducts().subscribe(
       (res) => {
         this.productsList = res.data.map((product: any) => {
-          
           // Clean up main_image
           if (product.main_image) {
             // Replace backslashes with forward slashes and ensure no leading slash
@@ -100,6 +99,10 @@ export class ProductListComponent implements OnInit {
           return product;
         });
   
+        // Sort the productsList in descending order by the desired field, e.g., createdAt
+        this.productsList.sort((a: any, b: any) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
+
+
         // Initialize filteredProducts if not already initialized
         if (!this.filterdProducts) {
           this.filterdProducts = this.productsList;
@@ -110,6 +113,7 @@ export class ProductListComponent implements OnInit {
       }
     );
   }
+  
   
   
   selectedCategory: any;

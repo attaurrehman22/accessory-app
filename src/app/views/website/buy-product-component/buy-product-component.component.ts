@@ -125,7 +125,6 @@ export class BuyProductComponentComponent implements OnInit, OnDestroy {
     },
     // Add more products here
   ];
-  
 
   currentIndex = 0;
   currentIndex1 = 0;
@@ -209,24 +208,27 @@ export class BuyProductComponentComponent implements OnInit, OnDestroy {
   thumbnails: string[] = [];
 
   constructor(private http: HttpService) {
-    this.selectedImage = "./assets/images/man-watch-3.png";
-    this.thumbnails = [
-      "./assets/images/man-watch-3.png",
-      "./assets/images/how-works-watch.png",
-      "./assets/images/man-watch-2.png",
-      "./assets/images/how-works-watch.png",
-    ];
+    // this.thumbnails = [
+    //   "./assets/images/man-watch-3.png",
+    //   "./assets/images/how-works-watch.png",
+    //   "./assets/images/man-watch-2.png",
+    //   "./assets/images/how-works-watch.png",
+    // ];
   }
 
   swapImages(clickedImage: string): void {
     this.selectedImage = clickedImage;
   }
 
-  productDetails:any;
+  productDetails: any;
 
   ngOnInit(): void {
-this.productDetails=history.state.data;
-console.log("this.productDetails",this.productDetails)
+    this.productDetails = history.state.data;
+    this.thumbnails = this.productDetails.additional_images;
+    if (!this.selectedImage) {
+      this.selectedImage = this.thumbnails[0];
+    }
+    console.log("this.productDetails", this.productDetails);
     this.getAllProducts();
     this.startAutoSlide();
     this.startAutoSlide1();
