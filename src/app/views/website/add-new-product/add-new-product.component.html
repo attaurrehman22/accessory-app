@@ -9,76 +9,36 @@
       <h2>Offer <span>(* Required field)</span></h2>
       <hr />
 
-      <div
-        class="d-flex"
-        [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }"
-        style="justify-content: space-between"
-      >
-        <mat-label>Name</mat-label>
-        <div style="width: 70%">
+      <div class="d-flex mt-2" style="justify-content: space-between; gap: 1%">
+        <div style="width: 49%">
           <mat-form-field style="width: 100%" appearance="outline">
+            <mat-label>Name</mat-label>
             <input formControlName="name" matInput placeholder="" />
             <mat-error *ngIf="productForm.get('name').hasError('required')">
               Please add Name
             </mat-error>
           </mat-form-field>
         </div>
-      </div>
-      <div
-        class="d-flex"
-        [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }"
-        style="justify-content: space-between"
-      >
-        <mat-label>Title</mat-label>
-        <div style="width: 70%">
+        <div style="width: 49%">
           <mat-form-field style="width: 100%" appearance="outline">
-            <input formControlName="meta_title" matInput placeholder="" />
-            <mat-error
-              *ngIf="productForm.get('meta_title').hasError('required')"
-            >
+            <mat-label>Title</mat-label>
+            <input formControlName="title" matInput placeholder="" />
+            <mat-error *ngIf="productForm.get('title').hasError('required')">
               Please add Title
             </mat-error>
           </mat-form-field>
         </div>
       </div>
-      <div
-        class="d-flex"
-        [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }"
-        style="justify-content: space-between"
-      >
-        <mat-label>Slug</mat-label>
-        <div style="width: 70%">
+      <div class="d-flex mt-2" style="justify-content: space-between; gap: 1%">
+        <div style="width: 49%">
           <mat-form-field style="width: 100%" appearance="outline">
-            <input formControlName="slug" matInput placeholder="" />
-            <mat-error *ngIf="productForm.get('slug').hasError('required')">
-              Please add Slug
-            </mat-error>
-          </mat-form-field>
-        </div>
-      </div>
-
-      <div
-        class="d-flex"
-        [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }"
-        style="justify-content: space-between"
-      >
-        <mat-label>Features</mat-label>
-        <div style="width: 70%">
-          <mat-form-field style="width: 100%" appearance="outline">
-            <input formControlName="features" matInput placeholder="" />
-          </mat-form-field>
-        </div>
-      </div>
-
-      <div
-        class="d-flex"
-        [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }"
-        style="justify-content: space-between"
-      >
-        <mat-label>Cover Image</mat-label>
-        <div style="width: 70%">
-          <mat-form-field style="width: 100%" appearance="outline">
-            <input type="file" (change)="onmain_img_FileSelected($event)" formControlName="main_image" matInput />
+            <mat-label>Cover Image</mat-label>
+            <input
+              type="file"
+              (change)="onmain_img_FileSelected($event)"
+              formControlName="main_image"
+              matInput
+            />
             <mat-error
               *ngIf="productForm.get('main_image').hasError('required')"
             >
@@ -86,262 +46,133 @@
             </mat-error>
           </mat-form-field>
         </div>
-      </div>
+        <div style="width: 49%">
+          <mat-form-field style="width: 100%" appearance="outline">
+            <mat-label>Additional Images</mat-label>
+            <!-- File input to accept multiple images -->
+            <input
+              type="file"
+              (change)="onFilesChange($event)"
+              formControlName="additional_images"
+              matInput
+              multiple
+            />
+            <mat-error
+              *ngIf="productForm.get('additional_images').hasError('required')"
+            >
+              Please add Image
+            </mat-error>
 
-      <div
-  class="d-flex"
-  [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }"
-  style="justify-content: space-between"
->
-  <mat-label>Additional Images</mat-label>
-  <div style="width: 70%">
-    <mat-form-field style="width: 100%" appearance="outline">
-      <!-- File input to accept multiple images -->
-      <input
-        type="file"
-        (change)="onFilesChange($event)"
-        formControlName="additional_images"
-        matInput
-        multiple
-      />
-      <mat-error *ngIf="productForm.get('additional_images').hasError('required')">
-        Please add Image
-      </mat-error>
-
-      <!-- Image Preview inside the mat-form-field -->
-      <div *ngIf="imagePreview.length > 0" style="margin-top: 10px">
-        <div
-          *ngFor="let image of imagePreview"
-          style="display: inline-block; margin-right: 10px"
-        >
-          <!-- Image preview display -->
-          <img
-            [src]="image"
-            alt="Selected Image"
-            style="width: 100px; height: 100px; object-fit: cover"
-          />
+            <!-- Image Preview inside the mat-form-field -->
+            <div *ngIf="imagePreview.length > 0" style="margin-top: 10px">
+              <div
+                *ngFor="let image of imagePreview"
+                style="display: inline-block; margin-right: 10px"
+              >
+                <!-- Image preview display -->
+                <img
+                  [src]="image"
+                  alt="Selected Image"
+                  style="width: 100px; height: 100px; object-fit: cover"
+                />
+              </div>
+            </div>
+          </mat-form-field>
         </div>
       </div>
-    </mat-form-field>
-  </div>
-</div>
 
-
-
-      <div
-        class="d-flex"
-        [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }"
-        style="justify-content: space-between"
-      >
-        <mat-label>Type</mat-label>
-        <mat-form-field
-          style="width: 70%"
-          appearance="outline"
-          class="full-width"
-        >
-          <mat-select formControlName="type">
-            <mat-option value="case">Case</mat-option>
-            <mat-option value="box">Box</mat-option>
-            <mat-option value="tools">Tools</mat-option>
-            <mat-option value="bracelet">Bracelet/Strap</mat-option>
-            <mat-option value="watch">Watch</mat-option>
-          </mat-select>
-          <mat-error *ngIf="productForm.get('type').hasError('required')">
-            Select Type
-          </mat-error>
-        </mat-form-field>
-      </div>
-      <div
-        class="d-flex"
-        [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }"
-        style="justify-content: space-between"
-      >
-        <mat-label>Select Category *</mat-label>
-        <mat-form-field
-          style="width: 70%"
-          appearance="outline"
-          class="full-width"
-        >
-          <mat-select formControlName="category_id">
-            <mat-option *ngFor="let brand of categoryList" [value]="brand.id">
-              {{ brand.name }}
-            </mat-option>
-          </mat-select>
-          <mat-error
-            *ngIf="productForm.get('category_id').hasError('required')"
+      <div class="d-flex mt-2" style="justify-content: space-between; gap: 1%">
+        <div style="width: 49%">
+          <mat-form-field
+            style="width: 100%"
+            appearance="outline"
+            class="full-width"
           >
-            Select Brand
-          </mat-error>
-        </mat-form-field>
-      </div>
-      <div
-        class="d-flex"
-        [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }"
-        style="justify-content: space-between"
-      >
-        <mat-label>Select Brand *</mat-label>
-        <mat-form-field
-          style="width: 70%"
-          appearance="outline"
-          class="full-width"
-        >
-          <mat-select formControlName="brand_id">
-            <mat-option *ngFor="let brand of brandsList" [value]="brand.id">
-              {{ brand.name }}
-            </mat-option>
-          </mat-select>
-          <mat-hint align="start"
-            ><a href="#">Manufacturer not listed?</a>
-          </mat-hint>
-          <mat-error *ngIf="productForm.get('brand_id').hasError('required')">
-            Select Brand
-          </mat-error>
-        </mat-form-field>
-      </div>
-
-      <div
-        class="d-flex"
-        [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }"
-        style="justify-content: space-between"
-      >
-        <mat-label>Select Warranty *</mat-label>
-        <mat-form-field
-          style="width: 70%"
-          appearance="outline"
-          class="full-width"
-        >
-          <mat-select formControlName="warranty">
-            <mat-option value="yes"> Yes </mat-option>
-            <mat-option value="no"> No </mat-option>
-          </mat-select>
-          <mat-error *ngIf="productForm.get('warranty').hasError('required')">
-            Select Warranty
-          </mat-error>
-        </mat-form-field>
-      </div>
-
-      <div
-        class="d-flex"
-        [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }"
-        style="justify-content: space-between"
-      >
-        <mat-label>Select Box *</mat-label>
-        <mat-form-field
-          style="width: 70%"
-          appearance="outline"
-          class="full-width"
-        >
-          <mat-select formControlName="box">
-            <mat-option value="yes"> Yes </mat-option>
-            <mat-option value="no"> No </mat-option>
-          </mat-select>
-          <mat-error *ngIf="productForm.get('box').hasError('required')">
-            Select Box
-          </mat-error>
-        </mat-form-field>
-      </div>
-
-      <div
-        class="d-flex"
-        [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }"
-        style="justify-content: space-between"
-      >
-        <mat-label>Select Availability *</mat-label>
-        <mat-form-field
-          style="width: 70%"
-          appearance="outline"
-          class="full-width"
-        >
-          <mat-select formControlName="availability">
-            <mat-option value="immediate"> Immediate </mat-option>
-            <mat-option value="1-3_days"> 1-3 Days </mat-option>
-            <mat-option value="1_week"> 1 Week </mat-option>
-            <mat-option value="on_request"> On Request </mat-option>
-          </mat-select>
-          <mat-error
-            *ngIf="productForm.get('availability').hasError('required')"
+            <mat-label>Watch Type</mat-label>
+            <mat-select formControlName="watch_type">
+              <mat-option
+                *ngFor="let key of allDropDownList.watch_type | keyvalue"
+                [value]="key.key"
+              >
+                {{ key.value }}</mat-option
+              >
+            </mat-select>
+            <mat-error
+              *ngIf="productForm.get('watch_type').hasError('required')"
+            >
+              Select Type
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div style="width: 49%">
+          <mat-form-field
+            style="width: 100%"
+            appearance="outline"
+            class="full-width"
           >
-            Select Availability
-          </mat-error>
-        </mat-form-field>
+            <mat-label>Select Category</mat-label>
+            <mat-select formControlName="category_id">
+              <mat-option *ngFor="let brand of categoryList" [value]="brand.id">
+                {{ brand.name }}
+              </mat-option>
+            </mat-select>
+            <mat-error
+              *ngIf="productForm.get('category_id').hasError('required')"
+            >
+              Select Brand
+            </mat-error>
+          </mat-form-field>
+        </div>
       </div>
 
-      <div
-        class="d-flex"
-        [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }"
-        style="justify-content: space-between"
-      >
-        <mat-label>Select Sale Status *</mat-label>
-        <mat-form-field
-          style="width: 70%"
-          appearance="outline"
-          class="full-width"
-        >
-          <mat-select formControlName="sale_status">
-            <mat-option value="for_sale"> For Sale </mat-option>
-            <mat-option value="sold"> Sold </mat-option>
-            <mat-option value="reserved"> Reserved </mat-option>
-          </mat-select>
-          <mat-error
-            *ngIf="productForm.get('sale_status').hasError('required')"
+      <div class="d-flex mt-2" style="justify-content: space-between; gap: 1%">
+        <div style="width: 49%">
+          <mat-form-field
+            style="width: 100%"
+            appearance="outline"
+            class="full-width"
           >
-            Select Sale Status
-          </mat-error>
-        </mat-form-field>
-      </div>
-
-      <div
-        class="d-flex"
-        [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }"
-        style="justify-content: space-between"
-      >
-        <mat-label>Select Papers *</mat-label>
-        <mat-form-field
-          style="width: 70%"
-          appearance="outline"
-          class="full-width"
-        >
-          <mat-select formControlName="papers">
-            <mat-option value="yes"> Yes </mat-option>
-            <mat-option value="no"> No </mat-option>
-          </mat-select>
-          <mat-error *ngIf="productForm.get('papers').hasError('required')">
-            Select Brand
-          </mat-error>
-        </mat-form-field>
-      </div>
-
-      <div
-        class="d-flex"
-        [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }"
-        style="justify-content: space-between"
-      >
-        <mat-label>Select Stock Status *</mat-label>
-        <mat-form-field
-          style="width: 70%"
-          appearance="outline"
-          class="full-width"
-        >
-          <mat-select formControlName="stock_status">
-            <mat-option value="in_stock"> In Stock </mat-option>
-            <mat-option value="out_of_stock"> Out Of Stock </mat-option>
-          </mat-select>
-          <mat-error
-            *ngIf="productForm.get('stock_status').hasError('required')"
+            <mat-label>Select Brand </mat-label>
+            <mat-select formControlName="brand_id">
+              <mat-option *ngFor="let brand of brandsList" [value]="brand.id">
+                {{ brand.name }}
+              </mat-option>
+            </mat-select>
+            <mat-hint align="start"
+              ><a>Manufacturer not listed?</a>
+            </mat-hint>
+            <mat-error *ngIf="productForm.get('brand_id').hasError('required')">
+              Select Brand
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div style="width: 49%">
+          <mat-form-field
+            style="width: 100%"
+            appearance="outline"
+            class="full-width"
           >
-            Select Stock Status
-          </mat-error>
-        </mat-form-field>
+            <mat-label>Scope of Delivery</mat-label>
+            <mat-select formControlName="scope_of_delivery">
+              <mat-option
+                *ngFor="let key of allDropDownList.scope_of_delivery | keyvalue"
+                [value]="key.key"
+              >
+                {{ key.value }}</mat-option
+              >
+            </mat-select>
+            <mat-error
+              *ngIf="productForm.get('scope_of_delivery').hasError('required')"
+            >
+              Select Scope of Delivery
+            </mat-error>
+          </mat-form-field>
+        </div>
       </div>
-
-      <div
-        class="d-flex"
-        [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }"
-        style="justify-content: space-between"
-      >
-        <mat-label>Model *</mat-label>
-        <div style="width: 70%">
+      <div class="d-flex mt-2" style="justify-content: space-between; gap: 1%">
+        <div style="width: 49%">
           <mat-form-field style="width: 100%" appearance="outline">
+            <mat-label>Model </mat-label>
             <input formControlName="model" matInput placeholder="" />
             <mat-hint style="font-size: 12px">
               You can be more specific about the model name and indicate the
@@ -352,27 +183,23 @@
             </mat-error>
           </mat-form-field>
         </div>
-      </div>
-      <div
-        class="d-flex"
-        [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }"
-        style="justify-content: space-between"
-      >
-        <mat-label class="d-flex gap-1"
-          >Reference number <mat-icon matSuffix>info_outline</mat-icon>
-        </mat-label>
-        <mat-form-field
-          style="width: 70%"
-          appearance="outline"
-          class="full-width"
-        >
-          <input matInput formControlName="referenceNumber" />
-          <mat-error
-            *ngIf="productForm.get('referenceNumber').hasError('required')"
+        <div style="width: 49%">
+          <mat-form-field
+            style="width: 100%"
+            appearance="outline"
+            class="full-width"
           >
-            Add referenceNumber
-          </mat-error>
-        </mat-form-field>
+            <mat-label class="d-flex gap-1"
+              >Reference Number
+            </mat-label>
+            <input matInput formControlName="reference_number" />
+            <mat-error
+              *ngIf="productForm.get('reference_number').hasError('required')"
+            >
+              Add reference Number
+            </mat-error>
+          </mat-form-field>
+        </div>
       </div>
 
       <!-- --------------------  Condition Section ---------------------------- -->
@@ -388,7 +215,7 @@
           <button
             [ngStyle]="{
               border:
-                selectedCondition === 'new'
+                selectedCondition === 'New'
                   ? '2px solid black'
                   : '1px solid black',
               borderRadius: '30px',
@@ -396,21 +223,38 @@
               background: 'none'
             }"
             value="like-new"
-            (click)="openCondition('new')"
+            (click)="openCondition('New')"
           >
-            Like new & unworn
+            New
           </button>
+
           <button
             [ngStyle]="{
               border:
-                selectedCondition === 'used'
+                selectedCondition === 'New-Unwarn'
                   ? '2px solid black'
                   : '1px solid black',
               borderRadius: '30px',
               padding: '5px 15px',
               background: 'none'
             }"
-            (click)="openCondition('used')"
+            value="like-new"
+            (click)="openCondition('New-Unwarn')"
+          >
+            Like new & unworn
+          </button>
+
+          <button
+            [ngStyle]="{
+              border:
+                selectedCondition === 'Used'
+                  ? '2px solid black'
+                  : '1px solid black',
+              borderRadius: '30px',
+              padding: '5px 15px',
+              background: 'none'
+            }"
+            (click)="openCondition('Used')"
           >
             Used
           </button>
@@ -422,20 +266,20 @@
         <div *ngIf="usedCondition" class="card-container">
           <mat-card
             class="condition-card"
-            [ngClass]="{ 'selected-card': selectedCondition === 'pre_owned' }"
+            [ngClass]="{
+              'selected-card':
+                selectedCondition === 'Very good (minor signs of wear)'
+            }"
           >
-            <mat-card-title>Pre Owned (minor signs of wear)</mat-card-title>
+            <mat-card-title>Very good (minor signs of wear)</mat-card-title>
             <mat-card-content>
-              <p>
-                The item shows minor signs of wear, such as small, intangible
-                scratches.
-              </p>
+              <p>Very good (minor signs of wear)</p>
             </mat-card-content>
             <mat-card-actions>
               <button
                 style="border-radius: 75px; border: 1px solid black"
                 mat-button
-                (click)="selectUsedCondition('pre_owned')"
+                (click)="selectUsedCondition('Very good (minor signs of wear)')"
               >
                 Select
               </button>
@@ -444,20 +288,20 @@
 
           <mat-card
             class="condition-card"
-            [ngClass]="{ 'selected-card': selectedCondition === 'unworn' }"
+            [ngClass]="{
+              'selected-card':
+                selectedCondition === 'Good (moderate signs of wear)'
+            }"
           >
-            <mat-card-title>Unworn (moderate signs of wear)</mat-card-title>
+            <mat-card-title>Good (moderate signs of wear)</mat-card-title>
             <mat-card-content>
-              <p>
-                The item shows visible and tangible signs of wear like
-                scratches, scuffs, or small dents.
-              </p>
+              <p>Good (moderate signs of wear).</p>
             </mat-card-content>
             <mat-card-actions>
               <button
                 style="border-radius: 75px; border: 1px solid black"
                 mat-button
-                (click)="selectUsedCondition('unworn')"
+                (click)="selectUsedCondition('Good (moderate signs of wear)')"
               >
                 Select
               </button>
@@ -466,49 +310,37 @@
 
           <mat-card
             class="condition-card"
-            [ngClass]="{ 'selected-card': selectedCondition === 'vintage' }"
-          >
-            <mat-card-title>Vintage (major signs of wear)</mat-card-title>
-            <mat-card-content>
-              <p>
-                The item shows major, visible signs of wear like scratches and
-                dents.
-              </p>
-            </mat-card-content>
-            <mat-card-actions>
-              <button
-                style="border-radius: 75px; border: 1px solid black"
-                mat-button
-                (click)="selectUsedCondition('vintage')"
-              >
-                Select
-              </button>
-            </mat-card-actions>
-          </mat-card>
-
-          <!-- <mat-card
-            class="condition-card"
-            [ngClass]="{ 'selected-card': selectedCondition === 'incomplete' }"
+            [ngClass]="{ 'selected-card': selectedCondition === 'Incomplete' }"
           >
             <mat-card-title>Incomplete</mat-card-title>
             <mat-card-content>
-              <p>The item is missing some parts and is not functional.</p>
+              <p>Incomplete</p>
             </mat-card-content>
             <mat-card-actions>
               <button
                 style="border-radius: 75px; border: 1px solid black"
                 mat-button
-                (click)="selectUsedCondition('incomplete')"
+                (click)="selectUsedCondition('Incomplete')"
               >
                 Select
               </button>
             </mat-card-actions>
-          </mat-card> -->
+          </mat-card>
+          <div *ngIf="selectedCondition === 'Incomplete'">
+            <mat-form-field appearance="outline" style="width: 100%">
+              <mat-label>Description</mat-label>
+              <textarea
+                placeholder="Enter Description"
+                formControlName="description"
+                matInput
+              ></textarea>
+            </mat-form-field>
+          </div>
         </div>
         <div *ngIf="newCondition" class="mt-3">
           <div>
             <mat-card class="condition-card">
-              <mat-card-title>Very good (minor signs of wear)</mat-card-title>
+              <mat-card-title>New</mat-card-title>
               <mat-card-content>
                 <p>
                   The item shows minor signs of wear, such as small, intangible
@@ -518,7 +350,21 @@
             </mat-card>
           </div>
         </div>
-        <a href="#" class="more-info">More about item conditions</a>
+
+        <div *ngIf="newUnwarnCondition" class="mt-3">
+          <div>
+            <mat-card class="condition-card">
+              <mat-card-title>Like new and unworn</mat-card-title>
+              <mat-card-content>
+                <p>
+                  The item shows minor signs of wear, such as small, intangible
+                  scratches.
+                </p>
+              </mat-card-content>
+            </mat-card>
+          </div>
+        </div>
+        <!-- <a class="more-info">More about item conditions</a> -->
       </div>
 
       <!-- --------------------  Basic Info  Section ---------------------------- -->
@@ -526,86 +372,51 @@
       <h2>Basic Info <span>(* Required field)</span></h2>
       <mat-divider class="mat-divider"></mat-divider>
 
-      <div
-        [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }"
-        class="d-flex"
-        style="justify-content: space-between; align-items: center"
-      >
-        <mat-label>Gender</mat-label>
-        <mat-form-field
-          style="width: 70%"
-          appearance="outline"
-          class="full-width"
-        >
-          <mat-select formControlName="gender">
-            <mat-option value="">Please select</mat-option>
-            <mat-option value="mens">Men</mat-option>
-            <mat-option value="womens">Women</mat-option>
-            <mat-option value="unisex">Unisex</mat-option>
-          </mat-select>
-
-          <mat-error *ngIf="productForm.get('gender').hasError('required')">
-            Select Gender
-          </mat-error>
-        </mat-form-field>
-      </div>
-
-      <div
-        [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }"
-        class="d-flex flex-wrap"
-        style="justify-content: space-between; align-items: center"
-      >
-        <mat-label>Year of production *</mat-label>
-        <mat-form-field style="width: 70%" appearance="outline" class="">
-          <input
-            matInput
-            placeholder="e.g., 2013"
-            formControlName="yearOfProduction"
-          />
-          <mat-error
-            *ngIf="productForm.get('yearOfProduction').hasError('required')"
+      <div class="d-flex mt-2" style="justify-content: space-between; gap: 1%">
+        <div style="width: 49%">
+          <mat-form-field
+            style="width: 100%"
+            appearance="outline"
+            class="full-width"
           >
-            Add Year Of Production
-          </mat-error>
-        </mat-form-field>
-        <div
-          [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }"
-          class="d-flex"
-          style="width: 70%; justify-content: end"
-        >
-          <div style="width: 50%"></div>
-          <div
-            style="width: 50%; display: flex; justify-content: space-between"
-          >
-            <mat-checkbox formControlName="approximation"
-              >Approximation</mat-checkbox
-            >
-            <mat-checkbox formControlName="unknown">Unknown</mat-checkbox>
-          </div>
+            <mat-label>Gender</mat-label>
+            <mat-select formControlName="gender">
+              <mat-option
+                *ngFor="let key of allDropDownList.gender | keyvalue"
+                [value]="key.key"
+              >
+                {{ key.value }}</mat-option
+              >
+            </mat-select>
+
+            <mat-error *ngIf="productForm.get('gender').hasError('required')">
+              Select Gender
+            </mat-error>
+          </mat-form-field>
         </div>
-      </div>
-
-      <div
-        [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }"
-        class="case-diameter d-flex"
-      >
-        <mat-label>Case diameter</mat-label>
-        <div
-          style="
-            width: 70%;
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-          "
-        >
-          <mat-form-field style="width: 35%" appearance="outline">
+        <div style="width: 49%">
+          <mat-form-field style="width: 100%" appearance="outline" class="">
+            <mat-label>Year of Production</mat-label>
             <input
               matInput
-              formControlName="caseDiameterWidth"
-              placeholder=""
+              placeholder="e.g., 2013"
+              formControlName="year_of_production"
             />
             <mat-error
-              *ngIf="productForm.get('caseDiameterWidth').hasError('required')"
+              *ngIf="productForm.get('year_of_production').hasError('required')"
+            >
+              Add Year Of Production
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="d-flex mt-2" style="justify-content: space-between; gap: 1%">
+        <div style="width: 49%">
+          <mat-form-field style="width: 88%" appearance="outline">
+            <mat-label>Case Diameter</mat-label>
+            <input matInput formControlName="case_diameter" placeholder="" />
+            <mat-error
+              *ngIf="productForm.get('case_diameter').hasError('required')"
             >
               Add Case Diameter Width
             </mat-error>
@@ -613,113 +424,79 @@
           <mat-form-field style="width: 12%" appearance="outline">
             <input matInput readonly="true" placeholder="mm" />
           </mat-form-field>
-          <span style="padding: 0 10px 15px 10px">x</span>
-          <mat-form-field style="width: 35%" appearance="outline">
-            <input
-              matInput
-              formControlName="caseDiameterHeight"
-              placeholder=""
-            />
-            <mat-error
-              *ngIf="productForm.get('caseDiameterHeight').hasError('required')"
-            >
-              Add Case Diameter Height
+        </div>
+        <div style="width: 49%">
+          <mat-form-field
+            style="width: 100%"
+            appearance="outline"
+            class="full-width"
+          >
+            <mat-label>Movement</mat-label>
+            <mat-select formControlName="movement">
+              <mat-option
+                *ngFor="let key of allDropDownList.movement | keyvalue"
+                [value]="key.key"
+              >
+                {{ key.value }}</mat-option
+              >
+            </mat-select>
+
+            <mat-error *ngIf="productForm.get('movement').hasError('required')">
+              Select Movement
             </mat-error>
-          </mat-form-field>
-          <mat-form-field style="width: 12%" appearance="outline">
-            <input matInput readonly="true" placeholder="mm" />
           </mat-form-field>
         </div>
       </div>
-
-      <div
-        [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }"
-        class="d-flex"
-        style="justify-content: space-between; align-items: center"
-      >
-        <mat-label>Movement</mat-label>
-        <mat-form-field
-          style="width: 70%"
-          appearance="outline"
-          class="full-width"
-        >
-          <mat-select formControlName="movement">
-            <mat-option value="">Please select</mat-option>
-            <mat-option value="automatic">Automatic</mat-option>
-            <mat-option value="manual">Manual</mat-option>
-            <mat-option value="quartz">Quartz</mat-option>
-          </mat-select>
-
-          <mat-error *ngIf="productForm.get('movement').hasError('required')">
-            Select Movement
-          </mat-error>
-        </mat-form-field>
-      </div>
-
-      <div
-        [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }"
-        class="d-flex"
-        style="justify-content: space-between; align-items: center"
-      >
-        <mat-label>Description</mat-label>
-        <mat-form-field
-          style="width: 70%"
-          appearance="outline"
-          class="full-width"
-        >
-          <textarea
-            matInput
-            formControlName="meta_description"
-            placeholder="For example, where did you buy your watch? Does it still have a warranty? Has it been repaired? Is the watch damaged?"
-          ></textarea>
-          <mat-error
-            *ngIf="productForm.get('meta_description').hasError('required')"
+      <div class="d-flex mt-2" style="justify-content: space-between; gap: 1%">
+        <div style="width: 49%">
+          <mat-form-field
+            style="width: 100%"
+            appearance="outline"
+            class="full-width"
           >
-            Add Description
-          </mat-error>
-        </mat-form-field>
+            <mat-label>Description</mat-label>
+            <textarea
+              matInput
+              formControlName="meta_description"
+              placeholder="For example, where did you buy your watch? Does it still have a warranty? Has it been repaired? Is the watch damaged?"
+            ></textarea>
+            <mat-error
+              *ngIf="productForm.get('meta_description').hasError('required')"
+            >
+              Add Description
+            </mat-error>
+          </mat-form-field>
+        </div>
       </div>
 
       <!-- --------------------  Price  Section ---------------------------- -->
 
       <h2>Price <span>(* Required field)</span></h2>
       <mat-divider class="mat-divider"></mat-divider>
-
-      <div
-        [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }"
-        class="price-container d-flex"
-        style="justify-content: center; gap: 5px; align-items: center"
-      >
-        <div style="width: 20%; align-items: center; gap: 5px">
-          <mat-label
-            >Price * <mat-icon matSuffix>info_outline</mat-icon></mat-label
-          >
-        </div>
-        <div
-          [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }"
-          class="d-flex"
-        >
+      <div class="d-flex mt-2" style="justify-content: space-between; gap: 1%">
+        <div style="width: 50%; display: flex">
           <mat-form-field
-            style="width: 50%"
+            style="width: 80%"
             appearance="outline"
             class="price-input"
           >
+            <mat-label
+              >Price  <mat-icon matSuffix>info_outline</mat-icon></mat-label
+            >
             <input matInput formControlName="price" />
             <mat-error *ngIf="productForm.get('price').hasError('required')">
               Add price
             </mat-error>
           </mat-form-field>
-          <mat-form-field style="width: 20%" appearance="outline">
+          <mat-form-field style="width: 30%" appearance="outline">
             <span matSuffix>
-              <mat-select
-                style="padding: 7px"
-                formControlName="currency"
-                class="currency-select"
-              >
-                <mat-option value="USD">USD</mat-option>
-                <mat-option value="EUR">EUR</mat-option>
-                <mat-option value="GBP">GBP</mat-option>
-                <mat-option value="saudi-rial">Saudi Riyal</mat-option>
+              <mat-select formControlName="currency" class="currency-select">
+                <mat-option
+                  *ngFor="let key of allDropDownList.currency | keyvalue"
+                  [value]="key.key"
+                >
+                  {{ key.value }}</mat-option
+                >
               </mat-select>
             </span>
           </mat-form-field>
@@ -733,398 +510,60 @@
       </h2>
       <mat-divider class="mat-divider"></mat-divider>
       <mat-accordion>
-        <!-- ------------------- Caliber Information --------------------- -->
-        <div>
-          <h2>Caliber</h2>
-        </div>
-        <div style="padding: 0 20px 0 20px">
-          <div
-            class="d-flex"
-            [ngClass]="{
-              'reverse-order': translateService.currentLang !== 'en'
-            }"
-            style="justify-content: space-between"
-          >
-            <mat-label>Caliber/movement</mat-label>
-            <mat-form-field style="width: 70%" appearance="outline">
-              <input matInput formControlName="caliberMovement" />
-            </mat-form-field>
-          </div>
-          <div
-            class="d-flex"
-            [ngClass]="{
-              'reverse-order': translateService.currentLang !== 'en'
-            }"
-            style="justify-content: space-between"
-          >
-            <mat-label>Base caliber</mat-label>
-            <mat-form-field style="width: 70%" appearance="outline">
-              <input matInput formControlName="baseCaliber" />
-            </mat-form-field>
-          </div>
-          <div
-            class="d-flex"
-            [ngClass]="{
-              'reverse-order': translateService.currentLang !== 'en'
-            }"
-            style="justify-content: space-between"
-          >
-            <mat-label>Power reserve</mat-label>
-            <div class="d-flex" style="width: 70%">
-              <mat-form-field style="width: 90%" appearance="outline">
-                <input matInput formControlName="powerReserve" />
-              </mat-form-field>
-              <mat-form-field style="width: 10%" appearance="outline">
-                <input matInput placeholder="h" readonly="true" />
-              </mat-form-field>
-            </div>
-          </div>
-          <div
-            class="d-flex"
-            [ngClass]="{
-              'reverse-order': translateService.currentLang !== 'en'
-            }"
-            style="justify-content: space-between"
-          >
-            <mat-label>Number of jewels</mat-label>
-            <mat-form-field
-              style="width: 70%"
-              appearance="outline"
-              class="full-width"
-            >
-              <input matInput formControlName="numberOfJewels" />
-            </mat-form-field>
-          </div>
-          <div
-            class="d-flex"
-            [ngClass]="{
-              'reverse-order': translateService.currentLang !== 'en'
-            }"
-            style="justify-content: space-between"
-          >
-            <mat-label>Frequency</mat-label>
-            <div class="d-flex" style="width: 70%">
-              <mat-form-field style="width: 85%" appearance="outline">
-                <input matInput formControlName="frequency" />
-              </mat-form-field>
-              <mat-form-field style="width: 15%" appearance="outline">
-                <span matSuffix>
-                  <mat-select
-                    formControlName="frequencyUnit"
-                    style="padding: 7px"
-                    class="currency-select"
-                  >
-                    <mat-option value="ah">A/H</mat-option>
-                    <mat-option value="hz">HZ</mat-option>
-                  </mat-select>
-                </span>
-              </mat-form-field>
-            </div>
-          </div>
-
-          <div
-            class="other-details"
-            [ngClass]="{
-              'reverse-order': translateService.currentLang !== 'en'
-            }"
-          >
-            <mat-label>Other details</mat-label>
-            <div style="width: 70%">
-              <mat-checkbox class="othr-chk" formControlName="genevianSeal"
-                >Genevian Seal</mat-checkbox
-              >
-              <mat-checkbox class="othr-chk" formControlName="chronometer"
-                >Chronometer</mat-checkbox
-              >
-              <mat-checkbox class="othr-chk" formControlName="masterChronometer"
-                >Master Chronometer</mat-checkbox
-              >
-            </div>
-          </div>
-        </div>
-
         <!-- Case Section -->
         <div class="mt-5">
           <h2>Case</h2>
         </div>
-        <div style="padding: 0 20px 0 20px">
-          <div
-            class="d-flex"
-            [ngClass]="{
-              'reverse-order': translateService.currentLang !== 'en'
-            }"
-            style="justify-content: space-between"
-          >
-            <mat-label>Case material</mat-label>
+
+        <div class="d-flex mt-2" style="justify-content: space-between; gap: 1%">
+          <div style="width: 49%">
             <mat-form-field
-              style="width: 70%"
+              style="width: 100%"
               appearance="outline"
               class="full-width"
             >
-              <!-- <input matInput formControlName="" /> -->
-              <mat-select formControlName="caseMaterial">
-                <mat-option value="aluminium">Aluminium</mat-option>
-                <mat-option value="brass">Brass</mat-option>
-                <mat-option value="carbon">Carbon</mat-option>
-                <mat-option value="plastic">Plastic</mat-option>
+              <mat-label>Case Material</mat-label>
+              <mat-select formControlName="case_material">
+                <mat-option
+                  *ngFor="let key of allDropDownList.case_material | keyvalue"
+                  [value]="key.key"
+                >
+                  {{ key.value }}</mat-option
+                >
               </mat-select>
             </mat-form-field>
           </div>
-          <div
-            class="d-flex"
-            [ngClass]="{
-              'reverse-order': translateService.currentLang !== 'en'
-            }"
-            style="justify-content: space-between"
-          >
-            <mat-label>Bezel material</mat-label>
+          <div style="width: 49%">
             <mat-form-field
-              style="width: 70%"
+              style="width: 100%"
               appearance="outline"
               class="full-width"
             >
-              <!-- <input matInput formControlName="bezelMaterial" /> -->
-              <mat-select formControlName="bezelMaterial">
-                <mat-option value="aluminium">Aluminium</mat-option>
-                <mat-option value="brass">Brass</mat-option>
-                <mat-option value="carbon">Carbon</mat-option>
-                <mat-option value="plastic">Plastic</mat-option>
+              <mat-label>Bezel Material</mat-label>
+              <mat-select formControlName="bezel_material">
+                <mat-option
+                  *ngFor="let key of allDropDownList.bezel_material | keyvalue"
+                  [value]="key.key"
+                >
+                  {{ key.value }}</mat-option
+                >
               </mat-select>
             </mat-form-field>
-          </div>
-
-          <div
-            class="d-flex"
-            [ngClass]="{
-              'reverse-order': translateService.currentLang !== 'en'
-            }"
-            style="justify-content: space-between"
-          >
-            <mat-label>Thickness</mat-label>
-            <div class="d-flex" style="width: 70%">
-              <mat-form-field style="width: 90%" appearance="outline">
-                <input matInput formControlName="thickness" />
-              </mat-form-field>
-              <mat-form-field style="width: 10%" appearance="outline">
-                <input matInput placeholder="mm" readonly="true" />
-              </mat-form-field>
-            </div>
-          </div>
-          <div
-            class="d-flex"
-            [ngClass]="{
-              'reverse-order': translateService.currentLang !== 'en'
-            }"
-            style="justify-content: space-between"
-          >
-            <mat-label>Crystal</mat-label>
-            <mat-form-field
-              style="width: 70%"
-              appearance="outline"
-              class="full-width"
-            >
-              <mat-select formControlName="crystal">
-                <mat-option value="glass">Glass</mat-option>
-                <mat-option value="plastic">Plastic</mat-option>
-              </mat-select>
-            </mat-form-field>
-          </div>
-          <div
-            class="d-flex"
-            [ngClass]="{
-              'reverse-order': translateService.currentLang !== 'en'
-            }"
-            style="justify-content: space-between"
-          >
-            <mat-label>Water resistance</mat-label>
-            <mat-form-field style="width: 70%" appearance="outline">
-              <mat-select formControlName="waterResistance">
-                <mat-option value="no-resistence">No Water Resistence</mat-option>
-                <mat-option value="1-atm">1 ATM</mat-option>
-                <mat-option value="2-atm">2 ATM</mat-option>
-                <mat-option value="2.5-atm">2.5 ATM</mat-option>
-              </mat-select>
-            </mat-form-field>
-          </div>
-
-          <div
-            [ngClass]="{
-              'reverse-order': translateService.currentLang !== 'en'
-            }"
-            class="other-details"
-          >
-            <mat-label>Other details</mat-label>
-            <div style="width: 70%">
-              <mat-checkbox class="othr-chk" formControlName="displayBack"
-                >Display back</mat-checkbox
-              >
-              <mat-checkbox class="othr-chk" formControlName="gemstonesDiamonds"
-                >Gemstones and/or diamonds</mat-checkbox
-              >
-              <mat-checkbox class="othr-chk" formControlName="pvddlcCoating"
-                >PVD/DLC coating
-              </mat-checkbox>
-            </div>
           </div>
         </div>
-
-        <!-- Dial and Hands Section -->
-        <div class="mt-5">
-          <h2>Dial and hands</h2>
-        </div>
-        <div style="padding: 0 20px 0 20px">
-          <div
-            class="d-flex"
-            [ngClass]="{
-              'reverse-order': translateService.currentLang !== 'en'
-            }"
-            style="justify-content: space-between"
-          >
-            <mat-label>Dial</mat-label>
-            <mat-form-field style="width: 70%" appearance="outline">
-              <mat-select formControlName="dial">
-                <mat-option value="black">Black</mat-option>
-                <mat-option value="blue">Blue</mat-option>
-                <mat-option value="brown">Brown</mat-option>
-                <mat-option value="gold">Gold</mat-option>
-              </mat-select>
-            </mat-form-field>
-          </div>
-
-          <div
-            class="d-flex"
-            [ngClass]="{
-              'reverse-order': translateService.currentLang !== 'en'
-            }"
-            style="justify-content: space-between"
-          >
-            <mat-label>Dial numerals</mat-label>
-            <mat-form-field style="width: 70%" appearance="outline">
-              <mat-select formControlName="dialNumerals">
-                <mat-option value="lines">Lines</mat-option>
-                <mat-option value="arabic-numerals">Arabic Numerals</mat-option>
-                <mat-option value="no-numerals">No Numerals</mat-option>
-              </mat-select>
-            </mat-form-field>
-          </div>
-
-          <div
-            [ngClass]="{
-              'reverse-order': translateService.currentLang !== 'en'
-            }"
-            class="other-details"
-          >
-            <mat-label>Dial features</mat-label>
-            <div style="width: 70%">
-              <mat-checkbox class="othr-chk" formControlName="guillocheDial"
-                >Guilloché dial</mat-checkbox
-              >
-              <mat-checkbox
-                class="othr-chk"
-                formControlName="guillocheDialHandwork"
-                >Guilloché dial (handwork)</mat-checkbox
-              >
-              <mat-checkbox class="othr-chk" formControlName="luminousNumerals"
-                >Luminous numerals
-              </mat-checkbox>
-              <mat-checkbox class="othr-chk" formControlName="luminousIndices"
-                >Luminous indices
-              </mat-checkbox>
-            </div>
-          </div>
-
-          <div
-            [ngClass]="{
-              'reverse-order': translateService.currentLang !== 'en'
-            }"
-            class="other-details"
-          >
-            <mat-label>Hand details</mat-label>
-            <div style="width: 70%">
-              <mat-checkbox class="othr-chk" formControlName="centralSeconds"
-                >Central seconds</mat-checkbox
-              >
-              <mat-checkbox class="othr-chk" formControlName="smallSeconds"
-                >Small Seconds</mat-checkbox
-              >
-              <mat-checkbox class="othr-chk" formControlName="luminousHands"
-                >Luminous hands
-              </mat-checkbox>
-              <mat-checkbox class="othr-chk" formControlName="temperedBlueHands"
-                >Tempered blue hands
-              </mat-checkbox>
-            </div>
-          </div>
-        </div>
-
-        <!-- Bracelet/Strap Section -->
-        <div class="mt-5">
-          <h2>Bracelet/Strap</h2>
-        </div>
-        <div style="padding: 0 20px 0 20px">
-          <div
-            class="d-flex"
-            [ngClass]="{
-              'reverse-order': translateService.currentLang !== 'en'
-            }"
-            style="justify-content: space-between"
-          >
-            <mat-label>Bracelet material</mat-label>
-            <mat-form-field style="width: 70%" appearance="outline">
-              <mat-select formControlName="braceletMaterial">
-                <mat-option value="brass">Brass</mat-option>
-                <mat-option value="calf=skin">Calf Skin</mat-option>
-                <mat-option value="ceramic">Ceramic</mat-option>
-              </mat-select>
-            </mat-form-field>
-          </div>
-
-          <div
-            class="d-flex"
-            [ngClass]="{
-              'reverse-order': translateService.currentLang !== 'en'
-            }"
-            style="justify-content: space-between"
-          >
-            <mat-label>Bracelet color</mat-label>
-            <mat-form-field style="width: 70%" appearance="outline">
-              <mat-select formControlName="braceletColor">
-                <mat-option value="black">Black</mat-option>
-                <mat-option value="blue">Blue</mat-option>
-                <mat-option value="brown">Brown</mat-option>
-              </mat-select>
-            </mat-form-field>
-          </div>
-
-          <div
-            class="d-flex"
-            [ngClass]="{
-              'reverse-order': translateService.currentLang !== 'en'
-            }"
-            style="justify-content: space-between"
-          >
-            <mat-label>Type of clasp</mat-label>
-            <mat-form-field style="width: 70%" appearance="outline">
-              <mat-select formControlName="typeOfClasp">
-                <mat-option value="buckle">Buckle</mat-option>
-                <mat-option value="fold-clasp">Fold Clasp</mat-option>
-              </mat-select>
-            </mat-form-field>
-          </div>
-
-          <div
-            class="d-flex"
-            [ngClass]="{
-              'reverse-order': translateService.currentLang !== 'en'
-            }"
-            style="justify-content: space-between"
-          >
-            <mat-label>Clasp material</mat-label>
-            <mat-form-field style="width: 70%" appearance="outline">
-              <mat-select formControlName="claspMaterial">
-                <mat-option value="plastic">Plastic</mat-option>
-                <mat-option value="steel">Steel</mat-option>
-                <mat-option value="silver">Silver</mat-option>
+        <div class="d-flex mt-2" style="justify-content: space-between; gap: 1%">
+          <div style="width: 49%">
+            <mat-form-field style="width: 100%" appearance="outline">
+              <mat-label>Water Resistance</mat-label>
+              <mat-select formControlName="water_resistance">
+                <mat-option
+                  *ngFor="
+                    let key of allDropDownList.water_resistance | keyvalue
+                  "
+                  [value]="key.key"
+                >
+                  {{ key.value }}</mat-option
+                >
               </mat-select>
             </mat-form-field>
           </div>

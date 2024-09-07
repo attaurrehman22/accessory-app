@@ -23,69 +23,76 @@ export class AddNewProductComponent implements OnInit {
   brandsList: any;
 
   name: FormControl = new FormControl("", Validators.required);
-  warranty: FormControl = new FormControl("", Validators.required);
-  box: FormControl = new FormControl("", Validators.required);
-  papers: FormControl = new FormControl("", Validators.required);
-  availability: FormControl = new FormControl("", Validators.required);
-  sale_status: FormControl = new FormControl("", Validators.required);
-  stock_status: FormControl = new FormControl("", Validators.required);
+  // warranty: FormControl = new FormControl("", Validators.required);
+  // box: FormControl = new FormControl("", Validators.required);
+  // papers: FormControl = new FormControl("", Validators.required);
+  // availability: FormControl = new FormControl("", Validators.required);
+  // sale_status: FormControl = new FormControl("", Validators.required);
+  // stock_status: FormControl = new FormControl("", Validators.required);
   category_id: FormControl = new FormControl(1, Validators.required);
-  meta_title: FormControl = new FormControl("", Validators.required);
-  slug: FormControl = new FormControl("", Validators.required);
+  title: FormControl = new FormControl("", Validators.required);
+  // slug: FormControl = new FormControl("", Validators.required);
   additional_images: FormControl = new FormControl([]);
-  type: FormControl = new FormControl("", Validators.required);
+  watch_type: FormControl = new FormControl("", Validators.required);
   brand_id: FormControl = new FormControl("", Validators.required);
   model: FormControl = new FormControl("", [
     Validators.required,
     Validators.min(0),
   ]);
-  referenceNumber: FormControl = new FormControl("", [
+  reference_number: FormControl = new FormControl("", [
     Validators.required,
     Validators.min(1),
   ]);
-  condition: FormControl = new FormControl("new", Validators.required);
+  condition: FormControl = new FormControl("New", Validators.required);
   gender: FormControl = new FormControl("", Validators.required);
-  yearOfProduction: FormControl = new FormControl("", Validators.required);
-  approximation: FormControl = new FormControl(false);
-  unknown: FormControl = new FormControl(false);
-  caseDiameterWidth: FormControl = new FormControl("", Validators.required);
-  caseDiameterHeight: FormControl = new FormControl("", Validators.required);
+  year_of_production: FormControl = new FormControl("", Validators.required);
+  // approximation: FormControl = new FormControl(false);
+  // unknown: FormControl = new FormControl(false);
+
+  case_diameter: FormControl = new FormControl("", Validators.required);
+  // caseDiameterHeight: FormControl = new FormControl("", Validators.required);
+  scope_of_delivery: FormControl = new FormControl("", Validators.required);
+
   movement: FormControl = new FormControl("", Validators.required);
   meta_description: FormControl = new FormControl("", Validators.required);
+  description: FormControl = new FormControl("",);
   price: FormControl = new FormControl("", Validators.required);
   currency: FormControl = new FormControl("USD", Validators.required);
-  caliberMovement: FormControl = new FormControl("");
-  baseCaliber: FormControl = new FormControl("");
-  powerReserve: FormControl = new FormControl("");
-  numberOfJewels: FormControl = new FormControl("");
-  frequency: FormControl = new FormControl("");
-  frequencyUnit: FormControl = new FormControl("ah");
-  genevianSeal: FormControl = new FormControl(false);
-  chronometer: FormControl = new FormControl(false);
-  masterChronometer: FormControl = new FormControl(false);
-  caseMaterial: FormControl = new FormControl("");
-  bezelMaterial: FormControl = new FormControl("");
-  thickness: FormControl = new FormControl("");
-  crystal: FormControl = new FormControl("");
-  waterResistance: FormControl = new FormControl("");
-  displayBack: FormControl = new FormControl(false);
-  gemstonesDiamonds: FormControl = new FormControl(false);
-  pvddlcCoating: FormControl = new FormControl(false);
-  dial: FormControl = new FormControl("");
-  dialNumerals: FormControl = new FormControl("");
-  guillocheDial: FormControl = new FormControl(false);
-  guillocheDialHandwork: FormControl = new FormControl(false);
-  luminousNumerals: FormControl = new FormControl(false);
-  luminousIndices: FormControl = new FormControl(false);
-  centralSeconds: FormControl = new FormControl(false);
-  smallSeconds: FormControl = new FormControl(false);
-  luminousHands: FormControl = new FormControl(false);
-  temperedBlueHands: FormControl = new FormControl(false);
-  braceletMaterial: FormControl = new FormControl("");
-  braceletColor: FormControl = new FormControl("");
-  typeOfClasp: FormControl = new FormControl("");
-  claspMaterial: FormControl = new FormControl("");
+  // caliberMovement: FormControl = new FormControl("");
+  // baseCaliber: FormControl = new FormControl("");
+  // powerReserve: FormControl = new FormControl("");
+  // numberOfJewels: FormControl = new FormControl("");
+  // frequency: FormControl = new FormControl("");
+  // frequencyUnit: FormControl = new FormControl("ah");
+  // genevianSeal: FormControl = new FormControl(false);
+  // chronometer: FormControl = new FormControl(false);
+  // masterChronometer: FormControl = new FormControl(false);
+  case_material: FormControl = new FormControl("");
+  bezel_material: FormControl = new FormControl("");
+  // thickness: FormControl = new FormControl("");
+  // crystal: FormControl = new FormControl("");
+  water_resistance: FormControl = new FormControl("");
+  // displayBack: FormControl = new FormControl(false);
+  // gemstonesDiamonds: FormControl = new FormControl(false);
+  // pvddlcCoating: FormControl = new FormControl(false);
+  dial_color: FormControl = new FormControl("");
+  // dialNumerals: FormControl = new FormControl("");
+  // guillocheDial: FormControl = new FormControl(false);
+  // guillocheDialHandwork: FormControl = new FormControl(false);
+  // luminousNumerals: FormControl = new FormControl(false);
+  // luminousIndices: FormControl = new FormControl(false);
+  // centralSeconds: FormControl = new FormControl(false);
+  // smallSeconds: FormControl = new FormControl(false);
+  // luminousHands: FormControl = new FormControl(false);
+  // temperedBlueHands: FormControl = new FormControl(false);
 
+  bracelet_material: FormControl = new FormControl("");
+
+  // braceletColor: FormControl = new FormControl("");
+  // typeOfClasp: FormControl = new FormControl("");
+  // claspMaterial: FormControl = new FormControl("");
+
+  commission_fee: FormControl = new FormControl(0);
   // -------------- Extra ---------------------------
 
   main_image: FormControl = new FormControl("", Validators.required);
@@ -93,8 +100,8 @@ export class AddNewProductComponent implements OnInit {
   // meta_title:FormControl= new FormControl("", Validators.required);
   // meta_description:FormControl= new FormControl("", Validators.required);
   // meta_keywords:FormControl= new FormControl("");
-  location: FormControl = new FormControl("");
-  features: FormControl = new FormControl("");
+  // location: FormControl = new FormControl("");
+  // features: FormControl = new FormControl("");
 
   // -------------- Extra End ---------------------------
 
@@ -118,6 +125,7 @@ export class AddNewProductComponent implements OnInit {
   }
 
   selectedCondition: string | null = null;
+  newUnwarnCondition:string | null = null;
 
   selectUsedCondition(condition: string) {
     this.selectedCondition = condition;
@@ -130,6 +138,7 @@ export class AddNewProductComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.getAllProductDropDown();
     if (!this.newCondition) {
       this.newCondition = "new";
     }
@@ -137,6 +146,19 @@ export class AddNewProductComponent implements OnInit {
     this.createForm();
     this.getBrandsDropdown();
     this.getCategoryDropdown();
+  }
+
+  allDropDownList: any;
+
+  getAllProductDropDown() {
+    this.http.getPrductFormDropDnCategory().subscribe(
+      (res) => {
+        this.allDropDownList = res.data;
+      },
+      (err) => {
+        console.log(err)
+      }
+    );
   }
 
   imagePreview: string[] = [];
@@ -203,65 +225,68 @@ export class AddNewProductComponent implements OnInit {
   createForm() {
     this.productForm = this.fb.group({
       name: this.name,
-      warranty: this.warranty,
-      box: this.box,
-      papers: this.papers,
-      availability: this.availability,
-      sale_status: this.sale_status,
-      stock_status: this.stock_status,
+      commission_fee: this.commission_fee,
+      scope_of_delivery: this.scope_of_delivery,
+      // warranty: this.warranty,
+      // box: this.box,
+      // papers: this.papers,
+      // availability: this.availability,
+      // sale_status: this.sale_status,
+      // stock_status: this.stock_status,
       category_id: this.category_id,
-      meta_title: this.meta_title,
-      slug: this.slug,
+      title: this.title,
+      // slug: this.slug,
       additional_images: this.additional_images,
-      type: this.type,
+      watch_type: this.watch_type,
       brand_id: this.brand_id,
       model: this.model,
       main_image: this.main_image,
       meta_description: this.meta_description,
-      location: this.location,
-      features: this.features,
-      referenceNumber: this.referenceNumber,
+      // location: this.location,
+      // features: this.features,
+      reference_number: this.reference_number,
       condition: this.condition,
+      description: this.description,
       gender: this.gender,
-      yearOfProduction: this.yearOfProduction,
-      approximation: this.approximation,
-      unknown: this.unknown,
-      caseDiameterWidth: this.caseDiameterWidth,
-      caseDiameterHeight: this.caseDiameterHeight,
+      year_of_production: this.year_of_production,
+      // approximation: this.approximation,
+      // unknown: this.unknown,
+      case_diameter: this.case_diameter,
+      // caseDiameterHeight: this.caseDiameterHeight,
       movement: this.movement,
       price: this.price,
       currency: this.currency,
-      caliberMovement: this.caliberMovement,
-      baseCaliber: this.baseCaliber,
-      powerReserve: this.powerReserve,
-      numberOfJewels: this.numberOfJewels,
-      frequency: this.frequency,
-      frequencyUnit: this.frequencyUnit,
-      genevianSeal: this.genevianSeal,
-      chronometer: this.chronometer,
-      masterChronometer: this.masterChronometer,
-      caseMaterial: this.caseMaterial,
-      bezelMaterial: this.bezelMaterial,
-      thickness: this.thickness,
-      crystal: this.crystal,
-      waterResistance: this.waterResistance,
-      displayBack: this.displayBack,
-      gemstonesDiamonds: this.gemstonesDiamonds,
-      pvddlcCoating: this.pvddlcCoating,
-      dial: this.dial,
-      dialNumerals: this.dialNumerals,
-      guillocheDial: this.guillocheDial,
-      guillocheDialHandwork: this.guillocheDialHandwork,
-      luminousNumerals: this.luminousNumerals,
-      luminousIndices: this.luminousIndices,
-      centralSeconds: this.centralSeconds,
-      smallSeconds: this.smallSeconds,
-      luminousHands: this.luminousHands,
-      temperedBlueHands: this.temperedBlueHands,
-      braceletMaterial: this.braceletMaterial,
-      braceletColor: this.braceletColor,
-      typeOfClasp: this.typeOfClasp,
-      claspMaterial: this.claspMaterial,
+      // caliberMovement: this.caliberMovement,
+      // baseCaliber: this.baseCaliber,
+      // powerReserve: this.powerReserve,
+      // numberOfJewels: this.numberOfJewels,
+      // frequency: this.frequency,
+      // frequencyUnit: this.frequencyUnit,
+      // genevianSeal: this.genevianSeal,
+      // chronometer: this.chronometer,
+      // masterChronometer: this.masterChronometer,
+      case_material: this.case_material,
+      bezel_material: this.bezel_material,
+      // thickness: this.thickness,
+      // crystal: this.crystal,
+      water_resistance: this.water_resistance,
+      // displayBack: this.displayBack,
+      // gemstonesDiamonds: this.gemstonesDiamonds,
+      // pvddlcCoating: this.pvddlcCoating,
+      dial_color: this.dial_color,
+      // dialNumerals: this.dialNumerals,
+      // guillocheDial: this.guillocheDial,
+      // guillocheDialHandwork: this.guillocheDialHandwork,
+      // luminousNumerals: this.luminousNumerals,
+      // luminousIndices: this.luminousIndices,
+      // centralSeconds: this.centralSeconds,
+      // smallSeconds: this.smallSeconds,
+      // luminousHands: this.luminousHands,
+      // temperedBlueHands: this.temperedBlueHands,
+      bracelet_material: this.bracelet_material,
+      // braceletColor: this.braceletColor,
+      // typeOfClasp: this.typeOfClasp,
+      // claspMaterial: this.claspMaterial,
     });
   }
 
@@ -276,7 +301,7 @@ export class AddNewProductComponent implements OnInit {
 
       if (key === "main_image") {
         formData.append(key, controlValue);
-      }else if (key === "additional_images") {
+      } else if (key === "additional_images") {
         for (let i = 0; i < controlValue.length; i++) {
           // Append each file to the FormData object with the key as 'additional_images[]'
           formData.append(`${key}[]`, controlValue[i]);
@@ -288,11 +313,11 @@ export class AddNewProductComponent implements OnInit {
 
     console.log("formData", formData);
     // if (this.productForm.valid) {
-      this.http.addProduct(formData).subscribe((reponse) => {
-        console.log("Data saved");
-        this.router.navigate(["/product-list"]);
-      });
-      console.log("Product Data:", this.productForm.value);
+    this.http.addProduct(formData).subscribe((reponse) => {
+      console.log("Data saved");
+      this.router.navigate(["/product-list"]);
+    });
+    console.log("Product Data:", this.productForm.value);
     // } else {
     //   console.log("Form is invalid", this.productForm.value);
     // }
@@ -305,16 +330,24 @@ export class AddNewProductComponent implements OnInit {
     console.log(param);
     this.selectedCondition = param;
 
-    if (param === "new") {
-      this.newCondition = "new";
+    if (param === "New") {
+      this.newCondition = "New";
       this.usedCondition = "";
-      this.productForm.get("condition")?.setValue("new");
-    } else {
-      this.usedCondition = "used";
+      this.newUnwarnCondition=""
+      this.productForm.get("condition")?.setValue("New");
+    }else if(param === "New-Unwarn"){
       this.newCondition = "";
+      this.usedCondition = "";
+      this.newUnwarnCondition="New-Unwarn"
+      this.productForm.get("condition")?.setValue("Like new and unworn");
+    }
+     else {
+      this.usedCondition = "Used";
+      this.newCondition = "";
+      this.newUnwarnCondition=""
       this.productForm
         .get("condition")
-        ?.setValue(this.selectedUsedCondition || "used");
+        ?.setValue(this.selectedUsedCondition || "Used");
     }
 
     console.log("condition value ", this.productForm.get("condition").value);

@@ -64,6 +64,10 @@ export class HttpService {
     return this.http.get(`${this.apiUrl}/api/categories`);
   }
 
+  getPrductFormDropDnCategory(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/api/product-form-dropdown`);
+  }
+
   getCategoryDropDown(): Observable<any> {
     return this.http.get(`${this.apiUrl}/api/categories-dropdown`);
   }

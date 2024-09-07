@@ -37,13 +37,13 @@
         <p class="mb-0">+852 3002 0310</p>
         <small class="text-muted"
           >Be sure to have your PIN on hand when you call to request sensitive
-          information. <a href="#">View PIN</a></small
+          information. <a>View PIN</a></small
         >
       </div>
     </div>
     <div class="d-flex align-items-center">
       <i class="bi bi-envelope-fill me-2"></i>
-      <a href="#">Contact ChronoSouq</a>
+      <a>Contact ChronoSouq</a>
     </div>
   </div>
 </div>
@@ -52,16 +52,16 @@
 
 <div class="container mt-5">
   <div class="row">
-    <div class="col-md-6" style="height: 550px">
+    <div class="col-md-6" style="height: 580px">
       <img
       [src]="'https://api.chronosouq.com/' + selectedImage"
-        style="object-fit: cover; height: 100%; width: 100%"
+        style="object-fit: cover; height: 84%; width: 100%"
         class="img-fluid"
         alt="Selected Watch"
       />
 
       <div class="row mt-3" style="display: flex">
-        <div class="col-3" *ngFor="let image of thumbnails">
+        <div class="col-3" style="height: 150px;" *ngFor="let image of thumbnails">
           <img
             [src]="'https://api.chronosouq.com/' + image"
             class="img-fluid"
@@ -77,17 +77,16 @@
     </div>
     <div class="col-md-6">
       <h3 class="header-h3">{{productDetails.name}}</h3>
-      <p class="text-muted">{{productDetails.name}}</p>
-      <p class="text-success">{{productDetails.price}}</p>
+      <p class="text-muted">{{productDetails.brand.name}}</p>
+      <p class="text-success">{{productDetails.price}}  <span>{{productDetails.currency}}</span></p>
       <p>Condition :<strong>{{productDetails.condition}}</strong></p>
       <p>Year of production: {{productDetails.year_of_production}}</p>
-      <p>Box : {{productDetails.box}}</p>
       <div class="mt-4">
         <button class="btn btn-success btn-lg">Buy ...</button>
         <button class="btn btn-dark btn-lg mt-2">Suggest a price</button>
       </div>
       <div class="alert alert-warning mt-4" role="alert">
-        Security on Chrono24
+        Security on ChronoSouq
         <ul>
           <li>Escrow Service unavailable</li>
           <li>Ownership confirmed</li>
@@ -148,75 +147,75 @@
             <div class="col-md-6">
               <table class="table table-borderless">
                 <tbody>
-                  <tr>
+                  <!-- <tr>
                     <th scope="row">Listing code</th>
                     <td>KH5G06</td>
-                  </tr>
+                  </tr> -->
                   <tr>
                     <th scope="row">Brand</th>
-                    <td><a href="#">Rolex</a></td>
+                    <td><a>{{productDetails.brand.name}}</a></td>
                   </tr>
                   <tr>
                     <th scope="row">Model</th>
-                    <td><a href="#">GMT-Master II</a></td>
+                    <td><a>{{productDetails.model}}</a></td>
                   </tr>
                   <tr>
                     <th scope="row">Reference number</th>
-                    <td>126710BLRO</td>
+                    <td>{{productDetails.reference_number}}</td>
                   </tr>
                   <tr>
                     <th scope="row">Movement</th>
-                    <td>Automatic</td>
+                    <td>{{productDetails.movement}}</td>
                   </tr>
                   <tr>
                     <th scope="row">Case material</th>
-                    <td>Steel</td>
+                    <td>{{productDetails.case_material}}</td>
                   </tr>
-                  <tr>
+                  <!-- <tr>
                     <th scope="row">Bracelet material</th>
-                    <td>Steel</td>
-                  </tr>
+                    <td>{{productDetails.case_material}}</td>
+                  </tr> -->
                   <tr>
                     <th scope="row">Year of production</th>
-                    <td>2019</td>
+                    <td>{{productDetails.year_of_production}}</td>
                   </tr>
                   <tr>
                     <th scope="row">Condition</th>
-                    <td><a href="#">Used (Very good)</a></td>
+                    <td><a>{{productDetails.condition}}</a></td>
                   </tr>
-                  <tr>
+                  <tr *ngIf="productDetails.description">
                     <th scope="row"></th>
                     <td>
-                      <small
-                        >The item shows minor signs of wear, such as small,
-                        intangible scratches.</small
+                      <small>
+                        {{productDetails.description}}
+                        </small
                       >
                     </td>
                   </tr>
                   <tr>
                     <th scope="row">Scope of delivery</th>
-                    <td>Original box, original papers</td>
+                    <td>  {{productDetails.scope_of_delivery}}</td>
                   </tr>
                   <tr>
                     <th scope="row">Gender</th>
-                    <td>Men's watch/Unisex</td>
+                    <td>  {{productDetails.gender}}</td>
                   </tr>
-                  <tr>
+                  <!-- <tr>
                     <th scope="row">Location</th>
                     <td>The Netherlands, Berkel en Rodenrijs</td>
-                  </tr>
+                  </tr> -->
                   <tr>
                     <th scope="row">Price</th>
-                    <td>€18,500 (= $20,974) [Negotiable]</td>
+                    <td>{{productDetails.price}}  {{productDetails.currency}}</td>
                   </tr>
-                  <tr>
+                  <!-- <tr>
                     <th scope="row">Availability</th>
                     <td>Item is in stock</td>
-                  </tr>
+                  </tr> -->
                 </tbody>
               </table>
 
-              <table class="table table-borderless">
+              <!-- <table class="table table-borderless">
                 <tr>
                   <td style="font-size: 20px; font-weight: 800" colspan="2">
                     Caliber
@@ -229,11 +228,11 @@
                   </tr>
                   <tr>
                     <th scope="row">Brand</th>
-                    <td><a href="#">Rolex</a></td>
+                    <td><a>Rolex</a></td>
                   </tr>
                   <tr>
                     <th scope="row">Model</th>
-                    <td><a href="#">GMT-Master II</a></td>
+                    <td><a>GMT-Master II</a></td>
                   </tr>
                   <tr>
                     <th scope="row">Reference number</th>
@@ -244,7 +243,7 @@
                     <td>Automatic</td>
                   </tr>
                 </tbody>
-              </table>
+              </table> -->
 
               <table class="table table-borderless">
                 <tr>
@@ -254,57 +253,34 @@
                 </tr>
                 <tbody>
                   <tr>
-                    <th scope="row">Listing code</th>
-                    <td>KH5G06</td>
+                    <th scope="row">Case Material</th>
+                    <td>{{productDetails.case_material}}</td>
                   </tr>
                   <tr>
-                    <th scope="row">Brand</th>
-                    <td><a href="#">Rolex</a></td>
+                    <th scope="row">Bazel Material</th>
+                    <td>{{productDetails.bezel_material}}</td>
                   </tr>
                   <tr>
-                    <th scope="row">Model</th>
-                    <td><a href="#">GMT-Master II</a></td>
-                  </tr>
-                  <tr>
-                    <th scope="row">Reference number</th>
-                    <td>126710BLRO</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">Movement</th>
-                    <td>Automatic</td>
+                    <th scope="row">Water Resistence</th>
+                    <td>{{productDetails.water_resistance}}</td>
                   </tr>
                 </tbody>
               </table>
 
-              <table class="table table-borderless">
+              <!-- <table class="table table-borderless">
                 <tr>
                   <td style="font-size: 20px; font-weight: 800" colspan="2">
-                    Bracelet/strap
+                    Dial and Hands
                   </td>
                 </tr>
                 <tbody>
                   <tr>
-                    <th scope="row">Listing code</th>
-                    <td>KH5G06</td>
+                    <th scope="row">Dial</th>
+                    <td>{{productDetails.dial_color}}</td>
                   </tr>
-                  <tr>
-                    <th scope="row">Brand</th>
-                    <td><a href="#">Rolex</a></td>
-                  </tr>
-                  <tr>
-                    <th scope="row">Model</th>
-                    <td><a href="#">GMT-Master II</a></td>
-                  </tr>
-                  <tr>
-                    <th scope="row">Reference number</th>
-                    <td>126710BLRO</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">Movement</th>
-                    <td>Automatic</td>
-                  </tr>
+                 
                 </tbody>
-              </table>
+              </table> -->
             </div>
             <div class="col-md-6">
               <h6>Description</h6>
@@ -323,7 +299,7 @@
           aria-labelledby="security-tab"
         >
           <div class="container mt-4">
-            <h5 class="mb-4">Security on Chrono24 for This Listing</h5>
+            <h5 class="mb-4">Security on ChronoSouq for This Listing</h5>
             <div class="row">
               <div class="col-md-6 col-lg-4 mb-4">
                 <div class="card1 h-100 text-center p-3">
@@ -365,7 +341,7 @@
                     class="mb-3 mx-auto"
                   />
                   <h6 class="font-weight-bold">
-                    Chrono24's quality & security team
+                    ChronoSouq's quality & security team
                   </h6>
                   <p class="text-muted">
                     Our 40-person quality & security team works hard to detect
@@ -384,7 +360,7 @@
                   />
                   <h6 class="font-weight-bold">Escrow Service unavailable</h6>
                   <p class="text-muted">
-                    Unfortunately, we cannot offer Chrono24's Escrow Service for
+                    Unfortunately, we cannot offer ChronoSouq's Escrow Service for
                     this listing. Instead, you will pay the purchase price
                     directly to the seller. As always, our multilingual support
                     team would be happy to offer assistance should you need it!
@@ -403,7 +379,7 @@
                     Because this listing comes from a private seller, there is
                     no legal obligation to accept returns. Please check all
                     information thoroughly before purchasing. Reach out to the
-                    seller or Chrono24 Support with any questions.
+                    seller or ChronoSouq Support with any questions.
                   </p>
                 </div>
               </div>
@@ -457,16 +433,16 @@
         />
         <div class="card-body">
           <h5 class="card-title">{{productDetails.name}}</h5>
-          <h6 class="card-subtitle mb-2 text-muted">GMT-Master II</h6>
-          <p class="card-text">126710BLRO</p>
+          <h6 class="card-subtitle mb-2 text-muted">{{productDetails.brand.name}}</h6>
+          <p class="card-text">{{productDetails.reference_number}}</p>
           <ul class="list-group list-group-flush">
-            <li class="list-group-item"><strong>Case:</strong> Steel</li>
-            <li class="list-group-item"><strong>Dial:</strong> Black</li>
+            <!-- <li class="list-group-item"><strong>Case:</strong> Steel</li>
+            <li class="list-group-item"><strong>Dial:</strong> Black</li> -->
             <li class="list-group-item">
               <strong>Condition</strong> {{productDetails.condition}}
             </li>
           </ul>
-          <a href="#" class="btn btn-outline-dark mt-3 w-100"
+          <a class="btn btn-outline-dark mt-3 w-100"
             >+ Add to Watch Collection</a
           >
         </div>
@@ -1109,7 +1085,7 @@
     <a href="tel:+85230020310" class="d-block mb-1"
       ><i class="bi bi-telephone"></i> +852 3002 0310</a
     >
-    <a href="#" class="d-block mb-3"><i class="bi bi-chat-dots"></i> Contact</a>
+    <a class="d-block mb-3"><i class="bi bi-chat-dots"></i> Contact</a>
   </div>
   <div class="accordion" id="faqAccordion">
     <div class="accordion-item">
@@ -1209,35 +1185,35 @@
     <div class="col-md-4">
       <h5 class="header-h5">Brand</h5>
       <ul class="list-unstyled un-ol">
-        <li><a href="#">Rolex watches (134439)</a></li>
-        <li><a href="#">New Rolex watches</a></li>
-        <li><a href="#">Pre-owned Rolex watches</a></li>
+        <li><a>Rolex watches (134439)</a></li>
+        <li><a>New Rolex watches</a></li>
+        <li><a>Pre-owned Rolex watches</a></li>
       </ul>
     </div>
 
     <div class="col-md-4">
       <h5 class="header-h5">Top categories</h5>
       <ul class="list-unstyled un-ol">
-        <li><a href="#">Russian Watches</a></li>
-        <li><a href="#">Gold Watches</a></li>
-        <li><a href="#">Military Watches</a></li>
-        <li><a href="#">Pre-Owned Watches</a></li>
+        <li><a>Russian Watches</a></li>
+        <li><a>Gold Watches</a></li>
+        <li><a>Military Watches</a></li>
+        <li><a>Pre-Owned Watches</a></li>
       </ul>
     </div>
 
     <div class="col-md-4">
       <h5 class="header-h5">More watches</h5>
       <ul class="list-unstyled un-ol">
-        <li><a href="#">GMT Watches</a></li>
-        <li><a href="#">Tritium Watches</a></li>
-        <li><a href="#">Rectangular Watches</a></li>
-        <li><a href="#">Used Men’s Watches</a></li>
-        <li><a href="#">Women’s Chronographs</a></li>
-        <li><a href="#">Thin Watches</a></li>
-        <li><a href="#">Sapphire Glass Watches</a></li>
-        <li><a href="#">Collector's Watches</a></li>
-        <li><a href="#">Affordable Watches</a></li>
-        <li><a href="#">Swarovski Watches</a></li>
+        <li><a>GMT Watches</a></li>
+        <li><a>Tritium Watches</a></li>
+        <li><a>Rectangular Watches</a></li>
+        <li><a>Used Men’s Watches</a></li>
+        <li><a>Women’s Chronographs</a></li>
+        <li><a>Thin Watches</a></li>
+        <li><a>Sapphire Glass Watches</a></li>
+        <li><a>Collector's Watches</a></li>
+        <li><a>Affordable Watches</a></li>
+        <li><a>Swarovski Watches</a></li>
       </ul>
     </div>
   </div>

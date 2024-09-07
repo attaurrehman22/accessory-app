@@ -19,7 +19,7 @@ a:hover {
 }
 
 .condition-container {
-  max-width: 800px;
+  max-width: 1054px;
   margin: auto;
   padding: 16px;
 }
@@ -106,7 +106,7 @@ h2 {
 }
 
 .currency-select {
-  width: 60px;
+  width: 80%;
 }
 
 .info-icon {
