@@ -3,7 +3,7 @@
   <div class="col-12 d-flex justify-content-center">
     <div class="dropdown">
           
-      <select (change)="useLang($event.target.value)" style="padding: 5px 20px 5px 20px;">
+      <select [(ngModel)]="selectedLang" (change)="useLang($event.target.value)" style="padding: 5px 20px 5px 20px;">
         <option *ngFor="let item of supportLanguages" [value]="item.value">
           {{ item.name }}
         </option>

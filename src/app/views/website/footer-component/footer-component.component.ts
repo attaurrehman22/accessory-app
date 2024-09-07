@@ -18,6 +18,7 @@ export class FooterComponentComponent {
   ];
 
   isRtl: boolean = false; 
+  selectedLang: string = "en";
 
   constructor(public translateService: TranslateService,
     private languageService:LanguageService
@@ -34,14 +35,12 @@ export class FooterComponentComponent {
     this.languageService.currentLang$.subscribe(lang => {
       this.translateService.use(lang);
       this.isRtl = lang !== 'en';
+      this.selectedLang = lang;
     });
   }
 
   useLang(lang: string) {
     this.languageService.setLanguage(lang);
-    // console.log("Selected Language:", lang);
-    // this.translateService.use(lang);
-    // this.isRtl = lang !== 'en';
   }
 
 }

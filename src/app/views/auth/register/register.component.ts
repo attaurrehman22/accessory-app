@@ -11,6 +11,7 @@ import { Router } from "@angular/router";
 import { usernameExists, notsame ,userEmailExists} from "../../validator/string.validator";
 import { UserService } from "src/services/users/user.service";
 import { HttpService } from "src/services/http/http.service";
+import { AlertsServicesService } from "src/services/alerts-service/alerts-services.service";
 
 @Component({
   selector: "app-register",
@@ -38,7 +39,7 @@ export class RegisterComponent implements OnInit {
   confirmpassword: FormControl = new FormControl("", [Validators.required, notsame(this.password),]);
 
 
-  constructor(
+  constructor(private alertService:AlertsServicesService,
     private userService: UserService,
     private formBuilder: FormBuilder,
     private http: HttpService,
@@ -60,7 +61,7 @@ export class RegisterComponent implements OnInit {
   register() {
     this.registerForm.markAllAsTouched();
     console.log(this.registerForm.valid);
-    // if (this.registerForm.valid) {
+    if (this.registerForm.valid) {
       this.http.register(this.registerForm).subscribe(
         (response) => {
           console.log("Registration successful", response);
@@ -70,7 +71,9 @@ export class RegisterComponent implements OnInit {
           console.error("Registration error", error);
         }
       );
-    // }
+    }else{
+      this.alertService.showAlert('warning', 'Enter Form Values');
+    }
   }
   
 }

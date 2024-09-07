@@ -11,3 +11,22 @@
 <div *ngIf="showFooter">
   <app-footer-component></app-footer-component>
 </div>
+ <!-- Bootstrap Alerts -->
+ <div
+ style="position: absolute; right: 15px; top: 25px; width: auto"
+ class="container mt-4"
+ *ngIf="alertService.alert$ | async as alert"
+>
+ <div
+   [ngClass]="'alert alert-' + alert.type + ' alert-dismissible fade show'"
+   role="alert"
+ >
+   <strong>{{ alert.type | titlecase }}!</strong> {{ alert.message }}
+   <button
+     type="button"
+     class="btn-close"
+     (click)="closeAlert()"
+     aria-label="Close"
+   ></button>
+ </div>
+</div>

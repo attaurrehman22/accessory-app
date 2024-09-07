@@ -64,6 +64,10 @@ export class HttpService {
     return this.http.get(`${this.apiUrl}/api/categories`);
   }
 
+  getCategoryDropDown(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/api/categories-dropdown`);
+  }
+
   addProduct(formData: any): Observable<any> {
     const token = localStorage.getItem("user_token");
     const url = `${this.apiUrl}/api/products/save`;

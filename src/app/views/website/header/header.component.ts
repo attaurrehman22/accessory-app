@@ -19,7 +19,7 @@ export class HeaderComponent {
     {name:"हिन्दी",value:"hi"},
   ];
   isRtl: boolean = false; 
-
+  selectedLang: string = "en";
   constructor(public translateService: TranslateService,
     private languageService:LanguageService,public router: Router) {
 
@@ -29,17 +29,15 @@ export class HeaderComponent {
 
     const browserlang = this.translateService.getBrowserLang();
 
-    console.log("Browser Language => ", browserlang);
-
     if (languagevalues.includes(browserlang)) {
       this.translateService.use(browserlang);
-      //
       this.isRtl = browserlang !== 'en';
     }
 
     this.languageService.currentLang$.subscribe(lang => {
       this.translateService.use(lang);
       this.isRtl = lang !== 'en';
+      this.selectedLang = lang;
     });
   }
 
@@ -92,12 +90,7 @@ export class HeaderComponent {
     this.dropdownOpen = !this.dropdownOpen;
   }
 
-  // goToRegister(){
-  //   this.router.navigateByUrl('register')
-  // }
-
   routeToNewProduct(){
-    console.log("----------------")
     this.router.navigate(['/new-product']);
   }
 }

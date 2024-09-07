@@ -422,9 +422,9 @@
         <div *ngIf="usedCondition" class="card-container">
           <mat-card
             class="condition-card"
-            [ngClass]="{ 'selected-card': selectedCondition === 'very-good' }"
+            [ngClass]="{ 'selected-card': selectedCondition === 'pre_owned' }"
           >
-            <mat-card-title>Very good (minor signs of wear)</mat-card-title>
+            <mat-card-title>Pre Owned (minor signs of wear)</mat-card-title>
             <mat-card-content>
               <p>
                 The item shows minor signs of wear, such as small, intangible
@@ -435,7 +435,7 @@
               <button
                 style="border-radius: 75px; border: 1px solid black"
                 mat-button
-                (click)="selectUsedCondition('very-good')"
+                (click)="selectUsedCondition('pre_owned')"
               >
                 Select
               </button>
@@ -444,9 +444,9 @@
 
           <mat-card
             class="condition-card"
-            [ngClass]="{ 'selected-card': selectedCondition === 'good' }"
+            [ngClass]="{ 'selected-card': selectedCondition === 'unworn' }"
           >
-            <mat-card-title>Good (moderate signs of wear)</mat-card-title>
+            <mat-card-title>Unworn (moderate signs of wear)</mat-card-title>
             <mat-card-content>
               <p>
                 The item shows visible and tangible signs of wear like
@@ -457,7 +457,7 @@
               <button
                 style="border-radius: 75px; border: 1px solid black"
                 mat-button
-                (click)="selectUsedCondition('good')"
+                (click)="selectUsedCondition('unworn')"
               >
                 Select
               </button>
@@ -466,9 +466,9 @@
 
           <mat-card
             class="condition-card"
-            [ngClass]="{ 'selected-card': selectedCondition === 'fair' }"
+            [ngClass]="{ 'selected-card': selectedCondition === 'vintage' }"
           >
-            <mat-card-title>Fair (major signs of wear)</mat-card-title>
+            <mat-card-title>Vintage (major signs of wear)</mat-card-title>
             <mat-card-content>
               <p>
                 The item shows major, visible signs of wear like scratches and
@@ -479,14 +479,14 @@
               <button
                 style="border-radius: 75px; border: 1px solid black"
                 mat-button
-                (click)="selectUsedCondition('fair')"
+                (click)="selectUsedCondition('vintage')"
               >
                 Select
               </button>
             </mat-card-actions>
           </mat-card>
 
-          <mat-card
+          <!-- <mat-card
             class="condition-card"
             [ngClass]="{ 'selected-card': selectedCondition === 'incomplete' }"
           >
@@ -503,7 +503,7 @@
                 Select
               </button>
             </mat-card-actions>
-          </mat-card>
+          </mat-card> -->
         </div>
         <div *ngIf="newCondition" class="mt-3">
           <div>
@@ -719,6 +719,7 @@
                 <mat-option value="USD">USD</mat-option>
                 <mat-option value="EUR">EUR</mat-option>
                 <mat-option value="GBP">GBP</mat-option>
+                <mat-option value="saudi-rial">Saudi Riyal</mat-option>
               </mat-select>
             </span>
           </mat-form-field>
@@ -813,8 +814,8 @@
                     style="padding: 7px"
                     class="currency-select"
                   >
-                    <mat-option value="AH">A/H</mat-option>
-                    <mat-option value="HZ">HZ</mat-option>
+                    <mat-option value="ah">A/H</mat-option>
+                    <mat-option value="hz">HZ</mat-option>
                   </mat-select>
                 </span>
               </mat-form-field>
@@ -860,7 +861,13 @@
               appearance="outline"
               class="full-width"
             >
-              <input matInput formControlName="caseMaterial" />
+              <!-- <input matInput formControlName="" /> -->
+              <mat-select formControlName="caseMaterial">
+                <mat-option value="aluminium">Aluminium</mat-option>
+                <mat-option value="brass">Brass</mat-option>
+                <mat-option value="carbon">Carbon</mat-option>
+                <mat-option value="plastic">Plastic</mat-option>
+              </mat-select>
             </mat-form-field>
           </div>
           <div
@@ -876,7 +883,13 @@
               appearance="outline"
               class="full-width"
             >
-              <input matInput formControlName="bezelMaterial" />
+              <!-- <input matInput formControlName="bezelMaterial" /> -->
+              <mat-select formControlName="bezelMaterial">
+                <mat-option value="aluminium">Aluminium</mat-option>
+                <mat-option value="brass">Brass</mat-option>
+                <mat-option value="carbon">Carbon</mat-option>
+                <mat-option value="plastic">Plastic</mat-option>
+              </mat-select>
             </mat-form-field>
           </div>
 
@@ -911,8 +924,8 @@
               class="full-width"
             >
               <mat-select formControlName="crystal">
-                <mat-option value="false">Fasle</mat-option>
-                <mat-option value="true">True</mat-option>
+                <mat-option value="glass">Glass</mat-option>
+                <mat-option value="plastic">Plastic</mat-option>
               </mat-select>
             </mat-form-field>
           </div>
@@ -925,8 +938,11 @@
           >
             <mat-label>Water resistance</mat-label>
             <mat-form-field style="width: 70%" appearance="outline">
-              <mat-select>
-                <mat-option value="Ah">A/h</mat-option>
+              <mat-select formControlName="waterResistance">
+                <mat-option value="no-resistence">No Water Resistence</mat-option>
+                <mat-option value="1-atm">1 ATM</mat-option>
+                <mat-option value="2-atm">2 ATM</mat-option>
+                <mat-option value="2.5-atm">2.5 ATM</mat-option>
               </mat-select>
             </mat-form-field>
           </div>
@@ -967,7 +983,10 @@
             <mat-label>Dial</mat-label>
             <mat-form-field style="width: 70%" appearance="outline">
               <mat-select formControlName="dial">
-                <mat-option value="Ah">A/h</mat-option>
+                <mat-option value="black">Black</mat-option>
+                <mat-option value="blue">Blue</mat-option>
+                <mat-option value="brown">Brown</mat-option>
+                <mat-option value="gold">Gold</mat-option>
               </mat-select>
             </mat-form-field>
           </div>
@@ -982,7 +1001,9 @@
             <mat-label>Dial numerals</mat-label>
             <mat-form-field style="width: 70%" appearance="outline">
               <mat-select formControlName="dialNumerals">
-                <mat-option value="Ah">A/h</mat-option>
+                <mat-option value="lines">Lines</mat-option>
+                <mat-option value="arabic-numerals">Arabic Numerals</mat-option>
+                <mat-option value="no-numerals">No Numerals</mat-option>
               </mat-select>
             </mat-form-field>
           </div>
@@ -1051,7 +1072,9 @@
             <mat-label>Bracelet material</mat-label>
             <mat-form-field style="width: 70%" appearance="outline">
               <mat-select formControlName="braceletMaterial">
-                <mat-option value="Ah">A/h</mat-option>
+                <mat-option value="brass">Brass</mat-option>
+                <mat-option value="calf=skin">Calf Skin</mat-option>
+                <mat-option value="ceramic">Ceramic</mat-option>
               </mat-select>
             </mat-form-field>
           </div>
@@ -1066,7 +1089,9 @@
             <mat-label>Bracelet color</mat-label>
             <mat-form-field style="width: 70%" appearance="outline">
               <mat-select formControlName="braceletColor">
-                <mat-option value="Ah">A/h</mat-option>
+                <mat-option value="black">Black</mat-option>
+                <mat-option value="blue">Blue</mat-option>
+                <mat-option value="brown">Brown</mat-option>
               </mat-select>
             </mat-form-field>
           </div>
@@ -1081,7 +1106,8 @@
             <mat-label>Type of clasp</mat-label>
             <mat-form-field style="width: 70%" appearance="outline">
               <mat-select formControlName="typeOfClasp">
-                <mat-option value="Ah">A/h</mat-option>
+                <mat-option value="buckle">Buckle</mat-option>
+                <mat-option value="fold-clasp">Fold Clasp</mat-option>
               </mat-select>
             </mat-form-field>
           </div>
@@ -1096,7 +1122,9 @@
             <mat-label>Clasp material</mat-label>
             <mat-form-field style="width: 70%" appearance="outline">
               <mat-select formControlName="claspMaterial">
-                <mat-option value="Ah">A/h</mat-option>
+                <mat-option value="plastic">Plastic</mat-option>
+                <mat-option value="steel">Steel</mat-option>
+                <mat-option value="silver">Silver</mat-option>
               </mat-select>
             </mat-form-field>
           </div>

@@ -44,7 +44,7 @@ import { ProductDetailComponentComponent } from './views/website/product-detail-
 import { BuyProductComponentComponent } from './views/website/buy-product-component/buy-product-component.component';
 import { SecondHeaderComponent } from "./views/website/second-header/second-header.component";
 import { ProductListComponent } from './views/website/product-list/product-list.component';
-
+import { FormsModule } from '@angular/forms'; 
 @NgModule({
   declarations: [
     AppComponent,
@@ -83,6 +83,7 @@ import { ProductListComponent } from './views/website/product-list/product-list.
     MatCardModule,
     MatButtonToggleModule,
     ReactiveFormsModule,
+    FormsModule,
     MatDividerModule,
     MatCheckboxModule,
     RouterModule,

@@ -7,6 +7,7 @@ import {
   Validators,
 } from "@angular/forms";
 import { Router } from "@angular/router";
+import { AlertsServicesService } from "src/services/alerts-service/alerts-services.service";
 import { HttpService } from "src/services/http/http.service";
 
 @Component({
@@ -25,7 +26,7 @@ export class LoginComponent implements OnInit {
     Validators.minLength(6),
     Validators.maxLength(30),
   ]);
-  constructor(
+  constructor(public alertService: AlertsServicesService,
     public router: Router,
     private fb: FormBuilder,
     private http: HttpService
@@ -59,6 +60,7 @@ export class LoginComponent implements OnInit {
           }
         },
         (error) => {
+          this.alertService.showAlert('danger', 'Enter Valid Email and Password');
           console.error("Login error", error);
         }
       );

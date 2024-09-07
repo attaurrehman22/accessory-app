@@ -1,5 +1,6 @@
 <mat-sidenav-container
   class="sidenav-container"
+  style="height: 12vh;"
   [ngClass]="{ 'rtl-layout': isRtl }"
 >
   <mat-sidenav
@@ -36,29 +37,6 @@
       </button>
     </div>
     <div class="header-contact gap-4">
-      <!-- <img src="./assets/images/basket-icon.png" /> -->
-      <!-- <img
-        src="./assets/images/profile-icon.png"
-        style="cursor: pointer"
-        [matMenuTriggerFor]="menu"
-        (click)="$event.stopPropagation()"
-      />
-
-      <mat-menu #menu="matMenu">
-        <button mat-menu-item>
-          <mat-icon>edit</mat-icon>
-          <span>Edit</span>
-        </button>
-        <button mat-menu-item>
-          <mat-icon>delete</mat-icon>
-          <span>Delete</span>
-        </button>
-        <button mat-menu-item>
-          <mat-icon>refresh</mat-icon>
-          <span>Reset Password</span>
-        </button>
-      </mat-menu> -->
-
       <button
         style="background: none; border: none; font-size: 16px"
         *ngIf="isUserLogin"
@@ -67,13 +45,6 @@
         Logout
       </button>
       <mat-icon style="cursor: pointer;">notification_important</mat-icon>
-      <!-- <mat-icon  style="cursor: pointer;"  ><span>logout</span></mat-icon> -->
-      <!-- <img
-      *ngIf="isUserLogin"
-      src="./assets/images/profile-icon.png"
-      (click)="logout()"
-      style="cursor: pointer;"
-    /> -->
       <img
         *ngIf="!isUserLogin"
         src="./assets/images/profile-icon.png"
@@ -81,7 +52,7 @@
         style="cursor: pointer"
       />
       <div class="dropdown">
-        <select (change)="useLang($event.target.value)">
+        <select [(ngModel)]="selectedLang" (change)="useLang($event.target.value)">
           <option *ngFor="let item of supportLanguages" [value]="item.value">
             {{ item.name }}
           </option>

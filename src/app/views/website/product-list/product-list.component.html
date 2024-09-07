@@ -1,23 +1,19 @@
 <div style="display: flex; flex-wrap: wrap">
   <!-- -------------------------------- Side Bar --------------------------- -->
   <div style="padding: 20px 0 0 45px" class="col-2">
-    <h2>Select Category</h2>
 
-    <div *ngFor="let cat of productsList">
-      <button
-        [ngStyle]="{ color: selectedCategory === cat ? 'black' : 'green' }"
-        style="
-          background: none;
-          border: none;
-          text-decoration: underline;
-          color: green;
-          font-size: 19px;
-          font-weight: 500;
-        "
-        (click)="getCategory(cat)"
-      >
-        {{ cat.name }}
-      </button>
+    <div>
+      <mat-form-field appearance="outline">
+        <mat-label>Select Category</mat-label>
+        <mat-select (selectionChange)="getCategory($event.value)" multiple>
+          <mat-option
+            *ngFor="let cat of category_sel_frm_popular_models"
+            [value]="cat.id"
+          >
+            {{ cat.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
     </div>
   </div>
 
@@ -96,7 +92,7 @@
 
     <div class="container mt-4">
       <div
-        *ngFor="let prod of filterdProducts"
+        *ngFor="let prod of productsList"
         class="card mb-3 mt-3"
         style="
           max-width: 100%;

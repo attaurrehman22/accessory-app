@@ -49,12 +49,18 @@ export class ProductListComponent implements OnInit {
 
   ngOnInit(): void {
     this.brandsDataList = history.state.data;
-    this.category_sel_frm_popular_models = history.state.singleBrand;
-    console.log(
-      "this.category_sel_frm_popular_models",
-      this.category_sel_frm_popular_models
-    );
+    
     this.getAllProducts();
+    this.getAllCategories();
+  }
+
+  getAllCategories(){
+    this.http.getCategoryDropDown().subscribe(
+      (res) => {
+        this.category_sel_frm_popular_models=res.data;
+      }
+      ,(err)=>{}
+    )
   }
 
   constructor(private http: HttpService, private router: Router) {}
@@ -99,7 +105,6 @@ export class ProductListComponent implements OnInit {
           return product;
         });
   
-        // Sort the productsList in descending order by the desired field, e.g., createdAt
         this.productsList.sort((a: any, b: any) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
 
 
@@ -119,12 +124,43 @@ export class ProductListComponent implements OnInit {
   selectedCategory: any;
 
   getCategory(cat: any) {
-    this.selectedCategory = cat;
-    console.log(cat);
-    this.filterdProducts = this.productsList.filter(
-      (prd) => prd.category_id === cat.category_id
-    );
-    console.log(this.filterdProducts);
+
+    // this.http.getProducts().subscribe(
+    //   (res)=>{
+    //     this.productsList = res.data.map((product: any) => {
+    //       // Clean up main_image
+    //       if (product.main_image) {
+    //         // Replace backslashes with forward slashes and ensure no leading slash
+    //         product.main_image = product.main_image.replace(/\\/g, "/").replace(/^\/+/, "");
+    //       }
+  
+    //       // Clean up folder
+    //       if (product.folder) {
+    //         // Replace backslashes with forward slashes and ensure no leading slash
+    //         product.folder = product.folder.replace(/\\/g, "/").replace(/^\/+/, "");
+    //       }
+  
+    //       // Clean up additional_images (assuming it's a JSON string that needs parsing)
+    //       if (product.additional_images) {
+    //         try {
+    //           product.additional_images = JSON.parse(product.additional_images).map((img: string) =>
+    //             img.replace(/\\/g, "/").replace(/^\/+/, "")
+    //           );
+    //         } catch (error) {
+    //           console.error('Error parsing additional_images:', error);
+    //         }
+    //       }
+  
+    //       return product;
+    //     });
+  
+    //     this.productsList.sort((a: any, b: any) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
+
+
+    //   },(err)=>{
+
+    //   }
+    // )
   }
 
   routeTo(slide) {
