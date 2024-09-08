@@ -53,7 +53,37 @@
       class="col-lg-6 col-md-12 col-sm-12"
       style="position: relative; overflow: hidden"
     >
-      <div
+    <div
+  id="carouselExample"
+  style="border-top-right-radius: 25px; border-bottom-left-radius: 25px; height: 620px;"
+  class="carousel slide"
+  data-bs-ride="carousel"
+>
+  <div class="carousel-inner" style="height: 620px;">
+    <!-- Ensure only one 'active' class is present -->
+    <div class="carousel-item" *ngFor="let img of homeData.slider; let i = index" [ngClass]="{'active': i === 0}" style="height: 620px;">
+      <img
+        [src]="'https://api.chronosouq.com/' + img.image"
+        style="height: 100%; width: 100%; object-fit: fill;"
+        alt="{{ 'find_dream.img_alt' | translate }}"
+        class="responsive-img"
+      />
+    </div>
+  </div>
+
+  <!-- Carousel Indicators -->
+  <ol class="carousel-indicators">
+    <li
+      *ngFor="let img of homeData.slider; let i = index"
+      [attr.data-bs-target]="'#carouselExample'"
+      [attr.data-bs-slide-to]="i"
+      [ngClass]="{'active': i === 0}"
+    ></li>
+  </ol>
+</div>
+
+
+      <!-- <div
         id="carouselExample"
         style="border-top-right-radius: 25px; border-bottom-left-radius: 25px;height: 620px;"
         class="carousel slide"
@@ -75,32 +105,6 @@
               class="responsive-img"
             />
           </div>
-          <!-- <div
-            class="carousel-item"
-            style="
-              border-top-right-radius: 25px;
-              border-bottom-left-radius: 25px;
-            "
-          >
-            <img
-              src="./assets/images/landing-page-watches.png"
-              alt="{{ 'find_dream.img_alt_2' | translate }}"
-              class="responsive-img"
-            />
-          </div>
-          <div
-            class="carousel-item"
-            style="
-              border-top-right-radius: 25px;
-              border-bottom-left-radius: 25px;
-            "
-          >
-            <img
-              src="./assets/images/landing-page-watches.png"
-              alt="{{ 'find_dream.img_alt_3' | translate }}"
-              class="responsive-img"
-            />
-          </div> -->
         </div>
 
         <ol class="carousel-indicators">
@@ -112,7 +116,7 @@
           <li data-bs-target="#carouselExample" data-bs-slide-to="1"></li>
           <li data-bs-target="#carouselExample" data-bs-slide-to="2"></li>
         </ol>
-      </div>
+      </div> -->
 
       <div class="pos-feature">
         <div class="features-container">

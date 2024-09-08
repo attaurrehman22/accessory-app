@@ -79,7 +79,7 @@ export class HeaderComponent {
 
   logout() {
     localStorage.removeItem('Logged');
-    localStorage.removeItem('token');
+    localStorage.removeItem('user_token');
     this.isUserLogin = null;
     this.router.navigateByUrl('login');
   }
@@ -91,6 +91,13 @@ export class HeaderComponent {
   }
 
   routeToNewProduct(){
+    const token=localStorage.getItem('user_token');
+    const rerouteUrl='new-product';
+    localStorage.setItem('navigate_url',rerouteUrl)
+    if(token){
     this.router.navigate(['/new-product']);
+    }else{
+      this.router.navigate(['/login'])
+    }
   }
 }

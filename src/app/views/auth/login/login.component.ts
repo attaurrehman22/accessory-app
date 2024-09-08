@@ -38,9 +38,10 @@ export class LoginComponent implements OnInit {
   }
 
   routeTo: any;
-
+  buyProductUrl:any;
   ngOnInit(): void {
     this.routeTo = history.state.paramRoute;
+    this.buyProductUrl=localStorage.getItem('navigate_url')
   }
   gotoHome() {
     this.loginForm.markAllAsTouched();
@@ -55,8 +56,8 @@ export class LoginComponent implements OnInit {
           localStorage.setItem("user_token", response.authorisation.token);
           if (this.routeTo) {
             this.router.navigateByUrl("buy-product");
-          } else {
-            this.router.navigateByUrl("");
+          } else if(this.buyProductUrl === 'new-product') {
+            this.router.navigateByUrl("new-product");
           }
         },
         (error) => {
