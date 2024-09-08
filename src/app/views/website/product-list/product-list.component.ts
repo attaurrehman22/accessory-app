@@ -193,7 +193,7 @@ export class ProductListComponent implements OnInit {
     if (!this.selectedCategories) {
       this.selectedCategories = [];
     }
-  
+
     // Check if the category is already selected
     if (this.selectedCategories.includes(selectedCatId)) {
       // Remove the category if it's already selected
@@ -204,9 +204,9 @@ export class ProductListComponent implements OnInit {
       // Add the category if it's not selected
       this.selectedCategories.push(selectedCatId);
     }
-  
+
     console.log("selectedCategories after change", this.selectedCategories);
-  
+
     // Check if all categories are unchecked
     if (!this.selectedCategories.length) {
       if (this.dataFrompopularbrands) {
