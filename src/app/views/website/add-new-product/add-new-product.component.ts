@@ -149,12 +149,14 @@ export class AddNewProductComponent implements OnInit {
   }
 
   categoryList: any;
-
+  topCategories: any; // Categories with top_category: 1
+  otherCategories: any;
   getCategoryDropdown() {
     this.http.getCategory().subscribe(
       (response: any) => {
         this.categoryList = response.data;
-        console.log(response);
+        this.topCategories = this.categoryList.filter(category => category.top_category === 1);
+        this.otherCategories = this.categoryList.filter(category => category.top_category === 0);
       },
       (error: any) => {
         console.log(error);
@@ -162,11 +164,15 @@ export class AddNewProductComponent implements OnInit {
     );
   }
 
+  topBrand: any; // Categories with top_category: 1
+  otherBrand: any;
+
   getBrandsDropdown() {
     this.http.getAllBrands().subscribe(
       (response: any) => {
         this.brandsList = response.data;
-        console.log(response);
+        this.topBrand = this.brandsList.filter(brand => brand.top_brand === 1);
+        this.otherBrand = this.brandsList.filter(brand => brand.top_brand === 0);
       },
       (error: any) => {
         console.log(error);

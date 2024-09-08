@@ -112,17 +112,28 @@
           >
             <mat-label>Select Category</mat-label>
             <mat-select formControlName="category_id">
-              <mat-option *ngFor="let brand of categoryList" [value]="brand.id">
-                {{ brand.name }}
-              </mat-option>
+              <!-- Top Categories Section -->
+              <mat-optgroup label="Top Categories">
+                <mat-option *ngFor="let brand of topCategories" [value]="brand.id">
+                  {{ brand.name }}
+                </mat-option>
+              </mat-optgroup>
+        
+              <!-- Other Categories Section -->
+              <mat-optgroup label="Other Categories">
+                <mat-option *ngFor="let brand of otherCategories" [value]="brand.id">
+                  {{ brand.name }}
+                </mat-option>
+              </mat-optgroup>
             </mat-select>
             <mat-error
               *ngIf="productForm.get('category_id').hasError('required')"
             >
-              Select Brand
+              Select Category
             </mat-error>
           </mat-form-field>
         </div>
+        
       </div>
 
       <div class="d-flex mt-2" style="justify-content: space-between; gap: 1%" [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }">
@@ -133,10 +144,26 @@
             class="full-width"
           >
             <mat-label>Select Brand </mat-label>
-            <mat-select formControlName="brand_id">
+            <!-- <mat-select formControlName="brand_id">
               <mat-option *ngFor="let brand of brandsList" [value]="brand.id">
                 {{ brand.name }}
               </mat-option>
+            </mat-select> -->
+
+            <mat-select formControlName="brand_id">
+              <!-- Top Categories Section -->
+              <mat-optgroup label="Top Brand">
+                <mat-option *ngFor="let brand of topBrand" [value]="brand.id">
+                  {{ brand.name }}
+                </mat-option>
+              </mat-optgroup>
+        
+              <!-- Other Categories Section -->
+              <mat-optgroup label="Other Brand">
+                <mat-option *ngFor="let brand of otherBrand" [value]="brand.id">
+                  {{ brand.name }}
+                </mat-option>
+              </mat-optgroup>
             </mat-select>
             <mat-hint align="start"
               ><a>Manufacturer not listed?</a>
