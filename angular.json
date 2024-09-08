@@ -44,14 +44,14 @@
                   "with": "src/environments/environment.prod.ts"
                 }
               ],
-              "optimization": true,
+              "optimization": false,
               "outputHashing": "all",
-              "sourceMap": false,
+              "sourceMap": true,
               "extractCss": true,
               "namedChunks": false,
               "extractLicenses": true,
               "vendorChunk": false,
-              "buildOptimizer": true,
+              "buildOptimizer": false,
               "budgets": [
                 {
                   "type": "initial",
@@ -64,6 +64,14 @@
                   "maximumError": "10kb"
                 }
               ]
+            },
+            "development": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "sourceMap": true,
+              "extractLicenses": false,
+              "namedChunks": true,
+              "vendorChunk": true
             }
           }
         },
@@ -75,6 +83,9 @@
           "configurations": {
             "production": {
               "buildTarget": "multilingualtestapp:build:production"
+            },
+            "development": {
+              "buildTarget": "multilingualtestapp:build:development"
             }
           }
         },
@@ -124,6 +135,9 @@
           "configurations": {
             "production": {
               "devServerTarget": "multilingualtestapp:serve:production"
+            },
+            "development": {
+              "devServerTarget": "multilingualtestapp:serve:development"
             }
           }
         }
