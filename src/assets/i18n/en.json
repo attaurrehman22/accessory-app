@@ -39,12 +39,12 @@
 	"chrono_buyer": {
 	  "label": "ChronoSouq Buyer Protection",
 	  "paragraph": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy.",
-	  "span_payment": "Payment via the Escrow Service",
-	  "span_commitment": "Commitment to Authenticity",
-	  "span_global": "Global money-back guarantee",
-	  "span_strict": "Strict dealer guidelines",
-	  "span_insured": "Insured shipments",
-	  "span_chrono": "ChronoSouq's quality & security team"
+	  "span_payment": "Secure/safe Payment via Escrow Service",
+	  "span_commitment": "Worldwide Money-Back Guarantee",
+	  "span_global": "Authenticity Guarantee",
+	  "span_strict": "Safe and Insured Delivery",
+	  "span_insured": "Chronosouq Quality Assurance Team",
+	  "span_chrono": "24/7 Customer Support"
 	},
 	"popular_models": {
 	  "label": "Our Most Popular Models",
@@ -66,9 +66,16 @@
 	},
 	"people_saying": {
 	  "label": "What People Are Saying",
-	  "header": "Great app for transferring money!",
-	  "paragraph": "It is one of my favorite apps and the best money transfer apps. I recommend ChronoSouq to anyone who wants to send money abroad.",
-	  "aut_name": "John S."
+	  "header1": "Aisha Al-Farisi, Riyadh",
+	  "paragraph1":"I had an amazing experience with ChronoSouq. The platform made it incredibly easy to find and purchase the watch I was looking for. The transaction was smooth, and the watch arrived exactly as described. I will definitely be using ChronoSouq again for my future watch needs.",
+	 "aut_name1": "Aisha Al-Farisi, Riyadh.", 
+	  "paragraph2": "ChronoSouq provided a seamless buying experience from start to finish. The website is user-friendly, and the customer service was top-notch. My watch was delivered promptly and was in perfect condition. Highly recommend this platform to any watch enthusiast!",
+	  "aut_name2": "Omar Al-Saud, Jeddah",
+	  "paragraph3": "I am thoroughly impressed with ChronoSouq's service. The purchase process was straightforward, and the watch was exactly as described. The seller's communication was excellent, and delivery was swift. I’ll definitely return for my next watch purchase",
+	  "aut_name3": "Layla Al-Hamadi, Dammam",
+	  "paragraph4": "ChronoSouq exceeded my expectations with their efficient service and attention to detail. The entire process was handled professionally, and the watch arrived promptly. It’s a fantastic platform for anyone looking to buy high-quality watches",
+	  "aut_name4": "Hassan Al-Mansoori, Khobar."
+
 	},
 	"how_works": {
 	  "label": "How it Works?",

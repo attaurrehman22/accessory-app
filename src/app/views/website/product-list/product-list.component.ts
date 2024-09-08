@@ -47,20 +47,79 @@ export class ProductListComponent implements OnInit {
   brandsDataList: any;
   category_sel_frm_popular_models: any;
 
+  dataFrompopularbrands: any;
+
   ngOnInit(): void {
     this.brandsDataList = history.state.data;
-    
-    this.getAllProducts();
+    this.dataFrompopularbrands = history.state.brandData;
+
+    if (this.dataFrompopularbrands) {
+      this.getPopularBrandswithBrndsID();
+    } else {
+      this.getAllProducts();
+    }
     this.getAllCategories();
   }
 
-  getAllCategories(){
+  getPopularBrandswithBrndsID() {
+    this.http.getPopularproductsWithID(this.dataFrompopularbrands.id).subscribe(
+      (res) => {
+        this.productsList = res.data.products.map((product: any) => {
+          // Clean up main_image
+          if (product.main_image) {
+            // Replace backslashes with forward slashes and ensure no leading slash
+            product.main_image = product.main_image
+              .replace(/\\/g, "/")
+              .replace(/^\/+/, "");
+          }
+
+          // Clean up folder
+          if (product.folder) {
+            // Replace backslashes with forward slashes and ensure no leading slash
+            product.folder = product.folder
+              .replace(/\\/g, "/")
+              .replace(/^\/+/, "");
+          }
+
+          // Clean up additional_images (assuming it's a JSON string that needs parsing)
+          if (product.additional_images) {
+            try {
+              product.additional_images = JSON.parse(
+                product.additional_images
+              ).map((img: string) =>
+                img.replace(/\\/g, "/").replace(/^\/+/, "")
+              );
+            } catch (error) {
+              console.error("Error parsing additional_images:", error);
+            }
+          }
+
+          return product;
+        });
+
+        this.productsList.sort(
+          (a: any, b: any) =>
+            new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+        );
+
+        // Initialize filteredProducts if not already initialized
+        if (!this.filterdProducts) {
+          this.filterdProducts = this.productsList;
+        }
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
+  }
+
+  getAllCategories() {
     this.http.getCategoryDropDown().subscribe(
       (res) => {
-        this.category_sel_frm_popular_models=res.data;
-      }
-      ,(err)=>{}
-    )
+        this.category_sel_frm_popular_models = res.data;
+      },
+      (err) => {}
+    );
   }
 
   constructor(private http: HttpService, private router: Router) {}
@@ -82,31 +141,39 @@ export class ProductListComponent implements OnInit {
           // Clean up main_image
           if (product.main_image) {
             // Replace backslashes with forward slashes and ensure no leading slash
-            product.main_image = product.main_image.replace(/\\/g, "/").replace(/^\/+/, "");
+            product.main_image = product.main_image
+              .replace(/\\/g, "/")
+              .replace(/^\/+/, "");
           }
-  
+
           // Clean up folder
           if (product.folder) {
             // Replace backslashes with forward slashes and ensure no leading slash
-            product.folder = product.folder.replace(/\\/g, "/").replace(/^\/+/, "");
+            product.folder = product.folder
+              .replace(/\\/g, "/")
+              .replace(/^\/+/, "");
           }
-  
+
           // Clean up additional_images (assuming it's a JSON string that needs parsing)
           if (product.additional_images) {
             try {
-              product.additional_images = JSON.parse(product.additional_images).map((img: string) =>
+              product.additional_images = JSON.parse(
+                product.additional_images
+              ).map((img: string) =>
                 img.replace(/\\/g, "/").replace(/^\/+/, "")
               );
             } catch (error) {
-              console.error('Error parsing additional_images:', error);
+              console.error("Error parsing additional_images:", error);
             }
           }
-  
+
           return product;
         });
-  
-        this.productsList.sort((a: any, b: any) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
 
+        this.productsList.sort(
+          (a: any, b: any) =>
+            new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+        );
 
         // Initialize filteredProducts if not already initialized
         if (!this.filterdProducts) {
@@ -118,49 +185,90 @@ export class ProductListComponent implements OnInit {
       }
     );
   }
-  
-  
-  
-  selectedCategory: any;
 
-  getCategory(cat: any) {
+  selectedCategories: any[] = [];
 
-    // this.http.getProducts().subscribe(
-    //   (res)=>{
-    //     this.productsList = res.data.map((product: any) => {
-    //       // Clean up main_image
-    //       if (product.main_image) {
-    //         // Replace backslashes with forward slashes and ensure no leading slash
-    //         product.main_image = product.main_image.replace(/\\/g, "/").replace(/^\/+/, "");
-    //       }
+  getCategory(selectedCatId: any) {
+    // Check if the category is already selected
+    if (!this.selectedCategories) {
+      this.selectedCategories = [];
+    }
   
-    //       // Clean up folder
-    //       if (product.folder) {
-    //         // Replace backslashes with forward slashes and ensure no leading slash
-    //         product.folder = product.folder.replace(/\\/g, "/").replace(/^\/+/, "");
-    //       }
+    // Check if the category is already selected
+    if (this.selectedCategories.includes(selectedCatId)) {
+      // Remove the category if it's already selected
+      this.selectedCategories = this.selectedCategories.filter(
+        (id) => id !== selectedCatId
+      );
+    } else {
+      // Add the category if it's not selected
+      this.selectedCategories.push(selectedCatId);
+    }
   
-    //       // Clean up additional_images (assuming it's a JSON string that needs parsing)
-    //       if (product.additional_images) {
-    //         try {
-    //           product.additional_images = JSON.parse(product.additional_images).map((img: string) =>
-    //             img.replace(/\\/g, "/").replace(/^\/+/, "")
-    //           );
-    //         } catch (error) {
-    //           console.error('Error parsing additional_images:', error);
-    //         }
-    //       }
+    console.log("selectedCategories after change", this.selectedCategories);
   
-    //       return product;
-    //     });
-  
-    //     this.productsList.sort((a: any, b: any) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
+    // Check if all categories are unchecked
+    if (!this.selectedCategories.length) {
+      if (this.dataFrompopularbrands) {
+        this.getPopularBrandswithBrndsID();
+      } else {
+        this.getAllProducts();
+      }
+    }
 
+    // Prepare the URL search params
+    const params = new URLSearchParams();
+    this.selectedCategories.forEach((id: number) =>
+      params.append("category_ids[]", id.toString())
+    );
 
-    //   },(err)=>{
+    this.http.getProductsByCategory(this.selectedCategories).subscribe(
+      (res) => {
+        this.productsList = res;
+        if (this.productsList) {
+          this.productsList = this.productsList.data;
+          this.productsList.map((product: any) => {
+            if (product.main_image) {
+              product.main_image = product.main_image
+                .replace(/\\/g, "/")
+                .replace(/^\/+/, "");
+            }
 
-    //   }
-    // )
+            if (product.folder) {
+              product.folder = product.folder
+                .replace(/\\/g, "/")
+                .replace(/^\/+/, "");
+            }
+
+            if (product.additional_images) {
+              try {
+                product.additional_images = JSON.parse(
+                  product.additional_images
+                ).map((img: string) =>
+                  img.replace(/\\/g, "/").replace(/^\/+/, "")
+                );
+              } catch (error) {
+                console.error("Error parsing additional_images:", error);
+              }
+            }
+
+            return product;
+          });
+          this.productsList.sort(
+            (a: any, b: any) =>
+              new Date(b.created_at).getTime() -
+              new Date(a.created_at).getTime()
+          );
+
+          if (this.filterdProducts) {
+            this.filterdProducts = this.productsList;
+          }
+        }
+      },
+      (err) => {
+        console.error("Error fetching products:", err);
+      }
+    );
   }
 
   routeTo(slide) {

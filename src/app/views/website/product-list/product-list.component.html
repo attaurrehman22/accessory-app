@@ -3,9 +3,9 @@
   <div style="padding: 20px 0 0 45px" class="col-2">
 
     <div>
-      <mat-form-field appearance="outline">
+      <mat-form-field style="width: 100%;" appearance="outline">
         <mat-label>Select Category</mat-label>
-        <mat-select (selectionChange)="getCategory($event.value)" multiple>
+        <mat-select multiple>
           <mat-option
             *ngFor="let cat of category_sel_frm_popular_models"
             [value]="cat.id"
@@ -144,7 +144,7 @@
                     "
                   >
                     <li><strong>Movement:</strong></li>
-                    <li>Automatic</li>
+                    <li>{{prod.movement}}</li>
                   </ul>
                   <ul
                     class="list-unstyled"
@@ -166,9 +166,20 @@
                     "
                   >
                     <li><strong>Reference number:</strong></li>
-                    <li>126233</li>
+                    <li>{{prod.reference_number}}</li>
                   </ul>
                   <ul
+                  class="list-unstyled"
+                  style="
+                    display: flex;
+                    justify-content: space-between;
+                    width: 100%;
+                  "
+                >
+                  <li><strong>Case Material:</strong></li>
+                  <li>{{prod.case_material}}</li>
+                </ul>
+                  <!-- <ul
                     class="list-unstyled"
                     style="
                       display: flex;
@@ -178,9 +189,10 @@
                   >
                     <li><strong>Location:</strong></li>
                     <li>{{ prod.location }}</li>
-                  </ul>
+                  </ul> -->
                 </div>
                 <div class="col-6 d-flex flex-wrap p-2">
+                
                   <ul
                     class="list-unstyled"
                     style="
@@ -189,8 +201,8 @@
                       width: 100%;
                     "
                   >
-                    <li><strong>Movement:</strong></li>
-                    <li>Automatic</li>
+                    <li><strong>Condition:</strong></li>
+                    <li>{{prod.condition}}</li>
                   </ul>
                   <ul
                     class="list-unstyled"
@@ -200,8 +212,8 @@
                       width: 100%;
                     "
                   >
-                    <li><strong>Year of production:</strong></li>
-                    <li>2022</li>
+                    <li><strong>Scope of Delivery:</strong></li>
+                    <li>{{prod.scope_of_delivery}}</li>
                   </ul>
                   <ul
                     class="list-unstyled"
@@ -211,20 +223,21 @@
                       width: 100%;
                     "
                   >
-                    <li><strong>Reference number:</strong></li>
-                    <li>126233</li>
-                  </ul>
-                  <ul
-                    class="list-unstyled"
-                    style="
-                      display: flex;
-                      justify-content: space-between;
-                      width: 100%;
-                    "
-                  >
-                    <li><strong>Diameter:</strong></li>
+                    <li><strong>Case Diameter:</strong></li>
                     <li>{{ prod.case_diameter }}</li>
                   </ul>
+
+                  <ul
+                  class="list-unstyled"
+                  style="
+                    display: flex;
+                    justify-content: space-between;
+                    width: 100%;
+                  "
+                >
+                  <li><strong>Gender:</strong></li>
+                  <li>{{prod.gender}}</li>
+                </ul>
                 </div>
               </div>
               <h5
@@ -233,11 +246,11 @@
               >
                 <p style="flex-direction: column; display: flex">
                   ${{ prod.price }}
-                  <small class="text-muted">+ $245 for shipping</small>
+                  <!-- <small class="text-muted">+ $245 for shipping</small> -->
                 </p>
-                <div style="flex-direction: column; display: flex">
+                <!-- <div style="flex-direction: column; display: flex">
                   <i class="fas fa-map-marker-alt"></i>US
-                </div>
+                </div> -->
               </h5>
             </div>
           </div>

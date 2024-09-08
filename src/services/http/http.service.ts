@@ -56,8 +56,17 @@ export class HttpService {
     return this.http.post(`${this.apiUrl}/api/login`, body.toString(), { headers });
   }
 
+  getTopBrands(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/api/topBrands`);
+  }
+
+  getProductsByCategory(catID:any){
+    return this.http.get(`${this.apiUrl}/api/search-product-by?${catID}`);
+  }
+
+
   getAllBrands(): Observable<any> {
-    return this.http.get(`${this.apiUrl}/api/brands`);
+    return this.http.get(`${this.apiUrl}/api/allBrands`);
   }
 
   getCategory(): Observable<any> {
@@ -87,6 +96,10 @@ export class HttpService {
     return this.http.get(`${this.apiUrl}/api/products`);
   }
 
+  getPopularproductsWithID(ID:any): Observable<any> {
+    return this.http.get(`${this.apiUrl}/api/brands/${ID}`);
+  }
+
   getPopularModels(): Observable<any> {
     return this.http.get(`${this.apiUrl}/api/most-popular-models`);
   }
@@ -101,5 +114,13 @@ export class HttpService {
 
   getStatics(): Observable<any> {
     return this.http.get(`${this.apiUrl}/api/getStatistics`);
+  }
+
+  getHomeData(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/api/home-data`);
+  }
+
+  getHowItWorksData(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/api/how-it-works`);
   }
 }

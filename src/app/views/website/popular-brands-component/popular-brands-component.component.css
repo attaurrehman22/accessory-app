@@ -83,3 +83,9 @@
     grid-template-columns: repeat(auto-fill, minmax(100%, 1fr));
   }
 }
+
+
+.brand-item.disabled {
+  cursor: not-allowed;
+  opacity: 0.9;
+}

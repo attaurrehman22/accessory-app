@@ -1,0 +1,14 @@
+.brand-item {
+    color: initial; /* Set initial or default color */
+    transition: color 0.3s; /* Smooth transition for color change */
+  }
+  
+  .brand-item:hover {
+    color: #c39052; /* Change this to your desired hover color */
+  }
+  
+  .brand-item.disabled {
+    cursor: not-allowed;
+    opacity: 0.9;
+  }
+  

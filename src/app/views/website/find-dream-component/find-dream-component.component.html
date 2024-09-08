@@ -55,24 +55,27 @@
     >
       <div
         id="carouselExample"
-        style="border-top-right-radius: 25px; border-bottom-left-radius: 25px"
+        style="border-top-right-radius: 25px; border-bottom-left-radius: 25px;height: 620px;"
         class="carousel slide"
         data-bs-ride="carousel"
       >
         <div
           class="carousel-inner"
-         
+         style="height: 620px;"
         >
           <div
             class="carousel-item active"
+            *ngFor="let img of homeData.slider"
+             style="height: 620px;"
           >
             <img
-              src="./assets/images/landing-page-watches.png"
+            [src]="'https://api.chronosouq.com/' + img.image"
+            style="height: 100%;width: 100%;object-fit: fill;"
               alt="{{ 'find_dream.img_alt' | translate }}"
               class="responsive-img"
             />
           </div>
-          <div
+          <!-- <div
             class="carousel-item"
             style="
               border-top-right-radius: 25px;
@@ -97,7 +100,7 @@
               alt="{{ 'find_dream.img_alt_3' | translate }}"
               class="responsive-img"
             />
-          </div>
+          </div> -->
         </div>
 
         <ol class="carousel-indicators">

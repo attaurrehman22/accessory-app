@@ -12,8 +12,20 @@ export class FindDreamComponentComponent implements OnInit {
   currentLanguage: string;
   staticList: any;
 
+  homeData: any;
+
   ngOnInit(): void {
     this.getStatics();
+    this.getSlideData();
+  }
+
+  getSlideData() {
+    this.http.getHomeData().subscribe(
+      (res) => {
+        this.homeData = res.data;
+      },
+      (err) => []
+    );
   }
 
   getStatics() {

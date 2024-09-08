@@ -1,108 +1,113 @@
 {
-    "header": {
-      "buy_watch": "घड़ी खरीदें",
-      "sell_watch": "घड़ी बेचें",
-      "magazine": "मैगज़ीन",
-      "watch_collection": "घड़ी संग्रह",
-      "chronopulse": "क्रोनो पल्स",
-      "faq": "अक्सर पूछे जाने वाले प्रश्न",
-      "security": "सुरक्षा"
-    },
-    "find_dream": {
-      "find": "खोजें",
-      "your_dream": "आपका सपना",
-      "luxury": "लक्ज़री",
-      "dream_watches":"!! घड़ियाँ",
-      "watches": "घड़ियाँ",
-      "grow_business": "अपने व्यवसाय को अगले स्तर तक बढ़ाएँ ताकि आपके व्यवसाय की प्रदर्शन में सुधार हो सके और आप प्रतिस्पर्धी बने रह सकें",
-      "search_placeholder": "600,000 घड़ियों के बीच खोजें...",
-      "find_watch": "अब एक घड़ी खोजें",
-      "years_experience": "अनुभव के वर्षों",
-      "satisfied_customers": "संतुष्ट ग्राहक",
-      "business_partners": "व्यापार भागीदार",
-      "img_alt": "लक्ज़री घड़ियाँ",
-      "reviews": "4.8 में से 5 सितारे",
-      "reviews_info": "दुनिया भर के 160,000 समीक्षाओं से",
-      "watch_enthusiasts": "9 मिलियन",
-      "enthusiasts_info": "हर महीने ChronoSouq उपयोगकर्ता",
-      "buyer_protection": "200,000 से अधिक",
-      "protection_info": "वर्ष में ग्राहक जो खरीदार सुरक्षा चुनते हैं",
-      "trustworthy_sellers": "25,000 से अधिक",
-      "sellers_info": "विश्वसनीय विक्रेता"
-    },
-    "popular_brands": {
-      "label": "लोकप्रिय ब्रांड्स",
-      "rolex": "रोलेक्स",
-      "Patek_Philppe": "पाटेक फिलिप",
-      "display_all": "सभी दिखाएँ"
-    },
-    "chrono_buyer": {
-      "label": "ChronoSouq खरीदार सुरक्षा",
-      "paragraph": "Lorem Ipsum प्रिंटिंग और टाइपसेटिंग उद्योग का एक डमी टेक्स्ट है। Lorem Ipsum बस एक डमी है।",
-      "span_payment": "एस्क्रो सेवा के माध्यम से भुगतान",
-      "span_commitment": "प्रामाणिकता की प्रतिबद्धता",
-      "span_global": "वैश्विक धन-वापसी गारंटी",
-      "span_strict": "कड़े विक्रेता दिशानिर्देश",
-      "span_insured": "बीमित शिपमेंट",
-      "span_chrono": "ChronoSouq की गुणवत्ता और सुरक्षा टीम"
-    },
-    "popular_models": {
-      "label": "हमारे सबसे लोकप्रिय मॉडल",
-      "Rolex": "रोलेक्स",
-      "Price": "कीमत",
-      "Datejust": "डेटजस्ट"
-    },
-    "explore_chrono": {
-      "label": "ChronoSouq का अन्वेषण करें",
-      "men_watches": "पुरुषों की घड़ियाँ",
-      "read_more": "अधिक पढ़ें",
-      "pre_owned": "पूर्व-स्वामित्व",
-      "watches": "घड़ियाँ",
-      "pocket": "जेब",
-      "automatic": "स्वचालित",
-      "womens": "महिलाओं की",
-      "gold": "सोना",
-      "moon": "चाँद"
-    },
-    "people_saying": {
-      "label": "लोग क्या कह रहे हैं",
-      "header": "पैसे ट्रांसफर करने के लिए शानदार ऐप!",
-      "paragraph": "यह मेरे पसंदीदा ऐप्स में से एक है और पैसे ट्रांसफर के लिए सबसे अच्छा ऐप है। मैं ChronoSouq की सिफारिश करता हूँ उन सभी को जो पैसे विदेश भेजना चाहते हैं।",
-      "aut_name": "जॉन एस."
-    },
-    "how_works": {
-      "label": "कैसे काम करता है?",
-      "header": "अपनी सपना घड़ी खोजें",
-      "paragraph": "हमारी बैंक डिपॉजिट सुविधा के माध्यम से अपने खाते में आसानी से धन जमा करें। हर बार सुरक्षित और विश्वसनीय लेन-देन।"
-    },
-    "stay_loop": {
-      "label": "जानकारी में बने रहें",
-      "paragraph": "ChronoSouq के बारे में नवीनतम समाचार और अपडेट प्राप्त करने के लिए सब्सक्राइब करें। हम वादा करते हैं कि आपको स्पैम नहीं भेजेंगे!",
-      "enter_email": "अपना ईमेल पता दर्ज करें।",
-      "continue": "जारी रखें"
-    },
-    "footer": {
-      "all_rights_reserved": "सर्वाधिकार सुरक्षित",
-      "buy_on_chronosouq": "ChronoSouq पर खरीदें",
-      "chronosouq_buyer_protection": "ChronoSouq खरीदार सुरक्षा",
-      "payment_via_methods": "विधियों के माध्यम से भुगतान",
-      "commitment_authenticity": "प्रामाणिकता की प्रतिबद्धता",
-      "easy_returns": "आसान रिटर्न",
-      "sell_on_chronosouq": "ChronoSouq पर बेचें",
-      "selling_watches_as_a_private_seller": "एक निजी विक्रेता के रूप में घड़ी बेचना",
-      "selling_watches_commercially": "वाणिज्यिक रूप से घड़ी बेचना",
-      "free_appraisal": "मुफ्त मूल्यांकन",
-      "advice_for_private_sellers": "प्राइवेट विक्रेताओं के लिए सलाह",
-      "about_chronosouq": "ChronoSouq के बारे में",
-      "about_us": "हमारे बारे में",
-      "legal_details": "कानूनी विवरण",
-      "security": "सुरक्षा",
-      "advices": "सलाह",
-      "personalized_support": "व्यक्तिगत समर्थन",
-      "frequently_asked_questions": "अक्सर पूछे जाने वाले प्रश्न",
-      "contact": "हमसे संपर्क करें",
-      "accessibility": "सुलभता",
-      "payment_methods": "भुगतान विधियाँ"
-    }
+  "header": {
+    "buy_watch": "घड़ी खरीदें",
+    "sell_watch": "घड़ी बेचें",
+    "magazine": "मैगज़ीन",
+    "watch_collection": "घड़ी संग्रह",
+    "chronopulse": "क्रोनो पल्स",
+    "faq": "अक्सर पूछे जाने वाले प्रश्न",
+    "security": "सुरक्षा"
+  },
+  "find_dream": {
+    "find": "खोजें",
+    "your_dream": "आपका सपना",
+    "luxury": "लक्ज़री",
+    "dream_watches": "!! घड़ियाँ",
+    "watches": "घड़ियाँ",
+    "grow_business": "अपने व्यवसाय को अगले स्तर तक बढ़ाएँ ताकि आपके व्यवसाय की प्रदर्शन में सुधार हो सके और आप प्रतिस्पर्धी बने रह सकें",
+    "search_placeholder": "600,000 घड़ियों के बीच खोजें...",
+    "find_watch": "अब एक घड़ी खोजें",
+    "years_experience": "अनुभव के वर्षों",
+    "satisfied_customers": "संतुष्ट ग्राहक",
+    "business_partners": "व्यापार भागीदार",
+    "img_alt": "लक्ज़री घड़ियाँ",
+    "reviews": "4.8 में से 5 सितारे",
+    "reviews_info": "दुनिया भर के 160,000 समीक्षाओं से",
+    "watch_enthusiasts": "9 मिलियन",
+    "enthusiasts_info": "हर महीने ChronoSouq उपयोगकर्ता",
+    "buyer_protection": "200,000 से अधिक",
+    "protection_info": "वर्ष में ग्राहक जो खरीदार सुरक्षा चुनते हैं",
+    "trustworthy_sellers": "25,000 से अधिक",
+    "sellers_info": "विश्वसनीय विक्रेता"
+  },
+  "popular_brands": {
+    "label": "लोकप्रिय ब्रांड्स",
+    "rolex": "रोलेक्स",
+    "Patek_Philppe": "पाटेक फिलिप",
+    "display_all": "सभी दिखाएँ"
+  },
+  "chrono_buyer": {
+    "label": "ChronoSouq खरीदार सुरक्षा",
+    "paragraph": "Lorem Ipsum प्रिंटिंग और टाइपसेटिंग उद्योग का एक डमी टेक्स्ट है। Lorem Ipsum बस एक डमी है।",
+    "span_payment": "एस्क्रो सेवा के माध्यम से भुगतान",
+    "span_commitment": "प्रामाणिकता की प्रतिबद्धता",
+    "span_global": "वैश्विक धन-वापसी गारंटी",
+    "span_strict": "कड़े विक्रेता दिशानिर्देश",
+    "span_insured": "बीमित शिपमेंट",
+    "span_chrono": "ChronoSouq की गुणवत्ता और सुरक्षा टीम"
+  },
+  "popular_models": {
+    "label": "हमारे सबसे लोकप्रिय मॉडल",
+    "Rolex": "रोलेक्स",
+    "Price": "कीमत",
+    "Datejust": "डेटजस्ट"
+  },
+  "explore_chrono": {
+    "label": "ChronoSouq का अन्वेषण करें",
+    "men_watches": "पुरुषों की घड़ियाँ",
+    "read_more": "अधिक पढ़ें",
+    "pre_owned": "पूर्व-स्वामित्व",
+    "watches": "घड़ियाँ",
+    "pocket": "जेब",
+    "automatic": "स्वचालित",
+    "womens": "महिलाओं की",
+    "gold": "सोना",
+    "moon": "चाँद"
+  },
+  "people_saying": {
+    "label": "लोग क्या कह रहे हैं",
+    "header1": "आइशा अल-फरीसी, रियाद",
+    "paragraph1": "मेरा ChronoSouq के साथ अनुभव बहुत ही अद्भुत रहा। इस प्लेटफॉर्म ने मुझे वह घड़ी ढूंढने और खरीदने में बहुत आसानी कर दी जिसकी मैं तलाश कर रही थी। लेन-देन बिल्कुल सुचारू था और घड़ी बिल्कुल वैसी ही थी जैसी वर्णन की गई थी। मैं अपनी भविष्य की घड़ी की जरूरतों के लिए निश्चित रूप से ChronoSouq का उपयोग करूंगी।",
+    "aut_name1": "आइशा अल-फरीसी, रियाद",
+    "paragraph2": "ChronoSouq ने शुरुआत से अंत तक एक सहज खरीदारी अनुभव प्रदान किया। वेबसाइट उपयोगकर्ता के अनुकूल है और ग्राहक सेवा शीर्ष स्तर की थी। मेरी घड़ी समय पर पहुंच गई और वह बिल्कुल सही स्थिति में थी। मैं किसी भी घड़ी प्रेमी को इस प्लेटफॉर्म की अत्यधिक सिफारिश करूंगा!",
+    "aut_name2": "ओमर अल-सऊद, जेद्दाह",
+    "paragraph3": "मैं ChronoSouq की सेवा से पूरी तरह से प्रभावित हूं। खरीद प्रक्रिया सीधी थी और घड़ी बिल्कुल वैसी ही थी जैसी वर्णन की गई थी। विक्रेता के साथ संचार उत्कृष्ट था और डिलीवरी तेज थी। मैं निश्चित रूप से अपनी अगली घड़ी खरीदने के लिए फिर से यहाँ आऊंगा।",
+    "aut_name3": "लैला अल-हमदी, दम्मम",
+    "paragraph4": "ChronoSouq ने अपनी कुशल सेवा और विवरण पर ध्यान के साथ मेरी उम्मीदों से बढ़कर प्रदर्शन किया। पूरी प्रक्रिया को पेशेवर तरीके से संभाला गया और घड़ी समय पर पहुंच गई। यह किसी भी व्यक्ति के लिए एक शानदार प्लेटफॉर्म है जो उच्च गुणवत्ता की घड़ियाँ खरीदने की तलाश में है।",
+    "aut_name4": "हसन अल-मंसूरी, खोबार"
+  },
+  "how_works": {
+    "label": "कैसे काम करता है?",
+    "header": "अपनी सपना घड़ी खोजें",
+    "paragraph": "हमारी बैंक डिपॉजिट सुविधा के माध्यम से अपने खाते में आसानी से धन जमा करें। हर बार सुरक्षित और विश्वसनीय लेन-देन।"
+  },
+  "stay_loop": {
+    "label": "जानकारी में बने रहें",
+    "paragraph": "ChronoSouq के बारे में नवीनतम समाचार और अपडेट प्राप्त करने के लिए सब्सक्राइब करें। हम वादा करते हैं कि आपको स्पैम नहीं भेजेंगे!",
+    "enter_email": "अपना ईमेल पता दर्ज करें।",
+    "continue": "जारी रखें"
+  },
+  "footer": {
+    "all_rights_reserved": "सर्वाधिकार सुरक्षित",
+    "buy_on_chronosouq": "ChronoSouq पर खरीदें",
+    "chronosouq_buyer_protection": "ChronoSouq खरीदार सुरक्षा",
+    "payment_via_methods": "विधियों के माध्यम से भुगतान",
+    "commitment_authenticity": "प्रामाणिकता की प्रतिबद्धता",
+    "easy_returns": "आसान रिटर्न",
+    "sell_on_chronosouq": "ChronoSouq पर बेचें",
+    "selling_watches_as_a_private_seller": "एक निजी विक्रेता के रूप में घड़ी बेचना",
+    "selling_watches_commercially": "वाणिज्यिक रूप से घड़ी बेचना",
+    "free_appraisal": "मुफ्त मूल्यांकन",
+    "advice_for_private_sellers": "प्राइवेट विक्रेताओं के लिए सलाह",
+    "about_chronosouq": "ChronoSouq के बारे में",
+    "about_us": "हमारे बारे में",
+    "legal_details": "कानूनी विवरण",
+    "security": "सुरक्षा",
+    "advices": "सलाह",
+    "personalized_support": "व्यक्तिगत समर्थन",
+    "frequently_asked_questions": "अक्सर पूछे जाने वाले प्रश्न",
+    "contact": "हमसे संपर्क करें",
+    "accessibility": "सुलभता",
+    "payment_methods": "भुगतान विधियाँ"
   }
-  
+}

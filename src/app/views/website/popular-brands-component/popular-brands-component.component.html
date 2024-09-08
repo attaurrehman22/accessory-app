@@ -1,14 +1,29 @@
-   <div class="brands-container mt-5">
-    <h2>{{ 'popular_brands.label' | translate }}</h2>
-    <div class="brands-grid mt-4" >
-      <div class="brand-item" style="cursor: pointer;" (click)="productDetails(brand)"
-       *ngFor="let brand of brandsList" (click)="goToProducDetailstList(brand)">
-        <img src="./assets/images/how-works-watch.png" alt="{{ 'popular_brands.rolex' | translate }}" />
-        <!-- <div class="brand-label">{{ 'popular_brands.rolex' | translate }}</div> -->
-        <div class="brand-label">{{ brand.name }}</div>
+<div class="brands-container mt-5">
+  <h2>{{ "popular_brands.label" | translate }}</h2>
+  <div class="brands-grid mt-4">
+    <div
+      class="brand-item"
+      style="cursor: pointer;height: 220px;"
+      *ngFor="let brand of brandsList | slice : 0 : 10"
+      [ngClass]="{'disabled': brand.products_count === 0}"
+      (click)="brand.products_count > 0 ? getDetails(brand) : null"
+      matTooltip="{{ brand.products_count === 0 ? 'Products do not exist' : '' }}"
+    >
+      <img
+      [src]="'https://api.chronosouq.com/' + brand.cover_image"
+      style="height: 100%;width: 100%;"
+        alt="{{ 'popular_brands.rolex' | translate }}"
+      />
+      <div
+        class="brand-label"
+        style="display: flex; justify-content: space-around"
+      >
+        <p>{{ brand.name }}</p>
+        <p>Products : {{ brand.products_count }}</p>
       </div>
     </div>
-    <button (click)="goToProductList()" class="display-all-button">
-      {{ 'popular_brands.display_all' | translate }}
-    </button>
   </div>
+  <button (click)="goToProductList()" class="display-all-button">
+    {{ "popular_brands.display_all" | translate }}
+  </button>
+</div>

@@ -45,6 +45,8 @@ import { BuyProductComponentComponent } from './views/website/buy-product-compon
 import { SecondHeaderComponent } from "./views/website/second-header/second-header.component";
 import { ProductListComponent } from './views/website/product-list/product-list.component';
 import { FormsModule } from '@angular/forms'; 
+import { PopularBrandsListAlphabeticallyComponent } from './views/website/popular-brands-list-alphabetically/popular-brands-list-alphabetically.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -65,7 +67,8 @@ import { FormsModule } from '@angular/forms';
     ProductDetailComponentComponent,
     BuyProductComponentComponent,
     SecondHeaderComponent,
-    ProductListComponent
+    ProductListComponent,
+    PopularBrandsListAlphabeticallyComponent
   ],
   imports: [
     BrowserModule,

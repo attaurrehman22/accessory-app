@@ -30,7 +30,7 @@ export class PopularBrandsComponentComponent implements OnInit {
 
 
   goToProductList(){
-    this.router.navigate(['/product-list'],{
+    this.router.navigate(['/popular-brands-list'],{
       state:{data:this.brandsList}
     })
   }
@@ -51,10 +51,16 @@ export class PopularBrandsComponentComponent implements OnInit {
     });
   }
 
+  getDetails(brand){
+    this.router.navigate(['/product-list'],{
+      state:{brandData:brand}
+    })
+  }
+
   brandsList: any;
 
   getAllBrands() {
-    this.http.getAllBrands().subscribe(
+    this.http.getTopBrands().subscribe(
       (response) => {
         this.brandsList = response.data;
         console.log(response);

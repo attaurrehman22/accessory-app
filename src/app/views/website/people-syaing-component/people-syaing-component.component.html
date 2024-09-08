@@ -1,7 +1,18 @@
 <div class="wraper mt-3">
-  <h2 class="how-it-works-title">{{ "how_works.label" | translate }}</h2>
-  <div class="how-it-works-cards">
-    <div class="how-it-works-card">
+  <h2 class="how-it-works-title">{{ dataList.title }} ?</h2>
+  <div class="how-it-works-cards" >
+    <div class="how-it-works-card" *ngFor="let item of dataList.steps">
+      <img
+      [src]="'https://api.chronosouq.com/' + item.image"
+        alt="step"
+        class="how-it-works-icon"
+      />
+      <h3 class="how-it-works-heading">{{ item.title }}</h3>
+      <p class="how-it-works-description">
+        {{ item.description  }}
+      </p>
+    </div>
+    <!-- <div class="how-it-works-card">
       <img
         src="./assets/images/how-works-watch.png"
         alt="step"
@@ -33,17 +44,6 @@
       <p class="how-it-works-description">
         {{ "how_works.paragraph" | translate }}
       </p>
-    </div>
-    <div class="how-it-works-card">
-      <img
-        src="./assets/images/how-works-watch.png"
-        alt="step"
-        class="how-it-works-icon"
-      />
-      <h3 class="how-it-works-heading">{{ "how_works.header" | translate }}</h3>
-      <p class="how-it-works-description">
-        {{ "how_works.paragraph" | translate }}
-      </p>
-    </div>
+    </div> -->
   </div>
 </div>

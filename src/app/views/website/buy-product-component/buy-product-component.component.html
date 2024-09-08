@@ -77,7 +77,7 @@
     </div>
     <div class="col-md-6">
       <h3 class="header-h3">{{productDetails.name}}</h3>
-      <p class="text-muted">{{productDetails.brand.name}}</p>
+      <p *ngIf="productDetails.brand" class="text-muted">{{productDetails.brand.name}}</p>
       <p class="text-success">{{productDetails.price}}  <span>{{productDetails.currency}}</span></p>
       <p>Condition :<strong>{{productDetails.condition}}</strong></p>
       <p>Year of production: {{productDetails.year_of_production}}</p>
@@ -151,7 +151,7 @@
                     <th scope="row">Listing code</th>
                     <td>KH5G06</td>
                   </tr> -->
-                  <tr>
+                  <tr *ngIf="productDetails.brand">
                     <th scope="row">Brand</th>
                     <td><a>{{productDetails.brand.name}}</a></td>
                   </tr>
@@ -433,7 +433,7 @@
         />
         <div class="card-body">
           <h5 class="card-title">{{productDetails.name}}</h5>
-          <h6 class="card-subtitle mb-2 text-muted">{{productDetails.brand.name}}</h6>
+          <h6 *ngIf="productDetails.brand" class="card-subtitle mb-2 text-muted">{{productDetails.brand.name}}</h6>
           <p class="card-text">{{productDetails.reference_number}}</p>
           <ul class="list-group list-group-flush">
             <!-- <li class="list-group-item"><strong>Case:</strong> Steel</li>

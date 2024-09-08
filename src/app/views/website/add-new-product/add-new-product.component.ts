@@ -8,6 +8,7 @@ import {
 import { MatExpansionModule } from "@angular/material/expansion";
 import { Router } from "@angular/router";
 import { TranslateService } from "@ngx-translate/core";
+import { AlertsServicesService } from "src/services/alerts-service/alerts-services.service";
 import { HttpService } from "src/services/http/http.service";
 
 @Component({
@@ -23,15 +24,8 @@ export class AddNewProductComponent implements OnInit {
   brandsList: any;
 
   name: FormControl = new FormControl("", Validators.required);
-  // warranty: FormControl = new FormControl("", Validators.required);
-  // box: FormControl = new FormControl("", Validators.required);
-  // papers: FormControl = new FormControl("", Validators.required);
-  // availability: FormControl = new FormControl("", Validators.required);
-  // sale_status: FormControl = new FormControl("", Validators.required);
-  // stock_status: FormControl = new FormControl("", Validators.required);
   category_id: FormControl = new FormControl(1, Validators.required);
   title: FormControl = new FormControl("", Validators.required);
-  // slug: FormControl = new FormControl("", Validators.required);
   additional_images: FormControl = new FormControl([]);
   watch_type: FormControl = new FormControl("", Validators.required);
   brand_id: FormControl = new FormControl("", Validators.required);
@@ -46,62 +40,26 @@ export class AddNewProductComponent implements OnInit {
   condition: FormControl = new FormControl("New", Validators.required);
   gender: FormControl = new FormControl("", Validators.required);
   year_of_production: FormControl = new FormControl("", Validators.required);
-  // approximation: FormControl = new FormControl(false);
-  // unknown: FormControl = new FormControl(false);
 
   case_diameter: FormControl = new FormControl("", Validators.required);
-  // caseDiameterHeight: FormControl = new FormControl("", Validators.required);
   scope_of_delivery: FormControl = new FormControl("", Validators.required);
 
   movement: FormControl = new FormControl("", Validators.required);
   meta_description: FormControl = new FormControl("", Validators.required);
-  description: FormControl = new FormControl("",);
+  description: FormControl = new FormControl("");
   price: FormControl = new FormControl("", Validators.required);
   currency: FormControl = new FormControl("USD", Validators.required);
-  // caliberMovement: FormControl = new FormControl("");
-  // baseCaliber: FormControl = new FormControl("");
-  // powerReserve: FormControl = new FormControl("");
-  // numberOfJewels: FormControl = new FormControl("");
-  // frequency: FormControl = new FormControl("");
-  // frequencyUnit: FormControl = new FormControl("ah");
-  // genevianSeal: FormControl = new FormControl(false);
-  // chronometer: FormControl = new FormControl(false);
-  // masterChronometer: FormControl = new FormControl(false);
   case_material: FormControl = new FormControl("");
   bezel_material: FormControl = new FormControl("");
-  // thickness: FormControl = new FormControl("");
-  // crystal: FormControl = new FormControl("");
   water_resistance: FormControl = new FormControl("");
-  // displayBack: FormControl = new FormControl(false);
-  // gemstonesDiamonds: FormControl = new FormControl(false);
-  // pvddlcCoating: FormControl = new FormControl(false);
   dial_color: FormControl = new FormControl("");
-  // dialNumerals: FormControl = new FormControl("");
-  // guillocheDial: FormControl = new FormControl(false);
-  // guillocheDialHandwork: FormControl = new FormControl(false);
-  // luminousNumerals: FormControl = new FormControl(false);
-  // luminousIndices: FormControl = new FormControl(false);
-  // centralSeconds: FormControl = new FormControl(false);
-  // smallSeconds: FormControl = new FormControl(false);
-  // luminousHands: FormControl = new FormControl(false);
-  // temperedBlueHands: FormControl = new FormControl(false);
 
   bracelet_material: FormControl = new FormControl("");
-
-  // braceletColor: FormControl = new FormControl("");
-  // typeOfClasp: FormControl = new FormControl("");
-  // claspMaterial: FormControl = new FormControl("");
 
   commission_fee: FormControl = new FormControl(0);
   // -------------- Extra ---------------------------
 
   main_image: FormControl = new FormControl("", Validators.required);
-  // additional_images:FormControl= new FormControl([], Validators.required);
-  // meta_title:FormControl= new FormControl("", Validators.required);
-  // meta_description:FormControl= new FormControl("", Validators.required);
-  // meta_keywords:FormControl= new FormControl("");
-  // location: FormControl = new FormControl("");
-  // features: FormControl = new FormControl("");
 
   // -------------- Extra End ---------------------------
 
@@ -109,6 +67,7 @@ export class AddNewProductComponent implements OnInit {
   currentLanguage: string;
 
   constructor(
+    private alertService: AlertsServicesService,
     private fb: FormBuilder,
     private http: HttpService,
     public translateService: TranslateService,
@@ -125,7 +84,7 @@ export class AddNewProductComponent implements OnInit {
   }
 
   selectedCondition: string | null = null;
-  newUnwarnCondition:string | null = null;
+  newUnwarnCondition: string | null = null;
 
   selectUsedCondition(condition: string) {
     this.selectedCondition = condition;
@@ -156,7 +115,7 @@ export class AddNewProductComponent implements OnInit {
         this.allDropDownList = res.data;
       },
       (err) => {
-        console.log(err)
+        console.log(err);
       }
     );
   }
@@ -242,51 +201,26 @@ export class AddNewProductComponent implements OnInit {
       model: this.model,
       main_image: this.main_image,
       meta_description: this.meta_description,
-      // location: this.location,
-      // features: this.features,
+
       reference_number: this.reference_number,
       condition: this.condition,
       description: this.description,
       gender: this.gender,
       year_of_production: this.year_of_production,
-      // approximation: this.approximation,
-      // unknown: this.unknown,
+
       case_diameter: this.case_diameter,
-      // caseDiameterHeight: this.caseDiameterHeight,
+
       movement: this.movement,
       price: this.price,
       currency: this.currency,
-      // caliberMovement: this.caliberMovement,
-      // baseCaliber: this.baseCaliber,
-      // powerReserve: this.powerReserve,
-      // numberOfJewels: this.numberOfJewels,
-      // frequency: this.frequency,
-      // frequencyUnit: this.frequencyUnit,
-      // genevianSeal: this.genevianSeal,
-      // chronometer: this.chronometer,
-      // masterChronometer: this.masterChronometer,
+
       case_material: this.case_material,
       bezel_material: this.bezel_material,
-      // thickness: this.thickness,
-      // crystal: this.crystal,
+
       water_resistance: this.water_resistance,
-      // displayBack: this.displayBack,
-      // gemstonesDiamonds: this.gemstonesDiamonds,
-      // pvddlcCoating: this.pvddlcCoating,
+
       dial_color: this.dial_color,
-      // dialNumerals: this.dialNumerals,
-      // guillocheDial: this.guillocheDial,
-      // guillocheDialHandwork: this.guillocheDialHandwork,
-      // luminousNumerals: this.luminousNumerals,
-      // luminousIndices: this.luminousIndices,
-      // centralSeconds: this.centralSeconds,
-      // smallSeconds: this.smallSeconds,
-      // luminousHands: this.luminousHands,
-      // temperedBlueHands: this.temperedBlueHands,
       bracelet_material: this.bracelet_material,
-      // braceletColor: this.braceletColor,
-      // typeOfClasp: this.typeOfClasp,
-      // claspMaterial: this.claspMaterial,
     });
   }
 
@@ -312,15 +246,18 @@ export class AddNewProductComponent implements OnInit {
     });
 
     console.log("formData", formData);
-    // if (this.productForm.valid) {
-    this.http.addProduct(formData).subscribe((reponse) => {
-      console.log("Data saved");
-      this.router.navigate(["/product-list"]);
-    });
-    console.log("Product Data:", this.productForm.value);
-    // } else {
-    //   console.log("Form is invalid", this.productForm.value);
-    // }
+    if (this.productForm.valid) {
+      this.http.addProduct(formData).subscribe((reponse) => {
+        console.log("Data saved");
+        this.router.navigate(["/product-list"]);
+      },(err)=>{
+        this.alertService.showAlert('danger', 'Error is Add Product')
+      });
+      console.log("Product Data:", this.productForm.value);
+    } else {
+      this.alertService.showAlert('warning', 'Form is invalid')
+      // console.log("Form is invalid", this.productForm.value);
+    }
   }
 
   panelOpenState = false;
@@ -333,18 +270,17 @@ export class AddNewProductComponent implements OnInit {
     if (param === "New") {
       this.newCondition = "New";
       this.usedCondition = "";
-      this.newUnwarnCondition=""
+      this.newUnwarnCondition = "";
       this.productForm.get("condition")?.setValue("New");
-    }else if(param === "New-Unwarn"){
+    } else if (param === "New-Unwarn") {
       this.newCondition = "";
       this.usedCondition = "";
-      this.newUnwarnCondition="New-Unwarn"
+      this.newUnwarnCondition = "New-Unwarn";
       this.productForm.get("condition")?.setValue("Like new and unworn");
-    }
-     else {
+    } else {
       this.usedCondition = "Used";
       this.newCondition = "";
-      this.newUnwarnCondition=""
+      this.newUnwarnCondition = "";
       this.productForm
         .get("condition")
         ?.setValue(this.selectedUsedCondition || "Used");
