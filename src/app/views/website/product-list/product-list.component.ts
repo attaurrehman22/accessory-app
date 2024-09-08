@@ -106,6 +106,9 @@ export class ProductListComponent implements OnInit {
         if (!this.filterdProducts) {
           this.filterdProducts = this.productsList;
         }
+        else if(this.slidercheck){
+          this.filterdProducts = this.productsList;
+        }
       },
       (err) => {
         console.log(err);
@@ -179,6 +182,9 @@ export class ProductListComponent implements OnInit {
         if (!this.filterdProducts) {
           this.filterdProducts = this.productsList;
         }
+        else if(this.slidercheck){
+          this.filterdProducts = this.productsList;
+        }
       },
       (err) => {
         console.log(err);
@@ -186,9 +192,11 @@ export class ProductListComponent implements OnInit {
     );
   }
 
-  selectedCategories: any[] = [];
+  selectedCategories: any;
+  slidercheck=false;
 
   getCategory(selectedCatId: any) {
+    this.slidercheck=false
     // Check if the category is already selected
     if (!this.selectedCategories) {
       this.selectedCategories = [];
@@ -207,22 +215,35 @@ export class ProductListComponent implements OnInit {
 
     console.log("selectedCategories after change", this.selectedCategories);
 
-    // Check if all categories are unchecked
-    if (!this.selectedCategories.length) {
+    let lastArray = this.selectedCategories.slice(-1)[0]; 
+
+    lastArray = this.selectedCategories.at(-1); 
+
+    if (lastArray.length === 0) {
       if (this.dataFrompopularbrands) {
         this.getPopularBrandswithBrndsID();
+        this.slidercheck=true
+        return;
       } else {
         this.getAllProducts();
+        this.slidercheck=true
+        return;
       }
     }
 
-    // Prepare the URL search params
-    const params = new URLSearchParams();
-    this.selectedCategories.forEach((id: number) =>
-      params.append("category_ids[]", id.toString())
-    );
+    console.log("Last Array:", lastArray);
 
-    this.http.getProductsByCategory(this.selectedCategories).subscribe(
+ 
+  // Construct the URLSearchParams for categories
+  const params = new URLSearchParams();
+  this.selectedCategories.forEach((id: number) =>
+    params.append("category_ids[]", id.toString())
+  );
+
+  // Convert params to a query string
+  const queryString = params.toString();
+
+    this.http.getProductsByCategory(queryString).subscribe(
       (res) => {
         this.productsList = res;
         if (this.productsList) {
