@@ -1,10 +1,10 @@
-<!-- second-header.component.html -->
 <nav class="navbar navbar-expand-lg navbar-light bg-light py-3" style="background-color: #fdfbff !important">
   <div class="container">
     <!-- Search Bar -->
-    <form class="d-flex flex-grow-1 ms-3" (ngSubmit)="onSearch(searchInput.value)">
+    <form class="d-flex flex-grow-1 ms-3" (ngSubmit)="onSearch(searchQuery)">
       <input
-        #searchInput
+        [(ngModel)]="searchQuery"
+        (ngModelChange)="onSearchChange()"
         class="form-control me-2"
         type="search"
         placeholder="Search through 597,161 watches worldwide"
@@ -16,4 +16,5 @@
     </form>
   </div>
 </nav>
+
 
