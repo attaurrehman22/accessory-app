@@ -12,7 +12,7 @@ export class FindDreamComponentComponent implements OnInit {
   currentLanguage: string;
   staticList: any;
 
-  homeData: any;
+  homeData: any = { slider: [] }
 
   ngOnInit(): void {
     this.getStatics();
@@ -22,18 +22,21 @@ export class FindDreamComponentComponent implements OnInit {
   getSlideData() {
     this.http.getHomeData().subscribe(
       (res) => {
-        this.homeData = res.data;
+        this.homeData = res.data || { slider: [] };
       },
-      (err) => []
+      (err) => {
+        this.homeData = { slider: [] };
+      }
     );
   }
 
   getStatics() {
     this.http.getStatics().subscribe(
       (res) => {
-        this.staticList = res.statistics;
+        this.staticList = res.statistics || {};
       },
       (err) => {
+        this.staticList = {};
         console.log(err);
       }
     );

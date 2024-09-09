@@ -1,23 +1,19 @@
-<!-- header.component.html -->
-<nav class="navbar navbar-expand-lg navbar-light bg-light py-3" style="background-color: #fdfbff !important;">
-    <div class="container">
-      <!-- Logo -->
-      <!-- <a class="navbar-brand" href="#">
-        <img src="assets/logo.png" alt="Logo" style="height: 40px;">
-        <span class="ms-2">chrono<span class="text-warning">24</span></span>
-      </a> -->
-      
-      <!-- Search Bar -->
-      <form class="d-flex flex-grow-1 ms-3">
-        <input class="form-control me-2" type="search" placeholder="Search through 597,161 watches worldwide" aria-label="Search">
-        <button class="btn btn-outline-secondary" type="submit"><mat-icon>search</mat-icon></button>
-      </form>
-      
-      <!-- Icons -->
-      <!-- <div class="d-flex align-items-center ms-3">
-        <a href="#" class="me-3 text-decoration-none text-dark"><i class="bi bi-bell"></i></a>
-        <a href="#" class="text-decoration-none text-dark"><i class="bi bi-person-circle"></i></a>
-      </div> -->
-    </div>
-  </nav>
-  
+<!-- second-header.component.html -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light py-3" style="background-color: #fdfbff !important">
+  <div class="container">
+    <!-- Search Bar -->
+    <form class="d-flex flex-grow-1 ms-3" (ngSubmit)="onSearch(searchInput.value)">
+      <input
+        #searchInput
+        class="form-control me-2"
+        type="search"
+        placeholder="Search through 597,161 watches worldwide"
+        aria-label="Search"
+      />
+      <button class="btn btn-outline-secondary" type="submit">
+        <mat-icon>search</mat-icon>
+      </button>
+    </form>
+  </div>
+</nav>
+

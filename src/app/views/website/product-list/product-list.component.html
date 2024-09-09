@@ -1,11 +1,13 @@
 <div style="display: flex; flex-wrap: wrap">
   <!-- -------------------------------- Side Bar --------------------------- -->
   <div style="padding: 20px 0 0 45px" class="col-2">
-
     <div>
-      <mat-form-field style="width: 100%;" appearance="outline">
+      <mat-form-field style="width: 100%" appearance="outline">
         <mat-label>Select Category</mat-label>
-        <mat-select (selectionChange)="getCategory($event.value)" multiple>
+        <mat-select
+          (selectionChange)="getCategory($event.value, 'category')"
+          multiple
+        >
           <mat-option
             *ngFor="let cat of category_sel_frm_popular_models"
             [value]="cat.id"
@@ -15,11 +17,22 @@
         </mat-select>
       </mat-form-field>
     </div>
+
+    <div>
+      <mat-form-field style="width: 100%" appearance="outline">
+        <mat-label>Select Brand</mat-label>
+        <mat-select (selectionChange)="getCategory($event.value, 'brand')">
+          <mat-option *ngFor="let brand of brandsDataList" [value]="brand.name">
+            {{ brand.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
   </div>
 
   <!-- -------------------------------- Content --------------------------- -->
   <div class="col-10">
-    <div class="container mt-4">
+    <div *ngIf="searchQuery === ''" class="container mt-4">
       <div id="watchesCarousel" class="carousel slide" data-bs-ride="carousel">
         <ol class="carousel-indicators">
           <li
@@ -144,7 +157,7 @@
                     "
                   >
                     <li><strong>Movement:</strong></li>
-                    <li>{{prod.movement}}</li>
+                    <li>{{ prod.movement }}</li>
                   </ul>
                   <ul
                     class="list-unstyled"
@@ -166,19 +179,19 @@
                     "
                   >
                     <li><strong>Reference number:</strong></li>
-                    <li>{{prod.reference_number}}</li>
+                    <li>{{ prod.reference_number }}</li>
                   </ul>
                   <ul
-                  class="list-unstyled"
-                  style="
-                    display: flex;
-                    justify-content: space-between;
-                    width: 100%;
-                  "
-                >
-                  <li><strong>Case Material:</strong></li>
-                  <li>{{prod.case_material}}</li>
-                </ul>
+                    class="list-unstyled"
+                    style="
+                      display: flex;
+                      justify-content: space-between;
+                      width: 100%;
+                    "
+                  >
+                    <li><strong>Case Material:</strong></li>
+                    <li>{{ prod.case_material }}</li>
+                  </ul>
                   <!-- <ul
                     class="list-unstyled"
                     style="
@@ -192,7 +205,6 @@
                   </ul> -->
                 </div>
                 <div class="col-6 d-flex flex-wrap p-2">
-                
                   <ul
                     class="list-unstyled"
                     style="
@@ -202,7 +214,7 @@
                     "
                   >
                     <li><strong>Condition:</strong></li>
-                    <li>{{prod.condition}}</li>
+                    <li>{{ prod.condition }}</li>
                   </ul>
                   <ul
                     class="list-unstyled"
@@ -213,7 +225,7 @@
                     "
                   >
                     <li><strong>Scope of Delivery:</strong></li>
-                    <li>{{prod.scope_of_delivery}}</li>
+                    <li>{{ prod.scope_of_delivery }}</li>
                   </ul>
                   <ul
                     class="list-unstyled"
@@ -228,16 +240,16 @@
                   </ul>
 
                   <ul
-                  class="list-unstyled"
-                  style="
-                    display: flex;
-                    justify-content: space-between;
-                    width: 100%;
-                  "
-                >
-                  <li><strong>Gender:</strong></li>
-                  <li>{{prod.gender}}</li>
-                </ul>
+                    class="list-unstyled"
+                    style="
+                      display: flex;
+                      justify-content: space-between;
+                      width: 100%;
+                    "
+                  >
+                    <li><strong>Gender:</strong></li>
+                    <li>{{ prod.gender }}</li>
+                  </ul>
                 </div>
               </div>
               <h5
@@ -405,11 +417,7 @@
             <li>Rolex Batman</li>
             <li>Rolex Two-tone</li>
             <li>Rolex Chocolate</li>
-            <li>Dual Time Watches</li>
-            <li>Bronze Watches</li>
-            <li>Camo Watches</li>
-            <li>Glass Back Watches</li>
-            <li>One-Hand Watches</li>
+
           </ul>
           <h5>Brand</h5>
           <ul class="list-unstyled">

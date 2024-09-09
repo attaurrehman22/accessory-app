@@ -64,6 +64,9 @@ export class HttpService {
     return this.http.get(`${this.apiUrl}/api/search-product-by?${catID}`);
   }
 
+  searchedProducts(name:any){
+    return this.http.get(`${this.apiUrl}/api/global-search?query=${name}`);
+  }
 
   getAllBrands(): Observable<any> {
     return this.http.get(`${this.apiUrl}/api/allBrands`);
@@ -100,6 +103,9 @@ export class HttpService {
     return this.http.get(`${this.apiUrl}/api/brands/${ID}`);
   }
 
+  getAllBrandsDropdDown(ID:any): Observable<any> {
+    return this.http.get(`${this.apiUrl}/api/brands`);
+  }
   getPopularModels(): Observable<any> {
     return this.http.get(`${this.apiUrl}/api/most-popular-models`);
   }

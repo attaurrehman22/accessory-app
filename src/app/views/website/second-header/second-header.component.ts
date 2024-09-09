@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { SearchServiceService } from 'src/services/search-service/search-service.service';
 
 @Component({
   selector: 'app-second-header',
@@ -6,5 +7,9 @@ import { Component } from '@angular/core';
   styleUrls: ['./second-header.component.css']
 })
 export class SecondHeaderComponent {
+  constructor(private searchService: SearchServiceService) {}
 
+  onSearch(query: string) {
+    this.searchService.changeSearchQuery(query);
+  }
 }

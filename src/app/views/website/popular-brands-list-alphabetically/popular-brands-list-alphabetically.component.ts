@@ -1,23 +1,21 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { HttpService } from 'src/services/http/http.service';
+import { Component, OnInit } from "@angular/core";
+import { Router } from "@angular/router";
+import { HttpService } from "src/services/http/http.service";
 
 @Component({
-  selector: 'app-popular-brands-list-alphabetically',
-  templateUrl: './popular-brands-list-alphabetically.component.html',
-  styleUrls: ['./popular-brands-list-alphabetically.component.css']
+  selector: "app-popular-brands-list-alphabetically",
+  templateUrl: "./popular-brands-list-alphabetically.component.html",
+  styleUrls: ["./popular-brands-list-alphabetically.component.css"],
 })
-export class PopularBrandsListAlphabeticallyComponent implements OnInit{
-
+export class PopularBrandsListAlphabeticallyComponent implements OnInit {
   public brandsData: any[] = [];
   public groupedBrands: { [key: string]: any[] } = {};
 
   ngOnInit(): void {
-      this.getAllBrands();
+    this.getAllBrands();
   }
 
-
-  constructor(private http:HttpService,private router:Router){}
+  constructor(private http: HttpService, private router: Router) {}
 
   brandsList: any;
 
@@ -49,10 +47,9 @@ export class PopularBrandsListAlphabeticallyComponent implements OnInit{
     });
   }
 
-
-  getDetails(brand){
-    this.router.navigate(['/product-list'],{
-      state:{brandData:brand}
-    })
+  getDetails(brand) {
+    this.router.navigate(["/product-list"], {
+      state: { brandData: brand },
+    });
   }
 }

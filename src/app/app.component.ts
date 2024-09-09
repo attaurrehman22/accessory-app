@@ -45,7 +45,7 @@ export class AppComponent implements OnInit {
 
     this.router.events.subscribe(() => {
       const currentRoute = this.router.url;
-      this.showSecondFooter = !['/login', '/register','/new-product' ,'/'].includes(currentRoute);
+      this.showSecondFooter = !['/login', '/register', '/popular-brands-list','/new-product' ,'/'].includes(currentRoute);
     });
   }
 

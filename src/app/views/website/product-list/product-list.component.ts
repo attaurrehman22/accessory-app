@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { HttpService } from "src/services/http/http.service";
+import { SearchServiceService } from "src/services/search-service/search-service.service";
 
 @Component({
   selector: "app-product-list",
@@ -8,39 +9,6 @@ import { HttpService } from "src/services/http/http.service";
   styleUrls: ["./product-list.component.css"],
 })
 export class ProductListComponent implements OnInit {
-  watches = [
-    {
-      name: "Rolex",
-      model: "GMT-Master II",
-      price: 9741,
-      image: "../assets/images/recommonded-1.png",
-    },
-    {
-      name: "Rolex",
-      model: "Daytona",
-      price: 14650,
-      image: "../assets/images/recommonded-1.png",
-    },
-    {
-      name: "Rolex",
-      model: "Submariner",
-      price: 7636,
-      image: "../assets/images/recommonded-1.png",
-    },
-    {
-      name: "Rolex",
-      model: "Datejust",
-      price: 2314,
-      image: "../assets/images/recommonded-1.png",
-    },
-    {
-      name: "Rolex",
-      model: "Day-Date",
-      price: 8596,
-      image: "../assets/images/recommonded-1.png",
-    },
-  ];
-
   productsList: any;
   title = "chronowatch";
 
@@ -48,17 +16,94 @@ export class ProductListComponent implements OnInit {
   category_sel_frm_popular_models: any;
 
   dataFrompopularbrands: any;
+  searchQuery: string = "";
 
   ngOnInit(): void {
-    this.brandsDataList = history.state.data;
     this.dataFrompopularbrands = history.state.brandData;
-
+    this.brandsDataList = history.state.data;
+    console.log("this.dataFrompopularbrands", this.dataFrompopularbrands);
     if (this.dataFrompopularbrands) {
       this.getPopularBrandswithBrndsID();
     } else {
       this.getAllProducts();
     }
     this.getAllCategories();
+    this.getAllBrands();
+
+    this.searchService.currentSearchQuery.subscribe((query) => {
+      this.searchQuery = query;
+      this.searchProducts();
+    });
+  }
+
+  searchProducts() {
+    console.log("Search Query", this.searchQuery);
+    if (this.searchQuery) {
+      this.http.searchedProducts(this.searchQuery).subscribe(
+        (res) => {
+          this.productsList = res;
+          if (this.productsList) {
+            this.productsList = this.productsList.data.map((product: any) => {
+              // Clean up main_image
+              if (product.main_image) {
+                // Replace backslashes with forward slashes and ensure no leading slash
+                product.main_image = product.main_image
+                  .replace(/\\/g, "/")
+                  .replace(/^\/+/, "");
+              }
+
+              // Clean up folder
+              if (product.folder) {
+                // Replace backslashes with forward slashes and ensure no leading slash
+                product.folder = product.folder
+                  .replace(/\\/g, "/")
+                  .replace(/^\/+/, "");
+              }
+
+              // Clean up additional_images (assuming it's a JSON string that needs parsing)
+              if (product.additional_images) {
+                try {
+                  product.additional_images = JSON.parse(
+                    product.additional_images
+                  ).map((img: string) =>
+                    img.replace(/\\/g, "/").replace(/^\/+/, "")
+                  );
+                } catch (error) {
+                  console.error("Error parsing additional_images:", error);
+                }
+              }
+
+              return product;
+            });
+
+            this.productsList.sort(
+              (a: any, b: any) =>
+                new Date(b.created_at).getTime() -
+                new Date(a.created_at).getTime()
+            );
+            this.filterdProducts = this.productsList;
+            this.getCarouselSlides()
+          }
+        },
+        (err) => {
+          console.log(err);
+        }
+      );
+    } else {
+    }
+  }
+
+  brandsDropDownList: any;
+
+  getAllBrands() {
+    this.http.getAllBrands().subscribe(
+      (res) => {
+        this.brandsDataList = res.data;
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
   }
 
   getPopularBrandswithBrndsID() {
@@ -105,8 +150,7 @@ export class ProductListComponent implements OnInit {
         // Initialize filteredProducts if not already initialized
         if (!this.filterdProducts) {
           this.filterdProducts = this.productsList;
-        }
-        else if(this.slidercheck){
+        } else if (this.slidercheck) {
           this.filterdProducts = this.productsList;
         }
       },
@@ -125,7 +169,11 @@ export class ProductListComponent implements OnInit {
     );
   }
 
-  constructor(private http: HttpService, private router: Router) {}
+  constructor(
+    private http: HttpService,
+    private router: Router,
+    private searchService: SearchServiceService
+  ) {}
 
   getCarouselSlides() {
     const slides = [];
@@ -181,8 +229,7 @@ export class ProductListComponent implements OnInit {
         // Initialize filteredProducts if not already initialized
         if (!this.filterdProducts) {
           this.filterdProducts = this.productsList;
-        }
-        else if(this.slidercheck){
+        } else if (this.slidercheck) {
           this.filterdProducts = this.productsList;
         }
       },
@@ -192,56 +239,60 @@ export class ProductListComponent implements OnInit {
     );
   }
 
-  selectedCategories: any;
-  slidercheck=false;
+  selectedCategories: any[] = [];
+  slidercheck = false;
+  selectedBrands: any = "";
+  getCategory(selectedCatId: any, option: string) {
+    let params;
+    let lastArray;
+    this.slidercheck = false;
+    if (option === "category") {
+      if (!this.selectedCategories) {
+        this.selectedCategories = [];
+      }
 
-  getCategory(selectedCatId: any) {
-    this.slidercheck=false
-    // Check if the category is already selected
-    if (!this.selectedCategories) {
-      this.selectedCategories = [];
+      if (this.selectedCategories.includes(selectedCatId)) {
+        this.selectedCategories = this.selectedCategories.filter(
+          (id) => id !== selectedCatId
+        );
+      } else {
+        this.selectedCategories.push(selectedCatId);
+      }
+      lastArray = this.selectedCategories[this.selectedCategories.length - 1];
     }
 
-    // Check if the category is already selected
-    if (this.selectedCategories.includes(selectedCatId)) {
-      // Remove the category if it's already selected
-      this.selectedCategories = this.selectedCategories.filter(
-        (id) => id !== selectedCatId
-      );
-    } else {
-      // Add the category if it's not selected
-      this.selectedCategories.push(selectedCatId);
+    if (option === "brand") {
+      this.selectedBrands = selectedCatId; // Store the single selected brand (assuming it's the name)
     }
-
-    console.log("selectedCategories after change", this.selectedCategories);
-
-    let lastArray = this.selectedCategories.slice(-1)[0]; 
-
-    lastArray = this.selectedCategories.at(-1); 
-
-    if (lastArray.length === 0) {
+    if (
+      (!lastArray || lastArray.length === 0) &&
+      (!this.selectedBrands || this.selectedBrands === "")
+    ) {
       if (this.dataFrompopularbrands) {
         this.getPopularBrandswithBrndsID();
-        this.slidercheck=true
+        this.slidercheck = true;
         return;
       } else {
         this.getAllProducts();
-        this.slidercheck=true
+        this.slidercheck = true;
         return;
       }
     }
 
-    console.log("Last Array:", lastArray);
+    params = new URLSearchParams();
 
- 
-  // Construct the URLSearchParams for categories
-  const params = new URLSearchParams();
-  this.selectedCategories.forEach((id: number) =>
-    params.append("category_ids[]", id.toString())
-  );
+    if (this.selectedBrands) {
+      params.append("name", this.selectedBrands); // Send brand name as a string
+    }
 
-  // Convert params to a query string
-  const queryString = params.toString();
+    this.selectedCategories.forEach((id: number) =>
+      params.append("category_ids[]", id.toString())
+    );
+
+    console.log("Selected Brands:", this.selectedBrands);
+    console.log("Selected Categories:", this.selectedCategories);
+
+    const queryString = params.toString();
 
     this.http.getProductsByCategory(queryString).subscribe(
       (res) => {

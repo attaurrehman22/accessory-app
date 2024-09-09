@@ -20,7 +20,6 @@ export class AddNewProductComponent implements OnInit {
   productForm: FormGroup;
   usedCondition: any;
   newCondition: any = "";
-  // selectedCondition: string | null = null;
   brandsList: any;
 
   name: FormControl = new FormControl("", Validators.required);
@@ -107,7 +106,7 @@ export class AddNewProductComponent implements OnInit {
     this.getCategoryDropdown();
   }
 
-  allDropDownList: any;
+  allDropDownList: any = {};
 
   getAllProductDropDown() {
     this.http.getPrductFormDropDnCategory().subscribe(
@@ -128,7 +127,6 @@ export class AddNewProductComponent implements OnInit {
     if (input.files) {
       const files = Array.from(input.files); // Multiple files are selected
 
-      // Store the files directly in the form control
       this.productForm.patchValue({
         additional_images: files, // Store array of files in the form control
       });
@@ -155,8 +153,12 @@ export class AddNewProductComponent implements OnInit {
     this.http.getCategory().subscribe(
       (response: any) => {
         this.categoryList = response.data;
-        this.topCategories = this.categoryList.filter(category => category.top_category === 1);
-        this.otherCategories = this.categoryList.filter(category => category.top_category === 0);
+        this.topCategories = this.categoryList.filter(
+          (category) => category.top_category === 1
+        );
+        this.otherCategories = this.categoryList.filter(
+          (category) => category.top_category === 0
+        );
       },
       (error: any) => {
         console.log(error);
@@ -171,8 +173,12 @@ export class AddNewProductComponent implements OnInit {
     this.http.getAllBrands().subscribe(
       (response: any) => {
         this.brandsList = response.data;
-        this.topBrand = this.brandsList.filter(brand => brand.top_brand === 1);
-        this.otherBrand = this.brandsList.filter(brand => brand.top_brand === 0);
+        this.topBrand = this.brandsList.filter(
+          (brand) => brand.top_brand === 1
+        );
+        this.otherBrand = this.brandsList.filter(
+          (brand) => brand.top_brand === 0
+        );
       },
       (error: any) => {
         console.log(error);
@@ -192,15 +198,8 @@ export class AddNewProductComponent implements OnInit {
       name: this.name,
       commission_fee: this.commission_fee,
       scope_of_delivery: this.scope_of_delivery,
-      // warranty: this.warranty,
-      // box: this.box,
-      // papers: this.papers,
-      // availability: this.availability,
-      // sale_status: this.sale_status,
-      // stock_status: this.stock_status,
       category_id: this.category_id,
       title: this.title,
-      // slug: this.slug,
       additional_images: this.additional_images,
       watch_type: this.watch_type,
       brand_id: this.brand_id,
@@ -243,7 +242,6 @@ export class AddNewProductComponent implements OnInit {
         formData.append(key, controlValue);
       } else if (key === "additional_images") {
         for (let i = 0; i < controlValue.length; i++) {
-          // Append each file to the FormData object with the key as 'additional_images[]'
           formData.append(`${key}[]`, controlValue[i]);
         }
       } else {
@@ -253,16 +251,18 @@ export class AddNewProductComponent implements OnInit {
 
     console.log("formData", formData);
     if (this.productForm.valid) {
-      this.http.addProduct(formData).subscribe((reponse) => {
-        console.log("Data saved");
-        this.router.navigate(["/product-list"]);
-      },(err)=>{
-        this.alertService.showAlert('danger', 'Error is Add Product')
-      });
+      this.http.addProduct(formData).subscribe(
+        (reponse) => {
+          console.log("Data saved");
+          this.router.navigate(["/product-list"]);
+        },
+        (err) => {
+          this.alertService.showAlert("danger", "Error is Add Product");
+        }
+      );
       console.log("Product Data:", this.productForm.value);
     } else {
-      this.alertService.showAlert('warning', 'Form is invalid')
-      // console.log("Form is invalid", this.productForm.value);
+      this.alertService.showAlert("warning", "Form is invalid");
     }
   }
 

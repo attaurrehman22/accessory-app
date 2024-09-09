@@ -5,18 +5,12 @@
   >
     <div class="col-lg-6 col-md-12 col-sm-12 dream-text-padding">
       <h2 class="display-4">
-        <!-- <span *ngIf="translateService.currentLang === 'hi'">!!</span> -->
         <span *ngIf="translateService.currentLang === 'ar' || translateService.currentLang === 'ta'">!!</span>
         <span style="color: #a8d8a1">{{ "find_dream.find" | translate }}</span>
         {{ "find_dream.your_dream" | translate }}
-        <span style="color: #a8d8a1">{{
-          "find_dream.luxury" | translate
-        }}</span>
- 
-        {{ "find_dream.dream_watches" | translate }} 
-        
+        <span style="color: #a8d8a1">{{ "find_dream.luxury" | translate }}</span>
+        {{ "find_dream.dream_watches" | translate }}
         <span *ngIf="translateService.currentLang === 'en'">!!</span>
-
       </h2>
       <p class="para">{{ "find_dream.grow_business" | translate }}</p>
       <div class="d-flex">
@@ -31,93 +25,64 @@
         </button>
       </div>
       <div class="col-lg-12 col-md-12 col-sm-12 d-flex flex-wrap mt-5">
-        <div class="col-lg-3 col-md-6 col-sm-6">
-          <p>10+</p>
-          <span>{{ "find_dream.years_experience" | translate }}</span>
-        </div>
-        <div class="col-lg-3 col-md-6 col-sm-6">
-          <p>20K+</p>
-          <span>{{ "find_dream.satisfied_customers" | translate }}</span>
-        </div>
-        <div class="col-lg-3 col-md-6 col-sm-6">
-          <p>263</p>
-          <span>{{ "find_dream.business_partners" | translate }}</span>
-        </div>
-        <div class="col-lg-3 col-md-6 col-sm-6">
-          <p>263</p>
-          <span>{{ "find_dream.business_partners" | translate }}</span>
-        </div>
+        <ng-container *ngIf="staticList">
+          <div class="col-lg-3 col-md-6 col-sm-6">
+            <p>10+</p>
+            <span>{{ "find_dream.years_experience" | translate }}</span>
+          </div>
+          <div class="col-lg-3 col-md-6 col-sm-6">
+            <p>20K+</p>
+            <span>{{ "find_dream.satisfied_customers" | translate }}</span>
+          </div>
+          <div class="col-lg-3 col-md-6 col-sm-6">
+            <p>263</p>
+            <span>{{ "find_dream.business_partners" | translate }}</span>
+          </div>
+          <div class="col-lg-3 col-md-6 col-sm-6">
+            <p>263</p>
+            <span>{{ "find_dream.business_partners" | translate }}</span>
+          </div>
+        </ng-container>
       </div>
     </div>
-    <div
-      class="col-lg-6 col-md-12 col-sm-12"
-      style="position: relative; overflow: hidden"
-    >
-    <div
-  id="carouselExample"
-  style="border-top-right-radius: 25px; border-bottom-left-radius: 25px; height: 620px;"
-  class="carousel slide"
-  data-bs-ride="carousel"
->
-  <div class="carousel-inner" style="height: 620px;">
-    <!-- Ensure only one 'active' class is present -->
-    <div class="carousel-item" *ngFor="let img of homeData.slider; let i = index" [ngClass]="{'active': i === 0}" style="height: 620px;">
-      <img
-        [src]="'https://api.chronosouq.com/' + img.image"
-        style="height: 100%; width: 100%; object-fit: fill;"
-        alt="{{ 'find_dream.img_alt' | translate }}"
-        class="responsive-img"
-      />
-    </div>
-  </div>
-
-  <!-- Carousel Indicators -->
-  <ol class="carousel-indicators">
-    <li
-      *ngFor="let img of homeData.slider; let i = index"
-      [attr.data-bs-target]="'#carouselExample'"
-      [attr.data-bs-slide-to]="i"
-      [ngClass]="{'active': i === 0}"
-    ></li>
-  </ol>
-</div>
-
-
-      <!-- <div
-        id="carouselExample"
-        style="border-top-right-radius: 25px; border-bottom-left-radius: 25px;height: 620px;"
-        class="carousel slide"
-        data-bs-ride="carousel"
-      >
+    <div class="col-lg-6 col-md-12 col-sm-12" style="position: relative; overflow: hidden">
+      <ng-container *ngIf="homeData?.slider?.length > 0">
         <div
-          class="carousel-inner"
-         style="height: 620px;"
+          id="carouselExample"
+          style="border-top-right-radius: 25px; border-bottom-left-radius: 25px; height: 620px;"
+          class="carousel slide"
+          data-bs-ride="carousel"
         >
-          <div
-            class="carousel-item active"
-            *ngFor="let img of homeData.slider"
-             style="height: 620px;"
-          >
-            <img
-            [src]="'https://api.chronosouq.com/' + img.image"
-            style="height: 100%;width: 100%;object-fit: fill;"
-              alt="{{ 'find_dream.img_alt' | translate }}"
-              class="responsive-img"
-            />
+          <div class="carousel-inner" style="height: 620px">
+            <div
+              class="carousel-item"
+              *ngFor="let img of homeData.slider; let i = index"
+              [ngClass]="{ active: i === 0 }"
+              style="height: 620px"
+            >
+              <img
+                [src]="'https://api.chronosouq.com/' + img.image"
+                style="height: 100%; width: 100%; object-fit: fill"
+                alt="{{ 'find_dream.img_alt' | translate }}"
+                class="responsive-img"
+              />
+            </div>
           </div>
+
+          <!-- Carousel Indicators -->
+          <ol class="carousel-indicators">
+            <li
+              *ngFor="let img of homeData.slider; let i = index"
+              [attr.data-bs-target]="'#carouselExample'"
+              [attr.data-bs-slide-to]="i"
+              [ngClass]="{ active: i === 0 }"
+            ></li>
+          </ol>
         </div>
-
-        <ol class="carousel-indicators">
-          <li
-            data-bs-target="#carouselExample"
-            data-bs-slide-to="0"
-            class="active"
-          ></li>
-          <li data-bs-target="#carouselExample" data-bs-slide-to="1"></li>
-          <li data-bs-target="#carouselExample" data-bs-slide-to="2"></li>
-        </ol>
-      </div> -->
-
+      </ng-container>
+      <ng-container *ngIf="homeData?.slider?.length === 0">
+        <p>No images available</p>
+      </ng-container>
       <div class="pos-feature">
         <div class="features-container">
           <div class="feature-item">
@@ -139,29 +104,28 @@
     </div>
   </div>
 
-  <div
-    class="pos-div"
-    [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }"
-  >
-    <div class="card-div">
-      <img src="./assets/images/love-my-watch.png" />
-      <p class="mt-3">{{ staticList.average_rating.text }} </p>
-      <span>{{ staticList.average_rating.value }}</span>
+  <ng-container *ngIf="staticList">
+    <div class="pos-div" [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }">
+      <div class="card-div">
+        <img src="./assets/images/love-my-watch.png" />
+        <p class="mt-3">{{ staticList.average_rating?.text || 'N/A' }}</p>
+        <span>{{ staticList.average_rating?.value || 'N/A' }}</span>
+      </div>
+      <div class="card-div">
+        <img src="./assets/images/love-my-watch.png" />
+        <p class="mt-3">{{ staticList.total_reviews?.text || 'N/A' }}</p>
+        <span>{{ staticList.total_reviews?.value || 'N/A' }}</span>
+      </div>
+      <div class="card-div">
+        <img src="./assets/images/love-my-watch.png" />
+        <p class="mt-3">{{ staticList.annual_buyer_protection?.text || 'N/A' }}</p>
+        <span>{{ staticList.annual_buyer_protection?.value || 'N/A' }}</span>
+      </div>
+      <div class="card-div">
+        <img src="./assets/images/love-my-watch.png" />
+        <p class="mt-3">{{ staticList.trusted_sellers?.text || 'N/A' }}</p>
+        <span>{{ staticList.trusted_sellers?.value || 'N/A' }}</span>
+      </div>
     </div>
-    <div class="card-div">
-      <img src="./assets/images/love-my-watch.png" />
-      <p class="mt-3">{{ staticList.total_reviews.text }}</p>
-      <span>{{ staticList.total_reviews.value }}</span>
-    </div>
-    <div class="card-div">
-      <img src="./assets/images/love-my-watch.png" />
-      <p class="mt-3">{{ staticList.annual_buyer_protection.text }}</p>
-      <span>{{ staticList.annual_buyer_protection.value }}</span>
-    </div>
-    <div class="card-div">
-      <img src="./assets/images/love-my-watch.png" />
-      <p class="mt-3">{{  staticList.trusted_sellers.text }}</p>
-      <span>{{ staticList.trusted_sellers.value }}</span>
-    </div>
-  </div>
+  </ng-container>
 </div>
