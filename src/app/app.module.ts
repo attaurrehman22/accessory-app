@@ -58,7 +58,7 @@ import { AdminProductsComponent } from './views/adminpages/admin-products/admin-
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
-
+import { AdminAddProductComponent } from './views/adminpages/admin-add-product/admin-add-product.component';
 
 @NgModule({
   declarations: [
@@ -87,7 +87,8 @@ import { MatSortModule } from '@angular/material/sort';
     AdminHomeComponent,
     AdminSidebarComponent,
     AdminNavbarComponent,
-    AdminProductsComponent
+    AdminProductsComponent,
+    AdminAddProductComponent
   ],
   imports: [
     MatSortModule,

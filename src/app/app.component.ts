@@ -14,7 +14,7 @@ export class AppComponent implements OnInit {
   showAdminHeader: boolean = true;
   showSecondFooter: boolean = true;
 
-  routesToHideforUser = ["/admin-portal", "/admin-products"];
+  routesToHideforUser = ["/admin-portal", "/admin-products", "/admin-add-product"];
   routesToHideforAdmin = [
     "/login",
     "/register",

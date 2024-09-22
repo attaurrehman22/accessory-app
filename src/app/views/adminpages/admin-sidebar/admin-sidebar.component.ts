@@ -17,6 +17,13 @@ export class AdminSidebarComponent {
       iconWidth: 20,
       iconHeight: 20,
     },
+    addProduct: {
+      router: '/admin-add-product',
+      routerActive: 'navbar-button-active',
+      // icon: 'assets/images/dashboard-2-svgrepo-com (1).svg',
+      iconWidth: 20,
+      iconHeight: 20,
+    },
     Products: {
       label: 'Products',
       router: '/admin-products',
@@ -60,6 +67,10 @@ export class AdminSidebarComponent {
     //   routerActive: 'navbar-button-active',
     // },
   };
+
+  isActive(route: string): boolean {
+    return this.route.url.includes(route);
+  }
 
   constructor(public route: Router) {}
 

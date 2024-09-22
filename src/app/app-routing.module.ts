@@ -10,6 +10,7 @@ import { ProductListComponent } from './views/website/product-list/product-list.
 import { PopularBrandsListAlphabeticallyComponent } from './views/website/popular-brands-list-alphabetically/popular-brands-list-alphabetically.component';
 import { AdminHomeComponent } from './views/adminpages/admin-home/admin-home.component';
 import { AdminProductsComponent } from './views/adminpages/admin-products/admin-products.component';
+import { AdminAddProductComponent } from './views/adminpages/admin-add-product/admin-add-product.component';
 
 
 const routes: Routes = [
@@ -23,6 +24,7 @@ const routes: Routes = [
   { path: 'popular-brands-list', component:  PopularBrandsListAlphabeticallyComponent},
   // { path: 'admin-portal', component:  AdminHomeComponent},
   { path: 'admin-products', component:  AdminProductsComponent},
+  { path: 'admin-add-product', component:  AdminAddProductComponent},
 ];
 
 @NgModule({

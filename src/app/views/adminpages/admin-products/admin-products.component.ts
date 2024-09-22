@@ -71,7 +71,7 @@ export class AdminProductsComponent {
   }
 
   openModal() {
-    this.router.navigate(["/Admin-Page-form"], {
+    this.router.navigate(["/admin-add-product"], {
       state: { param: "Create" },
     });
   }
@@ -134,7 +134,7 @@ export class AdminProductsComponent {
   }
 
   editUser(data: any) {
-    this.router.navigate(["/Admin-Page-form"], {
+    this.router.navigate(["/admin-add-product"], {
       state: { param: "Edit", data: data },
     });
   }
