@@ -10,6 +10,12 @@ import { Router } from "@angular/router";
 import { TranslateService } from "@ngx-translate/core";
 import { AlertsServicesService } from "src/services/alerts-service/alerts-services.service";
 import { HttpService } from "src/services/http/http.service";
+import { MatDialog } from "@angular/material/dialog";
+import { LoginComponent } from "../../auth/login/login.component";
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { ModelLoginComponent } from "../../auth/model-login/model-login.component";
+import { LanguageService } from "src/services/lang-service/language.service";
+
 
 @Component({
   selector: "app-add-new-product",
@@ -70,15 +76,27 @@ export class AddNewProductComponent implements OnInit {
     private fb: FormBuilder,
     private http: HttpService,
     public translateService: TranslateService,
-    private router: Router
+    private router: Router,
+    private dialog: MatDialog,
+    private languageService:LanguageService
   ) {
-    const supportedLanguages = ["en", "ar", "fr", "ta", "hi"];
-    this.translateService.addLangs(supportedLanguages);
-    this.translateService.setDefaultLang("en");
+    this.translateService.addLangs(this.supportLanguages);
 
-    const browserLang = this.translateService.getBrowserLang();
-    if (supportedLanguages.includes(browserLang)) {
-      this.translateService.use(browserLang);
+    // Get the saved language from LanguageService
+    const savedLang = this.languageService.getCurrentLanguage();
+
+    // Use the saved language or fallback to browser language
+    if (this.supportLanguages.includes(savedLang)) {
+      this.translateService.use(savedLang);
+    } else {
+      const browserLang = this.translateService.getBrowserLang();
+      console.log("Browser Language => ", browserLang);
+      this.currentLanguage = browserLang;
+
+      if (this.supportLanguages.includes(browserLang)) {
+        this.translateService.use(browserLang);
+        this.languageService.setLanguage(browserLang); // Save browser language if valid
+      }
     }
   }
 
@@ -113,9 +131,7 @@ export class AddNewProductComponent implements OnInit {
       (res) => {
         this.allDropDownList = res.data;
       },
-      (err) => {
-        console.log(err);
-      }
+      (err) => {}
     );
   }
 
@@ -130,9 +146,6 @@ export class AddNewProductComponent implements OnInit {
       this.productForm.patchValue({
         additional_images: files, // Store array of files in the form control
       });
-
-      console.log("files ", files);
-
       this.imagePreview = []; // Initialize the image preview array
 
       // Create preview for each image
@@ -160,9 +173,7 @@ export class AddNewProductComponent implements OnInit {
           (category) => category.top_category === 0
         );
       },
-      (error: any) => {
-        console.log(error);
-      }
+      (error: any) => {}
     );
   }
 
@@ -180,9 +191,7 @@ export class AddNewProductComponent implements OnInit {
           (brand) => brand.top_brand === 0
         );
       },
-      (error: any) => {
-        console.log(error);
-      }
+      (error: any) => {}
     );
   }
 
@@ -206,24 +215,18 @@ export class AddNewProductComponent implements OnInit {
       model: this.model,
       main_image: this.main_image,
       meta_description: this.meta_description,
-
       reference_number: this.reference_number,
       condition: this.condition,
       description: this.description,
       gender: this.gender,
       year_of_production: this.year_of_production,
-
       case_diameter: this.case_diameter,
-
       movement: this.movement,
       price: this.price,
       currency: this.currency,
-
       case_material: this.case_material,
       bezel_material: this.bezel_material,
-
       water_resistance: this.water_resistance,
-
       dial_color: this.dial_color,
       bracelet_material: this.bracelet_material,
     });
@@ -231,38 +234,55 @@ export class AddNewProductComponent implements OnInit {
 
   img_list: any[];
 
-  onSubmit() {
-    this.productForm.markAllAsTouched();
-
-    const formData: FormData = new FormData();
-    Object.keys(this.productForm.controls).forEach((key) => {
-      const controlValue = this.productForm.get(key)?.value;
-
-      if (key === "main_image") {
-        formData.append(key, controlValue);
-      } else if (key === "additional_images") {
-        for (let i = 0; i < controlValue.length; i++) {
-          formData.append(`${key}[]`, controlValue[i]);
-        }
-      } else {
-        formData.append(key, controlValue ?? "");
-      }
+  loginDialog() {
+    const dialogRef = this.dialog.open(ModelLoginComponent, {
+      width: "600px",
+      data: { message: "dialog-box" },
     });
 
-    console.log("formData", formData);
-    if (this.productForm.valid) {
-      this.http.addProduct(formData).subscribe(
-        (reponse) => {
-          console.log("Data saved");
-          this.router.navigate(["/product-list"]);
-        },
-        (err) => {
-          this.alertService.showAlert("danger", "Error is Add Product");
-        }
-      );
-      console.log("Product Data:", this.productForm.value);
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.onSubmit();
+      }
+    });
+  }
+
+  onSubmit() {
+    const token = localStorage.getItem("user_token");
+    console.log("-----------------------",token)
+    if (!token) {
+      console.log("Token are not present")
+      this.loginDialog();
     } else {
-      this.alertService.showAlert("warning", "Form is invalid");
+      this.productForm.markAllAsTouched();
+
+      const formData: FormData = new FormData();
+      Object.keys(this.productForm.controls).forEach((key) => {
+        const controlValue = this.productForm.get(key)?.value;
+        if (key === "main_image") {
+          formData.append(key, controlValue);
+        } else if (key === "additional_images") {
+          for (let i = 0; i < controlValue.length; i++) {
+            formData.append(`${key}[]`, controlValue[i]);
+          }
+        } else {
+          formData.append(key, controlValue ?? "");
+        }
+      });
+
+      console.log("formData", formData);
+      if (this.productForm.valid) {
+        this.http.addProduct(formData).subscribe(
+          (reponse) => {
+            this.router.navigate(["/product-list"]);
+          },
+          (err) => {
+            this.alertService.showAlert("danger", "Error is Add Product");
+          }
+        );
+      } else {
+        this.alertService.showAlert("warning", "Form is invalid");
+      }
     }
   }
 
@@ -272,7 +292,6 @@ export class AddNewProductComponent implements OnInit {
   openCondition(param: string) {
     console.log(param);
     this.selectedCondition = param;
-
     if (param === "New") {
       this.newCondition = "New";
       this.usedCondition = "";
@@ -291,7 +310,5 @@ export class AddNewProductComponent implements OnInit {
         .get("condition")
         ?.setValue(this.selectedUsedCondition || "Used");
     }
-
-    console.log("condition value ", this.productForm.get("condition").value);
   }
 }

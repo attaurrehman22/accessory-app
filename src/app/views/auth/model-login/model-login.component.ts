@@ -3,7 +3,6 @@ import {
   FormBuilder,
   FormControl,
   FormGroup,
-  FormsModule,
   Validators,
 } from "@angular/forms";
 import {
@@ -15,14 +14,14 @@ import { Router } from "@angular/router";
 import { TranslateService } from "@ngx-translate/core";
 import { AlertsServicesService } from "src/services/alerts-service/alerts-services.service";
 import { HttpService } from "src/services/http/http.service";
-import { RegisterComponent } from "../register/register.component";
+import { ModelRegisterComponent } from "../model-register/model-register.component";
 
 @Component({
-  selector: "app-login",
-  templateUrl: "./login.component.html",
-  styleUrls: ["./login.component.css"],
+  selector: "app-model-login",
+  templateUrl: "./model-login.component.html",
+  styleUrls: ["./model-login.component.css"],
 })
-export class LoginComponent implements OnInit {
+export class ModelLoginComponent implements OnInit {
   supportLanguages = ["en", "ar", "fr", "ta", "hi"];
   currentLanguage: string;
   isDialog: any = "";
@@ -42,7 +41,9 @@ export class LoginComponent implements OnInit {
     private dialog: MatDialog,
     private fb: FormBuilder,
     private http: HttpService,
-    public translateService: TranslateService
+    public translateService: TranslateService,
+    public dialogRef: MatDialogRef<ModelLoginComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any
   ) {
     this.translateService.addLangs(this.supportLanguages);
     this.translateService.setDefaultLang("ar");
@@ -55,6 +56,10 @@ export class LoginComponent implements OnInit {
     if (this.supportLanguages.includes(browserlang)) {
       this.translateService.use(browserlang);
     }
+
+    if (data) {
+      this.isDialog = data.message;
+    }
   }
 
   routeTo: any;
@@ -66,10 +71,12 @@ export class LoginComponent implements OnInit {
   }
   gotoHome() {
     this.loginForm.markAllAsTouched();
+    localStorage.removeItem("Logged");
+    localStorage.removeItem("user_token");
     if (this.loginForm.valid) {
       this.http.login(this.loginForm.value).subscribe(
         (response) => {
-          if (response.errorMessage || response.status === "failure") {
+          if (response.message === "" || response.status === "failure") {
             this.alertService.showAlert(
               "danger",
               "Enter valid username/email and password"
@@ -78,15 +85,20 @@ export class LoginComponent implements OnInit {
             localStorage.setItem("Logged", "LogIn");
             localStorage.setItem("user_token", response.authorization.token);
             console.log("-----------------------", this.isDialog);
-
-            this.router.navigateByUrl("");
+            if (this.isDialog === "dialog-box") {
+              this.dialogRef.close(true);
+            } else {
+              this.router.navigateByUrl("");
+            }
           }
         },
         (error) => {
-          this.alertService.showAlert(
-            "danger",
-            "Enter Valid Email and Password"
-          );
+          if (error.message === "Unauthorized") {
+            this.alertService.showAlert(
+              "danger",
+              "Enter Valid Email and Password"
+            );
+          }
           console.error("Login error", error);
         }
       );
@@ -95,6 +107,16 @@ export class LoginComponent implements OnInit {
     }
   }
   gotoRegister() {
-    this.router.navigateByUrl("register");
+    this.dialogRef.close();
+    const dialogRef = this.dialog.open(ModelRegisterComponent, {
+      width: "600px",
+      data: { message: "dialog-box" },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.dialogRef.close();
+      }
+    });
   }
 }

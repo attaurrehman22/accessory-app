@@ -182,37 +182,37 @@ h2 .optional {
   font-weight: bold;
 }
 
-.wraper{
+.wraper {
   display: flex;
   flex-wrap: wrap;
-  padding: 0 220px 0 220px
+  padding: 0 220px 0 220px;
 }
 
-.save-draft-section{
-  padding: 0 60px 0 25px; 
-  position: fixed; 
-  right: 310px; 
-  width: 450px
+.save-draft-section {
+  padding: 0 60px 0 25px;
+  position: fixed;
+  right: 310px;
+  width: 450px;
 }
 
-.form-section{
-  padding: 15px 30px 0 30px
+.form-section {
+  padding: 15px 0 0 0;
 }
 
 @media (max-width: 1600px) {
   .wraper {
     padding: 0 20px 0 20px;
   }
-  
-  .save-draft-section{
-    padding: 0 0 0 0; 
-    position: relative; 
-    right: 0px; 
+
+  .save-draft-section {
+    padding: 0 0 0 0;
+    position: relative;
+    right: 0px;
     display: flex;
-    width: 100%
+    width: 100%;
   }
-  
-  .form-section{
+
+  .form-section {
     padding: 0 0 0 0;
   }
 }
@@ -221,14 +221,38 @@ h2 .optional {
   flex-direction: row-reverse;
 }
 
-.reverse-order .save-draft-section{
+.reverse-order h2 {
+  text-align: end;
+}
+
+.reverse-order .save-draft-section {
   padding: 0 60px 0 25px;
-    position: fixed;
-    left: 310px !important;
-    width: 450px;
+  position: fixed;
+  left: 310px !important;
+  width: 450px;
 }
 
 .selected-card {
-  
   border: 2px solid #00838f !important; /* Example border color */
+}
+
+.reverse-order-condition{
+  flex-direction: row-reverse;
+}
+
+.reverse-order-condition .condition-togglec{
+  justify-content: end;
+  flex-direction: row-reverse;
+}
+
+.reverse-order-condition .condition-card {
+  text-align: end;
+}
+
+.reverse-order-condition h3 {
+  text-align: end;
+}
+
+.reverse-order-usedcond {
+  flex-direction: row-reverse;
 }

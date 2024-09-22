@@ -2,7 +2,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 88%;
   background-color: #e8f1eb;
 }
 
@@ -14,6 +13,7 @@
   text-align: center;
   max-width: 500px;
   width: 100%;
+  margin: 70px 0 70px 0;
 }
 
 h1,
@@ -97,3 +97,22 @@ a {
   color: #28a745;
   text-decoration: none;
 }
+
+
+/* Add this CSS to your global stylesheet or component stylesheet */
+
+/* Right-to-left layout for RTL languages */
+.rtl {
+  direction: rtl;
+  text-align: right;
+}
+
+/* Left-to-right layout for LTR languages */
+.ltr {
+  direction: ltr;
+  text-align: left;
+}
+
+
+
+

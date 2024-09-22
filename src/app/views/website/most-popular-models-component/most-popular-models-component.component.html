@@ -1,4 +1,4 @@
-<div class="wraper mt-3">
+<!-- <div class="global-main-wraper mt-3">
   <h2>{{ "popular_models.label" | translate }}</h2>
   <div class="watch-grid mt-4">
     <div class="watch-card" *ngFor="let model of popularModels | slice : 0 : 8">
@@ -32,6 +32,36 @@
             <p class="brand">{{ model.gender }}</p>
             <p class="price">{{ model.condition }}</p>
           </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->
+
+
+
+<div class="global-main-wraper mt-5 mb-5">
+  <h2 class="text-center mb-4">{{'popular_models.label' | translate}}</h2>
+  <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-4">
+    <div class="col" *ngFor="let model of popularModels | slice : 0 : 8">
+      <div class="card border-0 shadow-sm rounded-3">
+        <div class="position-relative">
+          <img [src]="'https://api.chronosouq.com/' + model.main_image" class="card-img-top" alt="{{ model.name }}">
+          <button class="btn btn-outline-success position-absolute top-0 end-0 m-2 rounded-circle">
+            <i class="fa fa-heart"></i>
+          </button>
+        </div>
+        <div  [ngClass]="{
+              'reverse-order': translateService.currentLang !== 'en'
+            }" class="card-body d-flex flex-wrap justify-content-between text-center bg-light rounded-bottom">
+          <small class="d-block text-muted">{{'popular_models.name' | translate}}</small>
+          <h6 class="card-title mb-1">{{ model.name }}</h6>
+        </div>
+          <div  [ngClass]="{
+              'reverse-order': translateService.currentLang !== 'en'
+            }" class="card-body d-flex flex-wrap justify-content-between text-center bg-light rounded-bottom">
+          <span class="text-muted">{{'popular_models.Price' | translate}}</span>
+          <p class="card-text">{{ model.price }} <span style="color: red;">{{model.currency}}</span></p>
         </div>
       </div>
     </div>

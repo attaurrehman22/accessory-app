@@ -24,7 +24,7 @@ export class HttpService {
     console.log("username in http Service", username);
     
     const formData = new FormData();
-    formData.append('email', username);
+    formData.append('username', username);
   
     return this.http.post(`${this.apiUrl}/api/check-user-existence`, formData);
   }
@@ -71,6 +71,11 @@ export class HttpService {
   getAllBrands(): Observable<any> {
     return this.http.get(`${this.apiUrl}/api/allBrands`);
   }
+
+  getBrandsDropDownFilter(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/api/brandDropDownForFilters`);
+  }
+
 
   getCategory(): Observable<any> {
     return this.http.get(`${this.apiUrl}/api/categories`);

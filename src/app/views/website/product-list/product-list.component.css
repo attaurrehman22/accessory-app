@@ -1,16 +1,24 @@
+.custom-dropdown-panel .mat-option {
+  display: block !important;
+  height: auto !important;
+  min-height: auto !important;
+}
+
 .carousel {
   margin-top: 20px;
+  height: 360px;
 }
 .carousel-indicators {
   list-style: none;
+  position: relative !important;
 }
 .carousel-indicators li {
   background-color: #000;
 }
 
 .card-title {
-  font-size: 1.25rem;
-  font-weight: bold;
+  font-size: 1rem;
+  font-weight: 600;
 }
 
 .card-text {
@@ -20,16 +28,21 @@
 
 .card {
   border: none;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 5px 8px rgba(0, 0, 0, 0.1),
+    4px 0 8px rgba(0, 0, 0, 0.1), 5px 0 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 10px;
 }
 
 .badge {
   font-size: 0.8rem;
+  top: 10px;
+  left: 15px;
+  position: absolute;
 }
-
 
 .card-title {
   font-size: 1.25rem;
-  font-weight: 600;
+  font-weight: 400;
 }
 
 .card-text {
@@ -42,4 +55,89 @@
 
 .border-end {
   border-right: 1px solid #ddd; /* Customizes the right border line */
+}
+
+.card-img-top {
+  height: 75%;
+  object-fit: fill;
+  padding: 10px;
+}
+
+.card-body {
+  height: 25%;
+}
+
+.carousel-item {
+  height: 100% !important;
+}
+
+.carousel-container {
+  display: flex;
+  overflow: hidden;
+}
+
+
+.price-text {
+  display: flex; justify-content: space-between
+}
+
+.carousel-item {
+  flex: 1 0 25%; /* 4 cards for larger screens */
+}
+
+@media (max-width: 1200px) {
+  .carousel-item {
+    flex: 1 0 25%; /* 4 cards for medium screens */
+  }
+}
+
+@media (max-width: 992px) {
+  .carousel-item {
+    flex: 1 0 33%; /* 3 cards for smaller screens */
+  }
+}
+
+@media (max-width: 768px) {
+  .carousel-item {
+    flex: 1 0 50%; /* 2 cards for mobile screens */
+  }
+}
+
+@media (max-width: 576px) {
+  .carousel-item {
+    flex: 1 0 100%; /* 1 card for extra small screens */
+  }
+}
+
+
+.reverse-order {
+  flex-direction: row-reverse;
+}
+
+.reverse-order .badge{
+  right: 15px !important;
+  position: absolute;
+  left: auto !important;
+}
+
+
+.reverse-order .card-title{
+  text-align: end;
+}
+
+.reverse-order .card-text{
+ justify-content: start !important;
+}
+
+.reverse-order-for-product-det{
+  flex-direction: row-reverse;
+}
+
+.reverse-order-for-product-det ul{
+  flex-direction: row-reverse;
+}
+
+.price-text-stl p{
+  display: flex;
+  text-align: start !important;
 }

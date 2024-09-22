@@ -1,4 +1,4 @@
-<div class="login-container">
+<!-- <div class="login-container">
   <div class="login-card">
     <h2>Welcome to Chronosouq</h2>
     <h1>Create a new account</h1>
@@ -19,10 +19,6 @@
           <mat-error *ngIf="registerForm.get('username')?.hasError('usernameExists')">
             User Name already exists
           </mat-error>
-          <!-- Success Icon -->
-          <!-- <mat-icon *ngIf="registerForm.get('username')?.valid && !registerForm.get('username')?.hasError('emailExists')">
-            check_circle
-          </mat-icon> -->
         </mat-form-field>
       </div>
       <div class="mt-2">
@@ -35,7 +31,6 @@
             matInput
             formControlName="email"
           />
-          <!-- Validation Errors -->
           <mat-error *ngIf="registerForm.get('email')?.hasError('required')">
             Enter Email
           </mat-error>
@@ -45,12 +40,7 @@
           <mat-error *ngIf="registerForm.get('email')?.hasError('emailExists')">
             Email already exists
           </mat-error>
-          <!-- Success Icon -->
-          <!-- <mat-icon *ngIf="registerForm.get('email')?.valid && !registerForm.get('email')?.hasError('emailExists')">
-            check_circle
-          </mat-icon> -->
-        </mat-form-field>
-        
+        </mat-form-field>    
       </div>
       
       <div class="mt-2">
@@ -107,6 +97,149 @@
         (click)="gotologin()"
           >Login</a
         >
+      </p>
+    </div>
+  </div>
+</div> -->
+
+<div class="login-container">
+  <div class="login-card">
+    <h2>{{ "register.welcome" | translate }}</h2>
+    <h1>{{ "register.create_account" | translate }}</h1>
+
+    <form [formGroup]="registerForm">
+      <div [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'">
+        <mat-form-field appearance="outline" style="width: 100%">
+          <mat-label>{{ "register.username" | translate }}</mat-label>
+          <input
+            type="text"
+            matInput
+            placeholder="{{ 'register.enter_username' | translate }}"
+            required
+            formControlName="username"
+          />
+          <mat-error *ngIf="registerForm.get('username')?.hasError('required')">
+            {{ "register.username_required" | translate }}
+          </mat-error>
+          <mat-error
+            *ngIf="registerForm.get('username')?.hasError('usernameExists')"
+          >
+            {{ "register.username_exists" | translate }}
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div
+        class="mt-2"
+        [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'"
+      >
+        <mat-form-field appearance="outline" style="width: 100%">
+          <mat-label>{{ "register.email" | translate }}</mat-label>
+          <input
+            type="email"
+            matInput
+            placeholder="{{ 'register.enter_email' | translate }}"
+            required
+            formControlName="email"
+          />
+          <mat-error *ngIf="registerForm.get('email')?.hasError('required')">
+            {{ "register.email_required" | translate }}
+          </mat-error>
+          <mat-error *ngIf="registerForm.get('email')?.hasError('email')">
+            {{ "register.email_invalid" | translate }}
+          </mat-error>
+          <mat-error *ngIf="registerForm.get('email')?.hasError('emailExists')">
+            {{ "register.email_exists" | translate }}
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div
+        class="mt-2"
+        [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'"
+      >
+        <mat-form-field appearance="outline" style="width: 100%">
+          <mat-label>{{ "register.password" | translate }}</mat-label>
+          <input
+            matInput
+            type="password"
+            placeholder="{{ 'register.enter_password' | translate }}"
+            required
+            formControlName="password"
+          />
+          <mat-error *ngIf="registerForm.get('password')?.hasError('required')">
+            {{ "register.password_required" | translate }}
+          </mat-error>
+          <mat-error
+            *ngIf="registerForm.get('password')?.hasError('minlength')"
+          >
+            {{ "register.password_minlength" | translate }}
+          </mat-error>
+          <mat-error
+            *ngIf="registerForm.get('password')?.hasError('maxlength')"
+          >
+            {{ "register.password_maxlength" | translate }}
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <!-- Confirm Password Field -->
+      <!-- Confirm Password Field -->
+      <div
+        class="mt-2"
+        [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'"
+      >
+        <mat-form-field appearance="outline" style="width: 100%">
+          <mat-label>{{ "register.confirm_password" | translate }}</mat-label>
+          <input
+            matInput
+            type="password"
+            placeholder="{{ 'register.confirm_password_required' | translate }}"
+            required
+            formControlName="confirmpassword"
+          />
+          <mat-error
+            *ngIf="registerForm.get('confirmpassword')?.hasError('required')"
+          >
+            {{ "register.confirm_password_required" | translate }}
+          </mat-error>
+          <mat-error
+            *ngIf="registerForm.get('confirmpassword')?.hasError('notsame1')"
+          >
+            {{ "register.password_mismatch" | translate }}
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </form>
+
+    <button class="login-btn mt-3" type="submit" (click)="register()">
+      {{ "register.register_button" | translate }}
+    </button>
+
+    <div class="separator">{{ "register.or" | translate }}</div>
+
+    <div class="social-login">
+      <button class="social-btn facebook"><mat-icon>facebook</mat-icon></button>
+      <button class="social-btn apple"><mat-icon>apple</mat-icon></button>
+      <button class="social-btn google">
+        <img alt="" style="height: 3vh" src="./assets/images/google.png" />
+      </button>
+    </div>
+
+    <div class="mt-5">
+      <p style="font-weight: 400; font-size: 14px; color: #909090">
+        {{ "register.already_have_account" | translate }}
+        <a
+          style="
+            color: #0f172a;
+            font-weight: 500;
+            font-size: 16px;
+            cursor: pointer;
+          "
+          (click)="gotologin()"
+        >
+          {{ "register.login" | translate }}
+        </a>
       </p>
     </div>
   </div>

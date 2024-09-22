@@ -1,9 +1,9 @@
-<div class="col-lg-12 col-md-12 col-sm-12 d-flex flex-wrap wraper-div">
+<div class="col-lg-12 col-md-12 col-sm-12 d-flex flex-wrap global-main-wraper mb-5">
   <div
     class="col-lg-12 col-md-12 col-sm-12 img-text-div"
     [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }"
   >
-    <div class="col-lg-6 col-md-12 col-sm-12 dream-text-padding">
+    <div class="col-lg-6 col-md-6 col-sm-12 dream-text-padding">
       <h2 class="display-4">
         <span *ngIf="translateService.currentLang === 'ar' || translateService.currentLang === 'ta'">!!</span>
         <span style="color: #a8d8a1">{{ "find_dream.find" | translate }}</span>
@@ -16,7 +16,7 @@
       <div class="d-flex">
         <input
           class="form-control"
-          style="width: 65% !important"
+          style="width: 60% !important"
           type="text"
           placeholder="{{ 'find_dream.search_placeholder' | translate }}"
         />
@@ -26,26 +26,26 @@
       </div>
       <div class="col-lg-12 col-md-12 col-sm-12 d-flex flex-wrap mt-5">
         <ng-container *ngIf="staticList">
-          <div class="col-lg-3 col-md-6 col-sm-6">
-            <p>10+</p>
+          <div class="col-lg-3 col-md-6 col-sm-6 statics-data-stl">
+            <p class="mt-sm-5">10+</p>
             <span>{{ "find_dream.years_experience" | translate }}</span>
           </div>
-          <div class="col-lg-3 col-md-6 col-sm-6">
-            <p>20K+</p>
+          <div class="col-lg-3 col-md-6 col-sm-6 statics-data-stl">
+            <p class="mt-sm-5">20K+</p>
             <span>{{ "find_dream.satisfied_customers" | translate }}</span>
           </div>
-          <div class="col-lg-3 col-md-6 col-sm-6">
-            <p>263</p>
+          <div class="col-lg-3 col-md-6 col-sm-6 statics-data-stl">
+            <p class="mt-sm-5">263</p>
             <span>{{ "find_dream.business_partners" | translate }}</span>
           </div>
-          <div class="col-lg-3 col-md-6 col-sm-6">
-            <p>263</p>
+          <div class="col-lg-3 col-md-6 col-sm-6 statics-data-stl">
+            <p class="mt-sm-5">263</p>
             <span>{{ "find_dream.business_partners" | translate }}</span>
           </div>
         </ng-container>
       </div>
     </div>
-    <div class="col-lg-6 col-md-12 col-sm-12" style="position: relative; overflow: hidden">
+    <div class="col-lg-6 col-md-6 col-sm-12" style="position: relative; overflow: hidden">
       <ng-container *ngIf="homeData?.slider?.length > 0">
         <div
           id="carouselExample"

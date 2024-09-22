@@ -1,4 +1,31 @@
-/* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.global-main-wraper {
+  padding: 0 200px 0 200px;
+}
+
+@media (max-width: 1024px) {
+  .global-main-wraper {
+    padding: 0 10px 0 10px;
+  }
+}
+
+/* --------  Set Form Fields From Left to Right or Right to Left start --------- */
+
+.mat-form-field-rtl .mat-input-element {
+  text-align: right;
+}
+
+.mat-form-field-rtl .mat-label {
+  text-align: right;
+}
+
+/* --------  Set Form Fields From Left to Right or Right to Left end --------- */

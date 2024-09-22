@@ -1,9 +1,8 @@
-<div class="brands-container mt-5">
+<div class="global-main-wraper text-center mt-5 mb-5">
   <h2>{{ "popular_brands.label" | translate }}</h2>
   <div class="brands-grid mt-4">
     <div
       class="brand-item"
-      style="cursor: pointer;height: 220px;"
       *ngFor="let brand of brandsList | slice : 0 : 10"
       [ngClass]="{'disabled': brand.products_count === 0}"
       (click)="brand.products_count > 0 ? getDetails(brand) : null"

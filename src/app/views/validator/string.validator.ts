@@ -125,6 +125,30 @@ export class StringValidator {
   }
 }
 
+export function notsame1(): ValidatorFn {
+  return (formGroup: AbstractControl): ValidationErrors | null => {
+    const passwordControl = formGroup.get('password');
+    const confirmPasswordControl = formGroup.get('confirmpassword');
+
+    if (!passwordControl || !confirmPasswordControl) {
+      return null; // If either control is missing, skip validation
+    }
+
+    const password = passwordControl.value;
+    const confirmPassword = confirmPasswordControl.value;
+
+    // Avoid validation when either password or confirmPassword is empty
+    if (!password || !confirmPassword) {
+      return null;
+    }
+
+    // Return validation error if passwords don't match, otherwise null
+    return password !== confirmPassword ? { notsame1: true } : null;
+  };
+}
+
+
+
 export function notsame(password: AbstractControl): ValidatorFn {
   return (confirmPassword: AbstractControl): ValidationErrors | null => {
     console.log(
@@ -235,7 +259,7 @@ export function usernameExists(userService: UserService): AsyncValidatorFn {
       return of(null); 
     }
 
-    return userService.checkUserEmailExists(control.value).pipe(
+    return userService.checkUsernameExists(control.value).pipe(
       map((usernameExists: boolean) => {
         return usernameExists ? { usernameExists: true } : null;
       }),

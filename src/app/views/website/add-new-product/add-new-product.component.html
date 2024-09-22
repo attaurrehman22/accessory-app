@@ -1,37 +1,48 @@
 <div
-  class="col-lg-12 col-md-12 col-sm-12 wraper"
+  class="col-lg-12 col-md-12 col-sm-12 d-flex flex-wrap global-main-wraper"
   [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }"
 >
   <div class="col-lg-12 col-md-12 col-sm-12 form-section">
     <form [formGroup]="productForm">
       <!-- --------------------  offer Section ---------------------------- -->
 
-      <h2>Offer <span>(* Required field)</span></h2>
+      <h2 >
+        {{ "offer.nameLabel" | translate }}
+        <span>{{ "offer.requiredFieldNote" | translate }}</span>
+      </h2>
       <hr />
 
-      <div class="d-flex mt-2" style="justify-content: space-between; gap: 1%" [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }">
-        <div style="width: 49%">
+      <div
+        class="d-flex mt-2"
+        style="justify-content: space-between; gap: 1%"
+        [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }"
+      >
+        <div style="width: 49%" [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'">
           <mat-form-field style="width: 100%" appearance="outline">
-            <mat-label>Name</mat-label>
+            <mat-label>{{ "offer.nameLabel" | translate }}</mat-label>
             <input formControlName="name" matInput placeholder="" />
             <mat-error *ngIf="productForm.get('name').hasError('required')">
-              Please add Name
+              {{ "offer.nameError" | translate }}
             </mat-error>
           </mat-form-field>
         </div>
-        <div style="width: 49%">
+        <div style="width: 49%" [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'">
           <mat-form-field style="width: 100%" appearance="outline">
-            <mat-label>Title</mat-label>
+            <mat-label>{{ "offer.titleLabel" | translate }}</mat-label>
             <input formControlName="title" matInput placeholder="" />
             <mat-error *ngIf="productForm.get('title').hasError('required')">
-              Please add Title
+              {{ "offer.titleError" | translate }}
             </mat-error>
           </mat-form-field>
         </div>
       </div>
-      <div class="d-flex mt-2" style="justify-content: space-between; gap: 1%" [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }">
-        <div style="width: 49%">
-          <mat-label>Cover Image</mat-label>
+      <div
+        class="d-flex mt-2"
+        style="justify-content: space-between; gap: 1%"
+        [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }"
+      >
+        <div style="width: 49%" [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'">
+          <mat-label>{{ "offer.coverImageLabel" | translate }}</mat-label>
           <mat-form-field style="width: 100%" appearance="outline">
             <input
               type="file"
@@ -42,12 +53,12 @@
             <mat-error
               *ngIf="productForm.get('main_image').hasError('required')"
             >
-              Please add Image
+              {{ "offer.coverImageError" | translate }}
             </mat-error>
           </mat-form-field>
         </div>
-        <div style="width: 49%">
-          <mat-label>Additional Images</mat-label>
+        <div style="width: 49%" [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'">
+          <mat-label>{{ "offer.additionalImagesLabel" | translate }}</mat-label>
           <mat-form-field style="width: 100%" appearance="outline">
             <!-- File input to accept multiple images -->
             <input
@@ -60,7 +71,7 @@
             <mat-error
               *ngIf="productForm.get('additional_images').hasError('required')"
             >
-              Please add Image
+              {{ "offer.additionalImagesError" | translate }}
             </mat-error>
 
             <!-- Image Preview inside the mat-form-field -->
@@ -81,14 +92,18 @@
         </div>
       </div>
 
-      <div class="d-flex mt-2" style="justify-content: space-between; gap: 1%" [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }">
-        <div style="width: 49%">
+      <div
+        class="d-flex mt-2"
+        style="justify-content: space-between; gap: 1%"
+        [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }"
+      >
+        <div style="width: 49%" [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'">
           <mat-form-field
             style="width: 100%"
             appearance="outline"
             class="full-width"
           >
-            <mat-label>Watch Type</mat-label>
+            <mat-label>{{ "offer.watchTypeLabel" | translate }}</mat-label>
             <mat-select formControlName="watch_type">
               <mat-option
                 *ngFor="let key of allDropDownList.watch_type | keyvalue"
@@ -100,28 +115,34 @@
             <mat-error
               *ngIf="productForm.get('watch_type').hasError('required')"
             >
-              Select Watch Type
+              {{ "offer.watchTypeError" | translate }}
             </mat-error>
           </mat-form-field>
         </div>
-        <div style="width: 49%">
+        <div style="width: 49%" [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'">
           <mat-form-field
             style="width: 100%"
             appearance="outline"
             class="full-width"
           >
-            <mat-label>Select Category</mat-label>
+            <mat-label>{{ "offer.categoryLabel" | translate }}</mat-label>
             <mat-select formControlName="category_id">
               <!-- Top Categories Section -->
               <mat-optgroup label="Top Categories">
-                <mat-option *ngFor="let brand of topCategories" [value]="brand.id">
+                <mat-option
+                  *ngFor="let brand of topCategories"
+                  [value]="brand.id"
+                >
                   {{ brand.name }}
                 </mat-option>
               </mat-optgroup>
-        
+
               <!-- Other Categories Section -->
               <mat-optgroup label="Other Categories">
-                <mat-option *ngFor="let brand of otherCategories" [value]="brand.id">
+                <mat-option
+                  *ngFor="let brand of otherCategories"
+                  [value]="brand.id"
+                >
                   {{ brand.name }}
                 </mat-option>
               </mat-optgroup>
@@ -129,21 +150,24 @@
             <mat-error
               *ngIf="productForm.get('category_id').hasError('required')"
             >
-              Select Category
+              {{ "offer.categoryError" | translate }}
             </mat-error>
           </mat-form-field>
         </div>
-        
       </div>
 
-      <div class="d-flex mt-2" style="justify-content: space-between; gap: 1%" [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }">
-        <div style="width: 49%">
+      <div
+        class="d-flex mt-2"
+        style="justify-content: space-between; gap: 1%"
+        [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }"
+      >
+        <div style="width: 49%" [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'">
           <mat-form-field
             style="width: 100%"
             appearance="outline"
             class="full-width"
           >
-            <mat-label>Select Brand </mat-label>
+            <mat-label>{{ "offer.brandLabel" | translate }}</mat-label>
             <!-- <mat-select formControlName="brand_id">
               <mat-option *ngFor="let brand of brandsList" [value]="brand.id">
                 {{ brand.name }}
@@ -157,7 +181,7 @@
                   {{ brand.name }}
                 </mat-option>
               </mat-optgroup>
-        
+
               <!-- Other Categories Section -->
               <mat-optgroup label="Other Brand">
                 <mat-option *ngFor="let brand of otherBrand" [value]="brand.id">
@@ -165,21 +189,21 @@
                 </mat-option>
               </mat-optgroup>
             </mat-select>
-            <mat-hint align="start"
-              ><a>Manufacturer not listed?</a>
-            </mat-hint>
+            <!-- <mat-hint align="start"><a>Manufacturer not listed?</a> </mat-hint> -->
             <mat-error *ngIf="productForm.get('brand_id').hasError('required')">
-              Select Brand
+              {{ "offer.brandError" | translate }}
             </mat-error>
           </mat-form-field>
         </div>
-        <div style="width: 49%">
+        <div style="width: 49%" [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'">
           <mat-form-field
             style="width: 100%"
             appearance="outline"
             class="full-width"
           >
-            <mat-label>Scope of Delivery</mat-label>
+            <mat-label>{{
+              "offer.scopeOfDeliveryLabel" | translate
+            }}</mat-label>
             <mat-select formControlName="scope_of_delivery">
               <mat-option
                 *ngFor="let key of allDropDownList.scope_of_delivery | keyvalue"
@@ -191,39 +215,44 @@
             <mat-error
               *ngIf="productForm.get('scope_of_delivery').hasError('required')"
             >
-              Select Scope of Delivery
+              <mat-label>{{
+                "offer.scopeOfDeliveryError" | translate
+              }}</mat-label>
             </mat-error>
           </mat-form-field>
         </div>
       </div>
-      <div class="d-flex mt-2" style="justify-content: space-between; gap: 1%" [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }">
-        <div style="width: 49%">
+      <div
+        class="d-flex mt-2"
+        style="justify-content: space-between; gap: 1%"
+        [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }"
+      >
+        <div style="width: 49%" [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'">
           <mat-form-field style="width: 100%" appearance="outline">
-            <mat-label>Model </mat-label>
+            <mat-label>{{ "offer.modelLabel" | translate }} </mat-label>
             <input formControlName="model" matInput placeholder="" />
             <mat-hint style="font-size: 12px">
-              You can be more specific about the model name and indicate the
-              exact model.
+              {{ "offer.modelHint" | translate }}
             </mat-hint>
             <mat-error *ngIf="productForm.get('model').hasError('required')">
-              Add Model
+              {{ "offer.modelError" | translate }}
             </mat-error>
           </mat-form-field>
         </div>
-        <div style="width: 49%">
+        <div style="width: 49%" [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'">
           <mat-form-field
             style="width: 100%"
             appearance="outline"
             class="full-width"
           >
             <mat-label class="d-flex gap-1"
-              >Reference Number
+              >{{ "offer.referenceNumberLabel" | translate }}
             </mat-label>
             <input matInput formControlName="reference_number" />
             <mat-error
               *ngIf="productForm.get('reference_number').hasError('required')"
             >
-              Add reference Number
+              {{ "offer.referenceNumberError" | translate }}
             </mat-error>
           </mat-form-field>
         </div>
@@ -231,8 +260,8 @@
 
       <!-- --------------------  Condition Section ---------------------------- -->
 
-      <div class="condition-container mt-5">
-        <h2>Condition</h2>
+      <div class="condition-container mt-5" [ngClass]="{ 'reverse-order-condition': translateService.currentLang !== 'en' }">
+        <h2>{{ "offer.conditionTitle" | translate }}</h2>
         <hr />
         <div
           style="border: none !important ; display: flex"
@@ -252,7 +281,7 @@
             value="like-new"
             (click)="openCondition('New')"
           >
-            New
+            {{ "offer.newCondition" | translate }}
           </button>
 
           <button
@@ -268,7 +297,7 @@
             value="like-new"
             (click)="openCondition('New-Unwarn')"
           >
-            Like new & unworn
+            {{ "offer.likeNewCondition" | translate }}
           </button>
 
           <button
@@ -283,14 +312,14 @@
             }"
             (click)="openCondition('Used')"
           >
-            Used
+            {{ "offer.usedCondition" | translate }}
           </button>
         </div>
 
         <h3 *ngIf="usedCondition" class="mt-3">
-          Overall Condition of the Watch
+          {{ "offer.usedConditionTitle" | translate }}
         </h3>
-        <div *ngIf="usedCondition" class="card-container">
+        <div *ngIf="usedCondition" class="card-container" [ngClass]="{ 'reverse-order-usedcond': translateService.currentLang !== 'en' }">
           <mat-card
             class="condition-card"
             [ngClass]="{
@@ -298,9 +327,11 @@
                 selectedCondition === 'Very good (minor signs of wear)'
             }"
           >
-            <mat-card-title>Very good (minor signs of wear)</mat-card-title>
+            <mat-card-title>{{
+              "offer.veryGoodCondition" | translate
+            }}</mat-card-title>
             <mat-card-content>
-              <p>Very good (minor signs of wear)</p>
+              <p>{{ "offer.veryGoodCondition" | translate }}</p>
             </mat-card-content>
             <mat-card-actions>
               <button
@@ -308,7 +339,7 @@
                 mat-button
                 (click)="selectUsedCondition('Very good (minor signs of wear)')"
               >
-                Select
+                {{ "offer.select_btn" | translate }}
               </button>
             </mat-card-actions>
           </mat-card>
@@ -320,9 +351,11 @@
                 selectedCondition === 'Good (moderate signs of wear)'
             }"
           >
-            <mat-card-title>Good (moderate signs of wear)</mat-card-title>
+            <mat-card-title>{{
+              "offer.goodCondition" | translate
+            }}</mat-card-title>
             <mat-card-content>
-              <p>Good (moderate signs of wear).</p>
+              <p>{{ "offer.goodCondition" | translate }}</p>
             </mat-card-content>
             <mat-card-actions>
               <button
@@ -330,7 +363,7 @@
                 mat-button
                 (click)="selectUsedCondition('Good (moderate signs of wear)')"
               >
-                Select
+                {{ "offer.select_btn" | translate }}
               </button>
             </mat-card-actions>
           </mat-card>
@@ -339,9 +372,9 @@
             class="condition-card"
             [ngClass]="{ 'selected-card': selectedCondition === 'Incomplete' }"
           >
-            <mat-card-title>Incomplete</mat-card-title>
+            <mat-card-title>{{ "offer.incomplete" | translate }}</mat-card-title>
             <mat-card-content>
-              <p>Incomplete</p>
+              <p>{{ "offer.incomplete" | translate }}</p>
             </mat-card-content>
             <mat-card-actions>
               <button
@@ -349,16 +382,16 @@
                 mat-button
                 (click)="selectUsedCondition('Incomplete')"
               >
-                Select
+                {{ "offer.select_btn" | translate }}
               </button>
             </mat-card-actions>
           </mat-card>
           <div *ngIf="selectedCondition === 'Incomplete'">
             <mat-form-field appearance="outline" style="width: 100%">
-              <mat-label>Description</mat-label>
+              <mat-label>{{ "offer.description" | translate }}</mat-label>
               <textarea
                 placeholder="Enter Description"
-                formControlName="description"
+                formControlName="{{ 'offer.description' | translate }}"
                 matInput
               ></textarea>
             </mat-form-field>
@@ -367,11 +400,12 @@
         <div *ngIf="newCondition" class="mt-3">
           <div>
             <mat-card class="condition-card">
-              <mat-card-title>New</mat-card-title>
+              <mat-card-title>
+                {{ "offer.newCondition" | translate }}</mat-card-title
+              >
               <mat-card-content>
                 <p>
-                  The item shows minor signs of wear, such as small, intangible
-                  scratches.
+                  {{ "offer.newConditionPargraph" | translate }}
                 </p>
               </mat-card-content>
             </mat-card>
@@ -381,11 +415,12 @@
         <div *ngIf="newUnwarnCondition" class="mt-3">
           <div>
             <mat-card class="condition-card">
-              <mat-card-title>Like new and unworn</mat-card-title>
+              <mat-card-title>
+                {{ "offer.likeNewCondition" | translate }}</mat-card-title
+              >
               <mat-card-content>
                 <p>
-                  The item shows minor signs of wear, such as small, intangible
-                  scratches.
+                  {{ "offer.newUnWarnConditionParagraph" | translate }}
                 </p>
               </mat-card-content>
             </mat-card>
@@ -396,17 +431,24 @@
 
       <!-- --------------------  Basic Info  Section ---------------------------- -->
 
-      <h2>Basic Info <span>(* Required field)</span></h2>
+      <h2>
+        {{ "offer.basic_info" | translate }}
+        <span> {{ "offer.requiredFieldNote" | translate }}</span>
+      </h2>
       <mat-divider class="mat-divider"></mat-divider>
 
-      <div class="d-flex mt-2" style="justify-content: space-between; gap: 1%" [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }">
-        <div style="width: 49%">
+      <div
+        class="d-flex mt-2"
+        style="justify-content: space-between; gap: 1%"
+        [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }"
+      >
+        <div style="width: 49%" [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'">
           <mat-form-field
             style="width: 100%"
             appearance="outline"
             class="full-width"
           >
-            <mat-label>Gender</mat-label>
+            <mat-label> {{ "offer.gender" | translate }}</mat-label>
             <mat-select formControlName="gender">
               <mat-option
                 *ngFor="let key of allDropDownList.gender | keyvalue"
@@ -417,13 +459,13 @@
             </mat-select>
 
             <mat-error *ngIf="productForm.get('gender').hasError('required')">
-              Select Gender
+              {{ "offer.gender_required" | translate }}
             </mat-error>
           </mat-form-field>
         </div>
-        <div style="width: 49%">
+        <div style="width: 49%" [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'">
           <mat-form-field style="width: 100%" appearance="outline" class="">
-            <mat-label>Year of Production</mat-label>
+            <mat-label>{{ "offer.year_of_prod" | translate }}</mat-label>
             <input
               matInput
               placeholder="e.g., 2013"
@@ -432,33 +474,37 @@
             <mat-error
               *ngIf="productForm.get('year_of_production').hasError('required')"
             >
-              Add Year Of Production
+              {{ "offer.year_of_prod_req" | translate }}
             </mat-error>
           </mat-form-field>
         </div>
       </div>
-      <div class="d-flex mt-2" style="justify-content: space-between; gap: 1%" [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }">
-        <div style="width: 49%">
+      <div
+        class="d-flex mt-2"
+        style="justify-content: space-between; gap: 1%"
+        [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }"
+      >
+        <div style="width: 49%" [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'">
           <mat-form-field style="width: 88%" appearance="outline">
-            <mat-label>Case Diameter</mat-label>
+            <mat-label>{{ "offer.case_diameter" | translate }}</mat-label>
             <input matInput formControlName="case_diameter" placeholder="" />
             <mat-error
               *ngIf="productForm.get('case_diameter').hasError('required')"
             >
-              Add Case Diameter
+              {{ "offer.case_diameter_req" | translate }}
             </mat-error>
           </mat-form-field>
           <mat-form-field style="width: 12%" appearance="outline">
-            <input matInput readonly="true" placeholder="mm" />
+            <input matInput readonly="true" placeholder="{{'offer.mm' | translate}}" />
           </mat-form-field>
         </div>
-        <div style="width: 49%">
+        <div style="width: 49%" [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'">
           <mat-form-field
             style="width: 100%"
             appearance="outline"
             class="full-width"
           >
-            <mat-label>Movement</mat-label>
+            <mat-label>{{ "offer.movement" | translate }}</mat-label>
             <mat-select formControlName="movement">
               <mat-option
                 *ngFor="let key of allDropDownList.movement | keyvalue"
@@ -469,19 +515,23 @@
             </mat-select>
 
             <mat-error *ngIf="productForm.get('movement').hasError('required')">
-              Select Movement
+              {{ "offer.movement_req" | translate }}
             </mat-error>
           </mat-form-field>
         </div>
       </div>
-      <div class="d-flex mt-2" style="justify-content: space-between; gap: 1%" [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }">
-        <div style="width: 49%">
+      <div
+        class="d-flex mt-2"
+        style="justify-content: space-between; gap: 1%"
+        [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }"
+      >
+        <div style="width: 49%" [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'">
           <mat-form-field
             style="width: 100%"
             appearance="outline"
             class="full-width"
           >
-            <mat-label>Description</mat-label>
+            <mat-label>{{ "offer.description" | translate }}</mat-label>
             <textarea
               matInput
               formControlName="meta_description"
@@ -490,7 +540,7 @@
             <mat-error
               *ngIf="productForm.get('meta_description').hasError('required')"
             >
-              Add Description
+              {{ "offer.description_req" | translate }}
             </mat-error>
           </mat-form-field>
         </div>
@@ -498,21 +548,30 @@
 
       <!-- --------------------  Price  Section ---------------------------- -->
 
-      <h2>Price <span>(* Required field)</span></h2>
+      <h2>
+        {{ "offer.price" | translate }}
+        <span>{{ "offer.requiredFieldNote" | translate }}</span>
+      </h2>
       <mat-divider class="mat-divider"></mat-divider>
-      <div class="d-flex mt-2" style="justify-content: space-between; gap: 1%" [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }">
-        <div style="width: 50%; display: flex">
+      <div
+        class="d-flex mt-2"
+        style="justify-content: space-between; gap: 1%"
+       
+      >
+        <div  [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }" style="width: 50%; display: flex">
           <mat-form-field
+          [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'"
             style="width: 80%"
             appearance="outline"
             class="price-input"
           >
             <mat-label
-              >Price  <mat-icon matSuffix>info_outline</mat-icon></mat-label
+              >{{ "offer.price" | translate }}
+              <mat-icon matSuffix>info_outline</mat-icon></mat-label
             >
             <input matInput formControlName="price" />
             <mat-error *ngIf="productForm.get('price').hasError('required')">
-              Add price
+              {{ "offer.price_req" | translate }}
             </mat-error>
           </mat-form-field>
           <mat-form-field style="width: 30%" appearance="outline">
@@ -533,23 +592,28 @@
       <!-- ------------------------- Additional Information ------------------------------ -->
 
       <h2 class="mt-5">
-        Additional information <span class="optional">(optional)</span>
+        {{ "offer.additional_inf" | translate }}
+        <span class="optional"> {{ "offer.optional" | translate }}</span>
       </h2>
       <mat-divider class="mat-divider"></mat-divider>
       <mat-accordion>
         <!-- Case Section -->
         <div class="mt-5">
-          <h2>Case</h2>
+          <h2>{{ "offer.case" | translate }}</h2>
         </div>
 
-        <div class="d-flex mt-2" style="justify-content: space-between; gap: 1%" [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }">
-          <div style="width: 49%">
+        <div
+          class="d-flex mt-2"
+          style="justify-content: space-between; gap: 1%"
+          [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }"
+        >
+          <div style="width: 49%" [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'">
             <mat-form-field
               style="width: 100%"
               appearance="outline"
               class="full-width"
             >
-              <mat-label>Case Material</mat-label>
+              <mat-label> {{ "offer.case_material" | translate }}</mat-label>
               <mat-select formControlName="case_material">
                 <mat-option
                   *ngFor="let key of allDropDownList.case_material | keyvalue"
@@ -560,13 +624,13 @@
               </mat-select>
             </mat-form-field>
           </div>
-          <div style="width: 49%">
+          <div style="width: 49%" [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'">
             <mat-form-field
               style="width: 100%"
               appearance="outline"
               class="full-width"
             >
-              <mat-label>Bezel Material</mat-label>
+              <mat-label> {{ "offer.bezel_material" | translate }}</mat-label>
               <mat-select formControlName="bezel_material">
                 <mat-option
                   *ngFor="let key of allDropDownList.bezel_material | keyvalue"
@@ -578,10 +642,14 @@
             </mat-form-field>
           </div>
         </div>
-        <div class="d-flex mt-2" style="justify-content: space-between; gap: 1%" [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }">
-          <div style="width: 49%">
+        <div
+          class="d-flex mt-2"
+          style="justify-content: space-between; gap: 1%"
+          [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }"
+        >
+          <div style="width: 49%" [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'">
             <mat-form-field style="width: 100%" appearance="outline">
-              <mat-label>Water Resistance</mat-label>
+              <mat-label> {{ "offer.price_req" | translate }}</mat-label>
               <mat-select formControlName="water_resistance">
                 <mat-option
                   *ngFor="
@@ -610,24 +678,8 @@
         "
         (click)="onSubmit()"
       >
-        Accept Details and Continue
+        {{ "offer.sbt_btn" | translate }}
       </button>
     </div>
   </div>
-  <!-- <div class="col-lg-5 col-md-12 col-sm-12 save-draft-section">
-    <div class="card" style="margin: auto">
-      <div
-        class="card-body"
-        style="display: flex; justify-content: center; flex-direction: column"
-      >
-        <img src="./assets/images/no-picture-Square420.png" />
-        <h5 class="card-title mt-3">TITLE</h5>
-        <p class="card-text">PRICE</p>
-        <h6 class="price">$0.00</h6>
-        <button class="btn mt-4" style="border: 1px solid">
-          Save as draft
-        </button>
-      </div>
-    </div>
-  </div> -->
 </div>

@@ -1,0 +1,120 @@
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #e8f1eb;
+    width: auto !important;     
+  }
+  
+  .login-card {
+    background-color: white;
+    padding: 40px 40px 0 40px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 100%;
+    /* width: 100%; */
+    margin: 70px 0 70px 0;
+  }
+  
+  h1,
+  h2 {
+    margin: 0;
+  }
+  
+  h2 {
+    color: #757575;
+  }
+  
+  h1 {
+    margin-bottom: 20px;
+  }
+  
+  .form-group {
+    margin-bottom: 16px;
+  }
+  
+  .login-btn {
+    width: 100%;
+    padding: 12px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 18px;
+  }
+  
+  .separator {
+    margin: 10px 0;
+    font-weight: bold;
+  }
+  
+  .social-login {
+    display: flex;
+    justify-content: space-around;
+  }
+  
+  .social-btn {
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    border-radius: 8px;
+    font-size: 16px;
+    width: 80px;
+  }
+  
+  .facebook {
+    color: #2d3748;
+    background: #ffffff;
+    border: 1px solid black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .apple {
+    color: #2d3748;
+    background: #ffffff;
+    border: 1px solid black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .google {
+    background: #ffffff;
+    border: 1px solid black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  p {
+    margin-top: 20px;
+  }
+  
+  a {
+    color: #28a745;
+    text-decoration: none;
+  }
+  
+  
+  /* Add this CSS to your global stylesheet or component stylesheet */
+  
+  /* Right-to-left layout for RTL languages */
+  .rtl {
+    direction: rtl;
+    text-align: right;
+  }
+  
+  /* Left-to-right layout for LTR languages */
+  .ltr {
+    direction: ltr;
+    text-align: left;
+  }
+  
+  
+  
+  
+  

@@ -3,28 +3,31 @@ import {
   FormBuilder,
   FormControl,
   FormGroup,
-  FormsModule,
-  ReactiveFormsModule,
   Validators,
 } from "@angular/forms";
-import { Router } from "@angular/router";
 import {
   usernameExists,
   notsame1,
   userEmailExists,
 } from "../../validator/string.validator";
+import { AlertsServicesService } from "src/services/alerts-service/alerts-services.service";
 import { UserService } from "src/services/users/user.service";
 import { HttpService } from "src/services/http/http.service";
-import { AlertsServicesService } from "src/services/alerts-service/alerts-services.service";
+import { Router } from "@angular/router";
 import { TranslateService } from "@ngx-translate/core";
-import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
+import {
+  MAT_DIALOG_DATA,
+  MatDialog,
+  MatDialogRef,
+} from "@angular/material/dialog";
+import { ModelLoginComponent } from "../model-login/model-login.component";
 
 @Component({
-  selector: "app-register",
-  templateUrl: "./register.component.html",
-  styleUrls: ["./register.component.css"],
+  selector: "app-model-register",
+  templateUrl: "./model-register.component.html",
+  styleUrls: ["./model-register.component.css"],
 })
-export class RegisterComponent implements OnInit {
+export class ModelRegisterComponent implements OnInit {
   supportLanguages = ["en", "ar", "fr", "ta", "hi"];
   currentLanguage: string;
   isDialog: any = "";
@@ -36,10 +39,9 @@ export class RegisterComponent implements OnInit {
   });
   email = new FormControl("", {
     validators: [Validators.required, Validators.email],
-    asyncValidators: [userEmailExists(this.userService)],
-    updateOn: "blur",
+    asyncValidators: [userEmailExists(this.userService)], // Async validator
+    updateOn: "blur", // Validate on blur
   });
-
   password: FormControl = new FormControl("", [
     Validators.required,
     Validators.minLength(6),
@@ -55,7 +57,10 @@ export class RegisterComponent implements OnInit {
     private formBuilder: FormBuilder,
     private http: HttpService,
     public router: Router,
-    public translateService: TranslateService
+    private dialog: MatDialog,
+    public translateService: TranslateService,
+    public dialogRef: MatDialogRef<ModelRegisterComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any
   ) {
     this.translateService.addLangs(this.supportLanguages);
     this.translateService.setDefaultLang("ar");
@@ -64,6 +69,10 @@ export class RegisterComponent implements OnInit {
 
     console.log("Browser Language => ", browserlang);
     this.currentLanguage = browserlang;
+
+    if (this.supportLanguages.includes(browserlang)) {
+      this.translateService.use(browserlang);
+    }
 
     this.registerForm = this.formBuilder.group(
       {
@@ -77,35 +86,49 @@ export class RegisterComponent implements OnInit {
       }
     );
 
-    if (this.supportLanguages.includes(browserlang)) {
-      this.translateService.use(browserlang);
+    if (this.dialogRef && this.data) {
+      this.isDialog = data.message;
     }
   }
-  ngOnInit(): void {}
+  ngOnInit(): void {
+   
+  }
 
   gotologin() {
-    this.router.navigateByUrl("login");
+
+    this.dialogRef.close();
+    const dialogRef = this.dialog.open(ModelLoginComponent, {
+      width: "600px",
+      data: { message: "dialog-box" },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+      }
+    });
   }
 
   register() {
     this.registerForm.markAllAsTouched();
-
+    localStorage.removeItem("Logged")
+    localStorage.removeItem("user_token")
+    console.log(this.registerForm.value);
     if (this.registerForm.valid) {
-      console.log(this.registerForm);
-      console.log(this.registerForm.value);
       this.http.register(this.registerForm).subscribe(
         (response) => {
           localStorage.setItem("Logged", "LogIn");
+          console.log("response.authorisation.token",response.authorisation.token)
           localStorage.setItem("user_token", response.authorisation.token);
-
-          this.router.navigateByUrl("");
+          
+          this.dialogRef.close();
         },
         (error) => {
+          this.alertService.showAlert("warning", "Enter Form Values");
           console.error("Registration error", error);
         }
       );
     } else {
-      this.alertService.showAlert("warning", "Enter Valid Form Values");
+      this.alertService.showAlert("warning", "Enter Form Values");
     }
   }
 }

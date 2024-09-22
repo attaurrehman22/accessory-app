@@ -1,6 +1,7 @@
 import { Component, HostListener, OnInit } from "@angular/core";
 import { TranslateService } from "@ngx-translate/core";
 import { HttpService } from "src/services/http/http.service";
+import { LanguageService } from "src/services/lang-service/language.service";
 
 @Component({
   selector: "app-find-dream-component",
@@ -44,19 +45,28 @@ export class FindDreamComponentComponent implements OnInit {
 
   constructor(
     public translateService: TranslateService,
-    private http: HttpService
+    private http: HttpService,
+    private languageService:LanguageService
   ) {
     this.translateService.addLangs(this.supportLanguages);
-    this.translateService.setDefaultLang("ar");
 
-    const browserlang = this.translateService.getBrowserLang();
+    // Get the saved language from LanguageService
+    const savedLang = this.languageService.getCurrentLanguage();
 
-    console.log("Browser Language => ", browserlang);
-    this.currentLanguage = browserlang;
+    // Use the saved language or fallback to browser language
+    if (this.supportLanguages.includes(savedLang)) {
+      this.translateService.use(savedLang);
+    } else {
+      const browserLang = this.translateService.getBrowserLang();
+      console.log("Browser Language => ", browserLang);
+      this.currentLanguage = browserLang;
 
-    if (this.supportLanguages.includes(browserlang)) {
-      this.translateService.use(browserlang);
+      if (this.supportLanguages.includes(browserLang)) {
+        this.translateService.use(browserLang);
+        this.languageService.setLanguage(browserLang); // Save browser language if valid
+      }
     }
+
   }
   useLang(lang: string) {
     console.log("Selected Language:", lang);

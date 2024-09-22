@@ -14,6 +14,7 @@ export class AppComponent implements OnInit {
   showHeader: boolean = true;
   showFooter:boolean = true;
   showSecondFooter:boolean=true; 
+ 
   ngOnInit(): void {
     const val = TRANSLATE_ME('home.title');
     console.log(' Title from marker ==> ', TRANSLATE_ME('home.title'));
@@ -40,8 +41,10 @@ export class AppComponent implements OnInit {
 
     this.router.events.subscribe(() => {
       const currentRoute = this.router.url;
-      this.showFooter = !['/login', '/register', '/'].includes(currentRoute);
+      this.showFooter = !['/'].includes(currentRoute);
     });
+
+   
 
     this.router.events.subscribe(() => {
       const currentRoute = this.router.url;

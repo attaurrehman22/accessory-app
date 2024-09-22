@@ -46,7 +46,7 @@
   .video-placeholder {
     background-color: #000824;
     width: 100%;
-    height: 280px;
+    height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -133,7 +133,11 @@
 
 @media (max-width: 1500px) {
   .reverse-order {
-    flex-direction: column-reverse;
+    flex-direction: row-reverse;
+  }
+
+  .reverse-order .video-section {
+    height: 200px;
   }
 }
 

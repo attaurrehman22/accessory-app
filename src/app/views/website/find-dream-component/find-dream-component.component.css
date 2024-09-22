@@ -1,7 +1,3 @@
-.wraper-div {
-  padding: 45px 200px 0 200px;
-}
-
 .pos-div {
   height: auto;
   display: flex;
@@ -27,15 +23,17 @@
   width: 24%;
 }
 
-@media (max-width: 1500px) {
-  .wraper-div {
-    padding: 25px 25px 0 25px;
-  }
+.statics-data-stl p{
+  font-size: 20px;
+  font-weight: bold;
+}
 
-  .responsive-img {
-    height: auto !important;
-    border-radius: 10px;
-  }
+.statics-data-stl span{
+  font-size: 14px;
+  font-weight: 400;
+}
+
+@media (max-width: 1500px) {
 
   .carousel-item {
     height: auto;
@@ -49,19 +47,12 @@
     padding: 30px 20px 0 20px;
   }
 
-  .bus-details {
-    height: auto !important;
-    bottom: 0px !important;
-    display: flex;
-    flex-wrap: wrap;
-  }
-
   .img-text-div {
     height: auto !important;
   }
 
   .dream-text-padding {
-    padding: 5px 0 0 0;
+    padding: 5px 5px 0 5px !important;
   }
 }
 
@@ -104,19 +95,12 @@
   
 }
 
-@media (max-width: 480px) {
+/* @media (max-width: 480px) {
   .responsive-img {
     margin-top: 20px;
     border-radius: 10px;
   }
-}
-
-.bus-details {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  height: 25vh;
-}
+} */
 
 .display-4 {
   font-weight: bold;
@@ -166,7 +150,6 @@
 }
 .carousel-inner img {
   width: 100%;
-  height: auto;
 }
 
 .carousel-item {
@@ -243,12 +226,6 @@
 
 .reverse-order h2 {
   text-align: end;
-}
-
-@media (max-width: 1500px) {
-  .reverse-order {
-    flex-direction: column-reverse;
-  }
 }
 
 @media (max-width: 768px) {

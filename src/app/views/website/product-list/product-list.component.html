@@ -1,10 +1,13 @@
-<div style="display: flex; flex-wrap: wrap">
-  <!-- -------------------------------- Side Bar --------------------------- -->
-  <div style="padding: 20px 0 0 45px" class="col-2">
-    <div>
-      <mat-form-field style="width: 100%" appearance="outline">
-        <mat-label>Select Category</mat-label>
+<div class="global-main-wraper" style="display: flex; flex-wrap: wrap">
+  <div class="col-lg-2 col-md-3 col-sm-12 mt-5">
+    <!-- <div *ngFor="let cat of category_sel_frm_popular_models"> -->
+    <!-- <mat-checkbox (selectionChange)="getCategory(cat.id, 'category')">
+        {{ cat.name }}
+      </mat-checkbox> -->
+    <!-- <mat-form-field style="width: 100%" appearance="outline">
+        <mat-label>{{ "product_list.select_category" | translate }}</mat-label>
         <mat-select
+          [panelClass]="'custom-dropdown-panel'"
           (selectionChange)="getCategory($event.value, 'category')"
           multiple
         >
@@ -15,55 +18,48 @@
             {{ cat.name }}
           </mat-option>
         </mat-select>
-      </mat-form-field>
-    </div>
+      </mat-form-field> -->
+    <!-- </div> -->
 
-    <div>
-      <mat-form-field style="width: 100%" appearance="outline">
-        <mat-label>Select Brand</mat-label>
-        <mat-select (selectionChange)="getCategory($event.value, 'brand')">
-          <mat-option *ngFor="let brand of brandsDataList" [value]="brand.name">
-            {{ brand.name }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-    </div>
+      <div class="d-flex  d-sm-flex flex-column col-12" style="width: 100%;" *ngFor="let brand of brandsDataList">
+        <mat-checkbox style="width: auto;" (change)="getCategory(brand.name, 'brand')">
+          {{ brand.name }}
+        </mat-checkbox>
+        <!-- <mat-form-field style="width: 100%" appearance="outline">
+          <mat-label>{{ "product_list.select_brand" | translate }}</mat-label>
+          <mat-select (selectionChange)="getCategory($event.value, 'brand')">
+            <mat-option *ngFor="let brand of brandsDataList" [value]="brand.name">
+              {{ brand.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field> -->
+      </div>
   </div>
 
-  <!-- -------------------------------- Content --------------------------- -->
-  <div class="col-10">
-    <div class="container mt-4">
+  <div class="col-lg-10 col-md-9 col-sm-12">
+    <div class="container p-0 mt-4">
       <div id="watchesCarousel" class="carousel slide" data-bs-ride="carousel">
-        <ol class="carousel-indicators">
-          <li
-            *ngFor="let watch of getCarouselSlides(); let i = index"
-            [class.active]="i === 0"
-            data-bs-target="#watchesCarousel"
-            [attr.data-bs-slide-to]="i"
-          ></li>
-        </ol>
-        <div class="carousel-inner">
+        <div class="carousel-inner h-100">
           <div
             class="carousel-item"
             style="cursor: pointer"
             *ngFor="let slide of getCarouselSlides(); let i = index"
-            [class.active]="i === 0"
+            [class.active]="i === currentIndex1"
           >
             <div class="row">
-              <div class="col-lg-3 col-md-6 mb-4" *ngFor="let watch of slide">
+              <div
+                class="col-lg-3 col-md-4 col-sm-6 col-12 mb-4"
+                style="height: 360px; padding: 18px"
+                *ngFor="let watch of slide"
+              >
                 <div class="card h-100" (click)="routeTo(watch)">
                   <img
                     class="card-img-top"
                     [src]="'https://api.chronosouq.com/' + watch.main_image"
                     alt="{{ watch.name }}"
-                    style="height: 100%; object-fit: fill"
-                    alt="{{ watch.name }}"
                   />
                   <div class="card-body text-center">
-                    <h5 class="card-title">{{ watch.name }}</h5>
-                    <p class="card-text">
-                      Material {{ watch.bracelet_material }}
-                    </p>
+                    <p class="card-title">{{ watch.name }}</p>
                     <p class="text-muted">from ${{ watch.price }}</p>
                   </div>
                 </div>
@@ -72,38 +68,63 @@
           </div>
         </div>
 
-        <a
-          class="carousel-control-prev"
-          style="width: 3% !important"
-          href="#watchesCarousel"
-          role="button"
-          data-bs-slide="prev"
-        >
-          <span
-            class="carousel-control-prev-icon"
-            style="background-color: #4c4747"
-            aria-hidden="true"
-          ></span>
-          <span class="visually-hidden">Previous</span>
-        </a>
-        <a
-          class="carousel-control-next"
-          style="width: 3% !important"
-          href="#watchesCarousel"
-          role="button"
-          data-bs-slide="next"
-        >
-          <span
-            class="carousel-control-next-icon"
-            style="background-color: #4c4747"
-            aria-hidden="true"
-          ></span>
-          <span class="visually-hidden">Next</span>
-        </a>
+        <!-- Carousel Indicators -->
+        <ol class="carousel-indicators">
+          <li
+            *ngFor="let slide of getCarouselSlides(); let i = index"
+            [class.active]="i === currentIndex1"
+            data-bs-target="#watchesCarousel"
+            [attr.data-bs-slide-to]="i"
+            (click)="goToSlide(i)"
+          ></li>
+        </ol>
       </div>
     </div>
 
-    <div class="container mt-4">
+    <!-- <div class="container p-0 mt-4">
+      <div id="watchesCarousel" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner h-100">
+          <div
+            class="col carousel-item"
+            style="cursor: pointer"
+            *ngFor="let slide of getCarouselSlides(); let i = index"
+            [class.active]="i === currentIndex1"
+          >
+            <div class="row">
+              <div
+                class="col-lg-3 col-md-4 mb-4"
+                style="height: 360px; padding: 18px 18px 18px 18px"
+                *ngFor="let watch of slide"
+              >
+                <div class="card h-100" (click)="routeTo(watch)">
+                  <img
+                    class="card-img-top"
+                    [src]="'https://api.chronosouq.com/' + watch.main_image"
+                    alt="{{ watch.name }}"
+                  />
+                  <div class="card-body text-center">
+                    <p class="card-title">{{ watch.name }}</p>
+                    <p class="text-muted">from ${{ watch.price }}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <ol class="carousel-indicators">
+          <li
+            *ngFor="let slide of getCarouselSlides(); let i = index"
+            [class.active]="i === currentIndex1"
+            data-bs-target="#watchesCarousel"
+            [attr.data-bs-slide-to]="i"
+            (click)="goToSlide(i)"
+          ></li>
+        </ol>
+        
+      </div>
+    </div> -->
+
+    <div class="container p-0" style="margin-top: 50px">
       <div
         *ngFor="let prod of productsList"
         class="card mb-3 mt-3"
@@ -113,8 +134,15 @@
           cursor: pointer;
         "
       >
-        <div class="row g-0" (click)="routeTo(prod)">
-          <div class="col-md-3" style="height: 330px">
+        <div
+          [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }"
+          class="row d-flex flex-wrap g-0"
+          (click)="routeTo(prod)"
+        >
+          <div
+            class="col-lg-3 col-md-12 col-sm-12"
+            style="height: 330px; position: relative"
+          >
             <img
               [src]="'https://api.chronosouq.com/' + prod.main_image"
               alt="{{ prod.name }}"
@@ -122,15 +150,16 @@
                 object-fit: fill;
                 height: -webkit-fill-available;
                 width: -webkit-fill-available;
+                padding: 25px;
               "
               class="img-fluid rounded-start"
               alt="Rolex Datejust 36"
             />
-            <span class="badge bg-success position-absolute top-0 start-0 m-2"
-              >Promoted</span
-            >
+            <span class="badge bg-success m-2">{{
+              "product_list.promoted" | translate
+            }}</span>
           </div>
-          <div class="col-md-8">
+          <div class="col-lg-8 col-md-12 col-sm-12 d-flex">
             <div class="card-body">
               <h5 class="card-title">{{ prod.name }}</h5>
               <p
@@ -146,8 +175,14 @@
                   <i class="fas fa-heart"></i>
                 </button>
               </p>
-              <div class="d-flex flex-wrap">
-                <div class="col-6 d-flex flex-wrap p-2">
+              <div
+                class="d-flex flex-wrap"
+                [ngClass]="{
+                  'reverse-order-for-product-det':
+                    translateService.currentLang !== 'en'
+                }"
+              >
+                <div class="col-lg-6 col-md-12 col-sm-12 d-flex flex-wrap p-2">
                   <ul
                     class="list-unstyled"
                     style="
@@ -156,7 +191,11 @@
                       width: 100%;
                     "
                   >
-                    <li><strong>Movement:</strong></li>
+                    <li>
+                      <strong>
+                        {{ "product_list.movement" | translate }}</strong
+                      >
+                    </li>
                     <li>{{ prod.movement }}</li>
                   </ul>
                   <ul
@@ -167,7 +206,13 @@
                       width: 100%;
                     "
                   >
-                    <li><strong>Year of production:</strong></li>
+                    <li>
+                      <strong>
+                        {{
+                          "product_list.year_of_production" | translate
+                        }}</strong
+                      >
+                    </li>
                     <li>{{ prod.year_of_production }}</li>
                   </ul>
                   <ul
@@ -178,7 +223,13 @@
                       width: 100%;
                     "
                   >
-                    <li><strong>Reference number:</strong></li>
+                    <li>
+                      <strong>
+                        {{
+                          "product_list.reference_number" | translate
+                        }}</strong
+                      >
+                    </li>
                     <li>{{ prod.reference_number }}</li>
                   </ul>
                   <ul
@@ -189,22 +240,15 @@
                       width: 100%;
                     "
                   >
-                    <li><strong>Case Material:</strong></li>
+                    <li>
+                      <strong>
+                        {{ "product_list.case_material" | translate }}</strong
+                      >
+                    </li>
                     <li>{{ prod.case_material }}</li>
                   </ul>
-                  <!-- <ul
-                    class="list-unstyled"
-                    style="
-                      display: flex;
-                      justify-content: space-between;
-                      width: 100%;
-                    "
-                  >
-                    <li><strong>Location:</strong></li>
-                    <li>{{ prod.location }}</li>
-                  </ul> -->
                 </div>
-                <div class="col-6 d-flex flex-wrap p-2">
+                <div class="col-lg-6 col-md-12 col-sm-12 d-flex flex-wrap p-2">
                   <ul
                     class="list-unstyled"
                     style="
@@ -213,7 +257,11 @@
                       width: 100%;
                     "
                   >
-                    <li><strong>Condition:</strong></li>
+                    <li>
+                      <strong>
+                        {{ "product_list.condition" | translate }}</strong
+                      >
+                    </li>
                     <li>{{ prod.condition }}</li>
                   </ul>
                   <ul
@@ -224,7 +272,13 @@
                       width: 100%;
                     "
                   >
-                    <li><strong>Scope of Delivery:</strong></li>
+                    <li>
+                      <strong>
+                        {{
+                          "product_list.scope_of_delivery" | translate
+                        }}</strong
+                      >
+                    </li>
                     <li>{{ prod.scope_of_delivery }}</li>
                   </ul>
                   <ul
@@ -235,7 +289,11 @@
                       width: 100%;
                     "
                   >
-                    <li><strong>Case Diameter:</strong></li>
+                    <li>
+                      <strong>
+                        {{ "product_list.case_diameter" | translate }}</strong
+                      >
+                    </li>
                     <li>{{ prod.case_diameter }}</li>
                   </ul>
 
@@ -247,22 +305,22 @@
                       width: 100%;
                     "
                   >
-                    <li><strong>Gender:</strong></li>
+                    <li>
+                      <strong> {{ "product_list.gender" | translate }}</strong>
+                    </li>
                     <li>{{ prod.gender }}</li>
                   </ul>
                 </div>
               </div>
               <h5
-                class="card-text text-danger"
-                style="display: flex; justify-content: space-between"
+                [ngClass]="{
+                  'price-text-stl': translateService.currentLang !== 'en'
+                }"
+                class="text-danger price-text"
               >
                 <p style="flex-direction: column; display: flex">
                   ${{ prod.price }}
-                  <!-- <small class="text-muted">+ $245 for shipping</small> -->
                 </p>
-                <!-- <div style="flex-direction: column; display: flex">
-                  <i class="fas fa-map-marker-alt"></i>US
-                </div> -->
               </h5>
             </div>
           </div>
@@ -270,99 +328,17 @@
       </div>
     </div>
 
-    <div class="container my-5">
-      <div class="text-center">
-        <h2 class="mb-4">
-          ChronoSouq Magazine: News and Perspectives From the Watch Industry
-        </h2>
-      </div>
-      <div class="row">
-        <!-- First Article -->
-        <div class="col-md-6 mb-4">
-          <div class="card" style="height: 600px">
-            <img
-              src="../assets/images/interested-watches-5.png"
-              style="height: 70%; width: 100%; object-fit: cover"
-              class="card-img-top"
-              alt="Rolex Alternatives"
-            />
-            <div class="card-body">
-              <h5 class="card-title">
-                Rolex Alternatives: The Icons and Their Competition – Part 1
-              </h5>
-              <p class="card-text">
-                For every person who says Rolex is the best brand in the world,
-                there’s another person who finds them boring. So, our challenge
-                for today is to match the most popular Role...
-              </p>
-            </div>
-            <div
-              class="card-footer d-flex justify-content-between align-items-center"
-            >
-              <div class="d-flex align-items-center">
-                <img
-                  src="../assets/images/interested-watches-5.png"
-                  class="rounded-circle me-2"
-                  alt="Author"
-                  width="30"
-                  height="30"
-                />
-                <small>Thomas Hendricks</small>
-              </div>
-              <small class="text-muted">6 minutes</small>
-            </div>
-          </div>
-        </div>
-        <!-- Second Article -->
-        <div class="col-md-6 mb-4">
-          <div class="card" style="height: 600px">
-            <img
-              src="../assets/images/interested-watches-6.png"
-              style="height: 70%; width: 100%; object-fit: cover"
-              class="card-img-top"
-              alt="Best-Selling Rolex Daytona"
-            />
-            <div class="card-body">
-              <h5 class="card-title">
-                The Top 5 Best-Selling Rolex Daytona References on ChronoSouq
-              </h5>
-              <p class="card-text">
-                Dive into the legacy of the Rolex Daytona! We've collected the
-                top five best-selling Daytona references on ChronoSouq, based on
-                our latest internal data. Which references...
-              </p>
-            </div>
-            <div
-              class="card-footer d-flex justify-content-between align-items-center"
-            >
-              <div class="d-flex align-items-center">
-                <img
-                  src="../assets/images/interested-watches-6.png"
-                  class="rounded-circle me-2"
-                  alt="Author"
-                  width="30"
-                  height="30"
-                />
-                <small>Thomas Hendricks</small>
-              </div>
-              <small class="text-muted">5 minutes</small>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="text-center mt-4">
-        <button class="btn btn-outline-primary">To the magazine</button>
-      </div>
-    </div>
-
-    <div class="container mt-5">
+    <div class="container mt-5 mb-5">
       <div class="card p-4 shadow-sm" style="background: #f3f3f3">
-        <h2 class="card-title">Do you have any questions?</h2>
+        <h2 class="card-title">
+          {{ "product_list.any_questions" | translate }}
+        </h2>
         <div class="d-flex align-items-center justify-content-start mb-4">
           <i class="bi bi-info-circle me-2"></i>
           <span>+852 3002 0310</span>
           <span class="ms-3"
-            ><i class="bi bi-envelope"></i> <a>Contact</a></span
+            ><i class="bi bi-envelope"></i>
+            <a> {{ "product_list.contact_us" | translate }}</a></span
           >
         </div>
 
@@ -393,101 +369,8 @@
 
         <div class="mt-4">
           <button class="btn btn-outline-secondary">
-            More questions and answers
+            {{ "product_list.more_questions" | translate }}
           </button>
-        </div>
-      </div>
-    </div>
-
-    <div class="container mt-5 mb-5">
-      <div class="row">
-        <!-- Top categories -->
-        <div class="col-md-3 border-end">
-          <h5>Top categories</h5>
-          <ul class="list-unstyled">
-            <li>Mechanical Watches</li>
-            <li>Vintage Watches</li>
-            <li>Automatic Watches</li>
-            <li>Men's Watches</li>
-          </ul>
-          <h5>More watches</h5>
-          <ul class="list-unstyled">
-            <li>Rolex Bubble Back</li>
-            <li>Rolex Arabic Dial</li>
-            <li>Rolex Batman</li>
-            <li>Rolex Two-tone</li>
-            <li>Rolex Chocolate</li>
-          </ul>
-          <h5>Brand</h5>
-          <ul class="list-unstyled">
-            <li>Rolex UK</li>
-          </ul>
-          <h5>Class</h5>
-          <ul class="list-unstyled">
-            <li>Rolex Parts/Accessories</li>
-            <li>Rolex Pocket watch</li>
-          </ul>
-          <h5>New/Used</h5>
-          <ul class="list-unstyled">
-            <li>Rolex New/unworn</li>
-            <li>Rolex Used</li>
-          </ul>
-        </div>
-
-        <!-- Model -->
-        <div class="col-md-5 border-end">
-          <h5>Model</h5>
-          <ul class="list-unstyled">
-            <li>1908</li>
-            <li>Air King</li>
-            <li>Air King Date</li>
-            <li>Cellini</li>
-            <li>Cellini Danaos</li>
-            <li>Cellini Date</li>
-            <li>Cellini Dual Time</li>
-            <li>Cellini Moonphase</li>
-            <li>Cellini Prince</li>
-            <li>Cellini Time</li>
-            <li>Chronograph</li>
-            <li>Datejust</li>
-            <li>Datejust 31</li>
-            <li>Datejust 36</li>
-            <li>Datejust 41</li>
-            <li>Datejust II</li>
-            <li>Datejust Oysterquartz</li>
-            <li>Datejust Turn-O-Graph</li>
-            <li>Day-Date</li>
-            <li>Day-Date 36</li>
-            <!-- Add more models as needed -->
-            <li><a>More...</a></li>
-          </ul>
-        </div>
-
-        <!-- Case material -->
-        <div class="col-md-2 border-end">
-          <h5>Case material</h5>
-          <ul class="list-unstyled">
-            <li>Aluminum</li>
-            <li>Carbon</li>
-            <li>Ceramic</li>
-            <li>Gold-plated</li>
-            <li>Platinum</li>
-            <li>Red gold</li>
-            <li>Rose gold</li>
-            <li>Silver</li>
-            <li>Steel</li>
-            <li>Titanium</li>
-            <li>White gold</li>
-            <li>Yellow gold</li>
-          </ul>
-        </div>
-
-        <!-- Gender -->
-        <div class="col-md-2">
-          <h5>Gender</h5>
-          <ul class="list-unstyled">
-            <li>Rolex Women's watch</li>
-          </ul>
         </div>
       </div>
     </div>

@@ -2,9 +2,9 @@
   <app-header></app-header>
 </div>
 
-<div *ngIf="showSecondFooter">
+<!-- <div *ngIf="showSecondFooter">
   <app-second-header></app-second-header>
-</div>
+</div> -->
 
 <router-outlet></router-outlet>
 
@@ -13,7 +13,7 @@
 </div>
  <!-- Bootstrap Alerts -->
  <div
- style="position: absolute; right: 15px; top: 25px; width: auto"
+ style="position: absolute; right: 15px; top: 80px; width: auto"
  class="container mt-4"
  *ngIf="alertService.alert$ | async as alert"
 >

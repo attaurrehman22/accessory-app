@@ -1,6 +1,8 @@
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
+import { TranslateService } from "@ngx-translate/core";
 import { HttpService } from "src/services/http/http.service";
+import { LanguageService } from "src/services/lang-service/language.service";
 import { SearchServiceService } from "src/services/search-service/search-service.service";
 
 @Component({
@@ -9,6 +11,8 @@ import { SearchServiceService } from "src/services/search-service/search-service
   styleUrls: ["./product-list.component.css"],
 })
 export class ProductListComponent implements OnInit {
+  supportLanguages = ["en", "ar", "fr", "ta", "hi"];
+  currentLanguage: string;
   productsList: any;
   title = "chronowatch";
 
@@ -19,9 +23,14 @@ export class ProductListComponent implements OnInit {
   searchQuery: string = "";
 
   ngOnInit(): void {
+
+
+    window.addEventListener('resize', () => {
+      this.updateSlides();
+    });
+
     this.dataFrompopularbrands = history.state.brandData;
     this.brandsDataList = history.state.data;
-    console.log("this.dataFrompopularbrands", this.dataFrompopularbrands);
     if (this.dataFrompopularbrands) {
       this.getPopularBrandswithBrndsID();
     } else {
@@ -43,46 +52,39 @@ export class ProductListComponent implements OnInit {
         (res) => {
           this.productsList = res;
           if (this.productsList) {
-            this.productsList = this.productsList.products.map((product: any) => {
-              // Clean up main_image
-              if (product.main_image) {
-                // Replace backslashes with forward slashes and ensure no leading slash
-                product.main_image = product.main_image
-                  .replace(/\\/g, "/")
-                  .replace(/^\/+/, "");
-              }
-
-              // Clean up folder
-              if (product.folder) {
-                // Replace backslashes with forward slashes and ensure no leading slash
-                product.folder = product.folder
-                  .replace(/\\/g, "/")
-                  .replace(/^\/+/, "");
-              }
-
-              // Clean up additional_images (assuming it's a JSON string that needs parsing)
-              if (product.additional_images) {
-                try {
-                  product.additional_images = JSON.parse(
-                    product.additional_images
-                  ).map((img: string) =>
-                    img.replace(/\\/g, "/").replace(/^\/+/, "")
-                  );
-                } catch (error) {
-                  console.error("Error parsing additional_images:", error);
+            this.productsList = this.productsList.products.map(
+              (product: any) => {
+                if (product.main_image) {
+                  product.main_image = product.main_image
+                    .replace(/\\/g, "/")
+                    .replace(/^\/+/, "");
                 }
-              }
+                if (product.folder) {
+                  product.folder = product.folder
+                    .replace(/\\/g, "/")
+                    .replace(/^\/+/, "");
+                }
+                if (product.additional_images) {
+                  try {
+                    product.additional_images = JSON.parse(
+                      product.additional_images
+                    ).map((img: string) =>
+                      img.replace(/\\/g, "/").replace(/^\/+/, "")
+                    );
+                  } catch (error) {
+                    console.error("Error parsing additional_images:", error);
+                  }
+                }
 
-              return product;
-            });
+                return product;
+              }
+            );
 
             this.productsList.sort(
               (a: any, b: any) =>
                 new Date(b.created_at).getTime() -
                 new Date(a.created_at).getTime()
             );
-            this.filterdProducts = this.productsList;
-            
           }
         },
         (err) => {
@@ -96,9 +98,10 @@ export class ProductListComponent implements OnInit {
   brandsDropDownList: any;
 
   getAllBrands() {
-    this.http.getAllBrands().subscribe(
+    this.http.getBrandsDropDownFilter().subscribe(
       (res) => {
         this.brandsDataList = res.data;
+        this.filterdProducts = res.data;
       },
       (err) => {
         console.log(err);
@@ -110,23 +113,18 @@ export class ProductListComponent implements OnInit {
     this.http.getPopularproductsWithID(this.dataFrompopularbrands.id).subscribe(
       (res) => {
         this.productsList = res.data.products.map((product: any) => {
-          // Clean up main_image
           if (product.main_image) {
-            // Replace backslashes with forward slashes and ensure no leading slash
             product.main_image = product.main_image
               .replace(/\\/g, "/")
               .replace(/^\/+/, "");
           }
 
-          // Clean up folder
           if (product.folder) {
-            // Replace backslashes with forward slashes and ensure no leading slash
             product.folder = product.folder
               .replace(/\\/g, "/")
               .replace(/^\/+/, "");
           }
 
-          // Clean up additional_images (assuming it's a JSON string that needs parsing)
           if (product.additional_images) {
             try {
               product.additional_images = JSON.parse(
@@ -146,13 +144,6 @@ export class ProductListComponent implements OnInit {
           (a: any, b: any) =>
             new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
         );
-
-        // Initialize filteredProducts if not already initialized
-        if (!this.filterdProducts) {
-          this.filterdProducts = this.productsList;
-        } else if (this.slidercheck) {
-          this.filterdProducts = this.productsList;
-        }
       },
       (err) => {
         console.log(err);
@@ -172,40 +163,91 @@ export class ProductListComponent implements OnInit {
   constructor(
     private http: HttpService,
     private router: Router,
-    private searchService: SearchServiceService
-  ) {}
+    public translateService: TranslateService,
+    private searchService: SearchServiceService,
+    private languageService: LanguageService
+  ) {
+    this.translateService.addLangs(this.supportLanguages);
+    const savedLang = this.languageService.getCurrentLanguage();
+    if (this.supportLanguages.includes(savedLang)) {
+      this.translateService.use(savedLang);
+    } else {
+      const browserLang = this.translateService.getBrowserLang();
+      this.currentLanguage = browserLang;
 
-  getCarouselSlides() {
-    const slides = [];
-    for (let i = 0; i < this.filterdProducts.length; i += 4) {
-      slides.push(this.filterdProducts.slice(i, i + 4));
+      if (this.supportLanguages.includes(browserLang)) {
+        this.translateService.use(browserLang);
+        this.languageService.setLanguage(browserLang); // Save browser language if valid
+      }
     }
-    return slides;
   }
 
+slides:any;
+  updateSlides() {
+    this.slides = this.getCarouselSlides();
+  }
+
+  getCarouselSlides() {
+    const screenWidth = window.innerWidth;
+    let cardsPerSlide;
+
+    // Adjust the number of cards per slide based on screen width
+    if (screenWidth >= 1200) {
+      cardsPerSlide = 4; // 4 cards for large screens
+    } else if (screenWidth >= 992) {
+      cardsPerSlide = 3; // 3 cards for medium screens
+    } else if (screenWidth >= 768) {
+      cardsPerSlide = 2; // 2 cards for small screens
+    } else {
+      cardsPerSlide = 1; // 1 card for extra small screens
+    }
+
+    const slides = [];
+    for (let i = 0; i < this.filterdProducts.length; i += cardsPerSlide) {
+      slides.push(this.filterdProducts.slice(i, i + cardsPerSlide));
+    }
+    return slides;
+}
+
+
+  nextSlide1() {
+    if (this.currentIndex1 < this.getCarouselSlides().length - 1) {
+      this.currentIndex1++;
+    } else {
+      this.currentIndex1 = 0; // Loop back to the first slide
+    }
+  }
+
+  previousSlide1() {
+    if (this.currentIndex1 > 0) {
+      this.currentIndex1--;
+    } else {
+      this.currentIndex1 = this.getCarouselSlides().length - 1; // Loop back to the last slide
+    }
+  }
+  goToSlide(index: number) {
+    this.currentIndex1 = index;
+  }
+  currentIndex1: number = 0;
+  itemsPerPage1: number = 4;
   filterdProducts: any[] = [];
 
   getAllProducts() {
     this.http.getProducts().subscribe(
       (res) => {
         this.productsList = res.data.map((product: any) => {
-          // Clean up main_image
           if (product.main_image) {
-            // Replace backslashes with forward slashes and ensure no leading slash
             product.main_image = product.main_image
               .replace(/\\/g, "/")
               .replace(/^\/+/, "");
           }
 
-          // Clean up folder
           if (product.folder) {
-            // Replace backslashes with forward slashes and ensure no leading slash
             product.folder = product.folder
               .replace(/\\/g, "/")
               .replace(/^\/+/, "");
           }
 
-          // Clean up additional_images (assuming it's a JSON string that needs parsing)
           if (product.additional_images) {
             try {
               product.additional_images = JSON.parse(
@@ -225,13 +267,6 @@ export class ProductListComponent implements OnInit {
           (a: any, b: any) =>
             new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
         );
-
-        // Initialize filteredProducts if not already initialized
-        if (!this.filterdProducts) {
-          this.filterdProducts = this.productsList;
-        } else if (this.slidercheck) {
-          this.filterdProducts = this.productsList;
-        }
       },
       (err) => {
         console.log(err);
@@ -242,27 +277,31 @@ export class ProductListComponent implements OnInit {
   selectedCategories: any[] = [];
   slidercheck = false;
   selectedBrands: any = "";
-  getCategory(selectedCatId: any, option: string) {
+
+  getCategory(brandName: string, categoryType: string) {
+    console.log('Brand name:', brandName);
+    console.log('Category type:', categoryType);
+    // console.log("selectedCatId", selectedCatId);
     let params;
     let lastArray;
-    this.slidercheck = false;
-    if (option === "category") {
-      if (!this.selectedCategories) {
-        this.selectedCategories = [];
-      }
+    // this.slidercheck = false;
+    // if (option === "category") {
+    //   if (!this.selectedCategories) {
+    //     this.selectedCategories = [];
+    //   }
 
-      if (this.selectedCategories.includes(selectedCatId)) {
-        this.selectedCategories = this.selectedCategories.filter(
-          (id) => id !== selectedCatId
-        );
-      } else {
-        this.selectedCategories.push(selectedCatId);
-      }
-      lastArray = this.selectedCategories[this.selectedCategories.length - 1];
-    }
+    //   if (this.selectedCategories.includes(selectedCatId)) {
+    //     this.selectedCategories = this.selectedCategories.filter(
+    //       (id) => id !== selectedCatId
+    //     );
+    //   } else {
+    //     this.selectedCategories.push(selectedCatId);
+    //   }
+    //   lastArray = this.selectedCategories[this.selectedCategories.length - 1];
+    // }
 
-    if (option === "brand") {
-      this.selectedBrands = selectedCatId; // Store the single selected brand (assuming it's the name)
+    if (categoryType === "brand") {
+      this.selectedBrands = brandName; // Store the single selected brand (assuming it's the name)
     }
     if (
       (!lastArray || lastArray.length === 0) &&
@@ -285,9 +324,9 @@ export class ProductListComponent implements OnInit {
       params.append("name", this.selectedBrands); // Send brand name as a string
     }
 
-    this.selectedCategories.forEach((id: number) =>
-      params.append("category_ids[]", id.toString())
-    );
+    // this.selectedCategories.forEach((id: number) =>
+    //   params.append("category_ids[]", id.toString())
+    // );
 
     console.log("Selected Brands:", this.selectedBrands);
     console.log("Selected Categories:", this.selectedCategories);
@@ -297,7 +336,7 @@ export class ProductListComponent implements OnInit {
     this.http.getProductsByCategory(queryString).subscribe(
       (res) => {
         this.productsList = res;
-        if (this.productsList) {
+        if (this.productsList.data) {
           this.productsList = this.productsList.data;
           this.productsList.map((product: any) => {
             if (product.main_image) {
@@ -331,10 +370,6 @@ export class ProductListComponent implements OnInit {
               new Date(b.created_at).getTime() -
               new Date(a.created_at).getTime()
           );
-
-          if (this.filterdProducts) {
-            this.filterdProducts = this.productsList;
-          }
         }
       },
       (err) => {
@@ -350,8 +385,6 @@ export class ProductListComponent implements OnInit {
   }
 
   expandedIndex: number | null = null;
-
-  // List of questions and answers
   questions = [
     {
       question: "Why are Rolex watches so expensive?",
@@ -370,7 +403,6 @@ export class ProductListComponent implements OnInit {
     },
   ];
 
-  // Method to toggle the display of the answer
   toggleAnswer(index: number) {
     this.expandedIndex = this.expandedIndex === index ? null : index;
   }

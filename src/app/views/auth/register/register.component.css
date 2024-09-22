@@ -2,7 +2,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 88%;
   background-color: #e8f1eb;
 }
 
@@ -14,6 +13,7 @@
   text-align: center;
   max-width: 500px;
   width: 100%;
+  margin: 70px 0 70px 0;
 }
 
 h1,

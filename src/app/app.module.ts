@@ -46,6 +46,11 @@ import { SecondHeaderComponent } from "./views/website/second-header/second-head
 import { ProductListComponent } from './views/website/product-list/product-list.component';
 import { FormsModule } from '@angular/forms'; 
 import { PopularBrandsListAlphabeticallyComponent } from './views/website/popular-brands-list-alphabetically/popular-brands-list-alphabetically.component';
+import { BidiModule } from '@angular/cdk/bidi';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatDialogModule } from '@angular/material/dialog';
+import { ModelLoginComponent } from './views/auth/model-login/model-login.component';
+import { ModelRegisterComponent } from './views/auth/model-register/model-register.component';
 
 @NgModule({
   declarations: [
@@ -68,7 +73,9 @@ import { PopularBrandsListAlphabeticallyComponent } from './views/website/popula
     BuyProductComponentComponent,
     SecondHeaderComponent,
     ProductListComponent,
-    PopularBrandsListAlphabeticallyComponent
+    PopularBrandsListAlphabeticallyComponent,
+    ModelLoginComponent,
+    ModelRegisterComponent
   ],
   imports: [
     BrowserModule,
@@ -88,9 +95,12 @@ import { PopularBrandsListAlphabeticallyComponent } from './views/website/popula
     ReactiveFormsModule,
     FormsModule,
     MatDividerModule,
+    BrowserAnimationsModule,
     MatCheckboxModule,
     RouterModule,
+    MatDialogModule,
     MatMenuModule,
+    BidiModule,
     // MatExpansionModule,
     TranslateModule.forRoot({
         loader: {

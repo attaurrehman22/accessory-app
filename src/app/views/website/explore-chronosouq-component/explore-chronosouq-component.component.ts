@@ -29,7 +29,7 @@ export class ExploreChronosouqComponentComponent implements OnInit {
     public translateService: TranslateService,
     private http: HttpService
   ) {
-    const supportedLanguages = ["en", "ar"]; // Add other languages if necessary
+    const supportedLanguages = ["en", "ar"];
     this.translateService.addLangs(supportedLanguages);
     this.translateService.setDefaultLang("en");
 
