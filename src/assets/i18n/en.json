@@ -6,7 +6,8 @@
     "watch_collection": "Watch Collection",
     "chronopulse": "ChronoPulse",
     "faq": "FAQ",
-    "security": "Security"
+    "security": "Security",
+    "admin_pannel":"Admin Pannel"
   },
   "register": {
     "welcome": "Welcome to Chronosouq",

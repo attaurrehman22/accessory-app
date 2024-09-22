@@ -13,9 +13,9 @@ import { SearchServiceService } from "src/services/search-service/search-service
 export class HeaderComponent {
   isSmallScreen: boolean = false;
   isUserLogin: any;
-  searchQuery: string = '';
+  searchQuery: string = "";
 
-  searchFilter:boolean=true;
+  searchFilter: boolean = true;
   supportLanguages = [
     { name: "English", value: "en" },
     { name: "العربية", value: "ar" },
@@ -26,9 +26,9 @@ export class HeaderComponent {
   isRtl: boolean = false;
   selectedLang: string = "en";
 
-  @ViewChild('drawer') drawer: MatSidenav; // Access sidenav
-  @ViewChild('sidenav', { static: true }) sidenavRef: ElementRef; // Access sidenav ElementRef
-  @ViewChild('header', { static: false }) headerRef: ElementRef;  // Access header
+  @ViewChild("drawer") drawer: MatSidenav; // Access sidenav
+  @ViewChild("sidenav", { static: true }) sidenavRef: ElementRef; // Access sidenav ElementRef
+  @ViewChild("header", { static: false }) headerRef: ElementRef; // Access header
 
   constructor(
     public translateService: TranslateService,
@@ -49,7 +49,7 @@ export class HeaderComponent {
 
     this.router.events.subscribe(() => {
       const currentRoute = this.router.url;
-      this.searchFilter = ['/product-list'].includes(currentRoute);
+      this.searchFilter = ["/product-list"].includes(currentRoute);
     });
 
     this.languageService.currentLang$.subscribe((lang) => {
@@ -64,9 +64,16 @@ export class HeaderComponent {
     this.isSmallScreen = window.innerWidth <= 768;
   }
 
+  isAdminUser: any;
+
   ngOnInit() {
+    this.isAdminUser = localStorage.getItem("isAdminUser") === "admin";
     this.isUserLogin = localStorage.getItem("Logged");
     this.isSmallScreen = window.innerWidth <= 1500;
+  }
+
+  routeToAdminPannel(){
+    this.router.navigate(["/admin-dashboard"]);
   }
 
   onSearch(query: string) {
@@ -90,6 +97,7 @@ export class HeaderComponent {
   }
 
   logout() {
+    localStorage.removeItem("isAdminUser");
     localStorage.removeItem("Logged");
     localStorage.removeItem("user_token");
     this.isUserLogin = null;
@@ -107,20 +115,24 @@ export class HeaderComponent {
     // const rerouteUrl = "new-product";
     // localStorage.setItem("navigate_url", rerouteUrl);
     // if (token) {
-      this.router.navigate(["/new-product"]);
+    this.router.navigate(["/new-product"]);
     // } else {
-      // this.router.navigate(["/login"]);
+    // this.router.navigate(["/login"]);
     // }
   }
 
   // Close the sidenav on outside click
-  @HostListener('document:click', ['$event'])
+  @HostListener("document:click", ["$event"])
   onClickOutside(event: Event) {
     const clickedElement = event.target as HTMLElement;
 
     // Get references for the header and sidenav DOM elements
-    const isOutsideHeader = this.headerRef?.nativeElement && !this.headerRef.nativeElement.contains(clickedElement);
-    const isOutsideSidenav = this.sidenavRef?.nativeElement && !this.sidenavRef.nativeElement.contains(clickedElement);
+    const isOutsideHeader =
+      this.headerRef?.nativeElement &&
+      !this.headerRef.nativeElement.contains(clickedElement);
+    const isOutsideSidenav =
+      this.sidenavRef?.nativeElement &&
+      !this.sidenavRef.nativeElement.contains(clickedElement);
 
     // If click is outside both the header and the sidenav, close the sidenav
     if (isOutsideHeader && isOutsideSidenav && this.drawer.opened) {

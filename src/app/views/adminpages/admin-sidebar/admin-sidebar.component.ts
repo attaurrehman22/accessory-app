@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component,HostListener } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -13,14 +13,14 @@ export class AdminSidebarComponent {
       label: 'Dashboard',
       router: '/admin-dashboard',
       routerActive: 'navbar-button-active',
-      // icon: 'assets/images/dashboard-2-svgrepo-com (1).svg',
+      icon: 'assets/images/dashboard-2-svgrepo-com (1).svg',
       iconWidth: 20,
       iconHeight: 20,
     },
     addProduct: {
       router: '/admin-add-product',
       routerActive: 'navbar-button-active',
-      // icon: 'assets/images/dashboard-2-svgrepo-com (1).svg',
+      icon: 'assets/images/dashboard-2-svgrepo-com (1).svg',
       iconWidth: 20,
       iconHeight: 20,
     },
@@ -28,7 +28,7 @@ export class AdminSidebarComponent {
       label: 'Products',
       router: '/admin-products',
       routerActive: 'navbar-button-active',
-      // icon: 'assets/images/dashboard-2-svgrepo-com (1).svg',
+      icon: 'assets/images/dashboard-2-svgrepo-com (1).svg',
       iconWidth: 20,
       iconHeight: 20,
     },
@@ -36,7 +36,7 @@ export class AdminSidebarComponent {
       label: 'Brands',
       router: '/admin-brands',
       routerActive: 'navbar-button-active',
-      // icon: 'assets/images/american-football-player-svgrepo-com (1).svg',
+      icon: 'assets/images/dashboard-2-svgrepo-com (1).svg',
       iconWidth: 20,
       iconHeight: 20,
     },
@@ -44,7 +44,7 @@ export class AdminSidebarComponent {
       label: 'Category',
       router: '/admin-category',
       routerActive: 'navbar-button-active',
-      // icon: 'assets/images/american-football-player-svgrepo-com (1).svg',
+      icon: 'assets/images/dashboard-2-svgrepo-com (1).svg',
       iconWidth: 20,
       iconHeight: 20,
     },
@@ -83,9 +83,20 @@ export class AdminSidebarComponent {
   constructor(public route: Router) {}
 
   ngOnInit(): void {
-    if (window.screen.width <= 575) {
+    this.checkScreenSize();
+  }
+
+  checkScreenSize() {
+    if (window.innerWidth <= 660) {
       this.toogle = false;
+    } else {
+      this.toogle = true;
     }
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event: any) {
+    this.checkScreenSize();
   }
 
   logout() {

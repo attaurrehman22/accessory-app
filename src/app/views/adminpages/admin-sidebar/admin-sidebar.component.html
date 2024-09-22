@@ -14,10 +14,11 @@
         [routerLinkActive]="navItems.dashboard.routerActive"
       >
         <img
+          [src]="navItems.dashboard.icon"
           [width]="navItems.dashboard.iconWidth"
           [height]="navItems.dashboard.iconHeight"
         />
-        <span [ngClass]="toogle ? '' : 'hidden'"> Dashboard </span>
+        <span *ngIf="toogle"> Dashboard </span>
       </button>
 
       <button
@@ -31,10 +32,11 @@
         "
       >
         <img
+          [src]="navItems.Products.icon"
           [width]="navItems.Products.iconWidth"
           [height]="navItems.Products.iconHeight"
         />
-        <span [ngClass]="toogle ? '' : 'hidden'"> Products </span>
+        <span *ngIf="toogle"> Products </span>
       </button>
 
       <button
@@ -48,28 +50,30 @@
         "
       >
         <img
+          [src]="navItems.Brands.icon"
           [width]="navItems.Brands.iconWidth"
           [height]="navItems.Brands.iconHeight"
         />
-        <span [ngClass]="toogle ? '' : 'hidden'"> Brands </span>
+        <span *ngIf="toogle"> Brands </span>
       </button>
 
       <button
-      class="btn2"
-      [title]="navItems.Category.label"
-      [routerLink]="navItems.Category.router"
-      [ngClass]="
-        isActive('/admin-category') || isActive('/admin-category-product')
-          ? navItems.Category.routerActive
-          : ''
-      "
-    >
-      <img
-        [width]="navItems.Category.iconWidth"
-        [height]="navItems.Category.iconHeight"
-      />
-      <span [ngClass]="toogle ? '' : 'hidden'"> Category </span>
-    </button>
+        class="btn2"
+        [title]="navItems.Category.label"
+        [routerLink]="navItems.Category.router"
+        [ngClass]="
+          isActive('/admin-category') || isActive('/admin-category-product')
+            ? navItems.Category.routerActive
+            : ''
+        "
+      >
+        <img
+          [src]="navItems.Category.icon"
+          [width]="navItems.Category.iconWidth"
+          [height]="navItems.Category.iconHeight"
+        />
+        <span *ngIf="toogle"> Category </span>
+      </button>
     </div>
   </div>
 </div>

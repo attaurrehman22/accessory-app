@@ -11,13 +11,16 @@
       position="end"
       [style]="{ top: '0', right: '0', position: 'fixed', height: 'auto' }"
     >
+   
       <button class="drawer-btn" (click)="routeToBuyProduct()">
         {{ "header.buy_watch" | translate }}
       </button>
       <button class="drawer-btn" (click)="routeToNewProduct()">
         {{ "header.sell_watch" | translate }}
       </button>
-
+      <button class="drawer-btn" *ngIf="isAdminUser" (click)="routeToAdminPannel()">
+        {{ "header.admin_pannel" | translate }}
+      </button>
       <form *ngIf="searchFilter" class="d-flex flex-grow-1 ms-3" (ngSubmit)="onSearch(searchQuery)">
         <input
           [(ngModel)]="searchQuery"
@@ -80,6 +83,9 @@
         </button>
         <button class="custom-btn" (click)="routeToNewProduct()">
           {{ "header.sell_watch" | translate }}
+        </button>
+        <button class="custom-btn" *ngIf="isAdminUser" (click)="routeToAdminPannel()">
+          {{ "header.admin_pannel" | translate }}
         </button>
       </div>
       <div class="header-contact gap-4">

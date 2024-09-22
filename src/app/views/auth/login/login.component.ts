@@ -77,6 +77,7 @@ export class LoginComponent implements OnInit {
           } else {
             localStorage.setItem("Logged", "LogIn");
             localStorage.setItem("user_token", response.authorization.token);
+            localStorage.setItem("isAdminUser",response.user.type)
             console.log("-----------------------", this.isDialog);
 
             this.router.navigateByUrl("");
