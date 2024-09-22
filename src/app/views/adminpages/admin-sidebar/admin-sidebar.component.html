@@ -1,0 +1,39 @@
+<div class="sideBar" [ngStyle]="{ width: toogle == false ? '80px' : '240px' }">
+  <div class="card">
+    <div class="toogle-menu pointer" (click)="onToogleHandler()">
+      <mat-icon>menu</mat-icon>
+    </div>
+    <div class="toogle-menu1 pointer">
+      <h2>ChronoSouq</h2>
+    </div>
+    <div class="largeSize">
+      <button
+        [title]="navItems.dashboard.label"
+        class="btn2"
+        [routerLink]="navItems.dashboard.router"
+        [routerLinkActive]="navItems.dashboard.routerActive"
+      >
+        <img
+          
+          [width]="navItems.dashboard.iconWidth"
+          [height]="navItems.dashboard.iconHeight"
+        />
+        <span [ngClass]="toogle ? '' : 'hidden'"> Dashboard </span>
+      </button>
+
+      <button
+        class="btn2"
+        [title]="navItems.Products.label"
+        [routerLink]="navItems.Products.router"
+        [routerLinkActive]="navItems.Products.routerActive"
+      >
+        <img
+      
+          [width]="navItems.Products.iconWidth"
+          [height]="navItems.Products.iconHeight"
+        />
+        <span [ngClass]="toogle ? '' : 'hidden'"> Products </span>
+      </button>
+    </div>
+  </div>
+</div>

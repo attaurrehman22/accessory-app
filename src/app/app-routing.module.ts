@@ -8,6 +8,8 @@ import { BuyProductComponentComponent } from './views/website/buy-product-compon
 import { ProductDetailComponentComponent } from './views/website/product-detail-component/product-detail-component.component';
 import { ProductListComponent } from './views/website/product-list/product-list.component';
 import { PopularBrandsListAlphabeticallyComponent } from './views/website/popular-brands-list-alphabetically/popular-brands-list-alphabetically.component';
+import { AdminHomeComponent } from './views/adminpages/admin-home/admin-home.component';
+import { AdminProductsComponent } from './views/adminpages/admin-products/admin-products.component';
 
 
 const routes: Routes = [
@@ -19,6 +21,8 @@ const routes: Routes = [
   { path: 'product-list', component:  ProductListComponent},
   { path: 'product-detail', component:  ProductDetailComponentComponent},
   { path: 'popular-brands-list', component:  PopularBrandsListAlphabeticallyComponent},
+  // { path: 'admin-portal', component:  AdminHomeComponent},
+  { path: 'admin-products', component:  AdminProductsComponent},
 ];
 
 @NgModule({

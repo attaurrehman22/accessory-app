@@ -51,6 +51,14 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatDialogModule } from '@angular/material/dialog';
 import { ModelLoginComponent } from './views/auth/model-login/model-login.component';
 import { ModelRegisterComponent } from './views/auth/model-register/model-register.component';
+import { AdminHomeComponent } from './views/adminpages/admin-home/admin-home.component';
+import { AdminNavbarComponent } from './views/adminpages/admin-navbar/admin-navbar.component';
+import { AdminSidebarComponent } from './views/adminpages/admin-sidebar/admin-sidebar.component';
+import { AdminProductsComponent } from './views/adminpages/admin-products/admin-products.component';
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
+
 
 @NgModule({
   declarations: [
@@ -75,9 +83,16 @@ import { ModelRegisterComponent } from './views/auth/model-register/model-regist
     ProductListComponent,
     PopularBrandsListAlphabeticallyComponent,
     ModelLoginComponent,
-    ModelRegisterComponent
+    ModelRegisterComponent,
+    AdminHomeComponent,
+    AdminSidebarComponent,
+    AdminNavbarComponent,
+    AdminProductsComponent
   ],
   imports: [
+    MatSortModule,
+    MatPaginatorModule,
+    MatTableModule,
     BrowserModule,
     AppRoutingModule,
     MatIconModule,

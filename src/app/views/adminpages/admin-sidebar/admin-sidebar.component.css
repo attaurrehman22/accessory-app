@@ -1,0 +1,105 @@
+.sideBar {
+    text-align: center;
+    padding: 0 20px;
+    margin-top: 3.9rem;
+    transition: all ease-in-out 200ms;
+  }
+  .card {
+    position: relative;
+    background-color: inherit;
+    border: none;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 10px 0;
+    width: 100%;
+  }
+  
+  .card .toogle-menu {
+    position: absolute;
+    right: -2px;
+    top: -50px;
+    z-index: 10;
+  }
+  .card .toogle-menu1 {
+    position: absolute;
+    right: -200px;
+    top: -50px;
+    z-index: 10;
+  }
+  
+  @media screen and (max-width: 768px) {
+    .toogle-menu1 {
+      display: none;
+    }
+  }
+  
+  .toogle-menu1 {
+    color: white;
+    font-size: 40px;
+    height: 40px;
+  }
+  
+  .toogle-menu mat-icon {
+    color: white;
+    font-size: 40px;
+    height: 40px;
+    width: 40px;
+  }
+  .btn2 {
+    background-color: transparent;
+    color: white;
+    border: transparent;
+    display: flex;
+    justify-content: start;
+    align-items: flex-start;
+    gap: 15px;
+    padding: 10px;
+    border-radius: 10px;
+    transition: all ease-in-out 200ms;
+  }
+  
+  .btn2:hover {
+    cursor: pointer;
+    background-color: darkslategray;
+  }
+  .btn1 {
+    width: 100%;
+    background-color: transparent;
+    color: white;
+    padding: 1px 3px;
+  }
+  
+  .largeSize {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 12px;
+  }
+  
+  .navbar-button-active {
+    background-color: darkslategray;
+  }
+  
+  /* @media screen and (max-width: 575px) {
+    .largeSize {
+      display: none;
+    }
+  } */
+  /*
+  @media screen and (min-width: 576px) {
+    .smallSize {
+      display: none;
+    }
+  }
+  @media screen and (max-width: 480px) {
+    .smallSize {
+      width: 100%;
+    }
+  } */
+  .active,
+  .btn:hover {
+    background-color: aqua;
+    color: white;
+  }
+  
