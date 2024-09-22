@@ -1,13 +1,138 @@
-<!-- <div>
-  <div class="row g-0"><app-admin-navbar></app-admin-navbar></div>
-  <div class="row g-0">
-    <div class="split-screen">
-      <div class="sidebar">
-        <app-admin-sidebar></app-admin-sidebar>
-      </div>
-      <div class="main-router">
-        <router-outlet></router-outlet>
-      </div>
-    </div>
+<h1 class="mt-5"><strong>Dashboard</strong></h1>
+<div class="row mt-5">
+  <div class="col-md-3">
+    <mat-card class="dashBoard-card">
+      <mat-card-header class="center">
+        <mat-card-title>
+          <span>Total Users</span>
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <h1 class="center cardDataColor">{{ cardData?.totalUsers }}</h1>
+      </mat-card-content>
+    </mat-card>
   </div>
-</div> -->
+  <div class="col-md-3">
+    <mat-card class="dashBoard-card">
+      <mat-card-header class="center">
+        <mat-card-title>
+          <span>Total Players</span>
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <h1 class="center cardDataColor">{{ cardData?.totalPlayers }}</h1>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  <div class="col-md-3">
+    <mat-card class="dashBoard-card">
+      <mat-card-header class="center">
+        <mat-card-title>
+          <span>Present Players</span>
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <h1 class="center cardDataColor">{{ cardData?.presentPlayers }}</h1>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  <div class="col-md-3">
+    <mat-card class="dashBoard-card">
+      <mat-card-header class="center">
+        <mat-card-title>
+          <span>Players Who Paid Fee</span>
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <h1 class="center cardDataColor">
+          {{ cardData?.totalPlayersWhoPaidFee }}
+        </h1>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
+
+<!-- Second Row -->
+<div class="row mt-5">
+  <div class="col-md-6">
+    <mat-card class="circle-card">
+      <mat-card-content>
+        <!-- <highcharts-chart
+          class="chart"
+          [Highcharts]="Highcharts"
+          [options]="linechart"
+          style="width: 100%; height: 270px; display: block"
+        >
+        </highcharts-chart> -->
+
+        <highcharts-chart
+  [Highcharts]="Highcharts"
+  [options]="linechart"
+  style="width: 100%; height: 270px; display: block"
+></highcharts-chart>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  <div class="col-md-6">
+    <mat-card class="circle-card" style="height: 300px">
+      <mat-card-content>
+        <div class="circle">
+          <span>50</span>
+        </div>
+        <p>This is some data about the circle.</p>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
+<div class="row mt-5">
+  <div class="col-md-6">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title> Data Table </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <table mat-table [dataSource]="dataSource">
+          <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef>ID</th>
+            <td mat-cell *matCellDef="let element">{{ element.id }}</td>
+          </ng-container>
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef>Name</th>
+            <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+          </ng-container>
+          <ng-container matColumnDef="email">
+            <th mat-header-cell *matHeaderCellDef>Email</th>
+            <td mat-cell *matCellDef="let element">{{ element.email }}</td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  <div class="col-md-6 mb-2">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title> Data Table </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <table mat-table [dataSource]="dataSource">
+          <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef>ID</th>
+            <td mat-cell *matCellDef="let element">{{ element.id }}</td>
+          </ng-container>
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef>Name</th>
+            <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+          </ng-container>
+          <ng-container matColumnDef="email">
+            <th mat-header-cell *matHeaderCellDef>Email</th>
+            <td mat-cell *matCellDef="let element">{{ element.email }}</td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

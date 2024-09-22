@@ -14,7 +14,15 @@ export class AppComponent implements OnInit {
   showAdminHeader: boolean = true;
   showSecondFooter: boolean = true;
 
-  routesToHideforUser = ["/admin-portal", "/admin-products", "/admin-add-product","/admin-brands","/admin-brands-product","/admin-category","/admin-category-product"];
+  routesToHideforUser = [
+    "/admin-dashboard",
+    "/admin-products",
+    "/admin-add-product",
+    "/admin-brands",
+    "/admin-brands-product",
+    "/admin-category",
+    "/admin-category-product",
+  ];
   routesToHideforAdmin = [
     "/login",
     "/register",
@@ -33,7 +41,8 @@ export class AppComponent implements OnInit {
       if (event instanceof NavigationEnd) {
         const currentRoute = this.router.url;
         this.showHeader = !this.routesToHideforUser.includes(currentRoute);
-        this.showAdminHeader = !this.routesToHideforAdmin.includes(currentRoute);
+        this.showAdminHeader =
+          !this.routesToHideforAdmin.includes(currentRoute);
       }
     });
     console.log(" Title from marker ==> ", TRANSLATE_ME("home.title"));
@@ -57,13 +66,12 @@ export class AppComponent implements OnInit {
       this.translateService.use(browserlang);
     }
 
-
-
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         const currentRoute = this.router.url;
         this.showHeader = !this.routesToHideforUser.includes(currentRoute);
-        this.showAdminHeader = !this.routesToHideforAdmin.includes(currentRoute);
+        this.showAdminHeader =
+          !this.routesToHideforAdmin.includes(currentRoute);
       }
     });
   }

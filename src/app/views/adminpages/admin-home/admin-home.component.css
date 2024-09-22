@@ -1,23 +1,78 @@
-html,
-body {
-  max-width: 100%;
-  overflow-x: hidden;
+/* Customize the background color of the dashboard */
+.dashboard {
+  background-color: #f0f0f0;
 }
 
-.split-screen {
+/* Define the card styles */
+.card {
+  margin: 20px;
+  width: calc(25% - 40px);
+  height: 150px;
   display: flex;
-  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.card-border-blue {
+  border: 5px solid #3498db;
+}
+
+.card-border-red {
+  border: 5px solid #e74c3c;
+}
+
+.card-border-green {
+  border: 5px solid #2ecc71;
+}
+
+.card-border-purple {
+  border: 5px solid #9b59b6;
+}
+
+/* Define the circle styles */
+.circle {
+  margin: 20px;
+  width: 150px;
+  height: 150px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 36px;
+  font-weight: bold;
+  color: white;
+  background-color: #3498db;
+  border-radius: 50%;
+}
+
+/* Define the data table styles */
+table {
   width: 100%;
 }
 
-.sidebar {
-  height: 100%;
-  background-color: hsl(208, 37%, 18%);
+th,
+td {
+  padding: 8px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
 }
 
-.main-router {
-  width: 100%;
-  padding: 20px;
-  height: 100vh;
-  overflow-y: scroll;
+th {
+  background-color: #f2f2f2;
+}
+
+.dashBoard-card {
+  border-radius: 15px;
+  border: 3px solid whitesmoke;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+  margin-top: 5%;
+}
+
+.cardDataColor {
+  color: #4f4dd3;
 }

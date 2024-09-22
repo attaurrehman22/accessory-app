@@ -26,7 +26,7 @@ const routes: Routes = [
   { path: 'product-list', component:  ProductListComponent},
   { path: 'product-detail', component:  ProductDetailComponentComponent},
   { path: 'popular-brands-list', component:  PopularBrandsListAlphabeticallyComponent},
-  // { path: 'admin-portal', component:  AdminHomeComponent},
+  { path: 'admin-dashboard', component:  AdminHomeComponent},
   { path: 'admin-products', component:  AdminProductsComponent},
   { path: 'admin-add-product', component:  AdminAddProductComponent},
   { path: 'admin-brands', component:  AdminBrandsComponent},

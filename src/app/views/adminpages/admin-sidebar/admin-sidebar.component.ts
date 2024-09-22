@@ -11,7 +11,7 @@ export class AdminSidebarComponent {
   navItems = {
     dashboard: {
       label: 'Dashboard',
-      router: '/admin-portal',
+      router: '/admin-dashboard',
       routerActive: 'navbar-button-active',
       // icon: 'assets/images/dashboard-2-svgrepo-com (1).svg',
       iconWidth: 20,
