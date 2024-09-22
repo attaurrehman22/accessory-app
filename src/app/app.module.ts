@@ -59,6 +59,10 @@ import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { AdminAddProductComponent } from './views/adminpages/admin-add-product/admin-add-product.component';
+import { AdminBrandsComponent } from './views/adminpages/admin-brands/admin-brands.component';
+import { AdminCategoryComponent } from './views/adminpages/admin-category/admin-category.component';
+import { AdminBrandsProductComponent } from './views/adminpages/admin-brands-product/admin-brands-product.component';
+import { AdminCategoryProductComponent } from './views/adminpages/admin-category-product/admin-category-product.component';
 
 @NgModule({
   declarations: [
@@ -88,7 +92,11 @@ import { AdminAddProductComponent } from './views/adminpages/admin-add-product/a
     AdminSidebarComponent,
     AdminNavbarComponent,
     AdminProductsComponent,
-    AdminAddProductComponent
+    AdminAddProductComponent,
+    AdminBrandsComponent,
+    AdminCategoryComponent,
+    AdminBrandsProductComponent,
+    AdminCategoryProductComponent
   ],
   imports: [
     MatSortModule,

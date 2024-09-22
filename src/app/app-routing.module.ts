@@ -11,6 +11,10 @@ import { PopularBrandsListAlphabeticallyComponent } from './views/website/popula
 import { AdminHomeComponent } from './views/adminpages/admin-home/admin-home.component';
 import { AdminProductsComponent } from './views/adminpages/admin-products/admin-products.component';
 import { AdminAddProductComponent } from './views/adminpages/admin-add-product/admin-add-product.component';
+import { AdminBrandsComponent } from './views/adminpages/admin-brands/admin-brands.component';
+import { AdminCategoryComponent } from './views/adminpages/admin-category/admin-category.component';
+import { AdminBrandsProductComponent } from './views/adminpages/admin-brands-product/admin-brands-product.component';
+import { AdminCategoryProductComponent } from './views/adminpages/admin-category-product/admin-category-product.component';
 
 
 const routes: Routes = [
@@ -25,6 +29,10 @@ const routes: Routes = [
   // { path: 'admin-portal', component:  AdminHomeComponent},
   { path: 'admin-products', component:  AdminProductsComponent},
   { path: 'admin-add-product', component:  AdminAddProductComponent},
+  { path: 'admin-brands', component:  AdminBrandsComponent},
+  { path: 'admin-brands-product', component:  AdminBrandsProductComponent},
+  { path: 'admin-category', component:  AdminCategoryComponent},
+  { path: 'admin-category-product', component:  AdminCategoryProductComponent},
 ];
 
 @NgModule({

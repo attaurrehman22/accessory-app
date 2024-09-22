@@ -14,7 +14,6 @@
         [routerLinkActive]="navItems.dashboard.routerActive"
       >
         <img
-          
           [width]="navItems.dashboard.iconWidth"
           [height]="navItems.dashboard.iconHeight"
         />
@@ -22,18 +21,55 @@
       </button>
 
       <button
+        class="btn2"
+        [title]="navItems.Products.label"
+        [routerLink]="navItems.Products.router"
+        [ngClass]="
+          isActive('/admin-products') || isActive('/admin-add-product')
+            ? navItems.Products.routerActive
+            : ''
+        "
+      >
+        <img
+          [width]="navItems.Products.iconWidth"
+          [height]="navItems.Products.iconHeight"
+        />
+        <span [ngClass]="toogle ? '' : 'hidden'"> Products </span>
+      </button>
+
+      <button
+        class="btn2"
+        [title]="navItems.Brands.label"
+        [routerLink]="navItems.Brands.router"
+        [ngClass]="
+          isActive('/admin-brands') || isActive('/admin-brands-product')
+            ? navItems.Brands.routerActive
+            : ''
+        "
+      >
+        <img
+          [width]="navItems.Brands.iconWidth"
+          [height]="navItems.Brands.iconHeight"
+        />
+        <span [ngClass]="toogle ? '' : 'hidden'"> Brands </span>
+      </button>
+
+      <button
       class="btn2"
-      [title]="navItems.Products.label"
-      [routerLink]="navItems.Products.router"
-      [ngClass]="isActive('/admin-products') || isActive('/admin-add-product') ? navItems.Products.routerActive : ''"
+      [title]="navItems.Category.label"
+      [routerLink]="navItems.Category.router"
+      [ngClass]="
+        isActive('/admin-category') || isActive('/admin-category-product')
+          ? navItems.Category.routerActive
+          : ''
+      "
     >
       <img
-        [width]="navItems.Products.iconWidth"
-        [height]="navItems.Products.iconHeight"
+        [width]="navItems.Category.iconWidth"
+        [height]="navItems.Category.iconHeight"
       />
-      <span [ngClass]="toogle ? '' : 'hidden'"> Products </span>
+      <span [ngClass]="toogle ? '' : 'hidden'"> Category </span>
     </button>
-    
     </div>
   </div>
 </div>
