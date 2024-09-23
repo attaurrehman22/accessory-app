@@ -1,6 +1,9 @@
 import { Component } from "@angular/core";
 import { AlertsServicesService } from "src/services/alerts-service/alerts-services.service";
 import * as Highcharts from 'highcharts';
+import { HighchartsServiceService } from "src/services/highcharts-service/highcharts-service.service";
+import { ChangeDetectorRef } from '@angular/core'; // Import ChangeDetectorRef
+
 
 @Component({
   selector: "app-admin-home",
@@ -22,25 +25,20 @@ export class AdminHomeComponent {
     { id: 3, name: "Bob Johnson", email: "bob@example.com" },
   ];
   Highcharts = Highcharts;
-  linechart: any = {
-    chart: {
-      type: 'line',
-    },
-    series: [
-      {
-        data: [1, 3, 5, 7, 10],
-      },
-    ],
-    title: {
-      text: '10 Year Performance',
-    },
-  };
+  linechart: any;
 
-  constructor(private toast: AlertsServicesService) {}
-
+  constructor(private toast: AlertsServicesService, private highchartsService: HighchartsServiceService,private cd: ChangeDetectorRef  ) {}
   ngOnInit(): void {
     this.getDashBoardCardInfo();
+    this.loadHighcharts();  // Load chart options after initialization
   }
+  
+  loadHighcharts() {
+    this.linechart = this.highchartsService.getLineChartOptions();
+    console.log(this.linechart); 
+    this.cd.detectChanges();  // Force change detection to ensure chart updates
+  }
+  
 
   getDashBoardCardInfo() {
     // this.api.getInfoForAdminDashBoard().subscribe((res: any) => {

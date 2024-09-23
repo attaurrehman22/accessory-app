@@ -3916,7 +3916,14 @@ hasown@^2.0.0, hasown@^2.0.2:
   dependencies:
     function-bind "^1.1.2"
 
-highcharts@^10.3.3:
+highcharts-angular@^4.0.1:
+  version "4.0.1"
+  resolved "https://registry.npmjs.org/highcharts-angular/-/highcharts-angular-4.0.1.tgz"
+  integrity sha512-KAy+RRJyrDDKFYLFr3p2O+ups3ZyDP3CoakHuO3u+ZUCm85ziJ29WT1qPjzp2NBupYt+MGZV/DAyPMi5iyAIHw==
+  dependencies:
+    tslib "^2.0.0"
+
+highcharts@^10.3.3, highcharts@>=9.0.0:
   version "10.3.3"
   resolved "https://registry.npmjs.org/highcharts/-/highcharts-10.3.3.tgz"
   integrity sha512-r7wgUPQI9tr3jFDn3XT36qsNwEIZYcfgz4mkKEA6E4nn5p86y+u1EZjazIG4TRkl5/gmGRtkBUiZW81g029RIw==
@@ -5099,6 +5106,7 @@ multicast-dns@^7.2.5:
     "@ngx-translate/core" "^15.0.0"
     "@ngx-translate/http-loader" "^8.0.0"
     "@popperjs/core" "^2.11.8"
+    angular-highcharts "^17.0.1"
     bootstrap "^5.3.3"
     highcharts "^10.3.3"
     jquery "^3.7.0"

@@ -65,6 +65,7 @@ th {
 .dashBoard-card {
   border-radius: 15px;
   border: 3px solid whitesmoke;
+  border-left: 5px solid red;
 }
 
 .center {

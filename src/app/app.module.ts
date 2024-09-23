@@ -64,7 +64,7 @@ import { AdminCategoryComponent } from './views/adminpages/admin-category/admin-
 import { AdminBrandsProductComponent } from './views/adminpages/admin-brands-product/admin-brands-product.component';
 import { AdminCategoryProductComponent } from './views/adminpages/admin-category-product/admin-category-product.component';
 import { ChartModule } from 'angular-highcharts';
-
+import { HighchartsChartModule } from 'highcharts-angular';
 
 @NgModule({
   declarations: [
@@ -98,7 +98,7 @@ import { ChartModule } from 'angular-highcharts';
     AdminBrandsComponent,
     AdminCategoryComponent,
     AdminBrandsProductComponent,
-    AdminCategoryProductComponent
+    AdminCategoryProductComponent,
   ],
   imports: [
     MatSortModule,
@@ -127,7 +127,7 @@ import { ChartModule } from 'angular-highcharts';
     RouterModule,
     MatDialogModule,
     MatMenuModule,
-    BidiModule,
+    BidiModule,HighchartsChartModule,
     // MatExpansionModule,
     TranslateModule.forRoot({
         loader: {
