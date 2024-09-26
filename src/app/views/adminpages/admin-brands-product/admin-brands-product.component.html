@@ -1,91 +1,111 @@
 <form [formGroup]="form" class="mt-5">
-    <mat-dialog-content>
-      <h2 class="d-flex justify-content-center">Brands</h2>
-      <div class="row">
-        <div class="col-md-6">
-          <mat-form-field appearance="outline" style="width: 100%">
-            <input matInput placeholder="Product Name" formControlName="name" />
-            <mat-error
-              *ngIf="name.hasError('name') && !name.hasError('required')"
-            >
-              Please enter a valid name
-            </mat-error>
-            <mat-error *ngIf="name.hasError('required')">
-              Name is required
-            </mat-error>
-          </mat-form-field>
-        </div>
-        <div class="col-md-6">
-          <mat-form-field appearance="outline" style="width: 100%">
-            <input matInput placeholder="Brand Name" formControlName="userName" />
-            <mat-error
-              *ngIf="userName.hasError('name') && !userName.hasError('required')"
-            >
-              Please enter a valid User Name
-            </mat-error>
-            <mat-error *ngIf="userName.hasError('required')">
-              User name is required
-            </mat-error>
-          </mat-form-field>
-        </div>
+  <mat-dialog-content>
+    <h2 class="d-flex justify-content-center">{{ paramVal }} Brand</h2>
+
+    <!-- Name input -->
+    <div class="row">
+      <div class="col-md-6">
+        <mat-form-field appearance="outline" style="width: 100%">
+          <input matInput placeholder="Brand Name" formControlName="name" />
+          <mat-error *ngIf="form.controls.name.invalid">
+            {{
+              form.controls.name.hasError("required")
+                ? "Name is required"
+                : "Invalid name"
+            }}
+          </mat-error>
+        </mat-form-field>
       </div>
-      <div class="row">
-        <div class="col-md-6">
-          <mat-form-field appearance="outline" style="width: 100%">
-            <input
-              type="email"
-              matInput
-              placeholder="Email"
-              formControlName="email"
-            />
-            <mat-error
-              *ngIf="email.hasError('name') && !email.hasError('required')"
-            >
-              Please enter a valid email
-            </mat-error>
-            <mat-error *ngIf="email.hasError('required')">
-              Email is required
-            </mat-error>
-          </mat-form-field>
-        </div>
-        <div class="col-md-6">
-          <mat-form-field appearance="outline" style="width: 100%">
-            <input
-              type="password"
-              matInput
-              placeholder="Password"
-              formControlName="password"
-            />
-            <mat-error
-              *ngIf="
-                password.hasError('password') && !password.hasError('required')
-              "
-            >
-              Please enter a valid password
-            </mat-error>
-            <mat-error *ngIf="password.hasError('required')">
-              Password is required
-            </mat-error>
-          </mat-form-field>
-        </div>
+
+      <!-- Slug input -->
+      <div class="col-md-6">
+        <mat-form-field appearance="outline" style="width: 100%">
+          <input matInput placeholder="Slug" formControlName="slug" />
+          <mat-error *ngIf="form.controls.slug.invalid">
+            {{
+              form.controls.slug.hasError("required")
+                ? "Slug is required"
+                : "Invalid slug"
+            }}
+          </mat-error>
+        </mat-form-field>
       </div>
-      <div class="row">
-        <div class="col-md-12">
-          <mat-form-field appearance="outline" style="width: 100%">
-            <mat-label>Status</mat-label>
-            <mat-select formControlName="active" name="active">
-              <mat-option *ngFor="let user of activeUser" [value]="user.value">
-                {{ user.viewValue }}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-        </div>
+    </div>
+
+    <!-- meta_title input -->
+    <div class="row" *ngIf="paramVal === 'Create'">
+      <div class="col-md-6">
+        <mat-form-field appearance="outline" style="width: 100%">
+          <input
+            matInput
+            placeholder="Meta Title"
+            formControlName="meta_title"
+          />
+        </mat-form-field>
       </div>
-    </mat-dialog-content>
-  
-    <mat-dialog-actions class="d-flex gap-2 justify-content-center">
-      <button class="save-btn" (click)="save()">Submit</button>
-      <button class="cancel-btn" (click)="cancel()">Cancel</button>
-    </mat-dialog-actions>
-  </form>
-  
+
+      <!-- meta_description input -->
+      <div class="col-md-6">
+        <mat-form-field appearance="outline" style="width: 100%">
+          <input
+            matInput
+            placeholder="Meta Description"
+            formControlName="meta_description"
+          />
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6">
+        <mat-form-field appearance="outline" style="width: 100%">
+          <textarea
+            matInput
+            placeholder="Description"
+            formControlName="description"
+          ></textarea>
+        </mat-form-field>
+      </div>
+
+      <div class="col-md-6" *ngIf="paramVal === 'Create'">
+        <mat-form-field appearance="outline" style="width: 100%">
+          <input
+            matInput
+            placeholder="Meta Keywords"
+            formControlName="meta_keywords"
+          />
+        </mat-form-field>
+      </div>
+    </div>
+
+    <!-- File upload for cover image -->
+    <div class="row">
+      <div class="col-md-6">
+        <input
+          style="border: 1px solid black; padding: 5px; width: 100%"
+          type="file"
+          value="fileName"
+          (change)="onFileSelected($event)"
+          accept="image/*"
+        />
+      </div>
+    </div>
+
+    <!-- Active and top brand checkboxes -->
+    <div class="row">
+      <div class="col-md-6">
+        <mat-checkbox formControlName="is_active">Active</mat-checkbox>
+      </div>
+      <div class="col-md-6">
+        <mat-checkbox formControlName="top_brand">Top Brand</mat-checkbox>
+      </div>
+    </div>
+  </mat-dialog-content>
+
+  <!-- Form action buttons -->
+  <mat-dialog-actions class="d-flex gap-2 justify-content-center">
+    <button class="save-btn" *ngIf="paramVal === 'Create'" (click)="save()">Submit</button>
+    <button class="save-btn" *ngIf="paramVal === 'Edit'"  (click)="save()">Update</button>
+    <button class="cancel-btn" (click)="cancel()">Cancel</button>
+  </mat-dialog-actions>
+</form>

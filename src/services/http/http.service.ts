@@ -9,7 +9,7 @@ import { environment } from "src/environments/environment";
 export class HttpService {
   private apiUrl = environment.apipath;
   constructor(private http: HttpClient) {}
-
+  token = localStorage.getItem("user_token");
 
   getuserEmail(email: string) {
     console.log("email in http Service", email);
@@ -29,11 +29,6 @@ export class HttpService {
     return this.http.post(`${this.apiUrl}/api/check-user-existence`, formData);
   }
   
-
-  // getusername(username: string) {
-  //   console.log("Username in http Service",username)
-  //   return this.http.get(`${this.apiUrl}/api/usernames?name=${username}`);
-  // }
   register(FormControl: any): Observable<any> {
     let formdate = new FormData();
     formdate.append("name", FormControl.get("username").value);
@@ -48,7 +43,6 @@ export class HttpService {
       'Content-Type': 'application/x-www-form-urlencoded',
     });
   
-    // Encoding the form data
     const body = new HttpParams()
       .set('email', formData.email)
       .set('password', formData.password);
@@ -90,12 +84,12 @@ export class HttpService {
   }
 
   addProduct(formData: any): Observable<any> {
-    const token = localStorage.getItem("user_token");
+    
     const url = `${this.apiUrl}/api/products/save`;
     return this.http.post(url, formData, {
       headers: {
         Accept: "application/json",
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${this.token}`,
       },
     });
   }
@@ -133,5 +127,60 @@ export class HttpService {
 
   getHowItWorksData(): Observable<any> {
     return this.http.get(`${this.apiUrl}/api/how-it-works`);
+  }
+
+  getAdminBrands(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/api/admin/brands`, {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+  }
+
+  addAdminBrand(formData): Observable<any> {
+    return this.http.post(`${this.apiUrl}/api/admin/brands`,formData, {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+  }
+
+  editAdminBrand(formData,ID): Observable<any> {
+    return this.http.put(`${this.apiUrl}/api/admin/brands/${ID}`,formData, {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+  }
+
+  deleteAdminBrand(ID): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/api/admin/brands/${ID}`, {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+  }
+
+  activateDeactivateAdminBrand(ID): Observable<any> {
+    return this.http.post(`${this.apiUrl}/api/admin/brands/${ID}/toggle-active`,{}, {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+  }
+
+
+  topAdminBrand(ID): Observable<any> {
+    return this.http.post(`${this.apiUrl}/api/admin/brands/${ID}/toggle-top`,{}, {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
   }
 }

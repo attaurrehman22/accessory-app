@@ -1,10 +1,11 @@
-import { Component, ViewChild } from "@angular/core";
+import { Component, OnInit, ViewChild } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatSort } from "@angular/material/sort";
 import { MatTableDataSource } from "@angular/material/table";
 import { Router } from "@angular/router";
 import { AlertsServicesService } from "src/services/alerts-service/alerts-services.service";
+import { HttpService } from "src/services/http/http.service";
 
 export interface UserData {
   userName: string;
@@ -19,7 +20,7 @@ export interface UserData {
   templateUrl: "./admin-products.component.html",
   styleUrls: ["./admin-products.component.css"],
 })
-export class AdminProductsComponent {
+export class AdminProductsComponent implements OnInit{
   displayedColumns: string[] = [
     "prod_name",
     "brand_name",
@@ -43,7 +44,7 @@ export class AdminProductsComponent {
   constructor(
     private router: Router,
     private dialog: MatDialog,
-
+    private http:HttpService,
     private toast: AlertsServicesService,
     private route: Router
   ) {
