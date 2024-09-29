@@ -183,4 +183,90 @@ export class HttpService {
       },
     });
   }
+
+  getAdminCategory(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/api/admin/categories`, {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+  }
+
+  addAdminCategory(formData): Observable<any> {
+    return this.http.post(`${this.apiUrl}/api/admin/categories`,formData, {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+  }
+
+  editAdminCategory(formData,ID): Observable<any> {
+    return this.http.put(`${this.apiUrl}/api/admin/categories/${ID}`,formData, {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+  }
+
+  deleteAdminCategory(ID): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/api/admin/categories/${ID}`, {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+  }
+
+  activateDeactivateAdminCategory(ID): Observable<any> {
+    return this.http.post(`${this.apiUrl}/api/admin/categories/${ID}/toggle-active`,{}, {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+  }
+
+
+  getAdminProducts(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/api/admin/products`, {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+  }
+
+
+  deleteAdminProducts(ID): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/api/admin/products/${ID}`, {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+  }
+
+
+  topAdminPopularProducts(ID): Observable<any> {
+    return this.http.patch(`${this.apiUrl}/api/admin/products/${ID}/toggle-popular`,{}, {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+  }
+
+
+  activateAdminProducts(ID): Observable<any> {
+    return this.http.patch(`${this.apiUrl}/api/admin/products/${ID}/toggle-active`,{}, {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+  }
+
 }

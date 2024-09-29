@@ -39,7 +39,7 @@ export class HeaderComponent {
     const languagevalues = this.supportLanguages.map((lang) => lang.value);
     this.translateService.addLangs(languagevalues);
     this.translateService.setDefaultLang("en");
-
+    this.isAdminUser = localStorage.getItem("isAdminUser") === "admin"
     const browserlang = this.translateService.getBrowserLang();
 
     if (languagevalues.includes(browserlang)) {

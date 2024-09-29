@@ -5,6 +5,7 @@ import { MatSort } from "@angular/material/sort";
 import { MatTableDataSource } from "@angular/material/table";
 import { Router } from "@angular/router";
 import { AlertsServicesService } from "src/services/alerts-service/alerts-services.service";
+import { HttpService } from "src/services/http/http.service";
 
 export interface UserData {
   userName: string;
@@ -24,6 +25,7 @@ export class AdminCategoryComponent {
     "prod_name",
     "brand_name",
     "category",
+    "top_category",
     "price",
     "edit",
   ];
@@ -43,7 +45,7 @@ export class AdminCategoryComponent {
   constructor(
     private router: Router,
     private dialog: MatDialog,
-
+    private http:HttpService,
     private toast: AlertsServicesService,
     private route: Router
   ) {
@@ -70,6 +72,34 @@ export class AdminCategoryComponent {
     }
   }
 
+  deleteCategory(data) {
+    this.http.deleteAdminCategory(data.id).subscribe(
+      (res) => {
+        this.toast.showAlert("success", "Category Delete Susseccfully");
+        this.allUser();
+      },
+      (err) => {
+        this.toast.showAlert("danger", "Error in removing Category");
+      }
+    );
+  }
+
+  activateDeactivateCategory(data) {
+    this.http.activateDeactivateAdminCategory(data.id).subscribe(
+      (res) => {
+        if(res.data.is_active===true){
+          this.toast.showAlert("success", "Category Activate Susseccfully");
+        }else{
+          this.toast.showAlert("success", "Category De-activate Susseccfully");
+        }
+        this.allUser();
+      },
+      (err) => {
+        this.toast.showAlert("danger", "Error in Updating Active Status");
+      }
+    );
+  }
+
   openModal() {
     this.router.navigate(["/admin-category-product"], {
       state: { param: "Create" },
@@ -77,52 +107,14 @@ export class AdminCategoryComponent {
   }
 
   allUser() {
-    const dummyData = [
-      {
-        _id: "64116c60c3aa80a82c6a6719",
-        name: "testing",
-        userName: "testing",
-        email: "admin122@gmail.com",
-        password:
-          "$2b$10$knxmbxFjGhPtUBPwMzUZiOdz2PHeiLz6ptBCEdvTuERKWUlbWTSOm",
-        isActive: 65,
-        createdAt: "2023-03-15T06:57:36.251Z",
-        updatedAt: "2023-05-05T09:55:33.297Z",
-        isBlocked: false,
-        createdBy: "Admin", // Add this field
-      },
-      {
-        _id: "64199ff04eb784eefbdc8977",
-        name: "testing123",
-        userName: "testing123",
-        email: "admin4@gmail.com",
-        picture: "global.png",
-        password:
-          "$2b$10$Hmrn6iGXyT/lyl3otMFvUOqZzNWPdbACkkj2R2ZFkBnUqCRADVVMa",
-        isActive: 65,
-        createdAt: "2023-03-21T12:15:44.837Z",
-        updatedAt: "2023-05-05T09:55:33.297Z",
-        isBlocked: false,
-        createdBy: "Admin", // Add this field
-      },
-      {
-        _id: "6419a0ba4eb784eefbdc89a2",
-        name: "testing09",
-        userName: "testing09",
-        email: "admin1111@gmail.com",
-        picture: "global.png",
-        password:
-          "$2b$10$dlfXpnp21j1YXTLwQtmAGOOLS2LAbD7z6w4YxdvX0ZGKAsuNDkODK",
-        isActive: 65,
-        createdAt: "2023-03-21T12:19:06.058Z",
-        updatedAt: "2023-05-05T09:55:33.297Z",
-        isBlocked: true,
-        createdBy: "Admin", // Add this field
-      },
-    ];
-    this.allData = dummyData;
-    this.dataSource = new MatTableDataSource(dummyData);
-    this.dataSource.paginator = this.paginator;
+    this.http.getAdminCategory().subscribe(
+      (res)=>{
+        this.allData=res.data;
+        this.dataSource = new MatTableDataSource(this.allData);
+        this.dataSource.paginator = this.paginator;
+      }
+    )
+   
   }
 
   isMeOrAdminOrDeveloper(id: any): boolean {
@@ -140,21 +132,6 @@ export class AdminCategoryComponent {
   }
 
   deleteUser(data: any) {}
-
-  changingStatus(value: any) {
-    if (value == "All") {
-      this.currentStatus = "All";
-      this.dataSource = new MatTableDataSource(this.allData);
-      this.dataSource.paginator = this.paginator;
-    } else {
-      this.currentStatus = false;
-      let newData = this.allData.filter((data: any) => {
-        return data.isBlocked == true;
-      });
-      this.dataSource = new MatTableDataSource(newData);
-      this.dataSource.paginator = this.paginator;
-    }
-  }
 
   download() {
     const option = {

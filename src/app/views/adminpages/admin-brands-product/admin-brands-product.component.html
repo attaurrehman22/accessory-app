@@ -67,6 +67,31 @@
         </mat-form-field>
       </div>
 
+      <div class="col-md-6">
+        <input
+          style="border: 1px solid black; padding: 5px; width: 100%"
+          type="file"
+          value="fileName"
+          (change)="onFileSelected($event)"
+          accept="image/*"
+        />
+      </div>
+
+     
+    </div>
+
+     <!-- Active and top brand checkboxes -->
+     <div class="row">
+      <div class="col-md-3">
+        <mat-checkbox formControlName="is_active"> Active</mat-checkbox>
+      </div>
+      <div class="col-md-3">
+        <mat-checkbox formControlName="top_brand">Top Brand</mat-checkbox>
+      </div>
+    </div>
+
+    <!-- File upload for cover image -->
+    <div class="row">
       <div class="col-md-6" *ngIf="paramVal === 'Create'">
         <mat-form-field appearance="outline" style="width: 100%">
           <input
@@ -78,28 +103,7 @@
       </div>
     </div>
 
-    <!-- File upload for cover image -->
-    <div class="row">
-      <div class="col-md-6">
-        <input
-          style="border: 1px solid black; padding: 5px; width: 100%"
-          type="file"
-          value="fileName"
-          (change)="onFileSelected($event)"
-          accept="image/*"
-        />
-      </div>
-    </div>
-
-    <!-- Active and top brand checkboxes -->
-    <div class="row">
-      <div class="col-md-6">
-        <mat-checkbox formControlName="is_active">Active</mat-checkbox>
-      </div>
-      <div class="col-md-6">
-        <mat-checkbox formControlName="top_brand">Top Brand</mat-checkbox>
-      </div>
-    </div>
+   
   </mat-dialog-content>
 
   <!-- Form action buttons -->

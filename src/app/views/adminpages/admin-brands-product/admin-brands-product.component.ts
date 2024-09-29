@@ -54,17 +54,13 @@ export class AdminBrandsProductComponent {
 
   populateForm(data: any) {
     console.log("Data to populate form", data);
-  
-    // Convert is_active and top_brand to boolean
     const isActive = data.is_active === 1 ? true : false;
     const isTopBrand = data.top_brand === 1 ? true : false;
     this.fileName = this.data.cover_image;
-    // Populate form values
     this.form.patchValue({
       name: data.name,
       slug: data.slug,
       description: data.description,
-
       is_active: isActive,
       top_brand: isTopBrand,
       meta_title: data.meta_title || "",

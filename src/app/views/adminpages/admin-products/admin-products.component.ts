@@ -8,11 +8,15 @@ import { AlertsServicesService } from "src/services/alerts-service/alerts-servic
 import { HttpService } from "src/services/http/http.service";
 
 export interface UserData {
-  userName: string;
-  name: string;
-  email: string;
-  password: string;
-  createdBy: string;
+  name: any;
+  slug: any;
+  description: any;
+  cover_image: any;
+  meta_title: any;
+  meta_description: any;
+  meta_keywords: any;
+  is_active: any;
+  top_brand: any;
 }
 
 @Component({
@@ -20,12 +24,17 @@ export interface UserData {
   templateUrl: "./admin-products.component.html",
   styleUrls: ["./admin-products.component.css"],
 })
-export class AdminProductsComponent implements OnInit{
+export class AdminProductsComponent {
   displayedColumns: string[] = [
-    "prod_name",
-    "brand_name",
-    "category",
-    "price",
+    "name",
+    "slug",
+    "description",
+    "cover_image",
+    "meta_title",
+    "meta_description",
+    "meta_keywords",
+    "is_active",
+    "top_brand",
     "edit",
   ];
   dataSource: MatTableDataSource<UserData>;
@@ -44,7 +53,7 @@ export class AdminProductsComponent implements OnInit{
   constructor(
     private router: Router,
     private dialog: MatDialog,
-    private http:HttpService,
+    private http: HttpService,
     private toast: AlertsServicesService,
     private route: Router
   ) {
@@ -72,58 +81,29 @@ export class AdminProductsComponent implements OnInit{
   }
 
   openModal() {
-    this.router.navigate(["/admin-add-product"], {
+    this.router.navigate(["/admin-brands-product"], {
       state: { param: "Create" },
     });
   }
 
   allUser() {
-    const dummyData = [
-      {
-        _id: "64116c60c3aa80a82c6a6719",
-        name: "testing",
-        userName: "testing",
-        email: "admin122@gmail.com",
-        password:
-          "$2b$10$knxmbxFjGhPtUBPwMzUZiOdz2PHeiLz6ptBCEdvTuERKWUlbWTSOm",
-        isActive: 65,
-        createdAt: "2023-03-15T06:57:36.251Z",
-        updatedAt: "2023-05-05T09:55:33.297Z",
-        isBlocked: false,
-        createdBy: "Admin", // Add this field
+    this.http.getAdminProducts().subscribe(
+      (res) => {
+        this.allData = res.data;
+
+        this.allData = this.allData.map((product: any) => {
+          if (product.cover_image) {
+            product.cover_image = product.cover_image
+              .replace(/\\/g, "/")
+              .replace(/^\/+/, "");
+          }
+          return product;
+        });
+        this.dataSource = new MatTableDataSource(this.allData);
+        this.dataSource.paginator = this.paginator;
       },
-      {
-        _id: "64199ff04eb784eefbdc8977",
-        name: "testing123",
-        userName: "testing123",
-        email: "admin4@gmail.com",
-        picture: "global.png",
-        password:
-          "$2b$10$Hmrn6iGXyT/lyl3otMFvUOqZzNWPdbACkkj2R2ZFkBnUqCRADVVMa",
-        isActive: 65,
-        createdAt: "2023-03-21T12:15:44.837Z",
-        updatedAt: "2023-05-05T09:55:33.297Z",
-        isBlocked: false,
-        createdBy: "Admin", // Add this field
-      },
-      {
-        _id: "6419a0ba4eb784eefbdc89a2",
-        name: "testing09",
-        userName: "testing09",
-        email: "admin1111@gmail.com",
-        picture: "global.png",
-        password:
-          "$2b$10$dlfXpnp21j1YXTLwQtmAGOOLS2LAbD7z6w4YxdvX0ZGKAsuNDkODK",
-        isActive: 65,
-        createdAt: "2023-03-21T12:19:06.058Z",
-        updatedAt: "2023-05-05T09:55:33.297Z",
-        isBlocked: true,
-        createdBy: "Admin", // Add this field
-      },
-    ];
-    this.allData = dummyData;
-    this.dataSource = new MatTableDataSource(dummyData);
-    this.dataSource.paginator = this.paginator;
+      (err) => {}
+    );
   }
 
   isMeOrAdminOrDeveloper(id: any): boolean {
@@ -134,10 +114,47 @@ export class AdminProductsComponent implements OnInit{
     return true;
   }
 
-  editUser(data: any) {
-    this.router.navigate(["/admin-add-product"], {
-      state: { param: "Edit", data: data },
-    });
+  deleteProduct(data) {
+    this.http.deleteAdminProducts(data.id).subscribe(
+      (res) => {
+        this.toast.showAlert("success", "Product Delete Susseccfully");
+        this.allUser();
+      },
+      (err) => {
+        this.toast.showAlert("danger", "Error in removing Product");
+      }
+    );
+  }
+
+
+  activateProduct(data) {
+    this.http.activateAdminProducts(data.id).subscribe(
+      (res) => {
+        if(res.data.is_active===true){
+          this.toast.showAlert("success", "Product add to Susseccfully");
+        }else{
+          this.toast.showAlert("success", "Product De-activate Susseccfully");
+        }
+        this.allUser();
+      },
+      (err) => {
+        this.toast.showAlert("danger", "Error in Updating Active Status");
+      }
+    );
+  }
+
+
+  addPopularProduct(data) {
+    this.http.topAdminPopularProducts(data.id).subscribe(
+      (res) => {
+          this.toast.showAlert("success", "Product move on top Susseccfully");
+
+        this.allUser();
+      },
+      (err) => {
+        this.toast.showAlert("danger", "Error in updating top status");
+      }
+    );
   }
 
   deleteUser(data: any) {}

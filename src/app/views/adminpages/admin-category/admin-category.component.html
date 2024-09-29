@@ -1,4 +1,4 @@
-<div class="tab mt-5">
+<div class="">
     <div class="row">
       <div class="col-12">
         <div class="row">
@@ -8,7 +8,6 @@
           </div>
           <div class="col-1"></div>
         </div>
-        <!-- <div class="col-10"></div> -->
       </div>
       <div class="row g-0">
         
@@ -29,18 +28,6 @@
                       />
                     </mat-form-field>
                     &nbsp;
-                    <mat-form-field appearance="outline">
-                      <mat-label>Player status</mat-label>
-                      <mat-select [(ngModel)]="selectedValue" name="userStatu">
-                        <mat-option
-                          *ngFor="let i of userStatu"
-                          (click)="changingStatus(i.value)"
-                          [value]="i.value"
-                        >
-                          {{ i.viewValue }}
-                        </mat-option>
-                      </mat-select>
-                    </mat-form-field>
                   </div>
                   
                   <div class="col-4 col-lg-4 col-md-4 col-sm-6 d-flex justify-content-end align-items-center">
@@ -50,7 +37,7 @@
                       color="primary"
                       (click)="openModal()"
                     >
-                      <mat-icon>add_circle_outline</mat-icon>Add User
+                      <mat-icon>add_circle_outline</mat-icon>Add Category 
                     </button>
                   </div>
                 </div>
@@ -63,36 +50,45 @@
                           Category Name
                         </th>
                         <td mat-cell class="column" *matCellDef="let row">
-                          {{ row.userName }}
+                          {{ row.name }}
                         </td>
                       </ng-container>
   
                       <!-- First Name Column -->
                       <ng-container class="column" matColumnDef="brand_name">
                         <th mat-header-cell class="column" *matHeaderCellDef>
-                          Brand Name
+                          Slug
                         </th>
                         <td mat-cell class="column" *matCellDef="let row; in">
-                          {{ row.name }}
+                          {{ row.slug }}
                         </td>
                       </ng-container>
   
                       <!-- Last Name Column -->
                       <ng-container class="column" matColumnDef="category">
                         <th mat-header-cell class="column" *matHeaderCellDef>
-                          Category
+                          Meta Title
                         </th>
                         <td mat-cell class="column" *matCellDef="let row; in">
-                          {{ row.email }}
+                          {{ row.meta_title }}
+                        </td>
+                      </ng-container>
+
+                      <ng-container class="column" matColumnDef="top_category">
+                        <th mat-header-cell class="column" *matHeaderCellDef>
+                          Is On Top
+                        </th>
+                        <td mat-cell class="column" *matCellDef="let row; in">
+                          {{ row.top_category === 0 ? 'No' : 'Yes' }}
                         </td>
                       </ng-container>
   
                       <ng-container class="column" matColumnDef="price">
                         <th mat-header-cell class="column" *matHeaderCellDef>
-                          Price
+                          Is Active
                         </th>
                         <td mat-cell class="column" *matCellDef="let row; in">
-                          {{ row.isBlocked ? "Blocked" : "Active" }}
+                          {{ row.is_active === 0 ? 'No' : 'Yes' }}
                         </td>
                       </ng-container>
   
@@ -102,13 +98,40 @@
                           Action
                         </th>
                         <td mat-cell class="column" *matCellDef="let row; in">
-                          <button
+                          <!-- <button
                             (click)="editUser(row)"
                             mat-raised-button
                             [color]="row.isBlocked ? 'warn' : 'primary'"
                           >
                             Edit
+                          </button> -->
+
+
+                          <button
+                          style="width: 0; height: 0; padding: 0"
+                          mat-icon-button
+                          [matMenuTriggerFor]="menu"
+                          (click)="$event.stopPropagation()"
+                        >
+                          <mat-icon>info</mat-icon>
+                        </button>
+                        <mat-menu #menu="matMenu">
+                          <button mat-menu-item (click)="editUser(row)">
+                            <mat-icon>edit</mat-icon>
+                            <span>Edit</span>
                           </button>
+                          <button mat-menu-item (click)="deleteCategory(row)">
+                            <mat-icon>delete</mat-icon>
+                            <span>Delete</span>
+                          </button>
+                          <button mat-menu-item (click)="activateDeactivateCategory(row)">
+                            <mat-icon>refresh</mat-icon>
+                            <span *ngIf="row.is_active === 1">Deactivate</span>
+                            <span *ngIf="row.is_active === 0">Activate</span>
+                          </button>
+                        </mat-menu>
+
+
                         </td>
                       </ng-container>
   
@@ -136,11 +159,11 @@
                     ></mat-paginator>
                   </div>
                 </mat-card>
-                <div class="d-flex justify-content-end">
+                <!-- <div class="d-flex justify-content-end">
                   <button mat-raised-button color="primary" (click)="download()">
                     <mat-icon>cloud_download</mat-icon>Download Users
                   </button>
-                </div>
+                </div> -->
               </mat-card-content>
             </mat-card>
           </div>

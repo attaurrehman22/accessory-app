@@ -1,4 +1,4 @@
-<div class="tab mt-5">
+<div class="">
   <div class="row">
     <div class="col-12">
       <div class="row">
@@ -27,8 +27,8 @@
                       #input
                     />
                   </mat-form-field>
-                  &nbsp;
-                  <mat-form-field appearance="outline">
+                  <!-- &nbsp; -->
+                  <!-- <mat-form-field appearance="outline">
                     <mat-label>Player status</mat-label>
                     <mat-select [(ngModel)]="selectedValue" name="userStatu">
                       <mat-option
@@ -39,7 +39,7 @@
                         {{ i.viewValue }}
                       </mat-option>
                     </mat-select>
-                  </mat-form-field>
+                  </mat-form-field> -->
                 </div>
 
                 <div
@@ -95,8 +95,8 @@
                       <td mat-cell class="column" *matCellDef="let row; in">
                         <!-- {{ row.cover_image }} -->
                         <img
-                          style="height: 100px;
-                          width: 150px;
+                          style="height: 60px;
+                          width: 70px;
                           border-radius: 10px;"
                           [src]="
                             'https://api.chronosouq.com/' + row.cover_image
@@ -140,7 +140,7 @@
                         Is Active
                       </th>
                       <td mat-cell class="column" *matCellDef="let row; in">
-                        {{ row.is_active }}
+                        {{ row.is_active === 0 ? 'No' : 'Yes'}}
                       </td>
                     </ng-container>
 
@@ -149,7 +149,7 @@
                         Top Brand
                       </th>
                       <td mat-cell class="column" *matCellDef="let row; in">
-                        {{ row.top_brand }}
+                        {{ row.top_brand === 0 ? 'No' : 'Yes'}}
                       </td>
                     </ng-container>
 
@@ -218,11 +218,11 @@
                   ></mat-paginator>
                 </div>
               </mat-card>
-              <div class="d-flex justify-content-end">
+              <!-- <div class="d-flex justify-content-end">
                 <button mat-raised-button color="primary" (click)="download()">
                   <mat-icon>cloud_download</mat-icon>Download Users
                 </button>
-              </div>
+              </div> -->
             </mat-card-content>
           </mat-card>
         </div>

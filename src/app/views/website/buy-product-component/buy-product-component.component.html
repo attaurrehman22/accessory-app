@@ -104,7 +104,7 @@
 
 <div class="container mt-5">
   <div class="card">
-    <div class="card-body">
+    <div class="card-body" style="display: flex;flex-direction: column;">
       <h5 class="card-title mt-5">More About This Listing</h5>
       <ul class="nav nav-tabs" id="myTab" role="tablist">
         <li class="nav-item" role="presentation">
@@ -431,7 +431,7 @@
           class="card-img-top"
           alt="Rolex GMT-Master II"
         />
-        <div class="card-body">
+        <div class="card-body" style="display: flex;flex-direction: column;">
           <h5 class="card-title">{{productDetails.name}}</h5>
           <h6 *ngIf="productDetails.brand" class="card-subtitle mb-2 text-muted">{{productDetails.brand.name}}</h6>
           <p class="card-text">{{productDetails.reference_number}}</p>

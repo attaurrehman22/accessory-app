@@ -10,6 +10,13 @@ import { AlertsServicesService } from "src/services/alerts-service/alerts-servic
   styleUrls: ["./app.component.css"],
 })
 export class AppComponent implements OnInit {
+
+  routeToCom:any='dashboard';
+
+  routeToSection(routeName){
+    this.routeToCom=routeName
+  }
+
   showHeader: boolean = true;
   showAdminHeader: boolean = true;
   showSecondFooter: boolean = true;
@@ -96,5 +103,13 @@ export class AppComponent implements OnInit {
   // Method to clear alert
   closeAlert() {
     this.alertService.clearAlert();
+  }
+
+
+  gotoLogin(){
+    localStorage.removeItem('Logged')
+    localStorage.removeItem('user_token')
+    localStorage.removeItem('isAdminUser')
+   this.router.navigate(['/login'])
   }
 }
