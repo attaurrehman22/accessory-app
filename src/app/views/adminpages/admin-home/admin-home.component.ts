@@ -3,6 +3,7 @@ import { AlertsServicesService } from "src/services/alerts-service/alerts-servic
 import * as Highcharts from "highcharts";
 import { HighchartsServiceService } from "src/services/highcharts-service/highcharts-service.service";
 import { ChangeDetectorRef } from "@angular/core"; // Import ChangeDetectorRef
+import { HttpService } from "src/services/http/http.service";
 
 @Component({
   selector: "app-admin-home",
@@ -25,30 +26,35 @@ export class AdminHomeComponent {
   ];
   Highcharts = Highcharts;
   linechart: any;
+  dashboarddetails:any;
 
   constructor(
     private toast: AlertsServicesService,
     private highchartsService: HighchartsServiceService,
-    private cd: ChangeDetectorRef
+    private cd: ChangeDetectorRef,
+    private http:HttpService
   ) {}
   ngOnInit(): void {
+    this.getDashboardDetails();
     this.getDashBoardCardInfo();
-    this.loadHighcharts(); // Load chart options after initialization
+    this.loadHighcharts(); 
+  }
+
+  getDashboardDetails(){
+    this.http.getAdminDashBoardDetails().subscribe(
+      (res)=>{
+        this.dashboarddetails=res.data;
+      }
+    )
   }
 
   loadHighcharts() {
     this.linechart = this.highchartsService.getLineChartOptions();
     console.log(this.linechart);
-    this.cd.detectChanges(); // Force change detection to ensure chart updates
+    this.cd.detectChanges();
   }
 
   getDashBoardCardInfo() {
-    // this.api.getInfoForAdminDashBoard().subscribe((res: any) => {
-    //   if (res.success) {
-    //     this.cardData = res.data;
-    //   } else {
-    //     this.toast.danger('Something went wrong');
-    //   }
-    // });
+    
   }
 }

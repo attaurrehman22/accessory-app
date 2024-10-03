@@ -16,6 +16,7 @@ import { TranslateService } from "@ngx-translate/core";
 import { AlertsServicesService } from "src/services/alerts-service/alerts-services.service";
 import { HttpService } from "src/services/http/http.service";
 import { RegisterComponent } from "../register/register.component";
+import { LoginStateService } from "src/services/login-service/login-state.service";
 
 @Component({
   selector: "app-login",
@@ -42,7 +43,8 @@ export class LoginComponent implements OnInit {
     private dialog: MatDialog,
     private fb: FormBuilder,
     private http: HttpService,
-    public translateService: TranslateService
+    public translateService: TranslateService,
+    private loginStateService:LoginStateService
   ) {
     this.translateService.addLangs(this.supportLanguages);
     this.translateService.setDefaultLang("ar");
@@ -75,9 +77,16 @@ export class LoginComponent implements OnInit {
               "Enter valid username/email and password"
             );
           } else {
-            localStorage.setItem("Logged", "LogIn");
+            localStorage.setItem('Logged', 'LogIn');
+            this.loginStateService.updateLoginStatus(true);
             localStorage.setItem("user_token", response.authorization.token);
-            localStorage.setItem("isAdminUser",response.user.type)
+
+            const isAdmin = response.user.type === 'admin';
+            
+            if(isAdmin){
+              this.loginStateService.updateAdminStatus(isAdmin);
+              localStorage.setItem('isAdminLogin',response.user.type)
+            }
             this.router.navigateByUrl("");
           }
         },

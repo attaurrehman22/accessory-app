@@ -4,6 +4,9 @@ import { TranslateService } from "@ngx-translate/core";
 import { LanguageService } from "src/services/lang-service/language.service";
 import { MatSidenav } from "@angular/material/sidenav";
 import { SearchServiceService } from "src/services/search-service/search-service.service";
+import { LoginStateService } from "src/services/login-service/login-state.service";
+import { ChangeDetectorRef } from '@angular/core';
+
 
 @Component({
   selector: "app-header",
@@ -12,7 +15,7 @@ import { SearchServiceService } from "src/services/search-service/search-service
 })
 export class HeaderComponent {
   isSmallScreen: boolean = false;
-  isUserLogin: any;
+  isUserLogin: any='';
   searchQuery: string = "";
 
   searchFilter: boolean = true;
@@ -34,12 +37,13 @@ export class HeaderComponent {
     public translateService: TranslateService,
     private languageService: LanguageService,
     public router: Router,
-    private searchService: SearchServiceService
+    private searchService: SearchServiceService,
+    private loginStateService:LoginStateService,
+    private cdRef: ChangeDetectorRef
   ) {
     const languagevalues = this.supportLanguages.map((lang) => lang.value);
     this.translateService.addLangs(languagevalues);
     this.translateService.setDefaultLang("en");
-    this.isAdminUser = localStorage.getItem("isAdminUser") === "admin"
     const browserlang = this.translateService.getBrowserLang();
 
     if (languagevalues.includes(browserlang)) {
@@ -57,6 +61,10 @@ export class HeaderComponent {
       this.isRtl = lang !== "en";
       this.selectedLang = lang;
     });
+
+    this.loginStateService.isAdminUser$.subscribe((isAdmin) => {
+      this.isAdminUser = isAdmin;
+    });
   }
 
   @HostListener("window:resize", ["$event"])
@@ -64,12 +72,15 @@ export class HeaderComponent {
     this.isSmallScreen = window.innerWidth <= 768;
   }
 
-  isAdminUser: any;
+  isAdminUser: any='';
 
   ngOnInit() {
-    this.isAdminUser = localStorage.getItem("isAdminUser") === "admin";
-    this.isUserLogin = localStorage.getItem("Logged");
+    this.loginStateService.isUserLoggedIn$.subscribe((isLoggedIn) => {
+      this.isUserLogin = isLoggedIn ? 'LogIn' : '';
+      this.cdRef.detectChanges();
+    });
     this.isSmallScreen = window.innerWidth <= 1500;
+   this.isAdminUser =localStorage.getItem('isAdminLogin')
   }
 
   routeToAdminPannel(){
@@ -97,10 +108,12 @@ export class HeaderComponent {
   }
 
   logout() {
-    localStorage.removeItem("isAdminUser");
     localStorage.removeItem("Logged");
     localStorage.removeItem("user_token");
-    this.isUserLogin = null;
+    this.isUserLogin = '';
+    this.isAdminUser='';
+    this.loginStateService.updateAdminStatus(this.isAdminUser);
+    this.loginStateService.updateLoginStatus(false);
     this.router.navigateByUrl("login");
   }
 
@@ -111,14 +124,7 @@ export class HeaderComponent {
   }
 
   routeToNewProduct() {
-    // const token = localStorage.getItem("user_token");
-    // const rerouteUrl = "new-product";
-    // localStorage.setItem("navigate_url", rerouteUrl);
-    // if (token) {
     this.router.navigate(["/new-product"]);
-    // } else {
-    // this.router.navigate(["/login"]);
-    // }
   }
 
   // Close the sidenav on outside click

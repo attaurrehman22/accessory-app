@@ -269,4 +269,13 @@ export class HttpService {
     });
   }
 
+  getAdminDashBoardDetails(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/api/admin/dashboard/stats`, {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+  }
+
 }

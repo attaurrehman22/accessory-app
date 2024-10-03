@@ -2,7 +2,6 @@
     background: whitesmoke;
     width: 100%;
     max-width: 100%;
-  
     min-height: 844px;
     max-height: 100vh;
   }
@@ -50,8 +49,7 @@
   }
   @media screen and (min-width: 1800px) {
     .table {
-      max-width: 50%; /* Limit the table width to 100% of the container */
-      overflow-x: auto; /* Add horizontal scrolling for wide screens */
+      max-width: 50%; 
+      overflow-x: auto;
     }
   }
-  

@@ -1,50 +1,47 @@
+.table {
+  overflow-x: auto;
+  min-width: 100% !important;
+  max-width: 100% !important;
+  overflow-y: auto;
+}
 
+@media only screen and (max-width: 660px) {
+  .column {
+    padding: 0 !important;
+  }
+}
+@media only screen and (max-width: 550px) {
+  .mt {
+    min-width: 623px;
+  }
+}
+@media only screen and (min-width: 1500px) {
   .table {
-    overflow-x: auto;
-    min-width: 100% !important;
-    max-width: 100% !important;
-    overflow-y: auto;
-    /* max-height: 100vh !important; */
+    overflow-x: hidden;
+    overflow-y: hidden;
   }
-  
-  @media only screen and (max-width: 660px) {
-    .column {
-      padding: 0 !important;
-    }
+}
+@media only screen and (min-width: 2000px) {
+  .table {
+    overflow-x: hidden;
+    overflow-y: hidden;
   }
-  @media only screen and (max-width: 550px) {
-    .mt {
-      min-width: 623px;
-    }
+}
+.row {
+  --bs-gutter-x: -0.5rem !important;
+}
+.iconColor {
+  color: blue;
+}
+.iconColor1 {
+  color: red;
+}
+td {
+  vertical-align: initial !important;
+}
+
+@media only screen and (max-width: 1116px) {
+  .card-class {
+    width: fit-content !important;
   }
-  @media only screen and (min-width: 1500px) {
-    .table {
-      overflow-x: hidden;
-      overflow-y: hidden;
-    }
-  }
-  @media only screen and (min-width: 2000px) {
-    .table {
-      overflow-x: hidden;
-      overflow-y: hidden;
-    }
-  }
-  .row {
-    --bs-gutter-x: -0.5rem !important;
-  }
-  .iconColor {
-    color: blue;
-  }
-  .iconColor1 {
-    color: red;
-  }
-  td {
-    vertical-align: initial !important;
-  }
-  /* @media screen and (min-width: 1800px) {
-    .table {
-      max-width: 50%; 
-      overflow-x: auto;
-    }
-  } */
-  
+}
