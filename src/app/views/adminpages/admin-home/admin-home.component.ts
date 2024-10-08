@@ -26,24 +26,35 @@ export class AdminHomeComponent {
   ];
   Highcharts = Highcharts;
   linechart: any;
-  dashboarddetails:any;
+  dashboarddetails = {
+    totalNumberOfBrands: 0
+    , totalNumberOfBrandsWithActiveSubscription: 0
+    , totalNumberOfCatagory: 0
+    , activeBrandsCount: 0
+    , topBrandsCount: 0
+    , totalNumberOfUsers: 0
+    , totalNumberOfUsersWithActiveSubscription: 0
+    , totalNumberOfUsersWithSubscription: 0
+    , totalNumberOfUsersWithoutSubscription: 0
+    , totalNumberOfProducts: 0
+  };
 
   constructor(
     private toast: AlertsServicesService,
     private highchartsService: HighchartsServiceService,
     private cd: ChangeDetectorRef,
-    private http:HttpService
-  ) {}
+    private http: HttpService
+  ) { }
   ngOnInit(): void {
     this.getDashboardDetails();
     this.getDashBoardCardInfo();
-    this.loadHighcharts(); 
+    this.loadHighcharts();
   }
 
-  getDashboardDetails(){
+  getDashboardDetails() {
     this.http.getAdminDashBoardDetails().subscribe(
-      (res)=>{
-        this.dashboarddetails=res.data;
+      (res) => {
+        this.dashboarddetails = res.data;
       }
     )
   }
@@ -55,6 +66,6 @@ export class AdminHomeComponent {
   }
 
   getDashBoardCardInfo() {
-    
+
   }
 }

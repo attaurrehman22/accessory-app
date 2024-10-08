@@ -3,12 +3,7 @@
     "development"
   ],
   "hints": {
-    "axe/forms": [
-      "default",
-      {
-        "label": "off"
-      }
-    ],
+    "axe/forms": "off",
     "button-type": "off",
     "compat-api/css": [
       "off",
@@ -24,7 +19,10 @@
       {
         "button-name": "off"
       }
-    ]
+    ],
+    "axe/text-alternatives": "off",
+    "axe/aria": "off",
+    "axe/structure": "off"
   },
   "browserslist": [
     "defaults",

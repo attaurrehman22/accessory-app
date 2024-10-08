@@ -22,13 +22,13 @@ export class AppComponent implements OnInit {
   showSecondFooter: boolean = true;
 
   routesToHideforUser = [
-    "/admin-dashboard",
-    "/admin-products",
-    "/admin-add-product",
-    "/admin-brands",
-    "/admin-brands-product",
-    "/admin-category",
-    "/admin-category-product",
+    "/admin/dashboard",
+    "/admin/products",
+    "/admin/add-product",
+    "/admin/brands",
+    "/admin/brands-product",
+    "/admin/category",
+    "/admin/category-product",
   ];
   routesToHideforAdmin = [
     "/login",

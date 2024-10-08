@@ -65,6 +65,9 @@ export class LoginComponent implements OnInit {
       email: this.email,
       password: this.password,
     });
+    if(!!localStorage.getItem('user_token')){
+      this.router.navigateByUrl("");
+    }
   }
   gotoHome() {
     this.loginForm.markAllAsTouched();
@@ -82,7 +85,7 @@ export class LoginComponent implements OnInit {
             localStorage.setItem("user_token", response.authorization.token);
 
             const isAdmin = response.user.type === 'admin';
-            
+
             if(isAdmin){
               this.loginStateService.updateAdminStatus(isAdmin);
               localStorage.setItem('isAdminLogin',response.user.type)

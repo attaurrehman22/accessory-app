@@ -44,7 +44,7 @@ import { ProductDetailComponentComponent } from './views/website/product-detail-
 import { BuyProductComponentComponent } from './views/website/buy-product-component/buy-product-component.component';
 import { SecondHeaderComponent } from "./views/website/second-header/second-header.component";
 import { ProductListComponent } from './views/website/product-list/product-list.component';
-import { FormsModule } from '@angular/forms'; 
+import { FormsModule } from '@angular/forms';
 import { PopularBrandsListAlphabeticallyComponent } from './views/website/popular-brands-list-alphabetically/popular-brands-list-alphabetically.component';
 import { BidiModule } from '@angular/cdk/bidi';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -65,6 +65,7 @@ import { AdminBrandsProductComponent } from './views/adminpages/admin-brands-pro
 import { AdminCategoryProductComponent } from './views/adminpages/admin-category-product/admin-category-product.component';
 import { ChartModule } from 'angular-highcharts';
 import { HighchartsChartModule } from 'highcharts-angular';
+import { AdminPageHeaderComponent } from "./views/adminpages/admin-page-header/admin-page-header.component";
 
 @NgModule({
   declarations: [
@@ -93,6 +94,7 @@ import { HighchartsChartModule } from 'highcharts-angular';
     AdminHomeComponent,
     AdminSidebarComponent,
     AdminNavbarComponent,
+    AdminPageHeaderComponent,
     AdminProductsComponent,
     AdminAddProductComponent,
     AdminBrandsComponent,
@@ -127,7 +129,7 @@ import { HighchartsChartModule } from 'highcharts-angular';
     RouterModule,
     MatDialogModule,
     MatMenuModule,
-    BidiModule,HighchartsChartModule,
+    BidiModule, HighchartsChartModule,
     // MatExpansionModule,
     TranslateModule.forRoot({
         loader: {
@@ -136,7 +138,6 @@ import { HighchartsChartModule } from 'highcharts-angular';
             deps: [HttpClient]
         }
     }),
-    
 ],
   providers: [TranslateService, provideAnimationsAsync()],
   bootstrap: [AppComponent],
