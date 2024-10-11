@@ -33,19 +33,19 @@
           </h5>
           <div class="d-flex gap-2">
             <div class="timer-box">
-              <span class="display-4" id="days">02</span>
+              <span class="display-4">{{ days }}</span>
               <p>Days</p>
             </div>
             <div class="timer-box">
-              <span class="display-4" id="hours">06</span>
+              <span class="display-4">{{ hours }}</span>
               <p>Hrs</p>
             </div>
             <div class="timer-box">
-              <span class="display-4" id="minutes">05</span>
+              <span class="display-4">{{ minutes }}</span>
               <p>Mins</p>
             </div>
             <div class="timer-box">
-              <span class="display-4" id="seconds">30</span>
+              <span class="display-4">{{ seconds }}</span>
               <p>Sec</p>
             </div>
           </div>
@@ -55,6 +55,7 @@
     <div class="col-lg-7 col-md-12 col-sm-12">
       <div class="container mt-5">
         <p-carousel
+          [autoplayInterval]="2000"
           [value]="products"
           [numVisible]="3"
           [numScroll]="1"

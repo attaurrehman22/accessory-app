@@ -96,15 +96,15 @@
   .carousal-div {
     display: flex;
     justify-content: center;
-    }
-    
-    .carosal-inner-custom {
-      width: 35% !important;
-    }
+  }
 
-    .no-gutters {
-      width: 89%;
-    }
+  .carosal-inner-custom {
+    width: 35% !important;
+  }
+
+  .no-gutters {
+    width: 89%;
+  }
 
   .bg-shadow-layer {
     position: absolute;
@@ -141,12 +141,12 @@
   }
 }
 
-
 @media (max-width: 468px) {
 
   .carosal-div {
     height: auto !important;
   }
+
   .carosal-inner-custom {
     width: 60% !important;
   }
@@ -161,4 +161,26 @@
   .carosal-div {
     height: auto !important;
   }
+
+  .prev-btn {
+    top: 113% !important;
+  }
+
+  .next-btn {
+    top: 113% !important;
+  }
+}
+
+.prev-btn {
+  position: absolute;
+  left: 38%;
+  top: 100%;
+  z-index: 850
+}
+
+.next-btn {
+  position: absolute;
+  left: 43%;
+  top: 100%;
+  z-index: 850
 }

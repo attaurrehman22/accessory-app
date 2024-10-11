@@ -38,11 +38,11 @@
 }
 
 ::ng-deep .p-carousel .p-carousel-prev {
-  left: 58%; 
+  left: 58%;
 }
 
 ::ng-deep .p-carousel .p-carousel-next {
-  right: 31%; 
+  right: 31%;
 }
 
 
@@ -85,11 +85,12 @@
     left: 35%;
     bottom: 0;
   }
-  
+
 }
 
 /* Media query for very small screens (narrow mobile screens) */
 @media (max-width: 561px) {
+
   ::ng-deep .p-carousel .p-carousel-prev,
   ::ng-deep .p-carousel .p-carousel-next {
     left: auto !important;
@@ -122,7 +123,7 @@
   bottom: 10%;
 }
 
-::ng-deep .p-carousel-indicators .p-carousel-indicator button{
+::ng-deep .p-carousel-indicators .p-carousel-indicator button {
   height: 10px;
   width: 10px;
   border-radius: 10px
@@ -145,20 +146,21 @@
   height: 300px;
 
 }
+
 ::ng-deep .p-carousel-item-start .border-round {
   height: 97%;
 }
 
-::ng-deep .p-carousel-item-start .border-round .mb-3 .relative img{
+::ng-deep .p-carousel-item-start .border-round .mb-3 .relative img {
   height: 300px;
 }
 
-.first-product {
+/* .first-product {
   height: 500px ; 
 }
 .p-carousel .p-carousel-item {
   height: 300px;
-}
+} */
 
 
 
@@ -185,28 +187,21 @@
   justify-content: end;
 }
 
-.reverse-order-time h5{
+.reverse-order-time h5 {
   text-align: end;
 }
 
-.reverse-order-time .d-flex{
+.reverse-order-time .d-flex {
   justify-content: end;
 }
 
 
-
-
-
-
-
-
-
 .first-product {
-  transform: scale(1.2); /* Increase size for the first visible product */
-  transition: transform 0.3s ease-in-out; /* Smooth transition for scaling */
+  /* transform: scale(1.2); 
+  transition: transform 0.3s ease-in-out; */
 }
 
 .other-products {
-  transform: scale(1); /* Normal size for other products */
-  transition: transform 0.3s ease-in-out;
+  /* transform: scale(1); 
+  transition: transform 0.3s ease-in-out; */
 }

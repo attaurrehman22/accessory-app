@@ -1,21 +1,77 @@
 .bg-left {
-  /* background-color: #FFF;  */
-  /* height: 100vh; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
 }
 
 .bg-right {
-  background-color: #333333; /* Change this to match the right color */
-  height: 50vh;
+  background-color: #333333;
   clip-path: polygon(31% 0, 100% 0%, 100% 100%, 0 100%);
+  display: flex;
+  align-items: center;
+  justify-content: end;
+}
+
+.watch-details-div {
+  width: 60%;
+  padding: 0 15px 0 5px;
+}
+
+.buy-btn {
+  width: fit-content;
+  padding: 5px 50px 5px 50px;
+  border-radius: 9px;
+  font-weight: 500;
 }
 
 @media (max-width: 768px) {
   .bg-left {
     clip-path: none;
   }
+
   .bg-right {
-    background-color: #333333; /* Change this to match the right color */
-    height: 50vh;
+    background-color: #333333;
     clip-path: polygon(0% 0, 100% 0%, 100% 100%, 0 100%);
+    justify-content: center;
+  }
+
+  .watch-details-div {
+    width: 100%;
+    padding: 5px 15px 5px 15px;
+  }
+}
+
+.reverse-order {
+  flex-direction: row-reverse;
+}
+
+.reverse-order-res-img {
+  width: 70%;
+}
+
+.reverse-order .bg-left {
+  clip-path: polygon(31% 0, 100% 0%, 100% 100%, 0 100%);
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  background: #f8f8f8;
+}
+
+.reverse-order .bg-right {
+  clip-path: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+@media (max-width: 768px) {
+  .reverse-order .bg-left {
+    clip-path: none;
+  }
+
+  .reverse-order-res-img {
+    width: 100%;
   }
 }
