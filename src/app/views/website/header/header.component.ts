@@ -71,20 +71,16 @@ export class HeaderComponent {
     this.isSmallScreen = window.innerWidth <= 768;
   }
 
-  isAdminUser: any = "";
+  isAdminUser: any = '';
 
   ngOnInit() {
-    this.loginStateService.isUserLoggedIn$.subscribe((isLoggedIn) => {
-      this.isUserLogin = isLoggedIn ? "LogIn" : "";
-      this.cdRef.detectChanges();
-    });
+    this.isUserLogin = localStorage.getItem('Logged');
     this.isSmallScreen = window.innerWidth <= 1500;
-    this.isAdminUser = localStorage.getItem("isAdminLogin");
-    console.log(this.isUserLogin, this.isSmallScreen);
+    this.isAdminUser = localStorage.getItem('isAdminLogin')
   }
 
   routeToAdminPannel() {
-    this.router.navigate(["/admin-dashboard"]);
+    this.router.navigate(["/admin/dashboard"]);
   }
 
   onSearch(query: string) {

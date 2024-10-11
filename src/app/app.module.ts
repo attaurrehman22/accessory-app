@@ -44,7 +44,7 @@ import { ProductDetailComponentComponent } from './views/website/product-detail-
 import { BuyProductComponentComponent } from './views/website/buy-product-component/buy-product-component.component';
 import { SecondHeaderComponent } from "./views/website/second-header/second-header.component";
 import { ProductListComponent } from './views/website/product-list/product-list.component';
-import { FormsModule } from '@angular/forms'; 
+import { FormsModule } from '@angular/forms';
 import { PopularBrandsListAlphabeticallyComponent } from './views/website/popular-brands-list-alphabetically/popular-brands-list-alphabetically.component';
 import { BidiModule } from '@angular/cdk/bidi';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -70,6 +70,7 @@ import { CarouselModule } from 'primeng/carousel';
 import { ButtonModule } from 'primeng/button';
 import { TagModule } from 'primeng/tag';
 
+import { AdminPageHeaderComponent } from "./views/adminpages/admin-page-header/admin-page-header.component";
 
 @NgModule({
   declarations: [
@@ -98,6 +99,7 @@ import { TagModule } from 'primeng/tag';
     AdminHomeComponent,
     AdminSidebarComponent,
     AdminNavbarComponent,
+    AdminPageHeaderComponent,
     AdminProductsComponent,
     AdminAddProductComponent,
     AdminBrandsComponent,
@@ -137,6 +139,7 @@ import { TagModule } from 'primeng/tag';
     ButtonModule,
     TagModule,
     BidiModule,HighchartsChartModule,
+    BidiModule, HighchartsChartModule,
     // MatExpansionModule,
     TranslateModule.forRoot({
         loader: {
@@ -145,7 +148,6 @@ import { TagModule } from 'primeng/tag';
             deps: [HttpClient]
         }
     }),
-    
 ],
   providers: [TranslateService, provideAnimationsAsync()],
   bootstrap: [AppComponent],
