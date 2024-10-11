@@ -7,7 +7,7 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class StayLoopComponentComponent {
   constructor(public translateService: TranslateService) {
-    const supportedLanguages = ["en", "ar"]; // Add other languages if necessary
+    const supportedLanguages = ["en", "ar"];
     this.translateService.addLangs(supportedLanguages);
     this.translateService.setDefaultLang('en');
 
@@ -15,9 +15,5 @@ export class StayLoopComponentComponent {
     if (supportedLanguages.includes(browserLang)) {
       this.translateService.use(browserLang);
     }
-  }
-
-  useLang(lang: string) {
-    this.translateService.use(lang);
   }
 }

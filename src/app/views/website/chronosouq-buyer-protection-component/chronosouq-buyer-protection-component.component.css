@@ -5,9 +5,10 @@
     padding: 45px 220px 0 220px;
   }
   
-  .text-section {
+  /* .text-section {
     max-width: 40%;
-  }
+  } */
+   
   
   .text-section h2 {
     font-size: 24px;
@@ -145,4 +146,95 @@
   .reverse-order {
     flex-direction: column-reverse;
   }
+}
+
+
+
+
+
+
+
+
+.category_btn{
+  border: 1px solid #F3F3F3;
+  height: 40px;
+  border-radius: 7px;
+}
+
+
+
+.container {
+  margin-top: 20px;
+}
+
+.card {
+  border-radius: 15px;
+  overflow: hidden;
+}
+
+.card-img-top {
+  height: 200px;
+  object-fit: contain;
+  background: #F8F8F8;
+
+}
+
+.watch-brand {
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+.price {
+  font-size: 1.1rem;
+  font-weight: bold;
+}
+
+.rating {
+  color: orange;
+  font-weight: bold;
+}
+
+.star-rating {
+  color: orange;
+}
+
+.text-danger {
+  font-size: 0.8rem;
+}
+
+.heart-icon {
+  display: flex;
+  justify-content: flex-end;
+  position: absolute;
+  top: 10px;
+  right: 15px;
+}
+
+.heart-icon i {
+  color: #ff4d4d;
+  font-size: 24px;
+  transition: background-color 0.3s ease;
+}
+
+.fa-heart-o {
+  color: #a09494  !important;
+}
+
+.fa-heart {
+  color: #ff4d4d;
+}
+
+
+
+.view_btn {
+  border-radius: 6px;
+  padding: 0 20px 0 20px;
+  height: 40px;
+  border: 1px solid #242424;
+  background: none;
+}
+
+.selected-category {
+  background-color: black;
+  color: white;
 }

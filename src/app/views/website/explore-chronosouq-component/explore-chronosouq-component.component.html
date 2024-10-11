@@ -1,164 +1,197 @@
-<div class="global-main-wraper mt-5 mb-5">
-  <h1 class="text-center">{{ "explore_chrono.label" | translate }}</h1>
+<div
+  class="global-main-wraper mt-5 mb-5 d-flex flex-wrap container"
+  [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }"
+>
+  <div class="col-lg-6 col-md-6 col-sm-12">
+    <div class="my-5"
+    [ngClass]="{ 'reverse-order-header': translateService.currentLang !== 'en' }">
+      <h2 class="mb-4">{{ "explore_chrono.label" | translate }}</h2>
+      <div class="row justify-content-center">
+        <div class="col-md-12"
+        [ngClass]="{ 'reverse-order-labels': translateService.currentLang !== 'en' }"
+        >
+         
+          <div
+            class="d-flex align-items-center rounded mb-3 p-3"
+            [ngClass]="{ 'bg-active-color ': selectedStep === 1 }"
+            (click)="selectStep(1)"
+          >
+            <div
+              class="step-circle rounded-circle d-flex align-items-center justify-content-center me-3"
+              [ngClass]="{
+                'bg-dark text-white': selectedStep === 1,
+                'bg-active-color ': selectedStep !== 1
+              }"
+              style="width: 2.3rem; height: 2.2rem"
+            >
+              1
+            </div>
+            <div class="text-start">
+              <h5 
+               [ngClass]="{ 'reverse-order-header': translateService.currentLang !== 'en' }"
+              class="mb-1">{{ "explore_chrono.browse" | translate }}</h5>
+              <p
+                class="mb-0"
+                [ngClass]="{
+                  '': selectedStep === 1,
+                  'text-muted': selectedStep !== 1
+                }"
+                style="font-size: 1.7vh"
+                *ngIf="selectedStep === 1"
+              >
+                {{ "explore_chrono.browse_para" | translate }}
+              </p>
+            </div>
+          </div>
 
-  <div class="mt-4 cards-div">
-    <div class="pos-relative">
-      <img
-        style="
-          height: 615px;
-          width: 354px;
-          object-fit: fill;
-          border-top-left-radius: 10px;
-          border-bottom-left-radius: 10px;
-        "
-        src="./assets/images/man-watch-1.png"
-        alt="{{ 'explore_chrono.men_watches' | translate }}"
-      />
-      <div
-        class="overlay"
-        [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }"
-        style="border-bottom-left-radius: 10px !important"
-      >
-        <h2>{{ exploreList[0].name }}</h2>
-        <p>{{ "explore_chrono.read_more" | translate }}</p>
-      </div>
-    </div>
-    <div
-      style="
-        flex-direction: column;
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between;
-      "
-    >
-      <div class="pos-relative">
-        <img
-          style="height: 300px; width: 354px; object-fit: fill"
-          src="./assets/images/man-watch-2.png"
-          alt="{{ 'explore_chrono.pre_owned' | translate }} {{
-            'explore_chrono.watches' | translate
-          }}"
-        />
-        <div
-          class="overlay"
-          [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }"
-        >
-          <h2>{{ exploreList[1].name }}</h2>
-          <p>{{ "explore_chrono.read_more" | translate }}</p>
-        </div>
-      </div>
-      <div class="pos-relative">
-        <img
-          style="height: 300px; width: 354px; object-fit: fill"
-          src="./assets/images/man-watch-2.png"
-          alt="{{ 'explore_chrono.pocket' | translate }} {{
-            'explore_chrono.watches' | translate
-          }}"
-        />
-        <div
-          class="overlay"
-          [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }"
-        >
-          <h2>{{ exploreList[2].name }}</h2>
-          <p>{{ "explore_chrono.read_more" | translate }}</p>
-        </div>
-      </div>
-    </div>
-    <div class="pos-relative">
-      <img
-        style="height: 615px; width: 354px; object-fit: fill"
-        src="./assets/images/man-watch-3.png"
-        alt="{{ 'explore_chrono.automatic' | translate }} {{
-          'explore_chrono.watches' | translate
-        }}"
-      />
-      <div
-        class="overlay"
-        [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }"
-      >
-        <h2>{{ exploreList[3].name }}</h2>
-        <p>{{ "explore_chrono.read_more" | translate }}</p>
-      </div>
-    </div>
-    <div
-      style="
-        flex-direction: column;
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between;
-      "
-    >
-      <div class="pos-relative">
-        <img
-          style="
-            height: 400px;
-            width: 354px;
-            object-fit: fill;
-            border-bottom-left-radius: 10px;
-            border-top-right-radius: 10px;
-          "
-          src="./assets/images/man-watch-5.png"
-          alt="{{ 'explore_chrono.womens' | translate }} {{
-            'explore_chrono.watches' | translate
-          }}"
-        />
-        <div
-          class="overlay"
-          [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }"
-        >
-          <h2>{{ exploreList[4].name }}</h2>
-          <p>{{ "explore_chrono.read_more" | translate }}</p>
-        </div>
-      </div>
-      <div style="display: flex; justify-content: space-between">
-        <div style="position: relative">
-          <img
-            style="height: 205px; width: 170px; object-fit: fill"
-            src="./assets/images/man-watch-6.png"
-            alt="{{ 'explore_chrono.gold' | translate }} {{
-              'explore_chrono.watches' | translate
-            }}"
-          />
+    
           <div
-            class="overlay"
-            [ngClass]="{
-              'reverse-order': translateService.currentLang !== 'en'
-            }"
+            class="d-flex align-items-center rounded mb-3 p-3"
+            [ngClass]="{ 'bg-active-color ': selectedStep === 2 }"
+            (click)="selectStep(2)"
           >
-            <h2>{{ exploreList[5].name }}</h2>
-            <p>{{ "explore_chrono.read_more" | translate }}</p>
+            <div
+              class="step-circle rounded-circle d-flex align-items-center justify-content-center me-3"
+              [ngClass]="{
+                'bg-dark text-white': selectedStep === 2,
+                'bg-active-color ': selectedStep !== 2
+              }"
+              style="width: 2.3rem; height: 2.2rem"
+            >
+              2
+            </div>
+
+            <div class="text-start">
+              <h5 
+               [ngClass]="{ 'reverse-order-header': translateService.currentLang !== 'en' }"
+              class="mb-1">
+                {{ "explore_chrono.secure" | translate }}
+              </h5>
+              <p
+                class="mb-0"
+                [ngClass]="{
+                  '': selectedStep === 2,
+                  'text-muted': selectedStep !== 2
+                }"
+                style="font-size: 1.7vh"
+                *ngIf="selectedStep === 2"
+              >
+                {{ "explore_chrono.secure_para" | translate }}
+              </p>
+            </div>
           </div>
-        </div>
-        <div style="position: relative">
-          <img
-            style="
-              height: 205px;
-              width: 170px;
-              object-fit: fill;
-              border-bottom-right-radius: 10px;
-            "
-            src="./assets/images/man-watch-6.png"
-            alt="{{ 'explore_chrono.moon' | translate }} {{
-              'explore_chrono.watches' | translate
-            }}"
-          />
+
           <div
-            class="overlay"
-            [ngClass]="{
-              'reverse-order': translateService.currentLang !== 'en'
-            }"
-            style="border-bottom-right-radius: 10px !important"
+            class="d-flex align-items-center rounded mb-3 p-3"
+            [ngClass]="{ 'bg-active-color ': selectedStep === 3 }"
+            (click)="selectStep(3)"
           >
-            <h2>{{ exploreList[6].name }}</h2>
-            <p>{{ "explore_chrono.read_more" | translate }}</p>
+            <div
+              class="step-circle rounded-circle d-flex align-items-center justify-content-center me-3"
+              [ngClass]="{
+                'bg-dark text-white': selectedStep === 3,
+                'bg-active-color ': selectedStep !== 3
+              }"
+              style="width: 2.3rem; height: 2.2rem"
+            >
+              3
+            </div>
+
+            <div class="text-start">
+              <h5 
+               [ngClass]="{ 'reverse-order-header': translateService.currentLang !== 'en' }"
+              class="mb-1">
+                {{ "explore_chrono.get_it" | translate }}
+              </h5>
+              <p
+                class="mb-0"
+                [ngClass]="{
+                  '': selectedStep === 3,
+                  'text-muted': selectedStep !== 3
+                }"
+                style="font-size: 1.7vh"
+                *ngIf="selectedStep === 3"
+              >
+                {{ "explore_chrono.get_it_para" | translate }}
+              </p>
+            </div>
           </div>
+
+          <div
+            class="d-flex align-items-center rounded mb-3 p-3"
+            [ngClass]="{ 'bg-active-color ': selectedStep === 4 }"
+            (click)="selectStep(4)"
+          >
+            <div
+              class="step-circle rounded-circle d-flex align-items-center justify-content-center me-3"
+              [ngClass]="{
+                'bg-dark text-white': selectedStep === 4,
+                'bg-active-color ': selectedStep !== 4
+              }"
+              style="width: 2.3rem; height: 2.2rem"
+            >
+              4
+            </div>
+
+            <div class="text-start">
+              <h5 
+               [ngClass]="{ 'reverse-order-header': translateService.currentLang !== 'en' }"
+              class="mb-1">
+                {{ "explore_chrono.sell" | translate }}
+              </h5>
+              <p
+                class="mb-0"
+                [ngClass]="{
+                  '': selectedStep === 4,
+                  'text-muted': selectedStep !== 4
+                }"
+                style="font-size: 1.7vh"
+                *ngIf="selectedStep === 4"
+              >
+                {{ "explore_chrono.sell_para" | translate }}
+              </p>
+            </div>
+          </div>
+
+
         </div>
       </div>
     </div>
   </div>
-  <div class="d-flex justify-content-center">
-    <button class="display-all-button">
-      {{ "explore_chrono.label" | translate }}
-    </button>
+  <div class="col-lg-6 col-md-6 col-sm-12 d-flex"
+  [ngClass]="{ 'reverse-res-img': translateService.currentLang !== 'en' }"
+  >
+    <div class="back-styl" 
+   
+    >
+      <div class="mt-4" *ngIf="selectedStep === 1">
+        <img
+          class="res-img"
+          src="../../../../assets/images/browse-discover.png"
+          alt="alt"
+        />
+      </div>
+      <div class="mt-4" *ngIf="selectedStep === 2">
+        <img
+          class="res-img"
+          src="../../../../assets/images/deal-purchase.png"
+          alt="alt"
+        />
+      </div>
+      <div class="mt-4" *ngIf="selectedStep === 3">
+        <img
+          class="res-img"
+          src="../../../../assets/images/get-delivered-safely.png"
+          alt="alt"
+        />
+      </div>
+      <div class="mt-4" *ngIf="selectedStep === 4">
+        <img
+          class="res-img"
+          src="../../../../assets/images/sell-with-ease.png"
+          alt="alt"
+        />
+      </div>
+    </div>
   </div>
 </div>

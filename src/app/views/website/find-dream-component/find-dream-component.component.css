@@ -1,153 +1,16 @@
-.pos-div {
-  height: auto;
+.conten-div {
   display: flex;
-  flex-wrap: wrap;
-  width: 100%;
-  justify-content: space-between;
-  padding: 35px 50px 10px 50px;
+  flex-direction: column;
+  justify-content: center;
 }
 
-.dream-text-padding {
-  padding: 170px 0 0 0;
+.header-styl{
+  padding: 0 155px 0 0;
 }
-
-.img-text-div {
-  display: flex;
-  flex-wrap: wrap;
-}
-
-.card-div {
-  background-color: #f5f5f5;
-  border-radius: 15px;
-  padding: 15px;
-  width: 24%;
-}
-
-.statics-data-stl p{
+.para {
   font-size: 20px;
-  font-weight: bold;
 }
 
-.statics-data-stl span{
-  font-size: 14px;
-  font-weight: 400;
-}
-
-@media (max-width: 1500px) {
-
-  .carousel-item {
-    height: auto;
-  }
-
-  .card-div {
-    width: 48%;
-    margin: 0 0 15px 0;
-  }
-  .pos-div {
-    padding: 30px 20px 0 20px;
-  }
-
-  .img-text-div {
-    height: auto !important;
-  }
-
-  .dream-text-padding {
-    padding: 5px 5px 0 5px !important;
-  }
-}
-
-.responsive-img {
-  width: 100%;
-  max-width: 100%;
-  object-fit: cover;
-  height: 65vh;
-  border-top-right-radius: 25px;
-  border-bottom-left-radius: 25px;
-}
-.pos-feature {
-  position: absolute;
-  flex-direction: column;
-  top: 20px;
-  right: 20px;
-}
-@media (max-width: 768px) {
-  .pos-feature {
-    flex-direction: column;
-    top: 25px;
-    right: 10px;
-  }
-  .features-container {
-    display: flex;
-    gap: 15px;
-  }
-
-  .responsive-img {
-    margin: 0 auto;
-    display: block;
-    margin-top: 20px;
-    border-radius: 10px;
-  }
-
-  .card-div {
-    width: 100%;
-    margin: 0 0 15px 0;
-  }
-  
-}
-
-/* @media (max-width: 480px) {
-  .responsive-img {
-    margin-top: 20px;
-    border-radius: 10px;
-  }
-} */
-
-.display-4 {
-  font-weight: bold;
-}
-
-.features-container {
-  background-color: #d6e5c9;
-  border-radius: 20px;
-  text-align: center;
-  border: 1px solid #ffffff;
-  padding: 5px;
-}
-
-.feature-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-bottom: 20px;
-}
-
-.feature-item i {
-  font-size: 35px;
-  color: white;
-}
-
-.feature-item span {
-  font-size: 14px;
-  color: white;
-}
-
-.separator {
-  height: 1px;
-  background-color: white;
-  margin: 20px 0;
-}
-
-.icon-waterproof:before {
-  content: "\f2c7";
-}
-
-.icon-sportwear:before {
-  content: "\f2c8";
-}
-
-.icon-reviews:before {
-  content: "\f091";
-}
 .carousel-inner img {
   width: 100%;
 }
@@ -191,17 +54,8 @@
   background-color: #fff;
 }
 
-.img-text-div {
-  display: flex;
-  flex-wrap: wrap;
-}
-
 .reverse-order {
   flex-direction: row-reverse;
-}
-
-.reverse-order .dream-text-padding {
-  padding: 170px 0 0 80px;
 }
 
 .reverse-order .para {
@@ -210,10 +64,6 @@
 
 .reverse-order .text-alg-right {
   text-align: end;
-}
-
-.reverse-order .card-div {
-  text-align: end !important;
 }
 
 .reverse-order .d-flex {
@@ -228,9 +78,13 @@
   text-align: end;
 }
 
-@media (max-width: 768px) {
-  .reverse-order {
-    flex-direction: column-reverse;
-  }
+.custom-btn {
+  height: 60px;
+  padding: 0 5% 0 5%;
+  border-radius: 10px;
+  border: 1px solid #242424;
 }
 
+.reverse-order .header-styl {
+  padding: 0px !important;
+}

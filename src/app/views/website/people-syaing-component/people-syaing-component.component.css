@@ -1,94 +1,164 @@
-.wraper {
-  text-align: center;
-  padding: 45px 220px 0 220px;
-}
-
-.how-it-works-title {
-  font-size: 24px;
-  font-weight: bold;
-  margin-bottom: 30px;
-}
-
-.how-it-works-cards {
+.act-img-div {
   display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  background-color: #D9D9D9;
+  padding: 0 0 10px 10px;
 }
 
-.how-it-works-card {
-  background: #f6f6f6;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  padding: 10px 0 5px 0;
-  width: 24%;
-  text-align: center;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+.font-size {
+  font-size: 1.8vh;
 }
 
-.how-it-works-card:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+.carosal-div {
+  height: 315px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.how-it-works-icon {
-  width: 88px;
-  height: 88px;
-  margin-bottom: 15px;
-  object-fit: cover;
+.act-img {
+  width: 200px;
+  height: 200px;
+  object-fit: fill;
+}
+
+.active-card {
+  max-width: 660px;
+  height: 275px;
+  display: flex;
+  justify-content: center;
+}
+
+.card-list {
+  height: 350px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.card {
+  max-width: 600px;
+}
+
+.back_card {
+  width: 150px;
+  height: 150px;
+  object-fit: cover
+}
+
+.img-fluid {
+  border: 2px solid #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.stars {
+  color: #ffcd3c;
+}
+
+.image-container {
+  position: relative;
+
+}
+
+.bg-shadow-layer {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 100%;
+  height: 100%;
+  background-color: #e0e0e0;
+  z-index: 1;
+}
+
+.main-image {
+  position: relative;
+  z-index: 2;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
   border-radius: 5px;
 }
 
-.how-it-works-heading {
-  font-size: 18px;
-  font-weight: bold;
-  margin-bottom: 10px;
+
+.carousel-item {
+  transition: transform 0.5s ease-in-out;
 }
 
-.how-it-works-description {
-  font-size: 14px;
-  color: #666;
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  background-color: #333;
+  border-radius: 50%;
 }
 
-@media (max-width: 1500px) {
-  .wraper {
-    padding: 0 20px 0 20px;
-  }
-}
 
-@media (max-width: 1024px) {
-  .how-it-works-card {
-    width: 48%;
-    margin-bottom: 20px;
-  }
-}
 
 @media (max-width: 768px) {
-  .how-it-works-cards {
-    flex-direction: column;
-    align-items: center;
+
+  .carousal-div {
+    display: flex;
+    justify-content: center;
+    }
+    
+    .carosal-inner-custom {
+      width: 35% !important;
+    }
+
+    .no-gutters {
+      width: 89%;
+    }
+
+  .bg-shadow-layer {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 100%;
+    height: 100%;
+    background-color: #e0e0e0;
+    z-index: 1;
   }
 
-  .how-it-works-card {
-    width: 80%;
-    margin-bottom: 20px;
+  .carosal-div {
+    height: auto !important;
+  }
+
+  .card-title {
+    margin: 0px !important;
+  }
+
+  .font-size {
+    font-size: 1.2vh;
+  }
+
+  .card-body {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .active-card {
+    max-width: 660px;
+    height: 340px;
+    display: flex;
+    justify-content: center;
   }
 }
 
-@media (max-width: 480px) {
-  .how-it-works-card {
-    width: 100%;
-    margin-bottom: 20px;
+
+@media (max-width: 468px) {
+
+  .carosal-div {
+    height: auto !important;
+  }
+  .carosal-inner-custom {
+    width: 60% !important;
+  }
+}
+
+@media (max-width: 418px) {
+
+  .card {
+    height: auto !important;
   }
 
-  .how-it-works-title {
-    font-size: 20px;
-  }
-
-  .how-it-works-heading {
-    font-size: 16px;
-  }
-
-  .how-it-works-description {
-    font-size: 13px;
+  .carosal-div {
+    height: auto !important;
   }
 }

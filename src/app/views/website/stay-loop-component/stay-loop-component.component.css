@@ -1,126 +1,21 @@
-.wraper {
-  padding: 45px 220px 0 220px;
-  margin-bottom: 50px;
+.bg-left {
+  /* background-color: #FFF;  */
+  /* height: 100vh; */
 }
 
-.subscribe-container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: #d7ecd7;
-  border-radius: 15px;
-  padding: 20px 30px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  flex-wrap: wrap;
-}
-
-.subscribe-content {
-  max-width: 60%;
-}
-
-.subscribe-title {
-  font-size: 24px;
-  font-weight: bold;
-  margin-bottom: 10px;
-  color: #222;
-}
-
-.subscribe-description {
-  font-size: 16px;
-  color: #555;
-}
-
-.subscribe-form {
-  display: flex;
-  align-items: center;
-  margin-top: 20px;  
-}
-
-.subscribe-input {
-  padding: 10px 15px;
-  border: 1px solid #ccc;
-  border-radius: 10px 0 0 10px;
-  font-size: 16px;
-  outline: none;
-  width: 250px;
-}
-
-.subscribe-input::placeholder {
-  color: #999;
-}
-
-.subscribe-button {
-  padding: 10px 20px;
-  background-color: #111;
-  color: white;
-  border: none;
-  border-radius: 0 10px 10px 0;
-  font-size: 16px;
-  cursor: pointer;
-  outline: none;
-  transition: background-color 0.3s ease;
-}
-
-.subscribe-button:hover {
-  background-color: #444;
-}
-
-@media (max-width: 1500px) {
-.wraper {
-  padding: 0 20px 0 20px;
-}
+.bg-right {
+  background-color: #333333; /* Change this to match the right color */
+  height: 50vh;
+  clip-path: polygon(31% 0, 100% 0%, 100% 100%, 0 100%);
 }
 
 @media (max-width: 768px) {
-  .subscribe-container {
-    flex-direction: column;
-    text-align: center;
-    padding: 20px;
+  .bg-left {
+    clip-path: none;
   }
-
-  .subscribe-content {
-    max-width: 100%;
-    margin-bottom: 20px;
+  .bg-right {
+    background-color: #333333; /* Change this to match the right color */
+    height: 50vh;
+    clip-path: polygon(0% 0, 100% 0%, 100% 100%, 0 100%);
   }
-
-  .subscribe-form {
-    justify-content: center;
-    width: 100%;
-  }
-
-  .subscribe-input {
-    width: 100%;
-    border-radius: 10px;
-  }
-
-  .subscribe-button {
-    width: 100%;
-    border-radius: 10px;
-  }
-}
-
-@media (max-width: 480px) {
-  .subscribe-title {
-    font-size: 20px;
-  }
-
-  .subscribe-description {
-    font-size: 14px;
-  }
-
-  .subscribe-input,
-  .subscribe-button {
-    font-size: 14px;
-  }
-}
-
-
-.reverse-order {
-  flex-direction: row-reverse;
-}
-.reverse-order .subscribe-title{
-  text-align: end;
-}
-.reverse-order .subscribe-input{
-  text-align: end;
 }

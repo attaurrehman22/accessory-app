@@ -7,29 +7,18 @@ import { HttpService } from "src/services/http/http.service";
   templateUrl: "./explore-chronosouq-component.component.html",
   styleUrls: ["./explore-chronosouq-component.component.css"],
 })
-export class ExploreChronosouqComponentComponent implements OnInit {
-  exploreList: any;
+export class ExploreChronosouqComponentComponent {
+  selectedStep: number = 1;
 
-  ngOnInit(): void {
-    this.getExploreList();
-  }
-
-  getExploreList() {
-    this.http.getExploreChronoSouq().subscribe(
-      (res) => {
-        this.exploreList = res.data;
-      },
-      (err) => {
-        console.log(err);
-      }
-    );
+  selectStep(step: number) {
+    this.selectedStep = step;
   }
 
   constructor(
     public translateService: TranslateService,
     private http: HttpService
   ) {
-    const supportedLanguages = ["en", "ar"];
+    const supportedLanguages = ["en", "ar"]; 
     this.translateService.addLangs(supportedLanguages);
     this.translateService.setDefaultLang("en");
 
@@ -38,33 +27,4 @@ export class ExploreChronosouqComponentComponent implements OnInit {
       this.translateService.use(browserLang);
     }
   }
-
-  useLang(lang: string) {
-    this.translateService.use(lang);
-  }
-
-  masonryOptions = {
-    transitionDuration: "0.8s",
-    gutter: 20,
-    horizontalOrder: true,
-    fitWidth: true,
-  };
-
-  watchCategories = [
-    {
-      title: "Men’s Watches",
-      subtitle: "Read More",
-      image: "assets/mens-watch.jpg",
-    },
-    { title: "Pre-Owned", subtitle: "Watches", image: "assets/pre-owned.jpg" },
-    { title: "Pocket", subtitle: "Watches", image: "assets/pocket-watch.jpg" },
-    { title: "Women’s", subtitle: "Watches", image: "assets/womens-watch.jpg" },
-    {
-      title: "Automatic",
-      subtitle: "Watches",
-      image: "assets/automatic-watch.jpg",
-    },
-    { title: "Gold", subtitle: "Watches", image: "assets/gold-watch.jpg" },
-    { title: "Moon", subtitle: "Watches", image: "assets/moon-watch.jpg" },
-  ];
 }

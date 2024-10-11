@@ -1,4 +1,4 @@
-<div class="global-main-wraper" style="background-color: #fdfbff">
+<div class="global-main-wraper" style="background-color: #fdfbff;position: fixed;width: 100%;z-index: 999;">
   <mat-sidenav-container
     class="sidenav-container"
     [ngClass]="{ 'rtl-layout': isRtl }"
@@ -8,7 +8,7 @@
       class="sidenav"
       #sidenav
       mode="over"
-      position="end"
+     [position]="isRtl && isSmallScreen ? 'start' : 'end'"
       [style]="{ top: '0', right: '0', position: 'fixed', height: 'auto' }"
     >
       <button class="drawer-btn" (click)="routeToBuyProduct()">
@@ -24,7 +24,14 @@
       >
         {{ "header.admin_pannel" | translate }}
       </button>
-      <form
+      <button class="drawer-btn position-relative">
+        {{ "header.new_arrivals" | translate }}
+        <span
+          class="toggle-notification-dot"
+          *ngIf="isUserLogin === 'LogIn'"
+        ></span>
+      </button>
+      <!-- <form
         *ngIf="searchFilter"
         class="d-flex flex-grow-1 ms-3"
         (ngSubmit)="onSearch(searchQuery)"
@@ -37,21 +44,21 @@
           placeholder="Search through 597,161 watches worldwide"
           aria-label="Search"
         />
-      </form>
+      </form> -->
 
       <button
         style="background: none; border: none; font-size: 16px"
         *ngIf="!isUserLogin"
         (click)="goToRegister()"
       >
-        Login
+        {{ "header.Login" | translate }}
       </button>
       <button
         style="background: none; border: none; font-size: 16px"
         *ngIf="isUserLogin"
         (click)="logout()"
       >
-        Logout
+        {{ "header.Logout" | translate }}
       </button>
     </mat-sidenav>
 
@@ -66,21 +73,10 @@
         />
       </div>
       <div class="header-content gap-4" *ngIf="!isSmallScreen">
-        <form
-          *ngIf="searchFilter"
-          class="d-flex flex-grow-1 ms-3"
-          (ngSubmit)="onSearch(searchQuery)"
-        >
-          <input
-            [(ngModel)]="searchQuery"
-            (ngModelChange)="onSearchChange()"
-            class="form-control me-2"
-            type="search"
-            placeholder="Search through 597,161 watches worldwide"
-            aria-label="Search"
-          />
-        </form>
-
+        <button class="custom-btn position-relative">
+          {{ "header.new_arrivals" | translate }}
+          <span class="notification-dot" *ngIf="isUserLogin === 'LogIn'"></span>
+        </button>
         <button class="custom-btn" (click)="routeToBuyProduct()">
           {{ "header.buy_watch" | translate }}
         </button>
@@ -94,31 +90,60 @@
         >
           {{ "header.admin_pannel" | translate }}
         </button>
+
+        <!-- <form
+          *ngIf="isSearchForm"
+          class="d-flex flex-grow-1 ms-3"
+          (ngSubmit)="onSearch(searchQuery)"
+        >
+          <input
+            [(ngModel)]="searchQuery"
+            (ngModelChange)="onSearchChange()"
+            class="form-control me-2"
+            type="search"
+            placeholder="Search through 597,161 watches worldwide"
+            aria-label="Search"
+          />
+        </form> -->
       </div>
       <div class="header-contact gap-4">
-        <button
-          style="background: none; border: none; font-size: 16px"
-          *ngIf="isUserLogin ==='LogIn' && !isSmallScreen"
-          (click)="logout()"
-        >
-          Logout
-        </button>
         <img
-          *ngIf="isUserLogin !=='LogIn' && !isSmallScreen"
-          src="./assets/images/profile-icon.png"
-          (click)="goToRegister()"
+          src="./assets/images/search-icon.png"
+          (click)="openSearchForm()"
+          *ngIf="!isSmallScreen"
           style="cursor: pointer"
         />
-        <div class="dropdown">
-          <select
-            [(ngModel)]="selectedLang"
-            (change)="useLang($event.target.value)"
-          >
-            <option *ngFor="let item of supportLanguages" [value]="item.value">
-              {{ item.name }}
-            </option>
-          </select>
-        </div>
+        <!-- <img src="./assets/images/fav-icon.png" style="cursor: pointer" /> -->
+        <mat-menu #profileMenu="matMenu">
+          <button mat-menu-item (click)="goToRegister()">
+            {{ "header.Login" | translate }}
+          </button>
+          <button mat-menu-item (click)="logout()">
+            {{ "header.Logout" | translate }}
+          </button>
+        </mat-menu>
+
+        <img
+          src="./assets/images/profile-icon.png"
+          alt="Profile"
+          [matMenuTriggerFor]="profileMenu"
+          style="cursor: pointer"
+        />
+
+        <button
+          *ngIf="selectedLang === 'en'"
+          class="custom-btn"
+          (click)="useLang('ar')"
+        >
+          ARB
+        </button>
+        <button
+          *ngIf="selectedLang === 'ar'"
+          class="custom-btn"
+          (click)="useLang('en')"
+        >
+          EN
+        </button>
 
         <button
           mat-icon-button

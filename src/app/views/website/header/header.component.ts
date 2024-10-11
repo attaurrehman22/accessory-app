@@ -5,8 +5,7 @@ import { LanguageService } from "src/services/lang-service/language.service";
 import { MatSidenav } from "@angular/material/sidenav";
 import { SearchServiceService } from "src/services/search-service/search-service.service";
 import { LoginStateService } from "src/services/login-service/login-state.service";
-import { ChangeDetectorRef } from '@angular/core';
-
+import { ChangeDetectorRef } from "@angular/core";
 
 @Component({
   selector: "app-header",
@@ -15,7 +14,7 @@ import { ChangeDetectorRef } from '@angular/core';
 })
 export class HeaderComponent {
   isSmallScreen: boolean = false;
-  isUserLogin: any='';
+  isUserLogin: any = "";
   searchQuery: string = "";
 
   searchFilter: boolean = true;
@@ -38,7 +37,7 @@ export class HeaderComponent {
     private languageService: LanguageService,
     public router: Router,
     private searchService: SearchServiceService,
-    private loginStateService:LoginStateService,
+    private loginStateService: LoginStateService,
     private cdRef: ChangeDetectorRef
   ) {
     const languagevalues = this.supportLanguages.map((lang) => lang.value);
@@ -72,18 +71,19 @@ export class HeaderComponent {
     this.isSmallScreen = window.innerWidth <= 768;
   }
 
-  isAdminUser: any='';
+  isAdminUser: any = "";
 
   ngOnInit() {
     this.loginStateService.isUserLoggedIn$.subscribe((isLoggedIn) => {
-      this.isUserLogin = isLoggedIn ? 'LogIn' : '';
+      this.isUserLogin = isLoggedIn ? "LogIn" : "";
       this.cdRef.detectChanges();
     });
     this.isSmallScreen = window.innerWidth <= 1500;
-   this.isAdminUser =localStorage.getItem('isAdminLogin')
+    this.isAdminUser = localStorage.getItem("isAdminLogin");
+    console.log(this.isUserLogin, this.isSmallScreen);
   }
 
-  routeToAdminPannel(){
+  routeToAdminPannel() {
     this.router.navigate(["/admin-dashboard"]);
   }
 
@@ -110,8 +110,8 @@ export class HeaderComponent {
   logout() {
     localStorage.removeItem("Logged");
     localStorage.removeItem("user_token");
-    this.isUserLogin = '';
-    this.isAdminUser='';
+    this.isUserLogin = "";
+    this.isAdminUser = "";
     this.loginStateService.updateAdminStatus(this.isAdminUser);
     this.loginStateService.updateLoginStatus(false);
     this.router.navigateByUrl("login");
@@ -127,22 +127,27 @@ export class HeaderComponent {
     this.router.navigate(["/new-product"]);
   }
 
-  // Close the sidenav on outside click
   @HostListener("document:click", ["$event"])
   onClickOutside(event: Event) {
     const clickedElement = event.target as HTMLElement;
-
-    // Get references for the header and sidenav DOM elements
-    const isOutsideHeader =
-      this.headerRef?.nativeElement &&
-      !this.headerRef.nativeElement.contains(clickedElement);
-    const isOutsideSidenav =
-      this.sidenavRef?.nativeElement &&
-      !this.sidenavRef.nativeElement.contains(clickedElement);
-
-    // If click is outside both the header and the sidenav, close the sidenav
-    if (isOutsideHeader && isOutsideSidenav && this.drawer.opened) {
-      this.drawer.close();
+  
+    // Ensure header and sidenav are present
+    const isOutsideHeader = this.headerRef?.nativeElement && !this.headerRef.nativeElement.contains(clickedElement);
+    const isOutsideSidenav = this.sidenavRef?.nativeElement && !this.sidenavRef.nativeElement.contains(clickedElement);
+  
+    console.log('drawer:', this.drawer);
+    if (this.drawer && this.drawer.opened) {
+      console.log('----------------------:', this.drawer);
+      if (isOutsideHeader && isOutsideSidenav) {
+        this.drawer.close();
+      }
     }
+  }
+  
+
+  isSearchForm: any = false;
+
+  openSearchForm() {
+    this.isSearchForm = !this.isSearchForm;
   }
 }

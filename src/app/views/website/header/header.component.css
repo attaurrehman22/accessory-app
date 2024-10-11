@@ -22,7 +22,7 @@
   width: 52%;
   display: flex;
   align-items: center;
-  justify-content: start;
+  justify-content: center;
 }
 
 .header-contact {
@@ -36,8 +36,7 @@
 .custom-btn {
   border: none;
   background: none;
-  font-weight: 400;
-  font-size: 16px;
+  font-size: 1.8vh;
   line-height: 19.68px;
   color: #030319;
 }
@@ -72,13 +71,6 @@
   color: #030319;
 }
 
-/* @media (max-width: 1500px) {
-  .header-contact {
-    display: flex;
-    justify-content: end;
-    width: 66%;
-  }
-} */
 
 @media (max-width: 768px) {
   .header-contact {
@@ -92,6 +84,7 @@
   position: relative;
   display: inline-block;
 }
+
 .lag-logo-stl {
   display: flex;
   justify-content: end;
@@ -106,10 +99,6 @@
   justify-content: end;
 }
 
-.rtl-layout .logo {
-  /* justify-content: flex-end;  */
-}
-
 .rtl-layout .header-contact {
   justify-content: flex-end;
   flex-direction: row-reverse;
@@ -120,17 +109,41 @@
   right: auto;
 }
 
-.rtl-layout .menu-icon {
-  /* margin-left: -300px; */
-}
-
 
 .navbar-brand img {
-  height: 30px; /* Adjust logo size */
+  height: 30px;
 }
+
 .form-control {
   border-radius: 20px;
 }
-.navbar .bi {
+
+/* .navbar .bi {
   font-size: 1.2rem;
+} */
+
+
+.notification-dot {
+  position: absolute;
+  top: -9px;
+  right: 4px;
+  height: 10px;
+  width: 10px;
+  background-color: #EC2633;
+  ;
+  border-radius: 50%;
+  box-shadow: 0px 0px 5px rgba(255, 0, 0, 0.5);
+}
+
+
+
+.toggle-notification-dot {
+  position: absolute;
+  top: 6px;
+  left: 95px;
+  height: 10px;
+  width: 10px;
+  background-color: #ec2633;
+  border-radius: 50%;
+  box-shadow: 0 0 5px #ff000080;
 }

@@ -21,7 +21,11 @@ export class ProductListComponent implements OnInit {
 
   dataFrompopularbrands: any;
   searchQuery: string = "";
+  isCollapsed = true;
 
+  toggleCollapse() {
+    this.isCollapsed = !this.isCollapsed;
+  }
   ngOnInit(): void {
 
 

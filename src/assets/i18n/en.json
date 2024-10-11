@@ -1,5 +1,6 @@
 {
   "header": {
+    "new_arrivals":"New Arrivals",
     "buy_watch": "Buy Watch",
     "sell_watch": "Sell Watch",
     "magazine": "Magazine",
@@ -7,7 +8,9 @@
     "chronopulse": "ChronoPulse",
     "faq": "FAQ",
     "security": "Security",
-    "admin_pannel":"Admin Pannel"
+    "admin_pannel":"Admin Pannel",
+    "Login":"Login",
+    "Logout":"Logout"
   },
   "register": {
     "welcome": "Welcome to Chronosouq",
@@ -126,42 +129,27 @@
     "more_questions": "More questions and answers"
   },
   "find_dream": {
-    "find": "Find",
-    "your_dream": "Your Dream",
-    "luxury": "Luxury",
-    "dream_watches": "Watches",
-    "watches": "Watches",
-    "grow_business": "Grow your business to the next level to enhance your business performance and stay competitive",
-    "search_placeholder": "Search among 600,000 watches...",
-    "find_watch": "Find a watch now",
-    "years_experience": "Years of Experience",
-    "satisfied_customers": "Satisfied Customers",
-    "business_partners": "Business Partners",
-    "img_alt": "Luxury Watches",
-    "reviews": "4.8 out of 5 Stars",
-    "reviews_info": "From 160,000 reviews worldwide",
-    "watch_enthusiasts": "9 million",
-    "enthusiasts_info": "ChronoSouq users monthly",
-    "buyer_protection": "Over 200,000",
-    "protection_info": "Customers choosing buyer protection annually",
-    "trustworthy_sellers": "Over 25,000",
-    "sellers_info": "Trusted sellers"
+    "heading_tag":"Saudi Arabia’s Premier Luxury Watch Marketplace",
+    "grow_business": "Chronosouq is the first dedicated platform in Saudi Arabia for buying & selling luxury watch in a end to end simple and secure way.",
+    "explore_now":"Explore Now",
+    "become_seller":" Become a Seller"
   },
   "popular_brands": {
-    "label": "Popular Brands",
-    "rolex": "Rolex",
-    "Patek_Philppe": "Patek Philippe",
-    "display_all": "Display all"
+    "label": "Featured Watches",
+    "paragraph": "A carefully selected rare or exclusive timepieces, providing exceptional value and uniqueness, offering collectors a distinctive opportunity to own something truly special.",
+    "view_listing": "View Listing",
+    "hurry_up":"Hurry, Before It's Too Late!"
   },
   "chrono_buyer": {
-    "label": "ChronoSouq Buyer Protection",
-    "paragraph": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy.",
+    "label": "New Arrivals",
+    "paragraph": "Discover our new arrivals and recently listed watches, showcasing exclusive designs and craftsmanship, perfect for passionate collectors and watch enthusiasts.",
     "span_payment": "Secure/safe Payment via Escrow Service",
     "span_commitment": "Worldwide Money-Back Guarantee",
     "span_global": "Authenticity Guarantee",
     "span_strict": "Safe and Insured Delivery",
     "span_insured": "Chronosouq Quality Assurance Team",
-    "span_chrono": "24/7 Customer Support"
+    "span_chrono": "24/7 Customer Support",
+    "view_more":"View More"
   },
   "popular_models": {
     "label": "Our Most Popular Models",
@@ -170,33 +158,32 @@
     "Datejust": "Datejust"
   },
   "explore_chrono": {
-    "label": "Explore ChronoSouq",
-    "men_watches": "Men's Watches",
-    "read_more": "Read More",
-    "pre_owned": "Pre-Owned",
-    "watches": "Watches",
-    "pocket": "Pocket",
-    "automatic": "Automatic",
-    "womens": "Women's",
-    "gold": "Gold",
+    "label": "HOW IT WORKS?",
+    "browse": "Browse And Discover",
+    "browse_para": "Explore your favorite watch listed by our trusted sellers.",
+    "secure": "Secure Your Purchase",
+    "secure_para": "Make an offer or buy securely with escrow-protected payments guaranteed.",
+    "get_it": "Get It Delivered Safely",
+    "get_it_para": "Your insured watch ships with tracking, arriving safely across Saudi Arabia.",
+    "sell": "Sell With Ease",
+    "sell_para": "Own a luxury watch? List it on ChronoSouq and get sold.",
     "moon": "Moon"
   },
   "people_saying": {
-    "label": "What People Are Saying",
-    "header1": "Aisha Al-Farisi, Riyadh",
-    "paragraph1": "I had an amazing experience with ChronoSouq. The platform made it incredibly easy to find and purchase the watch I was looking for. The transaction was smooth, and the watch arrived exactly as described. I will definitely be using ChronoSouq again for my future watch needs.",
-    "aut_name1": "Aisha Al-Farisi, Riyadh.",
-    "paragraph2": "ChronoSouq provided a seamless buying experience from start to finish. The website is user-friendly, and the customer service was top-notch. My watch was delivered promptly and was in perfect condition. Highly recommend this platform to any watch enthusiast!",
-    "aut_name2": "Omar Al-Saud, Jeddah",
-    "paragraph3": "I am thoroughly impressed with ChronoSouq's service. The purchase process was straightforward, and the watch was exactly as described. The seller's communication was excellent, and delivery was swift. I’ll definitely return for my next watch purchase",
-    "aut_name3": "Layla Al-Hamadi, Dammam",
-    "paragraph4": "ChronoSouq exceeded my expectations with their efficient service and attention to detail. The entire process was handled professionally, and the watch arrived promptly. It’s a fantastic platform for anyone looking to buy high-quality watches",
-    "aut_name4": "Hassan Al-Mansoori, Khobar."
+    "label": "Our Community’s Opinion",
+    "para": "Hear what our community thinks about us through their reviews, insights or feedbacks from the trusted watch enthusiasts."
   },
   "how_works": {
-    "label": "How it Works?",
-    "header": "Find Your Dream Watch",
-    "paragraph": "Easily deposit funds into your account through our bank deposit feature. Safe and reliable transactions every time."
+    "label": "Why Chronosouq",
+    "authenticity": "Authenticity Verification",
+    "authenticity_para": "Every watch will soon be verified by our team of experts to ensure it's 100% authentic, giving buyers complete peace of mind.",
+    "authenticity_btn":"Coming Soon",
+    "secure":"Secure Escrow Payments",
+    "secure_para":"A secured payment system that holds funds safely in Escrow until both Buyer and Seller are satisfied, protecting all parties.",
+    "secure_btn":"Active",
+    "insured":"Insured & Tracked Delivery",
+    "insured_para":" All shipments will be fully insured and tracked, guaranteeing that your luxury watch arrives safely, no matter where you are in the Middle East.",
+    "insured_btn":"Coming Soon"
   },
   "stay_loop": {
     "label": "Stay in the Loop",

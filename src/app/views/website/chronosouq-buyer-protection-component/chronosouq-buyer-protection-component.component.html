@@ -2,64 +2,103 @@
   class="global-main-wraper d-flex flex-wrap justify-content-between mt-5 mb-5"
   [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }"
 >
-  <div class="text-section">
-    <h2>{{ "chrono_buyer.label" | translate }}</h2>
-    <!-- <p>{{ "chrono_buyer.paragraph" | translate }}</p> -->
-    <ul>
-      <!-- <li
-        class="d-flex"
-        [ngClass]="{
-          'reverse-order-li': translateService.currentLang !== 'en'
-        }"
+  <div class="container d-flex flex-wrap justify-content-center">
+    <div class="col-lg-8 col-md-10 col-sm-12">
+      <h2 class="text-center">{{ "chrono_buyer.label" | translate }}</h2>
+    </div>
+    <div class="col-lg-8 col-md-10 col-sm-12">
+      <p class="text-center mt-2">
+        {{ "chrono_buyer.paragraph" | translate }}
+      </p>
+    </div>
+    <div
+      class="col-lg-12 col-md-12 col-sm-12 d-flex flex-wrap justify-content-center gap-2 mt-3"
+    >
+      <button
+        (click)="changeCategory('all')"
+        class="category_btn col-lg-2 col-md-3 col-sm-4"
+        [ngClass]="{ 'selected-category': selectedCategory === 'all' }"
       >
-        <span class="checkmark">&#10003;</span>
-        <p style="padding: 0 10px 0 10px">
-          {{ comment.comment }}
-        </p>
-      </li> -->
+        All
+      </button>
+      <button
+        (click)="changeCategory('casual')"
+        class="category_btn col-lg-2 col-md-3 col-sm-4"
+        [ngClass]="{ 'selected-category': selectedCategory === 'casual' }"
+      >
+        Casual
+      </button>
+      <button
+        (click)="changeCategory('diving')"
+        class="category_btn col-lg-2 col-md-3 col-sm-4"
+        [ngClass]="{ 'selected-category': selectedCategory === 'diving' }"
+      >
+        Diving
+      </button>
+      <button
+        (click)="changeCategory('sports')"
+        class="category_btn col-lg-2 col-md-3 col-sm-4"
+        [ngClass]="{ 'selected-category': selectedCategory === 'sports' }"
+      >
+        Sports Wear
+      </button>
+      <button
+        (click)="changeCategory('cartier')"
+        class="category_btn col-lg-2 col-md-3 col-sm-4"
+        [ngClass]="{ 'selected-category': selectedCategory === 'cartier' }"
+      >
+        Cartier
+      </button>
+    </div>
 
-      <li class="d-flex" [ngClass]="{'reverse-order-li': translateService.currentLang !== 'en'}">
-        <span class="checkmark">&#10003;</span>
-        <p style="padding: 0 10px 0 10px;">
-        {{ "chrono_buyer.span_payment" | translate }}
-      </p>
-      </li>
+    <div class="container mt-3">
+      <div class="row">
+        <div class="col-md-4 col-sm-6 mb-4" *ngFor="let watch of watches; let i = index">
+          <div class="card h-100 shadow-sm">
+            <img
+              src="{{ watch.image }}"
+              class="card-img-top"
+              alt="watch image"
+            />
+            <div class="card-body">
+              <div
+                class="d-flex justify-content-between align-items-center mb-2"
+              >
+                <div class="watch-brand">{{ watch.brand }}</div>
+                <div>
+                  <i class="fa fa-heart-o" aria-hidden="true"></i>
+                </div>
+              </div>
+              <div
+                class="d-flex justify-content-between align-items-center mb-2"
+              >
+                <h5 class="card-title">{{ watch.name }}</h5>
+                <div class="rating">
+                  <span class="star-rating">
+                    <i class="fa fa-star" aria-hidden="true"></i>
+                  </span>
+                  <span>{{ watch.rating }}</span>
+                </div>
+              </div>
+              <div class="d-flex justify-content-between align-items-center">
+                <span class="price">{{ watch.price }}</span>
+                <div class="text-danger" *ngIf="watch.isAlmostSoldOut">
+                  {{ watch.soldOutText }}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="heart-icon" (click)="toggleHeart(i)">
+            <i class="fa" [ngClass]="watch.liked ? 'fa-heart' : 'fa-heart fa-heart-o'" aria-hidden="true"></i>
+          </div>
+        </div>
+      </div>
 
-      <li class="d-flex" [ngClass]="{'reverse-order-li': translateService.currentLang !== 'en'}">
-        <span class="checkmark">&#10003;</span>
-        <p style="padding: 0 10px 0 10px;">
-        {{ "chrono_buyer.span_commitment" | translate }}
-      </p>
-      </li>
-      <li class="d-flex" [ngClass]="{'reverse-order-li': translateService.currentLang !== 'en'}">
-        <span class="checkmark">&#10003;</span>
-        <p style="padding: 0 10px 0 10px;">
-        {{ "chrono_buyer.span_global" | translate }}
-      </p>
-      </li>
-      <li class="d-flex" [ngClass]="{'reverse-order-li': translateService.currentLang !== 'en'}">
-        <span class="checkmark">&#10003;</span>
-        <p style="padding: 0 10px 0 10px;">
-        {{ "chrono_buyer.span_strict" | translate }}
-      </p>
-      </li>
-      <li class="d-flex" [ngClass]="{'reverse-order-li': translateService.currentLang !== 'en'}">
-        <span class="checkmark">&#10003;</span>
-        <p style="padding: 0 10px 0 10px;">
-        {{ "chrono_buyer.span_insured" | translate }}
-      </p>
-      </li>
-      <li class="d-flex" [ngClass]="{'reverse-order-li': translateService.currentLang !== 'en'}">
-        <span class="checkmark">&#10003;</span>
-        <p style="padding: 0 10px 0 10px;">
-        {{ "chrono_buyer.span_chrono" | translate }}
-      </p>
-      </li>
-    </ul>
-  </div>
-  <div class="video-section">
-    <div class="video-placeholder">
-      <button class="play-button">&#9654;</button>
+      <div class="text-center">
+        <button class="view_btn">
+          {{ "chrono_buyer.view_more" | translate }}
+        </button>
+      </div>
     </div>
   </div>
 </div>

@@ -1,177 +1,30 @@
-.wraper {
-  text-align: center;
-  padding: 45px 220px 0 220px;
-  margin-bottom: 20px;
+.img-stl{
+  height: 40px;
 }
 
-.watch-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 20px;
-}
-
-.watch-card {
-  background-color: #e5f7ea;
-  border-radius: 15px;
-  padding: 20px;
-  text-align: center;
+.logo-container {
+  overflow: hidden;
   position: relative;
-  border-radius: 10px;
-}
-
-.favorite-icon {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  font-size: 16px;
-  color: #a0a0a0;
-}
-
-.watch-image {
-  width: 290px;
-  height: 165px;
-  object-fit: cover;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
-}
-.watch-details {
-  padding: 5px 10px 0 10px;
-  background: #cfead7;
-  width: 290px;
-  border-bottom-left-radius: 12px;
-  border-bottom-right-radius: 12px;
-}
-.watch-details .brand {
-  font-size: 14px;
-  font-weight: 300;
-  color: #4a4a4a;
-}
-
-.watch-details .price {
-  font-size: 16px;
-  color: #4a4a4a;
-  font-weight: 500;
-}
-
-.watch-details-price {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  border-radius: 12px;
-}
-
-.card-cntent {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-
-@media (max-width: 1024px) {
-  .watch-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 15px;
-  }
-
-  .watch-card {
-    padding: 15px;
-  }
-
-  .favorite-icon {
-    font-size: 14px;
-  }
-
-  .watch-details .brand {
-    font-size: 13px;
-  }
-
-  .watch-details .price {
-    font-size: 15px;
-  }
-}
-
-@media (max-width: 768px) {
-  .watch-grid {
-    grid-template-columns: repeat(1, 1fr);
-    gap: 10px;
-  }
-
-  .watch-card {
-    padding: 10px;
-  }
-
-  .watch-details .brand {
-    font-size: 12px;
-  }
-
-  .watch-details .price {
-    font-size: 14px;
-  }
-}
-
-@media (max-width: 480px) {
-  .watch-grid {
-    grid-template-columns: repeat(1, 1fr);
-    gap: 8px;
-  }
-
-  .watch-card {
-    padding: 8px;
-  }
-
-  .favorite-icon {
-    font-size: 12px;
-  }
-
-  .watch-details .brand {
-    font-size: 11px;
-  }
-
-  .watch-details .price {
-    font-size: 13px;
-  }
-}
-
-
-.reverse-order {
-  flex-direction: row-reverse;
-}
-
-
-
-
-
-
-
-
-
-
-
-.card {
-  border-radius: 15px;
-
-}
-
-.card-img-top {
-  height: 250px; 
-  object-fit: cover; 
   width: 100%;
-  border-top-left-radius: 15px;
-  border-top-right-radius: 15px;
 }
 
-
-.card-body {
-  background-color: #e9f7ef;
-  padding: 10px;
+.logo-wrapper {
+  display: flex;
+  justify-content: space-between;
+  gap: 40px;
+  animation: scroll-logos 20s linear infinite;
 }
 
+.img-stl {
+  height: 40px;
+  flex-shrink: 0;
+}
 
-
-
-
-
-
-
-
-
-
+@keyframes scroll-logos {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}

@@ -65,6 +65,11 @@ import { AdminBrandsProductComponent } from './views/adminpages/admin-brands-pro
 import { AdminCategoryProductComponent } from './views/adminpages/admin-category-product/admin-category-product.component';
 import { ChartModule } from 'angular-highcharts';
 import { HighchartsChartModule } from 'highcharts-angular';
+import { MatSidenav } from '@angular/material/sidenav';
+import { CarouselModule } from 'primeng/carousel';
+import { ButtonModule } from 'primeng/button';
+import { TagModule } from 'primeng/tag';
+
 
 @NgModule({
   declarations: [
@@ -127,6 +132,10 @@ import { HighchartsChartModule } from 'highcharts-angular';
     RouterModule,
     MatDialogModule,
     MatMenuModule,
+    MatSidenav, 
+    CarouselModule,
+    ButtonModule,
+    TagModule,
     BidiModule,HighchartsChartModule,
     // MatExpansionModule,
     TranslateModule.forRoot({

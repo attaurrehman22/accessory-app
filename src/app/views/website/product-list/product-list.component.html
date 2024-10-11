@@ -25,29 +25,26 @@
       <!-- Brands Section -->
       <div class="accordion" id="accordionExample">
         <div class="card" style="box-shadow: none !important;">
-          <div class="card-header">
+          <div class="card-header d-flex justify-content-between">
             <h5 class="mb-0">
-              <!-- <button
-                class="btn btn-link"
-                type="button"
-                data-toggle="collapse"
-                data-target="#collapseBrands"
-                aria-expanded="true"
-                aria-controls="collapseBrands"
-              >
-                Brands
-              </button> -->
               Brands
-            </h5>
-          </div>
-
+            </h5> <a
+            class="text-decoration-none"
+            role="button"
+            (click)="toggleCollapse()"
+            aria-expanded="false"
+            aria-controls="collapseBrands"
+          >
           
+            <mat-icon>{{ isCollapsed ? 'expand_more' : 'expand_less' }}</mat-icon>
+          </a>
+          </div>
+        
+          <div [ngClass]="isCollapsed ? 'collapse' : 'collapse show'" id="collapseBrands">
             <div class="card-body">
               <div class="form-check">
                 <input class="form-check-input" type="checkbox" id="brand1" />
-                <label class="form-check-label" for="brand1"
-                  >A. Lange & Söhne</label
-                >
+                <label class="form-check-label" for="brand1">A. Lange & Söhne</label>
               </div>
               <div class="form-check">
                 <input class="form-check-input" type="checkbox" id="brand2" />
@@ -55,9 +52,7 @@
               </div>
               <div class="form-check">
                 <input class="form-check-input" type="checkbox" id="brand3" />
-                <label class="form-check-label" for="brand3"
-                  >Audemars Piguet</label
-                >
+                <label class="form-check-label" for="brand3">Audemars Piguet</label>
               </div>
               <div class="form-check">
                 <input class="form-check-input" type="checkbox" id="brand4" />
@@ -65,14 +60,13 @@
               </div>
               <div class="form-check">
                 <input class="form-check-input" type="checkbox" id="brand5" />
-                <label class="form-check-label" for="brand5"
-                  >Baume & Mercier</label
-                >
+                <label class="form-check-label" for="brand5">Baume & Mercier</label>
               </div>
               <a href="#" class="text-primary">See all</a>
             </div>
-         
+          </div>
         </div>
+        
 
         <!-- Luxury Section -->
         <div class="card" style="box-shadow: none !important;">

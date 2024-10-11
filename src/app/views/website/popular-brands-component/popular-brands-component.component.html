@@ -1,28 +1,96 @@
-<div class="global-main-wraper text-center mt-5 mb-5">
-  <h2>{{ "popular_brands.label" | translate }}</h2>
-  <div class="brands-grid mt-4">
-    <div
-      class="brand-item"
-      *ngFor="let brand of brandsList | slice : 0 : 10"
-      [ngClass]="{'disabled': brand.products_count === 0}"
-      (click)="brand.products_count > 0 ? getDetails(brand) : null"
-      matTooltip="{{ brand.products_count === 0 ? 'Products do not exist' : '' }}"
-    >
-      <img
-      [src]="'https://api.chronosouq.com/' + brand.cover_image"
-      style="height: 100%;width: 100%;"
-        alt="{{ 'popular_brands.rolex' | translate }}"
-      />
+<div class="container-div">
+  <div
+    class="col-lg-12 col-md-12 col-sm-12 d-flex flex-wrap"
+    [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }"
+  >
+    <div class="col-lg-5 col-md-12 col-sm-12">
       <div
-        class="brand-label"
-        style="display: flex; justify-content: space-around"
+        class="container mt-5"
+        [ngClass]="{
+          'reverse-order-labels': translateService.currentLang !== 'en'
+        }"
       >
-        <p>{{ brand.name }}</p>
-        <p>Products : {{ brand.products_count }}</p>
+        <h2 class="fw-bold">
+          {{ "popular_brands.label" | translate }}
+        </h2>
+        <p class="mb-4">
+          {{ "popular_brands.paragraph" | translate }}
+        </p>
+
+        <div class="w-100 d-flex">
+          <button class="btn btn-dark btn-lg mb-5">
+            {{ "popular_brands.view_listing" | translate }}
+          </button>
+        </div>
+        <div
+          class="countdown-timer"
+          [ngClass]="{
+            'reverse-order-time': translateService.currentLang !== 'en'
+          }"
+        >
+          <h5 class="mb-4">
+            {{ "popular_brands.hurry_up" | translate }}
+          </h5>
+          <div class="d-flex gap-2">
+            <div class="timer-box">
+              <span class="display-4" id="days">02</span>
+              <p>Days</p>
+            </div>
+            <div class="timer-box">
+              <span class="display-4" id="hours">06</span>
+              <p>Hrs</p>
+            </div>
+            <div class="timer-box">
+              <span class="display-4" id="minutes">05</span>
+              <p>Mins</p>
+            </div>
+            <div class="timer-box">
+              <span class="display-4" id="seconds">30</span>
+              <p>Sec</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-7 col-md-12 col-sm-12">
+      <div class="container mt-5">
+        <p-carousel
+          [value]="products"
+          [numVisible]="3"
+          [numScroll]="1"
+          [responsiveOptions]="responsiveOptions"
+          [circular]="true"
+          (onPage)="onCarouselMove($event)"
+        >
+          <ng-template let-product let-i="index" pTemplate="item">
+            <div
+              class="surface-border border-round m-1"
+              [ngClass]="{
+                'first-product': i === firstVisibleIndex,
+                'other-products': i !== firstVisibleIndex
+              }"
+            >
+              <div class="mb-3">
+                <div class="relative mx-auto">
+                  <img
+                    src="https://primefaces.org/cdn/primeng/images/demo/product/{{
+                      product.image
+                    }}"
+                    [alt]="product.name"
+                    class="w-full border-round"
+                  />
+                  <!-- <p-tag
+                    [value]="product.inventoryStatus"
+                    [severity]="getSeverity(product.inventoryStatus)"
+                    class="absolute"
+                    [ngStyle]="{ 'left.px': 5, 'top.px': 5 }"
+                  ></p-tag> -->
+                </div>
+              </div>
+            </div>
+          </ng-template>
+        </p-carousel>
       </div>
     </div>
   </div>
-  <button (click)="goToProductList()" class="display-all-button">
-    {{ "popular_brands.display_all" | translate }}
-  </button>
 </div>

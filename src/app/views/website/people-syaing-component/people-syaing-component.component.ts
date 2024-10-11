@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, AfterViewInit, ElementRef, ViewChild } from "@angular/core";
 import { TranslateService } from "@ngx-translate/core";
 import { HttpService } from "src/services/http/http.service";
 
@@ -7,27 +7,25 @@ import { HttpService } from "src/services/http/http.service";
   templateUrl: "./people-syaing-component.component.html",
   styleUrls: ["./people-syaing-component.component.css"],
 })
-export class PeopleSyaingComponentComponent implements OnInit {
-  ngOnInit(): void {
-    this.getHowItWorksData();
-  }
-  dataList: any;
-  getHowItWorksData() {
-    this.http.getHowItWorksData().subscribe(
-      (res) => {
-        this.dataList = res.data;
-      },
-      (err) => {
-        console.log(err);
-      }
-    );
-  }
+export class PeopleSyaingComponentComponent implements AfterViewInit {
+  @ViewChild('testimonialCarousel', { static: false }) carousel!: ElementRef;
+  activeIndex = 0; 
+
+  testimonials = [
+    {
+      name: "Osama AlRaee",
+      role: "Entrepreneur",
+      image: "../../../../assets/images/osama-alraeeaee.png",
+      text: "You won’t regret it. Absolutely wonderful product!",
+      rating: "⭐⭐⭐⭐⭐",
+    }
+  ];
 
   constructor(
     private translateService: TranslateService,
     private http: HttpService
   ) {
-    const supportedLanguages = ["en", "ar"]; // Add other languages if necessary
+    const supportedLanguages = ["en", "ar"];
     this.translateService.addLangs(supportedLanguages);
     this.translateService.setDefaultLang("en");
 
@@ -37,7 +35,22 @@ export class PeopleSyaingComponentComponent implements OnInit {
     }
   }
 
-  useLang(lang: string) {
-    this.translateService.use(lang);
+  ngAfterViewInit(): void {
+    const carouselElement = this.carousel.nativeElement;
+    carouselElement.addEventListener('slid.bs.carousel', () => {
+      this.updateActiveIndex();
+    });
   }
+
+  private updateActiveIndex() {
+    const carouselItems = this.carousel.nativeElement.querySelectorAll('.carousel-item');
+    const activeElement = this.carousel.nativeElement.querySelector('.carousel-item.active');
+    this.activeIndex = Array.from(carouselItems).indexOf(activeElement);
+  }
+
+  getNextIndex() {
+    return (this.activeIndex + 1) % this.testimonials.length;
+  }
+
+
 }
