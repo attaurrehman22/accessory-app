@@ -52,7 +52,6 @@ export class AppComponent implements OnInit {
           !this.routesToHideforAdmin.includes(currentRoute);
       }
     });
-    console.log(" Title from marker ==> ", TRANSLATE_ME("home.title"));
   }
 
   supportLanguages = ["en", "ar", "fr", "ta", "hi"];
@@ -66,9 +65,6 @@ export class AppComponent implements OnInit {
     this.translateService.setDefaultLang("en");
 
     const browserlang = this.translateService.getBrowserLang();
-
-    console.log("Browser Language => ", browserlang);
-
     if (this.supportLanguages.includes(browserlang)) {
       this.translateService.use(browserlang);
     }
@@ -84,7 +80,6 @@ export class AppComponent implements OnInit {
   }
 
   useLang(lang: string) {
-    console.log("selected language ==> ", lang);
     this.translateService.use(lang);
   }
 

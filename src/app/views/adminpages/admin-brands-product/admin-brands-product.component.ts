@@ -53,7 +53,6 @@ export class AdminBrandsProductComponent {
   fileName:any;
 
   populateForm(data: any) {
-    console.log("Data to populate form", data);
     const isActive = data.is_active === 1 ? true : false;
     const isTopBrand = data.top_brand === 1 ? true : false;
     this.fileName = this.data.cover_image;

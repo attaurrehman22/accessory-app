@@ -50,7 +50,6 @@ export class ModelLoginComponent implements OnInit {
 
     const browserlang = this.translateService.getBrowserLang();
 
-    console.log("Browser Language => ", browserlang);
     this.currentLanguage = browserlang;
 
     if (this.supportLanguages.includes(browserlang)) {

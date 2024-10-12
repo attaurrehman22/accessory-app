@@ -61,7 +61,6 @@ export class AdminHomeComponent {
 
   loadHighcharts() {
     this.linechart = this.highchartsService.getLineChartOptions();
-    console.log(this.linechart);
     this.cd.detectChanges();
   }
 

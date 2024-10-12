@@ -78,7 +78,6 @@ export class AdminCategoryProductComponent {
   fileName: any;
 
   populateForm(data: any) {
-    console.log("Data to populate form", data);
     const isActive = data.is_active === 1 ? true : false;
     this.fileName = this.data.cover_image;
     this.form.patchValue({
@@ -128,7 +127,6 @@ export class AdminCategoryProductComponent {
     formData.forEach((value, key) => {
       formDataEntries[key] = value;
     });
-    console.log(formDataEntries);
 
     if (this.paramval === "Create") {
       this.http.addAdminCategory(formData).subscribe(

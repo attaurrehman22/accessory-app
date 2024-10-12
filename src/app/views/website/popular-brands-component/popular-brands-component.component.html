@@ -32,21 +32,29 @@
             {{ "popular_brands.hurry_up" | translate }}
           </h5>
           <div class="d-flex gap-2">
-            <div class="timer-box">
-              <span class="display-4">{{ days }}</span>
-              <p>Days</p>
+            <div style="display: flex; flex-direction: column">
+              <div class="timer-box">
+                <span class="display-4">{{ days }}</span>
+              </div>
+              <p class="text-center">Days</p>
             </div>
-            <div class="timer-box">
-              <span class="display-4">{{ hours }}</span>
-              <p>Hrs</p>
+            <div style="display: flex; flex-direction: column">
+              <div class="timer-box">
+                <span class="display-4">{{ hours }}</span>
+              </div>
+              <p class="text-center">Hrs</p>
             </div>
-            <div class="timer-box">
-              <span class="display-4">{{ minutes }}</span>
-              <p>Mins</p>
+            <div style="display: flex; flex-direction: column">
+              <div class="timer-box">
+                <span class="display-4">{{ minutes }}</span>
+              </div>
+              <p class="text-center">Mins</p>
             </div>
-            <div class="timer-box">
-              <span class="display-4">{{ seconds }}</span>
-              <p>Sec</p>
+            <div style="display: flex; flex-direction: column">
+              <div class="timer-box">
+                <span class="display-4">{{ seconds }}</span>
+              </div>
+              <p class="text-center">Sec</p>
             </div>
           </div>
         </div>
@@ -55,7 +63,7 @@
     <div class="col-lg-7 col-md-12 col-sm-12">
       <div class="container mt-5">
         <p-carousel
-          [autoplayInterval]="2000"
+          [autoplayInterval]="3000"
           [value]="products"
           [numVisible]="3"
           [numScroll]="1"

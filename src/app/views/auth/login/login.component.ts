@@ -51,7 +51,6 @@ export class LoginComponent implements OnInit {
 
     const browserlang = this.translateService.getBrowserLang();
 
-    console.log("Browser Language => ", browserlang);
     this.currentLanguage = browserlang;
 
     if (this.supportLanguages.includes(browserlang)) {

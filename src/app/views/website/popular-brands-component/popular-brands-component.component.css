@@ -5,8 +5,8 @@
 .timer-box {
   background-color: #f8f9fa;
   border-radius: 8px;
-  padding: 10px;
-  width: 80px;
+  padding: 10px 20px 10px 20px;
+  width: auto;
   text-align: center;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
@@ -20,7 +20,7 @@
 .display-4 {
   font-weight: 500;
   margin-bottom: 0;
-  font-size: 2rem !important;
+  font-size: 5vh !important;
 }
 
 .carousel-inner img {
