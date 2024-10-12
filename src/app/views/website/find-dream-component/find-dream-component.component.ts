@@ -38,7 +38,6 @@ export class FindDreamComponentComponent implements OnInit {
       },
       (err) => {
         this.staticList = {};
-        console.log(err);
       }
     );
   }
@@ -58,7 +57,6 @@ export class FindDreamComponentComponent implements OnInit {
       this.translateService.use(savedLang);
     } else {
       const browserLang = this.translateService.getBrowserLang();
-      console.log("Browser Language => ", browserLang);
       this.currentLanguage = browserLang;
 
       if (this.supportLanguages.includes(browserLang)) {

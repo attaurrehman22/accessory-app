@@ -62,7 +62,6 @@ export class RegisterComponent implements OnInit {
 
     const browserlang = this.translateService.getBrowserLang();
 
-    console.log("Browser Language => ", browserlang);
     this.currentLanguage = browserlang;
 
     this.registerForm = this.formBuilder.group(
@@ -91,8 +90,6 @@ export class RegisterComponent implements OnInit {
     this.registerForm.markAllAsTouched();
 
     if (this.registerForm.valid) {
-      console.log(this.registerForm);
-      console.log(this.registerForm.value);
       this.http.register(this.registerForm).subscribe(
         (response) => {
           localStorage.setItem("Logged", "LogIn");

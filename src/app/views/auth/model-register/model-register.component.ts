@@ -67,7 +67,6 @@ export class ModelRegisterComponent implements OnInit {
 
     const browserlang = this.translateService.getBrowserLang();
 
-    console.log("Browser Language => ", browserlang);
     this.currentLanguage = browserlang;
 
     if (this.supportLanguages.includes(browserlang)) {
@@ -112,12 +111,10 @@ export class ModelRegisterComponent implements OnInit {
     this.registerForm.markAllAsTouched();
     localStorage.removeItem("Logged")
     localStorage.removeItem("user_token")
-    console.log(this.registerForm.value);
     if (this.registerForm.valid) {
       this.http.register(this.registerForm).subscribe(
         (response) => {
           localStorage.setItem("Logged", "LogIn");
-          console.log("response.authorisation.token",response.authorisation.token)
           localStorage.setItem("user_token", response.authorisation.token);
           
           this.dialogRef.close();

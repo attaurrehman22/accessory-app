@@ -26,7 +26,7 @@ export class PopularBrandsListAlphabeticallyComponent implements OnInit {
         this.groupBrandsByAlphabet();
       },
       (error) => {
-        console.log(error);
+  
       }
     );
   }

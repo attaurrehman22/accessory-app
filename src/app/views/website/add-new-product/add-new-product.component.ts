@@ -90,7 +90,6 @@ export class AddNewProductComponent implements OnInit {
       this.translateService.use(savedLang);
     } else {
       const browserLang = this.translateService.getBrowserLang();
-      console.log("Browser Language => ", browserLang);
       this.currentLanguage = browserLang;
 
       if (this.supportLanguages.includes(browserLang)) {
@@ -249,9 +248,7 @@ export class AddNewProductComponent implements OnInit {
 
   onSubmit() {
     const token = localStorage.getItem("user_token");
-    console.log("-----------------------",token)
     if (!token) {
-      console.log("Token are not present")
       this.loginDialog();
     } else {
       this.productForm.markAllAsTouched();
@@ -270,7 +267,6 @@ export class AddNewProductComponent implements OnInit {
         }
       });
 
-      console.log("formData", formData);
       if (this.productForm.valid) {
         this.http.addProduct(formData).subscribe(
           (reponse) => {
@@ -290,7 +286,6 @@ export class AddNewProductComponent implements OnInit {
   selectedUsedCondition: string | null = null;
 
   openCondition(param: string) {
-    console.log(param);
     this.selectedCondition = param;
     if (param === "New") {
       this.newCondition = "New";

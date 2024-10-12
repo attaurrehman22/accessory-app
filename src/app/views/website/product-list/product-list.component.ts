@@ -50,7 +50,6 @@ export class ProductListComponent implements OnInit {
   }
 
   searchProducts() {
-    console.log("Search Query", this.searchQuery);
     if (this.searchQuery) {
       this.http.searchedProducts(this.searchQuery).subscribe(
         (res) => {
@@ -92,7 +91,6 @@ export class ProductListComponent implements OnInit {
           }
         },
         (err) => {
-          console.log(err);
         }
       );
     } else {
@@ -108,7 +106,6 @@ export class ProductListComponent implements OnInit {
         this.filterdProducts = res.data;
       },
       (err) => {
-        console.log(err);
       }
     );
   }
@@ -150,7 +147,6 @@ export class ProductListComponent implements OnInit {
         );
       },
       (err) => {
-        console.log(err);
       }
     );
   }
@@ -273,7 +269,6 @@ slides:any;
         );
       },
       (err) => {
-        console.log(err);
       }
     );
   }
@@ -283,9 +278,6 @@ slides:any;
   selectedBrands: any = "";
 
   getCategory(brandName: string, categoryType: string) {
-    console.log('Brand name:', brandName);
-    console.log('Category type:', categoryType);
-    // console.log("selectedCatId", selectedCatId);
     let params;
     let lastArray;
     // this.slidercheck = false;
@@ -332,8 +324,6 @@ slides:any;
     //   params.append("category_ids[]", id.toString())
     // );
 
-    console.log("Selected Brands:", this.selectedBrands);
-    console.log("Selected Categories:", this.selectedCategories);
 
     const queryString = params.toString();
 

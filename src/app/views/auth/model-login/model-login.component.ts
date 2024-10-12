@@ -83,7 +83,7 @@ export class ModelLoginComponent implements OnInit {
           } else {
             localStorage.setItem("Logged", "LogIn");
             localStorage.setItem("user_token", response.authorization.token);
-            console.log("-----------------------", this.isDialog);
+            
             if (this.isDialog === "dialog-box") {
               this.dialogRef.close(true);
             } else {

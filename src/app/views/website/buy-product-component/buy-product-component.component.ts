@@ -224,12 +224,10 @@ export class BuyProductComponentComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.productDetails = history.state.data;
-    console.log("productDetails in buy-product ",this.productDetails)
     this.thumbnails = this.productDetails.additional_images;
     if (!this.selectedImage) {
       this.selectedImage = this.thumbnails[0];
     }
-    console.log("this.productDetails", this.productDetails);
     this.getAllProducts();
     this.startAutoSlide();
     this.startAutoSlide1();
@@ -246,7 +244,6 @@ export class BuyProductComponentComponent implements OnInit, OnDestroy {
         this.productsList = res.data;
       },
       (err) => {
-        console.log(err);
       }
     );
   }

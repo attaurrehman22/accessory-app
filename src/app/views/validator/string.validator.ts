@@ -151,12 +151,6 @@ export function notsame1(): ValidatorFn {
 
 export function notsame(password: AbstractControl): ValidatorFn {
   return (confirmPassword: AbstractControl): ValidationErrors | null => {
-    console.log(
-      "Password:",
-      password.value,
-      "ConfirmPassword:",
-      confirmPassword.value
-    );
     if (!confirmPassword.value || !password.value) {
       return null; // Return null if one of the controls is empty
     }
@@ -193,7 +187,6 @@ export function machineNameExists(robots: any, ignore = false): ValidatorFn {
 export function tryBuildVersionUploaded(builds: any): ValidatorFn {
   return (control: AbstractControl): ValidationErrors | null => {
     try {
-      // console.log(builds)
       if (builds.some((e) => e.name == control.value)) {
         return { buildExist: true };
       }

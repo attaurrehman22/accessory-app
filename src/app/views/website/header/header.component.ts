@@ -131,9 +131,7 @@ export class HeaderComponent {
     const isOutsideHeader = this.headerRef?.nativeElement && !this.headerRef.nativeElement.contains(clickedElement);
     const isOutsideSidenav = this.sidenavRef?.nativeElement && !this.sidenavRef.nativeElement.contains(clickedElement);
   
-    console.log('drawer:', this.drawer);
     if (this.drawer && this.drawer.opened) {
-      console.log('----------------------:', this.drawer);
       if (isOutsideHeader && isOutsideSidenav) {
         this.drawer.close();
       }

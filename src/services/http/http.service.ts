@@ -12,7 +12,6 @@ export class HttpService {
   token = localStorage.getItem("user_token");
 
   getuserEmail(email: string) {
-    console.log("email in http Service", email);
     
     const formData = new FormData();
     formData.append('email', email);
@@ -21,7 +20,6 @@ export class HttpService {
   }
 
   getusername(username: string) {
-    console.log("username in http Service", username);
     
     const formData = new FormData();
     formData.append('username', username);

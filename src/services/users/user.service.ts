@@ -11,11 +11,9 @@ export class UserService {
 
 
   checkUserEmailExists(email: string): Observable<boolean> {
-    console.log("email in User Service", email);
 
     return this.http.getuserEmail(email).pipe(
       map((response: any) => {
-        console.log("API Response:", response);
         return response.exists;  
       }),
       catchError((error) => {
@@ -26,10 +24,8 @@ export class UserService {
   }
 
   checkUsernameExists(username: string): Observable<boolean> {
-    console.log("Username in User Service",username)
     return this.http.getusername(username).pipe(
       map((response: any) => {
-        console.log("API Response:", response);
         return response.exists;  
       }),
       catchError((error) => {

@@ -19,7 +19,6 @@ export class MostPopularModelsComponentComponent implements OnInit {
         this.popularModels = res.data;
       },
       (err) => {
-        console.log(err);
       }
     );
   }

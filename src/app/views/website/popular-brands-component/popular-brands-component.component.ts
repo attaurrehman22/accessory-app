@@ -179,7 +179,6 @@ export class PopularBrandsComponentComponent implements OnInit {
     if (this.products.length > 0) {
       const productName = this.products[this.firstVisibleIndex]?.name; // Optional chaining to avoid undefined error
       if (productName) {
-        console.log("First visible product:", productName);
       } else {
         console.warn("No product found at index:", this.firstVisibleIndex);
       }
@@ -187,7 +186,6 @@ export class PopularBrandsComponentComponent implements OnInit {
   }
 
   logProductName(productName: string) {
-    console.log(productName);
   }
 
   startCountdown() {
@@ -219,7 +217,6 @@ export class PopularBrandsComponentComponent implements OnInit {
 
   // Function to get the severity for tag
   getSeverity(status: string) {
-    console.log("status,",status)
     switch (status) {
       case "INSTOCK":
         return "success";
