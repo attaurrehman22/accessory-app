@@ -139,6 +139,15 @@
     display: flex;
     justify-content: center;
   }
+
+
+  .prev-btn {
+    left: 34% !important;
+  }
+
+  .next-btn {
+    left: 53% !important;
+  }
 }
 
 @media (max-width: 468px) {
@@ -171,49 +180,6 @@
   }
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 .prev-btn,
 .next-btn {
   position: absolute;
@@ -230,14 +196,15 @@
   cursor: pointer;
 }
 
-.prev-btn:hover, 
+.prev-btn:hover,
 .next-btn:hover {
   background-color: #f8f9fa;
   border-color: #ddd;
 }
 
-/* Custom arrow design for buttons */
-.custom-arrow-left, .custom-arrow-right {
+
+.custom-arrow-left,
+.custom-arrow-right {
   display: inline-block;
   width: 15px;
   height: 15px;
@@ -258,14 +225,11 @@
 }
 
 .prev-btn {
-  left: 35%;
+  left: 42%;
   top: 93%;
 }
 
 .next-btn {
-  left: 52%;
+  left: 50%;
   top: 93%;
 }
-
-
-
