@@ -45,7 +45,7 @@ export class PopularBrandsComponentComponent implements OnInit {
       {
         name: "Product 1",
         price: 120,
-        image: "blue-t-shirt.jpg",
+        image: "assets/images/featured-watch-list.png",
         inventoryStatus: "INSTOCK",
         remainingTime:[
           {
@@ -59,7 +59,7 @@ export class PopularBrandsComponentComponent implements OnInit {
       {
         name: "Product 2",
         price: 240,
-        image: "blue-t-shirt.jpg",
+        image: "assets/images/featured-watch-list.png",
         inventoryStatus: "LOWSTOCK",
         remainingTime:[
           {
@@ -73,7 +73,7 @@ export class PopularBrandsComponentComponent implements OnInit {
       {
         name: "Product 3",
         price: 300,
-        image: "blue-t-shirt.jpg",
+        image: "assets/images/featured-watch-list.png",
         inventoryStatus: "OUTOFSTOCK",
         remainingTime:[
           {
@@ -87,7 +87,7 @@ export class PopularBrandsComponentComponent implements OnInit {
       {
         name: "Product 4",
         price: 120,
-        image: "blue-t-shirt.jpg",
+        image: "assets/images/featured-watch-list.png",
         inventoryStatus: "INSTOCK",
         remainingTime:[
           {
@@ -101,7 +101,7 @@ export class PopularBrandsComponentComponent implements OnInit {
       {
         name: "Product 5",
         price: 240,
-        image: "blue-t-shirt.jpg",
+        image: "assets/images/featured-watch-list.png",
         inventoryStatus: "LOWSTOCK",
         remainingTime:[
           {
@@ -114,7 +114,7 @@ export class PopularBrandsComponentComponent implements OnInit {
       },
       {
         name: "Product 6",
-        price: "blue-t-shirt.jpg",
+        price: "assets/images/featured-watch-list.png",
         inventoryStatus: "OUTOFSTOCK",
         remainingTime:[
           {
@@ -144,21 +144,15 @@ export class PopularBrandsComponentComponent implements OnInit {
         numScroll: 1,
       },
     ];
-
-    this.firstVisibleIndex=this.products[2].index;
-
     this.logFirstProduct();
   }
 
   onCarouselMove(event: any) {
-    this.firstVisibleIndex = event.page; // Update the first visible product index
+    this.firstVisibleIndex = event.page; 
   
-    // Validate the index and log the product
     if (this.firstVisibleIndex >= 0 && this.firstVisibleIndex < this.products.length) {
       this.logFirstProduct();
-  
-      // Update the countdown for the visible product
-      const activeProduct = this.products[this.firstVisibleIndex];
+        const activeProduct = this.products[this.firstVisibleIndex];
       this.updateRemainingTime(activeProduct.remainingTime[0]);
     } else {
       console.error("Invalid firstVisibleIndex:", this.firstVisibleIndex);
@@ -167,17 +161,17 @@ export class PopularBrandsComponentComponent implements OnInit {
   
   updateRemainingTime(remainingTime: any) {
     this.days = this.pad(remainingTime.days);
-    this.hours = this.pad(remainingTime.housrs); // Note: Corrected "housrs" to "hours"
+    this.hours = this.pad(remainingTime.housrs); 
     this.minutes = this.pad(remainingTime.minutes);
-    this.seconds = this.pad(remainingTime.secods); // Note: Corrected "secods" to "seconds"
+    this.seconds = this.pad(remainingTime.secods); 
+
+
   }
   
 
-  // Log the first product's name to the console
   logFirstProduct() {
-    // Validate products array before accessing
     if (this.products.length > 0) {
-      const productName = this.products[this.firstVisibleIndex]?.name; // Optional chaining to avoid undefined error
+      const productName = this.products[this.firstVisibleIndex]?.name;
       if (productName) {
       } else {
         console.warn("No product found at index:", this.firstVisibleIndex);
@@ -213,17 +207,4 @@ export class PopularBrandsComponentComponent implements OnInit {
     return value < 10 ? "0" + value : value.toString();
   }
 
-
-
-  // Function to get the severity for tag
-  getSeverity(status: string) {
-    switch (status) {
-      case "INSTOCK":
-        return "success";
-      case "LOWSTOCK":
-        return "warning";
-      case "OUTOFSTOCK":
-        return "danger";
-    }
-  }
 }

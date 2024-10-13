@@ -32,7 +32,7 @@
 ::ng-deep .p-carousel .p-carousel-prev,
 ::ng-deep .p-carousel .p-carousel-next {
   position: absolute;
-  bottom: 13%;
+  bottom: 3%;
   transform: translateY(-50%);
   z-index: 10;
 }
@@ -120,7 +120,7 @@
   gap: 0;
   width: -webkit-fill-available;
   position: absolute;
-  bottom: 10%;
+  bottom: 0;
 }
 
 ::ng-deep .p-carousel-indicators .p-carousel-indicator button {
@@ -142,17 +142,31 @@
   background-color: rgba(255, 255, 255, 1);
 }
 
-::ng-deep .p-carousel-item-start {
-  height: 300px;
-
+::ng-deep .p-carousel-item {
+  height: 300px !important;
 }
 
-::ng-deep .p-carousel-item-start .border-round {
+::ng-deep .p-carousel-item-start {
+  height: 400px !important;
+}
+
+
+::ng-deep .p-carousel-item .border-round {
   height: 97%;
 }
 
-::ng-deep .p-carousel-item-start .border-round .mb-3 .relative img {
-  height: 300px;
+::ng-deep .p-carousel-item .border-round .mb-3{
+  height: 100%;
+}
+
+::ng-deep .p-carousel-item .border-round .mb-3 .relative {
+  height: 100%;
+}
+
+::ng-deep .p-carousel-item .border-round .mb-3 .relative img {
+  height: 100%;
+width: 100%;
+object-fit: fill;
 }
 
 /* .first-product {
@@ -204,4 +218,67 @@
 .other-products {
   /* transform: scale(1); 
   transition: transform 0.3s ease-in-out; */
+}
+
+/* .card-img {
+height: 100%;
+width: 100%;
+object-fit: fill;
+} */
+
+
+
+.custom-tag {
+  position: absolute;
+  background-color: #f4f4f4;
+  color: #333;
+  border-radius: 10px;
+  padding: 8px 16px;
+  font-size: 14px;
+  font-weight: 400; 
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); 
+  display: inline-flex;
+  align-items: center;
+}
+
+.custom-tag > .p-tag {
+  background: #333;
+}
+
+.custom-tag span {
+  font-weight: bold;
+  margin-right: 8px;
+}
+
+.custom-separator {
+  margin: 0 8px;
+}
+
+
+.img-details {
+  position: absolute;
+  left: 5%;
+  right: 5%;
+  bottom: 5%;
+  background: white;
+  padding: 5px;
+  border-radius: 5px;
+  width: -webkit-fill-available;
+}
+
+
+::ng-deep .p-carousel-item .border-round .mb-3 .relative .img-details {
+  display: none !important;
+}
+
+::ng-deep .p-carousel-item-start .border-round .mb-3 .relative .img-details {
+  display: block !important;
+  position: absolute;
+  left: 5%;
+  right: 5%;
+  bottom: 5%;
+  background: white;
+  padding: 5px;
+  border-radius: 5px;
+  width: -webkit-fill-available;
 }
