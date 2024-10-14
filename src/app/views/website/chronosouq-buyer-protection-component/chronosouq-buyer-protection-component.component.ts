@@ -9,7 +9,7 @@ import { HttpService } from "src/services/http/http.service";
 })
 export class ChronosouqBuyerProtectionComponentComponent implements OnInit {
   selectedCategory: string = "all";
-  showList:any;
+  showList: any;
   commentsList: any;
 
   watches = [
@@ -21,7 +21,7 @@ export class ChronosouqBuyerProtectionComponentComponent implements OnInit {
       isAlmostSoldOut: true,
       soldOutText: "Almost Sold Out",
       image: "assets/images/interested-watches-1.png",
-    liked: true
+      liked: true,
     },
     {
       brand: "Rolex",
@@ -30,7 +30,7 @@ export class ChronosouqBuyerProtectionComponentComponent implements OnInit {
       rating: "4.1",
       isAlmostSoldOut: false,
       image: "assets/images/interested-watches-2.png",
-    liked: false
+      liked: false,
     },
     {
       brand: "Rolex",
@@ -40,7 +40,7 @@ export class ChronosouqBuyerProtectionComponentComponent implements OnInit {
       isAlmostSoldOut: true,
       soldOutText: "Almost Sold Out",
       image: "assets/images/interested-watches-3.png",
-    liked: true
+      liked: true,
     },
     {
       brand: "Rolex",
@@ -49,7 +49,7 @@ export class ChronosouqBuyerProtectionComponentComponent implements OnInit {
       rating: "4.1",
       isAlmostSoldOut: false,
       image: "assets/images/interested-watches-4.png",
-    liked: false
+      liked: false,
     },
     {
       brand: "Rolex",
@@ -59,7 +59,7 @@ export class ChronosouqBuyerProtectionComponentComponent implements OnInit {
       isAlmostSoldOut: true,
       soldOutText: "Almost Sold Out",
       image: "assets/images/interested-watches-7.png",
-    liked: false
+      liked: false,
     },
     {
       brand: "Rolex",
@@ -68,11 +68,9 @@ export class ChronosouqBuyerProtectionComponentComponent implements OnInit {
       rating: "4.1",
       isAlmostSoldOut: false,
       image: "assets/images/interested-watches-8.png",
-    liked: false
+      liked: false,
     },
   ];
-
-
 
   casualWatches = [
     {
@@ -82,7 +80,7 @@ export class ChronosouqBuyerProtectionComponentComponent implements OnInit {
       rating: "4.5",
       isAlmostSoldOut: false,
       image: "assets/images/interested-watches-1.png",
-      liked: true
+      liked: true,
     },
     {
       brand: "Timex",
@@ -92,7 +90,7 @@ export class ChronosouqBuyerProtectionComponentComponent implements OnInit {
       isAlmostSoldOut: true,
       soldOutText: "Almost Sold Out",
       image: "assets/images/interested-watches-2.png",
-      liked: false
+      liked: false,
     },
     {
       brand: "Fossil",
@@ -102,7 +100,7 @@ export class ChronosouqBuyerProtectionComponentComponent implements OnInit {
       isAlmostSoldOut: true,
       soldOutText: "Almost Sold Out",
       image: "assets/images/interested-watches-3.png",
-      liked: true
+      liked: true,
     },
     {
       brand: "Seiko",
@@ -111,7 +109,7 @@ export class ChronosouqBuyerProtectionComponentComponent implements OnInit {
       rating: "4.2",
       isAlmostSoldOut: false,
       image: "assets/images/interested-watches-4.png",
-      liked: false
+      liked: false,
     },
     {
       brand: "Citizen",
@@ -120,7 +118,7 @@ export class ChronosouqBuyerProtectionComponentComponent implements OnInit {
       rating: "4.6",
       isAlmostSoldOut: false,
       image: "assets/images/interested-watches-5.png",
-      liked: true
+      liked: true,
     },
     {
       brand: "Nixon",
@@ -130,10 +128,10 @@ export class ChronosouqBuyerProtectionComponentComponent implements OnInit {
       isAlmostSoldOut: true,
       soldOutText: "Almost Sold Out",
       image: "assets/images/interested-watches-6.png",
-      liked: false
+      liked: false,
     },
   ];
-  
+
   divingWatches = [
     {
       brand: "Seiko",
@@ -142,7 +140,7 @@ export class ChronosouqBuyerProtectionComponentComponent implements OnInit {
       rating: "4.7",
       isAlmostSoldOut: false,
       image: "assets/images/interested-watches-1.png",
-      liked: true
+      liked: true,
     },
     {
       brand: "Citizen",
@@ -152,7 +150,7 @@ export class ChronosouqBuyerProtectionComponentComponent implements OnInit {
       isAlmostSoldOut: true,
       soldOutText: "Almost Sold Out",
       image: "assets/images/interested-watches-2.png",
-      liked: false
+      liked: false,
     },
     {
       brand: "Omega",
@@ -161,7 +159,7 @@ export class ChronosouqBuyerProtectionComponentComponent implements OnInit {
       rating: "4.9",
       isAlmostSoldOut: false,
       image: "assets/images/interested-watches-3.png",
-      liked: true
+      liked: true,
     },
     {
       brand: "Rolex",
@@ -171,7 +169,7 @@ export class ChronosouqBuyerProtectionComponentComponent implements OnInit {
       isAlmostSoldOut: true,
       soldOutText: "Almost Sold Out",
       image: "assets/images/interested-watches-4.png",
-      liked: false
+      liked: false,
     },
     {
       brand: "Tissot",
@@ -180,7 +178,7 @@ export class ChronosouqBuyerProtectionComponentComponent implements OnInit {
       rating: "4.6",
       isAlmostSoldOut: false,
       image: "assets/images/interested-watches-5.png",
-      liked: true
+      liked: true,
     },
     {
       brand: "TAG Heuer",
@@ -190,12 +188,11 @@ export class ChronosouqBuyerProtectionComponentComponent implements OnInit {
       isAlmostSoldOut: true,
       soldOutText: "Almost Sold Out",
       image: "assets/images/interested-watches-6.png",
-      liked: false
+      liked: false,
     },
   ];
-  
 
-    sportsWatches = [
+  sportsWatches = [
     {
       brand: "Garmin",
       name: "Forerunner 945",
@@ -203,7 +200,7 @@ export class ChronosouqBuyerProtectionComponentComponent implements OnInit {
       rating: "4.7",
       isAlmostSoldOut: false,
       image: "assets/images/interested-watches-1.png",
-      liked: true
+      liked: true,
     },
     {
       brand: "Suunto",
@@ -213,7 +210,7 @@ export class ChronosouqBuyerProtectionComponentComponent implements OnInit {
       isAlmostSoldOut: true,
       soldOutText: "Almost Sold Out",
       image: "assets/images/interested-watches-2.png",
-      liked: false
+      liked: false,
     },
     {
       brand: "Polar",
@@ -222,7 +219,7 @@ export class ChronosouqBuyerProtectionComponentComponent implements OnInit {
       rating: "4.8",
       isAlmostSoldOut: false,
       image: "assets/images/interested-watches-3.png",
-      liked: true
+      liked: true,
     },
     {
       brand: "Fitbit",
@@ -231,7 +228,7 @@ export class ChronosouqBuyerProtectionComponentComponent implements OnInit {
       rating: "4.5",
       isAlmostSoldOut: false,
       image: "assets/images/interested-watches-4.png",
-      liked: false
+      liked: false,
     },
     {
       brand: "Apple",
@@ -241,7 +238,7 @@ export class ChronosouqBuyerProtectionComponentComponent implements OnInit {
       isAlmostSoldOut: true,
       soldOutText: "Almost Sold Out",
       image: "assets/images/interested-watches-5.png",
-      liked: true
+      liked: true,
     },
     {
       brand: "Coros",
@@ -251,12 +248,11 @@ export class ChronosouqBuyerProtectionComponentComponent implements OnInit {
       isAlmostSoldOut: true,
       soldOutText: "Almost Sold Out",
       image: "assets/images/interested-watches-6.png",
-      liked: false
+      liked: false,
     },
   ];
 
-
-   cartierWatches = [
+  cartierWatches = [
     {
       brand: "Cartier",
       name: "Santos de Cartier",
@@ -264,7 +260,7 @@ export class ChronosouqBuyerProtectionComponentComponent implements OnInit {
       rating: "4.9",
       isAlmostSoldOut: false,
       image: "assets/images/interested-watches-1.png",
-      liked: true
+      liked: true,
     },
     {
       brand: "Cartier",
@@ -274,7 +270,7 @@ export class ChronosouqBuyerProtectionComponentComponent implements OnInit {
       isAlmostSoldOut: true,
       soldOutText: "Almost Sold Out",
       image: "assets/images/interested-watches-2.png",
-      liked: false
+      liked: false,
     },
     {
       brand: "Cartier",
@@ -283,7 +279,7 @@ export class ChronosouqBuyerProtectionComponentComponent implements OnInit {
       rating: "4.7",
       isAlmostSoldOut: false,
       image: "assets/images/interested-watches-3.png",
-      liked: true
+      liked: true,
     },
     {
       brand: "Cartier",
@@ -293,7 +289,7 @@ export class ChronosouqBuyerProtectionComponentComponent implements OnInit {
       isAlmostSoldOut: true,
       soldOutText: "Almost Sold Out",
       image: "assets/images/interested-watches-4.png",
-      liked: false
+      liked: false,
     },
     {
       brand: "Cartier",
@@ -302,7 +298,7 @@ export class ChronosouqBuyerProtectionComponentComponent implements OnInit {
       rating: "4.6",
       isAlmostSoldOut: false,
       image: "assets/images/interested-watches-5.png",
-      liked: true
+      liked: true,
     },
     {
       brand: "Cartier",
@@ -312,37 +308,28 @@ export class ChronosouqBuyerProtectionComponentComponent implements OnInit {
       isAlmostSoldOut: true,
       soldOutText: "Almost Sold Out",
       image: "assets/images/interested-watches-6.png",
-      liked: false
+      liked: false,
     },
   ];
-  
-  
-
-
 
   changeCategory(category: string) {
-    if(category === 'all'){
-      this.showList=this.watches
-    }
-    else if(category === 'casual')
-    {
-      this.showList=this.casualWatches;
-    }
-    else if(category === 'diving'){
-      this.showList=this.divingWatches
-    }
-    else if(category === 'sports'){
-      this.showList=this.sportsWatches
-    }
-    else if(category === 'cartier'){
-      this.showList=this.cartierWatches
+    if (category === "all") {
+      this.showList = this.watches;
+    } else if (category === "casual") {
+      this.showList = this.casualWatches;
+    } else if (category === "diving") {
+      this.showList = this.divingWatches;
+    } else if (category === "sports") {
+      this.showList = this.sportsWatches;
+    } else if (category === "cartier") {
+      this.showList = this.cartierWatches;
     }
     this.selectedCategory = category;
   }
 
   ngOnInit(): void {
-    if(this.selectedCategory=== 'all' ){
-      this.showList=this.watches
+    if (this.selectedCategory === "all") {
+      this.showList = this.watches;
     }
   }
 
