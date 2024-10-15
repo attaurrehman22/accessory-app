@@ -1,4 +1,13 @@
-<div class="global-main-wraper" style="background-color: #fdfbff;position: fixed;width: 100%;z-index: 999;top: 0;">
+<div
+  class="global-main-wraper"
+  style="
+    background-color: #fdfbff;
+    position: fixed;
+    width: 100%;
+    z-index: 999;
+    top: 0;
+  "
+>
   <mat-sidenav-container
     class="sidenav-container"
     [ngClass]="{ 'rtl-layout': isRtl }"
@@ -8,7 +17,7 @@
       class="sidenav"
       #sidenav
       mode="over"
-     [position]="isRtl && isSmallScreen ? 'start' : 'end'"
+      [position]="isRtl && isSmallScreen ? 'start' : 'end'"
       [style]="{ top: '0', right: '0', position: 'fixed', height: 'auto' }"
     >
       <button class="drawer-btn" (click)="routeToBuyProduct()">
@@ -72,7 +81,7 @@
           style="cursor: pointer"
         />
       </div>
-      <div class="header-content gap-4" *ngIf="!isSmallScreen">
+      <div class="header-content gap-4" *ngIf="!isSmallScreen && !isSearchForm">
         <button class="custom-btn position-relative">
           {{ "header.new_arrivals" | translate }}
           <span class="notification-dot" *ngIf="isUserLogin === 'LogIn'"></span>
@@ -105,6 +114,22 @@
             aria-label="Search"
           />
         </form> -->
+      </div>
+
+      <div class="header-content gap-4" *ngIf="isSearchForm">
+        <form
+          class="d-flex flex-grow-1 ms-3"
+          (ngSubmit)="onSearch(searchQuery)"
+        >
+          <input
+            [(ngModel)]="searchQuery"
+            (ngModelChange)="onSearchChange()"
+            class="form-control me-2"
+            type="search"
+            placeholder="Search through 597,161 watches worldwide"
+            aria-label="Search"
+          />
+        </form>
       </div>
       <div class="header-contact gap-4">
         <img

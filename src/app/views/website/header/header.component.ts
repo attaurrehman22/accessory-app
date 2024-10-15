@@ -71,12 +71,12 @@ export class HeaderComponent {
     this.isSmallScreen = window.innerWidth <= 768;
   }
 
-  isAdminUser: any = '';
+  isAdminUser: any = "";
 
   ngOnInit() {
-    this.isUserLogin = localStorage.getItem('Logged');
+    this.isUserLogin = localStorage.getItem("Logged");
     this.isSmallScreen = window.innerWidth <= 1500;
-    this.isAdminUser = localStorage.getItem('isAdminLogin')
+    this.isAdminUser = localStorage.getItem("isAdminLogin");
   }
 
   routeToAdminPannel() {
@@ -126,18 +126,21 @@ export class HeaderComponent {
   @HostListener("document:click", ["$event"])
   onClickOutside(event: Event) {
     const clickedElement = event.target as HTMLElement;
-  
+
     // Ensure header and sidenav are present
-    const isOutsideHeader = this.headerRef?.nativeElement && !this.headerRef.nativeElement.contains(clickedElement);
-    const isOutsideSidenav = this.sidenavRef?.nativeElement && !this.sidenavRef.nativeElement.contains(clickedElement);
-  
+    const isOutsideHeader =
+      this.headerRef?.nativeElement &&
+      !this.headerRef.nativeElement.contains(clickedElement);
+    const isOutsideSidenav =
+      this.sidenavRef?.nativeElement &&
+      !this.sidenavRef.nativeElement.contains(clickedElement);
+
     if (this.drawer && this.drawer.opened) {
       if (isOutsideHeader && isOutsideSidenav) {
         this.drawer.close();
       }
     }
   }
-  
 
   isSearchForm: any = false;
 
