@@ -19,20 +19,20 @@ export class PeopleSyaingComponentComponent implements AfterViewInit {
       text: "You won’t regret it. Absolutely wonderful product!",
       rating: "⭐⭐⭐⭐⭐",
     },
-    {
-      name: "Megen W.",
-      role: "UI Designer",
-      image: "../../../../assets/images/megen-w.png",
-      text: "You won’t regret it. Absolutely wonderful product!",
-      rating: "⭐⭐⭐⭐⭐",
-    },
-    {
-      name: "Suzan B.",
-      role: "UI Designer",
-      image: "../../../../assets/images/suzan-b.png",
-      text: "You won’t regret it. Absolutely wonderful product!",
-      rating: "⭐⭐⭐⭐⭐",
-    }
+    // {
+    //   name: "Megen W.",
+    //   role: "UI Designer",
+    //   image: "../../../../assets/images/megen-w.png",
+    //   text: "You won’t regret it. Absolutely wonderful product!",
+    //   rating: "⭐⭐⭐⭐⭐",
+    // },
+    // {
+    //   name: "Suzan B.",
+    //   role: "UI Designer",
+    //   image: "../../../../assets/images/suzan-b.png",
+    //   text: "You won’t regret it. Absolutely wonderful product!",
+    //   rating: "⭐⭐⭐⭐⭐",
+    // }
   ];
 
   constructor(
