@@ -10,15 +10,15 @@
           'reverse-order-labels': translateService.currentLang !== 'en'
         }"
       >
-        <h2 class="fw-bold">
+        <p class="header-label">
           {{ "popular_brands.label" | translate }}
-        </h2>
-        <p class="mb-4">
+        </p>
+        <p class="mb-4" style="font-size: 22px; font-weight: 400">
           {{ "popular_brands.paragraph" | translate }}
         </p>
 
         <div class="w-100 d-flex">
-          <button class="btn btn-dark btn-lg mb-5">
+          <button class="btn btn-dark btn-lg mb-5" style="width: 200px;">
             {{ "popular_brands.view_listing" | translate }}
           </button>
         </div>
@@ -63,7 +63,7 @@
     <div class="col-lg-7 col-md-12 col-sm-12">
       <div class="container mt-5">
         <p-carousel
-        [autoplayInterval]="2000"
+          [autoplayInterval]="4000"
           [value]="products"
           [numVisible]="3"
           [numScroll]="1"

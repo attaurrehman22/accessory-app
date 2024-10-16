@@ -7,7 +7,8 @@
 }
 
 .font-size {
-  font-size: 1.8vh;
+  font-size: 16px;
+  font-weight: 400;
 }
 
 .carosal-div {
@@ -28,6 +29,7 @@
   height: 275px;
   display: flex;
   justify-content: center;
+  margin-top: 12px;
 }
 
 .card-list {
@@ -134,10 +136,6 @@
     margin: 0px !important;
   }
 
-  .font-size {
-    font-size: 1.2vh;
-  }
-
   .card-body {
     display: flex;
     flex-direction: column;
@@ -210,5 +208,11 @@
 
 .next-btn {
   left: 49%;
-  top: 86%;
+  top: 86%; 
+}
+
+
+.horizontal-line {
+  border-bottom: 1px solid #484848;
+  width: 60%; 
 }

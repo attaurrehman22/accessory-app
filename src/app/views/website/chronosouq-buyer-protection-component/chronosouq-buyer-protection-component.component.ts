@@ -15,6 +15,10 @@ export class ChronosouqBuyerProtectionComponentComponent implements OnInit {
   watches = [
     {
       brand: "Rolex",
+      condition:"Good Condition but in low price",
+      location:"Madinah",
+      shippingCharges:120,
+      shippingCurrency:"$",
       name: "Datejust",
       price: "SAR 125.50",
       rating: "4.1",
@@ -25,6 +29,10 @@ export class ChronosouqBuyerProtectionComponentComponent implements OnInit {
     },
     {
       brand: "Rolex",
+      condition:"New",
+      shippingCharges:130,
+      shippingCurrency:"$",
+      location:"Makkah",
       name: "Submariner",
       price: "SAR 125.50",
       rating: "4.1",
@@ -34,6 +42,10 @@ export class ChronosouqBuyerProtectionComponentComponent implements OnInit {
     },
     {
       brand: "Rolex",
+      condition:"Used",
+      location:"Madinah",
+      shippingCharges:120,
+      shippingCurrency:"$",
       name: "Datejust",
       price: "SAR 125.50",
       rating: "4.1",
@@ -44,6 +56,10 @@ export class ChronosouqBuyerProtectionComponentComponent implements OnInit {
     },
     {
       brand: "Rolex",
+      condition:"New",
+      shippingCharges:130,
+      shippingCurrency:"$",
+      location:"Makkah",
       name: "Submariner",
       price: "SAR 125.50",
       rating: "4.1",
@@ -53,6 +69,10 @@ export class ChronosouqBuyerProtectionComponentComponent implements OnInit {
     },
     {
       brand: "Rolex",
+      condition:"Good Condition but in low price",
+      location:"Madinah",
+      shippingCharges:120,
+      shippingCurrency:"$",
       name: "Datejust",
       price: "SAR 125.50",
       rating: "4.1",
@@ -63,6 +83,10 @@ export class ChronosouqBuyerProtectionComponentComponent implements OnInit {
     },
     {
       brand: "Rolex",
+      condition:"New",
+      shippingCharges:130,
+      shippingCurrency:"$",
+      location:"Makkah",
       name: "Submariner",
       price: "SAR 125.50",
       rating: "4.1",

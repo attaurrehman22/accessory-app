@@ -2,6 +2,11 @@
   padding: 0 0 0 135px;
 }
 
+.header-label{
+font-size: 40px;
+font-weight: 600;
+}
+
 .timer-box {
   background-color: #f8f9fa;
   border-radius: 8px;
@@ -106,14 +111,11 @@
     bottom: 0;
     left: auto !important;
   }
+
+  .display-4 {
+   font-size: 2vh !important;
+  }
 }
-
-
-
-
-
-
-
 
 
 ::ng-deep .p-carousel-indicators {
@@ -143,11 +145,13 @@
 }
 
 ::ng-deep .p-carousel-item {
-  height: 300px !important;
+  height: 400px !important;
+  width: 372px !important;
 }
 
 ::ng-deep .p-carousel-item-start {
-  height: 400px !important;
+  height: 500px !important;
+  width: 400px !important;
 }
 
 
@@ -168,13 +172,6 @@
 width: 100%;
 object-fit: fill;
 }
-
-/* .first-product {
-  height: 500px ; 
-}
-.p-carousel .p-carousel-item {
-  height: 300px;
-} */
 
 
 
@@ -208,24 +205,6 @@ object-fit: fill;
 .reverse-order-time .d-flex {
   justify-content: end;
 }
-
-
-.first-product {
-  /* transform: scale(1.2); 
-  transition: transform 0.3s ease-in-out; */
-}
-
-.other-products {
-  /* transform: scale(1); 
-  transition: transform 0.3s ease-in-out; */
-}
-
-/* .card-img {
-height: 100%;
-width: 100%;
-object-fit: fill;
-} */
-
 
 
 .custom-tag {

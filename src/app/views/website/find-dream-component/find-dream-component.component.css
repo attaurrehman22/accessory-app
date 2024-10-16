@@ -9,6 +9,18 @@
 }
 .para {
   font-size: 20px;
+  font-weight: 400;
+}
+
+.heading-tag {
+  font-size: 48px;
+  font-weight: 600;
+}
+
+@media (max-width: 424px) {
+  .heading-tag {
+    font-size: 30px;
+  }
 }
 
 .carousel-inner img {
@@ -80,11 +92,17 @@
 
 .custom-btn {
   height: 60px;
-  padding: 0 5% 0 5%;
+  width: 215px;
   border-radius: 10px;
   border: 1px solid #242424;
+  font-size: 20px;
+  font-weight: 400;
 }
 
 .reverse-order .header-styl {
   padding: 0px !important;
+}
+
+.reverse-order .header-styl p{
+  text-align: end;
 }

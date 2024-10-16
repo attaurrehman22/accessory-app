@@ -53,7 +53,10 @@
 
     <div class="container mt-5">
       <div class="row">
-        <div class="col-md-4 col-sm-6 mb-4" *ngFor="let watch of showList; let i = index">
+        <div
+          class="col-md-4 col-sm-6 mb-4"
+          *ngFor="let watch of showList; let i = index"
+        >
           <div class="card h-100 shadow-sm">
             <img
               src="{{ watch.image }}"
@@ -70,26 +73,39 @@
                 </div>
               </div>
               <div
-                class="d-flex justify-content-between align-items-center mb-2"
+                class="d-flex justify-content-between align-items-center mb-2 mt-3"
               >
-                <h5 class="card-title">{{ watch.name }}</h5>
-                <div class="rating">
+                <h5 class="card-title d-flex flex-wrap">
+                  {{ watch.name }} {{ watch.condition }}
+                </h5>
+                <!-- <div class="rating">
                   <span class="star-rating">
                     <i class="fa fa-star" aria-hidden="true"></i>
                   </span>
                   <span>{{ watch.rating }}</span>
-                </div>
+                </div> -->
+              </div>
+              <div class="d-flex justify-content-between align-items-center mt-3">
+                <span class="price"
+                  >+{{ watch.shippingCharges }}
+                  {{ watch.shippingCurrency }} Shipping</span
+                >
+                <div class="price">Location</div>
               </div>
               <div class="d-flex justify-content-between align-items-center">
-                <span class="price">{{ watch.price }}</span>
-                <div class="text-danger" *ngIf="watch.isAlmostSoldOut">
-                  {{ watch.soldOutText }}
+                <span class="card-title">{{ watch.price }}</span>
+                <div class="card-title">
+                  {{ watch.location }}
                 </div>
               </div>
             </div>
           </div>
           <div class="heart-icon" (click)="toggleHeart(i)">
-            <i class="fa" [ngClass]="watch.liked ? 'fa-heart' : 'fa-heart fa-heart-o'" aria-hidden="true"></i>
+            <i
+              class="fa"
+              [ngClass]="watch.liked ? 'fa-heart' : 'fa-heart fa-heart-o'"
+              aria-hidden="true"
+            ></i>
           </div>
         </div>
       </div>
