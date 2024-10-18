@@ -7,6 +7,14 @@
   color: #6c757d;
 }
 
+.card-text {
+  height: 60px;
+}
+
+.card-body {
+  padding: 0 0 10px 0 !important;
+}
+
 .card-title {
   font-weight: bold;
 }
@@ -21,4 +29,10 @@
 .res-img {
   height: 50px;
   width: 50px;
+}
+
+@media (max-width: 1024px) {
+  .card-text {
+    height: auto !important;
+  }
 }

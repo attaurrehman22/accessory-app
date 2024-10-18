@@ -1,134 +1,137 @@
 .wraper {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 45px 220px 0 220px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 45px 220px 0 220px;
+}
+
+.card {
+  height: 410px !important;
+}
+
+.text-section h2 {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.text-section p {
+  font-size: 16px;
+}
+
+.text-section ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.text-section li {
+  font-size: 16px;
+}
+
+.checkmark {
+  background: #2fab73;
+  margin-right: 10px;
+  color: #fff;
+  border-radius: 50%;
+  padding: 4px 8px 0 8px;
+  height: 30px;
+  width: 30px;
+}
+
+.video-section {
+  width: 50%;
+}
+
+.video-placeholder {
+  background-color: #000824;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+}
+
+.play-button {
+  font-size: 24px;
+  color: white;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+
+@media (max-width: 1500px) {
+  .wraper {
+    padding: 0 20px 0 20px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .wraper {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0 20px 0 20px;
   }
 
-  .card {
-    height: 410px !important;
-  }
-  
-  .text-section h2 {
-    font-size: 24px;
-    font-weight: bold;
-    margin-bottom: 10px;
-  }
-  
-  .text-section p {
-    font-size: 16px;
-  }
-  
-  .text-section ul {
-    list-style-type: none;
-    padding: 0;
-  }
-  
-  .text-section li {
-    font-size: 16px;
-  }
-  
-  .checkmark {
-    background: #2fab73;
-    margin-right: 10px;
-    color: #fff;
-    border-radius: 50%;
-    padding: 4px 8px 0 8px;
-    height: 30px;
-    width: 30px;
-  }
-  
+  .text-section,
   .video-section {
-    width: 50%;
-  }
-  
-  .video-placeholder {
-    background-color: #000824;
+    max-width: 100%;
     width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 10px;
-  }
-  
-  .play-button {
-    font-size: 24px;
-    color: white;
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
-  }
-  
-
-  @media (max-width: 1500px) {
-    .wraper {
-      padding: 0 20px 0 20px;
-    }
   }
 
-  @media (max-width: 1024px) {
-    .wraper {
-      flex-direction: column;
-      align-items: flex-start;
-      padding: 0 20px 0 20px;
-    }
-  
-    .text-section, .video-section {
-      max-width: 100%;
-      width: 100%;
-    }
-  
-    .video-placeholder {
-      height: 200px;
-    }
+  .video-placeholder {
+    height: 200px;
   }
-  
-  @media (max-width: 768px) {
-    .text-section h2 {
-      font-size: 20px;
-    }
-  
-    .text-section p, .text-section li {
-      font-size: 14px;
-    }
-  
-    .video-placeholder {
-      height: 180px;
-    }
+}
+
+@media (max-width: 768px) {
+  .text-section h2 {
+    font-size: 20px;
   }
-  
-  @media (max-width: 480px) {
-    .text-section h2 {
-      font-size: 18px;
-    }
-  
-    .text-section p, .text-section li {
-      font-size: 12px;
-    }
-  
-    .video-placeholder {
-      height: 150px;
-    }
+
+  .text-section p,
+  .text-section li {
+    font-size: 14px;
   }
+
+  .video-placeholder {
+    height: 180px;
+  }
+}
+
+@media (max-width: 480px) {
+  .text-section h2 {
+    font-size: 18px;
+  }
+
+  .text-section p,
+  .text-section li {
+    font-size: 12px;
+  }
+
+  .video-placeholder {
+    height: 150px;
+  }
+}
 
 
 
-  .reverse-order {
-    flex-direction: row-reverse;
-  }
+.reverse-order {
+  flex-direction: row-reverse;
+}
 
-  .reverse-order-li {
-    flex-direction: row-reverse;
-  }
+.reverse-order-li {
+  flex-direction: row-reverse;
+}
 
-  .reverse-order h2{
-    text-align: end;
-  }
+.reverse-order h2 {
+  text-align: end;
+}
 
-  .reverse-order p{
-    text-align: end;
-  }
+.reverse-order p {
+  text-align: end;
+}
 
 @media (max-width: 1500px) {
   .reverse-order {
@@ -164,17 +167,25 @@
 
 
 
-.category_btn{
+.category_btn {
   border: 1px solid #F3F3F3;
   height: 40px;
   border-radius: 7px;
 }
 
 .card-title {
-  font-size: 18px !important;
-  font-weight: 600 !important;
+  font-size: 18px;
+  font-weight: 600;
+  color: #484848;
+  margin: 0 !important;
 }
 
+.card-title-two {
+  font-size: 17px;
+  font-weight: 500;
+  color: #484848;
+  margin: 0 !important;
+}
 
 .container {
   margin-top: 20px;
@@ -197,14 +208,16 @@
 
 }
 
-.watch-brand {
+/* .watch-brand {
   font-weight: 400;
   font-size: 16px;
-}
+} */
 
 .price {
   font-size: 14px;
   font-weight: 400;
+  color: #6a6a6a;
+  margin: 0 !important;
 }
 
 .rating {
@@ -235,7 +248,7 @@
 }
 
 .fa-heart-o {
-  color: #a09494  !important;
+  color: #a09494 !important;
 }
 
 .fa-heart {

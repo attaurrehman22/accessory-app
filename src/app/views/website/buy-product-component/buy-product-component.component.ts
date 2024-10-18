@@ -48,8 +48,11 @@ export class BuyProductComponentComponent implements OnInit {
   selectedImage: string;
   thumbnails: string[] = [];
 
-  constructor(private http: HttpService,private alertService:AlertsServicesService,
-    private router:Router,private dialog:MatDialog
+  constructor(
+    private http: HttpService,
+    private alertService: AlertsServicesService,
+    private router: Router,
+    private dialog: MatDialog
   ) {}
 
   swapImages(clickedImage: string): void {
@@ -59,7 +62,7 @@ export class BuyProductComponentComponent implements OnInit {
 
   productDetails: any;
   dealerDetails: any;
-  dealerUserDetails:any;
+  dealerUserDetails: any;
   ngOnInit(): void {
     this.fetchProductDetails()
       .then(() => {
@@ -80,37 +83,19 @@ export class BuyProductComponentComponent implements OnInit {
 
         if (this.productDetails.created_by) {
           this.http
-          .getDealerReviewsByID(this.productDetails.created_by)
-          .subscribe(
-            (res) => {
-              this.dealerDetails = res.data;
-        
-              this.dealerDetails = this.dealerDetails.map((detail: any) => {
-                if (detail.main_image) {
-                  detail.main_image = detail.main_image.replace(/\\/g, '');
-                }
-                return detail;
-              });
-
-              console.log("this.dealerDetails",this.dealerDetails)
-        
-            },
-            (err) => {
-              console.log(err);
-            }
-          );
-        
-        }
-
-
-        if (this.productDetails.created_by) {
-          this.http
-            .getRevieweruserByID(this.productDetails.created_by)
+            .getDealerReviewsByID(this.productDetails.created_by)
             .subscribe(
               (res) => {
-                this.dealerUserDetails = res.data;
-                this.cosmeticCondition=res.data.cosmetic_condition;
-                this.satisfaction=res.data.satisfaction;
+                this.dealerDetails = res.data;
+
+                this.dealerDetails = this.dealerDetails.map((detail: any) => {
+                  if (detail.main_image) {
+                    detail.main_image = detail.main_image.replace(/\\/g, "");
+                  }
+                  return detail;
+                });
+
+                console.log("this.dealerDetails", this.dealerDetails);
               },
               (err) => {
                 console.log(err);
@@ -118,6 +103,20 @@ export class BuyProductComponentComponent implements OnInit {
             );
         }
 
+        if (this.productDetails.created_by) {
+          this.http
+            .getRevieweruserByID(this.productDetails.created_by)
+            .subscribe(
+              (res) => {
+                this.dealerUserDetails = res.data;
+                this.cosmeticCondition = res.data.cosmetic_condition;
+                this.satisfaction = res.data.satisfaction;
+              },
+              (err) => {
+                console.log(err);
+              }
+            );
+        }
 
         this.getAllSimilarProducts();
       })
@@ -126,32 +125,31 @@ export class BuyProductComponentComponent implements OnInit {
       });
   }
 
-  similarWatchesList:any;
+  similarWatchesList: any;
 
-
-  getAllSimilarProducts() { 
+  getAllSimilarProducts() {
     this.http.getSimilarProductsByID(5).subscribe(
       (res) => {
         this.similarWatchesList = res.data.data;
-        console.log("similarWatchesList",this.similarWatchesList)
-        if(this.similarWatchesList){
-          this.similarWatchesList = this.similarWatchesList.map((product: any) => {
-            return {
-              ...product,
-              main_image: product.main_image.replace(/\\/g, "")
-            };
-          });
+        console.log("similarWatchesList", this.similarWatchesList);
+        if (this.similarWatchesList) {
+          this.similarWatchesList = this.similarWatchesList.map(
+            (product: any) => {
+              return {
+                ...product,
+                main_image: product.main_image.replace(/\\/g, ""),
+              };
+            }
+          );
         }
 
-        console.log("similarWatchesList",this.similarWatchesList)
+        console.log("similarWatchesList", this.similarWatchesList);
       },
       (err) => {
         console.log(err);
       }
     );
   }
-  
-
 
   fetchProductDetails() {
     return this.http
@@ -178,54 +176,52 @@ export class BuyProductComponentComponent implements OnInit {
   }
 
   getConditionPercentage(): number {
-    return (this.cosmeticCondition / 5) * 100; 
+    return (this.cosmeticCondition / 5) * 100;
   }
 
   getSatisfactionPercentage(): number {
-    return (this.satisfaction / 5) * 100; 
+    return (this.satisfaction / 5) * 100;
   }
-
 
   getInitials(): string {
     if (this.dealerUserDetails?.user_details?.name) {
-      return this.dealerUserDetails.user_details.name.substring(0, 2).toUpperCase();
+      return this.dealerUserDetails.user_details.name
+        .substring(0, 2)
+        .toUpperCase();
     }
-    return ''; 
+    return "";
   }
-
 
   copyCurrentUrl() {
-    const currentUrl = window.location.href;  // Get the current browser URL
-  
-    navigator.clipboard.writeText(currentUrl).then(() => {
-      console.log('URL copied to clipboard successfully!');
-      // Optionally, you can show a success message or notification
-      this.alertService.showAlert('success','Url copy Successfully')
-    }).catch(err => {
-      console.error('Could not copy the URL: ', err);
-    });
+    const currentUrl = window.location.href; // Get the current browser URL
+
+    navigator.clipboard
+      .writeText(currentUrl)
+      .then(() => {
+        console.log("URL copied to clipboard successfully!");
+        // Optionally, you can show a success message or notification
+        this.alertService.showAlert("success", "Url copy Successfully");
+      })
+      .catch((err) => {
+        console.error("Could not copy the URL: ", err);
+      });
   }
 
+  buyNow() {
+    const isUserLogin = localStorage.getItem("Logged");
+    if (isUserLogin) {
+      this.router.navigate(["/buy-now"]);
+    } else {
+      const dialogRef = this.dialog.open(ModelLoginComponent, {
+        width: "600px",
+        data: { message: "dialog-box" },
+      });
 
-  buyNow(){
-    const isUserLogin=localStorage.getItem('Logged')
-    if(isUserLogin){
-      this.router.navigate(['/buy-now'])
-    }
-    else{
-      
-        const dialogRef = this.dialog.open(ModelLoginComponent, {
-          width: "600px",
-          data: { message: "dialog-box" },
-        });
-    
-        dialogRef.afterClosed().subscribe((result) => {
-          if (result) {
-            this.router.navigate(['/buy-now'])
-          }
-        });
-      
+      dialogRef.afterClosed().subscribe((result) => {
+        if (result) {
+          this.router.navigate(["/buy-now"]);
+        }
+      });
     }
   }
-  
 }

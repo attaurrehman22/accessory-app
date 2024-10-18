@@ -1,12 +1,6 @@
 <div
   class="global-main-wraper"
-  style="
-    background-color: #fdfbff;
-    position: fixed;
-    width: 100%;
-    z-index: 999;
-    top: 0;
-  "
+  style="position: fixed; width: 100%; z-index: 999; top: 0"
 >
   <mat-sidenav-container
     class="sidenav-container"
@@ -40,20 +34,6 @@
           *ngIf="isUserLogin === 'LogIn'"
         ></span>
       </button>
-      <!-- <form
-        *ngIf="searchFilter"
-        class="d-flex flex-grow-1 ms-3"
-        (ngSubmit)="onSearch(searchQuery)"
-      >
-        <input
-          [(ngModel)]="searchQuery"
-          (ngModelChange)="onSearchChange()"
-          class="form-control me-2"
-          type="search"
-          placeholder="Search through 597,161 watches worldwide"
-          aria-label="Search"
-        />
-      </form> -->
 
       <button
         style="background: none; border: none; font-size: 16px"
@@ -99,9 +79,14 @@
         >
           {{ "header.admin_pannel" | translate }}
         </button>
+      </div>
 
-        <!-- <form
-          *ngIf="isSearchForm"
+      <!-- <div
+        class="header-content gap-4"
+        *ngIf="isSearchForm"
+        [ngClass]="{ 'position-absolute': isSmallScreen }"
+      >
+        <form
           class="d-flex flex-grow-1 ms-3"
           (ngSubmit)="onSearch(searchQuery)"
         >
@@ -113,10 +98,16 @@
             placeholder="Search through 597,161 watches worldwide"
             aria-label="Search"
           />
-        </form> -->
-      </div>
+        </form>
+      </div> -->
 
-      <div class="header-content gap-4" *ngIf="isSearchForm">
+      <div
+        class="header-content gap-4"
+        *ngIf="isSearchForm"
+        [ngClass]="{
+          'position-absolute search-box-small-screen': isSmallScreen
+        }"
+      >
         <form
           class="d-flex flex-grow-1 ms-3"
           (ngSubmit)="onSearch(searchQuery)"
@@ -131,14 +122,13 @@
           />
         </form>
       </div>
+
       <div class="header-contact gap-4">
         <img
           src="./assets/images/search-icon.png"
           (click)="openSearchForm()"
-          *ngIf="!isSmallScreen"
           style="cursor: pointer"
         />
-        <!-- <img src="./assets/images/fav-icon.png" style="cursor: pointer" /> -->
         <mat-menu #profileMenu="matMenu">
           <button mat-menu-item (click)="goToRegister()">
             {{ "header.Login" | translate }}

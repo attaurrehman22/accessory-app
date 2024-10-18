@@ -4,10 +4,10 @@
 >
   <div class="container d-flex flex-wrap justify-content-center">
     <div class="col-lg-8 col-md-10 col-sm-12">
-      <h2 class="text-center">{{ "chrono_buyer.label" | translate }}</h2>
+      <p style="font-size: 40px;font-weight: 600;color: #484848;" class="text-center">{{ "chrono_buyer.label" | translate }}</p>
     </div>
     <div class="col-lg-8 col-md-10 col-sm-12">
-      <p class="text-center mt-2">
+      <p style="font-size: 18px;font-weight: 400;color: #6a6a6a;" class="text-center mt-2">
         {{ "chrono_buyer.paragraph" | translate }}
       </p>
     </div>
@@ -67,30 +67,38 @@
               <div
                 class="d-flex justify-content-between align-items-center mb-2"
               >
-                <div class="watch-brand">{{ watch.brand }}</div>
+                <div>
+                  <p style="font-size: 16px;font-weight: 400;color: #6a6a6a;margin: 0 !important;">
+                  {{ watch.brand }}
+                </p>
+                </div>
                 <div>
                   <i class="fa fa-heart-o" aria-hidden="true"></i>
                 </div>
               </div>
               <div
-                class="d-flex justify-content-between align-items-center mb-2 mt-3"
+                class="d-flex justify-content-between align-items-center mt-2"
               >
-                <h5 class="card-title d-flex flex-wrap">
+                <p class="card-title d-flex flex-wrap">
                   {{ watch.name }} {{ watch.condition }}
-                </h5>
+                </p>
               </div>
               <div class="d-flex justify-content-between align-items-center mt-3">
-                <span class="price"
+                <p class="price"
                   >+{{ watch.shippingCharges }}
-                  {{ watch.shippingCurrency }} Shipping</span
+                  {{ watch.shippingCurrency }} Shipping</p
                 >
-                <div class="price">Location</div>
+                <div>
+                  <p class="price">
+                  Location
+                </p>
+                </div>
               </div>
               <div class="d-flex justify-content-between align-items-center">
-                <span class="card-title">{{ watch.price }}</span>
-                <div class="card-title">
+                <p class="card-title-two">{{ watch.price }}</p>
+                <p class="card-title-two">
                   {{ watch.location }}
-                </div>
+                </p>
               </div>
             </div>
           </div>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, HostListener , OnInit } from "@angular/core";
 import { TranslateService } from "@ngx-translate/core";
 import { HttpService } from "src/services/http/http.service";
 
@@ -7,11 +7,24 @@ import { HttpService } from "src/services/http/http.service";
   templateUrl: "./explore-chronosouq-component.component.html",
   styleUrls: ["./explore-chronosouq-component.component.css"],
 })
-export class ExploreChronosouqComponentComponent {
+export class ExploreChronosouqComponentComponent implements OnInit{
   selectedStep: number = 1;
-
+  isSmallScreen = false;
   selectStep(step: number) {
     this.selectedStep = step;
+  }
+
+  ngOnInit(): void {
+    this.checkScreenSize();
+  }
+  
+  @HostListener('window:resize', ['$event'])
+  onResize() {
+    this.checkScreenSize();
+  }
+
+  checkScreenSize() {
+    this.isSmallScreen = window.innerWidth < 768;
   }
 
   constructor(

@@ -2,194 +2,241 @@
   class="global-main-wraper mt-5 mb-5 d-flex flex-wrap container"
   [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }"
 >
+  <!-- Steps Section -->
   <div class="col-lg-6 col-md-6 col-sm-12">
-    <div class="my-5"
-    [ngClass]="{ 'reverse-order-header': translateService.currentLang !== 'en' }">
-      <h2 class="mb-4">{{ "explore_chrono.label" | translate }}</h2>
+    <div class="my-5">
+      <p style="font-size: 35px; font-weight: 500; color: #484848" class="mb-4">
+        {{ "explore_chrono.label" | translate }}
+      </p>
       <div class="row justify-content-center">
-        <div class="col-md-12"
-        [ngClass]="{ 'reverse-order-labels': translateService.currentLang !== 'en' }"
-        >
-         
+        <div class="col-md-12">
+          <!-- Step 1 -->
           <div
-            class="d-flex align-items-center rounded mb-3 p-3"
+            class="d-flex flex-column align-items-start rounded mb-3 p-3"
             [ngClass]="{ 'bg-active-color ': selectedStep === 1 }"
             (click)="selectStep(1)"
           >
             <div
-              class="step-circle rounded-circle d-flex align-items-center justify-content-center me-3"
+              class="d-flex align-items-center"
               [ngClass]="{
-                'bg-dark text-white': selectedStep === 1,
-                'bg-active-color ': selectedStep !== 1
+                'reverse-order-text': translateService.currentLang !== 'en'
               }"
-              style="width: 2.3rem; height: 2.2rem"
+              style="width: 100%;"
             >
-              1
-            </div>
-            <div class="text-start">
-              <h5 
-               [ngClass]="{ 'reverse-order-header': translateService.currentLang !== 'en' }"
-              class="mb-1">{{ "explore_chrono.browse" | translate }}</h5>
-              <p
-                class="mb-0"
+              <div
+                class="step-circle rounded-circle d-flex align-items-center justify-content-center me-3"
                 [ngClass]="{
-                  '': selectedStep === 1,
-                  'text-muted': selectedStep !== 1
+                  'bg-dark text-white': selectedStep === 1,
+                  'bg-active-color ': selectedStep !== 1
                 }"
-                style="font-size: 1.7vh"
-                *ngIf="selectedStep === 1"
+                style="width: 2.3rem; height: 2.2rem"
               >
-                {{ "explore_chrono.browse_para" | translate }}
-              </p>
+                1
+              </div>
+              <div class="text-start">
+                <h5 class="mb-1">{{ "explore_chrono.browse" | translate }}</h5>
+                <p
+                  class="mb-0"
+                  [ngClass]="{
+                    '': selectedStep === 1,
+                    'text-muted': selectedStep !== 1
+                  }"
+                  style="font-size: 1.7vh"
+                  *ngIf="selectedStep === 1"
+                >
+                  {{ "explore_chrono.browse_para" | translate }}
+                </p>
+              </div>
+            </div>
+            <!-- Show image right below the first option when selected -->
+            <div *ngIf="selectedStep === 1 && isSmallScreen" class="mt-2">
+              <img
+                class="res-img"
+                src="../../../../assets/images/browse-discover.png"
+                alt="Browse Image"
+              />
             </div>
           </div>
 
-    
+          <!-- Step 2 -->
           <div
-            class="d-flex align-items-center rounded mb-3 p-3"
+            class="d-flex flex-column align-items-start rounded mb-3 p-3"
             [ngClass]="{ 'bg-active-color ': selectedStep === 2 }"
             (click)="selectStep(2)"
           >
             <div
-              class="step-circle rounded-circle d-flex align-items-center justify-content-center me-3"
+              class="d-flex align-items-center"
+              style="width: 100%;"
               [ngClass]="{
-                'bg-dark text-white': selectedStep === 2,
-                'bg-active-color ': selectedStep !== 2
+                'reverse-order-text': translateService.currentLang !== 'en'
               }"
-              style="width: 2.3rem; height: 2.2rem"
             >
-              2
-            </div>
-
-            <div class="text-start">
-              <h5 
-               [ngClass]="{ 'reverse-order-header': translateService.currentLang !== 'en' }"
-              class="mb-1">
-                {{ "explore_chrono.secure" | translate }}
-              </h5>
-              <p
-                class="mb-0"
+              <div
+                class="step-circle rounded-circle d-flex align-items-center justify-content-center me-3"
                 [ngClass]="{
-                  '': selectedStep === 2,
-                  'text-muted': selectedStep !== 2
+                  'bg-dark text-white': selectedStep === 2,
+                  'bg-active-color ': selectedStep !== 2
                 }"
-                style="font-size: 1.7vh"
-                *ngIf="selectedStep === 2"
+                style="width: 2.3rem; height: 2.2rem"
               >
-                {{ "explore_chrono.secure_para" | translate }}
-              </p>
+                2
+              </div>
+              <div class="text-start">
+                <h5 class="mb-1">{{ "explore_chrono.secure" | translate }}</h5>
+                <p
+                  class="mb-0"
+                  [ngClass]="{
+                    '': selectedStep === 2,
+                    'text-muted': selectedStep !== 2
+                  }"
+                  style="font-size: 1.7vh"
+                  *ngIf="selectedStep === 2"
+                >
+                  {{ "explore_chrono.secure_para" | translate }}
+                </p>
+              </div>
+            </div>
+            <!-- Show image below the second option -->
+            <div *ngIf="selectedStep === 2 && isSmallScreen" class="mt-2">
+              <img
+                class="res-img"
+                src="../../../../assets/images/deal-purchase.png"
+                alt="Secure Image"
+              />
             </div>
           </div>
 
+          <!-- Repeat for Step 3 -->
           <div
-            class="d-flex align-items-center rounded mb-3 p-3"
+            class="d-flex flex-column align-items-start rounded mb-3 p-3"
             [ngClass]="{ 'bg-active-color ': selectedStep === 3 }"
             (click)="selectStep(3)"
           >
             <div
-              class="step-circle rounded-circle d-flex align-items-center justify-content-center me-3"
+              class="d-flex align-items-center"
+              style="width: 100%;"
               [ngClass]="{
-                'bg-dark text-white': selectedStep === 3,
-                'bg-active-color ': selectedStep !== 3
+                'reverse-order-text': translateService.currentLang !== 'en'
               }"
-              style="width: 2.3rem; height: 2.2rem"
             >
-              3
-            </div>
-
-            <div class="text-start">
-              <h5 
-               [ngClass]="{ 'reverse-order-header': translateService.currentLang !== 'en' }"
-              class="mb-1">
-                {{ "explore_chrono.get_it" | translate }}
-              </h5>
-              <p
-                class="mb-0"
+              <div
+                class="step-circle rounded-circle d-flex align-items-center justify-content-center me-3"
                 [ngClass]="{
-                  '': selectedStep === 3,
-                  'text-muted': selectedStep !== 3
+                  'bg-dark text-white': selectedStep === 3,
+                  'bg-active-color ': selectedStep !== 3
                 }"
-                style="font-size: 1.7vh"
-                *ngIf="selectedStep === 3"
+                style="width: 2.3rem; height: 2.2rem"
               >
-                {{ "explore_chrono.get_it_para" | translate }}
-              </p>
+                3
+              </div>
+              <div class="text-start">
+                <h5 class="mb-1">{{ "explore_chrono.get_it" | translate }}</h5>
+                <p
+                  class="mb-0"
+                  [ngClass]="{
+                    '': selectedStep === 3,
+                    'text-muted': selectedStep !== 3
+                  }"
+                  style="font-size: 1.7vh"
+                  *ngIf="selectedStep === 3"
+                >
+                  {{ "explore_chrono.get_it_para" | translate }}
+                </p>
+              </div>
+            </div>
+            <div *ngIf="selectedStep === 3 && isSmallScreen" class="mt-2">
+              <img
+                class="res-img"
+                src="../../../../assets/images/get-delivered-safely.png"
+                alt="Get Delivered Image"
+              />
             </div>
           </div>
 
+          <!-- Step 4 -->
           <div
-            class="d-flex align-items-center rounded mb-3 p-3"
+            class="d-flex flex-column align-items-start rounded mb-3 p-3"
             [ngClass]="{ 'bg-active-color ': selectedStep === 4 }"
             (click)="selectStep(4)"
           >
             <div
-              class="step-circle rounded-circle d-flex align-items-center justify-content-center me-3"
+              class="d-flex align-items-center"
+              style="width: 100%;"
               [ngClass]="{
-                'bg-dark text-white': selectedStep === 4,
-                'bg-active-color ': selectedStep !== 4
+                'reverse-order-text': translateService.currentLang !== 'en'
               }"
-              style="width: 2.3rem; height: 2.2rem"
             >
-              4
-            </div>
-
-            <div class="text-start">
-              <h5 
-               [ngClass]="{ 'reverse-order-header': translateService.currentLang !== 'en' }"
-              class="mb-1">
-                {{ "explore_chrono.sell" | translate }}
-              </h5>
-              <p
-                class="mb-0"
+              <div
+                class="step-circle rounded-circle d-flex align-items-center justify-content-center me-3"
                 [ngClass]="{
-                  '': selectedStep === 4,
-                  'text-muted': selectedStep !== 4
+                  'bg-dark text-white': selectedStep === 4,
+                  'bg-active-color ': selectedStep !== 4
                 }"
-                style="font-size: 1.7vh"
-                *ngIf="selectedStep === 4"
+                style="width: 2.3rem; height: 2.2rem"
               >
-                {{ "explore_chrono.sell_para" | translate }}
-              </p>
+                4
+              </div>
+              <div class="text-start">
+                <h5 class="mb-1">{{ "explore_chrono.sell" | translate }}</h5>
+                <p
+                  class="mb-0"
+                  [ngClass]="{
+                    '': selectedStep === 4,
+                    'text-muted': selectedStep !== 4
+                  }"
+                  style="font-size: 1.7vh"
+                  *ngIf="selectedStep === 4"
+                >
+                  {{ "explore_chrono.sell_para" | translate }}
+                </p>
+              </div>
+            </div>
+            <div *ngIf="selectedStep === 4 && isSmallScreen" class="mt-2">
+              <img
+                class="res-img"
+                src="../../../../assets/images/sell-with-ease.png"
+                alt="Sell Image"
+              />
             </div>
           </div>
-
-
         </div>
       </div>
     </div>
   </div>
-  <div class="col-lg-6 col-md-6 col-sm-12 d-flex"
-  [ngClass]="{ 'reverse-res-img': translateService.currentLang !== 'en' }"
+
+  <!-- Images for larger screens, outside of the steps -->
+  <div
+    class="col-lg-6 col-md-6 col-sm-12 d-flex"
+    *ngIf="!isSmallScreen"
+    [ngClass]="{ 'reverse-res-img': translateService.currentLang !== 'en' }"
   >
-    <div class="back-styl" 
-   
-    >
+    <div class="back-styl">
       <div class="mt-4" *ngIf="selectedStep === 1">
         <img
           class="res-img"
           src="../../../../assets/images/browse-discover.png"
-          alt="alt"
+          alt="Browse Image"
         />
       </div>
       <div class="mt-4" *ngIf="selectedStep === 2">
         <img
           class="res-img"
           src="../../../../assets/images/deal-purchase.png"
-          alt="alt"
+          alt="Secure Image"
         />
       </div>
       <div class="mt-4" *ngIf="selectedStep === 3">
         <img
           class="res-img"
           src="../../../../assets/images/get-delivered-safely.png"
-          alt="alt"
+          alt="Get Delivered Image"
         />
       </div>
       <div class="mt-4" *ngIf="selectedStep === 4">
         <img
           class="res-img"
           src="../../../../assets/images/sell-with-ease.png"
-          alt="alt"
+          alt="Sell Image"
         />
       </div>
     </div>

@@ -62,9 +62,9 @@ export class PeopleSyaingComponentComponent implements AfterViewInit {
     this.activeIndex = Array.from(carouselItems).indexOf(activeElement);
   }
 
-  getNextIndex() {
-    return (this.activeIndex + 1) % this.testimonials.length;
+  getNextIndex(offset: number = 1): number {
+    return (this.activeIndex + offset) % this.testimonials.length;
   }
-
+  
 
 }
