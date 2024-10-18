@@ -38,7 +38,19 @@ img {
 }
 
 .table th {
-  width: 40%;
+  width: 25%;
+}
+
+.tbl-head {
+  font-size: 14px;
+  font-weight: 700;
+  color: #666666;
+}
+
+.tbl-td {
+  font-size: 14px;
+  font-weight: 400;
+  color: #666666;
 }
 
 .table td {
@@ -55,11 +67,18 @@ img {
 }
 
 .nav-tabs .nav-link.active {
-  border-bottom: 3px solid #ffd700;
+  border: none !important;
+  border-bottom: 2px solid #242424 !important;
+  color: #242424 !important;
+  font-size: 18px;
+  font-weight: 600;
 }
 
 .nav-tabs .nav-link {
   font-weight: bold;
+  color: #303A42 !important;
+  font-size: 18px;
+  font-weight: 600;
 }
 
 .table tr {
@@ -102,12 +121,15 @@ img {
   height: 400px;
   width: 100%;
 }
+
 .performance-info {
   font-size: 1rem;
 }
+
 .per-card {
   border: none;
 }
+
 .per-card .card-subtitle {
   font-size: 1rem;
   color: #6c757d;
@@ -146,13 +168,6 @@ img {
   color: #ffffff;
 }
 
-/* .satis-card {
-  background-color: #ffffff; 
-  border: none;
-  border-radius: 8px;
-  max-width: 300px;
-} */
-
 .carousel-control-prev,
 .carousel-control-next {
   filter: invert(1);
@@ -163,7 +178,7 @@ img {
   font-size: 14px;
 }
 
- /* Our Recommendations for You &&&&  You may also be interested in these watches Start */
+/* Our Recommendations for You &&&&  You may also be interested in these watches Start */
 
 .product-height {
   height: 450px;
@@ -171,30 +186,29 @@ img {
   flex-wrap: wrap;
 }
 
-.card-img-div{
+.card-img-div {
   height: 70%;
-    position: relative;
+  position: relative;
 }
 
-.card-img-top{
+.card-img-top {
   object-fit: fill;
 }
 
-.card-body{
+.card-body {
   padding: 10px;
 }
 
- /* Our Recommendations for You &&&&  You may also be interested in these watches Start */
+/* Our Recommendations for You &&&&  You may also be interested in these watches Start */
 
 
 
 .blur-image {
-  filter: blur(3px);
-  transition: filter 0.3s ease;
+  border: none !important;
 }
 
-.hover-remove-blur:hover {
-  filter: none;
+.hover-remove-blur {
+  border: 1px solid #242424;
 }
 
 
@@ -213,13 +227,16 @@ img {
 .header-h5 {
   font-weight: 500;
 }
+
 .un-ol {
   padding-left: 0;
 }
+
 .un-ol li a {
   text-decoration: none;
   color: #000;
 }
+
 .un-ol li a:hover {
   text-decoration: underline;
   color: #007bff;
@@ -260,51 +277,475 @@ mat-grid-list {
 
 
 
-
-
-
-.b-t-n {
-  border-radius: 50px;
-  padding: 10px 20px;
-  position: fixed;
-    bottom: 10px;
-    right: 10px;
+.routes-div {
+  display: flex;
+  gap: 5px;
 }
 
-.b-t-n .bi {
-  font-size: 1.2rem;
+.routes-styl {
+  font-size: 16px;
+  font-weight: 400;
+  color: #8E8E8E;
 }
 
-.b-t-n span {
-  font-size: 1rem;
+.routes-styl-active {
+  font-size: 16px;
+  font-weight: 400;
+  color: #4B4B4B;
 }
 
-.card-fixed {
+.brand-name-title {
+  font-size: 30px;
+  font-weight: 700;
+}
+
+.featured-card {
+  position: absolute;
+  top: 10px;
+  padding: 0 15px 0 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.featured-card-featred {
+  background-color: #ffffff;
+  padding: 3px 10px 3px 10px;
+  border-radius: 5px;
+}
+
+.featured-card-heart-sec {
+  position: absolute;
+  top: 18px;
+  flex-direction: column;
+  display: flex;
+  right: 35px;
+  top: 0;
+}
+
+.share-icon {
+  background: #FFFFFF;
+  padding: 10px;
+  border-radius: 18px;
+  margin: 8px 0 0 2px;
+}
+
+.heart-icon-one {
+  background: #fff;
+  border-radius: 25px;
+  padding: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+}
+
+.heart-icon-one i {
+  color: #ff4d4d;
+  font-size: 24px;
+  transition: background-color 0.3s ease;
+}
+
+.fa-heart-o {
+  color: #a09494 !important;
+}
+
+.fa-heart {
+  color: #ff4d4d;
+}
+
+.featured-bottom {
+  top: 435px;
+  right: 27px;
+  position: absolute;
+  background: #FFFFFF;
+  padding: 5px 10px 5px 10px;
+  display: flex;
+  align-items: baseline;
+  gap: 5px;
+  border-radius: 8px;
+}
+
+.watch-brand-details-div {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid #F3F3F3;
+  border-radius: 16px;
+  padding: 5px 5px 5px 5px;
+}
+
+.brand-sec {
+  width: 32%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-right: 1px solid #F3F3F3;
+}
+
+.time-sec {
+  width: 36%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.watch-brand-details-img {
+  height: 40px;
+  width: 40px;
+  border: none !important;
+}
+
+.condition-btn {
+  background-color: #242424;
+  color: #FFFFFF;
+  width: 122px;
+  height: 42px;
+  border-radius: 4px;
   border: none;
-  border-radius: 10px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.card-title {
-  font-size: 1.25rem;
+.watch-btn {
+  background-color: #242424;
+  color: #FFFFFF;
+  width: 95px;
+  height: 42px;
+  border-radius: 4px;
+  border: none;
+}
+
+.box-btn {
+  background-color: #242424;
+  color: #FFFFFF;
+  width: 77px;
+  height: 42px;
+  border-radius: 4px;
+  border: none;
+}
+
+.orig-pap-btn {
+  background-color: #242424;
+  color: #FFFFFF;
+  width: 163px;
+  height: 42px;
+  border-radius: 4px;
+  border: none;
+}
+
+.buy-btn {
+  width: 100%;
+  background-color: #242424;
+  color: #FFFFFF;
+  height: 60px;
+  font-size: 20px;
+  font-weight: 600;
+  border-radius: 12px;
+  border: none;
+}
+
+.make-offer-btn {
+  width: 100%;
+  background-color: #FFFFFF;
+  color: #242424;
+  height: 60px;
+  font-size: 20px;
+  font-weight: 600;
+  border-radius: 12px;
+  border: 1px solid #242424;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ------------   Similar Products Section CSS ------------- */
+
+.card {
+  border-radius: 15px;
+  overflow: hidden;
+  padding: 8px !important;
+}
+
+.card-body {
+  padding: 8px 0 0 0 !important;
+}
+
+.card-img-top {
+  height: 260px;
+  object-fit: contain;
+  background: #F8F8F8;
+
+}
+
+.watch-brand {
+  font-weight: 400;
+  font-size: 16px;
+}
+
+.price {
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.rating {
+  color: orange;
   font-weight: bold;
 }
 
-.card-text {
-  font-size: 1rem;
+.star-rating {
+  color: orange;
 }
 
-.collapse .bi {
-  font-size: 1.2rem;
+.text-danger {
+  font-size: 0.8rem;
 }
 
-.collapse a {
-  text-decoration: none;
-  color: #007bff;
+.heart-icon {
+  display: flex;
+  justify-content: flex-end;
+  position: absolute;
+  top: 18px;
+  right: 25px;
+}
+
+.heart-icon i {
+  color: #ff4d4d;
+  font-size: 24px;
+  transition: background-color 0.3s ease;
+}
+
+.fa-heart-o {
+  color: #a09494 !important;
+}
+
+.fa-heart {
+  color: #ff4d4d;
+}
+
+.view_btn {
+  border-radius: 6px;
+  padding: 0 20px 0 20px;
+  height: 40px;
+  border: 1px solid #242424;
+  background: none;
+}
+
+.selected-category {
+  background-color: black;
+  color: white;
+}
+
+
+.ml-3 {
+  margin-left: 1rem;
+}
+
+
+.cont-color {
+  background-color: #F7F7F8;
+  border-radius: 12px;
+}
+
+.icon {
+  font-size: 2rem;
+  color: #404040;
+}
+
+.border-right {
+  border-right: 1px solid #d8d8d8;
+}
+
+.progress {
+  height: 8px;
+}
+
+.bg-prog-bar {
+  background: #9A9DB1;
+
+}
+
+.bi-star-fill {
+  color: gold;
 }
 
 
 
 
 
+.slider-container {
+  position: relative;
+  width: 100%;
+}
 
+.custom-card {
+  height: 410px !important;
+}
+
+.custom-range-slider {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 5px;
+  background: #ddd;
+  border-radius: 5px;
+  outline: none;
+  opacity: 0.7;
+  margin-bottom: 10px;
+  position: relative;
+}
+
+.custom-range-slider::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 5px;
+  background: #bbb;
+  border-radius: 5px;
+}
+
+.custom-range-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  background: #00d1b2;
+  border: 2px solid white;
+  border-radius: 50%;
+  cursor: pointer;
+  margin-top: -8px;
+}
+
+.custom-range-slider::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  background: #00d1b2;
+  border: 2px solid white;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.custom-range-slider::-webkit-slider-runnable-track {
+  background: linear-gradient(90deg, #bbb 0%, #bbb 100%);
+}
+
+.custom-range-slider::-webkit-slider-thumb {
+  border-radius: 50%;
+  background-color: #00d1b2;
+}
+
+.custom-range-slider:before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  z-index: -1;
+}
+
+.custom-range-slider:before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  height: 0;
+  display: flex;
+  justify-content: space-between;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.custom-range-slider:before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  height: 0;
+  display: flex;
+  justify-content: space-between;
+}
+
+.custom-range-slider:before span {
+  content: '';
+  display: block;
+  width: 10px;
+  height: 10px;
+  background-color: #bbb;
+  border-radius: 50%;
+  position: relative;
+  top: -2.5px;
+}
+
+.custom-range-slider:before span:last-child {
+  background-color: #00d1b2;
+}
+
+
+
+.one,
+.two,
+.three,
+.start,
+.end {
+  position: absolute;
+  margin-top: -3px;
+  z-index: 1;
+  height: 10px;
+  width: 10px;
+  border-radius: 50%;
+  background-color: #9A9DB1;
+}
+
+.progress {
+  height: 4px;
+}
+
+.start {
+  left: 5px;
+}
+
+.one {
+  left: 25%;
+}
+
+.two {
+  left: 50%;
+}
+
+.three {
+  left: 75%;
+}
+
+.end {
+  right: 5px;
+}
+
+.bg-bar-color {
+  background-color: #9A9DB1;
+}
+
+.no-color {
+  background-color: inherit;
+}
+
+.progress-bar {
+  background-color: #9A9DB1;
+}
+
+.active-progress-bar {
+  border: 3px solid #00CAAA;
+  background: #FFFFFF !important;
+  box-shadow: 0px 0px 0px 2px #00CAAA;
+
+}

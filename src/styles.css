@@ -24,6 +24,15 @@ body {
   }
 }
 
+
+.header-highligted-color {
+  color: #242424;
+}
+
+.header-blur-color {
+  color: #6A6A6A;
+}
+
 /* --------  Set Form Fields From Left to Right or Right to Left start --------- */
 
 .mat-form-field-rtl .mat-input-element {

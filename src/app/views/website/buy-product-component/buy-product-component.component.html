@@ -1,67 +1,48 @@
-<!-- Button to trigger the collapse -->
-<button
-  class="b-t-n btn-outline-secondary d-flex align-items-center"
-  type="button"
-  data-bs-toggle="collapse"
-  data-bs-target="#supportCollapse"
-  aria-expanded="false"
-  aria-controls="supportCollapse"
->
-  <mat-icon class="mx-1"> message</mat-icon>
-  <span>Do you have any questions?</span>
-</button>
-
-<!-- Collapsible section -->
-<div
-  class="collapse mt-3"
-  id="supportCollapse"
-  style="
-    border-radius: 50px;
-    padding: 10px 20px;
-    position: fixed;
-    bottom: 60px;
-    right: 0;
-    width: 17%;
-  "
->
-  <div class="card-fixed card-body">
-    <h5 class="card-title">Do you have any questions?</h5>
-    <p class="card-text">Our support team would be happy to help.</p>
-    <p class="card-text">
-      Please provide the following listing code when communicating with our
-      support team: <strong>KWQWY5</strong>
-    </p>
-    <div class="d-flex align-items-center mb-3">
-      <i class="bi bi-telephone-fill me-2"></i>
-      <div>
-        <p class="mb-0">+852 3002 0310</p>
-        <small class="text-muted"
-          >Be sure to have your PIN on hand when you call to request sensitive
-          information. <a>View PIN</a></small
-        >
-      </div>
-    </div>
-    <div class="d-flex align-items-center">
-      <i class="bi bi-envelope-fill me-2"></i>
-      <a>Contact ChronoSouq</a>
-    </div>
-  </div>
-</div>
-
-<!-- [src]="'https://api.chronosouq.com/' + watch.main_image" -->
-
-<div class="container mt-5" style="margin-top: 120px !important;">
+<div class="container mt-5" style="margin-top: 120px !important">
   <div class="row">
-    <div class="col-md-6" style="height: 580px">
+    <div class="col-md-6">
       <img
-      [src]="'https://api.chronosouq.com/' + selectedImage"
-        style="object-fit: cover; height: 84%; width: 100%"
+        [src]="'https://api.chronosouq.com/' + selectedImage"
+        style="
+          object-fit: fill;
+          height: 485px;
+          width: 100%;
+          border: none !important;
+          border-radius: 16px;
+        "
         class="img-fluid"
         alt="Selected Watch"
       />
 
-      <div class="row mt-3" style="display: flex">
-        <div class="col-3" style="height: 150px;" *ngFor="let image of thumbnails">
+      <div class="featured-card">
+        <div class="featured-card-featred">
+          <p style="margin: 0">Featured</p>
+        </div>
+        <div class="featured-card-heart-sec">
+          <div class="heart-icon-one" (click)="toggleHeart(selectedImage)">
+            <i
+              class="fa"
+              [ngClass]="selectedImage ? 'fa-heart' : 'fa-heart fa-heart-o'"
+              aria-hidden="true"
+            ></i>
+          </div>
+          <div (click)="copyCurrentUrl()">
+            <i class="fas fa-share-alt share-icon"></i>
+          </div>
+        </div>
+      </div>
+
+      <div class="featured-bottom">
+        <i class="fas fa-eye"></i>
+        <p style="margin: 0">230</p>
+      </div>
+
+      <div class="mt-3" style="display: flex; overflow-x: auto">
+        <div
+          class="col-3"
+          style="height: 135px"
+          *ngFor="let image of thumbnails"
+        >
           <img
             [src]="'https://api.chronosouq.com/' + image"
             class="img-fluid"
@@ -76,1145 +57,1288 @@
       </div>
     </div>
     <div class="col-md-6">
-      <h3 class="header-h3">{{productDetails.name}}</h3>
-      <p *ngIf="productDetails.brand" class="text-muted">{{productDetails.brand.name}}</p>
-      <p class="text-success">{{productDetails.price}}  <span>{{productDetails.currency}}</span></p>
-      <p>Condition :<strong>{{productDetails.condition}}</strong></p>
-      <p>Year of production: {{productDetails.year_of_production}}</p>
+      <div class="routes-div">
+        <p class="routes-styl">Homepage</p>
+        <p class="routes-styl">/ Category Name</p>
+        <p class="routes-styl-active">/ {{ productDetails.name }}</p>
+      </div>
+
+      <div class="d-flex gap-2 align-items-baseline">
+        <i class="fas fa-map-marker-alt"></i>
+        <p class="routes-styl">Makkah</p>
+      </div>
+
+      <div class="d-flex flex-wrap">
+        <p class="brand-name-title">
+          {{ productDetails.brand.name }} {{ productDetails.name }}
+          {{ productDetails.condition }}
+        </p>
+      </div>
+
+      <div class="watch-brand-details-div">
+        <div class="brand-sec">
+          <div>
+            <img
+              class="watch-brand-details-img"
+              src="../../../../assets/images/brand-icon.png"
+              alt="brand"
+            />
+          </div>
+          <div style="display: flex; flex-direction: column">
+            <p style="margin: 0 !important">Brand</p>
+            <p style="margin: 0 !important">{{ productDetails.brand.name }}</p>
+          </div>
+        </div>
+
+        <div class="brand-sec">
+          <div>
+            <img
+              class="watch-brand-details-img"
+              src="../../../../assets/images/model-icon.png"
+              alt="brand"
+            />
+          </div>
+          <div style="display: flex; flex-direction: column">
+            <p style="margin: 0 !important">Model</p>
+            <p style="margin: 0 !important">{{ productDetails.model }}</p>
+          </div>
+        </div>
+
+        <div class="time-sec">
+          <div>
+            <img
+              class="watch-brand-details-img"
+              src="../../../../assets/images/watch-icon.png"
+              alt="brand"
+            />
+          </div>
+          <div style="display: flex; flex-direction: column">
+            <p style="margin: 0 !important">Year of Production</p>
+            <p style="margin: 0 !important">
+              {{ productDetails.year_of_production }}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="d-flex mt-4 gap-3">
+        <p class="header-highligted-color brand-name-title">
+          {{ productDetails.currency }} {{ productDetails.price }}
+        </p>
+        <p style="color: #666666; font-size: 14; font-weight: 400">
+          Exclu. Shipping Charges
+        </p>
+      </div>
+
+      <div class="d-flex flex-column">
+        <p
+          class="header-highligted-color"
+          style="
+            font-size: 16px;
+            font-weight: 400;
+            margin: 0 !important;
+            padding-bottom: 7px;
+          "
+        >
+          Condition:
+        </p>
+        <button class="condition-btn">{{ productDetails.condition }}</button>
+      </div>
+
+      <div class="d-flex flex-column mt-3">
+        <p
+          class="header-highligted-color"
+          style="
+            font-size: 16px;
+            font-weight: 400;
+            margin: 0 !important;
+            padding-bottom: 7px;
+          "
+        >
+          Scope of Delivery:
+        </p>
+        <div class="d-flex flex-wrap gap-2">
+          <button class="watch-btn">
+            {{ productDetails.scope_of_delivery }}
+          </button>
+          <!-- <button class="box-btn">Box</button>
+          <button class="orig-pap-btn">Original Papers</button> -->
+        </div>
+      </div>
+
+      <div class="d-flex flex-column mt-3">
+        <p
+          class="header-highligted-color"
+          style="
+            font-size: 16px;
+            font-weight: 400;
+            margin: 0 !important;
+            padding-bottom: 7px;
+          "
+        >
+          Est. Delivery
+        </p>
+        <button class="condition-btn">
+          {{ productDetails.estimate_delivery }}
+        </button>
+      </div>
       <div class="mt-4">
-        <button class="btn btn-success btn-lg">Buy ...</button>
-        <button class="btn btn-dark btn-lg mt-2">Suggest a price</button>
+        <button (click)="buyNow()" class="buy-btn">Buy</button>
+        <button class="make-offer-btn mt-2">Make an Offer ( optional )</button>
       </div>
-      <div class="alert alert-warning mt-4" role="alert">
-        Security on ChronoSouq
-        <ul>
-          <li>Escrow Service unavailable</li>
-          <li>Ownership confirmed</li>
-          <li>No legal obligation to accept returns of private sales</li>
-        </ul>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="productDetails.created_by" class="container mt-2">
+  <div
+    class="col-md-6 p-3 d-flex flex-wrap align-items-center justify-content-between flex-row"
+    style="border-radius: 16px; border: 1px solid #f3f3f3"
+  >
+    <div class="d-flex align-items-center">
+      <div
+        class="rounded-circle bg-light text-dark d-flex justify-content-center align-items-center"
+        style="width: 50px; height: 50px"
+      >
+        {{ getInitials() }}
       </div>
-      <div class="mt-3">
-        <h5>Seller</h5>
-        <p>Private Seller from Netherlands</p>
-        <button class="btn btn-outline-dark btn-lg">Contact seller</button>
+      <div class="d-flex flex-column">
+        <div class="d-flex align-items-center">
+          <h5
+            class="mb-0 font-weight-bold"
+            style="
+              border-right: 1px solid #666666;
+              color: #404040;
+              padding-right: 7px;
+              text-decoration: underline;
+              text-decoration-color: #404040;
+              cursor: pointer;
+            "
+            (click)="scrollToTarget()"
+          >
+            {{ dealerUserDetails.user_details.name }}
+          </h5>
+          <small
+            class="text-muted"
+            style="
+              border-right: 1px solid #666666;
+              color: #666666;
+              padding-right: 7px;
+              padding-left: 7px;
+            "
+            >Since 2003</small
+          >
+          <span class="text-warning mr-1" style="padding-left: 7px">
+            <i class="fas fa-star"></i>
+          </span>
+          <small class="text-muted" style="color: #666666"
+            >{{ dealerUserDetails.overall_rating }} ({{
+              dealerUserDetails.total_reviews
+            }}
+            reviews)</small
+          >
+        </div>
+        <button
+          style="
+            color: #242424;
+            border-radius: 8px;
+            border: 1px solid #242424;
+            height: 38px;
+            width: 174px;
+            margin-top: 8px;
+            background: none;
+          "
+        >
+          Chat with Dealer
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div *ngIf="!productDetails.created_by" class="container mt-2">
+  <div
+    class="col-md-6 p-3 d-flex flex-wrap align-items-center justify-content-between flex-row"
+    style="border-radius: 16px; border: 1px solid #f3f3f3"
+  >
+    <div class="d-flex align-items-center">
+      <div
+        class="rounded-circle bg-light text-dark d-flex justify-content-center align-items-center"
+        style="width: 50px; height: 50px"
+      >
+        {{ getInitials() }}
+      </div>
+      <div class="d-flex flex-column">
+        <div class="d-flex align-items-center">
+          <h5
+            class="mb-0 font-weight-bold"
+            style="
+              border-right: 1px solid #666666;
+              color: #404040;
+              padding-right: 7px;
+              
+            "
+           
+          >
+            {{ dealerUserDetails.user_details.name }}
+          </h5>
+          <small
+            class="text-muted"
+            style="
+              border-right: 1px solid #666666;
+              color: #666666;
+              padding-right: 7px;
+              padding-left: 7px;
+            "
+            >Since 2003</small
+          >
+          <!-- <span class="text-warning mr-1" style="padding-left: 7px">
+            <i class="fas fa-star"></i>
+          </span>
+          <small class="text-muted" style="color: #666666"
+            >{{ dealerUserDetails.overall_rating }} ({{
+              dealerUserDetails.total_reviews
+            }}
+            reviews)</small
+          > -->
+        </div>
+        <button
+          style="
+            color: #242424;
+            border-radius: 8px;
+            border: 1px solid #242424;
+            height: 38px;
+            width: 174px;
+            margin-top: 8px;
+            background: none;
+          "
+        >
+          Chat with Dealer
+        </button>
       </div>
     </div>
   </div>
 </div>
 
 <div class="container mt-5">
-  <div class="card">
-    <div class="card-body" style="display: flex;flex-direction: column;">
-      <h5 class="card-title mt-5">More About This Listing</h5>
-      <ul class="nav nav-tabs" id="myTab" role="tablist">
-        <li class="nav-item" role="presentation">
-          <button
-            class="nav-link active"
-            id="details-tab"
-            data-bs-toggle="tab"
-            data-bs-target="#details"
-            type="button"
-            role="tab"
-            aria-controls="details"
-            aria-selected="true"
-          >
-            Details
-          </button>
-        </li>
-        <li class="nav-item" role="presentation">
-          <button
-            class="nav-link"
-            id="security-tab"
-            data-bs-toggle="tab"
-            data-bs-target="#security"
-            type="button"
-            role="tab"
-            aria-controls="security"
-            aria-selected="false"
-          >
-            Security
-          </button>
-        </li>
-      </ul>
-      <div class="tab-content mt-3" id="myTabContent">
-        <div
-          class="tab-pane fade show active"
-          id="details"
-          role="tabpanel"
-          aria-labelledby="details-tab"
+  <div class="card-body d-flex flex-column">
+    <ul
+      class="nav nav-tabs"
+      style="display: flex; justify-content: center"
+      id="myTab"
+      role="tablist"
+    >
+      <li class="nav-item" role="presentation">
+        <button
+          class="nav-link active"
+          id="details-tab"
+          data-bs-toggle="tab"
+          data-bs-target="#details"
+          type="button"
+          role="tab"
+          aria-controls="details"
+          aria-selected="true"
         >
-          <div class="row">
-            <div class="col-md-6">
-              <table class="table table-borderless">
-                <tbody>
-                  <!-- <tr>
-                    <th scope="row">Listing code</th>
-                    <td>KH5G06</td>
-                  </tr> -->
-                  <tr *ngIf="productDetails.brand">
-                    <th scope="row">Brand</th>
-                    <td><a>{{productDetails.brand.name}}</a></td>
-                  </tr>
-                  <tr>
-                    <th scope="row">Model</th>
-                    <td><a>{{productDetails.model}}</a></td>
-                  </tr>
-                  <tr>
-                    <th scope="row">Reference number</th>
-                    <td>{{productDetails.reference_number}}</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">Movement</th>
-                    <td>{{productDetails.movement}}</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">Case material</th>
-                    <td>{{productDetails.case_material}}</td>
-                  </tr>
-                  <!-- <tr>
-                    <th scope="row">Bracelet material</th>
-                    <td>{{productDetails.case_material}}</td>
-                  </tr> -->
-                  <tr>
-                    <th scope="row">Year of production</th>
-                    <td>{{productDetails.year_of_production}}</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">Condition</th>
-                    <td><a>{{productDetails.condition}}</a></td>
-                  </tr>
-                  <tr *ngIf="productDetails.description">
-                    <th scope="row"></th>
-                    <td>
-                      <small>
-                        {{productDetails.description}}
-                        </small
-                      >
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">Scope of delivery</th>
-                    <td>  {{productDetails.scope_of_delivery}}</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">Gender</th>
-                    <td>  {{productDetails.gender}}</td>
-                  </tr>
-                  <!-- <tr>
-                    <th scope="row">Location</th>
-                    <td>The Netherlands, Berkel en Rodenrijs</td>
-                  </tr> -->
-                  <tr>
-                    <th scope="row">Price</th>
-                    <td>{{productDetails.price}}  {{productDetails.currency}}</td>
-                  </tr>
-                  <!-- <tr>
-                    <th scope="row">Availability</th>
-                    <td>Item is in stock</td>
-                  </tr> -->
-                </tbody>
-              </table>
+          Product description
+        </button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button
+          class="nav-link"
+          id="security-tab"
+          data-bs-toggle="tab"
+          data-bs-target="#security"
+          type="button"
+          role="tab"
+          aria-controls="security"
+          aria-selected="false"
+        >
+          Warranty Details
+        </button>
+      </li>
+    </ul>
+    <div class="tab-content mt-3" id="myTabContent">
+      <div
+        class="tab-pane fade show active"
+        id="details"
+        role="tabpanel"
+        aria-labelledby="details-tab"
+      >
+        <div class="row">
+          <div class="col-12 d-flex flex-wrap justify-content-center">
+            <p style="margin: 0 !important" class="brand-name-title">
+              {{ productDetails.brand.name }} {{ productDetails.name }}
+              {{ productDetails.condition }}
+            </p>
+          </div>
 
-              <!-- <table class="table table-borderless">
-                <tr>
-                  <td style="font-size: 20px; font-weight: 800" colspan="2">
-                    Caliber
-                  </td>
-                </tr>
-                <tbody>
-                  <tr>
-                    <th scope="row">Listing code</th>
-                    <td>KH5G06</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">Brand</th>
-                    <td><a>Rolex</a></td>
-                  </tr>
-                  <tr>
-                    <th scope="row">Model</th>
-                    <td><a>GMT-Master II</a></td>
-                  </tr>
-                  <tr>
-                    <th scope="row">Reference number</th>
-                    <td>126710BLRO</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">Movement</th>
-                    <td>Automatic</td>
-                  </tr>
-                </tbody>
-              </table> -->
-
-              <table class="table table-borderless">
-                <tr>
-                  <td style="font-size: 20px; font-weight: 800" colspan="2">
-                    Case
-                  </td>
-                </tr>
-                <tbody>
-                  <tr>
-                    <th scope="row">Case Material</th>
-                    <td>{{productDetails.case_material}}</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">Bazel Material</th>
-                    <td>{{productDetails.bezel_material}}</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">Water Resistence</th>
-                    <td>{{productDetails.water_resistance}}</td>
-                  </tr>
-                </tbody>
-              </table>
-
-              <!-- <table class="table table-borderless">
-                <tr>
-                  <td style="font-size: 20px; font-weight: 800" colspan="2">
-                    Dial and Hands
-                  </td>
-                </tr>
-                <tbody>
-                  <tr>
-                    <th scope="row">Dial</th>
-                    <td>{{productDetails.dial_color}}</td>
-                  </tr>
-                 
-                </tbody>
-              </table> -->
+          <div class="col-12">
+            <div class="col-12 d-flex flex-wrap justify-content-center">
+              <p
+                style="
+                  font-size: 20px;
+                  font-weight: 600;
+                  color: #242424;
+                  margin: 0 !important;
+                "
+              >
+                {{ productDetails.meta_description }}
+              </p>
             </div>
-            <div class="col-md-6">
-              <h6>Description</h6>
-              <p>
-                For sale Rolex BLRO GMT Master II in very good condition. Only
-                minor wear marks.
+            <div class="col-12">
+              <p
+                style="
+                  font-size: 16px;
+                  font-weight: 400;
+                  color: #666666;
+                  margin: 0 !important;
+                  text-align: center;
+                "
+              >
+                {{ productDetails.description }}
+              </p>
+            </div>
+          </div>
+
+          <div class="col-12 d-flex justify-content-center">
+            <div style="min-width: 335px; height: 270px; border-radius: 12px">
+              <img
+                [src]="'https://api.chronosouq.com/' + productMainImage"
+                style="
+                  object-fit: fill;
+                  height: 100%;
+                  width: 100%;
+                  border: none;
+                  border-radius: 12px;
+                "
+                class="img-fluid"
+                alt="Selected Watch"
+              />
+            </div>
+          </div>
+
+          <div class="col-12">
+            <p
+              style="
+                margin: 0 !important ;
+                color: #242424;
+                font-size: 24px;
+                font-weight: 700;
+                text-align: center;
+              "
+            >
+              Watch Specifications
+            </p>
+          </div>
+
+          <div class="col-12">
+            <table class="table table-borderless">
+              <tbody>
+                <tr *ngIf="productDetails.listing_Code">
+                  <th class="tbl-head" scope="row">Listing Code</th>
+                  <td class="tbl-td">
+                    {{ productDetails.listing_Code }}
+                  </td>
+                </tr>
+                <tr *ngIf="productDetails.brand">
+                  <th class="tbl-head" scope="row">Brand</th>
+                  <td class="tbl-td">
+                    {{ productDetails.brand.name }}
+                  </td>
+                </tr>
+                <tr *ngIf="productDetails.model">
+                  <th class="tbl-head" scope="row">Model</th>
+                  <td class="tbl-td">
+                    {{ productDetails.model }}
+                  </td>
+                </tr>
+                <tr *ngIf="productDetails.reference_number">
+                  <th class="tbl-head" scope="row">Reference number</th>
+                  <td class="tbl-td">{{ productDetails.reference_number }}</td>
+                </tr>
+                <tr *ngIf="productDetails.movement">
+                  <th class="tbl-head" scope="row">Movement</th>
+                  <td class="tbl-td">{{ productDetails.movement }}</td>
+                </tr>
+                <tr *ngIf="productDetails.case_material">
+                  <th class="tbl-head" scope="row">Case material</th>
+                  <td class="tbl-td">{{ productDetails.case_material }}</td>
+                </tr>
+                <tr *ngIf="productDetails.bracelet_material">
+                  <th class="tbl-head" scope="row">Bracelet material</th>
+                  <td class="tbl-td">{{ productDetails.bracelet_material }}</td>
+                </tr>
+                <tr *ngIf="productDetails.year_of_production">
+                  <th class="tbl-head" scope="row">Year of production</th>
+                  <td class="tbl-td">
+                    {{ productDetails.year_of_production }}
+                  </td>
+                </tr>
+                <tr *ngIf="productDetails.condition">
+                  <th class="tbl-head" scope="row">Condition</th>
+                  <td class="tbl-td">
+                    {{ productDetails.condition }}
+                  </td>
+                </tr>
+
+                <tr *ngIf="productDetails.scope_of_delivery">
+                  <th class="tbl-head" scope="row">Scope of Delivery</th>
+                  <td class="tbl-td">
+                    {{ productDetails.scope_of_delivery }}
+                  </td>
+                </tr>
+
+                <tr *ngIf="productDetails.gender">
+                  <th class="tbl-head" scope="row">Gender</th>
+                  <td class="tbl-td">
+                    {{ productDetails.gender }}
+                  </td>
+                </tr>
+
+                <tr *ngIf="productDetails.location">
+                  <th class="tbl-head" scope="row">Location</th>
+                  <td class="tbl-td">
+                    {{ productDetails.location }}
+                  </td>
+                </tr>
+                <tr *ngIf="productDetails.price">
+                  <th class="tbl-head" scope="row">Price</th>
+                  <td class="tbl-td">
+                    {{ productDetails.currency }} {{ productDetails.price }}
+                  </td>
+                </tr>
+
+                <tr *ngIf="productDetails.available">
+                  <th class="tbl-head" scope="row">Availability</th>
+                  <td class="tbl-td">
+                    {{ productDetails.available }}
+                  </td>
+                </tr>
+
+                <tr *ngIf="productDetails.description">
+                  <th class="tbl-head" scope="row"></th>
+                  <td class="tbl-td">
+                    <small>
+                      {{ productDetails.description }}
+                    </small>
+                  </td>
+                </tr>
+
+                <tr *ngIf="productDetails.case_material">
+                  <th class="tbl-head" scope="row">Case Material</th>
+                  <td class="tbl-td">{{ productDetails.case_material }}</td>
+                </tr>
+                <tr *ngIf="productDetails.bezel_material">
+                  <th class="tbl-head" scope="row">Bazel Material</th>
+                  <td class="tbl-td">{{ productDetails.bezel_material }}</td>
+                </tr>
+                <tr *ngIf="productDetails.dial">
+                  <th class="tbl-head" scope="row">Dial</th>
+                  <td class="tbl-td">{{ productDetails.dial }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <!-- Security Tab -->
+      <div
+        class="tab-pane fade"
+        id="security"
+        role="tabpanel"
+        aria-labelledby="security-tab"
+      >
+        <div class="container mt-4">
+          <h5 class="mb-4"></h5>
+          <div class="row">
+            <!-- <div class="col-md-6 col-lg-4 mb-4">
+              <div class="card1 h-100 text-center p-3">
+                <img
+                  src="./assets/images/love-my-watch.png"
+                  alt="Ownership confirmed"
+                  class="mb-3 mx-auto"
+                />
+                <h6 class="font-weight-bold">Ownership confirmed</h6>
+                <p class="text-muted">
+                  Each private seller listing must pass an inspection before we
+                  publish it on our platform. As part of the inspection, the
+                  seller must provide proof of ownership in the form of two
+                  pictures of the watch set to specific times.
+                </p>
+              </div>
+            </div>
+            <div class="col-md-6 col-lg-4 mb-4">
+              <div class="card1 h-100 text-center p-3">
+                <img
+                  src="./assets/images/love-my-watch.png"
+                  alt="Insured shipping"
+                  class="mb-3 mx-auto"
+                />
+                <h6 class="font-weight-bold">Insured shipping</h6>
+                <p class="text-muted">
+                  We tell every private seller to ship orders fully insured and
+                  with a tracking number. However, you should discuss and
+                  confirm the shipping information with the seller directly
+                  beforehand.
+                </p>
+              </div>
+            </div>
+            <div class="col-md-6 col-lg-4 mb-4">
+              <div class="card1 h-100 text-center p-3">
+                <img
+                  src="./assets/images/love-my-watch.png"
+                  alt="Security team"
+                  class="mb-3 mx-auto"
+                />
+                <h6 class="font-weight-bold">
+                  ChronoSouq's quality & security team
+                </h6>
+                <p class="text-muted">
+                  Our 40-person quality & security team works hard to detect
+                  suspicious listings and address issues before they arise,
+                  allowing you to focus on what's most important – finding the
+                  right watch!
+                </p>
+              </div>
+            </div>
+            <div class="col-md-6 col-lg-4 mb-4">
+              <div class="card1 h-100 text-center p-3">
+                <img
+                  src="./assets/images/love-my-watch.png"
+                  alt="Escrow Service unavailable"
+                  class="mb-3 mx-auto"
+                />
+                <h6 class="font-weight-bold">Escrow Service unavailable</h6>
+                <p class="text-muted">
+                  Unfortunately, we cannot offer ChronoSouq's Escrow Service for
+                  this listing. Instead, you will pay the purchase price
+                  directly to the seller. As always, our multilingual support
+                  team would be happy to offer assistance should you need it!
+                </p>
+              </div>
+            </div>
+            <div class="col-md-6 col-lg-4 mb-4">
+              <div class="card1 h-100 text-center p-3">
+                <img
+                  src="./assets/images/love-my-watch.png"
+                  alt="No returns accepted"
+                  class="mb-3 mx-auto"
+                />
+                <h6 class="font-weight-bold">No returns accepted</h6>
+                <p class="text-muted">
+                  Because this listing comes from a private seller, there is no
+                  legal obligation to accept returns. Please check all
+                  information thoroughly before purchasing. Reach out to the
+                  seller or ChronoSouq Support with any questions.
+                </p>
+              </div>
+            </div> -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  *ngIf="productDetails.created_by"
+  class="container mt-5 p-3"
+  #targetContainer
+>
+  <p
+    style="
+      font-size: 24px;
+      font-weight: 700;
+      margin: 0 !important;
+      color: #242424;
+    "
+  >
+    Dealer Reviews
+  </p>
+
+  <div class="col-12 d-flex flex-wrap">
+    <div
+      class="col-md-6"
+      style="border-radius: 16px; border: 1px solid #f3f3f3; padding: 5px"
+    >
+      <div
+        class="d-flex align-items-center"
+        style="border-bottom: 1px solid #f3f3f3"
+      >
+        <div
+          class="rounded-circle bg-light text-dark d-flex justify-content-center align-items-center"
+          style="width: 50px; height: 50px"
+        >
+          {{ getInitials() }}
+        </div>
+        <div class="d-flex flex-column">
+          <div class="d-flex align-items-center">
+            <h5
+              class="mb-0 font-weight-bold"
+              style="
+                border-right: 1px solid #666666;
+                color: #404040;
+                padding-right: 7px;
+              "
+            >
+              {{ dealerUserDetails.user_details.name }}
+            </h5>
+            <small
+              class="text-muted"
+              style="color: #666666; padding-right: 7px; padding-left: 7px"
+              >Since 2003</small
+            >
+          </div>
+          <p
+            style="
+              color: #565656;
+              margin-top: 8px;
+              font-size: 16px;
+              font-weight: 400;
+              text-decoration: underline;
+              text-decoration-color: #404040;
+            "
+          >
+            Visit Dealer Profile
+          </p>
+        </div>
+      </div>
+
+      <div class="d-flex gap-2 mt-3 align-items-center">
+        <div>
+          <img
+            src="../../../../assets/images/delivery-truck.png"
+            style="height: 40px; width: 40px; border: 0"
+          />
+        </div>
+        <div class="d-flex flex-column">
+          <p
+            style="
+              margin: 0 !important;
+              font-weight: 400;
+              font-size: 16px;
+              color: #242424;
+            "
+          >
+            Delivery Record
+          </p>
+          <p
+            style="
+              margin: 0 !important;
+              font-weight: 400;
+              font-size: 16px;
+              color: #666666;
+            "
+          >
+            Usually Delivers in 6-7 days
+          </p>
+        </div>
+      </div>
+
+      <div class="d-flex gap-2 mt-3 align-items-center">
+        <div>
+          <img
+            src="../../../../assets/images/location-icon.png"
+            style="height: 40px; width: 40px; border: 0"
+          />
+        </div>
+        <div class="d-flex flex-column">
+          <p
+            style="
+              margin: 0 !important;
+              font-weight: 400;
+              font-size: 16px;
+              color: #242424;
+            "
+          >
+            Store Location
+          </p>
+          <p
+            style="
+              margin: 0 !important;
+              font-weight: 400;
+              font-size: 16px;
+              color: #666666;
+            "
+          >
+            {{ dealerUserDetails.user_details.city }}
+          </p>
+        </div>
+      </div>
+
+      <div class="container cont-color mt-3">
+        <div class="row text-center align-items-center border rounded bg-light">
+          <div class="col">
+            <div class="d-flex align-items-center">
+              <div>
+                <img
+                  class="watch-brand-details-img"
+                  src="../../../../assets/images/watch-icon.png"
+                  alt="brand"
+                />
+              </div>
+              <div class="d-flex flex-column align-items-baseline">
+                <p
+                  class="mb-0"
+                  style="
+                    font-size: 14px;
+                    font-weight: 400;
+                    color: #303a42;
+                    margin: 0 !important;
+                  "
+                >
+                  Total Listing
+                </p>
+                <p
+                  style="
+                    font-size: 16px;
+                    font-weight: 700;
+                    color: #303a42;
+                    margin: 0 !important;
+                  "
+                >
+                  120
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="d-flex align-items-center">
+              <div>
+                <img
+                  class="watch-brand-details-img"
+                  src="../../../../assets/images/model-icon.png"
+                  alt="brand"
+                />
+              </div>
+              <div class="d-flex flex-column align-items-baseline">
+                <p
+                  class="mb-0"
+                  style="
+                    font-size: 14px;
+                    font-weight: 400;
+                    color: #303a42;
+                    margin: 0 !important;
+                  "
+                >
+                  Active Listing
+                </p>
+                <p
+                  style="
+                    font-size: 16px;
+                    font-weight: 700;
+                    color: #303a42;
+                    margin: 0 !important;
+                  "
+                >
+                  {{ dealerUserDetails.active_listings_count }}
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="d-flex align-items-center">
+              <div>
+                <img
+                  class="watch-brand-details-img"
+                  src="../../../../assets/images/brand-icon.png"
+                  alt="brand"
+                />
+              </div>
+              <div class="d-flex flex-column align-items-baseline">
+                <p
+                  class="mb-0"
+                  style="
+                    font-size: 14px;
+                    font-weight: 400;
+                    color: #303a42;
+                    margin: 0 !important;
+                  "
+                >
+                  Watches Sold
+                </p>
+                <p
+                  style="
+                    font-size: 16px;
+                    font-weight: 700;
+                    color: #303a42;
+                    margin: 0 !important;
+                  "
+                >
+                  {{ dealerUserDetails.sold_products_count }}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="col-md-6"
+      style="border-radius: 16px; border: 1px solid #f3f3f3"
+    >
+      <div class="container my-4">
+        <!-- Overall Rating -->
+        <div class="d-flex align-items-center mb-2">
+          <div class="text-warning">
+            <i class="bi bi-star-fill"></i>
+            <i class="bi bi-star-fill"></i>
+            <i class="bi bi-star-fill"></i>
+            <i class="bi bi-star-fill"></i>
+            <i class="bi bi-star-fill"></i>
+          </div>
+          <h4 class="mb-0 ml-2">{{ dealerUserDetails.overall_rating }}</h4>
+          <p style="color: #676986" class="mb-0 ml-2">
+            Based on {{ dealerUserDetails.total_reviews }} reviews
+          </p>
+        </div>
+
+        <!-- Rating Breakdown -->
+        <div class="row align-items-center mb-1">
+          <div class="col-2" style="color: #2c3e50">
+            5<i class="bi bi-star-fill mx-2"></i>
+          </div>
+          <div class="col-8">
+            <div class="progress">
+              <div class="progress-bar bg-prog-bar" style="width: 85%"></div>
+            </div>
+          </div>
+          <div class="col-2 text-right">59</div>
+        </div>
+        <div class="row align-items-center mb-1">
+          <div class="col-2" style="color: #2c3e50">
+            4<i class="bi bi-star-fill mx-2"></i>
+          </div>
+          <div class="col-8">
+            <div class="progress">
+              <div class="progress-bar bg-prog-bar" style="width: 10%"></div>
+            </div>
+          </div>
+          <div class="col-2 text-right">7</div>
+        </div>
+        <div class="row align-items-center mb-1">
+          <div class="col-2" style="color: #2c3e50">
+            3<i class="bi bi-star-fill mx-2"></i>
+          </div>
+          <div class="col-8">
+            <div class="progress">
+              <div class="progress-bar bg-prog-bar" style="width: 3%"></div>
+            </div>
+          </div>
+          <div class="col-2 text-right">1</div>
+        </div>
+        <div class="row align-items-center mb-1">
+          <div class="col-2" style="color: #2c3e50">
+            2<i class="bi bi-star-fill mx-2"></i>
+          </div>
+          <div class="col-8">
+            <div class="progress">
+              <div class="progress-bar bg-prog-bar" style="width: 0%"></div>
+            </div>
+          </div>
+          <div class="col-2 text-right">0</div>
+        </div>
+        <div class="row align-items-center">
+          <div class="col-2" style="color: #2c3e50">
+            1<i class="bi bi-star-fill mx-2"></i>
+          </div>
+          <div class="col-8">
+            <div class="progress">
+              <div class="progress-bar bg-prog-bar" style="width: 2%"></div>
+            </div>
+          </div>
+          <div class="col-2 text-right">2</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div
+    class="col-12 d-flex flex-wrap"
+    *ngFor="let review of dealerDetails.slice(0, reviewsListIndex)"
+  >
+    <div class="col-lg-3 col-md-12 col-sm-12 d-flex flex-wrap">
+      <div class="container my-4" style="background-color: #f7f7f8">
+        <div class="p-3" style="width: 18rem; border-radius: 0 !important">
+          <div class="d-flex gap-2">
+            <p
+              style="
+                margin: 0 !important;
+                font-size: 16;
+                font-weight: 700;
+                color: #2c3e50;
+              "
+            >
+              {{ review.reviewer_name }}
+            </p>
+            <img
+              src="../../../../assets/images/check-mark-icon.png"
+              style="height: 25px; width: 25px; border: none !important"
+              alt="checkmark"
+            />
+          </div>
+          <p
+            style="
+              margin: 0 !important;
+              font-size: 14;
+              font-weight: 400;
+              color: #666666;
+            "
+          >
+            {{ review.review_date | date : "dd / MM / yyyy" }}
+          </p>
+
+          <!-- Image and Reviewing Text -->
+          <div class="d-flex align-items-center mb-2 mt-2">
+            <img
+              [src]="'https://api.chronosouq.com/' + review.main_image"
+              alt="Watch Image"
+              class="img-thumbnail mr-2"
+              style="width: 50px; border: none"
+            />
+            <div>
+              <p
+                style="
+                  margin: 0 !important;
+                  font-size: 14;
+                  font-weight: 700;
+                  color: #2c3e50;
+                "
+              >
+                Reviewing
+              </p>
+              <p
+                style="
+                  margin: 0 !important;
+                  font-size: 14;
+                  font-weight: 400;
+                  color: #2c3e50;
+                "
+              >
+                {{ review.product_name }}
+              </p>
+            </div>
+          </div>
+
+          <p
+            style="
+              margin: 0 !important;
+              font-size: 14;
+              font-weight: 700;
+              color: #2c3e50;
+            "
+          >
+            Rated
+          </p>
+          <div class="d-flex align-items-center">
+            <div class="text-warning">
+              <i class="bi bi-star-fill"></i>
+              <i class="bi bi-star-fill"></i>
+              <i class="bi bi-star-fill"></i>
+              <i class="bi bi-star-fill"></i>
+              <i class="bi bi-star-fill"></i>
+            </div>
+            <p
+              style="
+                margin: 0 !important;
+                font-size: 14;
+                font-weight: 400;
+                color: #2c3e50;
+              "
+            >
+              {{ review.rating }}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-9 col-md-12 col-sm-12 d-flex flex-wrap">
+      <div class="container mt-4">
+        <div class="row text-center">
+          <!-- Cosmetic Condition -->
+          <div class="col-md-4" style="padding: 0 5px 0 5px">
+            <p
+              style="
+                font-size: 14px;
+                font-weight: 600;
+                color: #2c3e50;
+                text-align: left;
+              "
+            >
+              Cosmetic Condition
+            </p>
+            <div class="progress">
+              <div
+                [ngClass]="{
+                  'active-progress-bar': review.cosmetic_condition === 1
+                }"
+                class="start bg-bar-color"
+              ></div>
+              <div
+                [ngClass]="{
+                  'active-progress-bar': review.cosmetic_condition === 2
+                }"
+                class="one bg-bar-color"
+              ></div>
+              <div
+                [ngClass]="{
+                  'active-progress-bar': review.cosmetic_condition === 3
+                }"
+                class="two bg-bar-color"
+              ></div>
+              <div
+                [ngClass]="{
+                  'active-progress-bar': review.cosmetic_condition === 4
+                }"
+                class="three bg-bar-color"
+              ></div>
+              <div
+                [ngClass]="{
+                  'active-progress-bar': review.cosmetic_condition === 5
+                }"
+                class="end bg-bar-color"
+              ></div>
+              <div class="progress-bar" style="width: 100%"></div>
+            </div>
+            <div class="d-flex justify-content-between">
+              <p
+                style="
+                  margin-top: 7px;
+                  font-size: 14px;
+                  font-weight: 400;
+                  color: #2c3e50;
+                "
+              >
+                Poor
+              </p>
+              <p
+                style="
+                  margin-top: 7px;
+                  font-size: 14px;
+                  font-weight: 400;
+                  color: #2c3e50;
+                "
+              >
+                Excellent
+              </p>
+            </div>
+          </div>
+
+          <!-- Satisfaction -->
+          <div class="col-md-4" style="padding: 0 5px 0 5px">
+            <p
+              style="
+                font-size: 14px;
+                font-weight: 600;
+                color: #2c3e50;
+                text-align: left;
+              "
+            >
+              Satisfaction
+            </p>
+            <div class="progress">
+              <div
+                [ngClass]="{ 'active-progress-bar': review.satisfaction === 1 }"
+                class="start bg-bar-color"
+              ></div>
+              <div
+                [ngClass]="{ 'active-progress-bar': review.satisfaction === 2 }"
+                class="one bg-bar-color"
+              ></div>
+              <div
+                [ngClass]="{ 'active-progress-bar': review.satisfaction === 3 }"
+                class="two bg-bar-color"
+              ></div>
+              <div
+                [ngClass]="{ 'active-progress-bar': review.satisfaction === 4 }"
+                class="three bg-bar-color"
+              ></div>
+              <div
+                [ngClass]="{ 'active-progress-bar': review.satisfaction === 5 }"
+                class="end bg-bar-color"
+              ></div>
+              <div class="progress-bar" style="width: 100%"></div>
+            </div>
+            <div class="d-flex justify-content-between">
+              <p
+                style="
+                  margin-top: 7px;
+                  font-size: 14px;
+                  font-weight: 400;
+                  color: #2c3e50;
+                "
+              >
+                Low
+              </p>
+              <p
+                style="
+                  margin-top: 7px;
+                  font-size: 14px;
+                  font-weight: 400;
+                  color: #2c3e50;
+                "
+              >
+                High
+              </p>
+            </div>
+          </div>
+
+          <!-- Experience -->
+          <div class="col-md-4" style="padding: 0 5px 0 5px">
+            <p
+              style="
+                font-size: 14px;
+                font-weight: 600;
+                color: #2c3e50;
+                text-align: left;
+              "
+            >
+              Experience
+            </p>
+            <div class="progress">
+              <div
+                [ngClass]="{ 'active-progress-bar': review.experience === 1 }"
+                class="start bg-bar-color"
+              ></div>
+              <div
+                [ngClass]="{ 'active-progress-bar': review.experience === 2 }"
+                class="one bg-bar-color"
+              ></div>
+              <div
+                [ngClass]="{ 'active-progress-bar': review.experience === 3 }"
+                class="two bg-bar-color"
+              ></div>
+              <div
+                [ngClass]="{ 'active-progress-bar': review.experience === 4 }"
+                class="three bg-bar-color"
+              ></div>
+              <div
+                [ngClass]="{ 'active-progress-bar': review.experience === 5 }"
+                class="end bg-bar-color"
+              ></div>
+              <div class="progress-bar" style="width: 100%"></div>
+            </div>
+            <div class="d-flex justify-content-between">
+              <p
+                style="
+                  margin-top: 7px;
+                  font-size: 14px;
+                  font-weight: 400;
+                  color: #2c3e50;
+                "
+              >
+                Bad
+              </p>
+              <p
+                style="
+                  margin-top: 7px;
+                  font-size: 14px;
+                  font-weight: 400;
+                  color: #2c3e50;
+                "
+              >
+                Great
               </p>
             </div>
           </div>
         </div>
-        <!-- Security Tab -->
-        <div
-          class="tab-pane fade"
-          id="security"
-          role="tabpanel"
-          aria-labelledby="security-tab"
-        >
-          <div class="container mt-4">
-            <h5 class="mb-4">Security on ChronoSouq for This Listing</h5>
-            <div class="row">
-              <div class="col-md-6 col-lg-4 mb-4">
-                <div class="card1 h-100 text-center p-3">
-                  <img
-                    src="./assets/images/love-my-watch.png"
-                    alt="Ownership confirmed"
-                    class="mb-3 mx-auto"
-                  />
-                  <h6 class="font-weight-bold">Ownership confirmed</h6>
-                  <p class="text-muted">
-                    Each private seller listing must pass an inspection before
-                    we publish it on our platform. As part of the inspection,
-                    the seller must provide proof of ownership in the form of
-                    two pictures of the watch set to specific times.
-                  </p>
-                </div>
-              </div>
-              <div class="col-md-6 col-lg-4 mb-4">
-                <div class="card1 h-100 text-center p-3">
-                  <img
-                    src="./assets/images/love-my-watch.png"
-                    alt="Insured shipping"
-                    class="mb-3 mx-auto"
-                  />
-                  <h6 class="font-weight-bold">Insured shipping</h6>
-                  <p class="text-muted">
-                    We tell every private seller to ship orders fully insured
-                    and with a tracking number. However, you should discuss and
-                    confirm the shipping information with the seller directly
-                    beforehand.
-                  </p>
-                </div>
-              </div>
-              <div class="col-md-6 col-lg-4 mb-4">
-                <div class="card1 h-100 text-center p-3">
-                  <img
-                    src="./assets/images/love-my-watch.png"
-                    alt="Security team"
-                    class="mb-3 mx-auto"
-                  />
-                  <h6 class="font-weight-bold">
-                    ChronoSouq's quality & security team
-                  </h6>
-                  <p class="text-muted">
-                    Our 40-person quality & security team works hard to detect
-                    suspicious listings and address issues before they arise,
-                    allowing you to focus on what's most important – finding the
-                    right watch!
-                  </p>
-                </div>
-              </div>
-              <div class="col-md-6 col-lg-4 mb-4">
-                <div class="card1 h-100 text-center p-3">
-                  <img
-                    src="./assets/images/love-my-watch.png"
-                    alt="Escrow Service unavailable"
-                    class="mb-3 mx-auto"
-                  />
-                  <h6 class="font-weight-bold">Escrow Service unavailable</h6>
-                  <p class="text-muted">
-                    Unfortunately, we cannot offer ChronoSouq's Escrow Service for
-                    this listing. Instead, you will pay the purchase price
-                    directly to the seller. As always, our multilingual support
-                    team would be happy to offer assistance should you need it!
-                  </p>
-                </div>
-              </div>
-              <div class="col-md-6 col-lg-4 mb-4">
-                <div class="card1 h-100 text-center p-3">
-                  <img
-                    src="./assets/images/love-my-watch.png"
-                    alt="No returns accepted"
-                    class="mb-3 mx-auto"
-                  />
-                  <h6 class="font-weight-bold">No returns accepted</h6>
-                  <p class="text-muted">
-                    Because this listing comes from a private seller, there is
-                    no legal obligation to accept returns. Please check all
-                    information thoroughly before purchasing. Reach out to the
-                    seller or ChronoSouq Support with any questions.
-                  </p>
-                </div>
-              </div>
-            </div>
+
+        <!-- Product Description -->
+        <div class="row">
+          <div class="col-12">
+            <p style="font-size: 16px; font-weight: 700; color: #2c3e50">
+              Remarkable Product
+            </p>
+            <p style="font-size: 14px; font-weight: 400; color: #2c3e50">
+              {{ review.remarks }}
+            </p>
           </div>
         </div>
       </div>
     </div>
   </div>
+
+  <div class="text-center mb-4" *ngIf="reviewsListIndex < dealerDetails.length">
+    <button class="view_btn" (click)="loadMoreReviews()">View More</button>
+  </div>
 </div>
 
-<div class="container my-5">
+<div class="container mt-3">
+  <p
+    style="
+      text-align: center;
+      font-size: 60px;
+      font-weight: 500;
+      color: #484848;
+    "
+  >
+    Similar Products
+  </p>
   <div class="row">
-    <div class="col-12">
-      <h3>Performance of a Similar Model</h3>
-      <div class="performance-info text-muted mb-3">
-        Since Jul 2018: <span class="text-success">+ $2,744</span>
-        <span class="text-success">+14.1%</span>
-      </div>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col-md-8 d-flex flex-wrap">
-      <div class="chart-container">
+    <div
+      class="col-md-4 col-sm-6 mb-4"
+      *ngFor="
+        let watch of similarWatchesList.slice(0, displayedWatches);
+        let i = index
+      "
+    >
+      <div class="card custom-card h-100 shadow-sm">
         <img
-          src="./assets/images/apex-chart.png"
-          alt="Performance Chart"
-          class="img-fluid"
-        />
-      </div>
-      <div class="col-12 mt-1">
-        <div class="col-12 d-flex flex-wrap justify-content-start gap-2">
-          <button class="btn btn-dark">Max.</button>
-          <button class="btn btn-outline-secondary">5 years</button>
-          <button class="btn btn-outline-secondary">3 years</button>
-          <button class="btn btn-outline-secondary">1 year</button>
-          <button class="btn btn-outline-secondary">6 months</button>
-          <button class="btn btn-outline-secondary">3 months</button>
-          <button class="btn btn-outline-secondary">1 month</button>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-md-4">
-      <div class="per-card">
-        <img
-        [src]="'https://api.chronosouq.com/' + productDetails.main_image"
+          [src]="'https://api.chronosouq.com/' + watch.main_image"
           class="card-img-top"
-          alt="Rolex GMT-Master II"
+          alt="watch image"
         />
-        <div class="card-body" style="display: flex;flex-direction: column;">
-          <h5 class="card-title">{{productDetails.name}}</h5>
-          <h6 *ngIf="productDetails.brand" class="card-subtitle mb-2 text-muted">{{productDetails.brand.name}}</h6>
-          <p class="card-text">{{productDetails.reference_number}}</p>
-          <ul class="list-group list-group-flush">
-            <!-- <li class="list-group-item"><strong>Case:</strong> Steel</li>
-            <li class="list-group-item"><strong>Dial:</strong> Black</li> -->
-            <li class="list-group-item">
-              <strong>Condition</strong> {{productDetails.condition}}
-            </li>
-          </ul>
-          <a class="btn btn-outline-dark mt-3 w-100"
-            >+ Add to Watch Collection</a
-          >
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="container my-5">
-  <div class="row mb-3">
-    <div class="col-12">
-      <h3>You may also be interested in these watches</h3>
-    </div>
-  </div>
-
-  <div id="watchCarousel1" class="carousel slide" data-bs-ride="carousel">
-    <div class="carousel-inner">
-      <div class="carousel-item active">
-        <div class="row">
-          <div
-            class="col-lg-3 col-md-4 col-sm-6 mb-4 product-height"
-            *ngFor="let item of currentProducts1"
-          >
-            <div class="int-card">
-              <div class="card-img-div">
-                <img
-                  [src]="item.image"
-                  class="card-img-top"
-                  alt="Rolex GMT-Master II"
-                />
-                <span
-                  class="badge badge-pill badge-light position-absolute top-0 start-0 m-2"
-                  >Promoted</span
-                >
-                <button style="background: none;" class="btn btn-light position-absolute top-0 end-0 m-2">
-                  <i class="fas fa-heart"></i>
-                </button>
-              </div>
-              <div class="card-body">
-                <h6 class="card-title">Rolex GMT-Master II</h6>
-                <p class="card-text text-muted">
-                  II-40mm Steel "Pepsi" Black Dial Oyster
-                </p>
-                <p class="card-text">
-                  <strong>$23,500</strong> + $99 for shipping
-                </p>
-                <p class="card-text">
-                  <i class="fas fa-map-marker-alt"></i> US
-                </p>
-              </div>
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-center">
+            <div class="watch-brand" style="color: #6a6a6a">
+              <!-- {{ watch.brand.name }} -->
+              Rolex
+            </div>
+            <div>
+              <i class="fa fa-heart-o" aria-hidden="true"></i>
+            </div>
+          </div>
+          <div class="d-flex justify-content-between align-items-center mb-2">
+            <h5 style="color: #6a6a6a" class="card-title d-flex flex-wrap">
+              {{ watch.name }} {{ watch.condition }}
+            </h5>
+          </div>
+          <div class="d-flex justify-content-between align-items-center mt-1">
+            <span style="color: #6a6a6a" class="price"
+              >+{{ watch.shipping_charges }} {{ watch.currency }} Shipping</span
+            >
+            <div style="color: #6a6a6a" class="price">Location</div>
+          </div>
+          <div class="d-flex justify-content-between align-items-center">
+            <span style="color: #6a6a6a" class="card-title">{{
+              watch.price
+            }}</span>
+            <div style="color: #6a6a6a" class="card-title">
+              <!-- {{ watch.location }} -->
+              Makkah
             </div>
           </div>
         </div>
       </div>
+      <div class="heart-icon" (click)="toggleHearttwo(i)">
+        <i
+          class="fa"
+          [ngClass]="watch.liked ? 'fa-heart' : 'fa-heart fa-heart-o'"
+          aria-hidden="true"
+        ></i>
+      </div>
     </div>
+  </div>
 
-    <button
-      class="carousel-control-prev"
-      type="button"
-      data-bs-target="#watchCarousel1"
-      data-bs-slide="prev"
-      (click)="previousSlide1()"
-      style="
-        padding: 0 0 0 5px;
-        display: flex;
-        align-items: center;
-        color: white !important;
-      "
-    >
-      <mat-icon style="color: white !important">chevron_left</mat-icon>
+  <div
+    class="text-center mb-4"
+    *ngIf="displayedWatches < similarWatchesList.length"
+  >
+    <button class="view_btn" (click)="loadMoreWatches()">
+      {{ "chrono_buyer.view_more" | translate }}
     </button>
-    <button
-      class="carousel-control-next"
-      type="button"
-      data-bs-target="#watchCarousel1"
-      data-bs-slide="next"
-      (click)="nextSlide1()"
-      style="
-        padding: 0 5px 0 0;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: white !important;
-      "
-    >
-      <mat-icon>chevron_right</mat-icon>
-    </button>
-  </div>
-</div>
-
-<div class="container my-5">
-  <div class="row mb-3">
-    <div class="col-12">
-      <h3>Our Recommendations for You</h3>
-    </div>
-  </div>
-
-  <div id="watchCarousel" class="carousel slide" data-bs-ride="carousel">
-    <div class="carousel-inner">
-      <div class="carousel-item active">
-        <div class="row">
-          <div
-            class="col-lg-3 col-md-4 col-sm-6 mb-4 product-height"
-            *ngFor="let item of currentProducts"
-          >
-            <div class="int-card">
-              <div class="card-img-div">
-                <img
-                  [src]="item.image"
-                  class="card-img-top"
-                  alt="Rolex GMT-Master II"
-                />
-                <span
-                  class="badge badge-pill badge-light position-absolute top-0 start-0 m-2"
-                  >Promoted</span
-                >
-                <button class="btn btn-light position-absolute top-0 end-0 m-2">
-                  <i class="fas fa-heart"></i>
-                </button>
-              </div>
-              <div class="card-body">
-                <h6 class="card-title">Rolex GMT-Master II</h6>
-                <p class="card-text text-muted">
-                  II-40mm Steel "Pepsi" Black Dial Oyster
-                </p>
-                <p class="card-text">
-                  <strong>$23,500</strong> + $99 for shipping
-                </p>
-                <p class="card-text">
-                  <i class="fas fa-map-marker-alt"></i> US
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <button
-      class="carousel-control-prev"
-      type="button"
-      data-bs-target="#watchCarousel"
-      (click)="previousSlide()"
-      style="
-        padding: 0 0 0 5px;
-        display: flex;
-        align-items: center;
-        color: white !important;
-      "
-    >
-      <mat-icon style="color: white !important">chevron_left</mat-icon>
-    </button>
-    <button
-      class="carousel-control-next"
-      type="button"
-      data-bs-target="#watchCarousel"
-      (click)="nextSlide()"
-      style="
-        padding: 0 5px 0 0;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: white !important;
-      "
-    >
-      <mat-icon>chevron_right</mat-icon>
-    </button>
-  </div>
-</div>
-
-<div class="testimonial-section bg-dark text-light py-5">
-  <div class="container text-center">
-    <h2 class="mb-3">Over 800,000 satisfied watch buyers worldwide</h2>
-    <p class="mb-4">
-      ChronoSouq dealers receive great ratings: 4.8 out of 5
-      <i class="fa fa-star text-warning"></i>
-    </p>
-    <div
-      id="testimonialCarousel"
-      class="carousel slide"
-      data-bs-ride="carousel"
-    >
-      <div class="carousel-inner">
-        <div class="carousel-item active">
-          <div class="d-flex justify-content-center gap-2">
-            <div
-              class="card my-4 shadow-sm"
-              style="width: 22rem; height: 560px; background: none"
-            >
-              <div style="height: 250px">
-                <img
-                  style="
-                    height: 100%;
-                    width: 100%;
-                    object-fit: fill;
-                    border: none;
-                  "
-                  src="./assets/images/watches.png"
-                  class="card-img-top"
-                  alt="Vacheron Constantin Malte Watch"
-                />
-              </div>
-              <div
-                class="card-body"
-                style="
-                  position: absolute;
-                  height: 310px;
-                  margin-top: 165px;
-                  background: white;
-                  border-radius: 15px;
-                "
-              >
-                <div
-                  class="d-flex justify-content-between align-items-center mb-2"
-                >
-                  <div class="d-flex align-items-center">
-                    <span class="text-warning me-2">
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                    </span>
-                    <span class="text-muted">June 3, 2024</span>
-                  </div>
-                </div>
-                <h5 class="card-title mb-2">Vacheron Constantin Malte (1)</h5>
-                <p class="text-muted mb-1">Received: May 7, 2024</p>
-                <p class="text-muted mb-3">Shipped from: Spain</p>
-                <p class="card-text">
-                  Great communication and quick shipping. Watch was exactly as
-                  shown in the pictures. They even helped me fill out the
-                  customs forms. Thanks!
-                </p>
-                <div class="d-flex align-items-center mt-3">
-                  <div
-                    class="rounded-circle bg-secondary text-white d-flex justify-content-center align-items-center"
-                    style="width: 40px; height: 40px"
-                  >
-                    SC
-                  </div>
-                  <div class="ms-2">
-                    <p class="mb-0">Shawn C.</p>
-                    <small class="text-muted">United States of America</small>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div
-              class="card my-4 shadow-sm"
-              style="width: 22rem; height: 560px; background: none"
-            >
-              <div style="height: 250px">
-                <img
-                  style="
-                    height: 100%;
-                    width: 100%;
-                    object-fit: fill;
-                    border: none;
-                  "
-                  src="./assets/images/watches.png"
-                  class="card-img-top"
-                  alt="Vacheron Constantin Malte Watch"
-                />
-              </div>
-              <div
-                class="card-body"
-                style="
-                  position: absolute;
-                  height: 310px;
-                  margin-top: 165px;
-                  background: white;
-                  border-radius: 15px;
-                "
-              >
-                <div
-                  class="d-flex justify-content-between align-items-center mb-2"
-                >
-                  <div class="d-flex align-items-center">
-                    <span class="text-warning me-2">
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                    </span>
-                    <span class="text-muted">June 3, 2024</span>
-                  </div>
-                </div>
-                <h5 class="card-title mb-2">Vacheron Constantin Malte</h5>
-                <p class="text-muted mb-1">Received: May 7, 2024</p>
-                <p class="text-muted mb-3">Shipped from: Spain</p>
-                <p class="card-text">
-                  Great communication and quick shipping. Watch was exactly as
-                  shown in the pictures. They even helped me fill out the
-                  customs forms. Thanks!
-                </p>
-                <div class="d-flex align-items-center mt-3">
-                  <div
-                    class="rounded-circle bg-secondary text-white d-flex justify-content-center align-items-center"
-                    style="width: 40px; height: 40px"
-                  >
-                    SC
-                  </div>
-                  <div class="ms-2">
-                    <p class="mb-0">Shawn C.</p>
-                    <small class="text-muted">United States of America</small>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div
-              class="card my-4 shadow-sm"
-              style="width: 22rem; height: 560px; background: none"
-            >
-              <div style="height: 250px">
-                <img
-                  style="
-                    height: 100%;
-                    width: 100%;
-                    object-fit: fill;
-                    border: none;
-                  "
-                  src="./assets/images/watches.png"
-                  class="card-img-top"
-                  alt="Vacheron Constantin Malte Watch"
-                />
-              </div>
-              <div
-                class="card-body"
-                style="
-                  position: absolute;
-                  height: 310px;
-                  margin-top: 165px;
-                  background: white;
-                  border-radius: 15px;
-                "
-              >
-                <div
-                  class="d-flex justify-content-between align-items-center mb-2"
-                >
-                  <div class="d-flex align-items-center">
-                    <span class="text-warning me-2">
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                    </span>
-                    <span class="text-muted">June 3, 2024</span>
-                  </div>
-                </div>
-                <h5 class="card-title mb-2">Vacheron Constantin Malte</h5>
-                <p class="text-muted mb-1">Received: May 7, 2024</p>
-                <p class="text-muted mb-3">Shipped from: Spain</p>
-                <p class="card-text">
-                  Great communication and quick shipping. Watch was exactly as
-                  shown in the pictures. They even helped me fill out the
-                  customs forms. Thanks!
-                </p>
-                <div class="d-flex align-items-center mt-3">
-                  <div
-                    class="rounded-circle bg-secondary text-white d-flex justify-content-center align-items-center"
-                    style="width: 40px; height: 40px"
-                  >
-                    SC
-                  </div>
-                  <div class="ms-2">
-                    <p class="mb-0">Shawn C.</p>
-                    <small class="text-muted">United States of America</small>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="carousel-item">
-          <div class="d-flex justify-content-center gap-2">
-            <div
-              class="card my-4 shadow-sm"
-              style="width: 22rem; height: 560px; background: none"
-            >
-              <div style="height: 250px">
-                <img
-                  style="
-                    height: 100%;
-                    width: 100%;
-                    object-fit: fill;
-                    border: none;
-                  "
-                  src="./assets/images/watches.png"
-                  class="card-img-top"
-                  alt="Vacheron Constantin Malte Watch"
-                />
-              </div>
-              <div
-                class="card-body"
-                style="
-                  position: absolute;
-                  height: 310px;
-                  margin-top: 165px;
-                  background: white;
-                  border-radius: 15px;
-                "
-              >
-                <div
-                  class="d-flex justify-content-between align-items-center mb-2"
-                >
-                  <div class="d-flex align-items-center">
-                    <span class="text-warning me-2">
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                    </span>
-                    <span class="text-muted">June 3, 2024</span>
-                  </div>
-                </div>
-                <h5 class="card-title mb-2">Vacheron Constantin (2) Malte</h5>
-                <p class="text-muted mb-1">Received: May 7, 2024</p>
-                <p class="text-muted mb-3">Shipped from: Spain</p>
-                <p class="card-text">
-                  Great communication and quick shipping. Watch was exactly as
-                  shown in the pictures. They even helped me fill out the
-                  customs forms. Thanks!
-                </p>
-                <div class="d-flex align-items-center mt-3">
-                  <div
-                    class="rounded-circle bg-secondary text-white d-flex justify-content-center align-items-center"
-                    style="width: 40px; height: 40px"
-                  >
-                    SC
-                  </div>
-                  <div class="ms-2">
-                    <p class="mb-0">Shawn C.</p>
-                    <small class="text-muted">United States of America</small>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div
-              class="card my-4 shadow-sm"
-              style="width: 22rem; height: 560px; background: none"
-            >
-              <div style="height: 250px">
-                <img
-                  style="
-                    height: 100%;
-                    width: 100%;
-                    object-fit: fill;
-                    border: none;
-                  "
-                  src="./assets/images/watches.png"
-                  class="card-img-top"
-                  alt="Vacheron Constantin Malte Watch"
-                />
-              </div>
-              <div
-                class="card-body"
-                style="
-                  position: absolute;
-                  height: 310px;
-                  margin-top: 165px;
-                  background: white;
-                  border-radius: 15px;
-                "
-              >
-                <div
-                  class="d-flex justify-content-between align-items-center mb-2"
-                >
-                  <div class="d-flex align-items-center">
-                    <span class="text-warning me-2">
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                    </span>
-                    <span class="text-muted">June 3, 2024</span>
-                  </div>
-                </div>
-                <h5 class="card-title mb-2">Vacheron Constantin Malte</h5>
-                <p class="text-muted mb-1">Received: May 7, 2024</p>
-                <p class="text-muted mb-3">Shipped from: Spain</p>
-                <p class="card-text">
-                  Great communication and quick shipping. Watch was exactly as
-                  shown in the pictures. They even helped me fill out the
-                  customs forms. Thanks!
-                </p>
-                <div class="d-flex align-items-center mt-3">
-                  <div
-                    class="rounded-circle bg-secondary text-white d-flex justify-content-center align-items-center"
-                    style="width: 40px; height: 40px"
-                  >
-                    SC
-                  </div>
-                  <div class="ms-2">
-                    <p class="mb-0">Shawn C.</p>
-                    <small class="text-muted">United States of America</small>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div
-              class="card my-4 shadow-sm"
-              style="width: 22rem; height: 560px; background: none"
-            >
-              <div style="height: 250px">
-                <img
-                  style="
-                    height: 100%;
-                    width: 100%;
-                    object-fit: fill;
-                    border: none;
-                  "
-                  src="./assets/images/watches.png"
-                  class="card-img-top"
-                  alt="Vacheron Constantin Malte Watch"
-                />
-              </div>
-              <div
-                class="card-body"
-                style="
-                  position: absolute;
-                  height: 310px;
-                  margin-top: 165px;
-                  background: white;
-                  border-radius: 15px;
-                "
-              >
-                <div
-                  class="d-flex justify-content-between align-items-center mb-2"
-                >
-                  <div class="d-flex align-items-center">
-                    <span class="text-warning me-2">
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                    </span>
-                    <span class="text-muted">June 3, 2024</span>
-                  </div>
-                </div>
-                <h5 class="card-title mb-2">Vacheron Constantin Malte</h5>
-                <p class="text-muted mb-1">Received: May 7, 2024</p>
-                <p class="text-muted mb-3">Shipped from: Spain</p>
-                <p class="card-text">
-                  Great communication and quick shipping. Watch was exactly as
-                  shown in the pictures. They even helped me fill out the
-                  customs forms. Thanks!
-                </p>
-                <div class="d-flex align-items-center mt-3">
-                  <div
-                    class="rounded-circle bg-secondary text-white d-flex justify-content-center align-items-center"
-                    style="width: 40px; height: 40px"
-                  >
-                    SC
-                  </div>
-                  <div class="ms-2">
-                    <p class="mb-0">Shawn C.</p>
-                    <small class="text-muted">United States of America</small>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <button
-        class="carousel-control-prev"
-        type="button"
-        data-bs-target="#testimonialCarousel"
-        data-bs-slide="prev"
-      >
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
-      </button>
-      <button
-        class="carousel-control-next"
-        type="button"
-        data-bs-target="#testimonialCarousel"
-        data-bs-slide="next"
-      >
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>
-      </button>
-    </div>
-  </div>
-</div>
-
-<div class="container mt-4">
-  <div class="row">
-    <div
-      class="col-lg-4 col-md-6 col-sm-12 align-items-center"
-      style="flex-direction: column"
-    >
-      <h5 class="mb-1">Private Seller</h5>
-      <div class="align-items-center mt-3">
-        <div
-          class="rounded-circle bg-light d-flex justify-content-center align-items-center"
-          style="width: 50px; height: 50px"
-        >
-          <i class="fas fa-user" style="font-size: 24px; color: #555"></i>
-        </div>
-        <div class="ms-1">
-          <p class="mb-1 text-muted">
-            Seller information not publicly available
-          </p>
-          <p class="mb-0 text-muted">User since 2017</p>
-        </div>
-      </div>
-    </div>
-    <div
-      class="col-lg-6 col-md-6 col-sm-12 d-flex flex-column align-items-start align-items-md-end"
-    >
-      <div class="mb-3">
-        <i class="fas fa-map-marker-alt me-2"></i>
-        <span class="fw-bold">Location</span>
-        <p class="mb-0">The Netherlands</p>
-      </div>
-    </div>
-  </div>
-  <div class="col-lg-4 col-md-6 col-sm-12">
-    <button class="btn btn-lg btn-outline-secondary mt-3">
-      Contact seller
-    </button>
-  </div>
-</div>
-
-<div class="container mt-5">
-  <h2>Do you have any questions?</h2>
-  <div class="mb-4 d-flex gap-4">
-    <a href="tel:+85230020310" class="d-block mb-1"
-      ><i class="bi bi-telephone"></i> +852 3002 0310</a
-    >
-    <a class="d-block mb-3"><i class="bi bi-chat-dots"></i> Contact</a>
-  </div>
-  <div class="accordion" id="faqAccordion">
-    <div class="accordion-item">
-      <h2 class="accordion-header" id="headingOne">
-        <button
-          class="accordion-button"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#collapseOne"
-          aria-expanded="true"
-          aria-controls="collapseOne"
-        >
-          I'd like to buy this item. How do I proceed?
-        </button>
-      </h2>
-      <div
-        id="collapseOne"
-        class="accordion-collapse collapse show"
-        aria-labelledby="headingOne"
-        data-bs-parent="#faqAccordion"
-      >
-        <div class="accordion-body">
-          <p>Here's how to purchase this item:</p>
-          <ol>
-            <li>
-              Click on the green <strong>"Buy"</strong> button on the listing
-              page, and enter your shipping address.
-            </li>
-            <li>
-              The seller will send you an individualized offer, including
-              shipping costs.
-            </li>
-            <li>Accept the offer to order the item.</li>
-            <li>
-              We will then send you the payment information so you can pay for
-              your order.
-            </li>
-            <li>
-              The seller will ship your order as soon as your payment goes
-              through.
-            </li>
-          </ol>
-        </div>
-      </div>
-    </div>
-    <div class="accordion-item">
-      <h2 class="accordion-header" id="headingTwo">
-        <button
-          class="accordion-button collapsed"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#collapseTwo"
-          aria-expanded="false"
-          aria-controls="collapseTwo"
-        >
-          I would like to negotiate a price with the seller. What should I do?
-        </button>
-      </h2>
-      <div
-        id="collapseTwo"
-        class="accordion-collapse collapse"
-        aria-labelledby="headingTwo"
-        data-bs-parent="#faqAccordion"
-      >
-        <div class="accordion-body">
-          <p>Here's how to purchase this item:</p>
-          <ol>
-            <li>
-              Click on the green <strong>"Buy"</strong> button on the listing
-              page, and enter your shipping address.
-            </li>
-            <li>
-              The seller will send you an individualized offer, including
-              shipping costs.
-            </li>
-            <li>Accept the offer to order the item.</li>
-            <li>
-              We will then send you the payment information so you can pay for
-              your order.
-            </li>
-            <li>
-              The seller will ship your order as soon as your payment goes
-              through.
-            </li>
-          </ol>
-        </div>
-      </div>
-    </div>
-  </div>
-  <button type="button" class="btn btn-outline-secondary mt-4">
-    More questions and answers
-  </button>
-</div>
-
-<div class="container mt-5" style="margin-bottom: 3rem !important">
-  <div class="row">
-    <div class="col-md-4">
-      <h5 class="header-h5">Brand</h5>
-      <ul class="list-unstyled un-ol">
-        <li><a>Rolex watches (134439)</a></li>
-        <li><a>New Rolex watches</a></li>
-        <li><a>Pre-owned Rolex watches</a></li>
-      </ul>
-    </div>
-
-    <div class="col-md-4">
-      <h5 class="header-h5">Top categories</h5>
-      <ul class="list-unstyled un-ol">
-        <li><a>Russian Watches</a></li>
-        <li><a>Gold Watches</a></li>
-        <li><a>Military Watches</a></li>
-        <li><a>Pre-Owned Watches</a></li>
-      </ul>
-    </div>
-
-    <div class="col-md-4">
-      <h5 class="header-h5">More watches</h5>
-      <ul class="list-unstyled un-ol">
-        <li><a>GMT Watches</a></li>
-        <li><a>Tritium Watches</a></li>
-        <li><a>Rectangular Watches</a></li>
-        <li><a>Used Men’s Watches</a></li>
-        <li><a>Women’s Chronographs</a></li>
-        <li><a>Thin Watches</a></li>
-        <li><a>Sapphire Glass Watches</a></li>
-        <li><a>Collector's Watches</a></li>
-        <li><a>Affordable Watches</a></li>
-        <li><a>Swarovski Watches</a></li>
-      </ul>
-    </div>
   </div>
 </div>

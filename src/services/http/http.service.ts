@@ -96,6 +96,22 @@ export class HttpService {
     return this.http.get(`${this.apiUrl}/api/products`);
   }
 
+  getProductsByID(ID:any): Observable<any> {
+    return this.http.get(`${this.apiUrl}/api/products/${ID}`);
+  }
+
+  getRevieweruserByID(ID:any): Observable<any> {
+    return this.http.get(`${this.apiUrl}/api/dealer/${ID}/details`);
+  }
+
+  getSimilarProductsByID(ID:any): Observable<any> {
+    return this.http.get(`${this.apiUrl}/api/products/${ID}/similar`);
+  }
+
+  getDealerReviewsByID(ID:any): Observable<any> {
+    return this.http.get(`${this.apiUrl}/api/dealer/${ID}/reviews`);
+  }
+
   getPopularproductsWithID(ID:any): Observable<any> {
     return this.http.get(`${this.apiUrl}/api/brands/${ID}`);
   }

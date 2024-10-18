@@ -15,6 +15,7 @@ import { AdminBrandsComponent } from './views/adminpages/admin-brands/admin-bran
 import { AdminCategoryComponent } from './views/adminpages/admin-category/admin-category.component';
 import { AdminBrandsProductComponent } from './views/adminpages/admin-brands-product/admin-brands-product.component';
 import { AdminCategoryProductComponent } from './views/adminpages/admin-category-product/admin-category-product.component';
+import { BuyNowComponent } from './views/website/buy-now/buy-now.component';
 
 
 const routes: Routes = [
@@ -33,6 +34,7 @@ const routes: Routes = [
   { path: 'admin/brands-product', component:  AdminBrandsProductComponent},
   { path: 'admin/category', component:  AdminCategoryComponent},
   { path: 'admin/category-product', component:  AdminCategoryProductComponent},
+  { path: 'buy-now', component:  BuyNowComponent},
 ];
 
 @NgModule({

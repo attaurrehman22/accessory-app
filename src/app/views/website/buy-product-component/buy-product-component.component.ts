@@ -1,250 +1,231 @@
-import { Component, OnDestroy, OnInit } from "@angular/core";
+import {
+  Component,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+  ElementRef,
+} from "@angular/core";
+import { MatDialog } from "@angular/material/dialog";
+import { Router } from "@angular/router";
+import { AlertsServicesService } from "src/services/alerts-service/alerts-services.service";
 import { HttpService } from "src/services/http/http.service";
+import { ModelLoginComponent } from "../../auth/model-login/model-login.component";
 
 @Component({
   selector: "app-buy-product-component",
   templateUrl: "./buy-product-component.component.html",
   styleUrls: ["./buy-product-component.component.css"],
 })
-export class BuyProductComponentComponent implements OnInit, OnDestroy {
-  products = [
-    {
-      name: "Rolex GMT-Master II",
-      model: "126715CHNR",
-      price: 35500,
-      location: "HK",
-      image: "../assets/images/recommonded-1.png",
-    },
-    {
-      name: "Rolex GMT-Master II",
-      model: "126710BLRO",
-      price: 20925,
-      location: "NL",
-      image: "../assets/images/recommonded-2.png",
-    },
-    {
-      name: "Rolex GMT-Master II",
-      model: "126715CHNR",
-      price: 35500,
-      location: "HK",
-      image: "../assets/images/recommonded-3.png",
-    },
-    {
-      name: "Rolex GMT-Master II",
-      model: "126710BLRO",
-      price: 20925,
-      location: "NL",
-      image: "../assets/images/recommonded-4.png",
-    },
-    {
-      name: "Rolex GMT-Master II",
-      model: "126715CHNR",
-      price: 35500,
-      location: "HK",
-      image: "../assets/images/recommonded-5.png",
-    },
-    {
-      name: "Rolex GMT-Master II",
-      model: "126710BLRO",
-      price: 20925,
-      location: "NL",
-      image: "../assets/images/recommonded-6.png",
-    },
-    {
-      name: "Rolex GMT-Master II",
-      model: "126715CHNR",
-      price: 35500,
-      location: "HK",
-      image: "../assets/images/recommonded-7.png",
-    },
-    {
-      name: "Rolex GMT-Master II",
-      model: "126710BLRO",
-      price: 20925,
-      location: "NL",
-      image: "../assets/images/recommonded.png",
-    },
-  ];
+export class BuyProductComponentComponent implements OnInit {
+  cosmeticCondition: number;
+  satisfaction: number;
+  experience: number = 4;
+  productMainImage: any;
 
-  products1 = [
-    {
-      name: "Rolex GMT-Master II",
-      model: "126715CHNR",
-      price: 35500,
-      location: "HK",
-      image: "../assets/images/interested-watches-1.png",
-    },
-    {
-      name: "Rolex GMT-Master II",
-      model: "126710BLRO",
-      price: 20925,
-      location: "NL",
-      image: "../assets/images/interested-watches-2.png",
-    },
-    {
-      name: "Rolex GMT-Master II",
-      model: "126715CHNR",
-      price: 35500,
-      location: "HK",
-      image: "../assets/images/interested-watches-3.png",
-    },
-    {
-      name: "Rolex GMT-Master II",
-      model: "126710BLRO",
-      price: 20925,
-      location: "NL",
-      image: "../assets/images/interested-watches-4.png",
-    },
-    {
-      name: "Rolex GMT-Master II",
-      model: "126715CHNR",
-      price: 35500,
-      location: "HK",
-      image: "../assets/images/interested-watches-5.png",
-    },
-    {
-      name: "Rolex GMT-Master II",
-      model: "126710BLRO",
-      price: 20925,
-      location: "NL",
-      image: "../assets/images/interested-watches-6.png",
-    },
-    {
-      name: "Rolex GMT-Master II",
-      model: "126715CHNR",
-      price: 35500,
-      location: "HK",
-      image: "../assets/images/interested-watches-7.png",
-    },
-    {
-      name: "Rolex GMT-Master II",
-      model: "126710BLRO",
-      price: 20925,
-      location: "NL",
-      image: "../assets/images/interested-watches-8.png",
-    },
-    // Add more products here
-  ];
+  @ViewChild("targetContainer") targetContainer!: ElementRef;
 
-  currentIndex = 0;
-  currentIndex1 = 0;
-  itemsPerPage = 4;
-  itemsPerPage1 = 4;
-  autoSlideInterval: any;
-  autoSlideInterval1: any;
-
-  get currentProducts1() {
-    return this.products1.slice(
-      this.currentIndex1,
-      this.currentIndex1 + this.itemsPerPage1
-    );
+  scrollToTarget(): void {
+    this.targetContainer.nativeElement.scrollIntoView({ behavior: "smooth" });
   }
 
-  get currentProducts() {
-    return this.products.slice(
-      this.currentIndex,
-      this.currentIndex + this.itemsPerPage
-    );
+  toggleHearttwo(index: number): void {
+    // this.similarWatchesList[index].liked = !this.similarWatchesList[index].liked;
   }
 
-  nextSlide1() {
-    if (this.currentIndex1 + this.itemsPerPage1 < this.products1.length) {
-      this.currentIndex1 += this.itemsPerPage1;
-    } else {
-      this.currentIndex1 = 0;
-    }
+  displayedWatches: number = 6;
+
+  loadMoreWatches() {
+    this.displayedWatches += 6;
   }
 
-  previousSlide1() {
-    if (this.currentIndex1 - this.itemsPerPage1 >= 0) {
-      this.currentIndex1 -= this.itemsPerPage1;
-    } else {
-      this.currentIndex1 = this.products1.length - this.itemsPerPage1;
-    }
-  }
+  reviewsListIndex: number = 2;
 
-  nextSlide() {
-    if (this.currentIndex + this.itemsPerPage < this.products.length) {
-      this.currentIndex += this.itemsPerPage;
-    } else {
-      this.currentIndex = 0;
-    }
-  }
-
-  previousSlide() {
-    if (this.currentIndex - this.itemsPerPage >= 0) {
-      this.currentIndex -= this.itemsPerPage;
-    } else {
-      this.currentIndex = this.products.length - this.itemsPerPage;
-    }
-  }
-
-  startAutoSlide() {
-    this.autoSlideInterval = setInterval(() => {
-      this.nextSlide();
-    }, 6000);
-  }
-
-  stopAutoSlide() {
-    if (this.autoSlideInterval) {
-      clearInterval(this.autoSlideInterval);
-    }
-  }
-
-  startAutoSlide1() {
-    this.autoSlideInterval1 = setInterval(() => {
-      this.nextSlide1();
-    }, 6000);
-  }
-
-  stopAutoSlide1() {
-    if (this.autoSlideInterval1) {
-      clearInterval(this.autoSlideInterval1);
-    }
+  loadMoreReviews() {
+    this.reviewsListIndex += 2;
   }
 
   productsList: any;
   selectedImage: string;
   thumbnails: string[] = [];
 
-  constructor(private http: HttpService) {
-    // this.thumbnails = [
-    //   "./assets/images/man-watch-3.png",
-    //   "./assets/images/how-works-watch.png",
-    //   "./assets/images/man-watch-2.png",
-    //   "./assets/images/how-works-watch.png",
-    // ];
-  }
+  constructor(private http: HttpService,private alertService:AlertsServicesService,
+    private router:Router,private dialog:MatDialog
+  ) {}
 
   swapImages(clickedImage: string): void {
+    console.log("clickedImage", clickedImage);
     this.selectedImage = clickedImage;
   }
 
   productDetails: any;
-
+  dealerDetails: any;
+  dealerUserDetails:any;
   ngOnInit(): void {
-    this.productDetails = history.state.data;
-    this.thumbnails = this.productDetails.additional_images;
-    if (!this.selectedImage) {
-      this.selectedImage = this.thumbnails[0];
-    }
-    this.getAllProducts();
-    this.startAutoSlide();
-    this.startAutoSlide1();
+    this.fetchProductDetails()
+      .then(() => {
+        this.productMainImage = this.productDetails.main_image;
+
+        // Log the product main image
+        console.log("productMainImage", this.productMainImage);
+
+        // Set and clean up the thumbnails
+        this.thumbnails = this.productDetails.additional_images.map((image) =>
+          image.replace(/\\/g, "")
+        );
+
+        // Set the default selected image
+        if (this.thumbnails.length > 0) {
+          this.selectedImage = this.thumbnails[0];
+        }
+
+        if (this.productDetails.created_by) {
+          this.http
+          .getDealerReviewsByID(this.productDetails.created_by)
+          .subscribe(
+            (res) => {
+              this.dealerDetails = res.data;
+        
+              this.dealerDetails = this.dealerDetails.map((detail: any) => {
+                if (detail.main_image) {
+                  detail.main_image = detail.main_image.replace(/\\/g, '');
+                }
+                return detail;
+              });
+
+              console.log("this.dealerDetails",this.dealerDetails)
+        
+            },
+            (err) => {
+              console.log(err);
+            }
+          );
+        
+        }
+
+
+        if (this.productDetails.created_by) {
+          this.http
+            .getRevieweruserByID(this.productDetails.created_by)
+            .subscribe(
+              (res) => {
+                this.dealerUserDetails = res.data;
+                this.cosmeticCondition=res.data.cosmetic_condition;
+                this.satisfaction=res.data.satisfaction;
+              },
+              (err) => {
+                console.log(err);
+              }
+            );
+        }
+
+
+        this.getAllSimilarProducts();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
-  ngOnDestroy(): void {
-    this.stopAutoSlide();
-    this.stopAutoSlide1();
-  }
+  similarWatchesList:any;
 
-  getAllProducts() {
-    this.http.getProducts().subscribe(
+
+  getAllSimilarProducts() { 
+    this.http.getSimilarProductsByID(5).subscribe(
       (res) => {
-        this.productsList = res.data;
+        this.similarWatchesList = res.data.data;
+        console.log("similarWatchesList",this.similarWatchesList)
+        if(this.similarWatchesList){
+          this.similarWatchesList = this.similarWatchesList.map((product: any) => {
+            return {
+              ...product,
+              main_image: product.main_image.replace(/\\/g, "")
+            };
+          });
+        }
+
+        console.log("similarWatchesList",this.similarWatchesList)
       },
       (err) => {
+        console.log(err);
       }
     );
   }
+  
+
+
+  fetchProductDetails() {
+    return this.http
+      .getProductsByID(5)
+      .toPromise()
+      .then((res) => {
+        this.productDetails = res.data;
+
+        if (this.productDetails.additional_images) {
+          this.productDetails.additional_images = JSON.parse(
+            this.productDetails.additional_images
+          );
+        }
+
+        if (this.productDetails.main_image) {
+          this.productDetails.main_image =
+            this.productDetails.main_image.replace(/\\/g, "");
+        }
+      });
+  }
+
+  toggleHeart(image): void {
+    // this.watches[index].liked = !this.watches[index].liked;
+  }
+
+  getConditionPercentage(): number {
+    return (this.cosmeticCondition / 5) * 100; 
+  }
+
+  getSatisfactionPercentage(): number {
+    return (this.satisfaction / 5) * 100; 
+  }
+
+
+  getInitials(): string {
+    if (this.dealerUserDetails?.user_details?.name) {
+      return this.dealerUserDetails.user_details.name.substring(0, 2).toUpperCase();
+    }
+    return ''; 
+  }
+
+
+  copyCurrentUrl() {
+    const currentUrl = window.location.href;  // Get the current browser URL
+  
+    navigator.clipboard.writeText(currentUrl).then(() => {
+      console.log('URL copied to clipboard successfully!');
+      // Optionally, you can show a success message or notification
+      this.alertService.showAlert('success','Url copy Successfully')
+    }).catch(err => {
+      console.error('Could not copy the URL: ', err);
+    });
+  }
+
+
+  buyNow(){
+    const isUserLogin=localStorage.getItem('Logged')
+    if(isUserLogin){
+      this.router.navigate(['/buy-now'])
+    }
+    else{
+      
+        const dialogRef = this.dialog.open(ModelLoginComponent, {
+          width: "600px",
+          data: { message: "dialog-box" },
+        });
+    
+        dialogRef.afterClosed().subscribe((result) => {
+          if (result) {
+            this.router.navigate(['/buy-now'])
+          }
+        });
+      
+    }
+  }
+  
 }
