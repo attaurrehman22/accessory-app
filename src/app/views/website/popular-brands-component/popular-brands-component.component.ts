@@ -39,8 +39,12 @@ export class PopularBrandsComponentComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.targetDate = new Date("2024-12-31T00:00:00");
-    this.startCountdown();
+
+    this.getAllFeaturedProducts();
+    if(this.hours === '00' && this.minutes === '00'){
+      this.updateRemainingTime(this.products[0].start_date, this.products[0].end_date);
+    }
+    // this.startCountdown();
     this.products = [
       {
         name: "Product 1",
@@ -147,25 +151,58 @@ export class PopularBrandsComponentComponent implements OnInit {
     this.logFirstProduct();
   }
 
-  onCarouselMove(event: any) {
-    this.firstVisibleIndex = event.page; 
+  getAllFeaturedProducts() {
+    this.http.getFeaturedList().subscribe(
+      (res) => {
+        this.products = res.data.map((product: any) => {
+          product.promotion_banner = product.promotion_banner.replace(/\\/g, '');
+          return product;
+        });
+      },
+      (err) => {
+        console.error('Error fetching featured products:', err);
+      }
+    );
+  }
   
+  onCarouselMove(event: any) {
+    this.firstVisibleIndex = event.page;
+
     if (this.firstVisibleIndex >= 0 && this.firstVisibleIndex < this.products.length) {
+      const activeProduct = this.products[this.firstVisibleIndex];
+
       this.logFirstProduct();
-        const activeProduct = this.products[this.firstVisibleIndex];
-      this.updateRemainingTime(activeProduct.remainingTime[0]);
+      this.updateRemainingTime(activeProduct.start_date, activeProduct.end_date);
     } else {
       console.error("Invalid firstVisibleIndex:", this.firstVisibleIndex);
     }
   }
   
-  updateRemainingTime(remainingTime: any) {
-    this.days = this.pad(remainingTime.days);
-    this.hours = this.pad(remainingTime.housrs); 
-    this.minutes = this.pad(remainingTime.minutes);
-    this.seconds = this.pad(remainingTime.secods); 
+  updateRemainingTime(startDate: string, endDate: string) {
+    const currentTime = new Date().getTime();
+    const end = new Date(endDate).getTime();
 
+    // Time difference between now and end date
+    const timeRemaining = end - currentTime;
 
+    if (timeRemaining > 0) {
+      const days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
+
+      // Update the countdown values
+      this.days = this.pad(days);
+      this.hours = this.pad(hours);
+      this.minutes = this.pad(minutes);
+      this.seconds = this.pad(seconds);
+    } else {
+      // If the promotion has expired
+      this.days = "00";
+      this.hours = "00";
+      this.minutes = "00";
+      this.seconds = "00";
+    }
   }
   
 
@@ -174,7 +211,6 @@ export class PopularBrandsComponentComponent implements OnInit {
       const productName = this.products[this.firstVisibleIndex]?.name;
       if (productName) {
       } else {
-        console.warn("No product found at index:", this.firstVisibleIndex);
       }
     }
   }
@@ -182,26 +218,26 @@ export class PopularBrandsComponentComponent implements OnInit {
   logProductName(productName: string) {
   }
 
-  startCountdown() {
-    setInterval(() => {
-      const currentTime = new Date().getTime();
-      const timeRemaining = this.targetDate.getTime() - currentTime;
+  // startCountdown() {
+  //   setInterval(() => {
+  //     const currentTime = new Date().getTime();
+  //     const timeRemaining = this.targetDate.getTime() - currentTime;
 
-      const days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
-      const hours = Math.floor(
-        (timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-      );
-      const minutes = Math.floor(
-        (timeRemaining % (1000 * 60 * 60)) / (1000 * 60)
-      );
-      const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
+  //     const days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
+  //     const hours = Math.floor(
+  //       (timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+  //     );
+  //     const minutes = Math.floor(
+  //       (timeRemaining % (1000 * 60 * 60)) / (1000 * 60)
+  //     );
+  //     const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
 
-      this.days = this.pad(days);
-      this.hours = this.pad(hours);
-      this.minutes = this.pad(minutes);
-      this.seconds = this.pad(seconds);
-    }, 1000);
-  }
+  //     this.days = this.pad(days);
+  //     this.hours = this.pad(hours);
+  //     this.minutes = this.pad(minutes);
+  //     this.seconds = this.pad(seconds);
+  //   }, 1000);
+  // }
 
   pad(value: number) {
     return value < 10 ? "0" + value : value.toString();

@@ -146,12 +146,12 @@
 }
 
 ::ng-deep .p-carousel-item {
-  height: 350px !important;
+  height: 320px !important;
   width: 300px !important;
 }
 
 ::ng-deep .p-carousel-item-start {
-  height: 450px !important;
+  height: 400px !important;
   width: 350px !important;
 }
 

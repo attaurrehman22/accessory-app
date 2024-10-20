@@ -401,19 +401,21 @@ mat-grid-list {
 .condition-btn {
   background-color: #242424;
   color: #FFFFFF;
-  width: 122px;
+  width: fit-content;
   height: 42px;
   border-radius: 4px;
   border: none;
+  padding: 0 25px 0 25px;
 }
 
 .watch-btn {
   background-color: #242424;
   color: #FFFFFF;
-  width: 95px;
+  width: fit-content;
   height: 42px;
   border-radius: 4px;
   border: none;
+  padding: 0 25px 0 25px;
 }
 
 .box-btn {

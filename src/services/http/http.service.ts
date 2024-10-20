@@ -81,6 +81,10 @@ export class HttpService {
     return this.http.get(`${this.apiUrl}/api/categories-dropdown`);
   }
 
+  getAllTopNewArrivalCategory(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/api/new-arrival-with-top-catagory`);
+  }
+
   addProduct(formData: any): Observable<any> {
     
     const url = `${this.apiUrl}/api/products/save`;
@@ -114,6 +118,18 @@ export class HttpService {
 
   getPopularproductsWithID(ID:any): Observable<any> {
     return this.http.get(`${this.apiUrl}/api/brands/${ID}`);
+  }
+
+  getWatchOfTheDay(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/api/get-watch-of-the-day`);
+  }
+
+  getAllStaticstestimonial(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/api/testimonials`);
+  }
+
+  getFeaturedList(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/api/getActivePromotions`);
   }
 
   getAllBrandsDropdDown(ID:any): Observable<any> {

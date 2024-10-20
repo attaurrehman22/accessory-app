@@ -1,4 +1,10 @@
-import { Component, AfterViewInit, ElementRef, ViewChild } from "@angular/core";
+import {
+  Component,
+  AfterViewInit,
+  ElementRef,
+  ViewChild,
+  OnInit,
+} from "@angular/core";
 import { TranslateService } from "@ngx-translate/core";
 import { HttpService } from "src/services/http/http.service";
 
@@ -7,33 +13,32 @@ import { HttpService } from "src/services/http/http.service";
   templateUrl: "./people-syaing-component.component.html",
   styleUrls: ["./people-syaing-component.component.css"],
 })
-export class PeopleSyaingComponentComponent implements AfterViewInit {
-  @ViewChild('testimonialCarousel', { static: false }) carousel!: ElementRef;
-  activeIndex = 0; 
+export class PeopleSyaingComponentComponent implements AfterViewInit, OnInit {
+  @ViewChild("testimonialCarousel", { static: false }) carousel!: ElementRef;
+  activeIndex = 0;
+  testimonials:any;
 
-  testimonials = [
-    {
-      name: "Osama AlRaee",
-      role: "Entrepreneur",
-      image: "../../../../assets/images/osama-alraeeaee.png",
-      text: "You won’t regret it. Absolutely wonderful product!",
-      rating: "⭐⭐⭐⭐⭐",
-    },
-    {
-      name: "Megen W.",
-      role: "UI Designer",
-      image: "../../../../assets/images/megen-w.png",
-      text: "You won’t regret it. Absolutely wonderful product!",
-      rating: "⭐⭐⭐⭐⭐",
-    },
-    {
-      name: "Suzan B.",
-      role: "UI Designer",
-      image: "../../../../assets/images/suzan-b.png",
-      text: "You won’t regret it. Absolutely wonderful product!",
-      rating: "⭐⭐⭐⭐⭐",
-    }
-  ];
+  ngOnInit(): void {
+    this.getAllStaticstestimonials();
+  }
+
+  getAllStaticstestimonials() {
+    this.http.getAllStaticstestimonial().subscribe(
+      (res) => {
+        this.testimonials = res.data.map((testimonial: any) => {
+          // Remove backslashes from profile_picture URL
+          testimonial.profile_picture = testimonial.profile_picture.replace(/\\/g, '');
+          return testimonial;
+        });
+
+        console.log("this.testimonials",this.testimonials)
+      },
+      (err) => {
+        console.error('Error fetching testimonials:', err);
+      }
+    );
+  }
+  
 
   constructor(
     private translateService: TranslateService,
@@ -51,20 +56,21 @@ export class PeopleSyaingComponentComponent implements AfterViewInit {
 
   ngAfterViewInit(): void {
     const carouselElement = this.carousel.nativeElement;
-    carouselElement.addEventListener('slid.bs.carousel', () => {
+    carouselElement.addEventListener("slid.bs.carousel", () => {
       this.updateActiveIndex();
     });
   }
 
   private updateActiveIndex() {
-    const carouselItems = this.carousel.nativeElement.querySelectorAll('.carousel-item');
-    const activeElement = this.carousel.nativeElement.querySelector('.carousel-item.active');
+    const carouselItems =
+      this.carousel.nativeElement.querySelectorAll(".carousel-item");
+    const activeElement = this.carousel.nativeElement.querySelector(
+      ".carousel-item.active"
+    );
     this.activeIndex = Array.from(carouselItems).indexOf(activeElement);
   }
 
   getNextIndex(offset: number = 1): number {
     return (this.activeIndex + offset) % this.testimonials.length;
   }
-  
-
 }

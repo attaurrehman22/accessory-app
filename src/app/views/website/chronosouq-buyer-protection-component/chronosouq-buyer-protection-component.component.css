@@ -171,6 +171,7 @@
   border: 1px solid #F3F3F3;
   height: 40px;
   border-radius: 7px;
+  padding: 0 25px 0 25px;
 }
 
 .card-title {

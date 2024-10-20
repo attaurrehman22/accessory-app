@@ -63,7 +63,10 @@ export class BuyProductComponentComponent implements OnInit {
   productDetails: any;
   dealerDetails: any;
   dealerUserDetails: any;
+  ProductID;any;
   ngOnInit(): void {
+    this.ProductID=history.state.data.id;
+    console.log("this.ProductID",this.ProductID)
     this.fetchProductDetails()
       .then(() => {
         this.productMainImage = this.productDetails.main_image;
@@ -128,7 +131,7 @@ export class BuyProductComponentComponent implements OnInit {
   similarWatchesList: any;
 
   getAllSimilarProducts() {
-    this.http.getSimilarProductsByID(5).subscribe(
+    this.http.getSimilarProductsByID(this.ProductID).subscribe(
       (res) => {
         this.similarWatchesList = res.data.data;
         console.log("similarWatchesList", this.similarWatchesList);
@@ -153,7 +156,7 @@ export class BuyProductComponentComponent implements OnInit {
 
   fetchProductDetails() {
     return this.http
-      .getProductsByID(5)
+      .getProductsByID(this.ProductID)
       .toPromise()
       .then((res) => {
         this.productDetails = res.data;
