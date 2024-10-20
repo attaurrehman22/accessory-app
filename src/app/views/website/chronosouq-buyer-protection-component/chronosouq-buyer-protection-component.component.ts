@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+import { Router } from "@angular/router";
 import { TranslateService } from "@ngx-translate/core";
 import { HttpService } from "src/services/http/http.service";
 
@@ -15,18 +16,14 @@ export class ChronosouqBuyerProtectionComponentComponent implements OnInit {
 
   changeCategory(category: any) {
     this.selectedCategory = category;
- 
+
     this.showList = (category.products || []).map((product: any) => {
       if (product.main_image) {
         product.main_image = product.main_image.replace(/\\/g, ""); // Remove all backslashes
       }
       return product;
     });
-
-    console.log("this.showList", this.showList);
-
   }
-  
 
   ngOnInit(): void {
     this.getAllTopNewArrivals();
@@ -45,12 +42,12 @@ export class ChronosouqBuyerProtectionComponentComponent implements OnInit {
       },
       (err) => {}
     );
-
   }
 
   constructor(
     public translateService: TranslateService,
-    private http: HttpService
+    private http: HttpService,
+    private router: Router
   ) {
     const supportedLanguages = ["en", "ar"];
     this.translateService.addLangs(supportedLanguages);
@@ -69,31 +66,14 @@ export class ChronosouqBuyerProtectionComponentComponent implements OnInit {
   useLang(lang: string) {
     this.translateService.use(lang);
   }
+
+  routeToDetailPage(watch) {
+    this.router.navigate(["/buy-product"], {
+      state: { data: watch },
+    });
+  }
+
+  goToList(){
+    this.router.navigate(['/product-list'])
+  }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

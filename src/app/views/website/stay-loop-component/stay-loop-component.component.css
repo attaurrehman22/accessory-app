@@ -20,9 +20,10 @@
 
 .buy-btn {
   width: fit-content;
-  padding: 5px 50px 5px 50px;
+  padding: 10px 50px 10px 50px;
   border-radius: 9px;
   font-weight: 500;
+  border: none;
 }
 
 @media (max-width: 768px) {

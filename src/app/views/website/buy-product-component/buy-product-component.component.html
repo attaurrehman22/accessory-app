@@ -36,7 +36,8 @@
 
       <div class="featured-bottom">
         <i class="fas fa-eye"></i>
-        <p style="margin: 0">230</p>
+        <p style="margin: 0">
+          {{productDetails.views_count}}</p>
       </div>
 
       <div class="mt-3" style="display: flex; overflow-x: auto">
@@ -61,14 +62,14 @@
     </div>
     <div class="col-md-6">
       <div class="routes-div">
-        <p class="routes-styl">Homepage</p>
-        <p class="routes-styl">/ Category Name</p>
+        <p class="routes-styl" style="cursor: pointer;" routerLink="/">Homepage</p>
+        <!-- <p class="routes-styl">/ Category Name</p> -->
         <p class="routes-styl-active">/ {{ productDetails.name }}</p>
       </div>
 
-      <div *ngIf="productDetails.location" class="d-flex gap-2 align-items-baseline">
+      <div *ngIf="productDetails.created_by.city" class="d-flex gap-2 align-items-baseline">
         <i class="fas fa-map-marker-alt"></i>
-        <p class="routes-styl">{{ productDetails.location }}</p>
+        <p class="routes-styl">{{ productDetails.created_by.city }}</p>
       </div>
 
       <div class="d-flex flex-wrap">
@@ -260,8 +261,7 @@
 </div>
 
 
-<div *ngIf="!productDetails.created_by && dealerUserDetails" class="container mt-2">
-  hello
+<div *ngIf="!isDealer" class="container mt-2">
   <div
     class="col-md-6 p-3 d-flex flex-wrap align-items-center justify-content-between flex-row"
     style="border-radius: 16px; border: 1px solid #f3f3f3"
@@ -285,7 +285,7 @@
             "
            
           >
-            {{ dealerUserDetails.user_details.name }}
+            {{ productDetails.created_by.name }}
           </h5>
           <small
             class="text-muted"
@@ -318,7 +318,7 @@
             background: none;
           "
         >
-          Chat with Dealer
+          Chat with Seller
         </button>
       </div>
     </div>
@@ -407,11 +407,11 @@
           </div>
 
           <div class="col-12 d-flex justify-content-center">
-            <div style="min-width: 335px; height: 270px; border-radius: 12px">
+            <div style="min-width: 335px; height: 270px; border-radius: 12px;background-color: #F8F8F8;">
               <img
                 [src]="'https://api.chronosouq.com/' + productMainImage"
                 style="
-                  object-fit: fill;
+                  object-fit:scale-down;
                   height: 100%;
                   width: 100%;
                   border: none;
@@ -524,7 +524,7 @@
                 <tr *ngIf="productDetails.description">
                   <th class="tbl-head" scope="row">Description</th>
                   <td class="tbl-td">
-                    <small>
+                    <small style="font-size: 14px !important;font-weight: 500;">
                       {{ productDetails.description }}
                     </small>
                   </td>
@@ -557,88 +557,6 @@
         <div class="container mt-4">
           <h5 class="mb-4"></h5>
           <div class="row">
-            <!-- <div class="col-md-6 col-lg-4 mb-4">
-              <div class="card1 h-100 text-center p-3">
-                <img
-                  src="./assets/images/love-my-watch.png"
-                  alt="Ownership confirmed"
-                  class="mb-3 mx-auto"
-                />
-                <h6 class="font-weight-bold">Ownership confirmed</h6>
-                <p class="text-muted">
-                  Each private seller listing must pass an inspection before we
-                  publish it on our platform. As part of the inspection, the
-                  seller must provide proof of ownership in the form of two
-                  pictures of the watch set to specific times.
-                </p>
-              </div>
-            </div>
-            <div class="col-md-6 col-lg-4 mb-4">
-              <div class="card1 h-100 text-center p-3">
-                <img
-                  src="./assets/images/love-my-watch.png"
-                  alt="Insured shipping"
-                  class="mb-3 mx-auto"
-                />
-                <h6 class="font-weight-bold">Insured shipping</h6>
-                <p class="text-muted">
-                  We tell every private seller to ship orders fully insured and
-                  with a tracking number. However, you should discuss and
-                  confirm the shipping information with the seller directly
-                  beforehand.
-                </p>
-              </div>
-            </div>
-            <div class="col-md-6 col-lg-4 mb-4">
-              <div class="card1 h-100 text-center p-3">
-                <img
-                  src="./assets/images/love-my-watch.png"
-                  alt="Security team"
-                  class="mb-3 mx-auto"
-                />
-                <h6 class="font-weight-bold">
-                  ChronoSouq's quality & security team
-                </h6>
-                <p class="text-muted">
-                  Our 40-person quality & security team works hard to detect
-                  suspicious listings and address issues before they arise,
-                  allowing you to focus on what's most important – finding the
-                  right watch!
-                </p>
-              </div>
-            </div>
-            <div class="col-md-6 col-lg-4 mb-4">
-              <div class="card1 h-100 text-center p-3">
-                <img
-                  src="./assets/images/love-my-watch.png"
-                  alt="Escrow Service unavailable"
-                  class="mb-3 mx-auto"
-                />
-                <h6 class="font-weight-bold">Escrow Service unavailable</h6>
-                <p class="text-muted">
-                  Unfortunately, we cannot offer ChronoSouq's Escrow Service for
-                  this listing. Instead, you will pay the purchase price
-                  directly to the seller. As always, our multilingual support
-                  team would be happy to offer assistance should you need it!
-                </p>
-              </div>
-            </div>
-            <div class="col-md-6 col-lg-4 mb-4">
-              <div class="card1 h-100 text-center p-3">
-                <img
-                  src="./assets/images/love-my-watch.png"
-                  alt="No returns accepted"
-                  class="mb-3 mx-auto"
-                />
-                <h6 class="font-weight-bold">No returns accepted</h6>
-                <p class="text-muted">
-                  Because this listing comes from a private seller, there is no
-                  legal obligation to accept returns. Please check all
-                  information thoroughly before purchasing. Reach out to the
-                  seller or ChronoSouq Support with any questions.
-                </p>
-              </div>
-            </div> -->
           </div>
         </div>
       </div>
@@ -647,7 +565,7 @@
 </div>
 
 <div
-  *ngIf="dealerUserDetails"
+  *ngIf="isDealer && dealerUserDetails"
   class="container mt-5 p-3"
   #targetContainer
 >
@@ -657,6 +575,7 @@
       font-weight: 700;
       margin: 0 !important;
       color: #242424;
+      padding-left: 10px;
     "
   >
     Dealer Reviews
@@ -736,7 +655,7 @@
               color: #666666;
             "
           >
-            Usually Delivers in 6-7 days
+          {{ dealerUserDetails.user_details.delivery_time }}
           </p>
         </div>
       </div>
@@ -803,7 +722,8 @@
                     margin: 0 !important;
                   "
                 >
-                  120
+                {{ dealerUserDetails.total_listing }}
+                  
                 </p>
               </div>
             </div>
@@ -901,61 +821,81 @@
         </div>
 
         <!-- Rating Breakdown -->
-        <div class="row align-items-center mb-1">
+        <div class="row align-items-center mb-1" *ngIf="dealerReviewsRatings">
           <div class="col-2" style="color: #2c3e50">
             5<i class="bi bi-star-fill mx-2"></i>
           </div>
           <div class="col-8">
             <div class="progress">
-              <div class="progress-bar bg-prog-bar" style="width: 85%"></div>
+              <div
+                class="progress-bar bg-prog-bar"
+                [style.width]="getPercentage(dealerReviewsRatings['5.00_star']) + '%'">
+              </div>
             </div>
           </div>
-          <div class="col-2 text-right">59</div>
+          <div class="col-2 text-right">{{ dealerReviewsRatings['5.00_star'] }}</div>
         </div>
+        
         <div class="row align-items-center mb-1">
           <div class="col-2" style="color: #2c3e50">
             4<i class="bi bi-star-fill mx-2"></i>
           </div>
           <div class="col-8">
             <div class="progress">
-              <div class="progress-bar bg-prog-bar" style="width: 10%"></div>
+              <div
+                class="progress-bar bg-prog-bar"
+                [style.width]="getPercentage(dealerReviewsRatings['4.00_star']) + '%'">
+              </div>
             </div>
           </div>
-          <div class="col-2 text-right">7</div>
+          <div class="col-2 text-right">{{ dealerReviewsRatings['4.00_star'] }}</div>
         </div>
+        
         <div class="row align-items-center mb-1">
           <div class="col-2" style="color: #2c3e50">
             3<i class="bi bi-star-fill mx-2"></i>
           </div>
           <div class="col-8">
             <div class="progress">
-              <div class="progress-bar bg-prog-bar" style="width: 3%"></div>
+              <div
+                class="progress-bar bg-prog-bar"
+                [style.width]="getPercentage(dealerReviewsRatings['3.00_star']) + '%'">
+              </div>
             </div>
           </div>
-          <div class="col-2 text-right">1</div>
+          <div class="col-2 text-right">{{ dealerReviewsRatings['3.00_star'] }}</div>
         </div>
+        
         <div class="row align-items-center mb-1">
           <div class="col-2" style="color: #2c3e50">
             2<i class="bi bi-star-fill mx-2"></i>
           </div>
           <div class="col-8">
             <div class="progress">
-              <div class="progress-bar bg-prog-bar" style="width: 0%"></div>
+              <div
+                class="progress-bar bg-prog-bar"
+                [style.width]="getPercentage(dealerReviewsRatings['2.00_star']) + '%'">
+              </div>
             </div>
           </div>
-          <div class="col-2 text-right">0</div>
+          <div class="col-2 text-right">{{ dealerReviewsRatings['2.00_star'] }}</div>
         </div>
+        
         <div class="row align-items-center">
           <div class="col-2" style="color: #2c3e50">
             1<i class="bi bi-star-fill mx-2"></i>
           </div>
           <div class="col-8">
             <div class="progress">
-              <div class="progress-bar bg-prog-bar" style="width: 2%"></div>
+              <div
+                class="progress-bar bg-prog-bar"
+                [style.width]="getPercentage(dealerReviewsRatings['1.00_star']) + '%'">
+              </div>
             </div>
           </div>
-          <div class="col-2 text-right">2</div>
+          <div class="col-2 text-right">{{ dealerReviewsRatings['1.00_star'] }}</div>
         </div>
+        
       </div>
     </div>
   </div>
@@ -1021,6 +961,7 @@
                   font-size: 14;
                   font-weight: 400;
                   color: #2c3e50;
+                  width: 90%;
                 "
               >
                 {{ review.product_name }}
@@ -1273,7 +1214,7 @@
 </div>
 </div>
 
-<div *ngIf="similarWatchesList" class="container mt-3">
+<div *ngIf="similarWatchesList.length>0" class="container mt-3">
   <p
     style="
       text-align: center;
@@ -1300,9 +1241,8 @@
         />
         <div class="card-body">
           <div class="d-flex justify-content-between align-items-center">
-            <div class="watch-brand" style="color: #6a6a6a">
-              <!-- {{ watch.brand.name }} -->
-              Rolex
+            <div *ngIf="watch?.brand?.name" class="watch-brand" style="color: #6a6a6a">
+              {{ watch?.brand?.name }}
             </div>
             <div>
               <i class="fa fa-heart-o" aria-hidden="true"></i>
@@ -1323,10 +1263,12 @@
             <span style="color: #6a6a6a" class="card-title">{{
               watch.price
             }}</span>
-            <div style="color: #6a6a6a" class="card-title">
-              <!-- {{ watch.location }} -->
-              Makkah
+            <div *ngIf="watch.city" style="color: #6a6a6a" class="card-title">
+             {{ watch.city }}
             </div>
+            <div *ngIf="watch.created_by.city" style="color: #6a6a6a" class="card-title">
+              {{ watch.created_by.city }}
+             </div>
           </div>
         </div>
       </div>

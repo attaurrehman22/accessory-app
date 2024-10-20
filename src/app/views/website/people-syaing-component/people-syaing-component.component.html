@@ -1,5 +1,5 @@
 <div class="global-main-wraper mt-5 mb-5 pt-3 pb-3">
-  <div class="col-12">
+  <div class="col-12 d-flex flex-column justify-content-center">
     <p
       style="font-size: 40px; font-weight: 500; color: #484848"
       class="text-center"
@@ -7,7 +7,7 @@
       {{ "people_saying.label" | translate }}
     </p>
     <p
-      style="font-size: 20px; font-weight: 400; color: #6a6a6a"
+      style="font-size: 20px; font-weight: 400; color: #6a6a6a;width: 50%;"
       class="text-center mt-2"
     >
       {{ "people_saying.para" | translate }}
@@ -51,7 +51,7 @@
                       style="font-size: 16px; font-weight: 400; color: #484848"
                       class="card-text"
                     >
-                      {{ testimonial.review_text }}
+                    "{{ testimonial.review_text }}"
                     </p>
                     <div class="mb-2">
                       <span class="font-size text-warning">⭐⭐⭐⭐⭐</span>

@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+import { Router } from "@angular/router";
 import { TranslateService } from "@ngx-translate/core";
 import { HttpService } from "src/services/http/http.service";
 @Component({
@@ -30,7 +31,8 @@ export class StayLoopComponentComponent implements OnInit {
 
   constructor(
     public translateService: TranslateService,
-    private http: HttpService
+    private http: HttpService,
+    private router: Router
   ) {
     const supportedLanguages = ["en", "ar"];
     this.translateService.addLangs(supportedLanguages);
@@ -41,4 +43,13 @@ export class StayLoopComponentComponent implements OnInit {
       this.translateService.use(browserLang);
     }
   }
+
+  goToProductDetailPage() {
+    this.router.navigate(["/buy-product"], {
+      state: { data: this.watchDetails.product },
+    });
+  }
 }
+
+
+

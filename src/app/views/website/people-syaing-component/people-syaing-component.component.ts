@@ -30,8 +30,6 @@ export class PeopleSyaingComponentComponent implements AfterViewInit, OnInit {
           testimonial.profile_picture = testimonial.profile_picture.replace(/\\/g, '');
           return testimonial;
         });
-
-        console.log("this.testimonials",this.testimonials)
       },
       (err) => {
         console.error('Error fetching testimonials:', err);

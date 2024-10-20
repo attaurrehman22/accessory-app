@@ -1,25 +1,6 @@
 <div class="global-main-wraper" style="display: flex; flex-wrap: wrap;margin-top: 90px;">
   <div class="col-lg-2 col-md-3 col-sm-12 mt-5">
-    <!-- <div *ngFor="let cat of category_sel_frm_popular_models"> -->
-    <!-- <mat-checkbox (selectionChange)="getCategory(cat.id, 'category')">
-        {{ cat.name }}
-      </mat-checkbox> -->
-    <!-- <mat-form-field style="width: 100%" appearance="outline">
-        <mat-label>{{ "product_list.select_category" | translate }}</mat-label>
-        <mat-select
-          [panelClass]="'custom-dropdown-panel'"
-          (selectionChange)="getCategory($event.value, 'category')"
-          multiple
-        >
-          <mat-option
-            *ngFor="let cat of category_sel_frm_popular_models"
-            [value]="cat.id"
-          >
-            {{ cat.name }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field> -->
-    <!-- </div> -->
+   
 
     <div class="container">
       <!-- Brands Section -->
@@ -122,24 +103,10 @@
       </div>
     </div>
 
-    <!-- <div class="d-flex  d-sm-flex flex-column col-12" style="width: 100%;" *ngFor="let brand of brandsDataList">
-        <mat-checkbox style="width: auto;" (change)="getCategory(brand.name, 'brand')">
-          {{ brand.name }}
-        </mat-checkbox> -->
-
-    <!-- <mat-form-field style="width: 100%" appearance="outline">
-          <mat-label>{{ "product_list.select_brand" | translate }}</mat-label>
-          <mat-select (selectionChange)="getCategory($event.value, 'brand')">
-            <mat-option *ngFor="let brand of brandsDataList" [value]="brand.name">
-              {{ brand.name }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field> -->
-    <!-- </div> -->
   </div>
 
   <div class="col-lg-10 col-md-9 col-sm-12">
-    <div class="container p-0 mt-4">
+    <!-- <div class="container p-0 mt-4">
       <div id="watchesCarousel" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-inner h-100">
           <div
@@ -170,7 +137,6 @@
           </div>
         </div>
 
-        <!-- Carousel Indicators -->
         <ol class="carousel-indicators">
           <li
             *ngFor="let slide of getCarouselSlides(); let i = index"
@@ -180,49 +146,6 @@
             (click)="goToSlide(i)"
           ></li>
         </ol>
-      </div>
-    </div>
-
-    <!-- <div class="container p-0 mt-4">
-      <div id="watchesCarousel" class="carousel slide" data-bs-ride="carousel">
-        <div class="carousel-inner h-100">
-          <div
-            class="col carousel-item"
-            style="cursor: pointer"
-            *ngFor="let slide of getCarouselSlides(); let i = index"
-            [class.active]="i === currentIndex1"
-          >
-            <div class="row">
-              <div
-                class="col-lg-3 col-md-4 mb-4"
-                style="height: 360px; padding: 18px 18px 18px 18px"
-                *ngFor="let watch of slide"
-              >
-                <div class="card h-100" (click)="routeTo(watch)">
-                  <img
-                    class="card-img-top"
-                    [src]="'https://api.chronosouq.com/' + watch.main_image"
-                    alt="{{ watch.name }}"
-                  />
-                  <div class="card-body text-center">
-                    <p class="card-title">{{ watch.name }}</p>
-                    <p class="text-muted">from ${{ watch.price }}</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <ol class="carousel-indicators">
-          <li
-            *ngFor="let slide of getCarouselSlides(); let i = index"
-            [class.active]="i === currentIndex1"
-            data-bs-target="#watchesCarousel"
-            [attr.data-bs-slide-to]="i"
-            (click)="goToSlide(i)"
-          ></li>
-        </ol>
-        
       </div>
     </div> -->
 

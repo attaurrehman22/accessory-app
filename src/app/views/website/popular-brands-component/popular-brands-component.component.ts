@@ -243,4 +243,10 @@ export class PopularBrandsComponentComponent implements OnInit {
     return value < 10 ? "0" + value : value.toString();
   }
 
+  goToDetailPage(product){
+    this.router.navigate(['/buy-product'],{
+      state:{data:product}
+    })
+  }
+
 }

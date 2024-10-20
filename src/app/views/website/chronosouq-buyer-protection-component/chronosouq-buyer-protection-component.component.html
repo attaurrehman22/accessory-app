@@ -19,87 +19,6 @@
         {{ "chrono_buyer.paragraph" | translate }}
       </p>
     </div>
-    <!-- <div
-      class="col-lg-12 col-md-12 col-sm-12 d-flex flex-wrap justify-content-center gap-2 mt-3"
-      *ngFor="let item of categoryNames"
-    >
-      <button
-        (click)="changeCategory(item)"
-        class="category_btn col-lg-2 col-md-3 col-sm-4 d-flex flex-wrap"
-        [ngClass]="{ 'selected-category': selectedCategory === item }"
-      >
-      {{item.name}}
-      </button>
-    </div>
-
-    <div class="container mt-5">
-      <div class="row">
-        <div
-          class="col-md-4 col-sm-6 mb-4"
-          *ngFor="let watch of showList; let i = index"
-        >
-          <div class="card h-100 shadow-sm">
-            <img
-              src="{{ watch.image }}"
-              class="card-img-top"
-              alt="watch image"
-            />
-            <div class="card-body">
-              <div
-                class="d-flex justify-content-between align-items-center mb-2"
-              >
-                <div>
-                  <p style="font-size: 16px;font-weight: 400;color: #6a6a6a;margin: 0 !important;">
-                  {{ watch.brand }}
-                </p>
-                </div>
-                <div>
-                  <i class="fa fa-heart-o" aria-hidden="true"></i>
-                </div>
-              </div>
-              <div
-                class="d-flex justify-content-between align-items-center mt-2"
-              >
-                <p class="card-title d-flex flex-wrap">
-                  {{ watch.name }} {{ watch.condition }}
-                </p>
-              </div>
-              <div class="d-flex justify-content-between align-items-center mt-3">
-                <p class="price"
-                  >+{{ watch.shippingCharges }}
-                  {{ watch.shippingCurrency }} Shipping</p
-                >
-                <div>
-                  <p class="price">
-                  Location
-                </p>
-                </div>
-              </div>
-              <div class="d-flex justify-content-between align-items-center">
-                <p class="card-title-two">{{ watch.price }}</p>
-                <p class="card-title-two">
-                  {{ watch.location }}
-                </p>
-              </div>
-            </div>
-          </div>
-          <div class="heart-icon" (click)="toggleHeart(i)">
-            <i
-              class="fa"
-              [ngClass]="watch.liked ? 'fa-heart' : 'fa-heart fa-heart-o'"
-              aria-hidden="true"
-            ></i>
-          </div>
-        </div>
-      </div>
-
-      <div class="text-center">
-        <button class="view_btn">
-          {{ "chrono_buyer.view_more" | translate }}
-        </button>
-      </div>
-    </div> -->
-
     <div
       class="col-lg-12 col-md-12 col-sm-12 d-flex flex-wrap justify-content-center gap-2 mt-3"
     >
@@ -118,7 +37,9 @@
         <div class="col-md-4 col-sm-6 mb-4" *ngFor="let watch of showList">
           <div class="card h-100 shadow-sm">
             <img
-            [src]="'https://api.chronosouq.com/' + watch.main_image"
+            style="cursor: pointer;"
+            (click)="routeToDetailPage(watch)"
+              [src]="'https://api.chronosouq.com/' + watch.main_image"
               class="card-img-top"
               alt="watch image"
             />
@@ -153,8 +74,7 @@
                 class="d-flex justify-content-between align-items-center mt-3"
               >
                 <p class="price">
-                  +{{ watch.shipping_charges }}
-                  {{ watch.currency }} Shipping
+                  +{{ watch.shipping_charges }} {{ watch.currency }} Shipping
                 </p>
                 <div>
                   <p class="price">Location</p>
@@ -177,7 +97,7 @@
       </div>
 
       <div class="text-center">
-        <button class="view_btn">
+        <button class="view_btn" (click)="goToList()">
           {{ "chrono_buyer.view_more" | translate }}
         </button>
       </div>

@@ -56,7 +56,6 @@ export class BuyProductComponentComponent implements OnInit {
   ) {}
 
   swapImages(clickedImage: string): void {
-    console.log("clickedImage", clickedImage);
     this.selectedImage = clickedImage;
   }
 
@@ -66,13 +65,11 @@ export class BuyProductComponentComponent implements OnInit {
   ProductID;any;
   ngOnInit(): void {
     this.ProductID=history.state.data.id;
-    console.log("this.ProductID",this.ProductID)
     this.fetchProductDetails()
       .then(() => {
         this.productMainImage = this.productDetails.main_image;
 
         // Log the product main image
-        console.log("productMainImage", this.productMainImage);
 
         // Set and clean up the thumbnails
         this.thumbnails = this.productDetails.additional_images.map((image) =>
@@ -83,49 +80,53 @@ export class BuyProductComponentComponent implements OnInit {
         if (this.thumbnails.length > 0) {
           this.selectedImage = this.thumbnails[0];
         }
+        if(this.isDealer === 'dealer'){
+          if (this.productDetails.created_by.id) {
+            this.http
+              .getDealerReviewsByID(this.productDetails.created_by.id)
+              .subscribe(
+                (res) => {
+                  this.dealerDetails = res.data;
 
-        if (this.productDetails.created_by) {
-          this.http
-            .getDealerReviewsByID(this.productDetails.created_by)
-            .subscribe(
-              (res) => {
-                this.dealerDetails = res.data;
+                  this.dealerDetails = this.dealerDetails.map((detail: any) => {
+                    if (detail.main_image) {
+                      detail.main_image = detail.main_image.replace(/\\/g, "");
+                    }
+                    return detail;
+                  });
 
-                this.dealerDetails = this.dealerDetails.map((detail: any) => {
-                  if (detail.main_image) {
-                    detail.main_image = detail.main_image.replace(/\\/g, "");
-                  }
-                  return detail;
-                });
+                },
+                (err) => {
+                }
+              );
+          }
 
-                console.log("this.dealerDetails", this.dealerDetails);
-              },
-              (err) => {
-                console.log(err);
-              }
-            );
+          if (this.productDetails.created_by.id) {
+            this.http
+              .getRevieweruserByID(this.productDetails.created_by.id)
+              .subscribe(
+                (res) => {
+                  this.dealerUserDetails = res.data;
+                  this.dealerReviewsRatings=res.data.ratings;
+                  this.dealerReviewstotalRatings = Object.values(this.dealerReviewsRatings).reduce((a: number, b: number) => a + b, 0);
+                  this.cosmeticCondition = res.data.cosmetic_condition;
+                  this.satisfaction = res.data.satisfaction;
+                },
+                (err) => {
+                }
+              );
+          }
         }
-
-        if (this.productDetails.created_by) {
-          this.http
-            .getRevieweruserByID(this.productDetails.created_by)
-            .subscribe(
-              (res) => {
-                this.dealerUserDetails = res.data;
-                this.cosmeticCondition = res.data.cosmetic_condition;
-                this.satisfaction = res.data.satisfaction;
-              },
-              (err) => {
-                console.log(err);
-              }
-            );
-        }
-
+    
         this.getAllSimilarProducts();
       })
       .catch((err) => {
-        console.log(err);
       });
+  }
+
+  getPercentage(count: number): number {
+    
+    return this.dealerReviewstotalRatings > 0 ? (count / this.dealerReviewstotalRatings) * 100 : 0;
   }
 
   similarWatchesList: any;
@@ -134,7 +135,6 @@ export class BuyProductComponentComponent implements OnInit {
     this.http.getSimilarProductsByID(this.ProductID).subscribe(
       (res) => {
         this.similarWatchesList = res.data.data;
-        console.log("similarWatchesList", this.similarWatchesList);
         if (this.similarWatchesList) {
           this.similarWatchesList = this.similarWatchesList.map(
             (product: any) => {
@@ -146,19 +146,22 @@ export class BuyProductComponentComponent implements OnInit {
           );
         }
 
-        console.log("similarWatchesList", this.similarWatchesList);
       },
       (err) => {
-        console.log(err);
       }
     );
   }
+
+  isDealer:any='';
+  dealerReviewsRatings: any;
+  dealerReviewstotalRatings: any;
 
   fetchProductDetails() {
     return this.http
       .getProductsByID(this.ProductID)
       .toPromise()
       .then((res) => {
+        this.isDealer=res.typeOfProduct;
         this.productDetails = res.data;
 
         if (this.productDetails.additional_images) {
@@ -201,7 +204,6 @@ export class BuyProductComponentComponent implements OnInit {
     navigator.clipboard
       .writeText(currentUrl)
       .then(() => {
-        console.log("URL copied to clipboard successfully!");
         // Optionally, you can show a success message or notification
         this.alertService.showAlert("success", "Url copy Successfully");
       })

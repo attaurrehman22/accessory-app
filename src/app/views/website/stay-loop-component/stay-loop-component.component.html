@@ -35,7 +35,7 @@
 
           <div class="mb-3">
             <span class="fw-bold">Type:</span>
-            <span class="badge bg-light p-2 text-dark mx-2"
+            <span class="badge bg-light text-dark mx-2" style="padding: 10px 10px 10px 10px;"
               >Limited Edition</span
             >
           </div>
@@ -44,7 +44,7 @@
             {{ watchDetails.product.currency }} {{ watchDetails.product.price }}
           </h4>
 
-          <button class="buy-btn">Buy Now</button>
+          <button class="buy-btn" (click)="goToProductDetailPage()">Buy Now</button>
         </div>
       </div>
     </div>
