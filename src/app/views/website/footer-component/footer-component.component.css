@@ -1,8 +1,17 @@
 .footer {
-  background-color: #0d0d20;
+  background-color: #242424;
   color: #fff;
   padding: 55px;
 }
+
+.header-stl{
+  font-weight: 700;font-size: 16px;color: #FFFFFF;
+}
+
+.points-stl{
+  font-weight: 400;font-size: 14px;color: #FFFFFF;
+}
+
 
 .footer-logo {
   margin: 10px;
