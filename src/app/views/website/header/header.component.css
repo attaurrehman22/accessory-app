@@ -1,10 +1,10 @@
 .header-div {
-  height: 100px;
+  height: 73px;
   display: flex;
   padding: 0px !important;
   background: none !important;
 }
-.mat-drawer-container { 
+.mat-drawer-container {
   background: none !important;
 }
 .sidenav {
@@ -159,4 +159,12 @@
   background-color: #ec2633;
   border-radius: 50%;
   box-shadow: 0 0 5px #ff000080;
+}
+.headerclass{
+  position: fixed;
+   width: 100%;
+   z-index: 999;
+   top: 0;
+   background-color: white;
+
 }
