@@ -33,9 +33,36 @@ export class BuyProductComponentComponent implements OnInit {
   }
 
   displayedWatches: number = 6;
+  currentPage: number = 1;
+  totalPages: number = 1;
 
   loadMoreWatches() {
-    this.displayedWatches += 6;
+    console.log("hello");
+    console.log("totalPages", this.totalPages);
+    console.log("currentPage", this.currentPage);
+    if (this.currentPage < this.totalPages) {
+      this.currentPage++;
+      this.http
+        .getSimilarProductsByIDwithPage(this.ProductID, this.currentPage)
+        .subscribe(
+          (res) => {
+            const newWatches = res.data.data.map((product: any) => {
+              return {
+                ...product,
+                main_image: product.main_image.replace(/\\/g, ""),
+              };
+            });
+            this.similarWatchesList = [
+              ...this.similarWatchesList,
+              ...newWatches,
+            ];
+            this.totalPages = res.data.last_page;
+          },
+          (err) => {
+            console.error(err);
+          }
+        );
+    }
   }
 
   reviewsListIndex: number = 2;
@@ -62,9 +89,10 @@ export class BuyProductComponentComponent implements OnInit {
   productDetails: any;
   dealerDetails: any;
   dealerUserDetails: any;
-  ProductID;any;
+  ProductID;
+  any;
   ngOnInit(): void {
-    this.ProductID=history.state.data.id;
+    this.ProductID = history.state.data.id;
     this.fetchProductDetails()
       .then(() => {
         this.productMainImage = this.productDetails.main_image;
@@ -80,7 +108,7 @@ export class BuyProductComponentComponent implements OnInit {
         if (this.thumbnails.length > 0) {
           this.selectedImage = this.thumbnails[0];
         }
-        if(this.isDealer === 'dealer'){
+        if (this.isDealer === "dealer") {
           if (this.productDetails.created_by.id) {
             this.http
               .getDealerReviewsByID(this.productDetails.created_by.id)
@@ -94,10 +122,8 @@ export class BuyProductComponentComponent implements OnInit {
                     }
                     return detail;
                   });
-
                 },
-                (err) => {
-                }
+                (err) => {}
               );
           }
 
@@ -107,26 +133,27 @@ export class BuyProductComponentComponent implements OnInit {
               .subscribe(
                 (res) => {
                   this.dealerUserDetails = res.data;
-                  this.dealerReviewsRatings=res.data.ratings;
-                  this.dealerReviewstotalRatings = Object.values(this.dealerReviewsRatings).reduce((a: number, b: number) => a + b, 0);
+                  this.dealerReviewsRatings = res.data.ratings;
+                  this.dealerReviewstotalRatings = Object.values(
+                    this.dealerReviewsRatings
+                  ).reduce((a: number, b: number) => a + b, 0);
                   this.cosmeticCondition = res.data.cosmetic_condition;
                   this.satisfaction = res.data.satisfaction;
                 },
-                (err) => {
-                }
+                (err) => {}
               );
           }
         }
-    
+
         this.getAllSimilarProducts();
       })
-      .catch((err) => {
-      });
+      .catch((err) => {});
   }
 
   getPercentage(count: number): number {
-    
-    return this.dealerReviewstotalRatings > 0 ? (count / this.dealerReviewstotalRatings) * 100 : 0;
+    return this.dealerReviewstotalRatings > 0
+      ? (count / this.dealerReviewstotalRatings) * 100
+      : 0;
   }
 
   similarWatchesList: any;
@@ -134,25 +161,21 @@ export class BuyProductComponentComponent implements OnInit {
   getAllSimilarProducts() {
     this.http.getSimilarProductsByID(this.ProductID).subscribe(
       (res) => {
-        this.similarWatchesList = res.data.data;
-        if (this.similarWatchesList) {
-          this.similarWatchesList = this.similarWatchesList.map(
-            (product: any) => {
-              return {
-                ...product,
-                main_image: product.main_image.replace(/\\/g, ""),
-              };
-            }
-          );
-        }
-
+        this.similarWatchesList = res.data.data.map((product: any) => {
+          return {
+            ...product,
+            main_image: product.main_image.replace(/\\/g, ""),
+          };
+        });
+        this.totalPages = res.data.last_page; // Update the total pages
       },
       (err) => {
+        console.error(err);
       }
     );
   }
 
-  isDealer:any='';
+  isDealer: any = "";
   dealerReviewsRatings: any;
   dealerReviewstotalRatings: any;
 
@@ -161,7 +184,7 @@ export class BuyProductComponentComponent implements OnInit {
       .getProductsByID(this.ProductID)
       .toPromise()
       .then((res) => {
-        this.isDealer=res.typeOfProduct;
+        this.isDealer = res.typeOfProduct;
         this.productDetails = res.data;
 
         if (this.productDetails.additional_images) {

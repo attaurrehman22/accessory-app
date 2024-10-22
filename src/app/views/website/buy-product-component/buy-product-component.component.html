@@ -1229,7 +1229,7 @@
     <div
       class="col-md-4 col-sm-6 mb-4"
       *ngFor="
-        let watch of similarWatchesList.slice(0, displayedWatches);
+        let watch of similarWatchesList;
         let i = index
       "
     >
@@ -1284,7 +1284,7 @@
 
   <div
     class="text-center mb-4"
-    *ngIf="displayedWatches < similarWatchesList.length"
+    *ngIf="totalPages !== currentPage"
   >
     <button class="view_btn" (click)="loadMoreWatches()">
       {{ "chrono_buyer.view_more" | translate }}

@@ -9,13 +9,11 @@ import { HttpService } from "src/services/http/http.service";
   styleUrls: ["./popular-brands-component.component.css"],
 })
 export class PopularBrandsComponentComponent implements OnInit {
-
-  
   products: any[] = [];
   responsiveOptions: any[] = [];
 
   targetDate: Date;
-  
+
   firstVisibleIndex: number;
 
   days: string = "00";
@@ -39,115 +37,13 @@ export class PopularBrandsComponentComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
     this.getAllFeaturedProducts();
-    if(this.hours === '00' && this.minutes === '00'){
-      this.updateRemainingTime(this.products[0].start_date, this.products[0].end_date);
+    if (this.hours === "00" && this.minutes === "00") {
+      this.updateRemainingTime(
+        this.products[0].start_date,
+        this.products[0].end_date
+      );
     }
-    // this.startCountdown();
-    this.products = [
-      {
-        name: "Product 1",
-        price: 120,
-        image: "assets/images/featured-watch-list.png",
-        inventoryStatus: "INSTOCK",
-        remainingTime:[
-          {
-            days:2,
-            housrs:12,
-            minutes:13,
-            secods:45
-          }
-        ]
-      },
-      {
-        name: "Product 2",
-        price: 240,
-        image: "assets/images/featured-watch-list.png",
-        inventoryStatus: "LOWSTOCK",
-        remainingTime:[
-          {
-            days:5,
-            housrs:16,
-            minutes:24,
-            secods:45
-          }
-        ]
-      },
-      {
-        name: "Product 3",
-        price: 300,
-        image: "assets/images/featured-watch-list.png",
-        inventoryStatus: "OUTOFSTOCK",
-        remainingTime:[
-          {
-            days:12,
-            housrs:22,
-            minutes:43,
-            secods:45
-          }
-        ]
-      },
-      {
-        name: "Product 4",
-        price: 120,
-        image: "assets/images/featured-watch-list.png",
-        inventoryStatus: "INSTOCK",
-        remainingTime:[
-          {
-            days:1,
-            housrs:12,
-            minutes:13,
-            secods:45
-          }
-        ]
-      },
-      {
-        name: "Product 5",
-        price: 240,
-        image: "assets/images/featured-watch-list.png",
-        inventoryStatus: "LOWSTOCK",
-        remainingTime:[
-          {
-            days:2,
-            housrs:52,
-            minutes:13,
-            secods:45
-          }
-        ]
-      },
-      {
-        name: "Product 6",
-        price: "assets/images/featured-watch-list.png",
-        inventoryStatus: "OUTOFSTOCK",
-        remainingTime:[
-          {
-            days:12,
-            housrs:22,
-            minutes:33,
-            secods:55
-          }
-        ]
-      },
-    ];
-
-    this.responsiveOptions = [
-      {
-        breakpoint: "1024px",
-        numVisible: 3,
-        numScroll: 1,
-      },
-      {
-        breakpoint: "768px",
-        numVisible: 2,
-        numScroll: 1,
-      },
-      {
-        breakpoint: "560px",
-        numVisible: 1,
-        numScroll: 1,
-      },
-    ];
     this.logFirstProduct();
   }
 
@@ -155,29 +51,38 @@ export class PopularBrandsComponentComponent implements OnInit {
     this.http.getFeaturedList().subscribe(
       (res) => {
         this.products = res.data.map((product: any) => {
-          product.promotion_banner = product.promotion_banner.replace(/\\/g, '');
+          product.promotion_banner = product.promotion_banner.replace(
+            /\\/g,
+            ""
+          );
           return product;
         });
       },
       (err) => {
-        console.error('Error fetching featured products:', err);
+        console.error("Error fetching featured products:", err);
       }
     );
   }
-  
+
   onCarouselMove(event: any) {
     this.firstVisibleIndex = event.page;
 
-    if (this.firstVisibleIndex >= 0 && this.firstVisibleIndex < this.products.length) {
+    if (
+      this.firstVisibleIndex >= 0 &&
+      this.firstVisibleIndex < this.products.length
+    ) {
       const activeProduct = this.products[this.firstVisibleIndex];
 
       this.logFirstProduct();
-      this.updateRemainingTime(activeProduct.start_date, activeProduct.end_date);
+      this.updateRemainingTime(
+        activeProduct.start_date,
+        activeProduct.end_date
+      );
     } else {
       console.error("Invalid firstVisibleIndex:", this.firstVisibleIndex);
     }
   }
-  
+
   updateRemainingTime(startDate: string, endDate: string) {
     const currentTime = new Date().getTime();
     const end = new Date(endDate).getTime();
@@ -187,8 +92,12 @@ export class PopularBrandsComponentComponent implements OnInit {
 
     if (timeRemaining > 0) {
       const days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      const minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
+      const hours = Math.floor(
+        (timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+      );
+      const minutes = Math.floor(
+        (timeRemaining % (1000 * 60 * 60)) / (1000 * 60)
+      );
       const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
 
       // Update the countdown values
@@ -204,7 +113,12 @@ export class PopularBrandsComponentComponent implements OnInit {
       this.seconds = "00";
     }
   }
-  
+
+  logProductName(productName: string) {
+    this.router.navigate(["/buy-product"], {
+      state: { data: productName },
+    });
+  }
 
   logFirstProduct() {
     if (this.products.length > 0) {
@@ -215,38 +129,14 @@ export class PopularBrandsComponentComponent implements OnInit {
     }
   }
 
-  logProductName(productName: string) {
-  }
-
-  // startCountdown() {
-  //   setInterval(() => {
-  //     const currentTime = new Date().getTime();
-  //     const timeRemaining = this.targetDate.getTime() - currentTime;
-
-  //     const days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
-  //     const hours = Math.floor(
-  //       (timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-  //     );
-  //     const minutes = Math.floor(
-  //       (timeRemaining % (1000 * 60 * 60)) / (1000 * 60)
-  //     );
-  //     const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
-
-  //     this.days = this.pad(days);
-  //     this.hours = this.pad(hours);
-  //     this.minutes = this.pad(minutes);
-  //     this.seconds = this.pad(seconds);
-  //   }, 1000);
-  // }
 
   pad(value: number) {
     return value < 10 ? "0" + value : value.toString();
   }
 
-  goToDetailPage(product){
-    this.router.navigate(['/buy-product'],{
-      state:{data:product}
-    })
+  goToDetailPage(product) {
+    this.router.navigate(["/buy-product"], {
+      state: { data: product },
+    });
   }
-
 }

@@ -78,7 +78,7 @@
           (onPage)="onCarouselMove($event)"
         >
           <ng-template let-product let-i="index" pTemplate="item">
-            <div class="surface-border border-round m-1">
+            <div class="surface-border border-round m-1" style="cursor: pointer;" (click)="logProductName(product.product)">
               <div class="mb-3">
                 <div class="relative mx-auto">
                   <img

@@ -112,6 +112,10 @@ export class HttpService {
     return this.http.get(`${this.apiUrl}/api/products/${ID}/similar`);
   }
 
+  getSimilarProductsByIDwithPage(productId: number, page: number = 1): Observable<any> {
+    return this.http.get(`https://api.chronosouq.com/api/products/${productId}/similar?page=${page}`);
+  }
+
   getDealerReviewsByID(ID:any): Observable<any> {
     return this.http.get(`${this.apiUrl}/api/dealer/${ID}/reviews`);
   }
