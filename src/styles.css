@@ -44,3 +44,88 @@ body {
 }
 
 /* --------  Set Form Fields From Left to Right or Right to Left end --------- */
+
+
+/* ------------ Font Sizes Start ------------------- */
+
+.font-size-12 {
+  font-size: 12px;
+}
+
+.font-size-15 {
+  font-size: 15px;
+}
+
+.font-size-16 {
+  font-size: 16px;
+}
+
+.font-size-18 {
+  font-size: 18px;
+}
+
+.font-size-20 {
+  font-size: 20px;
+}
+
+.font-size-22 {
+  font-size: 22px;
+}
+
+.font-size-24 {
+  font-size: 24px;
+}
+
+.font-size-28 {
+  font-size: 28px;
+}
+
+.font-size-30 {
+  font-size: 30px;
+}
+
+.font-size-35 {
+  font-size: 35px;
+}
+
+.font-size-40 {
+  font-size: 40px;
+}
+
+/* ------------ Font Sizes End ------------------- */
+
+/* ------------ Font Weight Start ------------------- */
+
+.font-wight-400 {
+  font-weight: 400;
+}
+
+.font-wight-500 {
+  font-weight: 500;
+}
+
+.font-wight-600 {
+  font-weight: 600;
+}
+
+.font-wight-700 {
+  font-weight: 700;
+}
+
+/* ------------ Font Weight End ------------------- */
+
+/* ------------ Colors Start ------------------- */
+
+.color-6a6a6a {
+  color: #6a6a6a;
+}
+
+.color-484848 {
+  color: #484848;
+}
+
+.color-636e82 {
+  color: #636e82;
+}
+
+/* ------------ Colors End ------------------- */

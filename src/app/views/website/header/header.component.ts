@@ -1,4 +1,4 @@
-import { Component, HostListener, ViewChild, ElementRef } from "@angular/core";
+import { Component, HostListener, ViewChild, ElementRef, computed } from "@angular/core";
 import { Router } from "@angular/router";
 import { TranslateService } from "@ngx-translate/core";
 import { LanguageService } from "src/services/lang-service/language.service";
@@ -14,8 +14,14 @@ import { ChangeDetectorRef } from "@angular/core";
 })
 export class HeaderComponent {
   isSmallScreen: boolean = false;
-  isUserLogin: any = "";
+  isUserLogin: any;
   searchQuery: string = "";
+  
+  showHideAdminUser:any;
+  showHideUser:any;
+
+  isAdminUser = computed(() => this.loginStateService.isAdminUser());
+  isUserLoggedIn = computed(() => this.loginStateService.isUserLoggedIn());
 
   searchFilter: boolean = true;
   supportLanguages = [
@@ -28,9 +34,9 @@ export class HeaderComponent {
   isRtl: boolean = false;
   selectedLang: string = "en";
 
-  @ViewChild("drawer") drawer: MatSidenav; // Access sidenav
-  @ViewChild("sidenav", { static: true }) sidenavRef: ElementRef; // Access sidenav ElementRef
-  @ViewChild("header", { static: false }) headerRef: ElementRef; // Access header
+  @ViewChild("drawer") drawer: MatSidenav; 
+  @ViewChild("sidenav", { static: true }) sidenavRef: ElementRef; 
+  @ViewChild("header", { static: false }) headerRef: ElementRef; 
 
   constructor(
     public translateService: TranslateService,
@@ -60,10 +66,6 @@ export class HeaderComponent {
       this.isRtl = lang !== "en";
       this.selectedLang = lang;
     });
-
-    this.loginStateService.isAdminUser$.subscribe((isAdmin) => {
-      this.isAdminUser = isAdmin;
-    });
   }
 
   @HostListener("window:resize", ["$event"])
@@ -71,12 +73,23 @@ export class HeaderComponent {
     this.isSmallScreen = window.innerWidth <= 768;
   }
 
-  isAdminUser: any = "";
+
 
   ngOnInit() {
-    this.isUserLogin = localStorage.getItem("Logged");
     this.isSmallScreen = window.innerWidth <= 1500;
-    this.isAdminUser = localStorage.getItem("isAdminLogin");
+    this.isUserLogin=localStorage.getItem('isLoggedIn')
+     console.log("isAdminUser in header comp",this.isAdminUser())
+    if (this.isUserLoggedIn()) {
+     this.showHideUser=this.isUserLoggedIn();
+      
+      if (this.isAdminUser()) {
+       this.showHideAdminUser=this.isAdminUser();
+      } else {
+        console.log('User is not an admin');
+      }
+    } else {
+      console.log('User is not logged in');
+    }
   }
 
   routeToAdminPannel() {
@@ -106,11 +119,13 @@ export class HeaderComponent {
   logout() {
     localStorage.removeItem("Logged");
     localStorage.removeItem("user_token");
-    this.isUserLogin = "";
-    this.isAdminUser = "";
-    this.loginStateService.updateAdminStatus(this.isAdminUser);
+    this.isUserLogin = false;
     this.loginStateService.updateLoginStatus(false);
-    this.router.navigateByUrl("login");
+    localStorage.setItem("isAdmin", "false");
+    localStorage.setItem("isLoggedIn", "false"); 
+    this.router.navigateByUrl("login").then(() => {
+      window.location.reload();
+    });
   }
 
   dropdownOpen = false;

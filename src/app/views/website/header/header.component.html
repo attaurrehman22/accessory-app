@@ -8,7 +8,7 @@
       <button class="drawer-btn" (click)="routeToNewProduct()">
         {{ "header.sell_watch" | translate }}
       </button>
-      <button class="drawer-btn" *ngIf="isAdminUser" (click)="routeToAdminPannel()">
+      <button class="drawer-btn" *ngIf="showHideAdminUser === true" (click)="routeToAdminPannel()">
         {{ "header.admin_pannel" | translate }}
       </button>
       <button class="drawer-btn position-relative">
@@ -19,7 +19,7 @@
       <button style="background: none; border: none; font-size: 16px" *ngIf="!isUserLogin" (click)="goToRegister()">
         {{ "header.Login" | translate }}
       </button>
-      <button style="background: none; border: none; font-size: 16px" *ngIf="isUserLogin" (click)="logout()">
+      <button style="background: none; border: none; font-size: 16px" *ngIf="showHideUser === true" (click)="logout()">
         {{ "header.Logout" | translate }}
       </button>
     </mat-sidenav>
@@ -39,7 +39,7 @@
         <button class="custom-btn" (click)="routeToNewProduct()">
           {{ "header.sell_watch" | translate }}
         </button>
-        <button class="custom-btn" *ngIf="isAdminUser" (click)="routeToAdminPannel()">
+        <button class="custom-btn" *ngIf="showHideAdminUser === true" (click)="routeToAdminPannel()">
           {{ "header.admin_pannel" | translate }}
         </button>
       </div>
@@ -76,10 +76,10 @@
       <div class="header-contact gap-4">
         <img src="./assets/images/search-icon.png" (click)="openSearchForm()" style="cursor: pointer" />
         <mat-menu #profileMenu="matMenu">
-          <button mat-menu-item (click)="goToRegister()">
+          <button mat-menu-item *ngIf="showHideUser === false" (click)="goToRegister()">
             {{ "header.Login" | translate }}
           </button>
-          <button mat-menu-item (click)="logout()">
+          <button mat-menu-item *ngIf="showHideUser === true" (click)="logout()">
             {{ "header.Logout" | translate }}
           </button>
         </mat-menu>
