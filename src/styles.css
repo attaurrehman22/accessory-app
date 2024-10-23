@@ -24,6 +24,10 @@ body {
   }
 }
 
+.margin-0 {
+  margin: 0 !important
+}
+
 
 .header-highligted-color {
   color: #242424;
@@ -50,6 +54,10 @@ body {
 
 .font-size-12 {
   font-size: 12px;
+}
+
+.font-size-14 {
+  font-size: 14px;
 }
 
 .font-size-15 {
@@ -126,6 +134,30 @@ body {
 
 .color-636e82 {
   color: #636e82;
+}
+
+.color-666666 {
+  color: #666666;
+}
+
+.color-242424 {
+  color: #242424;
+}
+
+.color-565656 {
+  color: #565656;
+}
+
+.color-303a42 {
+  color: #303a42;
+}
+
+.color-2c3e50 {
+  color: #2c3e50;
+}
+
+.color-676986 {
+  color: #676986;
 }
 
 /* ------------ Colors End ------------------- */

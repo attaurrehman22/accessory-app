@@ -9,8 +9,7 @@
           width: 100%;
           border: none !important;
           border-radius: 16px;
-          background: #F8F8F8;
-
+          background: #f8f8f8;
         "
         class="img-fluid"
         alt="Selected Watch"
@@ -37,18 +36,19 @@
       <div class="featured-bottom">
         <i class="fas fa-eye"></i>
         <p style="margin: 0">
-          {{productDetails.views_count}}</p>
+          {{ productDetails.views_count }}
+        </p>
       </div>
 
       <div class="mt-3" style="display: flex; overflow-x: auto">
         <div
           class="col-3"
-          style="height: 135px;"
+          style="height: 135px"
           *ngFor="let image of thumbnails"
         >
           <img
             [src]="'https://api.chronosouq.com/' + image"
-            style="background: #F8F8F8;object-fit: scale-down;"
+            style="background: #f8f8f8; object-fit: scale-down"
             class="img-fluid"
             alt="thumbnail"
             [ngClass]="{
@@ -62,12 +62,17 @@
     </div>
     <div class="col-md-6">
       <div class="routes-div">
-        <p class="routes-styl" style="cursor: pointer;" routerLink="/">Homepage</p>
+        <p class="routes-styl" style="cursor: pointer" routerLink="/">
+          Homepage
+        </p>
         <!-- <p class="routes-styl">/ Category Name</p> -->
         <p class="routes-styl-active">/ {{ productDetails.name }}</p>
       </div>
 
-      <div *ngIf="productDetails.created_by.city" class="d-flex gap-2 align-items-baseline">
+      <div
+        *ngIf="productDetails.created_by.city"
+        class="d-flex gap-2 align-items-baseline"
+      >
         <i class="fas fa-map-marker-alt"></i>
         <p class="routes-styl">{{ productDetails.created_by.city }}</p>
       </div>
@@ -89,8 +94,8 @@
             />
           </div>
           <div style="display: flex; flex-direction: column">
-            <p style="margin: 0 !important">Brand</p>
-            <p style="margin: 0 !important">{{ productDetails.brand.name }}</p>
+            <p class="margin-0">Brand</p>
+            <p class="margin-0">{{ productDetails.brand.name }}</p>
           </div>
         </div>
 
@@ -103,8 +108,8 @@
             />
           </div>
           <div style="display: flex; flex-direction: column">
-            <p style="margin: 0 !important">Model</p>
-            <p style="margin: 0 !important">{{ productDetails.model }}</p>
+            <p class="margin-0">Model</p>
+            <p class="margin-0">{{ productDetails.model }}</p>
           </div>
         </div>
 
@@ -117,8 +122,8 @@
             />
           </div>
           <div style="display: flex; flex-direction: column">
-            <p style="margin: 0 !important">Year of Production</p>
-            <p style="margin: 0 !important">
+            <p class="margin-0">Year of Production</p>
+            <p class="margin-0">
               {{ productDetails.year_of_production }}
             </p>
           </div>
@@ -129,20 +134,15 @@
         <p class="header-highligted-color brand-name-title">
           {{ productDetails.currency }} {{ productDetails.price }}
         </p>
-        <p style="color: #666666; font-size: 14; font-weight: 400">
+        <p class="color-666666 font-wight-400 font-size-14">
           Exclu. Shipping Charges
         </p>
       </div>
 
       <div class="d-flex flex-column">
         <p
-          class="header-highligted-color"
-          style="
-            font-size: 16px;
-            font-weight: 400;
-            margin: 0 !important;
-            padding-bottom: 7px;
-          "
+          class="header-highligted-color font-wight-400 font-size-16 margin-0"
+          style="padding-bottom: 7px"
         >
           Condition:
         </p>
@@ -151,13 +151,8 @@
 
       <div class="d-flex flex-column mt-3">
         <p
-          class="header-highligted-color"
-          style="
-            font-size: 16px;
-            font-weight: 400;
-            margin: 0 !important;
-            padding-bottom: 7px;
-          "
+          class="header-highligted-color font-wight-400 font-size-16 margin-0"
+          style="padding-bottom: 7px"
         >
           Scope of Delivery:
         </p>
@@ -172,13 +167,8 @@
 
       <div class="d-flex flex-column mt-3">
         <p
-          class="header-highligted-color"
-          style="
-            font-size: 16px;
-            font-weight: 400;
-            margin: 0 !important;
-            padding-bottom: 7px;
-          "
+          class="header-highligted-color font-wight-400 font-size-16 margin-0"
+          style="padding-bottom: 7px"
         >
           Est. Delivery
         </p>
@@ -194,7 +184,10 @@
   </div>
 </div>
 
-<div *ngIf="productDetails.created_by && dealerUserDetails" class="container mt-2">
+<div
+  *ngIf="productDetails.created_by && dealerUserDetails"
+  class="container mt-2"
+>
   <div
     class="col-md-6 p-3 d-flex flex-wrap align-items-center justify-content-between flex-row"
     style="border-radius: 16px; border: 1px solid #f3f3f3"
@@ -235,7 +228,7 @@
           <span class="text-warning mr-1" style="padding-left: 7px">
             <i class="fas fa-star"></i>
           </span>
-          <small class="text-muted" style="color: #666666"
+          <small class="text-muted color-666666"
             >{{ dealerUserDetails.overall_rating }} ({{
               dealerUserDetails.total_reviews
             }}
@@ -260,7 +253,6 @@
   </div>
 </div>
 
-
 <div *ngIf="!isDealer" class="container mt-2">
   <div
     class="col-md-6 p-3 d-flex flex-wrap align-items-center justify-content-between flex-row"
@@ -281,9 +273,7 @@
               border-right: 1px solid #666666;
               color: #404040;
               padding-right: 7px;
-              
             "
-           
           >
             {{ productDetails.created_by.name }}
           </h5>
@@ -371,7 +361,7 @@
       >
         <div class="row">
           <div class="col-12 d-flex flex-wrap justify-content-center">
-            <p style="margin: 0 !important" class="brand-name-title">
+            <p class="brand-name-title margin-0">
               {{ productDetails.brand.name }} {{ productDetails.name }}
               {{ productDetails.condition }}
             </p>
@@ -380,26 +370,14 @@
           <div class="col-12">
             <div class="col-12 d-flex flex-wrap justify-content-center">
               <p
-                style="
-                  font-size: 20px;
-                  font-weight: 600;
-                  color: #242424;
-                  margin: 0 !important;
-                  text-align: center;
-                "
+                class="font-size-20 font-wight-600 color-242424 margin-0 text-center"
               >
                 {{ productDetails.meta_description }}
               </p>
             </div>
             <div class="col-12">
               <p
-                style="
-                  font-size: 16px;
-                  font-weight: 400;
-                  color: #666666;
-                  margin: 0 !important;
-                  text-align: center;
-                "
+                class="font-size-16 font-wight-400 color-666666 margin-0 text-center"
               >
                 {{ productDetails.description }}
               </p>
@@ -407,11 +385,18 @@
           </div>
 
           <div class="col-12 d-flex justify-content-center">
-            <div style="min-width: 335px; height: 270px; border-radius: 12px;background-color: #F8F8F8;">
+            <div
+              style="
+                min-width: 335px;
+                height: 270px;
+                border-radius: 12px;
+                background-color: #f8f8f8;
+              "
+            >
               <img
                 [src]="'https://api.chronosouq.com/' + productMainImage"
                 style="
-                  object-fit:scale-down;
+                  object-fit: scale-down;
                   height: 100%;
                   width: 100%;
                   border: none;
@@ -425,13 +410,7 @@
 
           <div class="col-12">
             <p
-              style="
-                margin: 0 !important ;
-                color: #242424;
-                font-size: 24px;
-                font-weight: 700;
-                text-align: center;
-              "
+              class="font-size-24 font-wight-700 color-242424 margin-0 text-center"
             >
               Watch Specifications
             </p>
@@ -524,7 +503,7 @@
                 <tr *ngIf="productDetails.description">
                   <th class="tbl-head" scope="row">Description</th>
                   <td class="tbl-td">
-                    <small style="font-size: 14px !important;font-weight: 500;">
+                    <small style="font-size: 14px !important; font-weight: 500">
                       {{ productDetails.description }}
                     </small>
                   </td>
@@ -556,8 +535,7 @@
       >
         <div class="container mt-4">
           <h5 class="mb-4"></h5>
-          <div class="row">
-          </div>
+          <div class="row"></div>
         </div>
       </div>
     </div>
@@ -570,13 +548,8 @@
   #targetContainer
 >
   <p
-    style="
-      font-size: 24px;
-      font-weight: 700;
-      margin: 0 !important;
-      color: #242424;
-      padding-left: 10px;
-    "
+    class="font-size-24 font-wight-700 margin-0 color-242424"
+    style="padding-left: 10px"
   >
     Dealer Reviews
   </p>
@@ -615,11 +588,9 @@
             >
           </div>
           <p
+            class="color-565656 font-size-16 font-wight-400"
             style="
-              color: #565656;
               margin-top: 8px;
-              font-size: 16px;
-              font-weight: 400;
               text-decoration: underline;
               text-decoration-color: #404040;
             "
@@ -637,25 +608,11 @@
           />
         </div>
         <div class="d-flex flex-column">
-          <p
-            style="
-              margin: 0 !important;
-              font-weight: 400;
-              font-size: 16px;
-              color: #242424;
-            "
-          >
+          <p class="margin-0 font-wight-400 font-size-16 color-242424">
             Delivery Record
           </p>
-          <p
-            style="
-              margin: 0 !important;
-              font-weight: 400;
-              font-size: 16px;
-              color: #666666;
-            "
-          >
-          {{ dealerUserDetails.user_details.delivery_time }}
+          <p class="margin-0 font-wight-400 font-size-16 color-666666">
+            {{ dealerUserDetails.user_details.delivery_time }}
           </p>
         </div>
       </div>
@@ -668,24 +625,10 @@
           />
         </div>
         <div class="d-flex flex-column">
-          <p
-            style="
-              margin: 0 !important;
-              font-weight: 400;
-              font-size: 16px;
-              color: #242424;
-            "
-          >
+          <p class="margin-0 font-wight-400 font-size-16 color-242424">
             Store Location
           </p>
-          <p
-            style="
-              margin: 0 !important;
-              font-weight: 400;
-              font-size: 16px;
-              color: #666666;
-            "
-          >
+          <p class="margin-0 font-wight-400 font-size-16 color-666666">
             {{ dealerUserDetails.user_details.city }}
           </p>
         </div>
@@ -704,26 +647,12 @@
               </div>
               <div class="d-flex flex-column align-items-baseline">
                 <p
-                  class="mb-0"
-                  style="
-                    font-size: 14px;
-                    font-weight: 400;
-                    color: #303a42;
-                    margin: 0 !important;
-                  "
+                  class="mb-0 margin-0 font-wight-400 font-size-14 color-303a42"
                 >
                   Total Listing
                 </p>
-                <p
-                  style="
-                    font-size: 16px;
-                    font-weight: 700;
-                    color: #303a42;
-                    margin: 0 !important;
-                  "
-                >
-                {{ dealerUserDetails.total_listing }}
-                  
+                <p class="margin-0 font-wight-700 font-size-16 color-303a42">
+                  {{ dealerUserDetails.total_listing }}
                 </p>
               </div>
             </div>
@@ -739,24 +668,11 @@
               </div>
               <div class="d-flex flex-column align-items-baseline">
                 <p
-                  class="mb-0"
-                  style="
-                    font-size: 14px;
-                    font-weight: 400;
-                    color: #303a42;
-                    margin: 0 !important;
-                  "
+                  class="mb-0 margin-0 font-wight-400 font-size-14 color-303a42"
                 >
                   Active Listing
                 </p>
-                <p
-                  style="
-                    font-size: 16px;
-                    font-weight: 700;
-                    color: #303a42;
-                    margin: 0 !important;
-                  "
-                >
+                <p class="margin-0 font-wight-700 font-size-16 color-303a42">
                   {{ dealerUserDetails.active_listings_count }}
                 </p>
               </div>
@@ -773,24 +689,11 @@
               </div>
               <div class="d-flex flex-column align-items-baseline">
                 <p
-                  class="mb-0"
-                  style="
-                    font-size: 14px;
-                    font-weight: 400;
-                    color: #303a42;
-                    margin: 0 !important;
-                  "
+                  class="mb-0 margin-0 font-wight-400 font-size-14 color-303a42"
                 >
                   Watches Sold
                 </p>
-                <p
-                  style="
-                    font-size: 16px;
-                    font-weight: 700;
-                    color: #303a42;
-                    margin: 0 !important;
-                  "
-                >
+                <p class="margin-0 font-wight-700 font-size-16 color-303a42">
                   {{ dealerUserDetails.sold_products_count }}
                 </p>
               </div>
@@ -815,423 +718,369 @@
             <i class="bi bi-star-fill"></i>
           </div>
           <h4 class="mb-0 ml-2">{{ dealerUserDetails.overall_rating }}</h4>
-          <p style="color: #676986" class="mb-0 ml-2">
+          <p class="mb-0 ml-2 color-676986">
             Based on {{ dealerUserDetails.total_reviews }} reviews
           </p>
         </div>
 
         <!-- Rating Breakdown -->
         <div class="row align-items-center mb-1" *ngIf="dealerReviewsRatings">
-          <div class="col-2" style="color: #2c3e50">
+          <div class="col-2 color-2c3e50">
             5<i class="bi bi-star-fill mx-2"></i>
           </div>
           <div class="col-8">
             <div class="progress">
               <div
                 class="progress-bar bg-prog-bar"
-                [style.width]="getPercentage(dealerReviewsRatings['5.00_star']) + '%'">
-              </div>
+                [style.width]="
+                  getPercentage(dealerReviewsRatings['5.00_star']) + '%'
+                "
+              ></div>
             </div>
           </div>
-          <div class="col-2 text-right">{{ dealerReviewsRatings['5.00_star'] }}</div>
+          <div class="col-2 text-right">
+            {{ dealerReviewsRatings["5.00_star"] }}
+          </div>
         </div>
-        
+
         <div class="row align-items-center mb-1">
-          <div class="col-2" style="color: #2c3e50">
+          <div class="col-2 color-2c3e50">
             4<i class="bi bi-star-fill mx-2"></i>
           </div>
           <div class="col-8">
             <div class="progress">
               <div
                 class="progress-bar bg-prog-bar"
-                [style.width]="getPercentage(dealerReviewsRatings['4.00_star']) + '%'">
-              </div>
+                [style.width]="
+                  getPercentage(dealerReviewsRatings['4.00_star']) + '%'
+                "
+              ></div>
             </div>
           </div>
-          <div class="col-2 text-right">{{ dealerReviewsRatings['4.00_star'] }}</div>
+          <div class="col-2 text-right">
+            {{ dealerReviewsRatings["4.00_star"] }}
+          </div>
         </div>
-        
+
         <div class="row align-items-center mb-1">
-          <div class="col-2" style="color: #2c3e50">
+          <div class="col-2 color-2c3e50">
             3<i class="bi bi-star-fill mx-2"></i>
           </div>
           <div class="col-8">
             <div class="progress">
               <div
                 class="progress-bar bg-prog-bar"
-                [style.width]="getPercentage(dealerReviewsRatings['3.00_star']) + '%'">
-              </div>
+                [style.width]="
+                  getPercentage(dealerReviewsRatings['3.00_star']) + '%'
+                "
+              ></div>
             </div>
           </div>
-          <div class="col-2 text-right">{{ dealerReviewsRatings['3.00_star'] }}</div>
+          <div class="col-2 text-right">
+            {{ dealerReviewsRatings["3.00_star"] }}
+          </div>
         </div>
-        
+
         <div class="row align-items-center mb-1">
-          <div class="col-2" style="color: #2c3e50">
+          <div class="col-2 color-2c3e50">
             2<i class="bi bi-star-fill mx-2"></i>
           </div>
           <div class="col-8">
             <div class="progress">
               <div
                 class="progress-bar bg-prog-bar"
-                [style.width]="getPercentage(dealerReviewsRatings['2.00_star']) + '%'">
-              </div>
+                [style.width]="
+                  getPercentage(dealerReviewsRatings['2.00_star']) + '%'
+                "
+              ></div>
             </div>
           </div>
-          <div class="col-2 text-right">{{ dealerReviewsRatings['2.00_star'] }}</div>
+          <div class="col-2 text-right">
+            {{ dealerReviewsRatings["2.00_star"] }}
+          </div>
         </div>
-        
+
         <div class="row align-items-center">
-          <div class="col-2" style="color: #2c3e50">
+          <div class="col-2 color-2c3e50">
             1<i class="bi bi-star-fill mx-2"></i>
           </div>
           <div class="col-8">
             <div class="progress">
               <div
                 class="progress-bar bg-prog-bar"
-                [style.width]="getPercentage(dealerReviewsRatings['1.00_star']) + '%'">
-              </div>
+                [style.width]="
+                  getPercentage(dealerReviewsRatings['1.00_star']) + '%'
+                "
+              ></div>
             </div>
           </div>
-          <div class="col-2 text-right">{{ dealerReviewsRatings['1.00_star'] }}</div>
+          <div class="col-2 text-right">
+            {{ dealerReviewsRatings["1.00_star"] }}
+          </div>
         </div>
-        
       </div>
     </div>
   </div>
 
   <div *ngIf="dealerDetails">
-  <div
-    class="col-12 d-flex flex-wrap"
-    *ngFor="let review of dealerDetails.slice(0, reviewsListIndex)"
-  >
-    <div class="col-lg-3 col-md-12 col-sm-12 d-flex flex-wrap">
-      <div class="container my-4" style="background-color: #f7f7f8">
-        <div class="p-3" style="width: 18rem; border-radius: 0 !important">
-          <div class="d-flex gap-2">
-            <p
-              style="
-                margin: 0 !important;
-                font-size: 16;
-                font-weight: 700;
-                color: #2c3e50;
-              "
-            >
-              {{ review.reviewer_name }}
-            </p>
-            <img
-              src="../../../../assets/images/check-mark-icon.png"
-              style="height: 25px; width: 25px; border: none !important"
-              alt="checkmark"
-            />
-          </div>
-          <p
-            style="
-              margin: 0 !important;
-              font-size: 14;
-              font-weight: 400;
-              color: #666666;
-            "
-          >
-            {{ review.review_date | date : "dd / MM / yyyy" }}
-          </p>
-
-          <!-- Image and Reviewing Text -->
-          <div class="d-flex align-items-center mb-2 mt-2">
-            <img
-              [src]="'https://api.chronosouq.com/' + review.main_image"
-              alt="Watch Image"
-              class="img-thumbnail mr-2"
-              style="width: 50px; border: none"
-            />
-            <div>
-              <p
-                style="
-                  margin: 0 !important;
-                  font-size: 14;
-                  font-weight: 700;
-                  color: #2c3e50;
-                "
-              >
-                Reviewing
+    <div
+      class="col-12 d-flex flex-wrap"
+      *ngFor="let review of dealerDetails.slice(0, reviewsListIndex)"
+    >
+      <div class="col-lg-3 col-md-12 col-sm-12 d-flex flex-wrap">
+        <div class="container my-4" style="background-color: #f7f7f8">
+          <div class="p-3" style="width: 18rem; border-radius: 0 !important">
+            <div class="d-flex gap-2">
+              <p class="margin-0 font-wight-700 font-size-16 color-2c3e50">
+                {{ review.reviewer_name }}
               </p>
-              <p
-                style="
-                  margin: 0 !important;
-                  font-size: 14;
-                  font-weight: 400;
-                  color: #2c3e50;
-                  width: 90%;
-                "
-              >
-                {{ review.product_name }}
+              <img
+                src="../../../../assets/images/check-mark-icon.png"
+                style="height: 25px; width: 25px; border: none !important"
+                alt="checkmark"
+              />
+            </div>
+            <p class="margin-0 font-wight-400 font-size-14 color-666666">
+              {{ review.review_date | date : "dd / MM / yyyy" }}
+            </p>
+
+            <!-- Image and Reviewing Text -->
+            <div class="d-flex align-items-center mb-2 mt-2">
+              <img
+                [src]="'https://api.chronosouq.com/' + review.main_image"
+                alt="Watch Image"
+                class="img-thumbnail mr-2"
+                style="width: 50px; border: none"
+              />
+              <div>
+                <p class="margin-0 font-wight-700 font-size-14 color-2c3e50">
+                  Reviewing
+                </p>
+                <p
+                  class="margin-0 font-wight-400 font-size-14 color-2c3e50"
+                  style="width: 90%"
+                >
+                  {{ review.product_name }}
+                </p>
+              </div>
+            </div>
+
+            <p class="margin-0 font-wight-700 font-size-14 color-2c3e50">
+              Rated
+            </p>
+            <div class="d-flex align-items-center">
+              <div class="text-warning">
+                <i class="bi bi-star-fill"></i>
+                <i class="bi bi-star-fill"></i>
+                <i class="bi bi-star-fill"></i>
+                <i class="bi bi-star-fill"></i>
+                <i class="bi bi-star-fill"></i>
+              </div>
+              <p class="margin-0 font-wight-400 font-size-14 color-2c3e50">
+                {{ review.rating }}
               </p>
             </div>
           </div>
+        </div>
+      </div>
 
-          <p
-            style="
-              margin: 0 !important;
-              font-size: 14;
-              font-weight: 700;
-              color: #2c3e50;
-            "
-          >
-            Rated
-          </p>
-          <div class="d-flex align-items-center">
-            <div class="text-warning">
-              <i class="bi bi-star-fill"></i>
-              <i class="bi bi-star-fill"></i>
-              <i class="bi bi-star-fill"></i>
-              <i class="bi bi-star-fill"></i>
-              <i class="bi bi-star-fill"></i>
+      <div class="col-lg-9 col-md-12 col-sm-12 d-flex flex-wrap">
+        <div class="container mt-4">
+          <div class="row text-center">
+            <!-- Cosmetic Condition -->
+            <div class="col-md-4" style="padding: 0 5px 0 5px">
+              <p
+                class="font-wight-600 font-size-14 color-2c3e50"
+                style="text-align: left"
+              >
+                Cosmetic Condition
+              </p>
+              <div class="progress">
+                <div
+                  [ngClass]="{
+                    'active-progress-bar': review.cosmetic_condition === 1
+                  }"
+                  class="start bg-bar-color"
+                ></div>
+                <div
+                  [ngClass]="{
+                    'active-progress-bar': review.cosmetic_condition === 2
+                  }"
+                  class="one bg-bar-color"
+                ></div>
+                <div
+                  [ngClass]="{
+                    'active-progress-bar': review.cosmetic_condition === 3
+                  }"
+                  class="two bg-bar-color"
+                ></div>
+                <div
+                  [ngClass]="{
+                    'active-progress-bar': review.cosmetic_condition === 4
+                  }"
+                  class="three bg-bar-color"
+                ></div>
+                <div
+                  [ngClass]="{
+                    'active-progress-bar': review.cosmetic_condition === 5
+                  }"
+                  class="end bg-bar-color"
+                ></div>
+                <div class="progress-bar" style="width: 100%"></div>
+              </div>
+              <div class="d-flex justify-content-between">
+                <p
+                  class="font-wight-400 font-size-14 color-2c3e50"
+                  style="margin-top: 7px"
+                >
+                  Poor
+                </p>
+                <p
+                  class="font-wight-400 font-size-14 color-2c3e50"
+                  style="margin-top: 7px"
+                >
+                  Excellent
+                </p>
+              </div>
             </div>
-            <p
-              style="
-                margin: 0 !important;
-                font-size: 14;
-                font-weight: 400;
-                color: #2c3e50;
-              "
-            >
-              {{ review.rating }}
-            </p>
+
+            <!-- Satisfaction -->
+            <div class="col-md-4" style="padding: 0 5px 0 5px">
+              <p
+                class="font-wight-600 font-size-14 color-2c3e50"
+                style="text-align: left"
+              >
+                Satisfaction
+              </p>
+              <div class="progress">
+                <div
+                  [ngClass]="{
+                    'active-progress-bar': review.satisfaction === 1
+                  }"
+                  class="start bg-bar-color"
+                ></div>
+                <div
+                  [ngClass]="{
+                    'active-progress-bar': review.satisfaction === 2
+                  }"
+                  class="one bg-bar-color"
+                ></div>
+                <div
+                  [ngClass]="{
+                    'active-progress-bar': review.satisfaction === 3
+                  }"
+                  class="two bg-bar-color"
+                ></div>
+                <div
+                  [ngClass]="{
+                    'active-progress-bar': review.satisfaction === 4
+                  }"
+                  class="three bg-bar-color"
+                ></div>
+                <div
+                  [ngClass]="{
+                    'active-progress-bar': review.satisfaction === 5
+                  }"
+                  class="end bg-bar-color"
+                ></div>
+                <div class="progress-bar" style="width: 100%"></div>
+              </div>
+              <div class="d-flex justify-content-between">
+                <p
+                  class="font-wight-400 font-size-14 color-2c3e50"
+                  style="margin-top: 7px"
+                >
+                  Low
+                </p>
+                <p
+                  class="font-wight-400 font-size-14 color-2c3e50"
+                  style="margin-top: 7px"
+                >
+                  High
+                </p>
+              </div>
+            </div>
+
+            <!-- Experience -->
+            <div class="col-md-4" style="padding: 0 5px 0 5px">
+              <p
+                class="font-wight-600 font-size-14 color-2c3e50"
+                style="text-align: left"
+              >
+                Experience
+              </p>
+              <div class="progress">
+                <div
+                  [ngClass]="{ 'active-progress-bar': review.experience === 1 }"
+                  class="start bg-bar-color"
+                ></div>
+                <div
+                  [ngClass]="{ 'active-progress-bar': review.experience === 2 }"
+                  class="one bg-bar-color"
+                ></div>
+                <div
+                  [ngClass]="{ 'active-progress-bar': review.experience === 3 }"
+                  class="two bg-bar-color"
+                ></div>
+                <div
+                  [ngClass]="{ 'active-progress-bar': review.experience === 4 }"
+                  class="three bg-bar-color"
+                ></div>
+                <div
+                  [ngClass]="{ 'active-progress-bar': review.experience === 5 }"
+                  class="end bg-bar-color"
+                ></div>
+                <div class="progress-bar" style="width: 100%"></div>
+              </div>
+              <div class="d-flex justify-content-between">
+                <p
+                  class="font-wight-400 font-size-14 color-2c3e50"
+                  style="margin-top: 7px"
+                >
+                  Bad
+                </p>
+                <p
+                  class="font-wight-400 font-size-14 color-2c3e50"
+                  style="margin-top: 7px"
+                >
+                  Great
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Product Description -->
+          <div class="row">
+            <div class="col-12">
+              <p class="font-wight-700 font-size-16 color-2c3e50">
+                Remarkable Product
+              </p>
+              <p class="font-wight-400 font-size-14 color-2c3e50">
+                {{ review.remarks }}
+              </p>
+            </div>
           </div>
         </div>
       </div>
     </div>
 
-    <div class="col-lg-9 col-md-12 col-sm-12 d-flex flex-wrap">
-      <div class="container mt-4">
-        <div class="row text-center">
-          <!-- Cosmetic Condition -->
-          <div class="col-md-4" style="padding: 0 5px 0 5px">
-            <p
-              style="
-                font-size: 14px;
-                font-weight: 600;
-                color: #2c3e50;
-                text-align: left;
-              "
-            >
-              Cosmetic Condition
-            </p>
-            <div class="progress">
-              <div
-                [ngClass]="{
-                  'active-progress-bar': review.cosmetic_condition === 1
-                }"
-                class="start bg-bar-color"
-              ></div>
-              <div
-                [ngClass]="{
-                  'active-progress-bar': review.cosmetic_condition === 2
-                }"
-                class="one bg-bar-color"
-              ></div>
-              <div
-                [ngClass]="{
-                  'active-progress-bar': review.cosmetic_condition === 3
-                }"
-                class="two bg-bar-color"
-              ></div>
-              <div
-                [ngClass]="{
-                  'active-progress-bar': review.cosmetic_condition === 4
-                }"
-                class="three bg-bar-color"
-              ></div>
-              <div
-                [ngClass]="{
-                  'active-progress-bar': review.cosmetic_condition === 5
-                }"
-                class="end bg-bar-color"
-              ></div>
-              <div class="progress-bar" style="width: 100%"></div>
-            </div>
-            <div class="d-flex justify-content-between">
-              <p
-                style="
-                  margin-top: 7px;
-                  font-size: 14px;
-                  font-weight: 400;
-                  color: #2c3e50;
-                "
-              >
-                Poor
-              </p>
-              <p
-                style="
-                  margin-top: 7px;
-                  font-size: 14px;
-                  font-weight: 400;
-                  color: #2c3e50;
-                "
-              >
-                Excellent
-              </p>
-            </div>
-          </div>
-
-          <!-- Satisfaction -->
-          <div class="col-md-4" style="padding: 0 5px 0 5px">
-            <p
-              style="
-                font-size: 14px;
-                font-weight: 600;
-                color: #2c3e50;
-                text-align: left;
-              "
-            >
-              Satisfaction
-            </p>
-            <div class="progress">
-              <div
-                [ngClass]="{ 'active-progress-bar': review.satisfaction === 1 }"
-                class="start bg-bar-color"
-              ></div>
-              <div
-                [ngClass]="{ 'active-progress-bar': review.satisfaction === 2 }"
-                class="one bg-bar-color"
-              ></div>
-              <div
-                [ngClass]="{ 'active-progress-bar': review.satisfaction === 3 }"
-                class="two bg-bar-color"
-              ></div>
-              <div
-                [ngClass]="{ 'active-progress-bar': review.satisfaction === 4 }"
-                class="three bg-bar-color"
-              ></div>
-              <div
-                [ngClass]="{ 'active-progress-bar': review.satisfaction === 5 }"
-                class="end bg-bar-color"
-              ></div>
-              <div class="progress-bar" style="width: 100%"></div>
-            </div>
-            <div class="d-flex justify-content-between">
-              <p
-                style="
-                  margin-top: 7px;
-                  font-size: 14px;
-                  font-weight: 400;
-                  color: #2c3e50;
-                "
-              >
-                Low
-              </p>
-              <p
-                style="
-                  margin-top: 7px;
-                  font-size: 14px;
-                  font-weight: 400;
-                  color: #2c3e50;
-                "
-              >
-                High
-              </p>
-            </div>
-          </div>
-
-          <!-- Experience -->
-          <div class="col-md-4" style="padding: 0 5px 0 5px">
-            <p
-              style="
-                font-size: 14px;
-                font-weight: 600;
-                color: #2c3e50;
-                text-align: left;
-              "
-            >
-              Experience
-            </p>
-            <div class="progress">
-              <div
-                [ngClass]="{ 'active-progress-bar': review.experience === 1 }"
-                class="start bg-bar-color"
-              ></div>
-              <div
-                [ngClass]="{ 'active-progress-bar': review.experience === 2 }"
-                class="one bg-bar-color"
-              ></div>
-              <div
-                [ngClass]="{ 'active-progress-bar': review.experience === 3 }"
-                class="two bg-bar-color"
-              ></div>
-              <div
-                [ngClass]="{ 'active-progress-bar': review.experience === 4 }"
-                class="three bg-bar-color"
-              ></div>
-              <div
-                [ngClass]="{ 'active-progress-bar': review.experience === 5 }"
-                class="end bg-bar-color"
-              ></div>
-              <div class="progress-bar" style="width: 100%"></div>
-            </div>
-            <div class="d-flex justify-content-between">
-              <p
-                style="
-                  margin-top: 7px;
-                  font-size: 14px;
-                  font-weight: 400;
-                  color: #2c3e50;
-                "
-              >
-                Bad
-              </p>
-              <p
-                style="
-                  margin-top: 7px;
-                  font-size: 14px;
-                  font-weight: 400;
-                  color: #2c3e50;
-                "
-              >
-                Great
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <!-- Product Description -->
-        <div class="row">
-          <div class="col-12">
-            <p style="font-size: 16px; font-weight: 700; color: #2c3e50">
-              Remarkable Product
-            </p>
-            <p style="font-size: 14px; font-weight: 400; color: #2c3e50">
-              {{ review.remarks }}
-            </p>
-          </div>
-        </div>
-      </div>
+    <div
+      class="text-center mb-4"
+      *ngIf="reviewsListIndex < dealerDetails.length"
+    >
+      <button class="view_btn" (click)="loadMoreReviews()">View More</button>
     </div>
   </div>
-
-  <div class="text-center mb-4" *ngIf="reviewsListIndex < dealerDetails.length">
-    <button class="view_btn" (click)="loadMoreReviews()">View More</button>
-  </div>
-</div>
 </div>
 
-<div *ngIf="similarWatchesList.length>0" class="container mt-3">
-  <p
-    style="
-      text-align: center;
-      font-size: 40px;
-      font-weight: 500;
-      color: #484848;
-    "
-  >
+<div *ngIf="similarWatchesList.length > 0" class="container mt-3">
+  <p class="font-wight-500 font-size-40 color-484848 text-center">
     Similar Products
   </p>
   <div class="row">
     <div
       class="col-md-4 col-sm-6 mb-4"
-      *ngFor="
-        let watch of similarWatchesList;
-        let i = index
-      "
+      *ngFor="let watch of similarWatchesList; let i = index"
     >
       <div class="card custom-card h-100 shadow-sm">
         <img
@@ -1241,7 +1090,7 @@
         />
         <div class="card-body">
           <div class="d-flex justify-content-between align-items-center">
-            <div *ngIf="watch?.brand?.name" class="watch-brand" style="color: #6a6a6a">
+            <div *ngIf="watch?.brand?.name" class="watch-brand color-6a6a6a">
               {{ watch?.brand?.name }}
             </div>
             <div>
@@ -1249,26 +1098,24 @@
             </div>
           </div>
           <div class="d-flex justify-content-between align-items-center mb-2">
-            <h5 style="color: #6a6a6a;margin: 0 !important;" class="card-title d-flex flex-wrap">
+            <h5 class="card-title d-flex flex-wrap color-6a6a6a margin-0">
               {{ watch.name }} {{ watch.condition }}
             </h5>
           </div>
           <div class="d-flex justify-content-between align-items-center mt-3">
-            <span style="color: #6a6a6a" class="price"
+            <span class="price color-6a6a6a"
               >+{{ watch.shipping_charges }} {{ watch.currency }} Shipping</span
             >
-            <div style="color: #6a6a6a" class="price">Location</div>
+            <div class="price color-6a6a6a">Location</div>
           </div>
           <div class="d-flex justify-content-between align-items-center">
-            <span style="color: #6a6a6a" class="card-title">{{
-              watch.price
-            }}</span>
-            <div *ngIf="watch.city" style="color: #6a6a6a" class="card-title">
-             {{ watch.city }}
+            <span class="card-title color-6a6a6a">{{ watch.price }}</span>
+            <div *ngIf="watch.city" class="card-title color-6a6a6a">
+              {{ watch.city }}
             </div>
-            <div *ngIf="watch.created_by.city" style="color: #6a6a6a" class="card-title">
+            <div *ngIf="watch.created_by.city" class="card-title color-6a6a6a">
               {{ watch.created_by.city }}
-             </div>
+            </div>
           </div>
         </div>
       </div>
@@ -1282,10 +1129,7 @@
     </div>
   </div>
 
-  <div
-    class="text-center mb-4"
-    *ngIf="totalPages !== currentPage"
-  >
+  <div class="text-center mb-4" *ngIf="totalPages !== currentPage">
     <button class="view_btn" (click)="loadMoreWatches()">
       {{ "chrono_buyer.view_more" | translate }}
     </button>
