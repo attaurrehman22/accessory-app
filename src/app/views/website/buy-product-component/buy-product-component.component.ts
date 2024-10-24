@@ -10,6 +10,8 @@ import { Router } from "@angular/router";
 import { AlertsServicesService } from "src/services/alerts-service/alerts-services.service";
 import { HttpService } from "src/services/http/http.service";
 import { ModelLoginComponent } from "../../auth/model-login/model-login.component";
+import { TranslateService } from "@ngx-translate/core";
+import { LanguageService } from "src/services/lang-service/language.service";
 
 @Component({
   selector: "app-buy-product-component",
@@ -21,7 +23,7 @@ export class BuyProductComponentComponent implements OnInit {
   satisfaction: number;
   experience: number = 4;
   productMainImage: any;
-
+  currentLanguage: string;
   @ViewChild("targetContainer") targetContainer!: ElementRef;
 
   scrollToTarget(): void {
@@ -79,8 +81,11 @@ export class BuyProductComponentComponent implements OnInit {
     private http: HttpService,
     private alertService: AlertsServicesService,
     private router: Router,
-    private dialog: MatDialog
-  ) {}
+    private dialog: MatDialog,
+    public translateService: TranslateService,
+    private languageService:LanguageService
+  ) {
+  }
 
   swapImages(clickedImage: string): void {
     this.selectedImage = clickedImage;
@@ -96,15 +101,9 @@ export class BuyProductComponentComponent implements OnInit {
     this.fetchProductDetails()
       .then(() => {
         this.productMainImage = this.productDetails.main_image;
-
-        // Log the product main image
-
-        // Set and clean up the thumbnails
         this.thumbnails = this.productDetails.additional_images.map((image) =>
           image.replace(/\\/g, "")
         );
-
-        // Set the default selected image
         if (this.thumbnails.length > 0) {
           this.selectedImage = this.thumbnails[0];
         }

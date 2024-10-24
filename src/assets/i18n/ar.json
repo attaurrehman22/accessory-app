@@ -11,7 +11,6 @@
     "security": "الأمان",
     "Login": "تسجيل الدخول",
     "Logout": "تسجيل الخروج"
-
   },
   "register": {
     "welcome": "مرحبًا بك في كرونوسوق",
@@ -127,7 +126,7 @@
     "gender": "الجنس",
     "any_questions": "هل لديك أي أسئلة؟",
     "contact_us": "اتصل بنا",
-    "more_questions": "المزيد من الأسئلة والأجوبة"  
+    "more_questions": "المزيد من الأسئلة والأجوبة"
   },
   "find_dream": {
     "heading_tag": "السعودية لبيع وشراء الساعات الفاخرة",
@@ -136,7 +135,7 @@
     "become_seller": "أصبح بائعًا"
   },
   "popular_brands": {
-   "label": "ساعات مميزة",
+    "label": "ساعات مميزة",
     "paragraph": "مجموعة مختارة بعناية من الساعات النادرة أو الحصرية، التي توفر قيمة استثنائية وفرصة فريدة لهواة الجمع لامتلاك شيء مميز حقًا.",
     "view_listing": "عرض القائمة",
     "hurry_up": "أسرع، قبل فوات الأوان!"
@@ -177,7 +176,7 @@
   },
 
   "how_works": {
-   "label": "لماذا Chronosouq",
+    "label": "لماذا Chronosouq",
     "authenticity": "التحقق من الأصالة",
     "authenticity_para": "سيتم قريبًا التحقق من كل ساعة من قبل فريق الخبراء لدينا لضمان أنها أصلية بنسبة 100%، مما يمنح المشترين راحة البال الكاملة.",
     "authenticity_btn": "قريبًا",
@@ -187,7 +186,7 @@
     "insured": "توصيل مؤمن ومتابع",
     "insured_para": "سيتم تأمين جميع الشحنات ومتابعتها بالكامل، مما يضمن وصول ساعتك الفاخرة بأمان، بغض مكان تواجدك في الشرق الأوسط.",
     "insured_btn": "قريبًا"
-   },
+  },
   "stay_loop": {
     "label": "البقاء في الحلقة",
     "paragraph": "اشترك للحصول على آخر الأخبار والتحديثات حول ChronoSouq. نحن نعد بعدم إرسال رسائل غير مرغوب فيها إليك!",
@@ -216,6 +215,31 @@
     "contact": "اتصل بنا",
     "accessibility": "إمكانية الوصول",
     "payment_methods": "طرق الدفع"
+  },
+  "product_details": {
+    "product_des": "وصف المنتج",
+    "warrenty_det": "تفاصيل الضمان",
+    "watch_spec": "مواصفات الساعة",
+    "listing_code": "رمز الإدراج",
+    "bracelet_material": "مادة السوار",
+    "model": "الطراز",
+    "brand": "العلامة التجارية",
+    "reference_number": "رقم المرجع",
+    "movement": "الحركة",
+    "case_material": "مادة الهيكل",
+    "year_of_production": "سنة الإنتاج",
+    "condition": "الحالة",
+    "scope_of_delivery": "نطاق التسليم",
+    "gender": "الجنس",
+    "location": "الموقع",
+    "price": "السعر",
+    "availability": "التوافر",
+    "description": "الوصف",
+    "bazel_material": "مادة الإطار",
+    "dial": "الميناء",
+    "dealer_rev": "مراجعات البائع",
+     "view_more": "عرض المزيد",
+    "similar_prod": "منتجات مشابهة"
   },
   "offer_details": {
     "offer_required_field": "عرض (* حقل مطلوب)",

@@ -749,5 +749,26 @@ mat-grid-list {
   border: 3px solid #00CAAA;
   background: #FFFFFF !important;
   box-shadow: 0px 0px 0px 2px #00CAAA;
+}
 
+
+.reverse-order {
+  flex-direction: row-reverse;
+}
+
+.reverse-order-tr {
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+.reverse-order-tr .tbl-head {
+  text-align: end;
+}
+
+.reverse-order-tr .tbl-td {
+  text-align: end;
+}
+
+.text-align-end{
+ text-align: end;
 }

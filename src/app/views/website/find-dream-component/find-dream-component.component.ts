@@ -48,11 +48,7 @@ export class FindDreamComponentComponent implements OnInit {
     private languageService:LanguageService
   ) {
     this.translateService.addLangs(this.supportLanguages);
-
-    // Get the saved language from LanguageService
     const savedLang = this.languageService.getCurrentLanguage();
-
-    // Use the saved language or fallback to browser language
     if (this.supportLanguages.includes(savedLang)) {
       this.translateService.use(savedLang);
     } else {
@@ -61,7 +57,7 @@ export class FindDreamComponentComponent implements OnInit {
 
       if (this.supportLanguages.includes(browserLang)) {
         this.translateService.use(browserLang);
-        this.languageService.setLanguage(browserLang); // Save browser language if valid
+        this.languageService.setLanguage(browserLang);
       }
     }
 
