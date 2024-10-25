@@ -31,9 +31,9 @@ const routes: Routes = [
   { path: 'admin/products', component:  AdminProductsComponent},
   { path: 'admin/product/add', component:  AdminAddProductComponent},
   { path: 'admin/brands', component:  AdminBrandsComponent},
-  { path: 'admin/brands-product', component:  AdminBrandsProductComponent},
+  { path: 'admin/brands/product', component:  AdminBrandsProductComponent},
   { path: 'admin/category', component:  AdminCategoryComponent},
-  { path: 'admin/category-product', component:  AdminCategoryProductComponent},
+  { path: 'admin/category/product', component:  AdminCategoryProductComponent},
   { path: 'buy-now', component:  BuyNowComponent},
 ];
 
