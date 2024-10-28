@@ -12,7 +12,8 @@ import { HomeComponent } from './views/website/home/home.component';
 import { HeaderComponent } from './views/website/header/header.component';
 import {MatButtonModule} from '@angular/material/button';
 import {MatTooltipModule} from '@angular/material/tooltip'
-import { FindDreamComponentComponent } from "./views/website/find-dream-component/find-dream-component.component";
+// import { FindDreamComponentComponent } from "./views/website/find-dream-component/find-dream-component.component";
+import { eamFindDreamComponentComponent } from './views/website/find-dream-component/find-dream-component.component';
 import { PopularBrandsComponentComponent } from "./views/website/popular-brands-component/popular-brands-component.component";
 import { ChronosouqBuyerProtectionComponentComponent } from "./views/website/chronosouq-buyer-protection-component/chronosouq-buyer-protection-component.component";
 import { MostPopularModelsComponentComponent } from "./views/website/most-popular-models-component/most-popular-models-component.component";
@@ -77,7 +78,7 @@ import { AdminPageHeaderComponent } from "./views/adminpages/admin-page-header/a
     AppComponent,
     HomeComponent,
     HeaderComponent,
-    FindDreamComponentComponent,
+    eamFindDreamComponentComponent,
     FooterComponentComponent,
     StayLoopComponentComponent,
     PeopleSyaingComponentComponent,

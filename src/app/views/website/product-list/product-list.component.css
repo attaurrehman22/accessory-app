@@ -126,7 +126,7 @@
 }
 
 .reverse-order .card-text{
- justify-content: start !important;
+ justify-content: flex-start !important;
 }
 
 .reverse-order-for-product-det{

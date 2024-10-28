@@ -101,11 +101,11 @@
 }
 
 .reverse-order .d-flex {
-  justify-content: end;
+  justify-content: flex-end;
 }
 
 .reverse-order .form-control {
-  justify-content: end;
+  justify-content: flex-end;
 }
 
 .reverse-order h2 {

@@ -8,14 +8,16 @@ import { LanguageService } from "src/services/lang-service/language.service";
   templateUrl: "./find-dream-component.component.html",
   styleUrls: ["./find-dream-component.component.css"],
 })
-export class FindDreamComponentComponent implements OnInit {
+export class eamFindDreamComponentComponent implements OnInit {
   supportLanguages = ["en", "ar", "fr", "ta", "hi"];
   currentLanguage: string;
   staticList: any;
-
+  isUserLogin: any=false;
   homeData: any = { slider: [] }
 
   ngOnInit(): void {
+    this.isUserLogin=localStorage.getItem('isLoggedIn')
+    console.log("isUserLogin",this.isUserLogin)
     this.getStatics();
     this.getSlideData();
   }

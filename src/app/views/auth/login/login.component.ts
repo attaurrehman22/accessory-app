@@ -44,7 +44,7 @@ export class LoginComponent implements OnInit {
     private fb: FormBuilder,
     private http: HttpService,
     public translateService: TranslateService,
-    private loginStateService:LoginStateService
+    private loginStateService: LoginStateService
   ) {
     this.translateService.addLangs(this.supportLanguages);
     this.translateService.setDefaultLang("ar");
@@ -64,13 +64,13 @@ export class LoginComponent implements OnInit {
       email: this.email,
       password: this.password,
     });
-    if(!!localStorage.getItem('user_token')){
+    if (!!localStorage.getItem("user_token")) {
       this.router.navigateByUrl("");
     }
 
     const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
     const isAdmin = localStorage.getItem("isAdmin") === "true";
-  
+
     this.loginStateService.updateLoginStatus(isLoggedIn);
     if (isAdmin) {
       this.loginStateService.updateAdminStatus(isAdmin);
@@ -82,23 +82,29 @@ export class LoginComponent implements OnInit {
       this.http.login(this.loginForm.value).subscribe(
         (response) => {
           if (response.errorMessage || response.status === "failure") {
-            this.alertService.showAlert("danger", "Enter valid username/email and password");
+            this.alertService.showAlert(
+              "danger",
+              "Enter valid username/email and password"
+            );
           } else {
             localStorage.setItem("user_token", response.authorization.token);
-            localStorage.setItem("isLoggedIn", "true"); 
-            
-            const isAdmin = response.user.type === 'admin';
+            localStorage.setItem("isLoggedIn", "true");
+
+            const isAdmin = response.user.type === "admin";
             if (isAdmin) {
               localStorage.setItem("isAdmin", "true");
             }
-  
+
             this.router.navigateByUrl("").then(() => {
               window.location.reload();
             });
           }
         },
         (error) => {
-          this.alertService.showAlert("danger", "Enter Valid Email and Password");
+          this.alertService.showAlert(
+            "danger",
+            "Enter Valid Email and Password"
+          );
           console.error("Login error", error);
         }
       );
@@ -106,7 +112,7 @@ export class LoginComponent implements OnInit {
       this.alertService.showAlert("info", "Enter UserName/Email and Password");
     }
   }
-  
+
   gotoRegister() {
     this.router.navigateByUrl("register");
   }

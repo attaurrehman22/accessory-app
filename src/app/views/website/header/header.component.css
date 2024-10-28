@@ -27,7 +27,7 @@
   height: 100%;
   display: flex;
   align-items: center;
-  justify-content: start;
+  justify-content: flex-start;
 }
 
 .logo-img {
@@ -48,7 +48,7 @@
   height: 100%;
   display: flex;
   align-items: center;
-  justify-content: end;
+  justify-content: flex-end;
 }
 
 .custom-btn {
@@ -94,7 +94,7 @@
 @media (max-width: 768px) {
   .header-contact {
     display: flex;
-    justify-content: end;
+    justify-content: flex-end;
     width: 80%;
   }
 }
@@ -106,7 +106,7 @@
 
 .lag-logo-stl {
   display: flex;
-  justify-content: end;
+  justify-content: flex-end;
 }
 
 .rtl-layout .header-div {
@@ -115,7 +115,7 @@
 }
 
 .rtl-layout .header-content {
-  justify-content: end;
+  justify-content: flex-end;
 }
 
 .rtl-layout .header-contact {
@@ -166,5 +166,13 @@
    z-index: 999;
    top: 0;
    background-color: white;
+}
 
+.header-div.no-background {
+  background: none !important;
+}
+
+
+.mat-drawer-backdrop.mat-drawer-shown {
+  background: none !important;
 }

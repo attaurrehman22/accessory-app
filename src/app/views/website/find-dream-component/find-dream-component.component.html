@@ -5,17 +5,21 @@
   >
     <div class="col-lg-6 col-md-6 col-sm-12 conten-div">
       <div class="header-styl">
-      <p class="heading-tag">
-        {{ "find_dream.heading_tag" | translate }}
-      </p>
-    </div>
+        <p class="heading-tag">
+          {{ "find_dream.heading_tag" | translate }}
+        </p>
+      </div>
       <p class="para">{{ "find_dream.grow_business" | translate }}</p>
       <div class="d-flex pb-3 mb-sm-3">
         <button class="custom-btn btn btn-dark">
           {{ "find_dream.explore_now" | translate }}
         </button>
-        <button class="custom-btn btn mx-2">
+        <button *ngIf="isUserLogin === 'false'" class="custom-btn btn mx-2">
           {{ "find_dream.become_seller" | translate }}
+        </button>
+
+        <button *ngIf="isUserLogin === 'true'" class="custom-btn btn mx-2">
+          {{ "find_dream.sell_now" | translate }}
         </button>
       </div>
     </div>
@@ -33,8 +37,8 @@
               [ngClass]="{ active: i === 0 }"
             >
               <img
-              class="img-fluid"
-              style="object-fit: scale-down !important;"
+                class="img-fluid"
+                style="object-fit: scale-down !important"
                 [src]="'https://api.chronosouq.com/' + img.image"
                 alt="{{ 'find_dream.img_alt' | translate }}"
               />

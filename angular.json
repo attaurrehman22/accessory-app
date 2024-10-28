@@ -50,6 +50,13 @@
               "node_modules/admin-lte/plugins/jquery-mapael/jquery.mapael.min.js",
               "node_modules/admin-lte/plugins/jquery-mapael/maps/usa_states.min.js",
               "node_modules/admin-lte/plugins/chart.js/Chart.min.js"
+            ],
+            "allowedCommonJsDependencies": [
+              "highcharts",
+              "highcharts/highmaps",
+              "highcharts/highstock",
+              "highcharts/highcharts-gantt",
+              "ev-emitter/ev-emitter"
             ]
           },
           "configurations": {

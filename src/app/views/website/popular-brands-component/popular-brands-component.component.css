@@ -196,7 +196,7 @@
 }
 
 .reverse-order-labels .d-flex {
-  justify-content: end;
+  justify-content: flex-end;
 }
 
 .reverse-order-time h5 {
@@ -204,7 +204,7 @@
 }
 
 .reverse-order-time .d-flex {
-  justify-content: end;
+  justify-content: flex-end;
 }
 
 

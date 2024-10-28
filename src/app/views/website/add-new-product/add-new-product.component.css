@@ -241,7 +241,7 @@ h2 .optional {
 }
 
 .reverse-order-condition .condition-togglec{
-  justify-content: end;
+  justify-content: flex-end;
   flex-direction: row-reverse;
 }
 

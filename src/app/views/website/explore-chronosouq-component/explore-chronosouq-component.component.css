@@ -92,7 +92,7 @@
 
 .reverse-order-labels .d-flex {
   flex-direction: row-reverse;
-  justify-content: end;
+  justify-content: flex-end;
 }
 
 .reverse-order-labels .d-flex .bg-active-color .text-start .mb-1 {

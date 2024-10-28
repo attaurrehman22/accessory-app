@@ -1,6 +1,8 @@
 <div class="global-main-wraper headerclass">
   <mat-sidenav-container class="sidenav-container" [ngClass]="{ 'rtl-layout': isRtl }">
-    <mat-sidenav #drawer class="sidenav" #sidenav mode="over" [position]="isRtl && isSmallScreen ? 'start' : 'end'"
+    <mat-sidenav #drawer
+    [ngClass]="{ 'no-background': isSmallScreen && drawer.opened }"
+    class="sidenav" #sidenav mode="over" [position]="isRtl && isSmallScreen ? 'start' : 'end'"
       [style]="{ top: '0', right: '0', position: 'fixed', height: 'auto' }">
       <button class="drawer-btn" (click)="routeToBuyProduct()">
         {{ "header.buy_watch" | translate }}
@@ -13,10 +15,10 @@
       </button>
       <button class="drawer-btn position-relative">
         {{ "header.new_arrivals" | translate }}
-        <span class="toggle-notification-dot" *ngIf="isUserLogin === 'LogIn'"></span>
+        <span class="toggle-notification-dot" *ngIf="isUserLogin === 'true'"></span>
       </button>
 
-      <button style="background: none; border: none; font-size: 16px" *ngIf="!isUserLogin" (click)="goToRegister()">
+      <button style="background: none; border: none; font-size: 16px" *ngIf="isUserLogin === 'false'" (click)="goToRegister()">
         {{ "header.Login" | translate }}
       </button>
       <button style="background: none; border: none; font-size: 16px" *ngIf="showHideUser === true" (click)="logout()">
@@ -31,7 +33,7 @@
       <div class="header-content gap-4" *ngIf="!isSmallScreen && !isSearchForm">
         <button class="custom-btn position-relative">
           {{ "header.new_arrivals" | translate }}
-          <span class="notification-dot" *ngIf="isUserLogin === 'LogIn'"></span>
+          <span class="notification-dot" *ngIf="isUserLogin === 'true'"></span>
         </button>
         <button class="custom-btn" (click)="routeToBuyProduct()">
           {{ "header.buy_watch" | translate }}
@@ -43,27 +45,6 @@
           {{ "header.admin_pannel" | translate }}
         </button>
       </div>
-
-      <!-- <div
-        class="header-content gap-4"
-        *ngIf="isSearchForm"
-        [ngClass]="{ 'position-absolute': isSmallScreen }"
-      >
-        <form
-          class="d-flex flex-grow-1 ms-3"
-          (ngSubmit)="onSearch(searchQuery)"
-        >
-          <input
-            [(ngModel)]="searchQuery"
-            (ngModelChange)="onSearchChange()"
-            class="form-control me-2"
-            type="search"
-            placeholder="Search through 597,161 watches worldwide"
-            aria-label="Search"
-          />
-        </form>
-      </div> -->
-
       <div class="header-content gap-4" *ngIf="isSearchForm" [ngClass]="{
           'position-absolute search-box-small-screen': isSmallScreen
         }">
@@ -76,10 +57,10 @@
       <div class="header-contact gap-4">
         <img src="./assets/images/search-icon.png" (click)="openSearchForm()" style="cursor: pointer" />
         <mat-menu #profileMenu="matMenu">
-          <button mat-menu-item *ngIf="showHideUser === false" (click)="goToRegister()">
+          <button mat-menu-item *ngIf="isUserLogin === 'false'"(click)="goToRegister()">
             {{ "header.Login" | translate }}
           </button>
-          <button mat-menu-item *ngIf="showHideUser === true" (click)="logout()">
+          <button mat-menu-item *ngIf="isUserLogin === 'true'" (click)="logout()">
             {{ "header.Logout" | translate }}
           </button>
         </mat-menu>

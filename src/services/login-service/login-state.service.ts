@@ -8,13 +8,11 @@ export class LoginStateService {
   isAdminUser = signal<boolean>(this.getStoredAdminStatus());
   isUserLoggedIn = signal<boolean>(this.getStoredLoginStatus());
 
-
   updateAdminStatus(isAdmin: boolean) {
     this.isAdminUser.set(isAdmin);
     localStorage.setItem("isAdmin", JSON.stringify(isAdmin)); 
   }
 
- 
   updateLoginStatus(isLoggedIn: boolean) {
     this.isUserLoggedIn.set(isLoggedIn);
     localStorage.setItem("isLoggedIn", JSON.stringify(isLoggedIn)); 
