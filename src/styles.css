@@ -161,3 +161,10 @@ body {
 }
 
 /* ------------ Colors End ------------------- */
+.mat-drawer-backdrop.mat-drawer-shown {
+  background: none !important;
+}
+
+mat-drawer-backdrop.mat-drawer-show{
+  background: none !important;
+}
