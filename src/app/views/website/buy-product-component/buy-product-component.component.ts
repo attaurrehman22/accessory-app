@@ -1,9 +1,4 @@
-import {
-  Component,
-  OnInit,
-  ViewChild,
-  ElementRef,
-} from "@angular/core";
+import { Component, OnInit, ViewChild, ElementRef } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 import { Router } from "@angular/router";
 import { AlertsServicesService } from "src/services/alerts-service/alerts-services.service";
@@ -82,9 +77,8 @@ export class BuyProductComponentComponent implements OnInit {
     private router: Router,
     private dialog: MatDialog,
     public translateService: TranslateService,
-    private languageService:LanguageService
-  ) {
-  }
+    private languageService: LanguageService
+  ) {}
 
   swapImages(clickedImage: string): void {
     this.selectedImage = clickedImage;
