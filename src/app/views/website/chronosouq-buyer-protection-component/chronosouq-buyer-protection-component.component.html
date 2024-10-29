@@ -49,7 +49,7 @@
                       margin: 0 !important;
                     "
                   >
-                    {{ watch.brand.name }}
+                    {{ watch.brand.name }} | {{watch.model || 'N/A'}}
                   </p>
                 </div>
                 <div>
@@ -60,7 +60,7 @@
                 class="d-flex justify-content-between align-items-center mt-2"
               >
                 <p class="card-title d-flex flex-wrap">
-                  {{ watch.name }}
+                  {{ watch.title }}
                 </p>
               </div>
               <div
@@ -77,9 +77,15 @@
                 <p class="card-title-two">{{ watch.price }}</p>
                 <p class="card-title-two">{{ watch.created_by.city }}</p>
               </div>
+              <div class="d-flex mt-2 seller-chip">
+                Private Seller
+              </div>
             </div>
           </div>
           <div class="heart-icon" (click)="toggleHeart(watch)">
+            <div class="featured-icon">
+              featured
+            </div>
             <i
               class="fa"
               [ngClass]="watch.liked ? 'fa-heart' : 'fa-heart fa-heart-o'"
