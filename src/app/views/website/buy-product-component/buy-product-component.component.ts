@@ -75,12 +75,11 @@ export class BuyProductComponentComponent implements OnInit {
   productDetails: any;
   dealerDetails: any;
   dealerUserDetails: any;
-  ProductID;
-  any;
+  ProductID:any;
   ngOnInit(): void {
+    window.scrollTo(0, 0);
     this.ProductID = history.state.data.id;
     this.initializeComponent();
-   
   }
 
   async initializeComponent() {
