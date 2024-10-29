@@ -11,11 +11,8 @@ import { HttpService } from "src/services/http/http.service";
 export class PopularBrandsComponentComponent implements OnInit {
   products: any[] = [];
   responsiveOptions: any[] = [];
-
   targetDate: Date;
-
   firstVisibleIndex: number;
-
   days: string = "00";
   hours: string = "00";
   minutes: string = "00";
@@ -34,6 +31,25 @@ export class PopularBrandsComponentComponent implements OnInit {
     if (supportedLanguages.includes(browserLang)) {
       this.translateService.use(browserLang);
     }
+
+
+    this.responsiveOptions = [
+      {
+        breakpoint: '1024px', // large screens
+        numVisible: 3,
+        numScroll: 3
+      },
+      {
+        breakpoint: '768px', // medium screens
+        numVisible: 2,
+        numScroll: 2
+      },
+      {
+        breakpoint: '560px', // small screens
+        numVisible: 1,
+        numScroll: 1
+      }
+    ];
   }
 
   ngOnInit(): void {
@@ -128,7 +144,6 @@ export class PopularBrandsComponentComponent implements OnInit {
       }
     }
   }
-
 
   pad(value: number) {
     return value < 10 ? "0" + value : value.toString();

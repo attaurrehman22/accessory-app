@@ -183,27 +183,6 @@ export class BuyProductComponentComponent implements OnInit {
   dealerReviewsRatings: any;
   dealerReviewstotalRatings: any;
 
-  // fetchProductDetails() {
-  //   return this.http
-  //     .getProductsByID(this.ProductID)
-  //     .toPromise()
-  //     .then((res) => {
-  //       this.isDealer = res.typeOfProduct;
-  //       this.productDetails = res.data;
-
-  //       if (this.productDetails.additional_images) {
-  //         this.productDetails.additional_images = JSON.parse(
-  //           this.productDetails.additional_images
-  //         );
-  //       }
-
-  //       if (this.productDetails.main_image) {
-  //         this.productDetails.main_image =
-  //           this.productDetails.main_image.replace(/\\/g, "");
-  //       }
-  //     });
-  // }
-
   toggleHeart(image): void {
     // this.watches[index].liked = !this.watches[index].liked;
   }

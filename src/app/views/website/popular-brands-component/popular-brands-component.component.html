@@ -69,8 +69,8 @@
         <p-carousel
           [autoplayInterval]="4000"
           [value]="products"
-          [numVisible]="3"
-          [numScroll]="1"
+          [numVisible]="responsiveOptions[0].numVisible"
+          [numScroll]="responsiveOptions[0].numScroll"
           [responsiveOptions]="responsiveOptions"
           [circular]="true"
           (onPage)="onCarouselMove($event)"

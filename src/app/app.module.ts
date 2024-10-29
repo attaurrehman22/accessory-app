@@ -72,6 +72,7 @@ import { ButtonModule } from 'primeng/button';
 import { TagModule } from 'primeng/tag';
 
 import { AdminPageHeaderComponent } from "./views/adminpages/admin-page-header/admin-page-header.component";
+import { BrandsListComponent } from './views/website/brands-list/brands-list.component';
 
 @NgModule({
   declarations: [
@@ -107,6 +108,7 @@ import { AdminPageHeaderComponent } from "./views/adminpages/admin-page-header/a
     AdminCategoryComponent,
     AdminBrandsProductComponent,
     AdminCategoryProductComponent,
+    BrandsListComponent
   ],
   imports: [
     MatSortModule,
