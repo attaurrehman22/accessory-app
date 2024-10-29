@@ -32,32 +32,20 @@ export class BuyProductComponentComponent implements OnInit {
   currentPage: number = 1;
   totalPages: number = 1;
 
-  loadMoreWatches() {
-    console.log("hello");
-    console.log("totalPages", this.totalPages);
-    console.log("currentPage", this.currentPage);
+  async loadMoreWatches() {
     if (this.currentPage < this.totalPages) {
       this.currentPage++;
-      this.http
-        .getSimilarProductsByIDwithPage(this.ProductID, this.currentPage)
-        .subscribe(
-          (res) => {
-            const newWatches = res.data.data.map((product: any) => {
-              return {
-                ...product,
-                main_image: product.main_image.replace(/\\/g, ""),
-              };
-            });
-            this.similarWatchesList = [
-              ...this.similarWatchesList,
-              ...newWatches,
-            ];
-            this.totalPages = res.data.last_page;
-          },
-          (err) => {
-            console.error(err);
-          }
-        );
+      try {
+        const res = await this.http.getSimilarProductsByIDwithPage(this.ProductID, this.currentPage).toPromise();
+        const newWatches = res.data.data.map((product: any) => ({
+          ...product,
+          main_image: product.main_image.replace(/\\/g, ""),
+        }));
+        this.similarWatchesList = [...this.similarWatchesList, ...newWatches];
+        this.totalPages = res.data.last_page;
+      } catch (err) {
+        console.error("Error loading more watches:", err);
+      }
     }
   }
 
@@ -91,55 +79,82 @@ export class BuyProductComponentComponent implements OnInit {
   any;
   ngOnInit(): void {
     this.ProductID = history.state.data.id;
-    this.fetchProductDetails()
-      .then(() => {
-        this.productMainImage = this.productDetails.main_image;
-        this.thumbnails = this.productDetails.additional_images.map((image) =>
-          image.replace(/\\/g, "")
+    this.initializeComponent();
+   
+  }
+
+  async initializeComponent() {
+    try {
+      await this.fetchProductDetails();
+      this.productMainImage = this.productDetails.main_image;
+      this.thumbnails = this.productDetails.additional_images.map((image) =>
+        image.replace(/\\/g, "")
+      );
+      if (this.thumbnails.length > 0) {
+        this.selectedImage = this.thumbnails[0];
+      }
+
+      if (this.isDealer === "dealer") {
+        if (this.productDetails.created_by.id) {
+          await this.fetchDealerDetails(this.productDetails.created_by.id);
+          await this.fetchDealerUserDetails(this.productDetails.created_by.id);
+        }
+      }
+      await this.getAllSimilarProducts();
+    } catch (err) {
+      console.error("Error initializing component:", err);
+    }
+  }
+
+
+  async fetchProductDetails() {
+    try {
+      const res = await this.http.getProductsByID(this.ProductID).toPromise();
+      this.isDealer = res.typeOfProduct;
+      this.productDetails = res.data;
+
+      if (this.productDetails.additional_images) {
+        this.productDetails.additional_images = JSON.parse(
+          this.productDetails.additional_images
         );
-        if (this.thumbnails.length > 0) {
-          this.selectedImage = this.thumbnails[0];
+      }
+
+      if (this.productDetails.main_image) {
+        this.productDetails.main_image = this.productDetails.main_image.replace(/\\/g, "");
+      }
+    } catch (err) {
+      console.error("Error fetching product details:", err);
+    }
+  }
+
+  async fetchDealerDetails(dealerId: number) {
+    try {
+      const res = await this.http.getDealerReviewsByID(dealerId).toPromise();
+      this.dealerDetails = res.data.map((detail: any) => {
+        if (detail.main_image) {
+          detail.main_image = detail.main_image.replace(/\\/g, "");
         }
-        if (this.isDealer === "dealer") {
-          if (this.productDetails.created_by.id) {
-            this.http
-              .getDealerReviewsByID(this.productDetails.created_by.id)
-              .subscribe(
-                (res) => {
-                  this.dealerDetails = res.data;
+        return detail;
+      });
+    } catch (err) {
+      console.error("Error fetching dealer details:", err);
+    }
+  }
 
-                  this.dealerDetails = this.dealerDetails.map((detail: any) => {
-                    if (detail.main_image) {
-                      detail.main_image = detail.main_image.replace(/\\/g, "");
-                    }
-                    return detail;
-                  });
-                },
-                (err) => {}
-              );
-          }
-
-          if (this.productDetails.created_by.id) {
-            this.http
-              .getRevieweruserByID(this.productDetails.created_by.id)
-              .subscribe(
-                (res) => {
-                  this.dealerUserDetails = res.data;
-                  this.dealerReviewsRatings = res.data.ratings;
-                  this.dealerReviewstotalRatings = Object.values(
-                    this.dealerReviewsRatings
-                  ).reduce((a: number, b: number) => a + b, 0);
-                  this.cosmeticCondition = res.data.cosmetic_condition;
-                  this.satisfaction = res.data.satisfaction;
-                },
-                (err) => {}
-              );
-          }
-        }
-
-        this.getAllSimilarProducts();
-      })
-      .catch((err) => {});
+  async fetchDealerUserDetails(userId: number) {
+    try {
+      const res = await this.http.getRevieweruserByID(userId).toPromise();
+      this.dealerUserDetails = res.data;
+      this.dealerReviewsRatings = res.data.ratings;
+      this.dealerReviewstotalRatings = Object.values(this.dealerReviewsRatings).reduce(
+        (a: number, b: number) => a + b,
+        0
+      );
+      this.cosmeticCondition = res.data.cosmetic_condition;
+      this.satisfaction = res.data.satisfaction;
+    } catch (err) {
+      console.error("Error fetching dealer user details:", err);
+    }
   }
 
   getPercentage(count: number): number {
@@ -150,47 +165,45 @@ export class BuyProductComponentComponent implements OnInit {
 
   similarWatchesList: any;
 
-  getAllSimilarProducts() {
-    this.http.getSimilarProductsByID(this.ProductID).subscribe(
-      (res) => {
-        this.similarWatchesList = res.data.data.map((product: any) => {
-          return {
-            ...product,
-            main_image: product.main_image.replace(/\\/g, ""),
-          };
-        });
-        this.totalPages = res.data.last_page; // Update the total pages
-      },
-      (err) => {
-        console.error(err);
-      }
-    );
+  async getAllSimilarProducts() {
+    try {
+      const res = await this.http.getSimilarProductsByID(this.ProductID).toPromise();
+      this.similarWatchesList = res.data.data.map((product: any) => {
+        return {
+          ...product,
+          main_image: product.main_image.replace(/\\/g, ""),
+        };
+      });
+      this.totalPages = res.data.last_page;
+    } catch (err) {
+      console.error("Error fetching similar products:", err);
+    }
   }
 
   isDealer: any = "";
   dealerReviewsRatings: any;
   dealerReviewstotalRatings: any;
 
-  fetchProductDetails() {
-    return this.http
-      .getProductsByID(this.ProductID)
-      .toPromise()
-      .then((res) => {
-        this.isDealer = res.typeOfProduct;
-        this.productDetails = res.data;
+  // fetchProductDetails() {
+  //   return this.http
+  //     .getProductsByID(this.ProductID)
+  //     .toPromise()
+  //     .then((res) => {
+  //       this.isDealer = res.typeOfProduct;
+  //       this.productDetails = res.data;
 
-        if (this.productDetails.additional_images) {
-          this.productDetails.additional_images = JSON.parse(
-            this.productDetails.additional_images
-          );
-        }
+  //       if (this.productDetails.additional_images) {
+  //         this.productDetails.additional_images = JSON.parse(
+  //           this.productDetails.additional_images
+  //         );
+  //       }
 
-        if (this.productDetails.main_image) {
-          this.productDetails.main_image =
-            this.productDetails.main_image.replace(/\\/g, "");
-        }
-      });
-  }
+  //       if (this.productDetails.main_image) {
+  //         this.productDetails.main_image =
+  //           this.productDetails.main_image.replace(/\\/g, "");
+  //       }
+  //     });
+  // }
 
   toggleHeart(image): void {
     // this.watches[index].liked = !this.watches[index].liked;
