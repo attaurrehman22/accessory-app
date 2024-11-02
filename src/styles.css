@@ -120,6 +120,10 @@ body {
   font-weight: 700;
 }
 
+.font-wight-bold {
+  font-weight: bold;
+}
+
 /* ------------ Font Weight End ------------------- */
 
 /* ------------ Colors Start ------------------- */
@@ -159,6 +163,12 @@ body {
 .color-676986 {
   color: #676986;
 }
+
+.color-909090 {
+  color: #909090;
+}
+
+
 
 /* ------------ Colors End ------------------- */
 .mat-drawer-backdrop.mat-drawer-shown {

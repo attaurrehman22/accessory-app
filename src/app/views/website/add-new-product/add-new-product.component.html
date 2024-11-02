@@ -195,9 +195,197 @@
                 </div>
               </div>
 
-              <div class="d-flex justify-content-end mt-3">
-                <button type="button" class="btn btn-light mr-2">Cancel</button>
-                <button type="submit" class="btn btn-dark">Save</button>
+              <div style="padding: 0 0 0 0">
+                <p><strong>Additional Information </strong>( optional )</p>
+                <p class="font-weight-400 font-size-16 color-909090">
+                  Every watch will soon be verified by our team of experts to
+                  ensure it’s 100% authentic, giving buyers complete peace of
+                  mind.
+                </p>
+              </div>
+              <div style="padding: 0 0 15px 0">
+                <mat-accordion>
+                  <mat-expansion-panel
+                    [(expanded)]="panelDialOpenState"
+                    class="panel"
+                  >
+                    <mat-expansion-panel-header>
+                      <mat-panel-title> Dial Info </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <div class="accordion-body">
+                      <div class="row">
+                        <div class="col-md-6 mb-3">
+                          <label for="dialColor" class="form-label"
+                            >Dial Color</label
+                          >
+                          <select class="form-select" id="dialColor">
+                            <option>Please select</option>
+                          </select>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                          <label for="dialMaterial" class="form-label"
+                            >Dial Material</label
+                          >
+                          <input
+                            type="text"
+                            class="form-control"
+                            id="dialMaterial"
+                            placeholder="Enter dial material"
+                          />
+                        </div>
+                      </div>
+
+                      <!-- Additional fields for Dial Info -->
+                      <div class="row">
+                        <div class="col-md-6 mb-3">
+                          <label for="dialMarkers" class="form-label"
+                            >Dial Markers</label
+                          >
+                          <select class="form-select" id="dialMarkers">
+                            <option>Please select</option>
+                          </select>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                          <label for="dialHands" class="form-label"
+                            >Dial Hands</label
+                          >
+                          <input
+                            type="text"
+                            class="form-control"
+                            id="dialHands"
+                            placeholder="Enter dial hands style"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </mat-expansion-panel>
+                </mat-accordion>
+              </div>
+              <div style="padding: 0 0 15px 0">
+                <mat-accordion>
+                  <mat-expansion-panel
+                    [(expanded)]="panelOpenState"
+                    class="panel"
+                  >
+                    <mat-expansion-panel-header>
+                      <mat-panel-title> Case Info </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <div class="accordion-body">
+                      <div class="row">
+                        <div class="col-md-6 mb-3">
+                          <label for="caseMaterial" class="form-label"
+                            >Case Material</label
+                          >
+                          <select class="form-select" id="caseMaterial">
+                            <option>Please select</option>
+                          </select>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                          <label for="bezelMaterial" class="form-label"
+                            >Bezel Material</label
+                          >
+                          <input
+                            type="text"
+                            class="form-control"
+                            id="bezelMaterial"
+                            placeholder="Enter model name"
+                          />
+                        </div>
+                      </div>
+
+                      <!-- Additional fields for Case Info -->
+                      <div class="row">
+                        <div class="col-md-6 mb-3">
+                          <label for="thickness" class="form-label"
+                            >Thickness</label
+                          >
+                          <div class="input-group">
+                            <input
+                              type="text"
+                              class="form-control"
+                              id="thickness"
+                              placeholder="Enter thickness"
+                            />
+                            <span class="input-group-text">mm</span>
+                          </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                          <label for="crystal" class="form-label"
+                            >Crystal</label
+                          >
+                          <select class="form-select" id="crystal">
+                            <option>Please select</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                  </mat-expansion-panel>
+                </mat-accordion>
+              </div>
+              <div style="padding: 0 0 15px 0">
+                <mat-accordion>
+                  <mat-expansion-panel
+                    [(expanded)]="panelStrapOpenState"
+                    class="panel"
+                  >
+                    <mat-expansion-panel-header>
+                      <mat-panel-title> Straps / Bracelet </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <div class="accordion-body">
+                      <div class="row">
+                        <div class="col-md-6 mb-3">
+                          <label for="braceletMaterial" class="form-label"
+                            >Bracelet Material</label
+                          >
+                          <select class="form-select" id="braceletMaterial">
+                            <option>Please select</option>
+                          </select>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                          <label for="braceletColor" class="form-label"
+                            >Bracelet Color</label
+                          >
+                          <input
+                            type="text"
+                            class="form-control"
+                            id="braceletColor"
+                            placeholder="Enter your model name"
+                          />
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="col-md-6 mb-3">
+                          <label for="claspType" class="form-label"
+                            >Type of Clasp</label
+                          >
+                          <div class="input-group">
+                            <select class="form-select" id="claspType">
+                              <option>Please select</option>
+                            </select>
+                            <span class="input-group-text">mm</span>
+                          </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                          <label for="claspMaterial" class="form-label"
+                            >Clasp Material</label
+                          >
+                          <select class="form-select" id="claspMaterial">
+                            <option>Please select</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                  </mat-expansion-panel>
+                </mat-accordion>
+              </div>
+
+              <div
+                class="d-flex align-items-center justify-content-end gap-2 mb-3"
+                style="padding: 0 20px 0 20px"
+              >
+                <button class="save-can-btn canc-bg-color">Back</button>
+                <button class="save-can-btn save-btn-bg">Save</button>
               </div>
             </form>
           </div>
@@ -307,9 +495,9 @@
 
     <div class="col-md-9" *ngIf="!isSmallScreen">
       <div class="card">
-        <div class="card-body" *ngIf="selectedSection === 'listingDetails'">
-          <h5 class="card-title">Listing Details</h5>
-          <p class="card-text">
+        <div class="card-body" style="padding: 0 !important;" *ngIf="selectedSection === 'listingDetails'">
+          <p class="font-weight-bold font-size-24 color-242424 margin-0">Listing Details</p>
+          <p  class="font-weight-400 font-size-16 color-909090">
             Every watch will soon be verified by our team of experts to ensure
             it’s 100% authentic, giving buyers complete peace of mind.
           </p>
@@ -388,30 +576,45 @@
               </div>
             </div>
 
-            <div class="d-flex justify-content-end mt-3">
-              <button type="button" class="btn btn-light mr-2">Cancel</button>
-              <button type="submit" class="btn btn-dark">Save</button>
+            <div class="d-flex justify-content-end gap-2 mt-3">
+              <button type="button" class="save-can-btn canc-bg-color">
+                Cancel
+              </button>
+              <button type="submit" class="save-can-btn save-btn-bg">
+                Save
+              </button>
             </div>
           </form>
         </div>
         <div class="" *ngIf="selectedSection === 'watchDetails'">
-          <div class="card mb-4">
+          <div class="card mb-4" style="box-shadow: none !important">
             <div
-              class="card-header d-flex justify-content-between align-items-center"
+              style="
+                border-bottom: none !important;
+                border-bottom: none !important;
+                justify-content: space-between;
+                width: 100%;
+                display: flex;
+                padding: 5px 20px 0 20px;
+              "
             >
-              <h5>Watch Details</h5>
+              <p class="font-weight-bold font-size-24 color-242424 margin-0">
+                Watch Details
+              </p>
               <button
                 type="button"
                 class="btn-close"
                 aria-label="Close"
               ></button>
             </div>
+            <p
+              style="padding: 0 20px 0 20px"
+              class="font-weight-400 font-size-16 color-909090"
+            >
+              Every watch will soon be verified by our team of experts to ensure
+              it’s 100% authentic, giving buyers complete peace of mind.
+            </p>
             <div class="card-body">
-              <p class="text-muted">
-                Every watch will soon be verified by our team of experts to
-                ensure it’s 100% authentic, giving buyers complete peace of
-                mind.
-              </p>
               <form>
                 <!-- Reference No. -->
                 <div class="mb-3">
@@ -490,202 +693,241 @@
             </div>
           </div>
 
-          <!-- Additional Information Section -->
-          <div class="accordion mb-4" id="additionalInfoAccordion">
-            <div class="accordion-item">
-              <h2 class="accordion-header" id="additionalInfoHeading">
-                <button
-                  class="accordion-button"
-                  type="button"
-                  data-bs-toggle="collapse"
-                  data-bs-target="#additionalInfoCollapse"
-                  aria-expanded="false"
-                  aria-controls="additionalInfoCollapse"
-                >
-                  Additional Information (optional)
-                </button>
-              </h2>
-              <div
-                id="additionalInfoCollapse"
-                class="accordion-collapse collapse"
-                aria-labelledby="additionalInfoHeading"
-                data-bs-parent="#additionalInfoAccordion"
+          <div style="padding: 0 20px 0 20px">
+            <p><strong>Additional Information </strong>( optional )</p>
+            <p class="font-weight-400 font-size-16 color-909090">
+              Every watch will soon be verified by our team of experts to ensure
+              it’s 100% authentic, giving buyers complete peace of mind.
+            </p>
+          </div>
+          <div style="padding: 0 20px 15px 20px">
+            <mat-accordion>
+              <mat-expansion-panel
+                [(expanded)]="panelDialOpenState"
+                class="panel"
               >
+                <mat-expansion-panel-header>
+                  <mat-panel-title> Dial Info </mat-panel-title>
+                </mat-expansion-panel-header>
                 <div class="accordion-body">
-                  <p class="text-muted">
-                    Every watch will soon be verified by our team of experts to
-                    ensure it’s 100% authentic, giving buyers complete peace of
-                    mind.
-                  </p>
-                  <form>
-                    <!-- Dial & Caliber Section -->
-                    <div class="row">
-                      <div class="col-md-6 mb-3">
-                        <label for="dialColor" class="form-label"
-                          >Dial Color</label
-                        >
-                        <select class="form-select" id="dialColor">
-                          <option>Please select</option>
-                          <!-- Add more options here -->
-                        </select>
-                      </div>
-                      <div class="col-md-6 mb-3">
-                        <label for="movementType" class="form-label"
-                          >Caliber / Movement</label
-                        >
-                        <select class="form-select" id="movementType">
-                          <option>Watch caliber / movement</option>
-                          <!-- Add more options here -->
-                        </select>
-                      </div>
+                  <div class="row">
+                    <div class="col-md-6 mb-3">
+                      <label for="dialColor" class="form-label"
+                        >Dial Color</label
+                      >
+                      <select class="form-select" id="dialColor">
+                        <option>Please select</option>
+                      </select>
                     </div>
+                    <div class="col-md-6 mb-3">
+                      <label for="dialMaterial" class="form-label"
+                        >Dial Material</label
+                      >
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="dialMaterial"
+                        placeholder="Enter dial material"
+                      />
+                    </div>
+                  </div>
 
-                    <!-- Case Info Section -->
-                    <div class="row">
-                      <div class="col-md-6 mb-3">
-                        <label for="caseMaterial" class="form-label"
-                          >Case Material</label
-                        >
-                        <select class="form-select" id="caseMaterial">
-                          <option>Please select</option>
-                          <!-- Add more options here -->
-                        </select>
-                      </div>
-                      <div class="col-md-6 mb-3">
-                        <label for="bezelMaterial" class="form-label"
-                          >Bezel Material</label
-                        >
-                        <input
-                          type="text"
-                          class="form-control"
-                          id="bezelMaterial"
-                          placeholder="Enter your model name"
-                        />
-                      </div>
+                  <!-- Additional fields for Dial Info -->
+                  <div class="row">
+                    <div class="col-md-6 mb-3">
+                      <label for="dialMarkers" class="form-label"
+                        >Dial Markers</label
+                      >
+                      <select class="form-select" id="dialMarkers">
+                        <option>Please select</option>
+                      </select>
                     </div>
-
-                    <!-- Straps / Bracelet Section -->
-                    <div class="row">
-                      <div class="col-md-6 mb-3">
-                        <label for="braceletMaterial" class="form-label"
-                          >Bracelet Material</label
-                        >
-                        <select class="form-select" id="braceletMaterial">
-                          <option>Please select</option>
-                          <!-- Add more options here -->
-                        </select>
-                      </div>
-                      <div class="col-md-6 mb-3">
-                        <label for="braceletColor" class="form-label"
-                          >Bracelet Color</label
-                        >
-                        <input
-                          type="text"
-                          class="form-control"
-                          id="braceletColor"
-                          placeholder="Enter color"
-                        />
-                      </div>
+                    <div class="col-md-6 mb-3">
+                      <label for="dialHands" class="form-label"
+                        >Dial Hands</label
+                      >
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="dialHands"
+                        placeholder="Enter dial hands style"
+                      />
                     </div>
-
-                    <!-- Buttons -->
-                    <div class="d-flex justify-content-between mt-3">
-                      <button type="button" class="btn btn-light">Back</button>
-                      <button type="submit" class="btn btn-dark">Save</button>
-                    </div>
-                  </form>
+                  </div>
                 </div>
-              </div>
-            </div>
+              </mat-expansion-panel>
+            </mat-accordion>
+          </div>
+          <div style="padding: 0 20px 15px 20px">
+            <mat-accordion>
+              <mat-expansion-panel [(expanded)]="panelOpenState" class="panel">
+                <mat-expansion-panel-header>
+                  <mat-panel-title> Case Info </mat-panel-title>
+                </mat-expansion-panel-header>
+                <div class="accordion-body">
+                  <div class="row">
+                    <div class="col-md-6 mb-3">
+                      <label for="caseMaterial" class="form-label"
+                        >Case Material</label
+                      >
+                      <select class="form-select" id="caseMaterial">
+                        <option>Please select</option>
+                      </select>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                      <label for="bezelMaterial" class="form-label"
+                        >Bezel Material</label
+                      >
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="bezelMaterial"
+                        placeholder="Enter model name"
+                      />
+                    </div>
+                  </div>
+
+                  <!-- Additional fields for Case Info -->
+                  <div class="row">
+                    <div class="col-md-6 mb-3">
+                      <label for="thickness" class="form-label"
+                        >Thickness</label
+                      >
+                      <div class="input-group">
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="thickness"
+                          placeholder="Enter thickness"
+                        />
+                        <span class="input-group-text">mm</span>
+                      </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                      <label for="crystal" class="form-label">Crystal</label>
+                      <select class="form-select" id="crystal">
+                        <option>Please select</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </mat-expansion-panel>
+            </mat-accordion>
+          </div>
+          <div style="padding: 0 20px 15px 20px">
+            <mat-accordion>
+              <mat-expansion-panel
+                [(expanded)]="panelStrapOpenState"
+                class="panel"
+              >
+                <mat-expansion-panel-header>
+                  <mat-panel-title> Straps / Bracelet </mat-panel-title>
+                </mat-expansion-panel-header>
+                <div class="accordion-body">
+                  <div class="row">
+                    <div class="col-md-6 mb-3">
+                      <label for="braceletMaterial" class="form-label"
+                        >Bracelet Material</label
+                      >
+                      <select class="form-select" id="braceletMaterial">
+                        <option>Please select</option>
+                      </select>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                      <label for="braceletColor" class="form-label"
+                        >Bracelet Color</label
+                      >
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="braceletColor"
+                        placeholder="Enter your model name"
+                      />
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-6 mb-3">
+                      <label for="claspType" class="form-label"
+                        >Type of Clasp</label
+                      >
+                      <div class="input-group">
+                        <select class="form-select" id="claspType">
+                          <option>Please select</option>
+                        </select>
+                        <span class="input-group-text">mm</span>
+                      </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                      <label for="claspMaterial" class="form-label"
+                        >Clasp Material</label
+                      >
+                      <select class="form-select" id="claspMaterial">
+                        <option>Please select</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </mat-expansion-panel>
+            </mat-accordion>
+          </div>
+
+          <div
+            class="d-flex align-items-center justify-content-end gap-2 mb-3"
+            style="padding: 0 20px 0 20px"
+          >
+            <button class="save-can-btn canc-bg-color">Back</button>
+            <button class="save-can-btn save-btn-bg">Save</button>
           </div>
         </div>
 
         <div class="card-body" *ngIf="selectedSection === 'uploadImages'">
-          <h5 class="card-title">Upload Images</h5>
-          <p class="card-text">
+          <h5 class="font-weight-bold font-size-24 color-242424 margin-0">Upload Images</h5>
+          <p class="font-weight-400 font-size-16 color-909090">
             Every watch will soon be verified by our team of experts to ensure
             it’s 100% authentic, giving buyers complete peace of mind.
           </p>
-          <form>
-            <div class="form-group">
-              <label for="brand">Brand *</label>
-              <input
-                type="text"
-                class="form-control"
-                id="brand"
-                placeholder="Enter your brand name"
-                required
-              />
-            </div>
-
-            <div class="form-group">
-              <label for="model">Model *</label>
-              <input
-                type="text"
-                class="form-control"
-                id="model"
-                placeholder="Enter your model name"
-                required
-              />
-            </div>
-
-            <div class="form-group">
-              <label for="title">Title *</label>
-              <input
-                type="text"
-                class="form-control"
-                id="title"
-                placeholder="Enter your ad title"
-                required
-              />
-            </div>
-
-            <div class="form-group">
-              <label for="description">Description</label>
-              <textarea
-                class="form-control"
-                id="description"
-                rows="3"
-                placeholder="Enter your watch description"
-              ></textarea>
-            </div>
-
-            <div class="form-group">
-              <label for="watchType">Watch Type</label>
-              <select class="form-control" id="watchType">
-                <option>Wrist Watch</option>
-              </select>
-            </div>
-
-            <div class="form-group">
-              <label for="yearOfProduction">Year of Production *</label>
-              <input
-                type="text"
-                class="form-control"
-                id="yearOfProduction"
-                placeholder="e.g. 2024"
-              />
-              <div class="form-check mt-2">
-                <input
-                  type="checkbox"
-                  class="form-check-input"
-                  id="approximation"
-                />
-                <label class="form-check-label" for="approximation"
-                  >Approximation</label
-                >
+          <div class="image-upload-container">
+            <!-- Cover Image -->
+            <div class="cover-image-section">
+              <p>Cover Image</p>
+              <div class="upload-box" (click)="selectCoverImage()">
+                <ng-container *ngIf="coverImage; else uploadPlaceholder">
+                  <img style="height: 100%;
+                  width: 100%;
+                  object-fit: fill;" [src]="coverImage" alt="Cover Image" />
+                </ng-container>
+                <ng-template #uploadPlaceholder>
+                  <span>+</span>
+                </ng-template>
               </div>
-              <div class="form-check">
-                <input type="checkbox" class="form-check-input" id="unknown" />
-                <label class="form-check-label" for="unknown">Unknown</label>
+              <input type="file" #coverImageInput (change)="onCoverImageSelected($event)" accept="image/*" hidden />
+            </div>
+          
+            <!-- Other Images -->
+            <div class="other-images-section">
+              <p>Other Images</p>
+              <div class="upload-box" (click)="selectOtherImages()">
+                <span>+</span>
+              </div>
+              <input type="file" #otherImagesInput (change)="onOtherImagesSelected($event)" accept="image/*" multiple hidden />
+          
+              <div class="image-preview" *ngFor="let image of otherImages">
+                <img [src]="image.url" *ngIf="!image.isUploading" alt="Preview" />
+                
+                <!-- Show the progress bar if the image is uploading -->
+                <div *ngIf="image.isUploading" class="upload-progress">
+                  <p>Uploading</p>
+                  <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+                </div>
+                
+                <!-- Show the delete button only when the upload is complete -->
+                <button *ngIf="!image.isUploading" class="delete-btn" (click)="removeImage(image)">
+                  <mat-icon>delete</mat-icon>
+                </button>
               </div>
             </div>
-
-            <div class="d-flex justify-content-end mt-3">
-              <button type="button" class="btn btn-light mr-2">Cancel</button>
-              <button type="submit" class="btn btn-dark">Save</button>
-            </div>
-          </form>
+          </div>
         </div>
       </div>
     </div>

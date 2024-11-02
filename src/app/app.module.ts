@@ -70,7 +70,7 @@ import { MatSidenav } from '@angular/material/sidenav';
 import { CarouselModule } from 'primeng/carousel';
 import { ButtonModule } from 'primeng/button';
 import { TagModule } from 'primeng/tag';
-
+import {MatExpansionModule} from '@angular/material/expansion';
 import { AdminPageHeaderComponent } from "./views/adminpages/admin-page-header/admin-page-header.component";
 import { BrandsListComponent } from './views/website/brands-list/brands-list.component';
 
@@ -141,6 +141,7 @@ import { BrandsListComponent } from './views/website/brands-list/brands-list.com
     CarouselModule,
     ButtonModule,
     TagModule,
+    MatExpansionModule,
     BidiModule,HighchartsChartModule,
     BidiModule, HighchartsChartModule,
     // MatExpansionModule,
