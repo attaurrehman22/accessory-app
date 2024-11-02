@@ -893,16 +893,24 @@
               <p>Cover Image</p>
               <div class="upload-box" (click)="selectCoverImage()">
                 <ng-container *ngIf="coverImage; else uploadPlaceholder">
-                  <img style="height: 100%;
-                  width: 100%;
-                  object-fit: fill;" [src]="coverImage" alt="Cover Image" />
+                  <img style="height: 100%; width: 100%; object-fit: fill;" [src]="coverImage" alt="Cover Image" />
+                  <!-- Show delete button when cover image is present -->
+                  <button class="delete-btn" (click)="removeCoverImage()">
+                    <mat-icon>delete</mat-icon>
+                  </button>
                 </ng-container>
                 <ng-template #uploadPlaceholder>
                   <span>+</span>
                 </ng-template>
+                <!-- Show the upload progress if cover image is uploading -->
+                <div *ngIf="isCoverImageUploading" class="upload-progress">
+                  <p>Uploading</p>
+                  <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+                </div>
               </div>
               <input type="file" #coverImageInput (change)="onCoverImageSelected($event)" accept="image/*" hidden />
             </div>
+
           
             <!-- Other Images -->
             <div class="other-images-section">

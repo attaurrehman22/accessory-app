@@ -1,4 +1,10 @@
-import { Component, OnInit, signal,ElementRef,ViewChild } from "@angular/core";
+import {
+  Component,
+  OnInit,
+  signal,
+  ElementRef,
+  ViewChild,
+} from "@angular/core";
 import {
   FormBuilder,
   FormControl,
@@ -12,10 +18,9 @@ import { AlertsServicesService } from "src/services/alerts-service/alerts-servic
 import { HttpService } from "src/services/http/http.service";
 import { MatDialog } from "@angular/material/dialog";
 import { LoginComponent } from "../../auth/login/login.component";
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA } from "@angular/material/dialog";
 import { ModelLoginComponent } from "../../auth/model-login/model-login.component";
 import { LanguageService } from "src/services/lang-service/language.service";
-
 
 @Component({
   selector: "app-add-new-product",
@@ -23,7 +28,7 @@ import { LanguageService } from "src/services/lang-service/language.service";
   styleUrls: ["./add-new-product.component.css"],
 })
 export class AddNewProductComponent implements OnInit {
-  selectedSection: string = 'watchDetails';
+  selectedSection: string = "watchDetails";
   isSmallScreen: boolean = false;
   panelOpenState = false;
   panelDialOpenState = false;
@@ -33,7 +38,7 @@ export class AddNewProductComponent implements OnInit {
 
   ngOnInit() {
     this.checkScreenSize();
-    window.addEventListener('resize', () => this.checkScreenSize());
+    window.addEventListener("resize", () => this.checkScreenSize());
   }
 
   checkScreenSize() {
@@ -44,12 +49,12 @@ export class AddNewProductComponent implements OnInit {
     this.selectedSection = section;
   }
 
-
   coverImage: string | null = null; // Holds the URL of the cover image
-  otherImages: Array<{ url: string, isUploading: boolean }> = []; // Holds the URLs and status of other images
-
-  @ViewChild('coverImageInput') coverImageInput!: ElementRef<HTMLInputElement>;
-  @ViewChild('otherImagesInput') otherImagesInput!: ElementRef<HTMLInputElement>;
+  otherImages: Array<{ url: string; isUploading: boolean }> = []; // Holds the URLs and status of other images
+  isCoverImageUploading: boolean = false;
+  @ViewChild("coverImageInput") coverImageInput!: ElementRef<HTMLInputElement>;
+  @ViewChild("otherImagesInput")
+  otherImagesInput!: ElementRef<HTMLInputElement>;
 
   // Open the file dialog for cover image selection
   selectCoverImage() {
@@ -61,50 +66,56 @@ export class AddNewProductComponent implements OnInit {
     this.otherImagesInput.nativeElement.click();
   }
 
-  // Handle cover image selection
+  // Handle cover image selection with delay
   onCoverImageSelected(event: Event) {
     const file = (event.target as HTMLInputElement).files?.[0];
     if (file) {
-      const reader = new FileReader();
-      reader.onload = () => {
-        this.coverImage = reader.result as string;
-      };
+        this.isCoverImageUploading = true; // Start uploading
 
-      
+        const reader = new FileReader();
+        reader.onload = () => {
+            // Set a timeout to simulate an upload delay
             setTimeout(() => {
-              this.coverImage = reader.result as string;
-            }, 10000);
-      reader.readAsDataURL(file);
-  
+                this.coverImage = reader.result as string;
+                this.isCoverImageUploading = false; // End uploading
+            }, 5000); // 10 seconds delay
+        };
+
+        reader.readAsDataURL(file);
     }
+  }
+
+
+  // Remove the cover image
+  removeCoverImage() {
+    this.coverImage = null;
+    this.isCoverImageUploading = false; // Reset uploading state
   }
 
   // Handle other images selection
   onOtherImagesSelected(event: Event) {
     const files = (event.target as HTMLInputElement).files;
     if (files) {
-      Array.from(files).forEach(file => {
+      Array.from(files).forEach((file) => {
         const reader = new FileReader();
-        const newImage = { url: '', isUploading: true };
+        const newImage = { url: "", isUploading: true };
         this.otherImages.push(newImage);
-        
+
         reader.onload = () => {
           newImage.url = reader.result as string;
-          
+
           setTimeout(() => {
             newImage.isUploading = false;
-          }, 5000); 
+          }, 5000);
         };
-        
+
         reader.readAsDataURL(file);
       });
     }
   }
 
-
   // Remove an image from the other images array
-  removeImage(image: { url: string, isUploading: boolean }) {
-    this.otherImages = this.otherImages.filter(img => img !== image);
+  removeImage(image: { url: string; isUploading: boolean }) {
+    this.otherImages = this.otherImages.filter((img) => img !== image);
   }
 }
-
