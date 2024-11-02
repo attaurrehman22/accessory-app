@@ -22,8 +22,21 @@ import { LanguageService } from "src/services/lang-service/language.service";
   templateUrl: "./add-new-product.component.html",
   styleUrls: ["./add-new-product.component.css"],
 })
-export class AddNewProductComponent {
-  selectedSection: string = 'listingDetails'; 
+export class AddNewProductComponent implements OnInit {
+  selectedSection: string = 'listingDetails';
+  isSmallScreen: boolean = false;
+
+  constructor() {}
+
+  ngOnInit() {
+    this.checkScreenSize();
+    window.addEventListener('resize', () => this.checkScreenSize());
+  }
+
+  checkScreenSize() {
+    this.isSmallScreen = window.innerWidth < 768;
+  }
+
   selectSection(section: string) {
     this.selectedSection = section;
   }

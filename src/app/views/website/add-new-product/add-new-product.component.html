@@ -1,7 +1,6 @@
 <div class="global-main-wraper" style="margin-top: 90px">
   <div class="row">
-    <!-- Sidebar -->
-    <div class="col-md-3" style="border-right: 1px solid #F3F3F3;">
+    <div class="col-md-3 col-12" style="border-right: 1px solid #f3f3f3">
       <h5>Create Product Listing</h5>
       <div class="sidebar-list">
         <div
@@ -11,11 +10,96 @@
         >
           <div class="step-circle">1</div>
           <div class="step-content">
-            <strong>Listing Details</strong>
-            <p class="text-muted">
-              Crypto ipsum bitcoin ethereum dogecoin litecoin. Revain neo gelen
-              amp tecoin EOS chiliz...
+            <h5 class="card-title">Listing Details</h5>
+            <p class="card-text">
+              Every watch will soon be verified by our team of experts to ensure
+              it’s 100% authentic, giving buyers complete peace of mind.
             </p>
+
+            <form *ngIf="selectedSection === 'listingDetails' && isSmallScreen">
+              <div class="form-group">
+                <label for="brand">Brand *</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="brand"
+                  placeholder="Enter your brand name"
+                  required
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="model">Model *</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="model"
+                  placeholder="Enter your model name"
+                  required
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="title">Title *</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="title"
+                  placeholder="Enter your ad title"
+                  required
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="description">Description</label>
+                <textarea
+                  class="form-control"
+                  id="description"
+                  rows="3"
+                  placeholder="Enter your watch description"
+                ></textarea>
+              </div>
+
+              <div class="form-group">
+                <label for="watchType">Watch Type</label>
+                <select class="form-control" id="watchType">
+                  <option>Wrist Watch</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="yearOfProduction">Year of Production *</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="yearOfProduction"
+                  placeholder="e.g. 2024"
+                />
+                <div class="form-check mt-2">
+                  <input
+                    type="checkbox"
+                    class="form-check-input"
+                    id="approximation"
+                  />
+                  <label class="form-check-label" for="approximation"
+                    >Approximation</label
+                  >
+                </div>
+                <div class="form-check">
+                  <input
+                    type="checkbox"
+                    class="form-check-input"
+                    id="unknown"
+                  />
+                  <label class="form-check-label" for="unknown">Unknown</label>
+                </div>
+              </div>
+
+              <div class="d-flex justify-content-end mt-3">
+                <button type="button" class="btn btn-light mr-2">Cancel</button>
+                <button type="submit" class="btn btn-dark">Save</button>
+              </div>
+            </form>
           </div>
         </div>
 
@@ -31,6 +115,91 @@
               Crypto ipsum bitcoin ethereum dogecoin litecoin. Revain neo gelen
               amp tecoin EOS chiliz...
             </p>
+
+            <form *ngIf="selectedSection === 'watchDetails' && isSmallScreen">
+              <div class="form-group">
+                <label for="brand">Brand *</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="brand"
+                  placeholder="Enter your brand name"
+                  required
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="model">Model *</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="model"
+                  placeholder="Enter your model name"
+                  required
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="title">Title *</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="title"
+                  placeholder="Enter your ad title"
+                  required
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="description">Description</label>
+                <textarea
+                  class="form-control"
+                  id="description"
+                  rows="3"
+                  placeholder="Enter your watch description"
+                ></textarea>
+              </div>
+
+              <div class="form-group">
+                <label for="watchType">Watch Type</label>
+                <select class="form-control" id="watchType">
+                  <option>Wrist Watch</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="yearOfProduction">Year of Production *</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="yearOfProduction"
+                  placeholder="e.g. 2024"
+                />
+                <div class="form-check mt-2">
+                  <input
+                    type="checkbox"
+                    class="form-check-input"
+                    id="approximation"
+                  />
+                  <label class="form-check-label" for="approximation"
+                    >Approximation</label
+                  >
+                </div>
+                <div class="form-check">
+                  <input
+                    type="checkbox"
+                    class="form-check-input"
+                    id="unknown"
+                  />
+                  <label class="form-check-label" for="unknown">Unknown</label>
+                </div>
+              </div>
+
+              <div class="d-flex justify-content-end mt-3">
+                <button type="button" class="btn btn-light mr-2">Cancel</button>
+                <button type="submit" class="btn btn-dark">Save</button>
+              </div>
+            </form>
           </div>
         </div>
 
@@ -46,13 +215,97 @@
               Crypto ipsum bitcoin ethereum dogecoin litecoin. Revain neo gelen
               amp tecoin EOS chiliz...
             </p>
+
+            <form *ngIf="selectedSection === 'uploadImages' && isSmallScreen">
+              <div class="form-group">
+                <label for="brand">Brand *</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="brand"
+                  placeholder="Enter your brand name"
+                  required
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="model">Model *</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="model"
+                  placeholder="Enter your model name"
+                  required
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="title">Title *</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="title"
+                  placeholder="Enter your ad title"
+                  required
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="description">Description</label>
+                <textarea
+                  class="form-control"
+                  id="description"
+                  rows="3"
+                  placeholder="Enter your watch description"
+                ></textarea>
+              </div>
+
+              <div class="form-group">
+                <label for="watchType">Watch Type</label>
+                <select class="form-control" id="watchType">
+                  <option>Wrist Watch</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="yearOfProduction">Year of Production *</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="yearOfProduction"
+                  placeholder="e.g. 2024"
+                />
+                <div class="form-check mt-2">
+                  <input
+                    type="checkbox"
+                    class="form-check-input"
+                    id="approximation"
+                  />
+                  <label class="form-check-label" for="approximation"
+                    >Approximation</label
+                  >
+                </div>
+                <div class="form-check">
+                  <input
+                    type="checkbox"
+                    class="form-check-input"
+                    id="unknown"
+                  />
+                  <label class="form-check-label" for="unknown">Unknown</label>
+                </div>
+              </div>
+
+              <div class="d-flex justify-content-end mt-3">
+                <button type="button" class="btn btn-light mr-2">Cancel</button>
+                <button type="submit" class="btn btn-dark">Save</button>
+              </div>
+            </form>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Main Form Section -->
-    <div class="col-md-9">
+    <div class="col-md-9" *ngIf="!isSmallScreen">
       <div class="card">
         <div class="card-body" *ngIf="selectedSection === 'listingDetails'">
           <h5 class="card-title">Listing Details</h5>
@@ -108,7 +361,6 @@
               <label for="watchType">Watch Type</label>
               <select class="form-control" id="watchType">
                 <option>Wrist Watch</option>
-                <!-- Add more options as needed -->
               </select>
             </div>
 
@@ -142,94 +394,210 @@
             </div>
           </form>
         </div>
-
-        <div class="card-body" *ngIf="selectedSection === 'watchDetails'">
-          <h5 class="card-title">Watch Details</h5>
-          <p class="card-text">
-            Every watch will soon be verified by our team of experts to ensure
-            it’s 100% authentic, giving buyers complete peace of mind.
-          </p>
-          <form>
-            <div class="form-group">
-              <label for="brand">Brand *</label>
-              <input
-                type="text"
-                class="form-control"
-                id="brand"
-                placeholder="Enter your brand name"
-                required
-              />
+        <div class="" *ngIf="selectedSection === 'watchDetails'">
+          <div class="card mb-4">
+            <div
+              class="card-header d-flex justify-content-between align-items-center"
+            >
+              <h5>Watch Details</h5>
+              <button
+                type="button"
+                class="btn-close"
+                aria-label="Close"
+              ></button>
             </div>
+            <div class="card-body">
+              <p class="text-muted">
+                Every watch will soon be verified by our team of experts to
+                ensure it’s 100% authentic, giving buyers complete peace of
+                mind.
+              </p>
+              <form>
+                <!-- Reference No. -->
+                <div class="mb-3">
+                  <label for="referenceNo" class="form-label"
+                    >Reference No.</label
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="referenceNo"
+                    placeholder="Enter your brand name"
+                  />
+                </div>
 
-            <div class="form-group">
-              <label for="model">Model *</label>
-              <input
-                type="text"
-                class="form-control"
-                id="model"
-                placeholder="Enter your model name"
-                required
-              />
+                <!-- Serial No., Gender, Movement -->
+                <div class="row">
+                  <div class="col-md-4 mb-3">
+                    <label for="serialNo" class="form-label"
+                      >Serial No. (if not polished)</label
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="serialNo"
+                      placeholder="Enter serial number"
+                    />
+                  </div>
+                  <div class="col-md-4 mb-3">
+                    <label for="gender" class="form-label">Gender</label>
+                    <select class="form-select" id="gender">
+                      <option>Please Select</option>
+                      <!-- Add more options here -->
+                    </select>
+                  </div>
+                  <div class="col-md-4 mb-3">
+                    <label for="movement" class="form-label">Movement</label>
+                    <select class="form-select" id="movement">
+                      <option>Please select</option>
+                      <!-- Add more options here -->
+                    </select>
+                  </div>
+                </div>
+
+                <!-- Case Diameter -->
+                <div class="row">
+                  <div class="col-md-6 mb-3">
+                    <label for="caseDiameter" class="form-label"
+                      >Case Diameter</label
+                    >
+                    <div class="input-group">
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="caseDiameter"
+                        placeholder="Enter diameter"
+                      />
+                      <span class="input-group-text">mm</span>
+                    </div>
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <label for="otherDiameter" class="form-label"
+                      >Other Diameter</label
+                    >
+                    <div class="input-group">
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="otherDiameter"
+                        placeholder="Enter diameter"
+                      />
+                      <span class="input-group-text">mm</span>
+                    </div>
+                  </div>
+                </div>
+              </form>
             </div>
+          </div>
 
-            <div class="form-group">
-              <label for="title">Title *</label>
-              <input
-                type="text"
-                class="form-control"
-                id="title"
-                placeholder="Enter your ad title"
-                required
-              />
-            </div>
-
-            <div class="form-group">
-              <label for="description">Description</label>
-              <textarea
-                class="form-control"
-                id="description"
-                rows="3"
-                placeholder="Enter your watch description"
-              ></textarea>
-            </div>
-
-            <div class="form-group">
-              <label for="watchType">Watch Type</label>
-              <select class="form-control" id="watchType">
-                <option>Wrist Watch</option>
-                <!-- Add more options as needed -->
-              </select>
-            </div>
-
-            <div class="form-group">
-              <label for="yearOfProduction">Year of Production *</label>
-              <input
-                type="text"
-                class="form-control"
-                id="yearOfProduction"
-                placeholder="e.g. 2024"
-              />
-              <div class="form-check mt-2">
-                <input
-                  type="checkbox"
-                  class="form-check-input"
-                  id="approximation"
-                />
-                <label class="form-check-label" for="approximation"
-                  >Approximation</label
+          <!-- Additional Information Section -->
+          <div class="accordion mb-4" id="additionalInfoAccordion">
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="additionalInfoHeading">
+                <button
+                  class="accordion-button"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#additionalInfoCollapse"
+                  aria-expanded="false"
+                  aria-controls="additionalInfoCollapse"
                 >
-              </div>
-              <div class="form-check">
-                <input type="checkbox" class="form-check-input" id="unknown" />
-                <label class="form-check-label" for="unknown">Unknown</label>
-              </div>
-            </div>
+                  Additional Information (optional)
+                </button>
+              </h2>
+              <div
+                id="additionalInfoCollapse"
+                class="accordion-collapse collapse"
+                aria-labelledby="additionalInfoHeading"
+                data-bs-parent="#additionalInfoAccordion"
+              >
+                <div class="accordion-body">
+                  <p class="text-muted">
+                    Every watch will soon be verified by our team of experts to
+                    ensure it’s 100% authentic, giving buyers complete peace of
+                    mind.
+                  </p>
+                  <form>
+                    <!-- Dial & Caliber Section -->
+                    <div class="row">
+                      <div class="col-md-6 mb-3">
+                        <label for="dialColor" class="form-label"
+                          >Dial Color</label
+                        >
+                        <select class="form-select" id="dialColor">
+                          <option>Please select</option>
+                          <!-- Add more options here -->
+                        </select>
+                      </div>
+                      <div class="col-md-6 mb-3">
+                        <label for="movementType" class="form-label"
+                          >Caliber / Movement</label
+                        >
+                        <select class="form-select" id="movementType">
+                          <option>Watch caliber / movement</option>
+                          <!-- Add more options here -->
+                        </select>
+                      </div>
+                    </div>
 
-            <div class="d-flex justify-content-end mt-3">
-              <button type="button" class="btn btn-light mr-2">Cancel</button>
-              <button type="submit" class="btn btn-dark">Save</button>
+                    <!-- Case Info Section -->
+                    <div class="row">
+                      <div class="col-md-6 mb-3">
+                        <label for="caseMaterial" class="form-label"
+                          >Case Material</label
+                        >
+                        <select class="form-select" id="caseMaterial">
+                          <option>Please select</option>
+                          <!-- Add more options here -->
+                        </select>
+                      </div>
+                      <div class="col-md-6 mb-3">
+                        <label for="bezelMaterial" class="form-label"
+                          >Bezel Material</label
+                        >
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="bezelMaterial"
+                          placeholder="Enter your model name"
+                        />
+                      </div>
+                    </div>
+
+                    <!-- Straps / Bracelet Section -->
+                    <div class="row">
+                      <div class="col-md-6 mb-3">
+                        <label for="braceletMaterial" class="form-label"
+                          >Bracelet Material</label
+                        >
+                        <select class="form-select" id="braceletMaterial">
+                          <option>Please select</option>
+                          <!-- Add more options here -->
+                        </select>
+                      </div>
+                      <div class="col-md-6 mb-3">
+                        <label for="braceletColor" class="form-label"
+                          >Bracelet Color</label
+                        >
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="braceletColor"
+                          placeholder="Enter color"
+                        />
+                      </div>
+                    </div>
+
+                    <!-- Buttons -->
+                    <div class="d-flex justify-content-between mt-3">
+                      <button type="button" class="btn btn-light">Back</button>
+                      <button type="submit" class="btn btn-dark">Save</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
             </div>
-          </form>
+          </div>
         </div>
 
         <div class="card-body" *ngIf="selectedSection === 'uploadImages'">
@@ -286,7 +654,6 @@
               <label for="watchType">Watch Type</label>
               <select class="form-control" id="watchType">
                 <option>Wrist Watch</option>
-                <!-- Add more options as needed -->
               </select>
             </div>
 

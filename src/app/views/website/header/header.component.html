@@ -1,8 +1,8 @@
 <div class="global-main-wraper headerclass">
   <mat-sidenav-container class="sidenav-container" [ngClass]="{ 'rtl-layout': isRtl }">
     <mat-sidenav #drawer
-    [ngClass]="{ 'no-background': isSmallScreen && drawer.opened }"
-    class="sidenav" #sidenav mode="over" [position]="isRtl && isSmallScreen ? 'start' : 'end'"
+      [ngClass]="{ 'no-background': isSmallScreen && drawer.opened }"
+      class="sidenav" mode="over" [position]="isRtl && isSmallScreen ? 'start' : 'end'"
       [style]="{ top: '0', right: '0', position: 'fixed', height: 'auto' }">
       <button class="drawer-btn" (click)="routeToBuyProduct()">
         {{ "header.buy_watch" | translate }}
