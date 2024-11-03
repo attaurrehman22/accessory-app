@@ -404,90 +404,82 @@
               amp tecoin EOS chiliz...
             </p>
 
-            <form *ngIf="selectedSection === 'uploadImages' && isSmallScreen">
-              <div class="form-group">
-                <label for="brand">Brand *</label>
+            <div
+              class="image-upload-container"
+              *ngIf="selectedSection === 'uploadImages' && isSmallScreen"
+            >
+              <!-- Cover Image -->
+              <div class="cover-image-section">
+                <p>Cover Image</p>
+                <div class="upload-box" (click)="selectCoverImage()">
+                  <ng-container *ngIf="coverImage; else uploadPlaceholder">
+                    <img
+                      style="height: 100%; width: 100%; object-fit: fill"
+                      [src]="coverImage"
+                      alt="Cover Image"
+                    />
+                    <!-- Show delete button when cover image is present -->
+                    <button class="delete-btn" (click)="removeCoverImage()">
+                      <mat-icon>delete</mat-icon>
+                    </button>
+                  </ng-container>
+                  <ng-template #uploadPlaceholder>
+                    <span>+</span>
+                  </ng-template>
+                  <!-- Show the upload progress if cover image is uploading -->
+                  <div *ngIf="isCoverImageUploading" class="upload-progress">
+                    <p>Uploading</p>
+                    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+                  </div>
+                </div>
                 <input
-                  type="text"
-                  class="form-control"
-                  id="brand"
-                  placeholder="Enter your brand name"
-                  required
+                  type="file"
+                  #coverImageInput
+                  (change)="onCoverImageSelected($event)"
+                  accept="image/*"
+                  hidden
                 />
               </div>
 
-              <div class="form-group">
-                <label for="model">Model *</label>
+              <!-- Other Images -->
+              <div class="other-images-section">
+                <p>Other Images</p>
+                <div class="upload-box" (click)="selectOtherImages()">
+                  <span>+</span>
+                </div>
                 <input
-                  type="text"
-                  class="form-control"
-                  id="model"
-                  placeholder="Enter your model name"
-                  required
+                  type="file"
+                  #otherImagesInput
+                  (change)="onOtherImagesSelected($event)"
+                  accept="image/*"
+                  multiple
+                  hidden
                 />
-              </div>
 
-              <div class="form-group">
-                <label for="title">Title *</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  id="title"
-                  placeholder="Enter your ad title"
-                  required
-                />
-              </div>
-
-              <div class="form-group">
-                <label for="description">Description</label>
-                <textarea
-                  class="form-control"
-                  id="description"
-                  rows="3"
-                  placeholder="Enter your watch description"
-                ></textarea>
-              </div>
-
-              <div class="form-group">
-                <label for="watchType">Watch Type</label>
-                <select class="form-control" id="watchType">
-                  <option>Wrist Watch</option>
-                </select>
-              </div>
-
-              <div class="form-group">
-                <label for="yearOfProduction">Year of Production *</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  id="yearOfProduction"
-                  placeholder="e.g. 2024"
-                />
-                <div class="form-check mt-2">
-                  <input
-                    type="checkbox"
-                    class="form-check-input"
-                    id="approximation"
+                <div class="image-preview" *ngFor="let image of otherImages">
+                  <img
+                    [src]="image.url"
+                    *ngIf="!image.isUploading"
+                    alt="Preview"
                   />
-                  <label class="form-check-label" for="approximation"
-                    >Approximation</label
+
+                  <!-- Show the progress bar if the image is uploading -->
+                  <div *ngIf="image.isUploading" class="upload-progress">
+                    <p>Uploading</p>
+                    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+                  </div>
+
+                  <!-- Show the delete button only when the upload is complete -->
+                  <button
+                    *ngIf="!image.isUploading"
+                    class="delete-btn"
+                    (click)="removeImage(image)"
                   >
-                </div>
-                <div class="form-check">
-                  <input
-                    type="checkbox"
-                    class="form-check-input"
-                    id="unknown"
-                  />
-                  <label class="form-check-label" for="unknown">Unknown</label>
+                    <mat-icon>delete</mat-icon>
+                  </button>
                 </div>
               </div>
-
-              <div class="d-flex justify-content-end mt-3">
-                <button type="button" class="btn btn-light mr-2">Cancel</button>
-                <button type="submit" class="btn btn-dark">Save</button>
-              </div>
-            </form>
+            </div>
           </div>
         </div>
       </div>
@@ -495,9 +487,16 @@
 
     <div class="col-md-9" *ngIf="!isSmallScreen">
       <div class="card">
-        <div class="card-body" style="padding: 0 !important;" *ngIf="selectedSection === 'listingDetails'">
-          <p class="font-weight-bold font-size-24 color-242424 margin-0">Listing Details</p>
-          <p  class="font-weight-400 font-size-16 color-909090">
+        <!-- <-- Listing Details -- > -->
+        <div
+          class="card-body"
+          style="padding: 8px 20px 0 20px !important"
+          *ngIf="selectedSection === 'listingDetails'"
+        >
+          <p class="font-weight-bold font-size-24 color-242424 margin-0">
+            Listing Details
+          </p>
+          <p class="font-weight-400 font-size-16 color-909090">
             Every watch will soon be verified by our team of experts to ensure
             it’s 100% authentic, giving buyers complete peace of mind.
           </p>
@@ -586,6 +585,8 @@
             </div>
           </form>
         </div>
+
+        <!-- <-- Watch Details -- > -->
         <div class="" *ngIf="selectedSection === 'watchDetails'">
           <div class="card mb-4" style="box-shadow: none !important">
             <div
@@ -881,8 +882,12 @@
           </div>
         </div>
 
+         <!-- <-- Upload Images -- > -->
+
         <div class="card-body" *ngIf="selectedSection === 'uploadImages'">
-          <h5 class="font-weight-bold font-size-24 color-242424 margin-0">Upload Images</h5>
+          <h5 class="font-weight-bold font-size-24 color-242424 margin-0">
+            Upload Images
+          </h5>
           <p class="font-weight-400 font-size-16 color-909090">
             Every watch will soon be verified by our team of experts to ensure
             it’s 100% authentic, giving buyers complete peace of mind.
@@ -893,7 +898,11 @@
               <p>Cover Image</p>
               <div class="upload-box" (click)="selectCoverImage()">
                 <ng-container *ngIf="coverImage; else uploadPlaceholder">
-                  <img style="height: 100%; width: 100%; object-fit: fill;" [src]="coverImage" alt="Cover Image" />
+                  <img
+                    style="height: 100%; width: 100%; object-fit: fill"
+                    [src]="coverImage"
+                    alt="Cover Image"
+                  />
                   <!-- Show delete button when cover image is present -->
                   <button class="delete-btn" (click)="removeCoverImage()">
                     <mat-icon>delete</mat-icon>
@@ -908,29 +917,49 @@
                   <mat-progress-bar mode="indeterminate"></mat-progress-bar>
                 </div>
               </div>
-              <input type="file" #coverImageInput (change)="onCoverImageSelected($event)" accept="image/*" hidden />
+              <input
+                type="file"
+                #coverImageInput
+                (change)="onCoverImageSelected($event)"
+                accept="image/*"
+                hidden
+              />
             </div>
 
-          
             <!-- Other Images -->
             <div class="other-images-section">
               <p>Other Images</p>
               <div class="upload-box" (click)="selectOtherImages()">
                 <span>+</span>
               </div>
-              <input type="file" #otherImagesInput (change)="onOtherImagesSelected($event)" accept="image/*" multiple hidden />
-          
+              <input
+                type="file"
+                #otherImagesInput
+                (change)="onOtherImagesSelected($event)"
+                accept="image/*"
+                multiple
+                hidden
+              />
+
               <div class="image-preview" *ngFor="let image of otherImages">
-                <img [src]="image.url" *ngIf="!image.isUploading" alt="Preview" />
-                
+                <img
+                  [src]="image.url"
+                  *ngIf="!image.isUploading"
+                  alt="Preview"
+                />
+
                 <!-- Show the progress bar if the image is uploading -->
                 <div *ngIf="image.isUploading" class="upload-progress">
                   <p>Uploading</p>
                   <mat-progress-bar mode="indeterminate"></mat-progress-bar>
                 </div>
-                
+
                 <!-- Show the delete button only when the upload is complete -->
-                <button *ngIf="!image.isUploading" class="delete-btn" (click)="removeImage(image)">
+                <button
+                  *ngIf="!image.isUploading"
+                  class="delete-btn"
+                  (click)="removeImage(image)"
+                >
                   <mat-icon>delete</mat-icon>
                 </button>
               </div>

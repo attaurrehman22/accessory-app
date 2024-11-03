@@ -33,6 +33,12 @@ export class AddNewProductComponent implements OnInit {
   panelOpenState = false;
   panelDialOpenState = false;
   panelStrapOpenState = false;
+  coverImage: string | null = null; // Holds the URL of the cover image
+  otherImages: Array<{ url: string; isUploading: boolean }> = []; // Holds the URLs and status of other images
+  isCoverImageUploading: boolean = false;
+  @ViewChild("coverImageInput") coverImageInput!: ElementRef<HTMLInputElement>;
+  @ViewChild("otherImagesInput")
+  otherImagesInput!: ElementRef<HTMLInputElement>;
 
   constructor() {}
 
@@ -49,50 +55,36 @@ export class AddNewProductComponent implements OnInit {
     this.selectedSection = section;
   }
 
-  coverImage: string | null = null; // Holds the URL of the cover image
-  otherImages: Array<{ url: string; isUploading: boolean }> = []; // Holds the URLs and status of other images
-  isCoverImageUploading: boolean = false;
-  @ViewChild("coverImageInput") coverImageInput!: ElementRef<HTMLInputElement>;
-  @ViewChild("otherImagesInput")
-  otherImagesInput!: ElementRef<HTMLInputElement>;
-
-  // Open the file dialog for cover image selection
   selectCoverImage() {
     this.coverImageInput.nativeElement.click();
   }
 
-  // Open the file dialog for other images selection
   selectOtherImages() {
     this.otherImagesInput.nativeElement.click();
   }
 
-  // Handle cover image selection with delay
   onCoverImageSelected(event: Event) {
     const file = (event.target as HTMLInputElement).files?.[0];
     if (file) {
-        this.isCoverImageUploading = true; // Start uploading
+      this.isCoverImageUploading = true; // Start uploading
 
-        const reader = new FileReader();
-        reader.onload = () => {
-            // Set a timeout to simulate an upload delay
-            setTimeout(() => {
-                this.coverImage = reader.result as string;
-                this.isCoverImageUploading = false; // End uploading
-            }, 5000); // 10 seconds delay
-        };
+      const reader = new FileReader();
+      reader.onload = () => {
+        setTimeout(() => {
+          this.coverImage = reader.result as string;
+          this.isCoverImageUploading = false; // End uploading
+        }, 5000); // 10 seconds delay
+      };
 
-        reader.readAsDataURL(file);
+      reader.readAsDataURL(file);
     }
   }
 
-
-  // Remove the cover image
   removeCoverImage() {
     this.coverImage = null;
     this.isCoverImageUploading = false; // Reset uploading state
   }
 
-  // Handle other images selection
   onOtherImagesSelected(event: Event) {
     const files = (event.target as HTMLInputElement).files;
     if (files) {
@@ -114,7 +106,6 @@ export class AddNewProductComponent implements OnInit {
     }
   }
 
-  // Remove an image from the other images array
   removeImage(image: { url: string; isUploading: boolean }) {
     this.otherImages = this.otherImages.filter((img) => img !== image);
   }
