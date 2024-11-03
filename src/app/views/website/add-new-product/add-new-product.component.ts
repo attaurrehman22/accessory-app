@@ -28,7 +28,7 @@ import { LanguageService } from "src/services/lang-service/language.service";
   styleUrls: ["./add-new-product.component.css"],
 })
 export class AddNewProductComponent implements OnInit {
-  selectedSection: string = "watchDetails";
+  selectedSection: string = "listingDetails";
   isSmallScreen: boolean = false;
   panelOpenState = false;
   panelDialOpenState = false;
@@ -41,18 +41,55 @@ export class AddNewProductComponent implements OnInit {
   otherImagesInput!: ElementRef<HTMLInputElement>;
 
   listingForm: FormGroup;
+  watchDetailsForm: FormGroup;
 
-  brand = new FormControl('', [
+  // Listing Form Details
+  brand = new FormControl("", [
     Validators.required,
-    Validators.pattern('^[^\\s]+(\\s+[^\\s]+)*$')
+    Validators.pattern("^[^\\s]+(\\s+[^\\s]+)*$"),
   ]);
-  model = new FormControl('', [Validators.required]);
-  title = new FormControl('', [Validators.required]);
-  description = new FormControl('');
-  watchType = new FormControl('');
-  yearOfProduction = new FormControl('', [Validators.required]);
+  model = new FormControl("", [Validators.required]);
+  title = new FormControl("", [Validators.required]);
+  description = new FormControl("");
+  watchType = new FormControl("");
+  yearOfProduction = new FormControl("", [Validators.required]);
   approximation = new FormControl(false);
   unknown = new FormControl(false);
+
+  // Watch Form Details
+
+  referenceNo = new FormControl("", [
+    Validators.required,
+    Validators.pattern("^[^\\s]+(\\s+[^\\s]+)*$"),
+  ]);
+  serialNo = new FormControl("", [
+    Validators.required,
+    Validators.pattern("^[^\\s]+(\\s+[^\\s]+)*$"),
+  ]);
+  gender = new FormControl("", Validators.required);
+  movement = new FormControl("", Validators.required);
+  caseDiameter = new FormControl("", [
+    Validators.required,
+    Validators.pattern("^[0-9]*$"),
+  ]);
+  otherDiameter = new FormControl("", [
+    Validators.required,
+    Validators.pattern("^[0-9]*$"),
+  ]);
+  dialColor = new FormControl("");
+  dialMaterial = new FormControl("");
+  dialMarkers = new FormControl("");
+  dialHands = new FormControl("");
+  caseMaterial = new FormControl("");
+  bezelMaterial = new FormControl("");
+  thickness = new FormControl("", [
+    Validators.pattern("^[0-9]*$"),
+  ]);
+  crystal = new FormControl("");
+  braceletMaterial = new FormControl("");
+  braceletColor = new FormControl("");
+  claspType = new FormControl("");
+  claspMaterial = new FormControl("");
 
   constructor() {}
 
@@ -61,7 +98,6 @@ export class AddNewProductComponent implements OnInit {
     window.addEventListener("resize", () => this.checkScreenSize());
 
     // Listing Form
-
     this.listingForm = new FormGroup({
       brand: this.brand,
       model: this.model,
@@ -70,7 +106,28 @@ export class AddNewProductComponent implements OnInit {
       watchType: this.watchType,
       yearOfProduction: this.yearOfProduction,
       approximation: this.approximation,
-      unknown: this.unknown
+      unknown: this.unknown,
+    });
+
+    this.watchDetailsForm = new FormGroup({
+      referenceNo: this.referenceNo,
+      serialNo: this.serialNo,
+      gender: this.gender,
+      movement: this.movement,
+      caseDiameter: this.caseDiameter,
+      otherDiameter: this.otherDiameter,
+      dialColor: this.dialColor,
+      dialMaterial: this.dialMaterial,
+      dialMarkers: this.dialMarkers,
+      dialHands: this.dialHands,
+      caseMaterial: this.caseMaterial,
+      bezelMaterial: this.bezelMaterial,
+      thickness: this.thickness,
+      crystal: this.crystal,
+      braceletMaterial: this.braceletMaterial,
+      braceletColor: this.braceletColor,
+      claspType: this.claspType,
+      claspMaterial: this.claspMaterial,
     });
   }
 
@@ -137,9 +194,12 @@ export class AddNewProductComponent implements OnInit {
     this.otherImages = this.otherImages.filter((img) => img !== image);
   }
 
-  onSubmit() {
-    if (this.listingForm.valid) {
+  onSubmit(Param: string) {
+    if (Param === "listing" && this.listingForm.valid) {
       console.log(this.listingForm.value);
+    }
+    else if(Param === 'watchDetails' && this.watchDetailsForm.valid){
+       console.log(this.watchDetailsForm.value)
     }
   }
 }
