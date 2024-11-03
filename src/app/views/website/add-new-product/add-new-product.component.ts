@@ -40,11 +40,38 @@ export class AddNewProductComponent implements OnInit {
   @ViewChild("otherImagesInput")
   otherImagesInput!: ElementRef<HTMLInputElement>;
 
+  listingForm: FormGroup;
+
+  brand = new FormControl('', [
+    Validators.required,
+    Validators.pattern('^[^\\s]+(\\s+[^\\s]+)*$')
+  ]);
+  model = new FormControl('', [Validators.required]);
+  title = new FormControl('', [Validators.required]);
+  description = new FormControl('');
+  watchType = new FormControl('');
+  yearOfProduction = new FormControl('', [Validators.required]);
+  approximation = new FormControl(false);
+  unknown = new FormControl(false);
+
   constructor() {}
 
   ngOnInit() {
     this.checkScreenSize();
     window.addEventListener("resize", () => this.checkScreenSize());
+
+    // Listing Form
+
+    this.listingForm = new FormGroup({
+      brand: this.brand,
+      model: this.model,
+      title: this.title,
+      description: this.description,
+      watchType: this.watchType,
+      yearOfProduction: this.yearOfProduction,
+      approximation: this.approximation,
+      unknown: this.unknown
+    });
   }
 
   checkScreenSize() {
@@ -108,5 +135,11 @@ export class AddNewProductComponent implements OnInit {
 
   removeImage(image: { url: string; isUploading: boolean }) {
     this.otherImages = this.otherImages.filter((img) => img !== image);
+  }
+
+  onSubmit() {
+    if (this.listingForm.valid) {
+      console.log(this.listingForm.value);
+    }
   }
 }
