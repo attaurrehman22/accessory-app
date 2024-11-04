@@ -197,9 +197,11 @@ export class AddNewProductComponent implements OnInit {
   onSubmit(Param: string) {
     if (Param === "listing" && this.listingForm.valid) {
       console.log(this.listingForm.value);
+      this.selectSection('watchDetails')
     }
     else if(Param === 'watchDetails' && this.watchDetailsForm.valid){
        console.log(this.watchDetailsForm.value)
+       this.selectSection('uploadImages')
     }
 
     else if (Param === 'uploadImages'){
