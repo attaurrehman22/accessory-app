@@ -157,7 +157,7 @@ export class AddNewProductComponent implements OnInit {
         setTimeout(() => {
           this.coverImage = reader.result as string;
           this.isCoverImageUploading = false; // End uploading
-        }, 5000); // 10 seconds delay
+        }, 3000); // 10 seconds delay
       };
 
       reader.readAsDataURL(file);
@@ -182,7 +182,7 @@ export class AddNewProductComponent implements OnInit {
 
           setTimeout(() => {
             newImage.isUploading = false;
-          }, 5000);
+          }, 3000);
         };
 
         reader.readAsDataURL(file);
@@ -200,6 +200,20 @@ export class AddNewProductComponent implements OnInit {
     }
     else if(Param === 'watchDetails' && this.watchDetailsForm.valid){
        console.log(this.watchDetailsForm.value)
+    }
+
+    else if (Param === 'uploadImages'){
+      if (!this.coverImage) {
+        alert("Please upload a cover image.");
+        return;
+      }
+  
+      if (this.otherImages.length === 0) {
+        alert("Please upload at least one other image.");
+        return;
+      }
+      console.log("Cover Image:", this.coverImage);
+      console.log("Other Images:", this.otherImages.map(image => image.url));
     }
   }
 }

@@ -3,6 +3,7 @@
     <div class="col-md-3 col-12" style="border-right: 1px solid #f3f3f3">
       <h5>Create Product Listing</h5>
       <div class="sidebar-list">
+        <!-- <-- Listing Details -- > -->
         <div
           class="list-item"
           [ngClass]="{ active: selectedSection === 'listingDetails' }"
@@ -119,7 +120,7 @@
             </form>
           </div>
         </div>
-
+        <!-- <-- Watch Details -- > -->
         <div
           class="list-item"
           [ngClass]="{ active: selectedSection === 'watchDetails' }"
@@ -133,252 +134,261 @@
               amp tecoin EOS chiliz...
             </p>
 
-            <form [formGroup]="watchDetailsForm" *ngIf="selectedSection === 'watchDetails' && isSmallScreen">
-              
-                <mat-form-field appearance="outline" class="w-100 mb-3">
-                  <mat-label>Reference No.</mat-label>
-                  <input
-                    matInput
-                    formControlName="referenceNo"
-                    placeholder="Enter your Reference Number"
-                  />
-                </mat-form-field>
+            <form
+              [formGroup]="watchDetailsForm"
+              *ngIf="selectedSection === 'watchDetails' && isSmallScreen"
+            >
+              <mat-form-field appearance="outline" class="w-100 mb-3">
+                <mat-label>Reference No.</mat-label>
+                <input
+                  matInput
+                  formControlName="referenceNo"
+                  placeholder="Enter your Reference Number"
+                />
+              </mat-form-field>
 
-                <div class="row">
-                  <div class="col-md-4 mb-3">
-                    <mat-form-field appearance="outline" class="w-100">
-                      <mat-label>Serial No. (if not polished)</mat-label>
-                      <input
-                        matInput
-                        formControlName="serialNo"
-                        placeholder="Enter serial number"
-                      />
-                    </mat-form-field>
-                  </div>
-                  <div class="col-md-4 mb-3">
-                    <mat-form-field appearance="outline" class="w-100">
-                      <mat-label>Gender</mat-label>
-                      <mat-select formControlName="gender">
-                        <mat-option value="">Please Select</mat-option>
-                        <mat-option value="male">Male</mat-option>
-                        <mat-option value="female">Female</mat-option>
-                      </mat-select>
-                    </mat-form-field>
-                  </div>
-                  <div class="col-md-4 mb-3">
-                    <mat-form-field appearance="outline" class="w-100">
-                      <mat-label>Movement</mat-label>
-                      <mat-select formControlName="movement">
-                        <mat-option value="">Please Select</mat-option>
-                        <mat-option value="yes">Yes</mat-option>
-                        <mat-option value="no">No</mat-option>
-                      </mat-select>
-                    </mat-form-field>
-                  </div>
+              <div class="row">
+                <div class="col-md-4 mb-3">
+                  <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>Serial No. (if not polished)</mat-label>
+                    <input
+                      matInput
+                      formControlName="serialNo"
+                      placeholder="Enter serial number"
+                    />
+                  </mat-form-field>
                 </div>
+                <div class="col-md-4 mb-3">
+                  <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>Gender</mat-label>
+                    <mat-select formControlName="gender">
+                      <mat-option value="">Please Select</mat-option>
+                      <mat-option value="male">Male</mat-option>
+                      <mat-option value="female">Female</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+                <div class="col-md-4 mb-3">
+                  <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>Movement</mat-label>
+                    <mat-select formControlName="movement">
+                      <mat-option value="">Please Select</mat-option>
+                      <mat-option value="yes">Yes</mat-option>
+                      <mat-option value="no">No</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div>
 
-                <div class="row">
-                  <div class="col-md-6 mb-3">
-                    <mat-form-field appearance="outline" class="w-100">
-                      <mat-label>Case Diameter</mat-label>
-                      <input
-                        matInput
-                        formControlName="caseDiameter"
-                        placeholder="Enter diameter"
-                      />
-                      <span matSuffix>mm</span>
-                    </mat-form-field>
-                  </div>
-                  <div class="col-md-6 mb-3">
-                    <mat-form-field appearance="outline" class="w-100">
-                      <mat-label>Other Diameter</mat-label>
-                      <input
-                        matInput
-                        formControlName="otherDiameter"
-                        placeholder="Enter diameter"
-                      />
-                      <span matSuffix>mm</span>
-                    </mat-form-field>
-                  </div>
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>Case Diameter</mat-label>
+                    <input
+                      matInput
+                      formControlName="caseDiameter"
+                      placeholder="Enter diameter"
+                    />
+                    <span matSuffix>mm</span>
+                  </mat-form-field>
                 </div>
+                <div class="col-md-6 mb-3">
+                  <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>Other Diameter</mat-label>
+                    <input
+                      matInput
+                      formControlName="otherDiameter"
+                      placeholder="Enter diameter"
+                    />
+                    <span matSuffix>mm</span>
+                  </mat-form-field>
+                </div>
+              </div>
 
-                <div style="padding: 0 0 0 0">
-                  <p><strong>Additional Information</strong> (optional)</p>
-                  <p class="font-weight-400 font-size-16 color-909090">
-                    Every watch will soon be verified by our team of experts to ensure
-                    it’s 100% authentic, giving buyers complete peace of mind.
-                  </p>
-                </div>
-      
-                <div style="padding: 0 0 15px 0">
-                  <mat-accordion>
-                    <mat-expansion-panel
-                      [(expanded)]="panelDialOpenState"
-                      class="panel"
-                    >
-                      <mat-expansion-panel-header>
-                        <mat-panel-title> Dial Info </mat-panel-title>
-                      </mat-expansion-panel-header>
-                      <div class="accordion-body">
-                        <div class="row">
-                          <div class="col-md-6 mb-3">
-                            <mat-form-field appearance="outline" class="w-100">
-                              <mat-label>Dial Color</mat-label>
-                              <mat-select formControlName="dialColor">
-                                <mat-option value="">Please Select</mat-option>
-                              </mat-select>
-                            </mat-form-field>
-                          </div>
-                          <div class="col-md-6 mb-3">
-                            <mat-form-field appearance="outline" class="w-100">
-                              <mat-label>Dial Material</mat-label>
-                              <input
-                                matInput
-                                formControlName="dialMaterial"
-                                placeholder="Enter dial material"
-                              />
-                            </mat-form-field>
-                          </div>
+              <div style="padding: 0 0 0 0">
+                <p><strong>Additional Information</strong> (optional)</p>
+                <p class="font-weight-400 font-size-16 color-909090">
+                  Every watch will soon be verified by our team of experts to
+                  ensure it’s 100% authentic, giving buyers complete peace of
+                  mind.
+                </p>
+              </div>
+
+              <div style="padding: 0 0 15px 0">
+                <mat-accordion>
+                  <mat-expansion-panel
+                    [(expanded)]="panelDialOpenState"
+                    class="panel"
+                  >
+                    <mat-expansion-panel-header>
+                      <mat-panel-title> Dial Info </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <div class="accordion-body">
+                      <div class="row">
+                        <div class="col-md-6 mb-3">
+                          <mat-form-field appearance="outline" class="w-100">
+                            <mat-label>Dial Color</mat-label>
+                            <mat-select formControlName="dialColor">
+                              <mat-option value="">Please Select</mat-option>
+                            </mat-select>
+                          </mat-form-field>
                         </div>
-      
-                        <div class="row">
-                          <div class="col-md-6 mb-3">
-                            <mat-form-field appearance="outline" class="w-100">
-                              <mat-label>Dial Markers</mat-label>
-                              <mat-select formControlName="dialMarkers">
-                                <mat-option value="">Please Select</mat-option>
-                              </mat-select>
-                            </mat-form-field>
-                          </div>
-                          <div class="col-md-6 mb-3">
-                            <mat-form-field appearance="outline" class="w-100">
-                              <mat-label>Dial Hands</mat-label>
-                              <input
-                                matInput
-                                formControlName="dialHands"
-                                placeholder="Enter dial hands style"
-                              />
-                            </mat-form-field>
-                          </div>
+                        <div class="col-md-6 mb-3">
+                          <mat-form-field appearance="outline" class="w-100">
+                            <mat-label>Dial Material</mat-label>
+                            <input
+                              matInput
+                              formControlName="dialMaterial"
+                              placeholder="Enter dial material"
+                            />
+                          </mat-form-field>
                         </div>
                       </div>
-                    </mat-expansion-panel>
-                  </mat-accordion>
-                </div>
-      
-                <div style="padding: 0 0 15px 0">
-                  <mat-accordion>
-                    <mat-expansion-panel [(expanded)]="panelOpenState" class="panel">
-                      <mat-expansion-panel-header>
-                        <mat-panel-title> Case Info </mat-panel-title>
-                      </mat-expansion-panel-header>
-                      <div class="accordion-body">
-                        <div class="row">
-                          <div class="col-md-6 mb-3">
-                            <mat-form-field appearance="outline" class="w-100">
-                              <mat-label>Case Material</mat-label>
-                              <mat-select formControlName="caseMaterial">
-                                <mat-option value="">Please Select</mat-option>
-                              </mat-select>
-                            </mat-form-field>
-                          </div>
-                          <div class="col-md-6 mb-3">
-                            <mat-form-field appearance="outline" class="w-100">
-                              <mat-label>Bezel Material</mat-label>
-                              <input
-                                matInput
-                                formControlName="bezelMaterial"
-                                placeholder="Enter model name"
-                              />
-                            </mat-form-field>
-                          </div>
+
+                      <div class="row">
+                        <div class="col-md-6 mb-3">
+                          <mat-form-field appearance="outline" class="w-100">
+                            <mat-label>Dial Markers</mat-label>
+                            <mat-select formControlName="dialMarkers">
+                              <mat-option value="">Please Select</mat-option>
+                            </mat-select>
+                          </mat-form-field>
                         </div>
-      
-                        <div class="row">
-                          <div class="col-md-6 mb-3">
-                            <mat-form-field appearance="outline" class="w-100">
-                              <mat-label>Thickness</mat-label>
-                              <input
-                                matInput
-                                formControlName="thickness"
-                                placeholder="Enter thickness"
-                              />
-                              <span matSuffix>mm</span>
-                            </mat-form-field>
-                          </div>
-                          <div class="col-md-6 mb-3">
-                            <mat-form-field appearance="outline" class="w-100">
-                              <mat-label>Crystal</mat-label>
-                              <mat-select formControlName="crystal">
-                                <mat-option value="">Please Select</mat-option>
-                              </mat-select>
-                            </mat-form-field>
-                          </div>
+                        <div class="col-md-6 mb-3">
+                          <mat-form-field appearance="outline" class="w-100">
+                            <mat-label>Dial Hands</mat-label>
+                            <input
+                              matInput
+                              formControlName="dialHands"
+                              placeholder="Enter dial hands style"
+                            />
+                          </mat-form-field>
                         </div>
                       </div>
-                    </mat-expansion-panel>
-                  </mat-accordion>
-                </div>
-      
-                <div style="padding: 0 0 15px 0">
-                  <mat-accordion>
-                    <mat-expansion-panel
-                      [(expanded)]="panelStrapOpenState"
-                      class="panel"
-                    >
-                      <mat-expansion-panel-header>
-                        <mat-panel-title> Straps / Bracelet </mat-panel-title>
-                      </mat-expansion-panel-header>
-                      <div class="accordion-body">
-                        <div class="row">
-                          <div class="col-md-6 mb-3">
-                            <mat-form-field appearance="outline" class="w-100">
-                              <mat-label>Bracelet Material</mat-label>
-                              <mat-select formControlName="braceletMaterial">
-                                <mat-option value="">Please Select</mat-option>
-                              </mat-select>
-                            </mat-form-field>
-                          </div>
-                          <div class="col-md-6 mb-3">
-                            <mat-form-field appearance="outline" class="w-100">
-                              <mat-label>Bracelet Color</mat-label>
-                              <input
-                                matInput
-                                formControlName="braceletColor"
-                                placeholder="Enter your model name"
-                              />
-                            </mat-form-field>
-                          </div>
+                    </div>
+                  </mat-expansion-panel>
+                </mat-accordion>
+              </div>
+
+              <div style="padding: 0 0 15px 0">
+                <mat-accordion>
+                  <mat-expansion-panel
+                    [(expanded)]="panelOpenState"
+                    class="panel"
+                  >
+                    <mat-expansion-panel-header>
+                      <mat-panel-title> Case Info </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <div class="accordion-body">
+                      <div class="row">
+                        <div class="col-md-6 mb-3">
+                          <mat-form-field appearance="outline" class="w-100">
+                            <mat-label>Case Material</mat-label>
+                            <mat-select formControlName="caseMaterial">
+                              <mat-option value="">Please Select</mat-option>
+                            </mat-select>
+                          </mat-form-field>
                         </div>
-      
-                        <div class="row">
-                          <div class="col-md-6 mb-3">
-                            <mat-form-field appearance="outline" class="w-100">
-                              <mat-label>Type of Clasp</mat-label>
-                              <mat-select formControlName="claspType">
-                                <mat-option value="">Please Select</mat-option>
-                              </mat-select>
-                            </mat-form-field>
-                          </div>
+                        <div class="col-md-6 mb-3">
+                          <mat-form-field appearance="outline" class="w-100">
+                            <mat-label>Bezel Material</mat-label>
+                            <input
+                              matInput
+                              formControlName="bezelMaterial"
+                              placeholder="Enter model name"
+                            />
+                          </mat-form-field>
                         </div>
                       </div>
-                    </mat-expansion-panel>
-                  </mat-accordion>
-                </div>
-      
-                <div
-                  class="d-flex align-items-center justify-content-end gap-2 mb-3"
-                  style="padding: 0 20px 0 20px"
+
+                      <div class="row">
+                        <div class="col-md-6 mb-3">
+                          <mat-form-field appearance="outline" class="w-100">
+                            <mat-label>Thickness</mat-label>
+                            <input
+                              matInput
+                              formControlName="thickness"
+                              placeholder="Enter thickness"
+                            />
+                            <span matSuffix>mm</span>
+                          </mat-form-field>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                          <mat-form-field appearance="outline" class="w-100">
+                            <mat-label>Crystal</mat-label>
+                            <mat-select formControlName="crystal">
+                              <mat-option value="">Please Select</mat-option>
+                            </mat-select>
+                          </mat-form-field>
+                        </div>
+                      </div>
+                    </div>
+                  </mat-expansion-panel>
+                </mat-accordion>
+              </div>
+
+              <div style="padding: 0 0 15px 0">
+                <mat-accordion>
+                  <mat-expansion-panel
+                    [(expanded)]="panelStrapOpenState"
+                    class="panel"
+                  >
+                    <mat-expansion-panel-header>
+                      <mat-panel-title> Straps / Bracelet </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <div class="accordion-body">
+                      <div class="row">
+                        <div class="col-md-6 mb-3">
+                          <mat-form-field appearance="outline" class="w-100">
+                            <mat-label>Bracelet Material</mat-label>
+                            <mat-select formControlName="braceletMaterial">
+                              <mat-option value="">Please Select</mat-option>
+                            </mat-select>
+                          </mat-form-field>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                          <mat-form-field appearance="outline" class="w-100">
+                            <mat-label>Bracelet Color</mat-label>
+                            <input
+                              matInput
+                              formControlName="braceletColor"
+                              placeholder="Enter your model name"
+                            />
+                          </mat-form-field>
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="col-md-6 mb-3">
+                          <mat-form-field appearance="outline" class="w-100">
+                            <mat-label>Type of Clasp</mat-label>
+                            <mat-select formControlName="claspType">
+                              <mat-option value="">Please Select</mat-option>
+                            </mat-select>
+                          </mat-form-field>
+                        </div>
+                      </div>
+                    </div>
+                  </mat-expansion-panel>
+                </mat-accordion>
+              </div>
+
+              <div
+                class="d-flex align-items-center justify-content-end gap-2 mb-3"
+                style="padding: 0 20px 0 20px"
+              >
+                <button class="save-can-btn canc-bg-color">Back</button>
+                <button
+                  class="save-can-btn save-btn-bg"
+                  (click)="onSubmit('watchDetails')"
                 >
-                  <button class="save-can-btn canc-bg-color">Back</button>
-                  <button class="save-can-btn save-btn-bg" (click)="onSubmit('watchDetails')">Save</button>
-                </div>
-
-              </form>
-            
+                  Save
+                </button>
+              </div>
+            </form>
           </div>
         </div>
-
+        <!-- <-- Upload Images -- > -->
         <div
           class="list-item"
           [ngClass]="{ active: selectedSection === 'uploadImages' }"
@@ -466,6 +476,13 @@
                     <mat-icon>delete</mat-icon>
                   </button>
                 </div>
+              </div>
+              <div
+                class="d-flex align-items-center justify-content-end gap-2 mb-3"
+                style="padding: 0 20px 0 20px"
+              >
+                <button class="save-can-btn canc-bg-color">Back</button>
+                <button class="save-can-btn save-btn-bg" (click)="onSubmit('uploadImages')">Save</button>
               </div>
             </div>
           </div>
@@ -690,11 +707,12 @@
                 <div style="padding: 0 0 0 0">
                   <p><strong>Additional Information</strong> (optional)</p>
                   <p class="font-weight-400 font-size-16 color-909090">
-                    Every watch will soon be verified by our team of experts to ensure
-                    it’s 100% authentic, giving buyers complete peace of mind.
+                    Every watch will soon be verified by our team of experts to
+                    ensure it’s 100% authentic, giving buyers complete peace of
+                    mind.
                   </p>
                 </div>
-      
+
                 <div style="padding: 0 0 15px 0">
                   <mat-accordion>
                     <mat-expansion-panel
@@ -725,7 +743,7 @@
                             </mat-form-field>
                           </div>
                         </div>
-      
+
                         <div class="row">
                           <div class="col-md-6 mb-3">
                             <mat-form-field appearance="outline" class="w-100">
@@ -750,10 +768,13 @@
                     </mat-expansion-panel>
                   </mat-accordion>
                 </div>
-      
+
                 <div style="padding: 0 0 15px 0">
                   <mat-accordion>
-                    <mat-expansion-panel [(expanded)]="panelOpenState" class="panel">
+                    <mat-expansion-panel
+                      [(expanded)]="panelOpenState"
+                      class="panel"
+                    >
                       <mat-expansion-panel-header>
                         <mat-panel-title> Case Info </mat-panel-title>
                       </mat-expansion-panel-header>
@@ -778,7 +799,7 @@
                             </mat-form-field>
                           </div>
                         </div>
-      
+
                         <div class="row">
                           <div class="col-md-6 mb-3">
                             <mat-form-field appearance="outline" class="w-100">
@@ -804,7 +825,7 @@
                     </mat-expansion-panel>
                   </mat-accordion>
                 </div>
-      
+
                 <div style="padding: 0 0 15px 0">
                   <mat-accordion>
                     <mat-expansion-panel
@@ -835,7 +856,7 @@
                             </mat-form-field>
                           </div>
                         </div>
-      
+
                         <div class="row">
                           <div class="col-md-6 mb-3">
                             <mat-form-field appearance="outline" class="w-100">
@@ -850,15 +871,19 @@
                     </mat-expansion-panel>
                   </mat-accordion>
                 </div>
-      
+
                 <div
                   class="d-flex align-items-center justify-content-end gap-2 mb-3"
                   style="padding: 0 20px 0 20px"
                 >
                   <button class="save-can-btn canc-bg-color">Back</button>
-                  <button class="save-can-btn save-btn-bg" (click)="onSubmit('watchDetails')">Save</button>
+                  <button
+                    class="save-can-btn save-btn-bg"
+                    (click)="onSubmit('watchDetails')"
+                  >
+                    Save
+                  </button>
                 </div>
-
               </form>
             </div>
           </div>
@@ -946,6 +971,14 @@
                 </button>
               </div>
             </div>
+          </div>
+
+          <div
+            class="d-flex align-items-center justify-content-end gap-2 mb-3"
+            style="padding: 0 20px 0 20px"
+          >
+            <button class="save-can-btn canc-bg-color">Back</button>
+            <button class="save-can-btn save-btn-bg" (click)="onSubmit('uploadImages')">Save</button>
           </div>
         </div>
       </div>
