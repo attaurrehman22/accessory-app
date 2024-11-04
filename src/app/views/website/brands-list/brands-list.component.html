@@ -5,33 +5,13 @@
   <div class="container d-flex flex-wrap justify-content-center">
     <div class="col-lg-8 col-md-10 col-sm-12">
       <p class="text-center font-size-40 font-wight-600 color-484848">
-        <!-- {{ "chrono_buyer.label" | translate }} -->
-          Popular Brands
+          Popular Models
       </p>
-    </div>
-    <div class="col-lg-8 col-md-10 col-sm-12">
-      <p
-        class="text-center mt-2 font-size-18 font-wight-400 color-6a6a6a"
-      >
-        {{ "chrono_buyer.paragraph" | translate }}
-      </p>
-    </div>
-    <div
-      class="col-lg-12 col-md-12 col-sm-12 d-flex flex-wrap justify-content-center gap-2 mt-3"
-    >
-      <button
-        *ngFor="let category of categoryNames"
-        (click)="changeCategory(category)"
-        class="category_btn"
-        [ngClass]="{ 'selected-category': selectedCategory === category }"
-      >
-        {{ category.name }}
-      </button>
     </div>
 
     <div class="container mt-5">
       <div class="row">
-        <div class="col-md-4 col-sm-6 mb-4" *ngFor="let watch of showList">
+        <div class="col-md-4 col-sm-6 mb-4" *ngFor="let watch of (showList || []) | slice:0:6">
           <div class="card h-100 shadow-sm">
             <img
             style="cursor: pointer;"

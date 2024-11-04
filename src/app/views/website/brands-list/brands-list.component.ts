@@ -14,31 +14,26 @@ export class BrandsListComponent implements OnInit {
   categoryNames: any[] = [];
   commentsList: any;
 
-  changeCategory(category: any) {
-    this.selectedCategory = category;
-
-    this.showList = (category.products || []).map((product: any) => {
-      if (product.main_image) {
-        product.main_image = product.main_image.replace(/\\/g, ""); // Remove all backslashes
-      }
-      return product;
-    });
-  }
-
   ngOnInit(): void {
-    this.getAllTopNewArrivals();
+    this.getAllModels();
   }
 
-  getAllTopNewArrivals() {
-    this.http.getAllTopNewArrivalCategory().subscribe(
+  getAllModels() {
+    this.http.getAllPopularModels().subscribe(
       (res) => {
-        this.categoryNames = res.data; // Store the entire category data
-        this.selectedCategory = this.categoryNames[0]; // Set the first category as default
-        this.showList = this.selectedCategory.products || []; // Load products for the default category
+        this.showList = res.data.map(model => {
+          return {
+            ...model,
+            main_image: model.main_image.replace(/\\/g, '')
+          };
+        });
       },
-      (err) => {}
+      (err) => {
+        console.error(err);
+      }
     );
   }
+  
 
   constructor(
     public translateService: TranslateService,

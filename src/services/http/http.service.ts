@@ -85,6 +85,10 @@ export class HttpService {
     return this.http.get(`${this.apiUrl}/api/new-arrival-with-top-catagory`);
   }
 
+  getAllPopularModels(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/api/most-popular-models`);
+  }
+
   addProduct(formData: any): Observable<any> {
     
     const url = `${this.apiUrl}/api/products/save`;
