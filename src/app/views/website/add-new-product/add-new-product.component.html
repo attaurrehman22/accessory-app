@@ -7,7 +7,6 @@
         <div
           class="list-item"
           [ngClass]="{ active: selectedSection === 'listingDetails' }"
-          
         >
           <div class="step-circle">1</div>
           <div class="step-content">
@@ -38,7 +37,7 @@
                 </mat-error>
               </mat-form-field>
 
-              <mat-form-field appearance="outline" class="w-100">
+              <mat-form-field appearance="outline" class="w-100 mt-2">
                 <mat-label>Model</mat-label>
                 <input
                   matInput
@@ -51,7 +50,7 @@
                 </mat-error>
               </mat-form-field>
 
-              <mat-form-field appearance="outline" class="w-100">
+              <mat-form-field appearance="outline" class="w-100 mt-2">
                 <mat-label>Title</mat-label>
                 <input
                   matInput
@@ -64,7 +63,7 @@
                 </mat-error>
               </mat-form-field>
 
-              <mat-form-field appearance="outline" class="w-100">
+              <mat-form-field appearance="outline" class="w-100 mt-2">
                 <mat-label>Description</mat-label>
                 <textarea
                   matInput
@@ -74,14 +73,14 @@
                 ></textarea>
               </mat-form-field>
 
-              <mat-form-field appearance="outline" class="w-100">
+              <mat-form-field appearance="outline" class="w-100 mt-2">
                 <mat-label>Watch Type</mat-label>
                 <mat-select formControlName="watchType">
                   <mat-option value="wrist">Wrist Watch</mat-option>
                 </mat-select>
               </mat-form-field>
 
-              <mat-form-field appearance="outline" class="w-100">
+              <mat-form-field appearance="outline" class="w-100 mt-2">
                 <mat-label>Year of Production</mat-label>
                 <input
                   matInput
@@ -100,7 +99,7 @@
               >
               <mat-checkbox formControlName="unknown">Unknown</mat-checkbox>
 
-              <div class="d-flex justify-content-end gap-2 mt-3">
+              <div class="d-flex justify-content-end gap-2 mb-3 mt-3">
                 <button
                   mat-button
                   type="button"
@@ -480,7 +479,176 @@
                 style="padding: 0 20px 0 20px"
               >
                 <button class="save-can-btn canc-bg-color">Back</button>
-                <button class="save-can-btn save-btn-bg" (click)="onSubmit('uploadImages')">Save</button>
+                <button
+                  class="save-can-btn save-btn-bg"
+                  (click)="onSubmit('uploadImages')"
+                >
+                  Save
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- <-- Condition Grading -- > -->
+        <div
+          class="list-item"
+          [ngClass]="{ active: selectedSection === 'conditionGrading' }"
+        >
+          <div class="step-circle">4</div>
+          <div class="step-content">
+            <strong>Condition Grading</strong>
+            <p class="text-muted">
+              Crypto ipsum bitcoin ethereum dogecoin litecoin. Revain neo gelen
+              amp tecoin EOS chiliz...
+            </p>
+
+            <div
+              class="image-upload-container"
+              *ngIf="selectedSection === 'conditionGrading' && isSmallScreen"
+            >
+              <div class="container-fluid my-4">
+                <div class="row">
+                  <div
+                    class="col-md-6 mb-3"
+                    *ngFor="let condition of conditions"
+                    (click)="selectCondition(condition)"
+                    [class.selected]="condition === selectedCondition"
+                  >
+                    <div class="card condition-card h-100">
+                      <div class="card-body">
+                        <h5 class="card-title">{{ condition.title }}</h5>
+                        <p class="card-text">{{ condition.description }}</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div
+                class="d-flex align-items-center justify-content-end gap-2 mb-3"
+                style="padding: 0 20px 0 20px"
+              >
+                <button class="save-can-btn canc-bg-color">Back</button>
+                <button
+                  class="save-can-btn save-btn-bg"
+                  (click)="onSubmit('conditionGrading')"
+                >
+                  Save
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- <-- Scope of Delivery -- > -->
+        <div
+          class="list-item"
+          [ngClass]="{ active: selectedSection === 'scopeofdelivery' }"
+        >
+          <div class="step-circle">5</div>
+          <div class="step-content">
+            <strong>Scope of Delivery</strong>
+            <p class="text-muted">
+              Crypto ipsum bitcoin ethereum dogecoin litecoin. Revain neo gelen
+              amp tecoin EOS chiliz...
+            </p>
+
+            <div
+              class="image-upload-container"
+              *ngIf="selectedSection === 'scopeofdelivery' && isSmallScreen"
+            >
+              <div class="container-fluid my-4">
+                <div class="row">
+                  <div
+                    class="col-md-6 col-lg-4 mb-3"
+                    *ngFor="let option of options"
+                    (click)="toggleOption(option)"
+                    [class.selected]="isSelected(option)"
+                  >
+                    <div class="card delivery-card h-100 text-center">
+                      <div class="card-body">
+                        <img
+                          [src]="option.icon"
+                          alt="{{ option.title }}"
+                          class="icon mb-3"
+                        />
+                        <h6 class="card-title">{{ option.title }}</h6>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div
+                class="d-flex align-items-center justify-content-end gap-2 mb-3"
+                style="padding: 0 20px 0 20px"
+              >
+                <button class="save-can-btn canc-bg-color">Back</button>
+                <button
+                  class="save-can-btn save-btn-bg"
+                  (click)="onSubmit('conditionGrading')"
+                >
+                  Save
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- <-- Proof of Ownership -- > -->
+        <div
+          class="list-item"
+          [ngClass]="{ active: selectedSection === 'proofofownership' }"
+        >
+          <div class="step-circle">6</div>
+          <div class="step-content">
+            <strong>Proof of Ownership</strong>
+            <p class="text-muted">
+              Crypto ipsum bitcoin ethereum dogecoin litecoin. Revain neo gelen
+              amp tecoin EOS chiliz...
+            </p>
+
+            <div
+              class="image-upload-container"
+              *ngIf="selectedSection === 'proofofownership' && isSmallScreen"
+            >
+              <div class="clock-container">
+                <div class="clock" *ngFor="let clock of clocks">
+                  <div class="clock-face">
+                    <span
+                      class="hour-hand"
+                      [ngStyle]="{
+                        transform:
+                          'rotate(' +
+                          (clock.hour * 30 + clock.minute * 0.5) +
+                          'deg)'
+                      }"
+                    ></span>
+                    <span
+                      class="minute-hand"
+                      [ngStyle]="{
+                        transform: 'rotate(' + clock.minute * 6 + 'deg)'
+                      }"
+                    ></span>
+                  </div>
+                  <div class="time-display">
+                    {{ formatTime(clock.hour, clock.minute) }}
+                  </div>
+                </div>
+              </div>
+
+              <div
+                class="d-flex align-items-center justify-content-end gap-2 mb-3"
+                style="padding: 0 20px 0 20px"
+              >
+                <button class="save-can-btn canc-bg-color">Back</button>
+                <button
+                  class="save-can-btn save-btn-bg"
+                  (click)="onSubmit('proofofownership')"
+                >
+                  Save
+                </button>
               </div>
             </div>
           </div>
@@ -504,7 +672,7 @@
             it’s 100% authentic, giving buyers complete peace of mind.
           </p>
           <form [formGroup]="listingForm" (ngSubmit)="onSubmit('listing')">
-            <mat-form-field appearance="outline" class="w-100">
+            <mat-form-field appearance="outline" class="w-100 mt-2">
               <mat-label>Brand</mat-label>
               <input
                 matInput
@@ -520,7 +688,7 @@
               </mat-error>
             </mat-form-field>
 
-            <mat-form-field appearance="outline" class="w-100">
+            <mat-form-field appearance="outline" class="w-100 mt-2">
               <mat-label>Model</mat-label>
               <input
                 matInput
@@ -533,7 +701,7 @@
               </mat-error>
             </mat-form-field>
 
-            <mat-form-field appearance="outline" class="w-100">
+            <mat-form-field appearance="outline" class="w-100 mt-2">
               <mat-label>Title</mat-label>
               <input
                 matInput
@@ -546,7 +714,7 @@
               </mat-error>
             </mat-form-field>
 
-            <mat-form-field appearance="outline" class="w-100">
+            <mat-form-field appearance="outline" class="w-100 mt-2">
               <mat-label>Description</mat-label>
               <textarea
                 matInput
@@ -556,14 +724,14 @@
               ></textarea>
             </mat-form-field>
 
-            <mat-form-field appearance="outline" class="w-100">
+            <mat-form-field appearance="outline" class="w-100 mt-2">
               <mat-label>Watch Type</mat-label>
               <mat-select formControlName="watchType">
                 <mat-option value="wrist">Wrist Watch</mat-option>
               </mat-select>
             </mat-form-field>
 
-            <mat-form-field appearance="outline" class="w-100">
+            <mat-form-field appearance="outline" class="w-100 mt-2">
               <mat-label>Year of Production</mat-label>
               <input
                 matInput
@@ -582,7 +750,7 @@
             >
             <mat-checkbox formControlName="unknown">Unknown</mat-checkbox>
 
-            <div class="d-flex justify-content-end gap-2 mt-3">
+            <div class="d-flex justify-content-end gap-2 mb-3 mt-3">
               <button
                 mat-button
                 type="button"
@@ -976,7 +1144,149 @@
             style="padding: 0 20px 0 20px"
           >
             <button class="save-can-btn canc-bg-color">Back</button>
-            <button class="save-can-btn save-btn-bg" (click)="onSubmit('uploadImages')">Save</button>
+            <button
+              class="save-can-btn save-btn-bg"
+              (click)="onSubmit('uploadImages')"
+            >
+              Save
+            </button>
+          </div>
+        </div>
+
+        <!-- <-- Condition Grading -- > -->
+
+        <div class="card-body" *ngIf="selectedSection === 'conditionGrading'">
+          <h5 class="font-weight-bold font-size-24 color-242424 margin-0">
+            Indicate the Condition of Your Watch
+          </h5>
+          <p class="font-weight-400 font-size-16 color-909090">
+            Please indicate any signs of wear such as scratches or dents.
+          </p>
+          <div class="container-fluid my-4">
+            <div class="row">
+              <div
+                class="col-md-6 mb-3"
+                *ngFor="let condition of conditions"
+                (click)="selectCondition(condition)"
+                [class.selected]="condition === selectedCondition"
+              >
+                <div class="card condition-card h-100">
+                  <div class="card-body">
+                    <h5 class="card-title">{{ condition.title }}</h5>
+                    <p class="card-text">{{ condition.description }}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="d-flex align-items-center justify-content-end gap-2 mb-3"
+            style="padding: 0 20px 0 20px"
+          >
+            <button class="save-can-btn canc-bg-color">Back</button>
+            <button
+              class="save-can-btn save-btn-bg"
+              (click)="onSubmit('conditionGrading')"
+            >
+              Save
+            </button>
+          </div>
+        </div>
+
+        <!-- <-- Scope of Delivery -- > -->
+
+        <div class="card-body" *ngIf="selectedSection === 'scopeofdelivery'">
+          <h5 class="font-weight-bold font-size-24 color-242424 margin-0">
+            Scope of Delivery
+          </h5>
+          <p class="font-weight-400 font-size-16 color-909090">
+            What comes with your watch ?
+          </p>
+          <div class="container-fluid my-4">
+            <div class="row">
+              <div
+                class="col-md-6 col-lg-4 mb-3"
+                *ngFor="let option of options"
+                (click)="toggleOption(option)"
+                [class.selected]="isSelected(option)"
+              >
+                <div class="card delivery-card h-100 text-center">
+                  <div class="card-body">
+                    <img
+                      [src]="option.icon"
+                      alt="{{ option.title }}"
+                      class="icon mb-3"
+                    />
+                    <h6 class="card-title">{{ option.title }}</h6>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="d-flex align-items-center justify-content-end gap-2 mb-3"
+            style="padding: 0 20px 0 20px"
+          >
+            <button class="save-can-btn canc-bg-color">Back</button>
+            <button
+              class="save-can-btn save-btn-bg"
+              (click)="onSubmit('scopeofdelivery')"
+            >
+              Save
+            </button>
+          </div>
+        </div>
+
+        <!-- <-- Proof of Ownership -- > -->
+
+        <div class="card-body" *ngIf="selectedSection === 'proofofownership'">
+          <h5 class="font-weight-bold font-size-24 color-242424 margin-0">
+            Proof of Ownership
+          </h5>
+          <p class="font-weight-400 font-size-16 color-909090">
+            Please set the watch to the following times & upload a photo of
+            each. This is our way of confirming that you are in possession of
+            the watch. These photos will also be published in your listing.
+          </p>
+
+          <div class="clock-container">
+            <div class="clock" *ngFor="let clock of clocks">
+              <div class="clock-face">
+                <span
+                  class="hour-hand"
+                  [ngStyle]="{
+                    transform:
+                      'rotate(' +
+                      (clock.hour * 30 + clock.minute * 0.5) +
+                      'deg)'
+                  }"
+                ></span>
+                <span
+                  class="minute-hand"
+                  [ngStyle]="{
+                    transform: 'rotate(' + clock.minute * 6 + 'deg)'
+                  }"
+                ></span>
+              </div>
+              <div class="time-display">
+                {{ formatTime(clock.hour, clock.minute) }}
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="d-flex align-items-center justify-content-end gap-2 mb-3"
+            style="padding: 0 20px 0 20px"
+          >
+            <button class="save-can-btn canc-bg-color">Back</button>
+            <button
+              class="save-can-btn save-btn-bg"
+              (click)="onSubmit('proofofownership')"
+            >
+              Save
+            </button>
           </div>
         </div>
       </div>

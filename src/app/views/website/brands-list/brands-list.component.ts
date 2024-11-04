@@ -9,10 +9,7 @@ import { HttpService } from "src/services/http/http.service";
   styleUrls: ['./brands-list.component.css']
 })
 export class BrandsListComponent implements OnInit {
-  selectedCategory: any;
-  showList: any[] = []; // Store products for the selected category
-  categoryNames: any[] = [];
-  commentsList: any;
+  showList: any[] = [];
 
   ngOnInit(): void {
     this.getAllModels();

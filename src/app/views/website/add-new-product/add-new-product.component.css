@@ -1,6 +1,37 @@
 .container-fluid {
   max-width: 1200px;
 }
+.mat-form-field {
+  border: 1px solid #EEEEEE;
+}
+
+.mat-form-field-focused {
+  border-color: #EEEEEE; 
+}
+
+mat-label {
+  font-size: 16px;
+  font-weight: 400;
+  color: #242424;
+}
+
+::ng-deep .mat-form-field .mat-input-element::placeholder {
+  font-size: 16px;         
+  font-weight: 400;        
+  color: #909090;           
+}
+
+::ng-deep .mat-form-field .mat-input-element:-ms-input-placeholder {
+  font-size: 16px;          
+  font-weight: 400;        
+  color: #909090;          
+}
+
+::ng-deep .mat-form-field .mat-input-element::-ms-input-placeholder {
+  font-size: 16px;          
+  font-weight: 400;         
+  color: #909090;           
+}
 
 .sidebar-list {
   position: relative;
@@ -193,3 +224,108 @@
 
 
 /* ------------------------- image form end--------------------------- */
+
+/* ------------------------- Condition Grading start--------------------------- */
+
+.container {
+  max-width: 700px;
+}
+
+.condition-card {
+  border: 1px solid #ddd;
+  cursor: pointer;
+  transition: border-color 0.2s ease-in-out;
+}
+
+.condition-card:hover {
+  border-color: #000;
+}
+
+.selected .condition-card {
+  border-color: #000;
+}
+
+
+/* ------------------------- Condition Grading end--------------------------- */
+
+
+
+/* ------------------------- Scope of Delivery start--------------------------- */
+
+.delivery-card {
+  border: 1px solid #ddd;
+  cursor: pointer;
+  transition: border-color 0.2s ease-in-out;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+}
+
+.delivery-card:hover {
+  border-color: #000;
+}
+
+.selected .delivery-card {
+  border-color: #000;
+}
+
+.icon {
+  width: 50px;
+  height: auto;
+}
+
+/* ------------------------- Scope of Delivery start--------------------------- */
+
+/* ------------------------- Proof of Ownership start--------------------------- */
+
+.clock-container {
+  display: flex;
+  gap: 20px;
+}
+
+.clock {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.clock-face {
+  width: 100px;
+  height: 100px;
+  border: 2px solid #ddd;
+  border-radius: 50%;
+  position: relative;
+  background-color: #f9f9f9;
+}
+
+.hour-hand, .minute-hand {
+  position: absolute;
+  background-color: black;
+  transform-origin: bottom center;
+}
+
+.hour-hand {
+  width: 4px;
+  height: 30px;
+  bottom: 50%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.minute-hand {
+  width: 2px;
+  height: 40px;
+  bottom: 50%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.time-display {
+  margin-top: 10px;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+
+/* ------------------------- Proof of Ownership start--------------------------- */
+
+

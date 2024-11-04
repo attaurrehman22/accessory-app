@@ -28,7 +28,7 @@ import { LanguageService } from "src/services/lang-service/language.service";
   styleUrls: ["./add-new-product.component.css"],
 })
 export class AddNewProductComponent implements OnInit {
-  selectedSection: string = "listingDetails";
+  selectedSection: string = "proofofownership";
   isSmallScreen: boolean = false;
   panelOpenState = false;
   panelDialOpenState = false;
@@ -91,11 +91,70 @@ export class AddNewProductComponent implements OnInit {
   claspType = new FormControl("");
   claspMaterial = new FormControl("");
 
-  constructor() {}
+  constructor(private http:HttpService) {}
+
+
+  clocks: { hour: number, minute: number }[] = [];
+ 
+  generateRandomClocks(count: number) {
+    this.clocks = Array.from({ length: count }, () => {
+      const hour = Math.floor(Math.random() * 12);  // Random hour from 0 to 11
+      const minute = Math.floor(Math.random() * 60); // Random minute from 0 to 59
+      return { hour, minute };
+    });
+  }
+
+  // Function to format time for display (e.g., 03:05 instead of 3:5)
+  formatTime(hour: number, minute: number): string {
+    const formattedHour = hour.toString().padStart(2, '0');
+    const formattedMinute = minute.toString().padStart(2, '0');
+    return `${formattedHour}:${formattedMinute}`;
+  }
+
+
+
+  options = [
+    { title: 'Original Box & Original Papers', icon: 'assets/icons/original-box-papers.svg' },
+    { title: 'Original Box', icon: 'assets/icons/original-box.svg' },
+    { title: 'Original Papers', icon: 'assets/icons/original-papers.svg' },
+    { title: 'Watch Only', icon: 'assets/icons/watch-only.svg' }
+  ];
+
+  selectedOptions: any[] = [];
+
+  toggleOption(option: any) {
+    const index = this.selectedOptions.indexOf(option);
+    if (index === -1) {
+      this.selectedOptions.push(option);  // Add to selection
+    } else {
+      this.selectedOptions.splice(index, 1);  // Remove from selection
+    }
+  }
+
+  isSelected(option: any): boolean {
+    return this.selectedOptions.includes(option);
+  }
+
+
+
+  conditions = [
+    { title: 'Like New & Unworn', description: 'The item has no signs of wear such as scratches or dents and is unworn. The item has not been polished.' },
+    { title: 'Very Good', description: 'The item shows minor signs of wear, such as small but physically imperceptible scratches.' },
+    { title: 'Good', description: 'The item shows visible and physically perceptible signs of wear such as scratches, scuffs or small dents.' },
+    { title: 'Fair', description: 'The item shows major, visible signs of wear like scratches and dents.' },
+    { title: 'Incomplete', description: 'The item is missing some parts and is not functional.' }
+  ];
+
+  selectedCondition = null;
+
+  selectCondition(condition: any) {
+    this.selectedCondition = condition;
+  }
 
   ngOnInit() {
     this.checkScreenSize();
     window.addEventListener("resize", () => this.checkScreenSize());
+    this.generateRandomClocks(2);
 
     // Listing Form
     this.listingForm = new FormGroup({
@@ -216,6 +275,17 @@ export class AddNewProductComponent implements OnInit {
       }
       console.log("Cover Image:", this.coverImage);
       console.log("Other Images:", this.otherImages.map(image => image.url));
+
+      this.selectSection('conditionGrading')
+    }
+
+    else if (Param === 'conditionGrading'){
+      console.log(this.selectedCondition)
+      this.selectSection('scopeofdelivery')
+    }
+
+    else if (Param === 'scopeofdelivery'){
+      console.log(this.selectedOptions)
     }
   }
 }
