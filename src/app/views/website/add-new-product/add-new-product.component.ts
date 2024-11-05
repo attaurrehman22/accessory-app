@@ -286,6 +286,20 @@ export class AddNewProductComponent implements OnInit {
 
     else if (Param === 'scopeofdelivery'){
       console.log(this.selectedOptions)
+      this.selectSection('proofofownership')
+    }
+
+    else if (Param === 'proofofownership'){
+      console.log("Selected files for 'proofofownership':", this.selectedFiles);
+
+      // Display each file separately in the console
+      this.selectedFiles.forEach((file, index) => {
+        if (file) {
+          console.log(`File for Clock ${index + 1}:`, file);
+        } else {
+          console.log(`No file selected for Clock ${index + 1}`);
+        }
+      });
     }
   }
 
@@ -296,7 +310,7 @@ export class AddNewProductComponent implements OnInit {
   @ViewChild('fileInput0') fileInput0!: ElementRef<HTMLInputElement>;
   @ViewChild('fileInput1') fileInput1!: ElementRef<HTMLInputElement>;
   imagePreviews: string[] = ['', ''];
-
+  selectedFiles: File[] = [null, null];
   triggerFileInput(clockIndex: number): void {
     if (clockIndex === 0) {
       this.fileInput0.nativeElement.click();
@@ -309,6 +323,7 @@ export class AddNewProductComponent implements OnInit {
     const fileInput = event.target as HTMLInputElement;
     if (fileInput.files && fileInput.files[0]) {
       const file = fileInput.files[0];
+      this.selectedFiles[clockIndex] = file; // Store the selected file
       console.log(`Selected file for clock ${clockIndex + 1}:`, file);
 
       const reader = new FileReader();

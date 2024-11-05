@@ -1252,28 +1252,39 @@
           </p>
 
           <div class="clock-container">
-            <div class="clock">
-              <div class="clock-face">
-                <span
-                  class="hour-hand"
-                  [ngStyle]="{
-                    transform:
-                      'rotate(' +
-                      (clocks[0].hour * 30 + clocks[0].minute * 0.5) +
-                      'deg)'
-                  }"
-                ></span>
-                <span
-                  class="minute-hand"
-                  [ngStyle]="{
-                    transform: 'rotate(' + clocks[0].minute * 6 + 'deg)'
-                  }"
-                ></span>
+            <div class="clock" style="flex-direction: row;gap: 10px;">
+              <div style="display: flex;flex-direction: column;">
+                <div class="clock-face">
+                  <span
+                    class="hour-hand"
+                    [ngStyle]="{
+                      transform:
+                        'rotate(' +
+                        (clocks[0].hour * 30 + clocks[0].minute * 0.5) +
+                        'deg)'
+                    }"
+                  ></span>
+                  <span
+                    class="minute-hand"
+                    [ngStyle]="{
+                      transform: 'rotate(' + clocks[0].minute * 6 + 'deg)'
+                    }"
+                  ></span>
+                </div>
+                <div class="time-display">
+                  {{ formatTime(clocks[0].hour, clocks[0].minute) }}
+                </div>
               </div>
-          
-              <!-- Button to open file input -->
-              <button (click)="triggerFileInput(0)">Upload Image</button>
-              
+               <!-- Image upload area for Clock 1 -->
+              <div class="upload-container" (click)="triggerFileInput(0)">
+                <div *ngIf="!imagePreviews[0]" class="upload-placeholder">
+                  <span class="plus-icon">+</span>
+                </div>
+                <img *ngIf="imagePreviews[0]" [src]="imagePreviews[0]" alt="Image Preview" class="image-preview"/>
+                <input type="file" accept="image/*" hidden (change)="onFileSelected($event, 0)" #fileInput0 />
+                <p class="upload-text">Upload Image</p>
+              </div>
+
               <!-- Hidden file input for image upload -->
               <input
                 type="file"
@@ -1281,56 +1292,40 @@
                 hidden
                 #fileInput0
                 (change)="onFileSelected($event, 0)"
-              />
-          
-              <!-- Preview image -->
-              <div *ngIf="imagePreviews[0]">
-                <img [src]="imagePreviews[0]" alt="Selected Image Preview" style="width: 100px; height: auto;"/>
-              </div>
-          
-              <div class="time-display">
-                {{ formatTime(clocks[0].hour, clocks[0].minute) }}
-              </div>
+              />       
             </div>
           
-            <div class="clock">
-              <div class="clock-face">
-                <span
-                  class="hour-hand"
-                  [ngStyle]="{
-                    transform:
-                      'rotate(' +
-                      (clocks[1].hour * 30 + clocks[1].minute * 0.5) +
-                      'deg)'
-                  }"
-                ></span>
-                <span
-                  class="minute-hand"
-                  [ngStyle]="{
-                    transform: 'rotate(' + clocks[1].minute * 6 + 'deg)'
-                  }"
-                ></span>
+            <div class="clock" style="flex-direction: row;gap: 10px;">
+              <div style="display: flex;flex-direction: column;">
+                <div class="clock-face">
+                  <span
+                    class="hour-hand"
+                    [ngStyle]="{
+                      transform:
+                        'rotate(' +
+                        (clocks[1].hour * 30 + clocks[1].minute * 0.5) +
+                        'deg)'
+                    }"
+                  ></span>
+                  <span
+                    class="minute-hand"
+                    [ngStyle]="{
+                      transform: 'rotate(' + clocks[1].minute * 6 + 'deg)'
+                    }"
+                  ></span>
+                </div>
+                <div class="time-display">
+                  {{ formatTime(clocks[1].hour, clocks[1].minute) }}
+                </div>
               </div>
-          
               <!-- Button to open file input -->
-              <button (click)="triggerFileInput(1)">Upload Image</button>
-          
-              <!-- Hidden file input for image upload -->
-              <input
-                type="file"
-                accept="image/*"
-                hidden
-                #fileInput1
-                (change)="onFileSelected($event, 1)"
-              />
-          
-              <!-- Preview image -->
-              <div *ngIf="imagePreviews[1]">
-                <img [src]="imagePreviews[1]" alt="Selected Image Preview" style="width: 100px; height: auto;"/>
-              </div>
-          
-              <div class="time-display">
-                {{ formatTime(clocks[1].hour, clocks[1].minute) }}
+              <div class="upload-container" (click)="triggerFileInput(1)">
+                <div *ngIf="!imagePreviews[1]" class="upload-placeholder">
+                  <span class="plus-icon">+</span>
+                </div>
+                <img *ngIf="imagePreviews[1]" [src]="imagePreviews[1]" alt="Image Preview" class="image-preview"/>
+                <input type="file" accept="image/*" hidden (change)="onFileSelected($event, 1)" #fileInput1 />
+                <p class="upload-text">Upload Image</p>
               </div>
             </div>
           </div>
