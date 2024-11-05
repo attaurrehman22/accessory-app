@@ -1270,11 +1270,29 @@
                   }"
                 ></span>
               </div>
+          
+              <!-- Button to open file input -->
+              <button (click)="triggerFileInput(0)">Upload Image</button>
+              
+              <!-- Hidden file input for image upload -->
+              <input
+                type="file"
+                accept="image/*"
+                hidden
+                #fileInput0
+                (change)="onFileSelected($event, 0)"
+              />
+          
+              <!-- Preview image -->
+              <div *ngIf="imagePreviews[0]">
+                <img [src]="imagePreviews[0]" alt="Selected Image Preview" style="width: 100px; height: auto;"/>
+              </div>
+          
               <div class="time-display">
                 {{ formatTime(clocks[0].hour, clocks[0].minute) }}
               </div>
             </div>
-
+          
             <div class="clock">
               <div class="clock-face">
                 <span
@@ -1293,11 +1311,31 @@
                   }"
                 ></span>
               </div>
+          
+              <!-- Button to open file input -->
+              <button (click)="triggerFileInput(1)">Upload Image</button>
+          
+              <!-- Hidden file input for image upload -->
+              <input
+                type="file"
+                accept="image/*"
+                hidden
+                #fileInput1
+                (change)="onFileSelected($event, 1)"
+              />
+          
+              <!-- Preview image -->
+              <div *ngIf="imagePreviews[1]">
+                <img [src]="imagePreviews[1]" alt="Selected Image Preview" style="width: 100px; height: auto;"/>
+              </div>
+          
               <div class="time-display">
                 {{ formatTime(clocks[1].hour, clocks[1].minute) }}
               </div>
             </div>
           </div>
+          
+          
 
           <div
             class="d-flex align-items-center justify-content-end gap-2 mb-3"

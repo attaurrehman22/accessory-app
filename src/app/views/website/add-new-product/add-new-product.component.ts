@@ -288,4 +288,35 @@ export class AddNewProductComponent implements OnInit {
       console.log(this.selectedOptions)
     }
   }
+
+
+
+
+
+  @ViewChild('fileInput0') fileInput0!: ElementRef<HTMLInputElement>;
+  @ViewChild('fileInput1') fileInput1!: ElementRef<HTMLInputElement>;
+  imagePreviews: string[] = ['', ''];
+
+  triggerFileInput(clockIndex: number): void {
+    if (clockIndex === 0) {
+      this.fileInput0.nativeElement.click();
+    } else if (clockIndex === 1) {
+      this.fileInput1.nativeElement.click();
+    }
+  }
+
+  onFileSelected(event: Event, clockIndex: number): void {
+    const fileInput = event.target as HTMLInputElement;
+    if (fileInput.files && fileInput.files[0]) {
+      const file = fileInput.files[0];
+      console.log(`Selected file for clock ${clockIndex + 1}:`, file);
+
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        this.imagePreviews[clockIndex] = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+
 }
