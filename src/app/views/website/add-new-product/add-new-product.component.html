@@ -1252,26 +1252,49 @@
           </p>
 
           <div class="clock-container">
-            <div class="clock" *ngFor="let clock of clocks">
+            <div class="clock">
               <div class="clock-face">
                 <span
                   class="hour-hand"
                   [ngStyle]="{
                     transform:
                       'rotate(' +
-                      (clock.hour * 30 + clock.minute * 0.5) +
+                      (clocks[0].hour * 30 + clocks[0].minute * 0.5) +
                       'deg)'
                   }"
                 ></span>
                 <span
                   class="minute-hand"
                   [ngStyle]="{
-                    transform: 'rotate(' + clock.minute * 6 + 'deg)'
+                    transform: 'rotate(' + clocks[0].minute * 6 + 'deg)'
                   }"
                 ></span>
               </div>
               <div class="time-display">
-                {{ formatTime(clock.hour, clock.minute) }}
+                {{ formatTime(clocks[0].hour, clocks[0].minute) }}
+              </div>
+            </div>
+
+            <div class="clock">
+              <div class="clock-face">
+                <span
+                  class="hour-hand"
+                  [ngStyle]="{
+                    transform:
+                      'rotate(' +
+                      (clocks[1].hour * 30 + clocks[1].minute * 0.5) +
+                      'deg)'
+                  }"
+                ></span>
+                <span
+                  class="minute-hand"
+                  [ngStyle]="{
+                    transform: 'rotate(' + clocks[1].minute * 6 + 'deg)'
+                  }"
+                ></span>
+              </div>
+              <div class="time-display">
+                {{ formatTime(clocks[1].hour, clocks[1].minute) }}
               </div>
             </div>
           </div>
