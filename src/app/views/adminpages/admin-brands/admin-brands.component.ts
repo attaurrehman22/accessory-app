@@ -81,7 +81,7 @@ export class AdminBrandsComponent {
   }
 
   openModal() {
-    this.router.navigate(["/admin-brands-product"], {
+    this.router.navigate(["admin","brands","product"], {
       state: { param: "Create" },
     });
   }
@@ -115,7 +115,7 @@ export class AdminBrandsComponent {
   }
 
   editBrand(data: any) {
-    this.router.navigate(["/admin-brands-product"], {
+    this.router.navigate(["admin","brands","product"], {
       state: { param: "Edit", data: data },
     });
   }

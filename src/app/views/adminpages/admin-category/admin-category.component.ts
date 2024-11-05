@@ -101,7 +101,7 @@ export class AdminCategoryComponent {
   }
 
   openModal() {
-    this.router.navigate(["/admin-category-product"], {
+    this.router.navigate(["admin","category","product"], {
       state: { param: "Create" },
     });
   }
@@ -114,7 +114,7 @@ export class AdminCategoryComponent {
         this.dataSource.paginator = this.paginator;
       }
     )
-   
+
   }
 
   isMeOrAdminOrDeveloper(id: any): boolean {
@@ -126,7 +126,7 @@ export class AdminCategoryComponent {
   }
 
   editUser(data: any) {
-    this.router.navigate(["/admin-category-product"], {
+    this.router.navigate(["admin","category","product"], {
       state: { param: "Edit", data: data },
     });
   }
