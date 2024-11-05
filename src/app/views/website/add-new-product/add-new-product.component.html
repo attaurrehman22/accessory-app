@@ -860,7 +860,11 @@
               *ngIf="selectedSection === 'billinginformation' && isSmallScreen"
             >
               <form [formGroup]="billingForm">
-                <mat-form-field style="width: 100%;margin-top: 8px;" class="full-width" appearance="outline">
+                <mat-form-field
+                  style="width: 100%; margin-top: 8px"
+                  class="full-width"
+                  appearance="outline"
+                >
                   <mat-label>Billing Address</mat-label>
                   <input
                     matInput
@@ -872,7 +876,11 @@
                   </mat-error>
                 </mat-form-field>
 
-                <mat-form-field style="width: 100%;margin-top: 8px;" class="full-width" appearance="outline">
+                <mat-form-field
+                  style="width: 100%; margin-top: 8px"
+                  class="full-width"
+                  appearance="outline"
+                >
                   <mat-label>First Name</mat-label>
                   <input
                     matInput
@@ -884,7 +892,11 @@
                   </mat-error>
                 </mat-form-field>
 
-                <mat-form-field style="width: 100%;margin-top: 8px;" class="full-width" appearance="outline">
+                <mat-form-field
+                  style="width: 100%; margin-top: 8px"
+                  class="full-width"
+                  appearance="outline"
+                >
                   <mat-label>Last Name</mat-label>
                   <input
                     matInput
@@ -896,7 +908,11 @@
                   </mat-error>
                 </mat-form-field>
 
-                <mat-form-field style="width: 100%;margin-top: 8px;" class="full-width" appearance="outline">
+                <mat-form-field
+                  style="width: 100%; margin-top: 8px"
+                  class="full-width"
+                  appearance="outline"
+                >
                   <mat-label>Street</mat-label>
                   <input
                     matInput
@@ -908,7 +924,11 @@
                   </mat-error>
                 </mat-form-field>
 
-                <mat-form-field style="width: 100%;margin-top: 8px;" class="full-width" appearance="outline">
+                <mat-form-field
+                  style="width: 100%; margin-top: 8px"
+                  class="full-width"
+                  appearance="outline"
+                >
                   <mat-label>Street Line 2</mat-label>
                   <input
                     matInput
@@ -917,7 +937,11 @@
                   />
                 </mat-form-field>
 
-                <mat-form-field style="width: 100%;margin-top: 8px;" class="full-width" appearance="outline">
+                <mat-form-field
+                  style="width: 100%; margin-top: 8px"
+                  class="full-width"
+                  appearance="outline"
+                >
                   <mat-label>ZIP Code</mat-label>
                   <input
                     matInput
@@ -929,7 +953,11 @@
                   </mat-error>
                 </mat-form-field>
 
-                <mat-form-field style="width: 100%;margin-top: 8px;" class="full-width" appearance="outline">
+                <mat-form-field
+                  style="width: 100%; margin-top: 8px"
+                  class="full-width"
+                  appearance="outline"
+                >
                   <mat-label>City</mat-label>
                   <mat-select
                     formControlName="city"
@@ -943,8 +971,6 @@
                     City is required
                   </mat-error>
                 </mat-form-field>
-
-                
               </form>
 
               <div
@@ -957,6 +983,109 @@
                   (click)="onSubmit('billinginformation')"
                 >
                   Save
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- <-- Summary -- > -->
+        <div
+          class="list-item"
+          [ngClass]="{ active: selectedSection === 'summary' }"
+        >
+          <div class="step-circle">9</div>
+          <div class="step-content">
+            <strong>Summary</strong>
+            <p class="text-muted">
+              Crypto ipsum bitcoin ethereum dogecoin litecoin. Revain neo golem
+              amp telcoin EOS chiliz...
+            </p>
+            <div
+              class="image-upload-container"
+              *ngIf="selectedSection === 'summary' && isSmallScreen"
+            >
+
+            <div class="container-fluid mt-4">
+              <div class="row">
+                <!-- Ad Preview Section -->
+                <div class="col-md-6">
+                  <div class="card p-3">
+                    <h6 class="text-muted font-weight-bold">Ad Preview</h6>
+                    <div class="d-flex align-items-center">
+                      <img src="path/to/watch-image.jpg" alt="Watch Image" class="img-fluid" style="max-width: 100px;" />
+                      <div class="ml-3">
+                        <h6 class="text-secondary">Rolex | Speed Master II</h6>
+                        <p class="font-weight-bold mb-1">Rolex Speedmaster In A Good Condition But In Low Price</p>
+                        <p class="text-primary font-weight-bold mb-0">SR 2499.99</p>
+                        <small class="text-muted">Excl. Shipping Charges</small>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+            
+                <!-- Price Info Section -->
+                <div class="col-md-6">
+                  <div class="card p-3">
+                    <h6 class="text-muted font-weight-bold">Price Info</h6>
+                    <div class="d-flex justify-content-between">
+                      <span>Watch Price</span>
+                      <span class="font-weight-bold">SR 2000.00</span>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                      <span>Platform Fee (4%)</span>
+                      <span class="text-danger">- SR 80.00</span>
+                    </div>
+                    <hr />
+                    <div class="d-flex justify-content-between">
+                      <span>Estimated Payout</span>
+                      <span class="font-weight-bold">SR 1920.00</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            
+              <!-- Billing Information Section -->
+              <div class="card mt-4 p-3">
+                <h6 class="text-muted font-weight-bold">Billing Information</h6>
+                <div class="row">
+                  <div class="col-md-6">
+                    <p class="mb-1"><strong>Billing Address</strong></p>
+                    <p class="text-muted mb-0">Rest assured, each watch will undergo verification by our team of experts.</p>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="d-flex justify-content-between">
+                      <p class="mb-1"><strong>Street</strong></p>
+                      <p class="text-muted mb-0">Jamama Street #1234</p>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                      <p class="mb-1"><strong>Street Line 2</strong></p>
+                      <p class="text-muted mb-0">Al Kharaj #1234</p>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                      <p class="mb-1"><strong>City</strong></p>
+                      <p class="font-italic text-dark mb-0">Makkah</p>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                      <p class="mb-1"><strong>Zip Code</strong></p>
+                      <p class="text-muted mb-0">479123</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+              <div
+                class="d-flex align-items-center justify-content-end gap-2 mb-3"
+                style="padding: 0 20px 0 20px"
+              >
+                <button class="save-can-btn canc-bg-color">Back</button>
+                <button
+                  class="save-can-btn save-btn-bg"
+                  (click)="onSubmit('summary')"
+                >
+                  Publish
                 </button>
               </div>
             </div>
@@ -1783,7 +1912,11 @@
             it’s 100% authentic, giving buyers complete peace of mind.
           </p>
           <form [formGroup]="billingForm">
-            <mat-form-field style="width: 100%;margin-top: 8px;" class="full-width" appearance="outline">
+            <mat-form-field
+              style="width: 100%; margin-top: 8px"
+              class="full-width"
+              appearance="outline"
+            >
               <mat-label>Billing Address</mat-label>
               <input
                 matInput
@@ -1795,7 +1928,11 @@
               </mat-error>
             </mat-form-field>
 
-            <mat-form-field style="width: 100%;margin-top: 8px;" class="full-width" appearance="outline">
+            <mat-form-field
+              style="width: 100%; margin-top: 8px"
+              class="full-width"
+              appearance="outline"
+            >
               <mat-label>First Name</mat-label>
               <input
                 matInput
@@ -1807,7 +1944,11 @@
               </mat-error>
             </mat-form-field>
 
-            <mat-form-field style="width: 100%;margin-top: 8px;" class="full-width" appearance="outline">
+            <mat-form-field
+              style="width: 100%; margin-top: 8px"
+              class="full-width"
+              appearance="outline"
+            >
               <mat-label>Last Name</mat-label>
               <input
                 matInput
@@ -1819,7 +1960,11 @@
               </mat-error>
             </mat-form-field>
 
-            <mat-form-field style="width: 100%;margin-top: 8px;" class="full-width" appearance="outline">
+            <mat-form-field
+              style="width: 100%; margin-top: 8px"
+              class="full-width"
+              appearance="outline"
+            >
               <mat-label>Street</mat-label>
               <input
                 matInput
@@ -1831,7 +1976,11 @@
               </mat-error>
             </mat-form-field>
 
-            <mat-form-field style="width: 100%;margin-top: 8px;" class="full-width" appearance="outline">
+            <mat-form-field
+              style="width: 100%; margin-top: 8px"
+              class="full-width"
+              appearance="outline"
+            >
               <mat-label>Street Line 2</mat-label>
               <input
                 matInput
@@ -1840,7 +1989,11 @@
               />
             </mat-form-field>
 
-            <mat-form-field style="width: 100%;margin-top: 8px;" class="full-width" appearance="outline">
+            <mat-form-field
+              style="width: 100%; margin-top: 8px"
+              class="full-width"
+              appearance="outline"
+            >
               <mat-label>ZIP Code</mat-label>
               <input
                 matInput
@@ -1852,7 +2005,11 @@
               </mat-error>
             </mat-form-field>
 
-            <mat-form-field style="width: 100%;margin-top: 8px;" class="full-width" appearance="outline">
+            <mat-form-field
+              style="width: 100%; margin-top: 8px"
+              class="full-width"
+              appearance="outline"
+            >
               <mat-label>City</mat-label>
               <mat-select formControlName="city" placeholder="Please select">
                 <mat-option *ngFor="let city of cities" [value]="city">{{
@@ -1875,6 +2032,102 @@
               (click)="onSubmit('billinginformation')"
             >
               Save
+            </button>
+          </div>
+        </div>
+
+        <!-- <--Summary -- > -->
+
+        <div class="card-body" *ngIf="selectedSection === 'summary'">
+          <h5 class="font-weight-bold font-size-24 color-242424 margin-0">
+            Summary
+          </h5>
+          <p class="font-weight-400 font-size-16 color-909090">
+            Every watch will soon be verified by our team of experts to ensure
+            it’s 100% authentic, giving buyers complete peace of mind.
+          </p>
+
+
+          <div class="container-fluid mt-4">
+            <div class="row">
+              <!-- Ad Preview Section -->
+              <div class="col-md-6">
+                <h6 class="text-muted font-weight-bold">Ad Preview</h6>
+                <div class="card p-3">
+                  <div class="d-flex align-items-center">
+                    <img src="./assets/images/interested-watches-1.png" alt="Watch Image" class="img-fluid" style="max-width: 100px;" />
+                    <div class="ml-3">
+                      <h6 class="text-secondary">Rolex | Speed Master II</h6>
+                      <p class="font-weight-bold mb-1">Rolex Speedmaster In A Good Condition But In Low Price</p>
+                      <p class="text-primary font-weight-bold mb-0">SR 2499.99</p>
+                      <small class="text-muted">Excl. Shipping Charges</small>
+                    </div>
+                  </div>
+                </div>
+              </div>
+          
+              <!-- Price Info Section -->
+              <div class="col-md-6">
+                <h6 class="text-muted font-weight-bold">Price Info</h6>
+                <div class="card p-3">
+                  <div class="d-flex justify-content-between">
+                    <span>Watch Price</span>
+                    <span class="font-weight-bold">SR 2000.00</span>
+                  </div>
+                  <div class="d-flex justify-content-between">
+                    <span>Platform Fee (4%)</span>
+                    <span class="text-danger">- SR 80.00</span>
+                  </div>
+                  <hr />
+                  <div class="d-flex justify-content-between">
+                    <span>Estimated Payout</span>
+                    <span class="font-weight-bold">SR 1920.00</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          
+            <!-- Billing Information Section -->
+            <h6 class="text-muted font-weight-bold">Billing Information</h6>
+            <div class="card mt-4 p-3">
+              <div class="row">
+                <div class="col-md-6">
+                  <p class="mb-1"><strong>Billing Address</strong></p>
+                  <p class="text-muted mb-0">Rest assured, each watch will undergo verification by our team of experts.</p>
+                </div>
+                <div class="col-md-6">
+                  <div class="d-flex justify-content-between">
+                    <p class="mb-1"><strong>Street</strong></p>
+                    <p class="text-muted mb-0">Jamama Street #1234</p>
+                  </div>
+                  <div class="d-flex justify-content-between">
+                    <p class="mb-1"><strong>Street Line 2</strong></p>
+                    <p class="text-muted mb-0">Al Kharaj #1234</p>
+                  </div>
+                  <div class="d-flex justify-content-between">
+                    <p class="mb-1"><strong>City</strong></p>
+                    <p class="font-italic text-dark mb-0">Makkah</p>
+                  </div>
+                  <div class="d-flex justify-content-between">
+                    <p class="mb-1"><strong>Zip Code</strong></p>
+                    <p class="text-muted mb-0">479123</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+
+          <div
+            class="d-flex align-items-center justify-content-end gap-2 mb-3"
+            style="padding: 0 20px 0 20px"
+          >
+            <button class="save-can-btn canc-bg-color">Back</button>
+            <button
+              class="save-can-btn save-btn-bg"
+              (click)="onSubmit('summary')"
+            >
+              Publish
             </button>
           </div>
         </div>

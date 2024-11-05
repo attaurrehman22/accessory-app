@@ -28,7 +28,7 @@ import { LanguageService } from "src/services/lang-service/language.service";
   styleUrls: ["./add-new-product.component.css"],
 })
 export class AddNewProductComponent implements OnInit {
-  selectedSection: string = "billinginformation";
+  selectedSection: string = "summary";
   isSmallScreen: boolean = false;
   panelOpenState = false;
   panelDialOpenState = false;
@@ -42,7 +42,7 @@ export class AddNewProductComponent implements OnInit {
 
   listingForm: FormGroup;
   watchDetailsForm: FormGroup;
-  billingForm:FormGroup;
+  billingForm: FormGroup;
 
   // Listing Form Details
   brand = new FormControl("", [
@@ -83,29 +83,26 @@ export class AddNewProductComponent implements OnInit {
   dialHands = new FormControl("");
   caseMaterial = new FormControl("");
   bezelMaterial = new FormControl("");
-  thickness = new FormControl("", [
-    Validators.pattern("^[0-9]*$"),
-  ]);
+  thickness = new FormControl("", [Validators.pattern("^[0-9]*$")]);
   crystal = new FormControl("");
   braceletMaterial = new FormControl("");
   braceletColor = new FormControl("");
   claspType = new FormControl("");
   claspMaterial = new FormControl("");
 
- // Billing Information Form Details
+  // Billing Information Form Details
 
-  billingAddress = new FormControl('', [Validators.required]);
-  firstName = new FormControl('', [Validators.required]);
-  lastName = new FormControl('', [Validators.required]);
-  street = new FormControl('', [Validators.required]);
-  streetLine2 = new FormControl('');
-  zipCode = new FormControl('', [Validators.required]);
-  city = new FormControl('', [Validators.required]);
+  billingAddress = new FormControl("", [Validators.required]);
+  firstName = new FormControl("", [Validators.required]);
+  lastName = new FormControl("", [Validators.required]);
+  street = new FormControl("", [Validators.required]);
+  streetLine2 = new FormControl("");
+  zipCode = new FormControl("", [Validators.required]);
+  city = new FormControl("", [Validators.required]);
 
-  cities = ['City 1', 'City 2', 'City 3'];
+  cities = ["City 1", "City 2", "City 3"];
 
-  constructor(private http:HttpService) {}
-
+  constructor(private http: HttpService) {}
 
   watchPrice: number = 0;
   watchPriceDisplay: number = 0;
@@ -118,12 +115,11 @@ export class AddNewProductComponent implements OnInit {
     this.estimatedPayout = this.watchPrice - this.platformFee;
   }
 
+  clocks: { hour: number; minute: number }[] = [];
 
-  clocks: { hour: number, minute: number }[] = [];
- 
   generateRandomClocks(count: number) {
     this.clocks = Array.from({ length: count }, () => {
-      const hour = Math.floor(Math.random() * 12);  // Random hour from 0 to 11
+      const hour = Math.floor(Math.random() * 12); // Random hour from 0 to 11
       const minute = Math.floor(Math.random() * 60); // Random minute from 0 to 59
       return { hour, minute };
     });
@@ -131,15 +127,14 @@ export class AddNewProductComponent implements OnInit {
 
   // Function to format time for display (e.g., 03:05 instead of 3:5)
   formatTime(hour: number, minute: number): string {
-    const formattedHour = hour.toString().padStart(2, '0');
-    const formattedMinute = minute.toString().padStart(2, '0');
+    const formattedHour = hour.toString().padStart(2, "0");
+    const formattedMinute = minute.toString().padStart(2, "0");
     return `${formattedHour}:${formattedMinute}`;
   }
 
-  
-  @ViewChild('fileInput0') fileInput0!: ElementRef<HTMLInputElement>;
-  @ViewChild('fileInput1') fileInput1!: ElementRef<HTMLInputElement>;
-  imagePreviews: string[] = ['', ''];
+  @ViewChild("fileInput0") fileInput0!: ElementRef<HTMLInputElement>;
+  @ViewChild("fileInput1") fileInput1!: ElementRef<HTMLInputElement>;
+  imagePreviews: string[] = ["", ""];
   selectedFiles: File[] = [null, null];
   triggerFileInput(clockIndex: number): void {
     if (clockIndex === 0) {
@@ -164,12 +159,14 @@ export class AddNewProductComponent implements OnInit {
     }
   }
 
-
   options = [
-    { title: 'Original Box & Original Papers', icon: 'assets/icons/original-box-papers.svg' },
-    { title: 'Original Box', icon: 'assets/icons/original-box.svg' },
-    { title: 'Original Papers', icon: 'assets/icons/original-papers.svg' },
-    { title: 'Watch Only', icon: 'assets/icons/watch-only.svg' }
+    {
+      title: "Original Box & Original Papers",
+      icon: "assets/icons/original-box-papers.svg",
+    },
+    { title: "Original Box", icon: "assets/icons/original-box.svg" },
+    { title: "Original Papers", icon: "assets/icons/original-papers.svg" },
+    { title: "Watch Only", icon: "assets/icons/watch-only.svg" },
   ];
 
   selectedOptions: any[] = [];
@@ -177,9 +174,9 @@ export class AddNewProductComponent implements OnInit {
   toggleOption(option: any) {
     const index = this.selectedOptions.indexOf(option);
     if (index === -1) {
-      this.selectedOptions.push(option);  // Add to selection
+      this.selectedOptions.push(option); // Add to selection
     } else {
-      this.selectedOptions.splice(index, 1);  // Remove from selection
+      this.selectedOptions.splice(index, 1); // Remove from selection
     }
   }
 
@@ -187,14 +184,31 @@ export class AddNewProductComponent implements OnInit {
     return this.selectedOptions.includes(option);
   }
 
-
-
   conditions = [
-    { title: 'Like New & Unworn', description: 'The item has no signs of wear such as scratches or dents and is unworn. The item has not been polished.' },
-    { title: 'Very Good', description: 'The item shows minor signs of wear, such as small but physically imperceptible scratches.' },
-    { title: 'Good', description: 'The item shows visible and physically perceptible signs of wear such as scratches, scuffs or small dents.' },
-    { title: 'Fair', description: 'The item shows major, visible signs of wear like scratches and dents.' },
-    { title: 'Incomplete', description: 'The item is missing some parts and is not functional.' }
+    {
+      title: "Like New & Unworn",
+      description:
+        "The item has no signs of wear such as scratches or dents and is unworn. The item has not been polished.",
+    },
+    {
+      title: "Very Good",
+      description:
+        "The item shows minor signs of wear, such as small but physically imperceptible scratches.",
+    },
+    {
+      title: "Good",
+      description:
+        "The item shows visible and physically perceptible signs of wear such as scratches, scuffs or small dents.",
+    },
+    {
+      title: "Fair",
+      description:
+        "The item shows major, visible signs of wear like scratches and dents.",
+    },
+    {
+      title: "Incomplete",
+      description: "The item is missing some parts and is not functional.",
+    },
   ];
 
   selectedCondition = null;
@@ -318,40 +332,34 @@ export class AddNewProductComponent implements OnInit {
   onSubmit(Param: string) {
     if (Param === "listing" && this.listingForm.valid) {
       console.log(this.listingForm.value);
-      this.selectSection('watchDetails')
-    }
-    else if(Param === 'watchDetails' && this.watchDetailsForm.valid){
-       console.log(this.watchDetailsForm.value)
-       this.selectSection('uploadImages')
-    }
-
-    else if (Param === 'uploadImages'){
+      this.selectSection("watchDetails");
+    } else if (Param === "watchDetails" && this.watchDetailsForm.valid) {
+      console.log(this.watchDetailsForm.value);
+      this.selectSection("uploadImages");
+    } else if (Param === "uploadImages") {
       if (!this.coverImage) {
         alert("Please upload a cover image.");
         return;
       }
-  
+
       if (this.otherImages.length === 0) {
         alert("Please upload at least one other image.");
         return;
       }
       console.log("Cover Image:", this.coverImage);
-      console.log("Other Images:", this.otherImages.map(image => image.url));
+      console.log(
+        "Other Images:",
+        this.otherImages.map((image) => image.url)
+      );
 
-      this.selectSection('conditionGrading')
-    }
-
-    else if (Param === 'conditionGrading'){
-      console.log(this.selectedCondition)
-      this.selectSection('scopeofdelivery')
-    }
-
-    else if (Param === 'scopeofdelivery'){
-      console.log(this.selectedOptions)
-      this.selectSection('proofofownership')
-    }
-
-    else if (Param === 'proofofownership'){
+      this.selectSection("conditionGrading");
+    } else if (Param === "conditionGrading") {
+      console.log(this.selectedCondition);
+      this.selectSection("scopeofdelivery");
+    } else if (Param === "scopeofdelivery") {
+      console.log(this.selectedOptions);
+      this.selectSection("proofofownership");
+    } else if (Param === "proofofownership") {
       console.log("Selected files for 'proofofownership':", this.selectedFiles);
 
       // Display each file separately in the console
@@ -363,23 +371,17 @@ export class AddNewProductComponent implements OnInit {
         }
       });
 
-      this.selectSection('priceshipment')
-    }
+      this.selectSection("priceshipment");
+    } else if (Param === "priceshipment") {
+      console.log("Price and Shipent", this.watchPrice);
 
-    else if (Param === 'priceshipment'){
-      console.log("Price and Shipent",this.watchPrice)
+      this.selectSection("billinginformation");
+    } else if (Param === "billinginformation") {
+      console.log("Form Submitted", this.billingForm.value);
 
-      this.selectSection('billinginformation')
-    }
-
-    else if (Param === 'billinginformation'){
-     console.log('Form Submitted', this.billingForm.value);
-
-      this.selectSection('billinginformation')
+      this.selectSection("summary");
+    } else if (Param === "summary") {
+      console.log("-----------");
     }
   }
-
-
-
-  
 }
