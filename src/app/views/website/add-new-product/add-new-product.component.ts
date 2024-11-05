@@ -28,7 +28,7 @@ import { LanguageService } from "src/services/lang-service/language.service";
   styleUrls: ["./add-new-product.component.css"],
 })
 export class AddNewProductComponent implements OnInit {
-  selectedSection: string = "proofofownership";
+  selectedSection: string = "billinginformation";
   isSmallScreen: boolean = false;
   panelOpenState = false;
   panelDialOpenState = false;
@@ -42,6 +42,7 @@ export class AddNewProductComponent implements OnInit {
 
   listingForm: FormGroup;
   watchDetailsForm: FormGroup;
+  billingForm:FormGroup;
 
   // Listing Form Details
   brand = new FormControl("", [
@@ -91,7 +92,31 @@ export class AddNewProductComponent implements OnInit {
   claspType = new FormControl("");
   claspMaterial = new FormControl("");
 
+ // Billing Information Form Details
+
+  billingAddress = new FormControl('', [Validators.required]);
+  firstName = new FormControl('', [Validators.required]);
+  lastName = new FormControl('', [Validators.required]);
+  street = new FormControl('', [Validators.required]);
+  streetLine2 = new FormControl('');
+  zipCode = new FormControl('', [Validators.required]);
+  city = new FormControl('', [Validators.required]);
+
+  cities = ['City 1', 'City 2', 'City 3'];
+
   constructor(private http:HttpService) {}
+
+
+  watchPrice: number = 0;
+  watchPriceDisplay: number = 0;
+  platformFee: number = 0;
+  estimatedPayout: number = 0;
+
+  calculatePayout() {
+    this.watchPriceDisplay = this.watchPrice;
+    this.platformFee = this.watchPrice * 0.04;
+    this.estimatedPayout = this.watchPrice - this.platformFee;
+  }
 
 
   clocks: { hour: number, minute: number }[] = [];
@@ -215,6 +240,16 @@ export class AddNewProductComponent implements OnInit {
       claspType: this.claspType,
       claspMaterial: this.claspMaterial,
     });
+
+    this.billingForm = new FormGroup({
+      billingAddress: this.billingAddress,
+      firstName: this.firstName,
+      lastName: this.lastName,
+      street: this.street,
+      streetLine2: this.streetLine2,
+      zipCode: this.zipCode,
+      city: this.city,
+    });
   }
 
   checkScreenSize() {
@@ -327,7 +362,24 @@ export class AddNewProductComponent implements OnInit {
           console.log(`No file selected for Clock ${index + 1}`);
         }
       });
+
+      this.selectSection('priceshipment')
+    }
+
+    else if (Param === 'priceshipment'){
+      console.log("Price and Shipent",this.watchPrice)
+
+      this.selectSection('billinginformation')
+    }
+
+    else if (Param === 'billinginformation'){
+     console.log('Form Submitted', this.billingForm.value);
+
+      this.selectSection('billinginformation')
     }
   }
 
+
+
+  
 }

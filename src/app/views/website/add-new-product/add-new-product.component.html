@@ -614,26 +614,140 @@
               *ngIf="selectedSection === 'proofofownership' && isSmallScreen"
             >
               <div class="clock-container">
-                <div class="clock" *ngFor="let clock of clocks">
-                  <div class="clock-face">
-                    <span
-                      class="hour-hand"
-                      [ngStyle]="{
-                        transform:
-                          'rotate(' +
-                          (clock.hour * 30 + clock.minute * 0.5) +
-                          'deg)'
-                      }"
-                    ></span>
-                    <span
-                      class="minute-hand"
-                      [ngStyle]="{
-                        transform: 'rotate(' + clock.minute * 6 + 'deg)'
-                      }"
-                    ></span>
+                <div
+                  class="clock"
+                  style="
+                    flex-direction: row;
+                    gap: 10px;
+                    background-color: #f9f9f9;
+                  "
+                >
+                  <div style="display: flex; flex-direction: column">
+                    <div class="clock-face">
+                      <span
+                        class="hour-hand"
+                        [ngStyle]="{
+                          transform:
+                            'rotate(' +
+                            (clocks[0].hour * 30 + clocks[0].minute * 0.5) +
+                            'deg)'
+                        }"
+                      ></span>
+                      <span
+                        class="minute-hand"
+                        [ngStyle]="{
+                          transform: 'rotate(' + clocks[0].minute * 6 + 'deg)'
+                        }"
+                      ></span>
+                    </div>
+                    <div class="time-display">
+                      {{ formatTime(clocks[0].hour, clocks[0].minute) }}
+                    </div>
                   </div>
-                  <div class="time-display">
-                    {{ formatTime(clock.hour, clock.minute) }}
+                  <!-- Image upload area for Clock 1 -->
+                  <div class="upload-container" (click)="triggerFileInput(0)">
+                    <div *ngIf="!imagePreviews[0]" class="upload-placeholder">
+                      <span class="plus-icon">+</span>
+                    </div>
+                    <img
+                      *ngIf="imagePreviews[0]"
+                      [src]="imagePreviews[0]"
+                      alt="Image Preview"
+                      class="image-preview"
+                    />
+                    <input
+                      type="file"
+                      accept="image/*"
+                      hidden
+                      (change)="onFileSelected($event, 0)"
+                      #fileInput0
+                    />
+                    <p class="upload-text">Upload Image</p>
+                  </div>
+
+                  <!-- Hidden file input for image upload -->
+                  <input
+                    type="file"
+                    accept="image/*"
+                    hidden
+                    #fileInput0
+                    (change)="onFileSelected($event, 0)"
+                  />
+                </div>
+
+                <div
+                  class="clock"
+                  style="
+                    flex-direction: row;
+                    gap: 10px;
+                    background-color: #f9f9f9;
+                  "
+                >
+                  <div style="display: flex; flex-direction: column">
+                    <div class="clock-face">
+                      <span
+                        class="hour-hand"
+                        [ngStyle]="{
+                          transform:
+                            'rotate(' +
+                            (clocks[1].hour * 30 + clocks[1].minute * 0.5) +
+                            'deg)'
+                        }"
+                      ></span>
+                      <span
+                        class="minute-hand"
+                        [ngStyle]="{
+                          transform: 'rotate(' + clocks[1].minute * 6 + 'deg)'
+                        }"
+                      ></span>
+                    </div>
+                    <div class="time-display">
+                      {{ formatTime(clocks[1].hour, clocks[1].minute) }}
+                    </div>
+                  </div>
+                  <!-- Button to open file input -->
+                  <div class="upload-container" (click)="triggerFileInput(1)">
+                    <div *ngIf="!imagePreviews[1]" class="upload-placeholder">
+                      <span class="plus-icon">+</span>
+                    </div>
+                    <img
+                      *ngIf="imagePreviews[1]"
+                      [src]="imagePreviews[1]"
+                      alt="Image Preview"
+                      class="image-preview"
+                    />
+                    <input
+                      type="file"
+                      accept="image/*"
+                      hidden
+                      (change)="onFileSelected($event, 1)"
+                      #fileInput1
+                    />
+                    <p class="upload-text">Upload Image</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="container-fluid mt-3">
+                <div class="help-card p-4">
+                  <div class="icon-placeholder text-center">
+                    <span>🔄</span>
+                  </div>
+                  <h5>Having trouble?</h5>
+                  <p>If you cannot set the watch to a specified time:</p>
+                  <ul class="pl-3" style="color: #666">
+                    <li>
+                      Write each time down on a slip of paper and place it next
+                      to the watch
+                    </li>
+                    <li>
+                      Take a photo of the watch with each piece of paper, then
+                      upload the photos
+                    </li>
+                  </ul>
+                  <p>If you still have any questions, please contact us</p>
+                  <div class="text-center mt-3">
+                    <button class="btn btn-contact">Contact us</button>
                   </div>
                 </div>
               </div>
@@ -646,6 +760,201 @@
                 <button
                   class="save-can-btn save-btn-bg"
                   (click)="onSubmit('proofofownership')"
+                >
+                  Save
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- <-- Price & Shipment -- > -->
+        <div
+          class="list-item"
+          [ngClass]="{ active: selectedSection === 'priceshipment' }"
+        >
+          <div class="step-circle">7</div>
+          <div class="step-content">
+            <strong>Price & Shipment</strong>
+            <p class="text-muted">
+              Crypto ipsum bitcoin ethereum dogecoin litecoin. Revain neo golem
+              amp telcoin EOS chiliz...
+            </p>
+            <div
+              class="image-upload-container"
+              *ngIf="selectedSection === 'priceshipment' && isSmallScreen"
+            >
+              <div class="container-fluid mt-5">
+                <mat-form-field
+                  style="width: 100%"
+                  class="full-width"
+                  appearance="outline"
+                >
+                  <mat-label>Watch Price</mat-label>
+                  <input
+                    matInput
+                    type="number"
+                    [(ngModel)]="watchPrice"
+                    placeholder="Enter watch price"
+                    (input)="calculatePayout()"
+                  />
+                  <mat-hint align="end">4% Commission</mat-hint>
+                </mat-form-field>
+
+                <mat-card class="info-card mt-4">
+                  <h6>Payout Information</h6>
+                  <div class="info-row d-flex justify-content-between">
+                    <span class="label">Watch Price</span>
+                    <span class="value">{{
+                      watchPriceDisplay | currency : "SR" : "symbol" : "1.2-2"
+                    }}</span>
+                  </div>
+                  <div class="info-row d-flex justify-content-between">
+                    <span class="label">Platform Fee (4%)</span>
+                    <span class="value text-danger">
+                      - {{ platformFee | currency : "SR" : "symbol" : "1.2-2" }}
+                    </span>
+                  </div>
+                  <mat-divider></mat-divider>
+                  <div class="info-row d-flex justify-content-between">
+                    <span class="label">Estimated Payout</span>
+                    <span class="value text-primary">
+                      {{
+                        estimatedPayout | currency : "SR" : "symbol" : "1.2-2"
+                      }}
+                    </span>
+                  </div>
+                </mat-card>
+              </div>
+
+              <div
+                class="d-flex align-items-center justify-content-end gap-2 mb-3"
+                style="padding: 0 20px 0 20px"
+              >
+                <button class="save-can-btn canc-bg-color">Back</button>
+                <button
+                  class="save-can-btn save-btn-bg"
+                  (click)="onSubmit('priceshipment')"
+                >
+                  Save
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- <-- Billing Information -- > -->
+        <div
+          class="list-item"
+          [ngClass]="{ active: selectedSection === 'billinginformation' }"
+        >
+          <div class="step-circle">8</div>
+          <div class="step-content">
+            <strong>Billing Information</strong>
+            <p class="text-muted">
+              Crypto ipsum bitcoin ethereum dogecoin litecoin. Revain neo golem
+              amp telcoin EOS chiliz...
+            </p>
+            <div
+              class="image-upload-container"
+              *ngIf="selectedSection === 'billinginformation' && isSmallScreen"
+            >
+              <form [formGroup]="billingForm">
+                <mat-form-field style="width: 100%;margin-top: 8px;" class="full-width" appearance="outline">
+                  <mat-label>Billing Address</mat-label>
+                  <input
+                    matInput
+                    formControlName="billingAddress"
+                    placeholder="Enter address here"
+                  />
+                  <mat-error *ngIf="billingAddress.hasError('required')">
+                    Billing Address is required
+                  </mat-error>
+                </mat-form-field>
+
+                <mat-form-field style="width: 100%;margin-top: 8px;" class="full-width" appearance="outline">
+                  <mat-label>First Name</mat-label>
+                  <input
+                    matInput
+                    formControlName="firstName"
+                    placeholder="Enter first name"
+                  />
+                  <mat-error *ngIf="firstName.hasError('required')">
+                    First Name is required
+                  </mat-error>
+                </mat-form-field>
+
+                <mat-form-field style="width: 100%;margin-top: 8px;" class="full-width" appearance="outline">
+                  <mat-label>Last Name</mat-label>
+                  <input
+                    matInput
+                    formControlName="lastName"
+                    placeholder="Enter last name"
+                  />
+                  <mat-error *ngIf="lastName.hasError('required')">
+                    Last Name is required
+                  </mat-error>
+                </mat-form-field>
+
+                <mat-form-field style="width: 100%;margin-top: 8px;" class="full-width" appearance="outline">
+                  <mat-label>Street</mat-label>
+                  <input
+                    matInput
+                    formControlName="street"
+                    placeholder="Enter street address"
+                  />
+                  <mat-error *ngIf="street.hasError('required')">
+                    Street is required
+                  </mat-error>
+                </mat-form-field>
+
+                <mat-form-field style="width: 100%;margin-top: 8px;" class="full-width" appearance="outline">
+                  <mat-label>Street Line 2</mat-label>
+                  <input
+                    matInput
+                    formControlName="streetLine2"
+                    placeholder="Enter street address"
+                  />
+                </mat-form-field>
+
+                <mat-form-field style="width: 100%;margin-top: 8px;" class="full-width" appearance="outline">
+                  <mat-label>ZIP Code</mat-label>
+                  <input
+                    matInput
+                    formControlName="zipCode"
+                    placeholder="Enter zip code"
+                  />
+                  <mat-error *ngIf="zipCode.hasError('required')">
+                    ZIP Code is required
+                  </mat-error>
+                </mat-form-field>
+
+                <mat-form-field style="width: 100%;margin-top: 8px;" class="full-width" appearance="outline">
+                  <mat-label>City</mat-label>
+                  <mat-select
+                    formControlName="city"
+                    placeholder="Please select"
+                  >
+                    <mat-option *ngFor="let city of cities" [value]="city">{{
+                      city
+                    }}</mat-option>
+                  </mat-select>
+                  <mat-error *ngIf="city.hasError('required')">
+                    City is required
+                  </mat-error>
+                </mat-form-field>
+
+                
+              </form>
+
+              <div
+                class="d-flex align-items-center justify-content-end gap-2 mb-3"
+                style="padding: 0 20px 0 20px"
+              >
+                <button class="save-can-btn canc-bg-color">Back</button>
+                <button
+                  class="save-can-btn save-btn-bg"
+                  (click)="onSubmit('billinginformation')"
                 >
                   Save
                 </button>
@@ -1252,8 +1561,11 @@
           </p>
 
           <div class="clock-container">
-            <div class="clock" style="flex-direction: row;gap: 10px;background-color: #f9f9f9;">
-              <div style="display: flex;flex-direction: column;">
+            <div
+              class="clock"
+              style="flex-direction: row; gap: 10px; background-color: #f9f9f9"
+            >
+              <div style="display: flex; flex-direction: column">
                 <div class="clock-face">
                   <span
                     class="hour-hand"
@@ -1275,13 +1587,24 @@
                   {{ formatTime(clocks[0].hour, clocks[0].minute) }}
                 </div>
               </div>
-               <!-- Image upload area for Clock 1 -->
+              <!-- Image upload area for Clock 1 -->
               <div class="upload-container" (click)="triggerFileInput(0)">
                 <div *ngIf="!imagePreviews[0]" class="upload-placeholder">
                   <span class="plus-icon">+</span>
                 </div>
-                <img *ngIf="imagePreviews[0]" [src]="imagePreviews[0]" alt="Image Preview" class="image-preview"/>
-                <input type="file" accept="image/*" hidden (change)="onFileSelected($event, 0)" #fileInput0 />
+                <img
+                  *ngIf="imagePreviews[0]"
+                  [src]="imagePreviews[0]"
+                  alt="Image Preview"
+                  class="image-preview"
+                />
+                <input
+                  type="file"
+                  accept="image/*"
+                  hidden
+                  (change)="onFileSelected($event, 0)"
+                  #fileInput0
+                />
                 <p class="upload-text">Upload Image</p>
               </div>
 
@@ -1292,11 +1615,14 @@
                 hidden
                 #fileInput0
                 (change)="onFileSelected($event, 0)"
-              />       
+              />
             </div>
-          
-            <div class="clock" style="flex-direction: row;gap: 10px;  background-color: #f9f9f9;">
-              <div style="display: flex;flex-direction: column;">
+
+            <div
+              class="clock"
+              style="flex-direction: row; gap: 10px; background-color: #f9f9f9"
+            >
+              <div style="display: flex; flex-direction: column">
                 <div class="clock-face">
                   <span
                     class="hour-hand"
@@ -1323,24 +1649,40 @@
                 <div *ngIf="!imagePreviews[1]" class="upload-placeholder">
                   <span class="plus-icon">+</span>
                 </div>
-                <img *ngIf="imagePreviews[1]" [src]="imagePreviews[1]" alt="Image Preview" class="image-preview"/>
-                <input type="file" accept="image/*" hidden (change)="onFileSelected($event, 1)" #fileInput1 />
+                <img
+                  *ngIf="imagePreviews[1]"
+                  [src]="imagePreviews[1]"
+                  alt="Image Preview"
+                  class="image-preview"
+                />
+                <input
+                  type="file"
+                  accept="image/*"
+                  hidden
+                  (change)="onFileSelected($event, 1)"
+                  #fileInput1
+                />
                 <p class="upload-text">Upload Image</p>
               </div>
             </div>
           </div>
-          
 
           <div class="container-fluid mt-3">
             <div class="help-card p-4">
               <div class="icon-placeholder text-center">
-                <span>🔄</span> <!-- Replace this with an actual icon if available -->
+                <span>🔄</span>
               </div>
               <h5>Having trouble?</h5>
               <p>If you cannot set the watch to a specified time:</p>
-              <ul class="pl-3" style="color: #666;">
-                <li>Write each time down on a slip of paper and place it next to the watch</li>
-                <li>Take a photo of the watch with each piece of paper, then upload the photos</li>
+              <ul class="pl-3" style="color: #666">
+                <li>
+                  Write each time down on a slip of paper and place it next to
+                  the watch
+                </li>
+                <li>
+                  Take a photo of the watch with each piece of paper, then
+                  upload the photos
+                </li>
               </ul>
               <p>If you still have any questions, please contact us</p>
               <div class="text-center mt-3">
@@ -1348,7 +1690,6 @@
               </div>
             </div>
           </div>
-          
 
           <div
             class="d-flex align-items-center justify-content-end gap-2 mb-3"
@@ -1358,6 +1699,180 @@
             <button
               class="save-can-btn save-btn-bg"
               (click)="onSubmit('proofofownership')"
+            >
+              Save
+            </button>
+          </div>
+        </div>
+
+        <!-- <--Price & Shipment -- > -->
+
+        <div class="card-body" *ngIf="selectedSection === 'priceshipment'">
+          <h5 class="font-weight-bold font-size-24 color-242424 margin-0">
+            Price & Shipment
+          </h5>
+          <p class="font-weight-400 font-size-16 color-909090">
+            Every watch will soon be verified by our team of experts to ensure
+            it’s 100% authentic, giving buyers complete peace of mind.
+          </p>
+          <div class="col-md-8">
+            <div class="container-fluid mt-5">
+              <mat-form-field
+                style="width: 100%"
+                class="full-width"
+                appearance="outline"
+              >
+                <mat-label>Watch Price</mat-label>
+                <input
+                  matInput
+                  type="number"
+                  [(ngModel)]="watchPrice"
+                  placeholder="Enter watch price"
+                  (input)="calculatePayout()"
+                />
+                <mat-hint align="end">4% Commission</mat-hint>
+              </mat-form-field>
+
+              <mat-card class="info-card mt-4">
+                <h6>Payout Information</h6>
+                <div class="info-row d-flex justify-content-between">
+                  <span class="label">Watch Price</span>
+                  <span class="value">{{
+                    watchPriceDisplay | currency : "SR" : "symbol" : "1.2-2"
+                  }}</span>
+                </div>
+                <div class="info-row d-flex justify-content-between">
+                  <span class="label">Platform Fee (4%)</span>
+                  <span class="value text-danger">
+                    - {{ platformFee | currency : "SR" : "symbol" : "1.2-2" }}
+                  </span>
+                </div>
+                <mat-divider></mat-divider>
+                <div class="info-row d-flex justify-content-between">
+                  <span class="label">Estimated Payout</span>
+                  <span class="value text-primary">
+                    {{ estimatedPayout | currency : "SR" : "symbol" : "1.2-2" }}
+                  </span>
+                </div>
+              </mat-card>
+            </div>
+          </div>
+
+          <div
+            class="d-flex align-items-center justify-content-end gap-2 mb-3"
+            style="padding: 0 20px 0 20px"
+          >
+            <button class="save-can-btn canc-bg-color">Back</button>
+            <button
+              class="save-can-btn save-btn-bg"
+              (click)="onSubmit('priceshipment')"
+            >
+              Save
+            </button>
+          </div>
+        </div>
+
+        <!-- <--Billing Information -- > -->
+
+        <div class="card-body" *ngIf="selectedSection === 'billinginformation'">
+          <h5 class="font-weight-bold font-size-24 color-242424 margin-0">
+            Billing Information
+          </h5>
+          <p class="font-weight-400 font-size-16 color-909090">
+            Every watch will soon be verified by our team of experts to ensure
+            it’s 100% authentic, giving buyers complete peace of mind.
+          </p>
+          <form [formGroup]="billingForm">
+            <mat-form-field style="width: 100%;margin-top: 8px;" class="full-width" appearance="outline">
+              <mat-label>Billing Address</mat-label>
+              <input
+                matInput
+                formControlName="billingAddress"
+                placeholder="Enter address here"
+              />
+              <mat-error *ngIf="billingAddress.hasError('required')">
+                Billing Address is required
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field style="width: 100%;margin-top: 8px;" class="full-width" appearance="outline">
+              <mat-label>First Name</mat-label>
+              <input
+                matInput
+                formControlName="firstName"
+                placeholder="Enter first name"
+              />
+              <mat-error *ngIf="firstName.hasError('required')">
+                First Name is required
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field style="width: 100%;margin-top: 8px;" class="full-width" appearance="outline">
+              <mat-label>Last Name</mat-label>
+              <input
+                matInput
+                formControlName="lastName"
+                placeholder="Enter last name"
+              />
+              <mat-error *ngIf="lastName.hasError('required')">
+                Last Name is required
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field style="width: 100%;margin-top: 8px;" class="full-width" appearance="outline">
+              <mat-label>Street</mat-label>
+              <input
+                matInput
+                formControlName="street"
+                placeholder="Enter street address"
+              />
+              <mat-error *ngIf="street.hasError('required')">
+                Street is required
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field style="width: 100%;margin-top: 8px;" class="full-width" appearance="outline">
+              <mat-label>Street Line 2</mat-label>
+              <input
+                matInput
+                formControlName="streetLine2"
+                placeholder="Enter street address"
+              />
+            </mat-form-field>
+
+            <mat-form-field style="width: 100%;margin-top: 8px;" class="full-width" appearance="outline">
+              <mat-label>ZIP Code</mat-label>
+              <input
+                matInput
+                formControlName="zipCode"
+                placeholder="Enter zip code"
+              />
+              <mat-error *ngIf="zipCode.hasError('required')">
+                ZIP Code is required
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field style="width: 100%;margin-top: 8px;" class="full-width" appearance="outline">
+              <mat-label>City</mat-label>
+              <mat-select formControlName="city" placeholder="Please select">
+                <mat-option *ngFor="let city of cities" [value]="city">{{
+                  city
+                }}</mat-option>
+              </mat-select>
+              <mat-error *ngIf="city.hasError('required')">
+                City is required
+              </mat-error>
+            </mat-form-field>
+          </form>
+
+          <div
+            class="d-flex align-items-center justify-content-end gap-2 mb-3"
+            style="padding: 0 20px 0 20px"
+          >
+            <button class="save-can-btn canc-bg-color">Back</button>
+            <button
+              class="save-can-btn save-btn-bg"
+              (click)="onSubmit('billinginformation')"
             >
               Save
             </button>
