@@ -364,6 +364,37 @@ mat-label {
   margin-top: 8px;
 }
 
+.help-card {
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  padding: 20px;
+  max-width: 500px;
+}
+
+.icon-placeholder {
+  font-size: 24px;
+  color: #555;
+  margin-bottom: 10px;
+}
+
+.help-card h5 {
+  font-weight: bold;
+  color: #333;
+}
+
+.help-card p {
+  color: #666;
+  font-size: 14px;
+  margin-bottom: 5px;
+}
+
+.help-card .btn-contact {
+  border: 1px solid #333;
+  color: #333;
+  font-weight: bold;
+  padding: 5px 15px;
+}
+
 
 /* ------------------------- Proof of Ownership end--------------------------- */
 
