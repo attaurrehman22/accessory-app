@@ -22,7 +22,7 @@
               *ngIf="selectedSection === 'listingDetails' && isSmallScreen"
             >
               <mat-form-field appearance="outline" class="w-100">
-                <mat-label>Brand</mat-label>
+                <mat-label class="label-header">Brand</mat-label>
                 <input
                   matInput
                   placeholder="Enter your brand name"
@@ -38,7 +38,7 @@
               </mat-form-field>
 
               <mat-form-field appearance="outline" class="w-100 mt-2">
-                <mat-label>Model</mat-label>
+                <mat-label class="label-header">Model</mat-label>
                 <input
                   matInput
                   placeholder="Enter your model name"
@@ -51,7 +51,7 @@
               </mat-form-field>
 
               <mat-form-field appearance="outline" class="w-100 mt-2">
-                <mat-label>Title</mat-label>
+                <mat-label class="label-header">Title</mat-label>
                 <input
                   matInput
                   placeholder="Enter your ad title"
@@ -64,7 +64,7 @@
               </mat-form-field>
 
               <mat-form-field appearance="outline" class="w-100 mt-2">
-                <mat-label>Description</mat-label>
+                <mat-label class="label-header">Description</mat-label>
                 <textarea
                   matInput
                   placeholder="Enter your watch description"
@@ -74,14 +74,14 @@
               </mat-form-field>
 
               <mat-form-field appearance="outline" class="w-100 mt-2">
-                <mat-label>Watch Type</mat-label>
+                <mat-label class="label-header">Watch Type</mat-label>
                 <mat-select formControlName="watchType">
                   <mat-option value="wrist">Wrist Watch</mat-option>
                 </mat-select>
               </mat-form-field>
 
               <mat-form-field appearance="outline" class="w-100 mt-2">
-                <mat-label>Year of Production</mat-label>
+                <mat-label class="label-header">Year of Production</mat-label>
                 <input
                   matInput
                   type="text"
@@ -137,7 +137,7 @@
               *ngIf="selectedSection === 'watchDetails' && isSmallScreen"
             >
               <mat-form-field appearance="outline" class="w-100 mb-3">
-                <mat-label>Reference No.</mat-label>
+                <mat-label class="label-header">Reference No.</mat-label>
                 <input
                   matInput
                   formControlName="referenceNo"
@@ -148,7 +148,7 @@
               <div class="row">
                 <div class="col-md-4 mb-3">
                   <mat-form-field appearance="outline" class="w-100">
-                    <mat-label>Serial No. (if not polished)</mat-label>
+                    <mat-label class="label-header">Serial No. (if not polished)</mat-label>
                     <input
                       matInput
                       formControlName="serialNo"
@@ -158,7 +158,7 @@
                 </div>
                 <div class="col-md-4 mb-3">
                   <mat-form-field appearance="outline" class="w-100">
-                    <mat-label>Gender</mat-label>
+                    <mat-label class="label-header">Gender</mat-label>
                     <mat-select formControlName="gender">
                       <mat-option value="">Please Select</mat-option>
                       <mat-option value="male">Male</mat-option>
@@ -168,7 +168,7 @@
                 </div>
                 <div class="col-md-4 mb-3">
                   <mat-form-field appearance="outline" class="w-100">
-                    <mat-label>Movement</mat-label>
+                    <mat-label class="label-header">Movement</mat-label>
                     <mat-select formControlName="movement">
                       <mat-option value="">Please Select</mat-option>
                       <mat-option value="yes">Yes</mat-option>
@@ -181,24 +181,24 @@
               <div class="row">
                 <div class="col-md-6 mb-3">
                   <mat-form-field appearance="outline" class="w-100">
-                    <mat-label>Case Diameter</mat-label>
+                    <mat-label class="label-header">Case Diameter</mat-label>
                     <input
                       matInput
                       formControlName="caseDiameter"
                       placeholder="Enter diameter"
                     />
-                    <span matSuffix>mm</span>
+                    <span style="padding: 17px 15px 17px 15px;background-color: #DBDBDB;" matSuffix>mm</span>
                   </mat-form-field>
                 </div>
                 <div class="col-md-6 mb-3">
                   <mat-form-field appearance="outline" class="w-100">
-                    <mat-label>Other Diameter</mat-label>
+                    <mat-label class="label-header">Other Diameter</mat-label>
                     <input
                       matInput
                       formControlName="otherDiameter"
                       placeholder="Enter diameter"
                     />
-                    <span matSuffix>mm</span>
+                    <span style="padding: 17px 15px 17px 15px;background-color: #DBDBDB;" matSuffix>mm</span>
                   </mat-form-field>
                 </div>
               </div>
@@ -225,7 +225,7 @@
                       <div class="row">
                         <div class="col-md-6 mb-3">
                           <mat-form-field appearance="outline" class="w-100">
-                            <mat-label>Dial Color</mat-label>
+                            <mat-label class="label-header">Dial Color</mat-label>
                             <mat-select formControlName="dialColor">
                               <mat-option value="">Please Select</mat-option>
                             </mat-select>
@@ -233,7 +233,7 @@
                         </div>
                         <div class="col-md-6 mb-3">
                           <mat-form-field appearance="outline" class="w-100">
-                            <mat-label>Dial Material</mat-label>
+                            <mat-label class="label-header">Dial Material</mat-label>
                             <input
                               matInput
                               formControlName="dialMaterial"
@@ -246,7 +246,7 @@
                       <div class="row">
                         <div class="col-md-6 mb-3">
                           <mat-form-field appearance="outline" class="w-100">
-                            <mat-label>Dial Markers</mat-label>
+                            <mat-label class="label-header">Dial Markers</mat-label>
                             <mat-select formControlName="dialMarkers">
                               <mat-option value="">Please Select</mat-option>
                             </mat-select>
@@ -254,7 +254,7 @@
                         </div>
                         <div class="col-md-6 mb-3">
                           <mat-form-field appearance="outline" class="w-100">
-                            <mat-label>Dial Hands</mat-label>
+                            <mat-label class="label-header">Dial Hands</mat-label>
                             <input
                               matInput
                               formControlName="dialHands"
@@ -281,7 +281,7 @@
                       <div class="row">
                         <div class="col-md-6 mb-3">
                           <mat-form-field appearance="outline" class="w-100">
-                            <mat-label>Case Material</mat-label>
+                            <mat-label class="label-header">Case Material</mat-label>
                             <mat-select formControlName="caseMaterial">
                               <mat-option value="">Please Select</mat-option>
                             </mat-select>
@@ -289,7 +289,7 @@
                         </div>
                         <div class="col-md-6 mb-3">
                           <mat-form-field appearance="outline" class="w-100">
-                            <mat-label>Bezel Material</mat-label>
+                            <mat-label class="label-header">Bezel Material</mat-label>
                             <input
                               matInput
                               formControlName="bezelMaterial"
@@ -302,18 +302,18 @@
                       <div class="row">
                         <div class="col-md-6 mb-3">
                           <mat-form-field appearance="outline" class="w-100">
-                            <mat-label>Thickness</mat-label>
+                            <mat-label class="label-header">Thickness</mat-label>
                             <input
                               matInput
                               formControlName="thickness"
                               placeholder="Enter thickness"
                             />
-                            <span matSuffix>mm</span>
+                            <span style="padding: 17px 15px 17px 15px;background-color: #DBDBDB;" matSuffix>mm</span>
                           </mat-form-field>
                         </div>
                         <div class="col-md-6 mb-3">
                           <mat-form-field appearance="outline" class="w-100">
-                            <mat-label>Crystal</mat-label>
+                            <mat-label class="label-header">Crystal</mat-label>
                             <mat-select formControlName="crystal">
                               <mat-option value="">Please Select</mat-option>
                             </mat-select>
@@ -338,7 +338,7 @@
                       <div class="row">
                         <div class="col-md-6 mb-3">
                           <mat-form-field appearance="outline" class="w-100">
-                            <mat-label>Bracelet Material</mat-label>
+                            <mat-label class="label-header">Bracelet Material</mat-label>
                             <mat-select formControlName="braceletMaterial">
                               <mat-option value="">Please Select</mat-option>
                             </mat-select>
@@ -346,7 +346,7 @@
                         </div>
                         <div class="col-md-6 mb-3">
                           <mat-form-field appearance="outline" class="w-100">
-                            <mat-label>Bracelet Color</mat-label>
+                            <mat-label class="label-header">Bracelet Color</mat-label>
                             <input
                               matInput
                               formControlName="braceletColor"
@@ -359,7 +359,7 @@
                       <div class="row">
                         <div class="col-md-6 mb-3">
                           <mat-form-field appearance="outline" class="w-100">
-                            <mat-label>Type of Clasp</mat-label>
+                            <mat-label class="label-header">Type of Clasp</mat-label>
                             <mat-select formControlName="claspType">
                               <mat-option value="">Please Select</mat-option>
                             </mat-select>
@@ -404,74 +404,78 @@
               *ngIf="selectedSection === 'uploadImages' && isSmallScreen"
             >
               <!-- Cover Image -->
-              <div class="cover-image-section">
+              <div class="">
                 <p>Cover Image</p>
-                <div class="upload-box" (click)="selectCoverImage()">
-                  <ng-container *ngIf="coverImage; else uploadPlaceholder">
-                    <img
-                      style="height: 100%; width: 100%; object-fit: fill"
-                      [src]="coverImage"
-                      alt="Cover Image"
-                    />
-                    <!-- Show delete button when cover image is present -->
-                    <button class="delete-btn" (click)="removeCoverImage()">
-                      <mat-icon>delete</mat-icon>
-                    </button>
-                  </ng-container>
-                  <ng-template #uploadPlaceholder>
-                    <span>+</span>
-                  </ng-template>
-                  <!-- Show the upload progress if cover image is uploading -->
-                  <div *ngIf="isCoverImageUploading" class="upload-progress">
-                    <p>Uploading</p>
-                    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+                <div class="d-flex flex-wrap">
+                  <div class="upload-box" (click)="selectCoverImage()">
+                    <ng-container *ngIf="coverImage; else uploadPlaceholder">
+                      <img
+                        style="height: 100%; width: 100%; object-fit: fill"
+                        [src]="coverImage"
+                        alt="Cover Image"
+                      />
+                      <!-- Show delete button when cover image is present -->
+                      <button class="delete-btn" (click)="removeCoverImage()">
+                        <mat-icon>delete</mat-icon>
+                      </button>
+                    </ng-container>
+                    <ng-template #uploadPlaceholder>
+                      <span>+</span>
+                    </ng-template>
+                    <!-- Show the upload progress if cover image is uploading -->
+                    <div *ngIf="isCoverImageUploading" class="upload-progress">
+                      <p>Uploading</p>
+                      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+                    </div>
                   </div>
+                  <input
+                    type="file"
+                    #coverImageInput
+                    (change)="onCoverImageSelected($event)"
+                    accept="image/*"
+                    hidden
+                  />
                 </div>
-                <input
-                  type="file"
-                  #coverImageInput
-                  (change)="onCoverImageSelected($event)"
-                  accept="image/*"
-                  hidden
-                />
               </div>
 
               <!-- Other Images -->
-              <div class="other-images-section">
+              <div class="">
                 <p>Other Images</p>
-                <div class="upload-box" (click)="selectOtherImages()">
-                  <span>+</span>
-                </div>
-                <input
-                  type="file"
-                  #otherImagesInput
-                  (change)="onOtherImagesSelected($event)"
-                  accept="image/*"
-                  multiple
-                  hidden
-                />
-
-                <div class="image-preview" *ngFor="let image of otherImages">
-                  <img
-                    [src]="image.url"
-                    *ngIf="!image.isUploading"
-                    alt="Preview"
+                <div class="d-flex flex-wrap gap-3">
+                  <div class="upload-box" (click)="selectOtherImages()">
+                    <span>+</span>
+                  </div>
+                  <input
+                    type="file"
+                    #otherImagesInput
+                    (change)="onOtherImagesSelected($event)"
+                    accept="image/*"
+                    multiple
+                    hidden
                   />
 
-                  <!-- Show the progress bar if the image is uploading -->
-                  <div *ngIf="image.isUploading" class="upload-progress">
-                    <p>Uploading</p>
-                    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
-                  </div>
+                  <div class="image-preview" *ngFor="let image of otherImages">
+                    <img
+                      [src]="image.url"
+                      *ngIf="!image.isUploading"
+                      alt="Preview"
+                    />
 
-                  <!-- Show the delete button only when the upload is complete -->
-                  <button
-                    *ngIf="!image.isUploading"
-                    class="delete-btn"
-                    (click)="removeImage(image)"
-                  >
-                    <mat-icon>delete</mat-icon>
-                  </button>
+                    <!-- Show the progress bar if the image is uploading -->
+                    <div *ngIf="image.isUploading" class="upload-progress">
+                      <p>Uploading</p>
+                      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+                    </div>
+
+                    <!-- Show the delete button only when the upload is complete -->
+                    <button
+                      *ngIf="!image.isUploading"
+                      class="delete-btn"
+                      (click)="removeImage(image)"
+                    >
+                      <mat-icon>delete</mat-icon>
+                    </button>
+                  </div>
                 </div>
               </div>
               <div
@@ -515,10 +519,10 @@
                     (click)="selectCondition(condition)"
                     [class.selected]="condition === selectedCondition"
                   >
-                    <div class="card condition-card h-100">
+                    <div class="card condition-card h-100" style="border-radius: 16px;">
                       <div class="card-body">
-                        <h5 class="card-title">{{ condition.title }}</h5>
-                        <p class="card-text">{{ condition.description }}</p>
+                        <p class="font-size-16 font-wight-700 color-242424 margin-0">{{ condition.title }}</p>
+                        <p class="font-size-14 font-weight-400 color-909090">{{ condition.description }}</p>
                       </div>
                     </div>
                   </div>
@@ -566,8 +570,8 @@
                     (click)="toggleOption(option)"
                     [class.selected]="isSelected(option)"
                   >
-                    <div class="card delivery-card h-100 text-center">
-                      <div class="card-body">
+                    <div class="card delivery-card h-100">
+                      <div class="card-body d-flex flex-column">
                         <img
                           [src]="option.icon"
                           alt="{{ option.title }}"
@@ -730,8 +734,9 @@
 
               <div class="container-fluid mt-3">
                 <div class="help-card p-4">
-                  <div class="icon-placeholder text-center">
-                    <span>🔄</span>
+                  <div class="icon-placeholder">
+                    <!-- <span>🔄</span> -->
+                     <img src="../../../../assets/images/help-us.png" alt="img"/>
                   </div>
                   <h5>Having trouble?</h5>
                   <p>If you cannot set the watch to a specified time:</p>
@@ -746,8 +751,8 @@
                     </li>
                   </ul>
                   <p>If you still have any questions, please contact us</p>
-                  <div class="text-center mt-3">
-                    <button class="btn btn-contact">Contact us</button>
+                  <div class="mt-3">
+                    <button class="contact-us-btn">Contact us</button>
                   </div>
                 </div>
               </div>
@@ -790,7 +795,7 @@
                   class="full-width"
                   appearance="outline"
                 >
-                  <mat-label>Watch Price</mat-label>
+                  <mat-label class="label-header">Watch Price</mat-label>
                   <input
                     matInput
                     type="number"
@@ -802,26 +807,24 @@
                 </mat-form-field>
 
                 <mat-card class="info-card mt-4">
-                  <h6>Payout Information</h6>
+                  <p class="font-size-18 font-wight-700 color-132138">Payout Information</p >
                   <div class="info-row d-flex justify-content-between">
-                    <span class="label">Watch Price</span>
-                    <span class="value">{{
+                    <p class="font-size-16 font-wight-400 color-909090">Watch Price</p>
+                    <p class="font-size-16 font-wight-600 color-0F172A">{{
                       watchPriceDisplay | currency : "SR" : "symbol" : "1.2-2"
-                    }}</span>
+                    }}</p>
                   </div>
                   <div class="info-row d-flex justify-content-between">
-                    <span class="label">Platform Fee (4%)</span>
-                    <span class="value text-danger">
+                    <span class="font-size-16 font-wight-400 color-909090">Platform Fee (4%)</span>
+                    <span class="font-size-16 font-wight-600 color-0F172A">
                       - {{ platformFee | currency : "SR" : "symbol" : "1.2-2" }}
                     </span>
                   </div>
                   <mat-divider></mat-divider>
                   <div class="info-row d-flex justify-content-between">
-                    <span class="label">Estimated Payout</span>
-                    <span class="value text-primary">
-                      {{
-                        estimatedPayout | currency : "SR" : "symbol" : "1.2-2"
-                      }}
+                    <span class="font-size-16 font-wight-400 color-909090">Estimated Payout</span>
+                    <span class="font-size-16 font-wight-600 color-0F172A">
+                      {{ estimatedPayout | currency : "SR" : "symbol" : "1.2-2" }}
                     </span>
                   </div>
                 </mat-card>
@@ -865,7 +868,7 @@
                   class="full-width"
                   appearance="outline"
                 >
-                  <mat-label>Billing Address</mat-label>
+                  <mat-label class="label-header">Billing Address</mat-label>
                   <input
                     matInput
                     formControlName="billingAddress"
@@ -881,7 +884,7 @@
                   class="full-width"
                   appearance="outline"
                 >
-                  <mat-label>First Name</mat-label>
+                  <mat-label class="label-header">First Name</mat-label>
                   <input
                     matInput
                     formControlName="firstName"
@@ -897,7 +900,7 @@
                   class="full-width"
                   appearance="outline"
                 >
-                  <mat-label>Last Name</mat-label>
+                  <mat-label class="label-header">Last Name</mat-label>
                   <input
                     matInput
                     formControlName="lastName"
@@ -913,7 +916,7 @@
                   class="full-width"
                   appearance="outline"
                 >
-                  <mat-label>Street</mat-label>
+                  <mat-label class="label-header">Street</mat-label>
                   <input
                     matInput
                     formControlName="street"
@@ -929,7 +932,7 @@
                   class="full-width"
                   appearance="outline"
                 >
-                  <mat-label>Street Line 2</mat-label>
+                  <mat-label class="label-header">Street Line 2</mat-label>
                   <input
                     matInput
                     formControlName="streetLine2"
@@ -942,7 +945,7 @@
                   class="full-width"
                   appearance="outline"
                 >
-                  <mat-label>ZIP Code</mat-label>
+                  <mat-label class="label-header">ZIP Code</mat-label>
                   <input
                     matInput
                     formControlName="zipCode"
@@ -958,7 +961,7 @@
                   class="full-width"
                   appearance="outline"
                 >
-                  <mat-label>City</mat-label>
+                  <mat-label class="label-header">City</mat-label>
                   <mat-select
                     formControlName="city"
                     placeholder="Please select"
@@ -1010,7 +1013,7 @@
               <div class="row">
                 <!-- Ad Preview Section -->
                 <div class="col-md-6">
-                  <div class="card p-3">
+                  <div style="background: #F7F7F8;border-radius: 15px;" class="card p-3">
                     <h6 class="text-muted font-weight-bold">Ad Preview</h6>
                     <div class="d-flex align-items-center">
                       <img src="path/to/watch-image.jpg" alt="Watch Image" class="img-fluid" style="max-width: 100px;" />
@@ -1026,7 +1029,7 @@
             
                 <!-- Price Info Section -->
                 <div class="col-md-6">
-                  <div class="card p-3">
+                  <div class="card p-3" style="background: #F7F7F8;border-radius: 15px;">
                     <h6 class="text-muted font-weight-bold">Price Info</h6>
                     <div class="d-flex justify-content-between">
                       <span>Watch Price</span>
@@ -1046,7 +1049,7 @@
               </div>
             
               <!-- Billing Information Section -->
-              <div class="card mt-4 p-3">
+              <div class="card mt-4 p-3" style="background: #F7F7F8;border-radius: 15px;">
                 <h6 class="text-muted font-weight-bold">Billing Information</h6>
                 <div class="row">
                   <div class="col-md-6">
@@ -1111,7 +1114,7 @@
           </p>
           <form [formGroup]="listingForm" (ngSubmit)="onSubmit('listing')">
             <mat-form-field appearance="outline" class="w-100 mt-2">
-              <mat-label>Brand</mat-label>
+              <mat-label class="label-header">Brand</mat-label>
               <input
                 matInput
                 placeholder="Enter your brand name"
@@ -1127,7 +1130,7 @@
             </mat-form-field>
 
             <mat-form-field appearance="outline" class="w-100 mt-2">
-              <mat-label>Model</mat-label>
+              <mat-label class="label-header">Model</mat-label>
               <input
                 matInput
                 placeholder="Enter your model name"
@@ -1140,7 +1143,7 @@
             </mat-form-field>
 
             <mat-form-field appearance="outline" class="w-100 mt-2">
-              <mat-label>Title</mat-label>
+              <mat-label class="label-header">Title</mat-label>
               <input
                 matInput
                 placeholder="Enter your ad title"
@@ -1153,7 +1156,7 @@
             </mat-form-field>
 
             <mat-form-field appearance="outline" class="w-100 mt-2">
-              <mat-label>Description</mat-label>
+              <mat-label class="label-header">Description</mat-label>
               <textarea
                 matInput
                 placeholder="Enter your watch description"
@@ -1163,14 +1166,14 @@
             </mat-form-field>
 
             <mat-form-field appearance="outline" class="w-100 mt-2">
-              <mat-label>Watch Type</mat-label>
+              <mat-label class="label-header">Watch Type</mat-label>
               <mat-select formControlName="watchType">
                 <mat-option value="wrist">Wrist Watch</mat-option>
               </mat-select>
             </mat-form-field>
 
             <mat-form-field appearance="outline" class="w-100 mt-2">
-              <mat-label>Year of Production</mat-label>
+              <mat-label class="label-header">Year of Production</mat-label>
               <input
                 matInput
                 type="text"
@@ -1223,14 +1226,6 @@
               <p class="font-weight-bold font-size-24 color-242424 margin-0">
                 Watch Details
               </p>
-              <button
-                mat-icon-button
-                type="button"
-                class="btn-close"
-                aria-label="Close"
-              >
-                <mat-icon>close</mat-icon>
-              </button>
             </div>
             <p
               style="padding: 0 20px 0 20px"
@@ -1242,7 +1237,7 @@
             <div class="card-body">
               <form [formGroup]="watchDetailsForm">
                 <mat-form-field appearance="outline" class="w-100 mb-3">
-                  <mat-label>Reference No.</mat-label>
+                  <mat-label class="label-header">Reference No.</mat-label>
                   <input
                     matInput
                     formControlName="referenceNo"
@@ -1253,7 +1248,7 @@
                 <div class="row">
                   <div class="col-md-4 mb-3">
                     <mat-form-field appearance="outline" class="w-100">
-                      <mat-label>Serial No. (if not polished)</mat-label>
+                      <mat-label class="label-header">Serial No. (if not polished)</mat-label>
                       <input
                         matInput
                         formControlName="serialNo"
@@ -1263,7 +1258,7 @@
                   </div>
                   <div class="col-md-4 mb-3">
                     <mat-form-field appearance="outline" class="w-100">
-                      <mat-label>Gender</mat-label>
+                      <mat-label class="label-header">Gender</mat-label>
                       <mat-select formControlName="gender">
                         <mat-option value="">Please Select</mat-option>
                         <mat-option value="male">Male</mat-option>
@@ -1273,7 +1268,7 @@
                   </div>
                   <div class="col-md-4 mb-3">
                     <mat-form-field appearance="outline" class="w-100">
-                      <mat-label>Movement</mat-label>
+                      <mat-label class="label-header">Movement</mat-label>
                       <mat-select formControlName="movement">
                         <mat-option value="">Please Select</mat-option>
                         <mat-option value="yes">Yes</mat-option>
@@ -1286,24 +1281,24 @@
                 <div class="row">
                   <div class="col-md-6 mb-3">
                     <mat-form-field appearance="outline" class="w-100">
-                      <mat-label>Case Diameter</mat-label>
+                      <mat-label class="label-header">Case Diameter</mat-label>
                       <input
                         matInput
                         formControlName="caseDiameter"
                         placeholder="Enter diameter"
                       />
-                      <span matSuffix>mm</span>
+                      <span style="padding: 17px 15px 17px 15px;background-color: #DBDBDB;" matSuffix>mm</span>
                     </mat-form-field>
                   </div>
                   <div class="col-md-6 mb-3">
                     <mat-form-field appearance="outline" class="w-100">
-                      <mat-label>Other Diameter</mat-label>
+                      <mat-label class="label-header">Other Diameter</mat-label>
                       <input
                         matInput
                         formControlName="otherDiameter"
                         placeholder="Enter diameter"
                       />
-                      <span matSuffix>mm</span>
+                      <span style="padding: 17px 15px 17px 15px;background-color: #DBDBDB;" matSuffix>mm</span>
                     </mat-form-field>
                   </div>
                 </div>
@@ -1330,7 +1325,7 @@
                         <div class="row">
                           <div class="col-md-6 mb-3">
                             <mat-form-field appearance="outline" class="w-100">
-                              <mat-label>Dial Color</mat-label>
+                              <mat-label class="label-header">Dial Color</mat-label>
                               <mat-select formControlName="dialColor">
                                 <mat-option value="">Please Select</mat-option>
                               </mat-select>
@@ -1338,7 +1333,7 @@
                           </div>
                           <div class="col-md-6 mb-3">
                             <mat-form-field appearance="outline" class="w-100">
-                              <mat-label>Dial Material</mat-label>
+                              <mat-label class="label-header">Dial Material</mat-label>
                               <input
                                 matInput
                                 formControlName="dialMaterial"
@@ -1351,7 +1346,7 @@
                         <div class="row">
                           <div class="col-md-6 mb-3">
                             <mat-form-field appearance="outline" class="w-100">
-                              <mat-label>Dial Markers</mat-label>
+                              <mat-label class="label-header">Dial Markers</mat-label>
                               <mat-select formControlName="dialMarkers">
                                 <mat-option value="">Please Select</mat-option>
                               </mat-select>
@@ -1359,7 +1354,7 @@
                           </div>
                           <div class="col-md-6 mb-3">
                             <mat-form-field appearance="outline" class="w-100">
-                              <mat-label>Dial Hands</mat-label>
+                              <mat-label class="label-header">Dial Hands</mat-label>
                               <input
                                 matInput
                                 formControlName="dialHands"
@@ -1386,7 +1381,7 @@
                         <div class="row">
                           <div class="col-md-6 mb-3">
                             <mat-form-field appearance="outline" class="w-100">
-                              <mat-label>Case Material</mat-label>
+                              <mat-label class="label-header">Case Material</mat-label>
                               <mat-select formControlName="caseMaterial">
                                 <mat-option value="">Please Select</mat-option>
                               </mat-select>
@@ -1394,7 +1389,7 @@
                           </div>
                           <div class="col-md-6 mb-3">
                             <mat-form-field appearance="outline" class="w-100">
-                              <mat-label>Bezel Material</mat-label>
+                              <mat-label class="label-header">Bezel Material</mat-label>
                               <input
                                 matInput
                                 formControlName="bezelMaterial"
@@ -1407,18 +1402,18 @@
                         <div class="row">
                           <div class="col-md-6 mb-3">
                             <mat-form-field appearance="outline" class="w-100">
-                              <mat-label>Thickness</mat-label>
+                              <mat-label class="label-header">Thickness</mat-label>
                               <input
                                 matInput
                                 formControlName="thickness"
                                 placeholder="Enter thickness"
                               />
-                              <span matSuffix>mm</span>
+                              <span style="padding: 17px 15px 17px 15px;background-color: #DBDBDB;" matSuffix>mm</span>
                             </mat-form-field>
                           </div>
                           <div class="col-md-6 mb-3">
                             <mat-form-field appearance="outline" class="w-100">
-                              <mat-label>Crystal</mat-label>
+                              <mat-label class="label-header">Crystal</mat-label>
                               <mat-select formControlName="crystal">
                                 <mat-option value="">Please Select</mat-option>
                               </mat-select>
@@ -1443,7 +1438,7 @@
                         <div class="row">
                           <div class="col-md-6 mb-3">
                             <mat-form-field appearance="outline" class="w-100">
-                              <mat-label>Bracelet Material</mat-label>
+                              <mat-label class="label-header">Bracelet Material</mat-label>
                               <mat-select formControlName="braceletMaterial">
                                 <mat-option value="">Please Select</mat-option>
                               </mat-select>
@@ -1451,7 +1446,7 @@
                           </div>
                           <div class="col-md-6 mb-3">
                             <mat-form-field appearance="outline" class="w-100">
-                              <mat-label>Bracelet Color</mat-label>
+                              <mat-label class="label-header">Bracelet Color</mat-label>
                               <input
                                 matInput
                                 formControlName="braceletColor"
@@ -1464,7 +1459,7 @@
                         <div class="row">
                           <div class="col-md-6 mb-3">
                             <mat-form-field appearance="outline" class="w-100">
-                              <mat-label>Type of Clasp</mat-label>
+                              <mat-label class="label-header">Type of Clasp</mat-label>
                               <mat-select formControlName="claspType">
                                 <mat-option value="">Please Select</mat-option>
                               </mat-select>
@@ -1505,74 +1500,78 @@
           </p>
           <div class="image-upload-container">
             <!-- Cover Image -->
-            <div class="cover-image-section">
+            <div class="">
               <p>Cover Image</p>
-              <div class="upload-box" (click)="selectCoverImage()">
-                <ng-container *ngIf="coverImage; else uploadPlaceholder">
-                  <img
-                    style="height: 100%; width: 100%; object-fit: fill"
-                    [src]="coverImage"
-                    alt="Cover Image"
-                  />
-                  <!-- Show delete button when cover image is present -->
-                  <button class="delete-btn" (click)="removeCoverImage()">
-                    <mat-icon>delete</mat-icon>
-                  </button>
-                </ng-container>
-                <ng-template #uploadPlaceholder>
-                  <span>+</span>
-                </ng-template>
-                <!-- Show the upload progress if cover image is uploading -->
-                <div *ngIf="isCoverImageUploading" class="upload-progress">
-                  <p>Uploading</p>
-                  <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+              <div class="d-flex flex-wrap">
+                <div class="upload-box" (click)="selectCoverImage()">
+                  <ng-container *ngIf="coverImage; else uploadPlaceholder">
+                    <img
+                      style="height: 100%; width: 100%; object-fit: fill"
+                      [src]="coverImage"
+                      alt="Cover Image"
+                    />
+                    <!-- Show delete button when cover image is present -->
+                    <button class="delete-btn" (click)="removeCoverImage()">
+                      <mat-icon>delete</mat-icon>
+                    </button>
+                  </ng-container>
+                  <ng-template #uploadPlaceholder>
+                    <span>+</span>
+                  </ng-template>
+                  <!-- Show the upload progress if cover image is uploading -->
+                  <div *ngIf="isCoverImageUploading" class="upload-progress">
+                    <p>Uploading</p>
+                    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+                  </div>
                 </div>
+                <input
+                  type="file"
+                  #coverImageInput
+                  (change)="onCoverImageSelected($event)"
+                  accept="image/*"
+                  hidden
+                />
               </div>
-              <input
-                type="file"
-                #coverImageInput
-                (change)="onCoverImageSelected($event)"
-                accept="image/*"
-                hidden
-              />
             </div>
 
             <!-- Other Images -->
-            <div class="other-images-section">
+            <div class="">
               <p>Other Images</p>
-              <div class="upload-box" (click)="selectOtherImages()">
-                <span>+</span>
-              </div>
-              <input
-                type="file"
-                #otherImagesInput
-                (change)="onOtherImagesSelected($event)"
-                accept="image/*"
-                multiple
-                hidden
-              />
-
-              <div class="image-preview" *ngFor="let image of otherImages">
-                <img
-                  [src]="image.url"
-                  *ngIf="!image.isUploading"
-                  alt="Preview"
+              <div class="d-flex flex-wrap align-items-center gap-3">
+                <div class="upload-box" (click)="selectOtherImages()">
+                  <span>+</span>
+                </div>
+                <input
+                  type="file"
+                  #otherImagesInput
+                  (change)="onOtherImagesSelected($event)"
+                  accept="image/*"
+                  multiple
+                  hidden
                 />
 
-                <!-- Show the progress bar if the image is uploading -->
-                <div *ngIf="image.isUploading" class="upload-progress">
-                  <p>Uploading</p>
-                  <mat-progress-bar mode="indeterminate"></mat-progress-bar>
-                </div>
+                <div class="image-preview" *ngFor="let image of otherImages">
+                  <img
+                    [src]="image.url"
+                    *ngIf="!image.isUploading"
+                    alt="Preview"
+                  />
 
-                <!-- Show the delete button only when the upload is complete -->
-                <button
-                  *ngIf="!image.isUploading"
-                  class="delete-btn"
-                  (click)="removeImage(image)"
-                >
-                  <mat-icon>delete</mat-icon>
-                </button>
+                  <!-- Show the progress bar if the image is uploading -->
+                  <div *ngIf="image.isUploading" class="upload-progress">
+                    <p>Uploading</p>
+                    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+                  </div>
+
+                  <!-- Show the delete button only when the upload is complete -->
+                  <button
+                    *ngIf="!image.isUploading"
+                    class="delete-btn"
+                    (click)="removeImage(image)"
+                  >
+                    <mat-icon>delete</mat-icon>
+                  </button>
+                </div>
               </div>
             </div>
           </div>
@@ -1608,10 +1607,10 @@
                 (click)="selectCondition(condition)"
                 [class.selected]="condition === selectedCondition"
               >
-                <div class="card condition-card h-100">
+                <div class="card condition-card h-100" style="border-radius: 16px;">
                   <div class="card-body">
-                    <h5 class="card-title">{{ condition.title }}</h5>
-                    <p class="card-text">{{ condition.description }}</p>
+                    <p class="font-size-16 font-wight-700 color-242424 margin-0">{{ condition.title }}</p>
+                    <p class="font-size-14 font-weight-400 color-909090">{{ condition.description }}</p>
                   </div>
                 </div>
               </div>
@@ -1649,8 +1648,8 @@
                 (click)="toggleOption(option)"
                 [class.selected]="isSelected(option)"
               >
-                <div class="card delivery-card h-100 text-center">
-                  <div class="card-body">
+                <div class="card delivery-card h-100">
+                  <div class="card-body d-flex flex-column ">
                     <img
                       [src]="option.icon"
                       alt="{{ option.title }}"
@@ -1798,8 +1797,8 @@
 
           <div class="container-fluid mt-3">
             <div class="help-card p-4">
-              <div class="icon-placeholder text-center">
-                <span>🔄</span>
+              <div class="icon-placeholder">
+                <img src="../../../../assets/images/help-us.png" alt="img"/>
               </div>
               <h5>Having trouble?</h5>
               <p>If you cannot set the watch to a specified time:</p>
@@ -1814,8 +1813,8 @@
                 </li>
               </ul>
               <p>If you still have any questions, please contact us</p>
-              <div class="text-center mt-3">
-                <button class="btn btn-contact">Contact us</button>
+              <div class="mt-3">
+                <button class="contact-us-btn">Contact us</button>
               </div>
             </div>
           </div>
@@ -1851,7 +1850,7 @@
                 class="full-width"
                 appearance="outline"
               >
-                <mat-label>Watch Price</mat-label>
+                <mat-label class="label-header">Watch Price</mat-label>
                 <input
                   matInput
                   type="number"
@@ -1863,23 +1862,23 @@
               </mat-form-field>
 
               <mat-card class="info-card mt-4">
-                <h6>Payout Information</h6>
+                <p class="font-size-18 font-wight-700 color-132138">Payout Information</p >
                 <div class="info-row d-flex justify-content-between">
-                  <span class="label">Watch Price</span>
-                  <span class="value">{{
+                  <p class="font-size-16 font-wight-400 color-909090">Watch Price</p>
+                  <p class="font-size-16 font-wight-600 color-0F172A">{{
                     watchPriceDisplay | currency : "SR" : "symbol" : "1.2-2"
-                  }}</span>
+                  }}</p>
                 </div>
                 <div class="info-row d-flex justify-content-between">
-                  <span class="label">Platform Fee (4%)</span>
-                  <span class="value text-danger">
+                  <span class="font-size-16 font-wight-400 color-909090">Platform Fee (4%)</span>
+                  <span class="font-size-16 font-wight-600 color-0F172A">
                     - {{ platformFee | currency : "SR" : "symbol" : "1.2-2" }}
                   </span>
                 </div>
                 <mat-divider></mat-divider>
                 <div class="info-row d-flex justify-content-between">
-                  <span class="label">Estimated Payout</span>
-                  <span class="value text-primary">
+                  <span class="font-size-16 font-wight-400 color-909090">Estimated Payout</span>
+                  <span class="font-size-16 font-wight-600 color-0F172A">
                     {{ estimatedPayout | currency : "SR" : "symbol" : "1.2-2" }}
                   </span>
                 </div>
@@ -1917,7 +1916,7 @@
               class="full-width"
               appearance="outline"
             >
-              <mat-label>Billing Address</mat-label>
+              <mat-label class="label-header">Billing Address</mat-label>
               <input
                 matInput
                 formControlName="billingAddress"
@@ -1933,7 +1932,7 @@
               class="full-width"
               appearance="outline"
             >
-              <mat-label>First Name</mat-label>
+              <mat-label class="label-header">First Name</mat-label>
               <input
                 matInput
                 formControlName="firstName"
@@ -1949,7 +1948,7 @@
               class="full-width"
               appearance="outline"
             >
-              <mat-label>Last Name</mat-label>
+              <mat-label class="label-header">Last Name</mat-label>
               <input
                 matInput
                 formControlName="lastName"
@@ -1965,7 +1964,7 @@
               class="full-width"
               appearance="outline"
             >
-              <mat-label>Street</mat-label>
+              <mat-label class="label-header">Street</mat-label>
               <input
                 matInput
                 formControlName="street"
@@ -1981,7 +1980,7 @@
               class="full-width"
               appearance="outline"
             >
-              <mat-label>Street Line 2</mat-label>
+              <mat-label class="label-header">Street Line 2</mat-label>
               <input
                 matInput
                 formControlName="streetLine2"
@@ -1994,7 +1993,7 @@
               class="full-width"
               appearance="outline"
             >
-              <mat-label>ZIP Code</mat-label>
+              <mat-label class="label-header">ZIP Code</mat-label>
               <input
                 matInput
                 formControlName="zipCode"
@@ -2010,7 +2009,7 @@
               class="full-width"
               appearance="outline"
             >
-              <mat-label>City</mat-label>
+              <mat-label class="label-header">City</mat-label>
               <mat-select formControlName="city" placeholder="Please select">
                 <mat-option *ngFor="let city of cities" [value]="city">{{
                   city
@@ -2053,7 +2052,7 @@
               <!-- Ad Preview Section -->
               <div class="col-md-6">
                 <h6 class="text-muted font-weight-bold">Ad Preview</h6>
-                <div class="card p-3">
+                <div class="card p-3" style="background: #F7F7F8;border-radius: 15px;">
                   <div class="d-flex align-items-center">
                     <img src="./assets/images/interested-watches-1.png" alt="Watch Image" class="img-fluid" style="max-width: 100px;" />
                     <div class="ml-3">
@@ -2069,7 +2068,7 @@
               <!-- Price Info Section -->
               <div class="col-md-6">
                 <h6 class="text-muted font-weight-bold">Price Info</h6>
-                <div class="card p-3">
+                <div class="card p-3" style="background: #F7F7F8;border-radius: 15px;">
                   <div class="d-flex justify-content-between">
                     <span>Watch Price</span>
                     <span class="font-weight-bold">SR 2000.00</span>
@@ -2089,7 +2088,7 @@
           
             <!-- Billing Information Section -->
             <h6 class="text-muted font-weight-bold">Billing Information</h6>
-            <div class="card mt-4 p-3">
+            <div class="card mt-4 p-3" style="background: #F7F7F8;border-radius: 15px;">
               <div class="row">
                 <div class="col-md-6">
                   <p class="mb-1"><strong>Billing Address</strong></p>

@@ -162,11 +162,11 @@ export class AddNewProductComponent implements OnInit {
   options = [
     {
       title: "Original Box & Original Papers",
-      icon: "assets/icons/original-box-papers.svg",
+      icon: "../assets/images/original-box-papers.png",
     },
-    { title: "Original Box", icon: "assets/icons/original-box.svg" },
-    { title: "Original Papers", icon: "assets/icons/original-papers.svg" },
-    { title: "Watch Only", icon: "assets/icons/watch-only.svg" },
+    { title: "Original Box", icon: "../assets/images/original-box.png" },
+    { title: "Original Papers", icon: "/assets/images/original-papers.png" },
+    { title: "Watch Only", icon: "/assets/images/watch-only.png" },
   ];
 
   selectedOptions: any[] = [];
