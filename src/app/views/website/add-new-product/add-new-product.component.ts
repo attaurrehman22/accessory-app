@@ -34,7 +34,7 @@ interface ImageFile {
   styleUrls: ["./add-new-product.component.css"],
 })
 export class AddNewProductComponent implements OnInit {
-  selectedSection: string = "uploadImages";
+  selectedSection: string = "billinginformation";
   isSmallScreen: boolean = false;
   panelOpenState = false;
   panelDialOpenState = false;
@@ -107,12 +107,12 @@ export class AddNewProductComponent implements OnInit {
 
   // Billing Information Form Details
 
-  billingAddress = new FormControl("", [Validators.required]);
-  firstName = new FormControl("", [Validators.required]);
-  lastName = new FormControl("", [Validators.required]);
+  billing_address = new FormControl("", [Validators.required]);
+  first_name = new FormControl("", [Validators.required]);
+  last_name = new FormControl("", [Validators.required]);
   street = new FormControl("", [Validators.required]);
-  streetLine2 = new FormControl("");
-  zipCode = new FormControl("", [Validators.required]);
+  street_line_2 = new FormControl("");
+  zip_code = new FormControl("", [Validators.required]);
   city = new FormControl("", [Validators.required]);
 
   cities = ["City 1", "City 2", "City 3"];
@@ -184,15 +184,12 @@ export class AddNewProductComponent implements OnInit {
     { title: "Watch Only", icon: "/assets/images/watch-only.png" },
   ];
 
-  selectedOptions: any[] = [];
+  selectedOptions: string='';
 
   toggleOption(option: any) {
-    const index = this.selectedOptions.indexOf(option);
-    if (index === -1) {
-      this.selectedOptions.push(option); // Add to selection
-    } else {
-      this.selectedOptions.splice(index, 1); // Remove from selection
-    }
+    this.selectedOptions=option.title
+    console.log("option",option)
+    console.log("this.selectedOptions",this.selectedOptions)
   }
 
   isSelected(option: any): boolean {
@@ -299,12 +296,12 @@ export class AddNewProductComponent implements OnInit {
     });
 
     this.billingForm = new FormGroup({
-      billingAddress: this.billingAddress,
-      firstName: this.firstName,
-      lastName: this.lastName,
+      billing_address: this.billing_address,
+      first_name: this.first_name,
+      last_name: this.last_name,
       street: this.street,
-      streetLine2: this.streetLine2,
-      zipCode: this.zipCode,
+      street_line_2: this.street_line_2,
+      zip_code: this.zip_code,
       city: this.city,
     });
   }
@@ -403,13 +400,9 @@ export class AddNewProductComponent implements OnInit {
         return;
       }
       const formData = new FormData();
-
-      // Append cover image as "main_image"
       if (this.coverImage && this.coverImage.file) {
          formData.append("main_image", this.coverImage.file, this.coverImage.file.name || "main_image.jpg");
       }
-
-      // Append other images as "additional_images[]"
       this.otherImages.forEach((image, index) => {
          if (image.file) {
             formData.append(`additional_images[]`, image.file, image.file.name || `additional_image_${index}.jpg`);
@@ -419,14 +412,17 @@ export class AddNewProductComponent implements OnInit {
       // Log formData entries for verification
       formData.forEach((value, key) => console.log(key, value));
 
-    console.log(formData)
-
       this.selectSection("conditionGrading");
     } else if (Param === "conditionGrading") {
       console.log(this.selectedCondition);
       this.selectSection("scopeofdelivery");
     } else if (Param === "scopeofdelivery") {
-      console.log(this.selectedOptions);
+
+     const formData ={
+      product_id: new FormControl(this.productIDFromResponse || ''),
+      scope_of_delivery:this.selectedOptions
+      }
+      console.log(formData);
       this.selectSection("proofofownership");
     } else if (Param === "proofofownership") {
       console.log("Selected files for 'proofofownership':", this.selectedFiles);
