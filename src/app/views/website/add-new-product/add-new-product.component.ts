@@ -28,7 +28,7 @@ import { LanguageService } from "src/services/lang-service/language.service";
   styleUrls: ["./add-new-product.component.css"],
 })
 export class AddNewProductComponent implements OnInit {
-  selectedSection: string = "listingDetails";
+  selectedSection: string = "watchDetails";
   isSmallScreen: boolean = false;
   panelOpenState = false;
   panelDialOpenState = false;
@@ -36,6 +36,7 @@ export class AddNewProductComponent implements OnInit {
   coverImage: string | null = null; // Holds the URL of the cover image
   otherImages: Array<{ url: string; isUploading: boolean }> = []; // Holds the URLs and status of other images
   isCoverImageUploading: boolean = false;
+  productIDFromResponse:any;
   @ViewChild("coverImageInput") coverImageInput!: ElementRef<HTMLInputElement>;
   @ViewChild("otherImagesInput")
   otherImagesInput!: ElementRef<HTMLInputElement>;
@@ -58,36 +59,45 @@ export class AddNewProductComponent implements OnInit {
 
   // Watch Form Details
 
-  referenceNo = new FormControl("", [
+  reference_number = new FormControl("", [
     Validators.required,
     Validators.pattern("^[^\\s]+(\\s+[^\\s]+)*$"),
   ]);
-  serialNo = new FormControl("", [
+  serial_no = new FormControl("", [
     Validators.required,
     Validators.pattern("^[^\\s]+(\\s+[^\\s]+)*$"),
   ]);
   gender = new FormControl("", Validators.required);
   movement = new FormControl("", Validators.required);
-  caseDiameter = new FormControl("", [
+  case_diameter_value_1 = new FormControl(null , [
     Validators.required,
     Validators.pattern("^[0-9]*$"),
   ]);
-  otherDiameter = new FormControl("", [
+  case_diameter_value_2 = new FormControl(null, [
     Validators.required,
     Validators.pattern("^[0-9]*$"),
   ]);
-  dialColor = new FormControl("");
-  dialMaterial = new FormControl("");
-  dialMarkers = new FormControl("");
-  dialHands = new FormControl("");
-  caseMaterial = new FormControl("");
-  bezelMaterial = new FormControl("");
-  thickness = new FormControl("", [Validators.pattern("^[0-9]*$")]);
+  dial_color = new FormControl("");
+  caliber_movement = new FormControl("");
+  base_caliber = new FormControl("");
+  power_reserve = new FormControl("");
+  no_of_jewels = new FormControl();
+  frequency = new FormControl("");
+  additional_details = new FormControl("");
+
+  case_material = new FormControl("");
+  bezel_material = new FormControl("");
+  thickness = new FormControl(null, [Validators.pattern("^[0-9]*$")]);
   crystal = new FormControl("");
-  braceletMaterial = new FormControl("");
-  braceletColor = new FormControl("");
-  claspType = new FormControl("");
-  claspMaterial = new FormControl("");
+  water_resistance = new FormControl("");
+
+  dial_numerals = new FormControl("");
+  bracelet_material = new FormControl("");
+  bracelet_color = new FormControl("");
+  type_of_clasp = new FormControl("");
+  clasp_material = new FormControl("");
+
+
 
   // Billing Information Form Details
 
@@ -101,7 +111,7 @@ export class AddNewProductComponent implements OnInit {
 
   cities = ["City 1", "City 2", "City 3"];
 
-  constructor(private http: HttpService) {}
+  constructor(private http: HttpService,private alertService:AlertsServicesService) {}
 
   watchPrice: number = 0;
   watchPriceDisplay: number = 0;
@@ -256,24 +266,30 @@ export class AddNewProductComponent implements OnInit {
     });
 
     this.watchDetailsForm = new FormGroup({
-      referenceNo: this.referenceNo,
-      serialNo: this.serialNo,
+      product_id: new FormControl(this.productIDFromResponse || ''),
+      reference_number: this.reference_number,
+      serial_no: this.serial_no,
       gender: this.gender,
       movement: this.movement,
-      caseDiameter: this.caseDiameter,
-      otherDiameter: this.otherDiameter,
-      dialColor: this.dialColor,
-      dialMaterial: this.dialMaterial,
-      dialMarkers: this.dialMarkers,
-      dialHands: this.dialHands,
-      caseMaterial: this.caseMaterial,
-      bezelMaterial: this.bezelMaterial,
+      case_diameter_value_1: this.case_diameter_value_1,
+      case_diameter_value_2: this.case_diameter_value_2,
+      dial_color: this.dial_color,
+      caliber_movement: this.caliber_movement,
+      base_caliber: this.base_caliber,
+      power_reserve: this.power_reserve,
+      no_of_jewels: this.no_of_jewels,
+      frequency: this.frequency,
+      additional_details: this.additional_details,
+      case_material: this.case_material,
+      bezel_material: this.bezel_material,
       thickness: this.thickness,
       crystal: this.crystal,
-      braceletMaterial: this.braceletMaterial,
-      braceletColor: this.braceletColor,
-      claspType: this.claspType,
-      claspMaterial: this.claspMaterial,
+      water_resistance: this.water_resistance,
+      dial_numerals: this.dial_numerals,
+      bracelet_material: this.bracelet_material,
+      bracelet_color: this.bracelet_color,
+      type_of_clasp: this.type_of_clasp,
+      clasp_material: this.clasp_material
     });
 
     this.billingForm = new FormGroup({
@@ -353,7 +369,21 @@ export class AddNewProductComponent implements OnInit {
   onSubmit(Param: string) {
     if (Param === "listingDetails") {
       console.log(this.listingForm.value);
+      if(this.listingForm.valid){
+         this.http.addListingDetails(this.listingForm.value).subscribe(
+          (res)=>{
+            this.productIDFromResponse=res.data.id;
+            this.alertService.showAlert('success','Listing Details Add Successfully')
+        
+          },(err)=>{
+            this.alertService.showAlert('danger','Error in adding listing details')
+          }
+         )
+      }else{
+        this.alertService.showAlert('warning','Enter Form Values')
+      }
       this.selectSection("watchDetails");
+      
     } else if (Param === "watchDetails" && this.watchDetailsForm.valid) {
       console.log(this.watchDetailsForm.value);
       this.selectSection("uploadImages");
@@ -404,5 +434,13 @@ export class AddNewProductComponent implements OnInit {
     } else if (Param === "summary") {
       console.log("-----------");
     }
+  }
+
+
+  cancelbtn(){}
+
+
+  backbtn(param:string){
+    this.selectSection(param);
   }
 }

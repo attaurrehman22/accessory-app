@@ -316,4 +316,19 @@ export class HttpService {
     });
   }
 
+
+  // ----------------------------------  create Listing start ------------------------------
+
+  addListingDetails(formData:any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/api/listing/create`,formData, {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+  }
+
+
+  // ----------------------------------  create Listing end ------------------------------
+
 }
