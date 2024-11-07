@@ -140,7 +140,7 @@ export class HttpService {
     return this.http.get(`${this.apiUrl}/api/getActivePromotions`);
   }
 
-  getAllBrandsDropdDown(ID:any): Observable<any> {
+  getAllBrandsDropdDown(): Observable<any> {
     return this.http.get(`${this.apiUrl}/api/brands`);
   }
   getPopularModels(): Observable<any> {

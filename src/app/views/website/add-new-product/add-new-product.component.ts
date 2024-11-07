@@ -28,7 +28,7 @@ import { LanguageService } from "src/services/lang-service/language.service";
   styleUrls: ["./add-new-product.component.css"],
 })
 export class AddNewProductComponent implements OnInit {
-  selectedSection: string = "summary";
+  selectedSection: string = "listingDetails";
   isSmallScreen: boolean = false;
   panelOpenState = false;
   panelDialOpenState = false;
@@ -45,10 +45,9 @@ export class AddNewProductComponent implements OnInit {
   billingForm: FormGroup;
 
   // Listing Form Details
-  brand = new FormControl("", [
-    Validators.required,
-    Validators.pattern("^[^\\s]+(\\s+[^\\s]+)*$"),
-  ]);
+  brand_id = new FormControl(0 , [Validators.required]);
+  category_ids = new FormControl([] , [Validators.required]);
+  name = new FormControl("", [Validators.required]);
   model = new FormControl("", [Validators.required]);
   title = new FormControl("", [Validators.required]);
   description = new FormControl("");
@@ -217,21 +216,43 @@ export class AddNewProductComponent implements OnInit {
     this.selectedCondition = condition;
   }
 
+  brandsList:any;
+  categoryList:any;
+  getAllBrandsDropDown(){
+    this.http.getAllBrandsDropdDown().subscribe(
+      (res)=>{
+        this.brandsList=res.data
+      }
+    )
+  }
+
+  getCategoriesDropDown(){
+    this.http.getCategoryDropDown().subscribe(
+      (res)=>{
+        this.categoryList=res.data
+      }
+    )
+  }
+
   ngOnInit() {
     this.checkScreenSize();
+    this.getAllBrandsDropDown();
+    this.getCategoriesDropDown();
     window.addEventListener("resize", () => this.checkScreenSize());
     this.generateRandomClocks(2);
 
     // Listing Form
     this.listingForm = new FormGroup({
-      brand: this.brand,
+      brand_id: this.brand_id,
+      category_ids: this.category_ids,
+      name: this.name,
       model: this.model,
       title: this.title,
       description: this.description,
       watchType: this.watchType,
       yearOfProduction: this.yearOfProduction,
       approximation: this.approximation,
-      unknown: this.unknown,
+      unknown: this.unknown, 
     });
 
     this.watchDetailsForm = new FormGroup({
@@ -330,7 +351,7 @@ export class AddNewProductComponent implements OnInit {
   }
 
   onSubmit(Param: string) {
-    if (Param === "listing" && this.listingForm.valid) {
+    if (Param === "listingDetails") {
       console.log(this.listingForm.value);
       this.selectSection("watchDetails");
     } else if (Param === "watchDetails" && this.watchDetailsForm.valid) {

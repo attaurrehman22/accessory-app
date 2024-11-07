@@ -21,21 +21,32 @@
               (ngSubmit)="onSubmit('listing')"
               *ngIf="selectedSection === 'listingDetails' && isSmallScreen"
             >
-              <mat-form-field appearance="outline" class="w-100">
-                <mat-label class="label-header">Brand</mat-label>
-                <input
-                  matInput
-                  placeholder="Enter your brand name"
-                  formControlName="brand"
-                  required
-                />
-                <mat-error *ngIf="brand.hasError('required')">
-                  Brand is required
-                </mat-error>
-                <mat-error *ngIf="brand.hasError('pattern')">
-                  Invalid brand name
-                </mat-error>
-              </mat-form-field>
+            <mat-form-field appearance="outline" class="w-100 mt-2">
+              <mat-label class="label-header">Brand</mat-label>
+              <mat-select formControlName="brand_id">
+                <mat-option *ngFor="let brand of brandsList" [value]="brand.id">{{brand.name}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="w-100 mt-2">
+              <mat-label class="label-header">Category</mat-label>
+              <mat-select multiple formControlName="category_ids">
+                <mat-option *ngFor="let category of categoryList" [value]="category.id">{{category.name}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="w-100 mt-2">
+              <mat-label class="label-header">Name</mat-label>
+              <input
+                matInput
+                placeholder="Enter Name"
+                formControlName="name"
+                required
+              />
+              <mat-error *ngIf="name.hasError('required')">
+                Name is required
+              </mat-error>
+            </mat-form-field>
 
               <mat-form-field appearance="outline" class="w-100 mt-2">
                 <mat-label class="label-header">Model</mat-label>
@@ -111,7 +122,7 @@
                   mat-button
                   class="save-can-btn save-btn-bg"
                   type="submit"
-                  [disabled]="listingForm.invalid"
+                  (click)="onSubmit('listingDetails')"
                 >
                   Save
                 </button>
@@ -1115,19 +1126,31 @@
             it’s 100% authentic, giving buyers complete peace of mind.
           </p>
           <form [formGroup]="listingForm" (ngSubmit)="onSubmit('listing')">
+
             <mat-form-field appearance="outline" class="w-100 mt-2">
               <mat-label class="label-header">Brand</mat-label>
+              <mat-select formControlName="brand_id">
+                <mat-option *ngFor="let brand of brandsList" [value]="brand.id">{{brand.name}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="w-100 mt-2">
+              <mat-label class="label-header">Category</mat-label>
+              <mat-select multiple formControlName="category_ids">
+                <mat-option *ngFor="let category of categoryList" [value]="category.id">{{category.name}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="w-100 mt-2">
+              <mat-label class="label-header">Name</mat-label>
               <input
                 matInput
-                placeholder="Enter your brand name"
-                formControlName="brand"
+                placeholder="Enter Name"
+                formControlName="name"
                 required
               />
-              <mat-error *ngIf="brand.hasError('required')">
-                Brand is required
-              </mat-error>
-              <mat-error *ngIf="brand.hasError('pattern')">
-                Invalid brand name
+              <mat-error *ngIf="name.hasError('required')">
+                Name is required
               </mat-error>
             </mat-form-field>
 
@@ -1205,7 +1228,7 @@
                 mat-button
                 class="save-can-btn save-btn-bg"
                 type="submit"
-                [disabled]="listingForm.invalid"
+                (click)="onSubmit('listingDetails')"
               >
                 Save
               </button>
