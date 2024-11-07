@@ -22,20 +22,26 @@ import { MAT_DIALOG_DATA } from "@angular/material/dialog";
 import { ModelLoginComponent } from "../../auth/model-login/model-login.component";
 import { LanguageService } from "src/services/lang-service/language.service";
 
+interface ImageFile {
+  file: File;
+  url: string;
+  isUploading: boolean;
+}
+
 @Component({
   selector: "app-add-new-product",
   templateUrl: "./add-new-product.component.html",
   styleUrls: ["./add-new-product.component.css"],
 })
 export class AddNewProductComponent implements OnInit {
-  selectedSection: string = "watchDetails";
+  selectedSection: string = "uploadImages";
   isSmallScreen: boolean = false;
   panelOpenState = false;
   panelDialOpenState = false;
   panelStrapOpenState = false;
-  coverImage: string | null = null; // Holds the URL of the cover image
-  otherImages: Array<{ url: string; isUploading: boolean }> = []; // Holds the URLs and status of other images
-  isCoverImageUploading: boolean = false;
+  coverImage: { file: File; url: string } | null = null;
+  otherImages: ImageFile[] = [];
+  isCoverImageUploading = false;
   productIDFromResponse:any;
   @ViewChild("coverImageInput") coverImageInput!: ElementRef<HTMLInputElement>;
   @ViewChild("otherImagesInput")
@@ -322,16 +328,16 @@ export class AddNewProductComponent implements OnInit {
   onCoverImageSelected(event: Event) {
     const file = (event.target as HTMLInputElement).files?.[0];
     if (file) {
-      this.isCoverImageUploading = true; // Start uploading
+      this.isCoverImageUploading = true;
 
       const reader = new FileReader();
       reader.onload = () => {
         setTimeout(() => {
-          this.coverImage = reader.result as string;
-          this.isCoverImageUploading = false; // End uploading
-        }, 3000); // 10 seconds delay
+          // Store both file and URL for preview and upload
+          this.coverImage = { file, url: reader.result as string };
+          this.isCoverImageUploading = false;
+        }, 3000); // Simulate upload delay
       };
-
       reader.readAsDataURL(file);
     }
   }
@@ -346,7 +352,7 @@ export class AddNewProductComponent implements OnInit {
     if (files) {
       Array.from(files).forEach((file) => {
         const reader = new FileReader();
-        const newImage = { url: "", isUploading: true };
+        const newImage: ImageFile = { file, url: '', isUploading: true };
         this.otherImages.push(newImage);
 
         reader.onload = () => {
@@ -356,7 +362,6 @@ export class AddNewProductComponent implements OnInit {
             newImage.isUploading = false;
           }, 3000);
         };
-
         reader.readAsDataURL(file);
       });
     }
@@ -397,11 +402,24 @@ export class AddNewProductComponent implements OnInit {
         alert("Please upload at least one other image.");
         return;
       }
-      console.log("Cover Image:", this.coverImage);
-      console.log(
-        "Other Images:",
-        this.otherImages.map((image) => image.url)
-      );
+      const formData = new FormData();
+
+      // Append cover image as "main_image"
+      if (this.coverImage && this.coverImage.file) {
+         formData.append("main_image", this.coverImage.file, this.coverImage.file.name || "main_image.jpg");
+      }
+
+      // Append other images as "additional_images[]"
+      this.otherImages.forEach((image, index) => {
+         if (image.file) {
+            formData.append(`additional_images[]`, image.file, image.file.name || `additional_image_${index}.jpg`);
+         }
+      });
+
+      // Log formData entries for verification
+      formData.forEach((value, key) => console.log(key, value));
+
+    console.log(formData)
 
       this.selectSection("conditionGrading");
     } else if (Param === "conditionGrading") {
