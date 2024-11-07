@@ -52,6 +52,11 @@ export class HttpService {
     return this.http.get(`${this.apiUrl}/api/topBrands`);
   }
 
+  getallDropDownformData(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/api/product-form-dropdown`);
+  }
+
+
   getProductsByCategory(catID:any){
     return this.http.get(`${this.apiUrl}/api/search-product-by?${catID}`);
   }
@@ -321,6 +326,44 @@ export class HttpService {
 
   addListingDetails(formData:any): Observable<any> {
     return this.http.post(`${this.apiUrl}/api/listing/create`,formData, {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+  }
+
+
+  addWatchDetails(formData:any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/api/listing/watchDetails`,formData, {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+  }
+
+  addUploadImages(formData:any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/api/listing/uploadImages`,formData, {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+  }
+
+  addCondition(formData:any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/api/listing/watchCondition`,formData, {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+  }
+
+
+  addScopeOfDelivery(formData:any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/api/listing/scopeOfDelivery`,formData, {
       headers: {
         Accept: "application/json",
         Authorization: `Bearer ${this.token}`,

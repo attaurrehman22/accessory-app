@@ -86,10 +86,13 @@
 
               <mat-form-field appearance="outline" class="w-100 mt-2">
                 <mat-label class="label-header">Watch Type</mat-label>
-                <mat-select formControlName="watchType">
-                  <mat-option value="wrist">Wrist Watch</mat-option>
+                <mat-select formControlName="watch_type">
+                  <mat-option *ngFor="let data of formdropdownListData.watch_type" [value]="data.key">
+                    {{ data.value }}
+                  </mat-option>
                 </mat-select>
               </mat-form-field>
+              
 
               <mat-form-field appearance="outline" class="w-100 mt-2">
                 <mat-label class="label-header">Year of Production</mat-label>
@@ -173,8 +176,9 @@
                     <mat-label class="label-header">Gender</mat-label>
                     <mat-select formControlName="gender">
                       <mat-option value="">Please Select</mat-option>
-                      <mat-option value="male">Male</mat-option>
-                      <mat-option value="female">Female</mat-option>
+                      <mat-option *ngFor="let data of formdropdownListData?.gender" [value]="data.key">
+                        {{ data.value }}
+                      </mat-option>
                     </mat-select>
                   </mat-form-field>
                 </div>
@@ -183,8 +187,7 @@
                     <mat-label class="label-header">Movement</mat-label>
                     <mat-select formControlName="movement">
                       <mat-option value="">Please Select</mat-option>
-                      <mat-option value="yes">Yes</mat-option>
-                      <mat-option value="no">No</mat-option>
+                      <mat-option *ngFor="let data of formdropdownListData?.movement" [value]="data.key">{{data.value}}</mat-option>
                     </mat-select>
                   </mat-form-field>
                 </div>
@@ -238,9 +241,11 @@
                         <div class="col-md-6 mb-3">
                           <mat-form-field appearance="outline" class="w-100">
                             <mat-label class="label-header">Dial Color</mat-label>
-                            <mat-select formControlName="dial_color">
-                              <mat-option value="">Please Select</mat-option>
-                            </mat-select>
+                            <input
+                            matInput
+                            formControlName="dial_color"
+                            placeholder="Enter Dial Color"
+                          />
                           </mat-form-field>
                         </div>
                         <div class="col-md-6 mb-3">
@@ -283,9 +288,15 @@
                         <div class="col-md-6 mb-3">
                           <mat-form-field appearance="outline" class="w-100">
                             <mat-label class="label-header">No of Jewels</mat-label>
-                            <mat-select formControlName="no_of_jewels">
+                            <!-- <mat-select formControlName="no_of_jewels">
                               <mat-option value="">Please Select</mat-option>
-                            </mat-select>
+                            </mat-select> -->
+
+                            <input
+                              matInput
+                              formControlName="no_of_jewels"
+                              placeholder="Enter No of Jewels"
+                            />
                        
                           </mat-form-field>
                         </div>
@@ -306,10 +317,11 @@
                         <div class="col-md-12 mb-3">
                           <mat-form-field appearance="outline" class="w-100">
                             <mat-label class="label-header">Other Details</mat-label>
-                            <mat-select formControlName="additional_details">
-                              <mat-option value="">Please Select</mat-option>
-                            </mat-select>
-                       
+                            <input
+                            matInput
+                            formControlName="additional_details"
+                            placeholder="Enter Other Details"
+                          />
                           </mat-form-field>
                         </div>
                         
@@ -335,17 +347,17 @@
                             <mat-label class="label-header">Case Material</mat-label>
                             <mat-select formControlName="case_material">
                               <mat-option value="">Please Select</mat-option>
+                              <mat-option *ngFor="let data of formdropdownListData.case_material" [value]="data.key">{{data.value}}</mat-option>
                             </mat-select>
                           </mat-form-field>
                         </div>
                         <div class="col-md-6 mb-3">
                           <mat-form-field appearance="outline" class="w-100">
                             <mat-label class="label-header">Bezel Material</mat-label>
-                            <input
-                              matInput
-                              formControlName="bezel_material"
-                              placeholder="Enter model name"
-                            />
+                            <mat-select formControlName="bezel_material">
+                              <mat-option value="">Please Select</mat-option>
+                              <mat-option *ngFor="let data of formdropdownListData.bezel_material" [value]="data.key">{{data.value}}</mat-option>
+                            </mat-select>
                           </mat-form-field>
                         </div>
                       </div>
@@ -367,6 +379,7 @@
                             <mat-label class="label-header">Crystal</mat-label>
                             <mat-select formControlName="crystal">
                               <mat-option value="">Please Select</mat-option>
+                              <mat-option *ngFor="let data of formdropdownListData.crystal" [value]="data.key">{{data.value}}</mat-option>
                             </mat-select>
                           </mat-form-field>
                         </div>
@@ -379,6 +392,8 @@
                             <mat-label class="label-header">Water Resistence</mat-label>
                             <mat-select formControlName="water_resistance">
                               <mat-option value="">Please Select</mat-option>
+                              <mat-option *ngFor="let data of formdropdownListData.water_resistance" [value]="data.key">{{data.value}}</mat-option>
+
                             </mat-select>
                           </mat-form-field>
                         </div>
@@ -414,9 +429,11 @@
                         <div class="col-md-6 mb-3">
                           <mat-form-field appearance="outline" class="w-100">
                             <mat-label class="label-header">Bracelet Material</mat-label>
-                            <mat-select formControlName="bracelet_material">
-                              <mat-option value="">Please Select</mat-option>
-                            </mat-select>
+                            <input
+                                matInput
+                                formControlName="bracelet_material"
+                                placeholder="Enter Bracelet Material"
+                              />
                           </mat-form-field>
                         </div>
                         <div class="col-md-6 mb-3">
@@ -425,7 +442,7 @@
                             <input
                               matInput
                               formControlName="bracelet_color"
-                              placeholder="Enter your model name"
+                              placeholder="Enter Bracelet Color"
                             />
                           </mat-form-field>
                         </div>
@@ -435,9 +452,11 @@
                         <div class="col-md-6 mb-3">
                           <mat-form-field appearance="outline" class="w-100">
                             <mat-label class="label-header">Type of Clasp</mat-label>
-                            <mat-select formControlName="type_of_clasp">
-                              <mat-option value="">Please Select</mat-option>
-                            </mat-select>
+                            <input
+                            matInput
+                            formControlName="type_of_clasp"
+                            placeholder="Enter Type of Clasp"
+                          />
                           </mat-form-field>
                         </div>
 
@@ -1271,10 +1290,13 @@
 
             <mat-form-field appearance="outline" class="w-100 mt-2">
               <mat-label class="label-header">Watch Type</mat-label>
-              <mat-select formControlName="watchType">
-                <mat-option value="wrist">Wrist Watch</mat-option>
+              <mat-select formControlName="watch_type">
+                <mat-option *ngFor="let data of formdropdownListData.watch_type" [value]="data.key">
+                  {{ data.value }}
+                </mat-option>
               </mat-select>
             </mat-form-field>
+            
 
             <mat-form-field appearance="outline" class="w-100 mt-2">
               <mat-label class="label-header">Year of Production</mat-label>
@@ -1366,8 +1388,9 @@
                       <mat-label class="label-header">Gender</mat-label>
                       <mat-select formControlName="gender">
                         <mat-option value="">Please Select</mat-option>
-                        <mat-option value="male">Male</mat-option>
-                        <mat-option value="female">Female</mat-option>
+                        <mat-option *ngFor="let data of formdropdownListData?.gender" [value]="data.key">
+                          {{ data.value }}
+                        </mat-option>
                       </mat-select>
                     </mat-form-field>
                   </div>
@@ -1376,8 +1399,7 @@
                       <mat-label class="label-header">Movement</mat-label>
                       <mat-select formControlName="movement">
                         <mat-option value="">Please Select</mat-option>
-                        <mat-option value="yes">Yes</mat-option>
-                        <mat-option value="no">No</mat-option>
+                        <mat-option *ngFor="let data of formdropdownListData?.movement" [value]="data.key">{{data.value}}</mat-option>
                       </mat-select>
                     </mat-form-field>
                   </div>
@@ -1431,9 +1453,11 @@
                           <div class="col-md-6 mb-3">
                             <mat-form-field appearance="outline" class="w-100">
                               <mat-label class="label-header">Dial Color</mat-label>
-                              <mat-select formControlName="dial_color">
-                                <mat-option value="">Please Select</mat-option>
-                              </mat-select>
+                              <input
+                              matInput
+                              formControlName="dial_color"
+                              placeholder="Enter Dial Color"
+                            />
                             </mat-form-field>
                           </div>
                           <div class="col-md-6 mb-3">
@@ -1476,10 +1500,14 @@
                           <div class="col-md-6 mb-3">
                             <mat-form-field appearance="outline" class="w-100">
                               <mat-label class="label-header">No of Jewels</mat-label>
-                              <mat-select formControlName="no_of_jewels">
+                              <!-- <mat-select formControlName="no_of_jewels">
                                 <mat-option value="">Please Select</mat-option>
-                              </mat-select>
-                         
+                              </mat-select> -->
+                              <input
+                              matInput
+                              formControlName="no_of_jewels"
+                              placeholder="Enter No of Jewels"
+                            />  
                             </mat-form-field>
                           </div>
                           <div class="col-md-6 mb-3">
@@ -1499,10 +1527,11 @@
                           <div class="col-md-12 mb-3">
                             <mat-form-field appearance="outline" class="w-100">
                               <mat-label class="label-header">Other Details</mat-label>
-                              <mat-select formControlName="additional_details">
-                                <mat-option value="">Please Select</mat-option>
-                              </mat-select>
-                         
+                              <input
+                              matInput
+                              formControlName="additional_details"
+                              placeholder="Enter Other Details"
+                            />
                             </mat-form-field>
                           </div>
                           
@@ -1528,17 +1557,17 @@
                               <mat-label class="label-header">Case Material</mat-label>
                               <mat-select formControlName="case_material">
                                 <mat-option value="">Please Select</mat-option>
+                                <mat-option *ngFor="let data of formdropdownListData.case_material" [value]="data.key">{{data.value}}</mat-option>
                               </mat-select>
                             </mat-form-field>
                           </div>
                           <div class="col-md-6 mb-3">
                             <mat-form-field appearance="outline" class="w-100">
                               <mat-label class="label-header">Bezel Material</mat-label>
-                              <input
-                                matInput
-                                formControlName="bezel_material"
-                                placeholder="Enter model name"
-                              />
+                              <mat-select formControlName="bezel_material">
+                                <mat-option value="">Please Select</mat-option>
+                                <mat-option *ngFor="let data of formdropdownListData.bezel_material" [value]="data.key">{{data.value}}</mat-option>
+                              </mat-select>
                             </mat-form-field>
                           </div>
                         </div>
@@ -1560,6 +1589,7 @@
                               <mat-label class="label-header">Crystal</mat-label>
                               <mat-select formControlName="crystal">
                                 <mat-option value="">Please Select</mat-option>
+                                <mat-option *ngFor="let data of formdropdownListData.crystal" [value]="data.key">{{data.value}}</mat-option>
                               </mat-select>
                             </mat-form-field>
                           </div>
@@ -1572,6 +1602,7 @@
                               <mat-label class="label-header">Water Resistence</mat-label>
                               <mat-select formControlName="water_resistance">
                                 <mat-option value="">Please Select</mat-option>
+                                <mat-option *ngFor="let data of formdropdownListData.water_resistance" [value]="data.key">{{data.value}}</mat-option>
                               </mat-select>
                             </mat-form-field>
                           </div>
@@ -1607,9 +1638,14 @@
                           <div class="col-md-6 mb-3">
                             <mat-form-field appearance="outline" class="w-100">
                               <mat-label class="label-header">Bracelet Material</mat-label>
-                              <mat-select formControlName="bracelet_material">
+                              <!-- <mat-select formControlName="bracelet_material">
                                 <mat-option value="">Please Select</mat-option>
-                              </mat-select>
+                              </mat-select> -->
+                              <input
+                                matInput
+                                formControlName="bracelet_material"
+                                placeholder="Enter Bracelet Material"
+                              />
                             </mat-form-field>
                           </div>
                           <div class="col-md-6 mb-3">
@@ -1618,7 +1654,7 @@
                               <input
                                 matInput
                                 formControlName="bracelet_color"
-                                placeholder="Enter your model name"
+                                placeholder="Enter Bracelet Color"
                               />
                             </mat-form-field>
                           </div>
@@ -1628,9 +1664,14 @@
                           <div class="col-md-6 mb-3">
                             <mat-form-field appearance="outline" class="w-100">
                               <mat-label class="label-header">Type of Clasp</mat-label>
-                              <mat-select formControlName="type_of_clasp">
+                              <!-- <mat-select formControlName="type_of_clasp">
                                 <mat-option value="">Please Select</mat-option>
-                              </mat-select>
+                              </mat-select> -->
+                              <input
+                              matInput
+                              formControlName="type_of_clasp"
+                              placeholder="Enter Type of Clasp"
+                            />
                             </mat-form-field>
                           </div>
 

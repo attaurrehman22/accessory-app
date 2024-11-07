@@ -34,7 +34,7 @@ interface ImageFile {
   styleUrls: ["./add-new-product.component.css"],
 })
 export class AddNewProductComponent implements OnInit {
-  selectedSection: string = "billinginformation";
+  selectedSection: string = "scopeofdelivery";
   isSmallScreen: boolean = false;
   panelOpenState = false;
   panelDialOpenState = false;
@@ -51,18 +51,21 @@ export class AddNewProductComponent implements OnInit {
   watchDetailsForm: FormGroup;
   billingForm: FormGroup;
 
+
   // Listing Form Details
+
   brand_id = new FormControl(0 , [Validators.required]);
   category_ids = new FormControl([] , [Validators.required]);
   name = new FormControl("", [Validators.required]);
   model = new FormControl("", [Validators.required]);
   title = new FormControl("", [Validators.required]);
   description = new FormControl("");
-  watchType = new FormControl("");
+  watch_type = new FormControl("");
   yearOfProduction = new FormControl("", [Validators.required]);
   approximation = new FormControl(false);
   unknown = new FormControl(false);
 
+  
   // Watch Form Details
 
   reference_number = new FormControl("", [
@@ -106,7 +109,6 @@ export class AddNewProductComponent implements OnInit {
 
 
   // Billing Information Form Details
-
   billing_address = new FormControl("", [Validators.required]);
   first_name = new FormControl("", [Validators.required]);
   last_name = new FormControl("", [Validators.required]);
@@ -176,44 +178,53 @@ export class AddNewProductComponent implements OnInit {
 
   options = [
     {
-      title: "Original Box & Original Papers",
+      title: "Watch only",
       icon: "../assets/images/original-box-papers.png",
     },
-    { title: "Original Box", icon: "../assets/images/original-box.png" },
-    { title: "Original Papers", icon: "/assets/images/original-papers.png" },
-    { title: "Watch Only", icon: "/assets/images/watch-only.png" },
+    { title: "Watch with original box", icon: "../assets/images/original-box.png" },
+    { title: "Watch with original papers", icon: "/assets/images/original-papers.png" },
+    { title: "Watch with original box and papers", icon: "/assets/images/watch-only.png" },
   ];
 
-  selectedOptions: string='';
+  selectedOptions: any;
 
   toggleOption(option: any) {
-    this.selectedOptions=option.title
+    this.selectedOptions=option
     console.log("option",option)
     console.log("this.selectedOptions",this.selectedOptions)
   }
 
   isSelected(option: any): boolean {
-    return this.selectedOptions.includes(option);
+    if(this.selectedOptions === option){
+      return true
+    }else{
+      return false
+    }
   }
 
   conditions = [
     {
-      title: "Like New & Unworn",
+      title: "New",
       description:
         "The item has no signs of wear such as scratches or dents and is unworn. The item has not been polished.",
     },
     {
-      title: "Very Good",
+      title: "Like new and unworn",
       description:
         "The item shows minor signs of wear, such as small but physically imperceptible scratches.",
     },
     {
-      title: "Good",
+      title: "Used",
       description:
         "The item shows visible and physically perceptible signs of wear such as scratches, scuffs or small dents.",
     },
     {
-      title: "Fair",
+      title: "Very good (minor signs of wear)",
+      description:
+        "The item shows major, visible signs of wear like scratches and dents.",
+    },
+    {
+      title: "Good (moderate signs of wear)",
       description:
         "The item shows major, visible signs of wear like scratches and dents.",
     },
@@ -247,10 +258,41 @@ export class AddNewProductComponent implements OnInit {
     )
   }
 
+  formdropdownListData: any = {};
+
+  allDropDownData() {
+    this.http.getallDropDownformData().subscribe((res) => {
+      this.formdropdownListData = res.data;
+      this.formdropdownListData.watch_type = Object.entries(res.data.watch_type).map(
+        ([key, value]) => ({ key, value })
+      );
+      this.formdropdownListData.gender = Object.entries(res.data.gender).map(
+        ([key, value]) => ({ key, value })
+      );
+      this.formdropdownListData.movement=Object.entries(res.data.movement).map(
+        ([key ,value]) => ({key,value})
+      );
+      this.formdropdownListData.case_material=Object.entries(res.data.case_material).map(
+        ([key,value])=>({key,value})
+      );
+      this.formdropdownListData.bezel_material=Object.entries(res.data.bezel_material).map(
+        ([key,value])=>({key,value})
+      );
+      this.formdropdownListData.crystal=Object.entries(res.data.crystal).map(
+        ([key,value])=>({key,value})
+      );
+      this.formdropdownListData.water_resistance=Object.entries(res.data.water_resistance).map(
+        ([key,value])=>({key,value})
+      );
+    });
+  }
+  
+
   ngOnInit() {
     this.checkScreenSize();
     this.getAllBrandsDropDown();
     this.getCategoriesDropDown();
+    this.allDropDownData()
     window.addEventListener("resize", () => this.checkScreenSize());
     this.generateRandomClocks(2);
 
@@ -262,14 +304,14 @@ export class AddNewProductComponent implements OnInit {
       model: this.model,
       title: this.title,
       description: this.description,
-      watchType: this.watchType,
+      watch_type: this.watch_type,
       yearOfProduction: this.yearOfProduction,
       approximation: this.approximation,
       unknown: this.unknown, 
     });
 
     this.watchDetailsForm = new FormGroup({
-      product_id: new FormControl(this.productIDFromResponse || ''),
+      // product_id: new FormControl(this.productIDFromResponse || ''),
       reference_number: this.reference_number,
       serial_no: this.serial_no,
       gender: this.gender,
@@ -374,21 +416,34 @@ export class AddNewProductComponent implements OnInit {
       if(this.listingForm.valid){
          this.http.addListingDetails(this.listingForm.value).subscribe(
           (res)=>{
-            this.productIDFromResponse=res.data.id;
+            this.productIDFromResponse=res.id;
             this.alertService.showAlert('success','Listing Details Add Successfully')
-        
+            this.selectSection("watchDetails");
           },(err)=>{
             this.alertService.showAlert('danger','Error in adding listing details')
+
           }
          )
       }else{
         this.alertService.showAlert('warning','Enter Form Values')
       }
-      this.selectSection("watchDetails");
-      
     } else if (Param === "watchDetails" && this.watchDetailsForm.valid) {
+
+      const formDataWithProductID = {
+        ...this.watchDetailsForm.value,
+        product_id: this.productIDFromResponse
+      };
+
+      this.http.addWatchDetails(formDataWithProductID).subscribe(
+        (res)=>{
+          this.alertService.showAlert('success','Watch Details Add Successfully')
+          this.selectSection("uploadImages");
+        },(err)=>{
+          this.alertService.showAlert('danger','Error in adding listing details')
+        }
+      )
       console.log(this.watchDetailsForm.value);
-      this.selectSection("uploadImages");
+      
     } else if (Param === "uploadImages") {
       if (!this.coverImage) {
         alert("Please upload a cover image.");
@@ -400,6 +455,7 @@ export class AddNewProductComponent implements OnInit {
         return;
       }
       const formData = new FormData();
+      formData.append("product_id", this.productIDFromResponse);
       if (this.coverImage && this.coverImage.file) {
          formData.append("main_image", this.coverImage.file, this.coverImage.file.name || "main_image.jpg");
       }
@@ -408,22 +464,47 @@ export class AddNewProductComponent implements OnInit {
             formData.append(`additional_images[]`, image.file, image.file.name || `additional_image_${index}.jpg`);
          }
       });
-
-      // Log formData entries for verification
       formData.forEach((value, key) => console.log(key, value));
 
-      this.selectSection("conditionGrading");
+      this.http.addUploadImages(formData).subscribe(
+        (res)=>{
+          this.alertService.showAlert('success','Images Add Successfully')
+          this.selectSection("conditionGrading");
+        },(err)=>{
+          this.alertService.showAlert('danger','Error in adding Images')
+        }
+      )   
     } else if (Param === "conditionGrading") {
-      console.log(this.selectedCondition);
-      this.selectSection("scopeofdelivery");
-    } else if (Param === "scopeofdelivery") {
-
-     const formData ={
-      product_id: new FormControl(this.productIDFromResponse || ''),
-      scope_of_delivery:this.selectedOptions
+      const formData={
+        product_id:this.productIDFromResponse,
+        condition:this.selectedCondition.title
       }
-      console.log(formData);
-      this.selectSection("proofofownership");
+
+      this.http.addCondition(formData).subscribe(
+        (res)=>{
+          this.alertService.showAlert('success','Condition Add Successfully')
+          this.selectSection("scopeofdelivery");
+        },(err)=>{
+          this.alertService.showAlert('danger','Error in adding Condition')
+        }
+      ) 
+    } else if (Param === "scopeofdelivery") {
+      if(!this.productIDFromResponse ){
+        this.productIDFromResponse=893;
+      }
+     const formData ={
+      product_id: this.productIDFromResponse,
+      scope_of_delivery:this.selectedOptions.title
+      }
+      this.http.addScopeOfDelivery(formData).subscribe(
+        (res)=>{
+          this.alertService.showAlert('success','Scope Add Successfully')
+          this.selectSection("proofofownership");
+        },(err)=>{
+          this.alertService.showAlert('danger','Error in adding Scope')
+        }
+      ) 
+     
     } else if (Param === "proofofownership") {
       console.log("Selected files for 'proofofownership':", this.selectedFiles);
 
