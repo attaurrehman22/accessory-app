@@ -178,6 +178,14 @@
   position: relative;
 }
 
+.upload-box:hover .delete-btn {
+  opacity: 1; 
+}
+
+.image-preview:hover .delete-btn {
+  opacity: 1; 
+}
+
 .upload-box span {
   font-size: 2rem;
   color: #ccc;
@@ -227,6 +235,8 @@
   cursor: pointer;
   border: none;
   outline: none;
+  opacity: 0; 
+  transition: opacity 0.3s ease;
 }
 .upload-progress mat-progress-bar {
   width: 80%;
