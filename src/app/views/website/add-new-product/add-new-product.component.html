@@ -672,7 +672,7 @@
                     <ng-container *ngIf="coverImage; else uploadPlaceholder">
                       <img
                         style="height: 100%; width: 100%; object-fit: fill"
-                        [src]="coverImage"
+                        [src]="coverImage.url"
                         alt="Cover Image"
                       />
                       <!-- Show delete button when cover image is present -->
@@ -2264,7 +2264,7 @@
                   <ng-container *ngIf="coverImage; else uploadPlaceholder">
                     <img
                       style="height: 100%; width: 100%; object-fit: fill"
-                      [src]="coverImage"
+                      [src]="coverImage.url"
                       alt="Cover Image"
                     />
                     <!-- Show delete button when cover image is present -->
