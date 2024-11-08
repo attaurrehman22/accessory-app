@@ -60,7 +60,7 @@ export class AddNewProductComponent implements OnInit {
   title = new FormControl("", [Validators.required]);
   description = new FormControl("");
   watch_type = new FormControl("");
-  yearOfProduction = new FormControl("", [Validators.required]);
+  year_of_production = new FormControl("", [Validators.required]);
   approximation = new FormControl(false);
   unknown = new FormControl(false);
 
@@ -298,7 +298,60 @@ export class AddNewProductComponent implements OnInit {
     });
   }
 
+  productFormData:any;
+
+  patchFormData(){
+// Listing Form
+    if (this.productFormData?.brand_id) {
+      this.listingForm.get('brand_id').setValue(this.productFormData.brand_id);
+    }
+    if (this.productFormData?.category_ids) {
+      this.listingForm.get('category_ids').setValue(this.productFormData.category_ids);
+    }
+    if (this.productFormData?.name) {
+      this.listingForm.get('name').setValue(this.productFormData.name);
+    }
+    if (this.productFormData?.model) {
+      this.listingForm.get('model').setValue(this.productFormData.model);
+    }
+    if (this.productFormData?.title) {
+      this.listingForm.get('title').setValue(this.productFormData.title);
+    }
+    if (this.productFormData?.description) {
+      this.listingForm.get('description').setValue(this.productFormData.description);
+    }
+    if (this.productFormData?.watch_type) {
+      this.listingForm.get('watch_type').setValue(this.productFormData.watch_type);
+    }
+    if (this.productFormData?.yearOfProduction) {
+      this.listingForm.get('yearOfProduction').setValue(this.productFormData.yearOfProduction);
+    }
+    if (this.productFormData?.approximation) {
+      this.listingForm.get('approximation').setValue(this.productFormData.approximation);
+    }
+    if (this.productFormData?.unknown) {
+      this.listingForm.get('unknown').setValue(this.productFormData.unknown);
+    }
+  }
+
+
+  getSteperData(product_id){
+    this.http.getSteper(product_id).subscribe(
+      (res)=>{
+        this.productFormData=res.product;
+        if(this.productFormData){
+           this.patchFormData();
+        }
+      }
+    );    
+  }
+
   ngOnInit() {
+    let product_id=893
+    if(product_id){
+      this.getSteperData(product_id)
+      
+    }
     this.checkScreenSize();
     this.getAllBrandsDropDown();
     this.getCategoriesDropDown();
@@ -315,7 +368,7 @@ export class AddNewProductComponent implements OnInit {
       title: this.title,
       description: this.description,
       watch_type: this.watch_type,
-      yearOfProduction: this.yearOfProduction,
+      year_of_production: this.year_of_production,
       approximation: this.approximation,
       unknown: this.unknown,
     });
@@ -614,9 +667,6 @@ export class AddNewProductComponent implements OnInit {
     } else if (Param === "billinginformation") {
 
       if(this.billingForm.valid){
-      if (!this.productIDFromResponse) {
-        this.productIDFromResponse = 893;
-      }
 
       const formDataWithProductID = {
         ...this.billingForm.value,
@@ -637,6 +687,9 @@ export class AddNewProductComponent implements OnInit {
 
     }
     } else if (Param === "summary") {
+      if (!this.productIDFromResponse) {
+        this.productIDFromResponse = 893;
+      }
       console.log("-----------");
     }
   }

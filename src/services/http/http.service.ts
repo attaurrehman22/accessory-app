@@ -399,6 +399,15 @@ export class HttpService {
     });
   }
 
+  getSteper(productID:any): Observable<any> {
+    return this.http.get(`${this.apiUrl}/api/listing/getStep?product_id=${productID}`, {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+  }
+
   // ----------------------------------  create Listing end ------------------------------
 
 }
