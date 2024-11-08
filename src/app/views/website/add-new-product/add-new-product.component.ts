@@ -35,7 +35,7 @@ interface ImageFile {
   styleUrls: ["./add-new-product.component.css"],
 })
 export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
-  selectedSection: string = "uploadImages";
+  selectedSection: string = "listingDetails";
   formDirty = false;
   isSmallScreen: boolean = false;
   panelOpenState = false;
@@ -119,7 +119,8 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
 
   constructor(
     private http: HttpService,
-    private alertService: AlertsServicesService
+    private alertService: AlertsServicesService,
+    private router:Router
   ) {}
 
   watchPrice: number = 0;
@@ -431,6 +432,14 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
     this.otherImages = this.otherImages.filter((img) => img !== image);
   }
 
+  brandnametoDisplay:any;
+
+  matchBrandname() {
+    let SelectedbrandID = this.listingForm.get('brand_id').value;
+    const selectedBrand = this.brandsList.find(brand => brand.id === SelectedbrandID);
+    this.brandnametoDisplay = selectedBrand ? selectedBrand.name : null;
+  }
+
   onSubmit(Param: string) {
     if (Param === "listingDetails") {
       console.log(this.listingForm.value);
@@ -482,10 +491,6 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
     }
 
     } else if (Param === "uploadImages") {
-      
-      if (!this.productIDFromResponse) {
-        this.productIDFromResponse = 896;
-      }
       if (!this.coverImage) {
         alert("Please upload a cover image.");
         return;
@@ -525,21 +530,26 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
         }
       );
     } else if (Param === "conditionGrading") {
-      const formData = {
-        product_id: this.productIDFromResponse,
-        condition: this.selectedCondition.title,
-      };
+      if(this.selectedCondition){
+        const formData = {
+          product_id: this.productIDFromResponse,
+          condition: this.selectedCondition.title,
+        };
 
-      this.http.addCondition(formData).subscribe(
-        (res) => {
-          this.alertService.showAlert("success", "Condition Add Successfully");
-          this.selectSection("scopeofdelivery");
-        },
-        (err) => {
-          this.alertService.showAlert("danger", "Error in adding Condition");
-        }
-      );
+        this.http.addCondition(formData).subscribe(
+          (res) => {
+            this.alertService.showAlert("success", "Condition Add Successfully");
+            this.selectSection("scopeofdelivery");
+          },
+          (err) => {
+            this.alertService.showAlert("danger", "Error in adding Condition");
+          }
+        );
+      }else{
+        this.alertService.showAlert('warning','Select any Option')
+      }
     } else if (Param === "scopeofdelivery") {
+      if(this.selectedOptions){
       const formData = {
         product_id: this.productIDFromResponse,
         scope_of_delivery: this.selectedOptions.title,
@@ -553,8 +563,10 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
           this.alertService.showAlert("danger", "Error in adding Scope");
         }
       );
+    }else{
+      this.alertService.showAlert('warning',"Select any Option")
+    }
     } else if (Param === "proofofownership") {
-      console.log("Selected files for 'proofofownership':", this.selectedFiles);
       this.selectedFiles.forEach((file, index) => {
         if (file) {
           console.log(`File for Clock ${index + 1}:`, file);
@@ -564,49 +576,54 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
       });
       const formData = new FormData();
 
-      // Set the product ID
-      formData.append("product_id", this.productIDFromResponse);
+      if(!this.selectedFiles[0] || !this.selectedFiles[1]){
+        this.alertService.showAlert('warning','Add Images')
+      }else{
 
-      // Proof images
-      if (this.selectedFiles[0]) {
-        formData.append("proof_image_1", this.selectedFiles[0]);
-      }
-      if (this.selectedFiles[1]) {
-        formData.append("proof_image_2", this.selectedFiles[1]);
-      }
-
-      // Proof times displayed on the clocks
-      formData.append(
-        "proof_time_text_1",
-        this.formatTime(this.clocks[0].hour, this.clocks[0].minute)
-      );
-      formData.append(
-        "proof_time_text_2",
-        this.formatTime(this.clocks[1].hour, this.clocks[1].minute)
-      );
-
-      // Randomly generated times (as a sample; can adjust if different from proof times)
-      formData.append(
-        "generted_time_text_1",
-        this.formatTime(this.clocks[0].hour, this.clocks[0].minute)
-      );
-      formData.append(
-        "generted_time_text_2",
-        this.formatTime(this.clocks[1].hour, this.clocks[1].minute)
-      );
-
-      this.http.addProffofOwnerShip(formData).subscribe(
-        (res) => {
-          this.alertService.showAlert("success", "Images Add Successfully");
-          this.selectSection("priceshipment");
-        },
-        (err) => {
-          this.alertService.showAlert("danger", "Error in adding Images");
+        // Set the product ID
+        formData.append("product_id", this.productIDFromResponse);
+  
+        // Proof images
+        if (this.selectedFiles[0]) {
+          formData.append("proof_image_1", this.selectedFiles[0]);
         }
-      );
+        if (this.selectedFiles[1]) {
+          formData.append("proof_image_2", this.selectedFiles[1]);
+        }
+  
+        // Proof times displayed on the clocks
+        formData.append(
+          "proof_time_text_1",
+          this.formatTime(this.clocks[0].hour, this.clocks[0].minute)
+        );
+        formData.append(
+          "proof_time_text_2",
+          this.formatTime(this.clocks[1].hour, this.clocks[1].minute)
+        );
+  
+        // Randomly generated times (as a sample; can adjust if different from proof times)
+        formData.append(
+          "generted_time_text_1",
+          this.formatTime(this.clocks[0].hour, this.clocks[0].minute)
+        );
+        formData.append(
+          "generted_time_text_2",
+          this.formatTime(this.clocks[1].hour, this.clocks[1].minute)
+        );
+  
+        this.http.addProffofOwnerShip(formData).subscribe(
+          (res) => {
+            this.alertService.showAlert("success", "Images Add Successfully");
+            this.selectSection("priceshipment");
+          },
+          (err) => {
+            this.alertService.showAlert("danger", "Error in adding Images");
+          }
+        );
+      }
+
     } else if (Param === "priceshipment") {
       console.log("Price and Shipent", this.watchPrice);
-     
 
       if(!this.watchPrice || !this.shipping_type || !this.shipping_charges || 
         !this.estimate_delivery || !this.estimatedPayoutwithShipping){
@@ -643,6 +660,7 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
       this.http.addbillingInformation(formDataWithProductID).subscribe(
         (res) => {
           this.alertService.showAlert("success", "Billing Info Add Successfully");
+          this.matchBrandname()
           this.selectSection("summary");
         },
         (err) => {
@@ -651,17 +669,27 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
       );
     }else{
       this.alertService.showAlert("warning", "Add Form Values");
-
     }
     } else if (Param === "summary") {
-      // if (!this.productIDFromResponse) {
-      //   this.productIDFromResponse = 893;
-      // }
-      console.log("-----------");
+      const formProductID={
+        product_id: this.productIDFromResponse
+      }
+      this.http.addbpublishListing(formProductID).subscribe(
+        (res) => {
+          this.alertService.showAlert("success", "Product Publish Successfully");
+          this.formDirty=false;
+          this.router.navigate(['/'])
+        },
+        (err) => {
+          this.alertService.showAlert("danger", "Error in Product Publishing");
+        }
+      );
     }
   }
 
-  cancelbtn() {}
+  cancelbtn() {
+    this.router.navigate(['/'])
+  }
 
   backbtn(param: string) {
     this.selectSection(param);

@@ -399,6 +399,15 @@ export class HttpService {
     });
   }
 
+  addbpublishListing(formData:any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/api/listing/publishListing`,formData, {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+  }
+
   getSteper(productID:any): Observable<any> {
     return this.http.get(`${this.apiUrl}/api/listing/getStep?product_id=${productID}`, {
       headers: {
