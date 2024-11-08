@@ -16,13 +16,15 @@ import { AdminCategoryComponent } from './views/adminpages/admin-category/admin-
 import { AdminBrandsProductComponent } from './views/adminpages/admin-brands-product/admin-brands-product.component';
 import { AdminCategoryProductComponent } from './views/adminpages/admin-category-product/admin-category-product.component';
 import { BuyNowComponent } from './views/website/buy-now/buy-now.component';
+import { CanDeactivateFormGuard } from './can-deactivate-form.guard';
 
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component:  RegisterComponent},
   { path: '', component:  HomeComponent},
-  { path: 'new-product', component:  AddNewProductComponent},
+  { path: 'new-product', component:  AddNewProductComponent,
+    canDeactivate: [CanDeactivateFormGuard]},
   { path: 'buy-product', component:  BuyProductComponentComponent},
   { path: 'product-list', component:  ProductListComponent},
   { path: 'product-detail', component:  ProductDetailComponentComponent},

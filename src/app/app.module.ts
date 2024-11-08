@@ -73,6 +73,7 @@ import { TagModule } from 'primeng/tag';
 import {MatExpansionModule} from '@angular/material/expansion';
 import { AdminPageHeaderComponent } from "./views/adminpages/admin-page-header/admin-page-header.component";
 import { BrandsListComponent } from './views/website/brands-list/brands-list.component';
+import { PositiveNumberDirective } from 'src/directives/positiveNumberDirective/positive-number.directive';
 
 @NgModule({
   declarations: [
@@ -108,7 +109,8 @@ import { BrandsListComponent } from './views/website/brands-list/brands-list.com
     AdminCategoryComponent,
     AdminBrandsProductComponent,
     AdminCategoryProductComponent,
-    BrandsListComponent
+    BrandsListComponent,
+    PositiveNumberDirective
   ],
   imports: [
     MatSortModule,

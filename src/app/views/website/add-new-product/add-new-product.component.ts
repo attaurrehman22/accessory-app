@@ -21,6 +21,7 @@ import { LoginComponent } from "../../auth/login/login.component";
 import { MAT_DIALOG_DATA } from "@angular/material/dialog";
 import { ModelLoginComponent } from "../../auth/model-login/model-login.component";
 import { LanguageService } from "src/services/lang-service/language.service";
+import { CanComponentDeactivate } from "src/app/can-deactivate-form.guard";
 
 interface ImageFile {
   file: File;
@@ -33,8 +34,9 @@ interface ImageFile {
   templateUrl: "./add-new-product.component.html",
   styleUrls: ["./add-new-product.component.css"],
 })
-export class AddNewProductComponent implements OnInit {
-  selectedSection: string = "billinginformation";
+export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
+  selectedSection: string = "uploadImages";
+  formDirty = false;
   isSmallScreen: boolean = false;
   panelOpenState = false;
   panelDialOpenState = false;
@@ -53,13 +55,13 @@ export class AddNewProductComponent implements OnInit {
 
   // Listing Form Details
 
-  brand_id = new FormControl(0, [Validators.required]);
+  brand_id = new FormControl(null, [Validators.required]);
   category_ids = new FormControl([], [Validators.required]);
   name = new FormControl("", [Validators.required]);
   model = new FormControl("", [Validators.required]);
   title = new FormControl("", [Validators.required]);
   description = new FormControl("");
-  watch_type = new FormControl("");
+  watch_type = new FormControl("", [Validators.required]);
   year_of_production = new FormControl("", [Validators.required]);
   approximation = new FormControl(false);
   unknown = new FormControl(false);
@@ -298,60 +300,16 @@ export class AddNewProductComponent implements OnInit {
     });
   }
 
-  productFormData:any;
-
-  patchFormData(){
-// Listing Form
-    if (this.productFormData?.brand_id) {
-      this.listingForm.get('brand_id').setValue(this.productFormData.brand_id);
+  canDeactivate(): boolean {
+    if (this.formDirty) {
+      return window.confirm(
+        'Are You Sure You Want to Cancel Form'
+      );
     }
-    if (this.productFormData?.category_ids) {
-      this.listingForm.get('category_ids').setValue(this.productFormData.category_ids);
-    }
-    if (this.productFormData?.name) {
-      this.listingForm.get('name').setValue(this.productFormData.name);
-    }
-    if (this.productFormData?.model) {
-      this.listingForm.get('model').setValue(this.productFormData.model);
-    }
-    if (this.productFormData?.title) {
-      this.listingForm.get('title').setValue(this.productFormData.title);
-    }
-    if (this.productFormData?.description) {
-      this.listingForm.get('description').setValue(this.productFormData.description);
-    }
-    if (this.productFormData?.watch_type) {
-      this.listingForm.get('watch_type').setValue(this.productFormData.watch_type);
-    }
-    if (this.productFormData?.yearOfProduction) {
-      this.listingForm.get('yearOfProduction').setValue(this.productFormData.yearOfProduction);
-    }
-    if (this.productFormData?.approximation) {
-      this.listingForm.get('approximation').setValue(this.productFormData.approximation);
-    }
-    if (this.productFormData?.unknown) {
-      this.listingForm.get('unknown').setValue(this.productFormData.unknown);
-    }
-  }
-
-
-  getSteperData(product_id){
-    this.http.getSteper(product_id).subscribe(
-      (res)=>{
-        this.productFormData=res.product;
-        if(this.productFormData){
-           this.patchFormData();
-        }
-      }
-    );    
+    return true;
   }
 
   ngOnInit() {
-    let product_id=893
-    if(product_id){
-      this.getSteperData(product_id)
-      
-    }
     this.checkScreenSize();
     this.getAllBrandsDropDown();
     this.getCategoriesDropDown();
@@ -484,6 +442,7 @@ export class AddNewProductComponent implements OnInit {
               "success",
               "Listing Details Add Successfully"
             );
+            this.formDirty = true;
             this.selectSection("watchDetails");
           },
           (err) => {
@@ -496,7 +455,8 @@ export class AddNewProductComponent implements OnInit {
       } else {
         this.alertService.showAlert("warning", "Enter Form Values");
       }
-    } else if (Param === "watchDetails" && this.watchDetailsForm.valid) {
+    } else if (Param === "watchDetails") {
+    if(this.watchDetailsForm.valid){
       const formDataWithProductID = {
         ...this.watchDetailsForm.value,
         product_id: this.productIDFromResponse,
@@ -517,8 +477,15 @@ export class AddNewProductComponent implements OnInit {
           );
         }
       );
-      console.log(this.watchDetailsForm.value);
+    }else{
+      this.alertService.showAlert('warning',"Enter Required Form Values")
+    }
+
     } else if (Param === "uploadImages") {
+      
+      if (!this.productIDFromResponse) {
+        this.productIDFromResponse = 896;
+      }
       if (!this.coverImage) {
         alert("Please upload a cover image.");
         return;
@@ -687,9 +654,9 @@ export class AddNewProductComponent implements OnInit {
 
     }
     } else if (Param === "summary") {
-      if (!this.productIDFromResponse) {
-        this.productIDFromResponse = 893;
-      }
+      // if (!this.productIDFromResponse) {
+      //   this.productIDFromResponse = 893;
+      // }
       console.log("-----------");
     }
   }
