@@ -1327,14 +1327,11 @@
                   appearance="outline"
                 >
                   <mat-label class="label-header">City</mat-label>
-                  <mat-select
+                  <input
+                    matInput
                     formControlName="city"
-                    placeholder="Please select"
-                  >
-                    <mat-option *ngFor="let city of cities" [value]="city">{{
-                      city
-                    }}</mat-option>
-                  </mat-select>
+                    placeholder="Enter City"
+                  />
                   <mat-error *ngIf="city.hasError('required')">
                     City is required
                   </mat-error>
@@ -2826,11 +2823,11 @@
               appearance="outline"
             >
               <mat-label class="label-header">City</mat-label>
-              <mat-select formControlName="city" placeholder="Please select">
-                <mat-option *ngFor="let city of cities" [value]="city">{{
-                  city
-                }}</mat-option>
-              </mat-select>
+              <input
+              matInput
+              formControlName="city"
+              placeholder="Enter City"
+            />
               <mat-error *ngIf="city.hasError('required')">
                 City is required
               </mat-error>

@@ -34,7 +34,7 @@ interface ImageFile {
   styleUrls: ["./add-new-product.component.css"],
 })
 export class AddNewProductComponent implements OnInit {
-  selectedSection: string = "priceshipment";
+  selectedSection: string = "billinginformation";
   isSmallScreen: boolean = false;
   panelOpenState = false;
   panelDialOpenState = false;
@@ -586,9 +586,7 @@ export class AddNewProductComponent implements OnInit {
       );
     } else if (Param === "priceshipment") {
       console.log("Price and Shipent", this.watchPrice);
-      if (!this.productIDFromResponse) {
-        this.productIDFromResponse = 893;
-      }
+     
 
       if(!this.watchPrice || !this.shipping_type || !this.shipping_charges || 
         !this.estimate_delivery || !this.estimatedPayoutwithShipping){
@@ -614,9 +612,30 @@ export class AddNewProductComponent implements OnInit {
           );
         }
     } else if (Param === "billinginformation") {
-      console.log("Form Submitted", this.billingForm.value);
 
-      this.selectSection("summary");
+      if(this.billingForm.valid){
+      if (!this.productIDFromResponse) {
+        this.productIDFromResponse = 893;
+      }
+
+      const formDataWithProductID = {
+        ...this.billingForm.value,
+        product_id: this.productIDFromResponse,
+      };
+
+      this.http.addbillingInformation(formDataWithProductID).subscribe(
+        (res) => {
+          this.alertService.showAlert("success", "Billing Info Add Successfully");
+          this.selectSection("summary");
+        },
+        (err) => {
+          this.alertService.showAlert("danger", "Error in adding Billing Info");
+        }
+      );
+    }else{
+      this.alertService.showAlert("warning", "Add Form Values");
+
+    }
     } else if (Param === "summary") {
       console.log("-----------");
     }

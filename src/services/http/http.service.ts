@@ -390,6 +390,15 @@ export class HttpService {
     });
   }
 
+  addbillingInformation(formData:any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/api/listing/billingInformation`,formData, {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+  }
+
   // ----------------------------------  create Listing end ------------------------------
 
 }
