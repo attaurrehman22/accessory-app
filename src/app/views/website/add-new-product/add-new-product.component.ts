@@ -34,7 +34,7 @@ interface ImageFile {
   styleUrls: ["./add-new-product.component.css"],
 })
 export class AddNewProductComponent implements OnInit {
-  selectedSection: string = "scopeofdelivery";
+  selectedSection: string = "priceshipment";
   isSmallScreen: boolean = false;
   panelOpenState = false;
   panelDialOpenState = false;
@@ -42,7 +42,7 @@ export class AddNewProductComponent implements OnInit {
   coverImage: { file: File; url: string } | null = null;
   otherImages: ImageFile[] = [];
   isCoverImageUploading = false;
-  productIDFromResponse:any;
+  productIDFromResponse: any;
   @ViewChild("coverImageInput") coverImageInput!: ElementRef<HTMLInputElement>;
   @ViewChild("otherImagesInput")
   otherImagesInput!: ElementRef<HTMLInputElement>;
@@ -51,11 +51,10 @@ export class AddNewProductComponent implements OnInit {
   watchDetailsForm: FormGroup;
   billingForm: FormGroup;
 
-
   // Listing Form Details
 
-  brand_id = new FormControl(0 , [Validators.required]);
-  category_ids = new FormControl([] , [Validators.required]);
+  brand_id = new FormControl(0, [Validators.required]);
+  category_ids = new FormControl([], [Validators.required]);
   name = new FormControl("", [Validators.required]);
   model = new FormControl("", [Validators.required]);
   title = new FormControl("", [Validators.required]);
@@ -65,7 +64,6 @@ export class AddNewProductComponent implements OnInit {
   approximation = new FormControl(false);
   unknown = new FormControl(false);
 
-  
   // Watch Form Details
 
   reference_number = new FormControl("", [
@@ -78,7 +76,7 @@ export class AddNewProductComponent implements OnInit {
   ]);
   gender = new FormControl("", Validators.required);
   movement = new FormControl("", Validators.required);
-  case_diameter_value_1 = new FormControl(null , [
+  case_diameter_value_1 = new FormControl(null, [
     Validators.required,
     Validators.pattern("^[0-9]*$"),
   ]);
@@ -106,8 +104,6 @@ export class AddNewProductComponent implements OnInit {
   type_of_clasp = new FormControl("");
   clasp_material = new FormControl("");
 
-
-
   // Billing Information Form Details
   billing_address = new FormControl("", [Validators.required]);
   first_name = new FormControl("", [Validators.required]);
@@ -119,30 +115,40 @@ export class AddNewProductComponent implements OnInit {
 
   cities = ["City 1", "City 2", "City 3"];
 
-  constructor(private http: HttpService,private alertService:AlertsServicesService) {}
+  constructor(
+    private http: HttpService,
+    private alertService: AlertsServicesService
+  ) {}
 
   watchPrice: number = 0;
+  shipping_type: any;
+  shipping_charges: number=0;
+  estimate_delivery: any;
+  allow_to_make_offer: false;
   watchPriceDisplay: number = 0;
   platformFee: number = 0;
   estimatedPayout: number = 0;
-
+  estimatedPayoutwithShipping: number = 0;
   calculatePayout() {
     this.watchPriceDisplay = this.watchPrice;
     this.platformFee = this.watchPrice * 0.04;
     this.estimatedPayout = this.watchPrice - this.platformFee;
   }
 
+  Payoutaftershippingcharges(){
+    this.estimatedPayoutwithShipping=this.estimatedPayout-this.shipping_charges;
+  }
+
   clocks: { hour: number; minute: number }[] = [];
 
   generateRandomClocks(count: number) {
     this.clocks = Array.from({ length: count }, () => {
-      const hour = Math.floor(Math.random() * 12); // Random hour from 0 to 11
-      const minute = Math.floor(Math.random() * 60); // Random minute from 0 to 59
+      const hour = Math.floor(Math.random() * 12);
+      const minute = Math.floor(Math.random() * 60);
       return { hour, minute };
     });
   }
 
-  // Function to format time for display (e.g., 03:05 instead of 3:5)
   formatTime(hour: number, minute: number): string {
     const formattedHour = hour.toString().padStart(2, "0");
     const formattedMinute = minute.toString().padStart(2, "0");
@@ -181,24 +187,33 @@ export class AddNewProductComponent implements OnInit {
       title: "Watch only",
       icon: "../assets/images/original-box-papers.png",
     },
-    { title: "Watch with original box", icon: "../assets/images/original-box.png" },
-    { title: "Watch with original papers", icon: "/assets/images/original-papers.png" },
-    { title: "Watch with original box and papers", icon: "/assets/images/watch-only.png" },
+    {
+      title: "Watch with original box",
+      icon: "../assets/images/original-box.png",
+    },
+    {
+      title: "Watch with original papers",
+      icon: "/assets/images/original-papers.png",
+    },
+    {
+      title: "Watch with original box and papers",
+      icon: "/assets/images/watch-only.png",
+    },
   ];
 
   selectedOptions: any;
 
   toggleOption(option: any) {
-    this.selectedOptions=option
-    console.log("option",option)
-    console.log("this.selectedOptions",this.selectedOptions)
+    this.selectedOptions = option;
+    console.log("option", option);
+    console.log("this.selectedOptions", this.selectedOptions);
   }
 
   isSelected(option: any): boolean {
-    if(this.selectedOptions === option){
-      return true
-    }else{
-      return false
+    if (this.selectedOptions === option) {
+      return true;
+    } else {
+      return false;
     }
   }
 
@@ -240,22 +255,18 @@ export class AddNewProductComponent implements OnInit {
     this.selectedCondition = condition;
   }
 
-  brandsList:any;
-  categoryList:any;
-  getAllBrandsDropDown(){
-    this.http.getAllBrandsDropdDown().subscribe(
-      (res)=>{
-        this.brandsList=res.data
-      }
-    )
+  brandsList: any;
+  categoryList: any;
+  getAllBrandsDropDown() {
+    this.http.getAllBrandsDropdDown().subscribe((res) => {
+      this.brandsList = res.data;
+    });
   }
 
-  getCategoriesDropDown(){
-    this.http.getCategoryDropDown().subscribe(
-      (res)=>{
-        this.categoryList=res.data
-      }
-    )
+  getCategoriesDropDown() {
+    this.http.getCategoryDropDown().subscribe((res) => {
+      this.categoryList = res.data;
+    });
   }
 
   formdropdownListData: any = {};
@@ -263,36 +274,35 @@ export class AddNewProductComponent implements OnInit {
   allDropDownData() {
     this.http.getallDropDownformData().subscribe((res) => {
       this.formdropdownListData = res.data;
-      this.formdropdownListData.watch_type = Object.entries(res.data.watch_type).map(
-        ([key, value]) => ({ key, value })
-      );
+      this.formdropdownListData.watch_type = Object.entries(
+        res.data.watch_type
+      ).map(([key, value]) => ({ key, value }));
       this.formdropdownListData.gender = Object.entries(res.data.gender).map(
         ([key, value]) => ({ key, value })
       );
-      this.formdropdownListData.movement=Object.entries(res.data.movement).map(
-        ([key ,value]) => ({key,value})
+      this.formdropdownListData.movement = Object.entries(
+        res.data.movement
+      ).map(([key, value]) => ({ key, value }));
+      this.formdropdownListData.case_material = Object.entries(
+        res.data.case_material
+      ).map(([key, value]) => ({ key, value }));
+      this.formdropdownListData.bezel_material = Object.entries(
+        res.data.bezel_material
+      ).map(([key, value]) => ({ key, value }));
+      this.formdropdownListData.crystal = Object.entries(res.data.crystal).map(
+        ([key, value]) => ({ key, value })
       );
-      this.formdropdownListData.case_material=Object.entries(res.data.case_material).map(
-        ([key,value])=>({key,value})
-      );
-      this.formdropdownListData.bezel_material=Object.entries(res.data.bezel_material).map(
-        ([key,value])=>({key,value})
-      );
-      this.formdropdownListData.crystal=Object.entries(res.data.crystal).map(
-        ([key,value])=>({key,value})
-      );
-      this.formdropdownListData.water_resistance=Object.entries(res.data.water_resistance).map(
-        ([key,value])=>({key,value})
-      );
+      this.formdropdownListData.water_resistance = Object.entries(
+        res.data.water_resistance
+      ).map(([key, value]) => ({ key, value }));
     });
   }
-  
 
   ngOnInit() {
     this.checkScreenSize();
     this.getAllBrandsDropDown();
     this.getCategoriesDropDown();
-    this.allDropDownData()
+    this.allDropDownData();
     window.addEventListener("resize", () => this.checkScreenSize());
     this.generateRandomClocks(2);
 
@@ -307,7 +317,7 @@ export class AddNewProductComponent implements OnInit {
       watch_type: this.watch_type,
       yearOfProduction: this.yearOfProduction,
       approximation: this.approximation,
-      unknown: this.unknown, 
+      unknown: this.unknown,
     });
 
     this.watchDetailsForm = new FormGroup({
@@ -334,7 +344,7 @@ export class AddNewProductComponent implements OnInit {
       bracelet_material: this.bracelet_material,
       bracelet_color: this.bracelet_color,
       type_of_clasp: this.type_of_clasp,
-      clasp_material: this.clasp_material
+      clasp_material: this.clasp_material,
     });
 
     this.billingForm = new FormGroup({
@@ -391,7 +401,7 @@ export class AddNewProductComponent implements OnInit {
     if (files) {
       Array.from(files).forEach((file) => {
         const reader = new FileReader();
-        const newImage: ImageFile = { file, url: '', isUploading: true };
+        const newImage: ImageFile = { file, url: "", isUploading: true };
         this.otherImages.push(newImage);
 
         reader.onload = () => {
@@ -413,37 +423,48 @@ export class AddNewProductComponent implements OnInit {
   onSubmit(Param: string) {
     if (Param === "listingDetails") {
       console.log(this.listingForm.value);
-      if(this.listingForm.valid){
-         this.http.addListingDetails(this.listingForm.value).subscribe(
-          (res)=>{
-            this.productIDFromResponse=res.id;
-            this.alertService.showAlert('success','Listing Details Add Successfully')
+      if (this.listingForm.valid) {
+        this.http.addListingDetails(this.listingForm.value).subscribe(
+          (res) => {
+            this.productIDFromResponse = res.id;
+            this.alertService.showAlert(
+              "success",
+              "Listing Details Add Successfully"
+            );
             this.selectSection("watchDetails");
-          },(err)=>{
-            this.alertService.showAlert('danger','Error in adding listing details')
-
+          },
+          (err) => {
+            this.alertService.showAlert(
+              "danger",
+              "Error in adding listing details"
+            );
           }
-         )
-      }else{
-        this.alertService.showAlert('warning','Enter Form Values')
+        );
+      } else {
+        this.alertService.showAlert("warning", "Enter Form Values");
       }
     } else if (Param === "watchDetails" && this.watchDetailsForm.valid) {
-
       const formDataWithProductID = {
         ...this.watchDetailsForm.value,
-        product_id: this.productIDFromResponse
+        product_id: this.productIDFromResponse,
       };
 
       this.http.addWatchDetails(formDataWithProductID).subscribe(
-        (res)=>{
-          this.alertService.showAlert('success','Watch Details Add Successfully')
+        (res) => {
+          this.alertService.showAlert(
+            "success",
+            "Watch Details Add Successfully"
+          );
           this.selectSection("uploadImages");
-        },(err)=>{
-          this.alertService.showAlert('danger','Error in adding listing details')
+        },
+        (err) => {
+          this.alertService.showAlert(
+            "danger",
+            "Error in adding listing details"
+          );
         }
-      )
+      );
       console.log(this.watchDetailsForm.value);
-      
     } else if (Param === "uploadImages") {
       if (!this.coverImage) {
         alert("Please upload a cover image.");
@@ -457,58 +478,63 @@ export class AddNewProductComponent implements OnInit {
       const formData = new FormData();
       formData.append("product_id", this.productIDFromResponse);
       if (this.coverImage && this.coverImage.file) {
-         formData.append("main_image", this.coverImage.file, this.coverImage.file.name || "main_image.jpg");
+        formData.append(
+          "main_image",
+          this.coverImage.file,
+          this.coverImage.file.name || "main_image.jpg"
+        );
       }
       this.otherImages.forEach((image, index) => {
-         if (image.file) {
-            formData.append(`additional_images[]`, image.file, image.file.name || `additional_image_${index}.jpg`);
-         }
+        if (image.file) {
+          formData.append(
+            `additional_images[]`,
+            image.file,
+            image.file.name || `additional_image_${index}.jpg`
+          );
+        }
       });
       formData.forEach((value, key) => console.log(key, value));
 
       this.http.addUploadImages(formData).subscribe(
-        (res)=>{
-          this.alertService.showAlert('success','Images Add Successfully')
+        (res) => {
+          this.alertService.showAlert("success", "Images Add Successfully");
           this.selectSection("conditionGrading");
-        },(err)=>{
-          this.alertService.showAlert('danger','Error in adding Images')
+        },
+        (err) => {
+          this.alertService.showAlert("danger", "Error in adding Images");
         }
-      )   
+      );
     } else if (Param === "conditionGrading") {
-      const formData={
-        product_id:this.productIDFromResponse,
-        condition:this.selectedCondition.title
-      }
+      const formData = {
+        product_id: this.productIDFromResponse,
+        condition: this.selectedCondition.title,
+      };
 
       this.http.addCondition(formData).subscribe(
-        (res)=>{
-          this.alertService.showAlert('success','Condition Add Successfully')
+        (res) => {
+          this.alertService.showAlert("success", "Condition Add Successfully");
           this.selectSection("scopeofdelivery");
-        },(err)=>{
-          this.alertService.showAlert('danger','Error in adding Condition')
+        },
+        (err) => {
+          this.alertService.showAlert("danger", "Error in adding Condition");
         }
-      ) 
+      );
     } else if (Param === "scopeofdelivery") {
-      if(!this.productIDFromResponse ){
-        this.productIDFromResponse=893;
-      }
-     const formData ={
-      product_id: this.productIDFromResponse,
-      scope_of_delivery:this.selectedOptions.title
-      }
+      const formData = {
+        product_id: this.productIDFromResponse,
+        scope_of_delivery: this.selectedOptions.title,
+      };
       this.http.addScopeOfDelivery(formData).subscribe(
-        (res)=>{
-          this.alertService.showAlert('success','Scope Add Successfully')
+        (res) => {
+          this.alertService.showAlert("success", "Scope Add Successfully");
           this.selectSection("proofofownership");
-        },(err)=>{
-          this.alertService.showAlert('danger','Error in adding Scope')
+        },
+        (err) => {
+          this.alertService.showAlert("danger", "Error in adding Scope");
         }
-      ) 
-     
+      );
     } else if (Param === "proofofownership") {
       console.log("Selected files for 'proofofownership':", this.selectedFiles);
-
-      // Display each file separately in the console
       this.selectedFiles.forEach((file, index) => {
         if (file) {
           console.log(`File for Clock ${index + 1}:`, file);
@@ -516,12 +542,77 @@ export class AddNewProductComponent implements OnInit {
           console.log(`No file selected for Clock ${index + 1}`);
         }
       });
+      const formData = new FormData();
 
-      this.selectSection("priceshipment");
+      // Set the product ID
+      formData.append("product_id", this.productIDFromResponse);
+
+      // Proof images
+      if (this.selectedFiles[0]) {
+        formData.append("proof_image_1", this.selectedFiles[0]);
+      }
+      if (this.selectedFiles[1]) {
+        formData.append("proof_image_2", this.selectedFiles[1]);
+      }
+
+      // Proof times displayed on the clocks
+      formData.append(
+        "proof_time_text_1",
+        this.formatTime(this.clocks[0].hour, this.clocks[0].minute)
+      );
+      formData.append(
+        "proof_time_text_2",
+        this.formatTime(this.clocks[1].hour, this.clocks[1].minute)
+      );
+
+      // Randomly generated times (as a sample; can adjust if different from proof times)
+      formData.append(
+        "generted_time_text_1",
+        this.formatTime(this.clocks[0].hour, this.clocks[0].minute)
+      );
+      formData.append(
+        "generted_time_text_2",
+        this.formatTime(this.clocks[1].hour, this.clocks[1].minute)
+      );
+
+      this.http.addProffofOwnerShip(formData).subscribe(
+        (res) => {
+          this.alertService.showAlert("success", "Images Add Successfully");
+          this.selectSection("priceshipment");
+        },
+        (err) => {
+          this.alertService.showAlert("danger", "Error in adding Images");
+        }
+      );
     } else if (Param === "priceshipment") {
       console.log("Price and Shipent", this.watchPrice);
+      if (!this.productIDFromResponse) {
+        this.productIDFromResponse = 893;
+      }
 
-      this.selectSection("billinginformation");
+      if(!this.watchPrice || !this.shipping_type || !this.shipping_charges || 
+        !this.estimate_delivery || !this.estimatedPayoutwithShipping){
+           this.alertService.showAlert('info','Enter Form Values')
+        }else{
+          const formData={
+            product_id:this.productIDFromResponse,
+            price:this.watchPrice,
+            shipping_type:this.shipping_type,
+            shipping_charges:this.shipping_charges,
+            estimate_delivery:this.estimate_delivery,
+            allow_to_make_offer:this.allow_to_make_offer,
+            estimate_payout:this.estimatedPayoutwithShipping
+          }
+          this.http.addpriceAndShipment(formData).subscribe(
+            (res) => {
+              this.alertService.showAlert("success", "Price and Shipment Add Successfully");
+              this.selectSection("billinginformation");
+            },
+            (err) => {
+              this.alertService.showAlert("danger", "Error in adding Price and Shipment");
+            }
+          );
+        }
     } else if (Param === "billinginformation") {
       console.log("Form Submitted", this.billingForm.value);
 
@@ -531,11 +622,9 @@ export class AddNewProductComponent implements OnInit {
     }
   }
 
+  cancelbtn() {}
 
-  cancelbtn(){}
-
-
-  backbtn(param:string){
+  backbtn(param: string) {
     this.selectSection(param);
   }
 }

@@ -21,32 +21,40 @@
               (ngSubmit)="onSubmit('listing')"
               *ngIf="selectedSection === 'listingDetails' && isSmallScreen"
             >
-            <mat-form-field appearance="outline" class="w-100 mt-2">
-              <mat-label class="label-header">Brand</mat-label>
-              <mat-select formControlName="brand_id">
-                <mat-option *ngFor="let brand of brandsList" [value]="brand.id">{{brand.name}}</mat-option>
-              </mat-select>
-            </mat-form-field>
+              <mat-form-field appearance="outline" class="w-100 mt-2">
+                <mat-label class="label-header">Brand</mat-label>
+                <mat-select formControlName="brand_id">
+                  <mat-option
+                    *ngFor="let brand of brandsList"
+                    [value]="brand.id"
+                    >{{ brand.name }}</mat-option
+                  >
+                </mat-select>
+              </mat-form-field>
 
-            <mat-form-field appearance="outline" class="w-100 mt-2">
-              <mat-label class="label-header">Category</mat-label>
-              <mat-select multiple formControlName="category_ids">
-                <mat-option *ngFor="let category of categoryList" [value]="category.id">{{category.name}}</mat-option>
-              </mat-select>
-            </mat-form-field>
+              <mat-form-field appearance="outline" class="w-100 mt-2">
+                <mat-label class="label-header">Category</mat-label>
+                <mat-select multiple formControlName="category_ids">
+                  <mat-option
+                    *ngFor="let category of categoryList"
+                    [value]="category.id"
+                    >{{ category.name }}</mat-option
+                  >
+                </mat-select>
+              </mat-form-field>
 
-            <mat-form-field appearance="outline" class="w-100 mt-2">
-              <mat-label class="label-header">Name</mat-label>
-              <input
-                matInput
-                placeholder="Enter Name"
-                formControlName="name"
-                required
-              />
-              <mat-error *ngIf="name.hasError('required')">
-                Name is required
-              </mat-error>
-            </mat-form-field>
+              <mat-form-field appearance="outline" class="w-100 mt-2">
+                <mat-label class="label-header">Name</mat-label>
+                <input
+                  matInput
+                  placeholder="Enter Name"
+                  formControlName="name"
+                  required
+                />
+                <mat-error *ngIf="name.hasError('required')">
+                  Name is required
+                </mat-error>
+              </mat-form-field>
 
               <mat-form-field appearance="outline" class="w-100 mt-2">
                 <mat-label class="label-header">Model</mat-label>
@@ -87,12 +95,14 @@
               <mat-form-field appearance="outline" class="w-100 mt-2">
                 <mat-label class="label-header">Watch Type</mat-label>
                 <mat-select formControlName="watch_type">
-                  <mat-option *ngFor="let data of formdropdownListData.watch_type" [value]="data.key">
+                  <mat-option
+                    *ngFor="let data of formdropdownListData.watch_type"
+                    [value]="data.key"
+                  >
                     {{ data.value }}
                   </mat-option>
                 </mat-select>
               </mat-form-field>
-              
 
               <mat-form-field appearance="outline" class="w-100 mt-2">
                 <mat-label class="label-header">Year of Production</mat-label>
@@ -163,7 +173,9 @@
               <div class="row">
                 <div class="col-md-4 mb-3">
                   <mat-form-field appearance="outline" class="w-100">
-                    <mat-label class="label-header">Serial No. (if not polished)</mat-label>
+                    <mat-label class="label-header"
+                      >Serial No. (if not polished)</mat-label
+                    >
                     <input
                       matInput
                       formControlName="serial_no"
@@ -176,7 +188,10 @@
                     <mat-label class="label-header">Gender</mat-label>
                     <mat-select formControlName="gender">
                       <mat-option value="">Please Select</mat-option>
-                      <mat-option *ngFor="let data of formdropdownListData?.gender" [value]="data.key">
+                      <mat-option
+                        *ngFor="let data of formdropdownListData?.gender"
+                        [value]="data.key"
+                      >
                         {{ data.value }}
                       </mat-option>
                     </mat-select>
@@ -187,7 +202,11 @@
                     <mat-label class="label-header">Movement</mat-label>
                     <mat-select formControlName="movement">
                       <mat-option value="">Please Select</mat-option>
-                      <mat-option *ngFor="let data of formdropdownListData?.movement" [value]="data.key">{{data.value}}</mat-option>
+                      <mat-option
+                        *ngFor="let data of formdropdownListData?.movement"
+                        [value]="data.key"
+                        >{{ data.value }}</mat-option
+                      >
                     </mat-select>
                   </mat-form-field>
                 </div>
@@ -202,7 +221,14 @@
                       formControlName="case_diameter_value_1"
                       placeholder="Enter diameter"
                     />
-                    <span style="padding: 17px 15px 17px 15px;background-color: #DBDBDB;" matSuffix>mm</span>
+                    <span
+                      style="
+                        padding: 17px 15px 17px 15px;
+                        background-color: #dbdbdb;
+                      "
+                      matSuffix
+                      >mm</span
+                    >
                   </mat-form-field>
                 </div>
                 <div class="col-md-6 mb-3">
@@ -213,7 +239,14 @@
                       formControlName="case_diameter_value_2"
                       placeholder="Enter diameter"
                     />
-                    <span style="padding: 17px 15px 17px 15px;background-color: #DBDBDB;" matSuffix>mm</span>
+                    <span
+                      style="
+                        padding: 17px 15px 17px 15px;
+                        background-color: #dbdbdb;
+                      "
+                      matSuffix
+                      >mm</span
+                    >
                   </mat-form-field>
                 </div>
               </div>
@@ -240,17 +273,21 @@
                       <div class="row">
                         <div class="col-md-6 mb-3">
                           <mat-form-field appearance="outline" class="w-100">
-                            <mat-label class="label-header">Dial Color</mat-label>
+                            <mat-label class="label-header"
+                              >Dial Color</mat-label
+                            >
                             <input
-                            matInput
-                            formControlName="dial_color"
-                            placeholder="Enter Dial Color"
-                          />
+                              matInput
+                              formControlName="dial_color"
+                              placeholder="Enter Dial Color"
+                            />
                           </mat-form-field>
                         </div>
                         <div class="col-md-6 mb-3">
                           <mat-form-field appearance="outline" class="w-100">
-                            <mat-label class="label-header">Caliber / Movement</mat-label>
+                            <mat-label class="label-header"
+                              >Caliber / Movement</mat-label
+                            >
                             <input
                               matInput
                               formControlName="caliber_movement"
@@ -263,7 +300,9 @@
                       <div class="row">
                         <div class="col-md-6 mb-3">
                           <mat-form-field appearance="outline" class="w-100">
-                            <mat-label class="label-header">Base Caliber</mat-label>
+                            <mat-label class="label-header"
+                              >Base Caliber</mat-label
+                            >
                             <input
                               matInput
                               formControlName="base_caliber"
@@ -273,7 +312,9 @@
                         </div>
                         <div class="col-md-6 mb-3">
                           <mat-form-field appearance="outline" class="w-100">
-                            <mat-label class="label-header">Power Reserve</mat-label>
+                            <mat-label class="label-header"
+                              >Power Reserve</mat-label
+                            >
                             <input
                               matInput
                               formControlName="power_reserve"
@@ -283,11 +324,12 @@
                         </div>
                       </div>
 
-                      
                       <div class="row">
                         <div class="col-md-6 mb-3">
                           <mat-form-field appearance="outline" class="w-100">
-                            <mat-label class="label-header">No of Jewels</mat-label>
+                            <mat-label class="label-header"
+                              >No of Jewels</mat-label
+                            >
                             <!-- <mat-select formControlName="no_of_jewels">
                               <mat-option value="">Please Select</mat-option>
                             </mat-select> -->
@@ -297,12 +339,13 @@
                               formControlName="no_of_jewels"
                               placeholder="Enter No of Jewels"
                             />
-                       
                           </mat-form-field>
                         </div>
                         <div class="col-md-6 mb-3">
                           <mat-form-field appearance="outline" class="w-100">
-                            <mat-label class="label-header">Frequency</mat-label>
+                            <mat-label class="label-header"
+                              >Frequency</mat-label
+                            >
                             <input
                               matInput
                               formControlName="frequency"
@@ -312,19 +355,19 @@
                         </div>
                       </div>
 
-
                       <div class="row">
                         <div class="col-md-12 mb-3">
                           <mat-form-field appearance="outline" class="w-100">
-                            <mat-label class="label-header">Other Details</mat-label>
+                            <mat-label class="label-header"
+                              >Other Details</mat-label
+                            >
                             <input
-                            matInput
-                            formControlName="additional_details"
-                            placeholder="Enter Other Details"
-                          />
+                              matInput
+                              formControlName="additional_details"
+                              placeholder="Enter Other Details"
+                            />
                           </mat-form-field>
                         </div>
-                        
                       </div>
                     </div>
                   </mat-expansion-panel>
@@ -344,19 +387,35 @@
                       <div class="row">
                         <div class="col-md-6 mb-3">
                           <mat-form-field appearance="outline" class="w-100">
-                            <mat-label class="label-header">Case Material</mat-label>
+                            <mat-label class="label-header"
+                              >Case Material</mat-label
+                            >
                             <mat-select formControlName="case_material">
                               <mat-option value="">Please Select</mat-option>
-                              <mat-option *ngFor="let data of formdropdownListData.case_material" [value]="data.key">{{data.value}}</mat-option>
+                              <mat-option
+                                *ngFor="
+                                  let data of formdropdownListData.case_material
+                                "
+                                [value]="data.key"
+                                >{{ data.value }}</mat-option
+                              >
                             </mat-select>
                           </mat-form-field>
                         </div>
                         <div class="col-md-6 mb-3">
                           <mat-form-field appearance="outline" class="w-100">
-                            <mat-label class="label-header">Bezel Material</mat-label>
+                            <mat-label class="label-header"
+                              >Bezel Material</mat-label
+                            >
                             <mat-select formControlName="bezel_material">
                               <mat-option value="">Please Select</mat-option>
-                              <mat-option *ngFor="let data of formdropdownListData.bezel_material" [value]="data.key">{{data.value}}</mat-option>
+                              <mat-option
+                                *ngFor="
+                                  let data of formdropdownListData.bezel_material
+                                "
+                                [value]="data.key"
+                                >{{ data.value }}</mat-option
+                              >
                             </mat-select>
                           </mat-form-field>
                         </div>
@@ -365,13 +424,22 @@
                       <div class="row">
                         <div class="col-md-6 mb-3">
                           <mat-form-field appearance="outline" class="w-100">
-                            <mat-label class="label-header">Thickness</mat-label>
+                            <mat-label class="label-header"
+                              >Thickness</mat-label
+                            >
                             <input
                               matInput
                               formControlName="thickness"
                               placeholder="Enter thickness"
                             />
-                            <span style="padding: 17px 15px 17px 15px;background-color: #DBDBDB;" matSuffix>mm</span>
+                            <span
+                              style="
+                                padding: 17px 15px 17px 15px;
+                                background-color: #dbdbdb;
+                              "
+                              matSuffix
+                              >mm</span
+                            >
                           </mat-form-field>
                         </div>
                         <div class="col-md-6 mb-3">
@@ -379,36 +447,56 @@
                             <mat-label class="label-header">Crystal</mat-label>
                             <mat-select formControlName="crystal">
                               <mat-option value="">Please Select</mat-option>
-                              <mat-option *ngFor="let data of formdropdownListData.crystal" [value]="data.key">{{data.value}}</mat-option>
+                              <mat-option
+                                *ngFor="
+                                  let data of formdropdownListData.crystal
+                                "
+                                [value]="data.key"
+                                >{{ data.value }}</mat-option
+                              >
                             </mat-select>
                           </mat-form-field>
                         </div>
                       </div>
 
-
                       <div class="row">
                         <div class="col-md-6 mb-3">
                           <mat-form-field appearance="outline" class="w-100">
-                            <mat-label class="label-header">Water Resistence</mat-label>
+                            <mat-label class="label-header"
+                              >Water Resistence</mat-label
+                            >
                             <mat-select formControlName="water_resistance">
                               <mat-option value="">Please Select</mat-option>
-                              <mat-option *ngFor="let data of formdropdownListData.water_resistance" [value]="data.key">{{data.value}}</mat-option>
-
+                              <mat-option
+                                *ngFor="
+                                  let data of formdropdownListData.water_resistance
+                                "
+                                [value]="data.key"
+                                >{{ data.value }}</mat-option
+                              >
                             </mat-select>
                           </mat-form-field>
                         </div>
                         <div class="col-md-6 mb-3">
                           <mat-form-field appearance="outline" class="w-100">
-                            <mat-label class="label-header">Dial Numerals</mat-label>
+                            <mat-label class="label-header"
+                              >Dial Numerals</mat-label
+                            >
                             <input
                               matInput
                               formControlName="dial_numerals"
                               placeholder="Enter Dial Numerals"
                             />
-                            <span style="padding: 17px 15px 17px 15px;background-color: #DBDBDB;" matSuffix>mm</span>
+                            <span
+                              style="
+                                padding: 17px 15px 17px 15px;
+                                background-color: #dbdbdb;
+                              "
+                              matSuffix
+                              >mm</span
+                            >
                           </mat-form-field>
                         </div>
-                       
                       </div>
                     </div>
                   </mat-expansion-panel>
@@ -428,17 +516,21 @@
                       <div class="row">
                         <div class="col-md-6 mb-3">
                           <mat-form-field appearance="outline" class="w-100">
-                            <mat-label class="label-header">Bracelet Material</mat-label>
+                            <mat-label class="label-header"
+                              >Bracelet Material</mat-label
+                            >
                             <input
-                                matInput
-                                formControlName="bracelet_material"
-                                placeholder="Enter Bracelet Material"
-                              />
+                              matInput
+                              formControlName="bracelet_material"
+                              placeholder="Enter Bracelet Material"
+                            />
                           </mat-form-field>
                         </div>
                         <div class="col-md-6 mb-3">
                           <mat-form-field appearance="outline" class="w-100">
-                            <mat-label class="label-header">Bracelet Color</mat-label>
+                            <mat-label class="label-header"
+                              >Bracelet Color</mat-label
+                            >
                             <input
                               matInput
                               formControlName="bracelet_color"
@@ -451,18 +543,22 @@
                       <div class="row">
                         <div class="col-md-6 mb-3">
                           <mat-form-field appearance="outline" class="w-100">
-                            <mat-label class="label-header">Type of Clasp</mat-label>
+                            <mat-label class="label-header"
+                              >Type of Clasp</mat-label
+                            >
                             <input
-                            matInput
-                            formControlName="type_of_clasp"
-                            placeholder="Enter Type of Clasp"
-                          />
+                              matInput
+                              formControlName="type_of_clasp"
+                              placeholder="Enter Type of Clasp"
+                            />
                           </mat-form-field>
                         </div>
 
                         <div class="col-md-6 mb-3">
                           <mat-form-field appearance="outline" class="w-100">
-                            <mat-label class="label-header">Clasp Material</mat-label>
+                            <mat-label class="label-header"
+                              >Clasp Material</mat-label
+                            >
                             <input
                               matInput
                               formControlName="clasp_material"
@@ -480,8 +576,12 @@
                 class="d-flex align-items-center justify-content-end gap-2 mb-3"
                 style="padding: 0 20px 0 20px"
               >
-                <button class="save-can-btn canc-bg-color"
-                (click)="backbtn('listingDetails')">Back</button>
+                <button
+                  class="save-can-btn canc-bg-color"
+                  (click)="backbtn('listingDetails')"
+                >
+                  Back
+                </button>
                 <button
                   class="save-can-btn save-btn-bg"
                   (click)="onSubmit('watchDetails')"
@@ -588,9 +688,12 @@
                 class="d-flex align-items-center justify-content-end gap-2 mb-3"
                 style="padding: 0 20px 0 20px"
               >
-                <button class="save-can-btn canc-bg-color"
-                (click)="backbtn('watchDetails')"
-                >Back</button>
+                <button
+                  class="save-can-btn canc-bg-color"
+                  (click)="backbtn('watchDetails')"
+                >
+                  Back
+                </button>
                 <button
                   class="save-can-btn save-btn-bg"
                   (click)="onSubmit('uploadImages')"
@@ -627,10 +730,19 @@
                     (click)="selectCondition(condition)"
                     [class.selected]="condition === selectedCondition"
                   >
-                    <div class="card condition-card h-100" style="border-radius: 16px;">
+                    <div
+                      class="card condition-card h-100"
+                      style="border-radius: 16px"
+                    >
                       <div class="card-body">
-                        <p class="font-size-16 font-wight-700 color-242424 margin-0">{{ condition.title }}</p>
-                        <p class="font-size-14 font-weight-400 color-909090">{{ condition.description }}</p>
+                        <p
+                          class="font-size-16 font-wight-700 color-242424 margin-0"
+                        >
+                          {{ condition.title }}
+                        </p>
+                        <p class="font-size-14 font-weight-400 color-909090">
+                          {{ condition.description }}
+                        </p>
                       </div>
                     </div>
                   </div>
@@ -641,9 +753,12 @@
                 class="d-flex align-items-center justify-content-end gap-2 mb-3"
                 style="padding: 0 20px 0 20px"
               >
-                <button class="save-can-btn canc-bg-color"
-                (click)="backbtn('uploadImages')"
-                >Back</button>
+                <button
+                  class="save-can-btn canc-bg-color"
+                  (click)="backbtn('uploadImages')"
+                >
+                  Back
+                </button>
                 <button
                   class="save-can-btn save-btn-bg"
                   (click)="onSubmit('conditionGrading')"
@@ -698,8 +813,12 @@
                 class="d-flex align-items-center justify-content-end gap-2 mb-3"
                 style="padding: 0 20px 0 20px"
               >
-                <button class="save-can-btn canc-bg-color"
-                (click)="backbtn('conditionGrading')">Back</button>
+                <button
+                  class="save-can-btn canc-bg-color"
+                  (click)="backbtn('conditionGrading')"
+                >
+                  Back
+                </button>
                 <button
                   class="save-can-btn save-btn-bg"
                   (click)="onSubmit('conditionGrading')"
@@ -847,7 +966,10 @@
                 <div class="help-card p-4">
                   <div class="icon-placeholder">
                     <!-- <span>🔄</span> -->
-                     <img src="../../../../assets/images/help-us.png" alt="img"/>
+                    <img
+                      src="../../../../assets/images/help-us.png"
+                      alt="img"
+                    />
                   </div>
                   <h5>Having trouble?</h5>
                   <p>If you cannot set the watch to a specified time:</p>
@@ -872,7 +994,12 @@
                 class="d-flex align-items-center justify-content-end gap-2 mb-3"
                 style="padding: 0 20px 0 20px"
               >
-                <button class="save-can-btn canc-bg-color" (click)="backbtn('scopeofdelivery')">Back</button>
+                <button
+                  class="save-can-btn canc-bg-color"
+                  (click)="backbtn('scopeofdelivery')"
+                >
+                  Back
+                </button>
                 <button
                   class="save-can-btn save-btn-bg"
                   (click)="onSubmit('proofofownership')"
@@ -900,7 +1027,8 @@
               class="image-upload-container"
               *ngIf="selectedSection === 'priceshipment' && isSmallScreen"
             >
-              <div class="container-fluid mt-5">
+              <!-- this is for Seller -->
+              <!-- <div class="container-fluid mt-5">
                 <mat-form-field
                   style="width: 100%"
                   class="full-width"
@@ -939,14 +1067,139 @@
                     </span>
                   </div>
                 </mat-card>
+              </div> -->
+
+              <!-- this is for Dealer -->
+
+              <div class="container-fluid mt-5 d-flex flex-wrap">
+                <div class="col-md-6">
+                <mat-form-field
+                  style="width: 100%"
+                  class="full-width"
+                  appearance="outline"
+                >
+                  <mat-label class="label-header">Watch Price</mat-label>
+                  <input
+                    matInput
+                    type="number"
+                    [(ngModel)]="watchPrice"
+                    placeholder="Enter watch price"
+                    (input)="calculatePayout()"
+                  />
+                  <mat-hint align="end">4% Commission</mat-hint>
+                </mat-form-field>
+  
+                <mat-form-field
+                  style="width: 100%"
+                  class="full-width"
+                  appearance="outline"
+                >
+                  <mat-label class="label-header">Shipping Type</mat-label>
+                  <input
+                    matInput
+                    type="text"
+                    [(ngModel)]="shipping_type"
+                    placeholder="Enter Shipping Type"
+                  />
+                </mat-form-field>
+  
+                <mat-form-field
+                  style="width: 100%"
+                  class="full-width"
+                  appearance="outline"
+                >
+                  <mat-label class="label-header">Shipping Cost</mat-label>
+                  <input
+                    matInput
+                    type="number"
+                    [(ngModel)]="shipping_charges"
+                    placeholder="Enter Shipping Cost"
+                    (input)="Payoutaftershippingcharges()"
+                  />
+                </mat-form-field>
+  
+                <mat-form-field
+                  style="width: 100%"
+                  class="full-width"
+                  appearance="outline"
+                >
+                  <mat-label class="label-header">Est. Delivery Time</mat-label>
+                  <input
+                    matInput
+                    type="text"
+                    [(ngModel)]="estimate_delivery"
+                    placeholder="Enter Est. Delivery Time"
+                  />
+                </mat-form-field>
+  
+                <mat-checkbox [(ngModel)]="allow_to_make_offer"
+                  >Allow make offers</mat-checkbox
+                >
+              </div>
+              <div class="col-md-6">
+                <mat-card class="info-card">
+                  <p class="font-size-18 font-wight-700 color-132138">
+                    Payout Information
+                  </p>
+                  <div class="info-row d-flex justify-content-between">
+                    <p class="font-size-16 font-wight-400 color-909090">
+                      Watch Price
+                    </p>
+                    <p class="font-size-16 font-wight-600 color-0F172A">
+                      {{
+                        watchPriceDisplay | currency : "SR" : "symbol" : "1.2-2"
+                      }}
+                    </p>
+                  </div>
+                  <div class="info-row d-flex justify-content-between">
+                    <span class="font-size-16 font-wight-400 color-909090"
+                      >Platform Fee (4%)</span
+                    >
+                    <span class="font-size-16 font-wight-600 color-0F172A">
+                      - {{ platformFee | currency : "SR" : "symbol" : "1.2-2" }}
+                    </span>
+                  </div>
+                  <mat-divider></mat-divider>
+                  <div class="info-row d-flex justify-content-between">
+                    <span class="font-size-16 font-wight-400 color-909090"
+                      >Payout</span
+                    >
+                    <span class="font-size-16 font-wight-600 color-0F172A">
+                      {{ estimatedPayout | currency : "SR" : "symbol" : "1.2-2" }}
+                    </span>
+                  </div>
+  
+                  <div class="info-row d-flex justify-content-between">
+                    <span class="font-size-16 font-wight-400 color-909090"
+                      >Shipping Charges</span
+                    >
+                    <span class="font-size-16 font-wight-600 color-0F172A">
+                      {{ shipping_charges | currency : "SR" : "symbol" : "1.2-2" }}
+                    </span>
+                  </div>
+                  <mat-divider></mat-divider>
+                  <div class="info-row d-flex justify-content-between">
+                    <span class="font-size-16 font-wight-400 color-909090"
+                      >Estimated Payout</span
+                    >
+                    <span class="font-size-16 font-wight-600 color-0F172A">
+                      {{ estimatedPayoutwithShipping | currency : "SR" : "symbol" : "1.2-2" }}
+                    </span>
+                  </div>
+                </mat-card>
+              </div>
               </div>
 
               <div
                 class="d-flex align-items-center justify-content-end gap-2 mb-3"
                 style="padding: 0 20px 0 20px"
               >
-                <button class="save-can-btn canc-bg-color"
-                (click)="backbtn('proofofownership')">Back</button>
+                <button
+                  class="save-can-btn canc-bg-color"
+                  (click)="backbtn('proofofownership')"
+                >
+                  Back
+                </button>
                 <button
                   class="save-can-btn save-btn-bg"
                   (click)="onSubmit('priceshipment')"
@@ -974,122 +1227,130 @@
               class="image-upload-container"
               *ngIf="selectedSection === 'billinginformation' && isSmallScreen"
             >
-            <form [formGroup]="billingForm">
-              <mat-form-field
-                style="width: 100%; margin-top: 8px"
-                class="full-width"
-                appearance="outline"
-              >
-                <mat-label class="label-header">Billing Address</mat-label>
-                <input
-                  matInput
-                  formControlName="billing_address"
-                  placeholder="Enter address here"
-                />
-                <mat-error *ngIf="billing_address.hasError('required')">
-                  Billing Address is required
-                </mat-error>
-              </mat-form-field>
-  
-              <mat-form-field
-                style="width: 100%; margin-top: 8px"
-                class="full-width"
-                appearance="outline"
-              >
-                <mat-label class="label-header">First Name</mat-label>
-                <input
-                  matInput
-                  formControlName="first_name"
-                  placeholder="Enter first name"
-                />
-                <mat-error *ngIf="first_name.hasError('required')">
-                  First Name is required
-                </mat-error>
-              </mat-form-field>
-  
-              <mat-form-field
-                style="width: 100%; margin-top: 8px"
-                class="full-width"
-                appearance="outline"
-              >
-                <mat-label class="label-header">Last Name</mat-label>
-                <input
-                  matInput
-                  formControlName="last_name"
-                  placeholder="Enter last name"
-                />
-                <mat-error *ngIf="last_name.hasError('required')">
-                  Last Name is required
-                </mat-error>
-              </mat-form-field>
-  
-              <mat-form-field
-                style="width: 100%; margin-top: 8px"
-                class="full-width"
-                appearance="outline"
-              >
-                <mat-label class="label-header">Street</mat-label>
-                <input
-                  matInput
-                  formControlName="street"
-                  placeholder="Enter street address"
-                />
-                <mat-error *ngIf="street.hasError('required')">
-                  Street is required
-                </mat-error>
-              </mat-form-field>
-  
-              <mat-form-field
-                style="width: 100%; margin-top: 8px"
-                class="full-width"
-                appearance="outline"
-              >
-                <mat-label class="label-header">Street Line 2</mat-label>
-                <input
-                  matInput
-                  formControlName="street_line_2"
-                  placeholder="Enter street address"
-                />
-              </mat-form-field>
-  
-              <mat-form-field
-                style="width: 100%; margin-top: 8px"
-                class="full-width"
-                appearance="outline"
-              >
-                <mat-label class="label-header">ZIP Code</mat-label>
-                <input
-                  matInput
-                  formControlName="zip_code"
-                  placeholder="Enter zip code"
-                />
-                <mat-error *ngIf="zip_code.hasError('required')">
-                  ZIP Code is required
-                </mat-error>
-              </mat-form-field>
-  
-              <mat-form-field
-                style="width: 100%; margin-top: 8px"
-                class="full-width"
-                appearance="outline"
-              >
-                <mat-label class="label-header">City</mat-label>
-                <mat-select formControlName="city" placeholder="Please select">
-                  <mat-option *ngFor="let city of cities" [value]="city">{{
-                    city
-                  }}</mat-option>
-                </mat-select>
-                <mat-error *ngIf="city.hasError('required')">
-                  City is required
-                </mat-error>
-              </mat-form-field>
-            </form>
+              <form [formGroup]="billingForm">
+                <mat-form-field
+                  style="width: 100%; margin-top: 8px"
+                  class="full-width"
+                  appearance="outline"
+                >
+                  <mat-label class="label-header">Billing Address</mat-label>
+                  <input
+                    matInput
+                    formControlName="billing_address"
+                    placeholder="Enter address here"
+                  />
+                  <mat-error *ngIf="billing_address.hasError('required')">
+                    Billing Address is required
+                  </mat-error>
+                </mat-form-field>
+
+                <mat-form-field
+                  style="width: 100%; margin-top: 8px"
+                  class="full-width"
+                  appearance="outline"
+                >
+                  <mat-label class="label-header">First Name</mat-label>
+                  <input
+                    matInput
+                    formControlName="first_name"
+                    placeholder="Enter first name"
+                  />
+                  <mat-error *ngIf="first_name.hasError('required')">
+                    First Name is required
+                  </mat-error>
+                </mat-form-field>
+
+                <mat-form-field
+                  style="width: 100%; margin-top: 8px"
+                  class="full-width"
+                  appearance="outline"
+                >
+                  <mat-label class="label-header">Last Name</mat-label>
+                  <input
+                    matInput
+                    formControlName="last_name"
+                    placeholder="Enter last name"
+                  />
+                  <mat-error *ngIf="last_name.hasError('required')">
+                    Last Name is required
+                  </mat-error>
+                </mat-form-field>
+
+                <mat-form-field
+                  style="width: 100%; margin-top: 8px"
+                  class="full-width"
+                  appearance="outline"
+                >
+                  <mat-label class="label-header">Street</mat-label>
+                  <input
+                    matInput
+                    formControlName="street"
+                    placeholder="Enter street address"
+                  />
+                  <mat-error *ngIf="street.hasError('required')">
+                    Street is required
+                  </mat-error>
+                </mat-form-field>
+
+                <mat-form-field
+                  style="width: 100%; margin-top: 8px"
+                  class="full-width"
+                  appearance="outline"
+                >
+                  <mat-label class="label-header">Street Line 2</mat-label>
+                  <input
+                    matInput
+                    formControlName="street_line_2"
+                    placeholder="Enter street address"
+                  />
+                </mat-form-field>
+
+                <mat-form-field
+                  style="width: 100%; margin-top: 8px"
+                  class="full-width"
+                  appearance="outline"
+                >
+                  <mat-label class="label-header">ZIP Code</mat-label>
+                  <input
+                    matInput
+                    formControlName="zip_code"
+                    placeholder="Enter zip code"
+                  />
+                  <mat-error *ngIf="zip_code.hasError('required')">
+                    ZIP Code is required
+                  </mat-error>
+                </mat-form-field>
+
+                <mat-form-field
+                  style="width: 100%; margin-top: 8px"
+                  class="full-width"
+                  appearance="outline"
+                >
+                  <mat-label class="label-header">City</mat-label>
+                  <mat-select
+                    formControlName="city"
+                    placeholder="Please select"
+                  >
+                    <mat-option *ngFor="let city of cities" [value]="city">{{
+                      city
+                    }}</mat-option>
+                  </mat-select>
+                  <mat-error *ngIf="city.hasError('required')">
+                    City is required
+                  </mat-error>
+                </mat-form-field>
+              </form>
 
               <div
                 class="d-flex align-items-center justify-content-end gap-2 mb-3"
                 style="padding: 0 20px 0 20px"
               >
-                <button class="save-can-btn canc-bg-color" (click)="backbtn('priceshipment')">Back</button>
+                <button
+                  class="save-can-btn canc-bg-color"
+                  (click)="backbtn('priceshipment')"
+                >
+                  Back
+                </button>
                 <button
                   class="save-can-btn save-btn-bg"
                   (click)="onSubmit('billinginformation')"
@@ -1117,84 +1378,157 @@
               class="image-upload-container"
               *ngIf="selectedSection === 'summary' && isSmallScreen"
             >
+              <div class="container-fluid mt-4">
+                <div class="row">
+                  <!-- Ad Preview Section -->
+                  <div class="col-md-6">
+                    <div
+                      style="background: #f7f7f8; border-radius: 15px"
+                      class="card p-3"
+                    >
+                      <h6 class="text-muted font-weight-bold">Ad Preview</h6>
+                      <div class="d-flex align-items-center">
+                        <img
+                          src="path/to/watch-image.jpg"
+                          alt="Watch Image"
+                          class="img-fluid"
+                          style="max-width: 127px"
+                        />
+                        <div class="ml-3">
+                          <h6 class="text-secondary">
+                            Rolex | Speed Master II
+                          </h6>
+                          <p class="font-weight-bold mb-1">
+                            Rolex Speedmaster In A Good Condition But In Low
+                            Price
+                          </p>
+                          <p class="text-primary font-weight-bold mb-0">
+                            SR 2499.99
+                          </p>
+                          <small class="text-muted"
+                            >Excl. Shipping Charges</small
+                          >
+                        </div>
+                      </div>
+                    </div>
+                  </div>
 
-            <div class="container-fluid mt-4">
-              <div class="row">
-                <!-- Ad Preview Section -->
-                <div class="col-md-6">
-                  <div style="background: #F7F7F8;border-radius: 15px;" class="card p-3">
-                    <h6 class="text-muted font-weight-bold">Ad Preview</h6>
-                    <div class="d-flex align-items-center">
-                      <img src="path/to/watch-image.jpg" alt="Watch Image" class="img-fluid" style="max-width: 127px;" />
-                      <div class="ml-3">
-                        <h6 class="text-secondary">Rolex | Speed Master II</h6>
-                        <p class="font-weight-bold mb-1">Rolex Speedmaster In A Good Condition But In Low Price</p>
-                        <p class="text-primary font-weight-bold mb-0">SR 2499.99</p>
-                        <small class="text-muted">Excl. Shipping Charges</small>
+                  <!-- Price Info Section -->
+                  <div class="col-md-6">
+                    <div
+                      class="card p-3"
+                      style="background: #f7f7f8; border-radius: 15px"
+                    >
+                      <h6 class="text-muted font-weight-bold">Price Info</h6>
+                      <div class="d-flex justify-content-between">
+                        <p class="font-size-16 font-weight-400 color-909090">
+                          Watch Price
+                        </p>
+                        <p class="font-size-16 font-weight-600 color-0F172A">
+                          SR 2000.00
+                        </p>
+                      </div>
+                      <div class="d-flex justify-content-between">
+                        <p class="font-size-16 font-weight-400 color-909090">
+                          Platform Fee (4%)
+                        </p>
+                        <p class="font-size-16 font-weight-600 color-0F172A">
+                          - SR 80.00
+                        </p>
+                      </div>
+                      <hr />
+                      <div class="d-flex justify-content-between">
+                        <p class="font-size-16 font-weight-400 color-909090">
+                          Estimated Payout
+                        </p>
+                        <p class="font-size-16 font-weight-600 color-0F172A">
+                          SR 1920.00
+                        </p>
                       </div>
                     </div>
                   </div>
                 </div>
-            
-                <!-- Price Info Section -->
-                <div class="col-md-6">
-                  <div class="card p-3" style="background: #F7F7F8;border-radius: 15px;">
-                    <h6 class="text-muted font-weight-bold">Price Info</h6>
-                    <div class="d-flex justify-content-between">
-                      <p class="font-size-16 font-weight-400 color-909090">Watch Price</p>
-                      <p class="font-size-16 font-weight-600 color-0F172A">SR 2000.00</p>
-                    </div>
-                    <div class="d-flex justify-content-between">
-                      <p class="font-size-16 font-weight-400 color-909090">Platform Fee (4%)</p>
-                      <p class="font-size-16 font-weight-600 color-0F172A">- SR 80.00</p>
-                    </div>
-                    <hr />
-                    <div class="d-flex justify-content-between">
-                      <p class="font-size-16 font-weight-400 color-909090">Estimated Payout</p>
-                      <p class="font-size-16 font-weight-600 color-0F172A">SR 1920.00</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            
-              <!-- Billing Information Section -->
-              <div class="card mt-4 p-3" style="background: #F7F7F8;border-radius: 15px;">
-                <h6 class="text-muted font-weight-bold">Billing Information</h6>
-                <div class="row">
-                  <div class="col-md-6">
-                    <div>
-                      <p class="mb-1 font-size-16 font-weight-400 color-909090 ">Billing Address</p>
-                      <p class="font-size-16 font-wight-600 color-0F172A  b-0">Rest assured, each watch will undergo verification by our team of experts.</p>
-                    </div>
-                    <div>
-                      <p class="mb-1 font-size-16 font-weight-400 color-909090 ">Street</p>
-                      <p class="font-size-16 font-wight-600 color-0F172A  b-0">Jamama Street #1234</p>
-                    </div>
-                    <div>
-                      <p class="mb-1 font-size-16 font-weight-400 color-909090 ">City</p>
-                      <p class="font-size-16 font-wight-600 color-0F172A mb-0">Makkah</p>
-                    </div>
-                  </div>
-                  <div class="col-md-6">  
-                    <div class="">
-                      <p class="mb-1 font-size-16 font-weight-400 color-909090 ">Street Line 2</p>
-                      <p class="font-size-16 font-wight-600 color-0F172A  b-0">Al Kharaj #1234</p>
-                    </div>
-                    <div class="">
-                      <p class="mb-1 font-size-16 font-weight-400 color-909090 ">Zip Code</p>
-                      <p class="font-size-16 font-wight-600 color-0F172A  b-0">479123</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
 
+                <!-- Billing Information Section -->
+                <div
+                  class="card mt-4 p-3"
+                  style="background: #f7f7f8; border-radius: 15px"
+                >
+                  <h6 class="text-muted font-weight-bold">
+                    Billing Information
+                  </h6>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div>
+                        <p
+                          class="mb-1 font-size-16 font-weight-400 color-909090"
+                        >
+                          Billing Address
+                        </p>
+                        <p class="font-size-16 font-wight-600 color-0F172A b-0">
+                          Rest assured, each watch will undergo verification by
+                          our team of experts.
+                        </p>
+                      </div>
+                      <div>
+                        <p
+                          class="mb-1 font-size-16 font-weight-400 color-909090"
+                        >
+                          Street
+                        </p>
+                        <p class="font-size-16 font-wight-600 color-0F172A b-0">
+                          Jamama Street #1234
+                        </p>
+                      </div>
+                      <div>
+                        <p
+                          class="mb-1 font-size-16 font-weight-400 color-909090"
+                        >
+                          City
+                        </p>
+                        <p
+                          class="font-size-16 font-wight-600 color-0F172A mb-0"
+                        >
+                          Makkah
+                        </p>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="">
+                        <p
+                          class="mb-1 font-size-16 font-weight-400 color-909090"
+                        >
+                          Street Line 2
+                        </p>
+                        <p class="font-size-16 font-wight-600 color-0F172A b-0">
+                          Al Kharaj #1234
+                        </p>
+                      </div>
+                      <div class="">
+                        <p
+                          class="mb-1 font-size-16 font-weight-400 color-909090"
+                        >
+                          Zip Code
+                        </p>
+                        <p class="font-size-16 font-wight-600 color-0F172A b-0">
+                          479123
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
 
               <div
                 class="d-flex align-items-center justify-content-end gap-2 mb-3"
                 style="padding: 0 20px 0 20px"
               >
-                <button class="save-can-btn canc-bg-color" (click)="backbtn('billinginformation')">Back</button>
+                <button
+                  class="save-can-btn canc-bg-color"
+                  (click)="backbtn('billinginformation')"
+                >
+                  Back
+                </button>
                 <button
                   class="save-can-btn save-btn-bg"
                   (click)="onSubmit('summary')"
@@ -1224,18 +1558,25 @@
             it’s 100% authentic, giving buyers complete peace of mind.
           </p>
           <form [formGroup]="listingForm" (ngSubmit)="onSubmit('listing')">
-
             <mat-form-field appearance="outline" class="w-100 mt-2">
               <mat-label class="label-header">Brand</mat-label>
               <mat-select formControlName="brand_id">
-                <mat-option *ngFor="let brand of brandsList" [value]="brand.id">{{brand.name}}</mat-option>
+                <mat-option
+                  *ngFor="let brand of brandsList"
+                  [value]="brand.id"
+                  >{{ brand.name }}</mat-option
+                >
               </mat-select>
             </mat-form-field>
 
             <mat-form-field appearance="outline" class="w-100 mt-2">
               <mat-label class="label-header">Category</mat-label>
               <mat-select multiple formControlName="category_ids">
-                <mat-option *ngFor="let category of categoryList" [value]="category.id">{{category.name}}</mat-option>
+                <mat-option
+                  *ngFor="let category of categoryList"
+                  [value]="category.id"
+                  >{{ category.name }}</mat-option
+                >
               </mat-select>
             </mat-form-field>
 
@@ -1291,12 +1632,14 @@
             <mat-form-field appearance="outline" class="w-100 mt-2">
               <mat-label class="label-header">Watch Type</mat-label>
               <mat-select formControlName="watch_type">
-                <mat-option *ngFor="let data of formdropdownListData.watch_type" [value]="data.key">
+                <mat-option
+                  *ngFor="let data of formdropdownListData.watch_type"
+                  [value]="data.key"
+                >
                   {{ data.value }}
                 </mat-option>
               </mat-select>
             </mat-form-field>
-            
 
             <mat-form-field appearance="outline" class="w-100 mt-2">
               <mat-label class="label-header">Year of Production</mat-label>
@@ -1375,7 +1718,9 @@
                 <div class="row">
                   <div class="col-md-4 mb-3">
                     <mat-form-field appearance="outline" class="w-100">
-                      <mat-label class="label-header">Serial No. (if not polished)</mat-label>
+                      <mat-label class="label-header"
+                        >Serial No. (if not polished)</mat-label
+                      >
                       <input
                         matInput
                         formControlName="serial_no"
@@ -1388,7 +1733,10 @@
                       <mat-label class="label-header">Gender</mat-label>
                       <mat-select formControlName="gender">
                         <mat-option value="">Please Select</mat-option>
-                        <mat-option *ngFor="let data of formdropdownListData?.gender" [value]="data.key">
+                        <mat-option
+                          *ngFor="let data of formdropdownListData?.gender"
+                          [value]="data.key"
+                        >
                           {{ data.value }}
                         </mat-option>
                       </mat-select>
@@ -1399,7 +1747,11 @@
                       <mat-label class="label-header">Movement</mat-label>
                       <mat-select formControlName="movement">
                         <mat-option value="">Please Select</mat-option>
-                        <mat-option *ngFor="let data of formdropdownListData?.movement" [value]="data.key">{{data.value}}</mat-option>
+                        <mat-option
+                          *ngFor="let data of formdropdownListData?.movement"
+                          [value]="data.key"
+                          >{{ data.value }}</mat-option
+                        >
                       </mat-select>
                     </mat-form-field>
                   </div>
@@ -1414,7 +1766,14 @@
                         formControlName="case_diameter_value_1"
                         placeholder="Enter diameter"
                       />
-                      <span style="padding: 17px 15px 17px 15px;background-color: #DBDBDB;" matSuffix>mm</span>
+                      <span
+                        style="
+                          padding: 17px 15px 17px 15px;
+                          background-color: #dbdbdb;
+                        "
+                        matSuffix
+                        >mm</span
+                      >
                     </mat-form-field>
                   </div>
                   <div class="col-md-6 mb-3">
@@ -1425,7 +1784,14 @@
                         formControlName="case_diameter_value_2"
                         placeholder="Enter diameter"
                       />
-                      <span style="padding: 17px 15px 17px 15px;background-color: #DBDBDB;" matSuffix>mm</span>
+                      <span
+                        style="
+                          padding: 17px 15px 17px 15px;
+                          background-color: #dbdbdb;
+                        "
+                        matSuffix
+                        >mm</span
+                      >
                     </mat-form-field>
                   </div>
                 </div>
@@ -1452,17 +1818,21 @@
                         <div class="row">
                           <div class="col-md-6 mb-3">
                             <mat-form-field appearance="outline" class="w-100">
-                              <mat-label class="label-header">Dial Color</mat-label>
+                              <mat-label class="label-header"
+                                >Dial Color</mat-label
+                              >
                               <input
-                              matInput
-                              formControlName="dial_color"
-                              placeholder="Enter Dial Color"
-                            />
+                                matInput
+                                formControlName="dial_color"
+                                placeholder="Enter Dial Color"
+                              />
                             </mat-form-field>
                           </div>
                           <div class="col-md-6 mb-3">
                             <mat-form-field appearance="outline" class="w-100">
-                              <mat-label class="label-header">Caliber / Movement</mat-label>
+                              <mat-label class="label-header"
+                                >Caliber / Movement</mat-label
+                              >
                               <input
                                 matInput
                                 formControlName="caliber_movement"
@@ -1475,7 +1845,9 @@
                         <div class="row">
                           <div class="col-md-6 mb-3">
                             <mat-form-field appearance="outline" class="w-100">
-                              <mat-label class="label-header">Base Caliber</mat-label>
+                              <mat-label class="label-header"
+                                >Base Caliber</mat-label
+                              >
                               <input
                                 matInput
                                 formControlName="base_caliber"
@@ -1485,7 +1857,9 @@
                           </div>
                           <div class="col-md-6 mb-3">
                             <mat-form-field appearance="outline" class="w-100">
-                              <mat-label class="label-header">Power Reserve</mat-label>
+                              <mat-label class="label-header"
+                                >Power Reserve</mat-label
+                              >
                               <input
                                 matInput
                                 formControlName="power_reserve"
@@ -1495,24 +1869,27 @@
                           </div>
                         </div>
 
-                        
                         <div class="row">
                           <div class="col-md-6 mb-3">
                             <mat-form-field appearance="outline" class="w-100">
-                              <mat-label class="label-header">No of Jewels</mat-label>
+                              <mat-label class="label-header"
+                                >No of Jewels</mat-label
+                              >
                               <!-- <mat-select formControlName="no_of_jewels">
                                 <mat-option value="">Please Select</mat-option>
                               </mat-select> -->
                               <input
-                              matInput
-                              formControlName="no_of_jewels"
-                              placeholder="Enter No of Jewels"
-                            />  
+                                matInput
+                                formControlName="no_of_jewels"
+                                placeholder="Enter No of Jewels"
+                              />
                             </mat-form-field>
                           </div>
                           <div class="col-md-6 mb-3">
                             <mat-form-field appearance="outline" class="w-100">
-                              <mat-label class="label-header">Frequency</mat-label>
+                              <mat-label class="label-header"
+                                >Frequency</mat-label
+                              >
                               <input
                                 matInput
                                 formControlName="frequency"
@@ -1522,19 +1899,19 @@
                           </div>
                         </div>
 
-
                         <div class="row">
                           <div class="col-md-12 mb-3">
                             <mat-form-field appearance="outline" class="w-100">
-                              <mat-label class="label-header">Other Details</mat-label>
+                              <mat-label class="label-header"
+                                >Other Details</mat-label
+                              >
                               <input
-                              matInput
-                              formControlName="additional_details"
-                              placeholder="Enter Other Details"
-                            />
+                                matInput
+                                formControlName="additional_details"
+                                placeholder="Enter Other Details"
+                              />
                             </mat-form-field>
                           </div>
-                          
                         </div>
                       </div>
                     </mat-expansion-panel>
@@ -1554,19 +1931,35 @@
                         <div class="row">
                           <div class="col-md-6 mb-3">
                             <mat-form-field appearance="outline" class="w-100">
-                              <mat-label class="label-header">Case Material</mat-label>
+                              <mat-label class="label-header"
+                                >Case Material</mat-label
+                              >
                               <mat-select formControlName="case_material">
                                 <mat-option value="">Please Select</mat-option>
-                                <mat-option *ngFor="let data of formdropdownListData.case_material" [value]="data.key">{{data.value}}</mat-option>
+                                <mat-option
+                                  *ngFor="
+                                    let data of formdropdownListData.case_material
+                                  "
+                                  [value]="data.key"
+                                  >{{ data.value }}</mat-option
+                                >
                               </mat-select>
                             </mat-form-field>
                           </div>
                           <div class="col-md-6 mb-3">
                             <mat-form-field appearance="outline" class="w-100">
-                              <mat-label class="label-header">Bezel Material</mat-label>
+                              <mat-label class="label-header"
+                                >Bezel Material</mat-label
+                              >
                               <mat-select formControlName="bezel_material">
                                 <mat-option value="">Please Select</mat-option>
-                                <mat-option *ngFor="let data of formdropdownListData.bezel_material" [value]="data.key">{{data.value}}</mat-option>
+                                <mat-option
+                                  *ngFor="
+                                    let data of formdropdownListData.bezel_material
+                                  "
+                                  [value]="data.key"
+                                  >{{ data.value }}</mat-option
+                                >
                               </mat-select>
                             </mat-form-field>
                           </div>
@@ -1575,49 +1968,81 @@
                         <div class="row">
                           <div class="col-md-6 mb-3">
                             <mat-form-field appearance="outline" class="w-100">
-                              <mat-label class="label-header">Thickness</mat-label>
+                              <mat-label class="label-header"
+                                >Thickness</mat-label
+                              >
                               <input
                                 matInput
                                 formControlName="thickness"
                                 placeholder="Enter thickness"
                               />
-                              <span style="padding: 17px 15px 17px 15px;background-color: #DBDBDB;" matSuffix>mm</span>
+                              <span
+                                style="
+                                  padding: 17px 15px 17px 15px;
+                                  background-color: #dbdbdb;
+                                "
+                                matSuffix
+                                >mm</span
+                              >
                             </mat-form-field>
                           </div>
                           <div class="col-md-6 mb-3">
                             <mat-form-field appearance="outline" class="w-100">
-                              <mat-label class="label-header">Crystal</mat-label>
+                              <mat-label class="label-header"
+                                >Crystal</mat-label
+                              >
                               <mat-select formControlName="crystal">
                                 <mat-option value="">Please Select</mat-option>
-                                <mat-option *ngFor="let data of formdropdownListData.crystal" [value]="data.key">{{data.value}}</mat-option>
+                                <mat-option
+                                  *ngFor="
+                                    let data of formdropdownListData.crystal
+                                  "
+                                  [value]="data.key"
+                                  >{{ data.value }}</mat-option
+                                >
                               </mat-select>
                             </mat-form-field>
                           </div>
                         </div>
 
-
                         <div class="row">
                           <div class="col-md-6 mb-3">
                             <mat-form-field appearance="outline" class="w-100">
-                              <mat-label class="label-header">Water Resistence</mat-label>
+                              <mat-label class="label-header"
+                                >Water Resistence</mat-label
+                              >
                               <mat-select formControlName="water_resistance">
                                 <mat-option value="">Please Select</mat-option>
-                                <mat-option *ngFor="let data of formdropdownListData.water_resistance" [value]="data.key">{{data.value}}</mat-option>
+                                <mat-option
+                                  *ngFor="
+                                    let data of formdropdownListData.water_resistance
+                                  "
+                                  [value]="data.key"
+                                  >{{ data.value }}</mat-option
+                                >
                               </mat-select>
                             </mat-form-field>
                           </div>
                           <div class="col-md-6 mb-3">
                             <mat-form-field appearance="outline" class="w-100">
-                              <mat-label class="label-header">Dial Numerals</mat-label>
+                              <mat-label class="label-header"
+                                >Dial Numerals</mat-label
+                              >
                               <input
                                 matInput
                                 formControlName="dial_numerals"
                                 placeholder="Enter Dial Numerals"
                               />
-                              <span style="padding: 17px 15px 17px 15px;background-color: #DBDBDB;" matSuffix>mm</span>
+                              <span
+                                style="
+                                  padding: 17px 15px 17px 15px;
+                                  background-color: #dbdbdb;
+                                "
+                                matSuffix
+                                >mm</span
+                              >
                             </mat-form-field>
                           </div>
-                         
                         </div>
                       </div>
                     </mat-expansion-panel>
@@ -1637,7 +2062,9 @@
                         <div class="row">
                           <div class="col-md-6 mb-3">
                             <mat-form-field appearance="outline" class="w-100">
-                              <mat-label class="label-header">Bracelet Material</mat-label>
+                              <mat-label class="label-header"
+                                >Bracelet Material</mat-label
+                              >
                               <!-- <mat-select formControlName="bracelet_material">
                                 <mat-option value="">Please Select</mat-option>
                               </mat-select> -->
@@ -1650,7 +2077,9 @@
                           </div>
                           <div class="col-md-6 mb-3">
                             <mat-form-field appearance="outline" class="w-100">
-                              <mat-label class="label-header">Bracelet Color</mat-label>
+                              <mat-label class="label-header"
+                                >Bracelet Color</mat-label
+                              >
                               <input
                                 matInput
                                 formControlName="bracelet_color"
@@ -1663,21 +2092,25 @@
                         <div class="row">
                           <div class="col-md-6 mb-3">
                             <mat-form-field appearance="outline" class="w-100">
-                              <mat-label class="label-header">Type of Clasp</mat-label>
+                              <mat-label class="label-header"
+                                >Type of Clasp</mat-label
+                              >
                               <!-- <mat-select formControlName="type_of_clasp">
                                 <mat-option value="">Please Select</mat-option>
                               </mat-select> -->
                               <input
-                              matInput
-                              formControlName="type_of_clasp"
-                              placeholder="Enter Type of Clasp"
-                            />
+                                matInput
+                                formControlName="type_of_clasp"
+                                placeholder="Enter Type of Clasp"
+                              />
                             </mat-form-field>
                           </div>
 
                           <div class="col-md-6 mb-3">
                             <mat-form-field appearance="outline" class="w-100">
-                              <mat-label class="label-header">Clasp Material</mat-label>
+                              <mat-label class="label-header"
+                                >Clasp Material</mat-label
+                              >
                               <input
                                 matInput
                                 formControlName="clasp_material"
@@ -1695,8 +2128,12 @@
                   class="d-flex align-items-center justify-content-end gap-2 mb-3"
                   style="padding: 0 20px 0 20px"
                 >
-                  <button class="save-can-btn canc-bg-color"
-                  (click)="backbtn('listingDetails')">Back</button>
+                  <button
+                    class="save-can-btn canc-bg-color"
+                    (click)="backbtn('listingDetails')"
+                  >
+                    Back
+                  </button>
                   <button
                     class="save-can-btn save-btn-bg"
                     (click)="onSubmit('watchDetails')"
@@ -1801,8 +2238,12 @@
             class="d-flex align-items-center justify-content-end gap-2 mb-3"
             style="padding: 0 20px 0 20px"
           >
-            <button class="save-can-btn canc-bg-color"
-            (click)="backbtn('watchDetails')">Back</button>
+            <button
+              class="save-can-btn canc-bg-color"
+              (click)="backbtn('watchDetails')"
+            >
+              Back
+            </button>
             <button
               class="save-can-btn save-btn-bg"
               (click)="onSubmit('uploadImages')"
@@ -1829,10 +2270,19 @@
                 (click)="selectCondition(condition)"
                 [class.selected]="condition === selectedCondition"
               >
-                <div class="card condition-card h-100" style="border-radius: 16px;">
+                <div
+                  class="card condition-card h-100"
+                  style="border-radius: 16px"
+                >
                   <div class="card-body">
-                    <p class="font-size-16 font-wight-700 color-242424 margin-0">{{ condition.title }}</p>
-                    <p class="font-size-14 font-weight-400 color-909090">{{ condition.description }}</p>
+                    <p
+                      class="font-size-16 font-wight-700 color-242424 margin-0"
+                    >
+                      {{ condition.title }}
+                    </p>
+                    <p class="font-size-14 font-weight-400 color-909090">
+                      {{ condition.description }}
+                    </p>
                   </div>
                 </div>
               </div>
@@ -1843,8 +2293,12 @@
             class="d-flex align-items-center justify-content-end gap-2 mb-3"
             style="padding: 0 20px 0 20px"
           >
-            <button class="save-can-btn canc-bg-color"
-            (click)="backbtn('uploadImages')">Back</button>
+            <button
+              class="save-can-btn canc-bg-color"
+              (click)="backbtn('uploadImages')"
+            >
+              Back
+            </button>
             <button
               class="save-can-btn save-btn-bg"
               (click)="onSubmit('conditionGrading')"
@@ -1872,7 +2326,7 @@
                 [class.selected]="isSelected(option)"
               >
                 <div class="card delivery-card h-100">
-                  <div class="card-body d-flex flex-column ">
+                  <div class="card-body d-flex flex-column">
                     <img
                       [src]="option.icon"
                       alt="{{ option.title }}"
@@ -1889,8 +2343,12 @@
             class="d-flex align-items-center justify-content-end gap-2 mb-3"
             style="padding: 0 20px 0 20px"
           >
-            <button class="save-can-btn canc-bg-color"
-            (click)="backbtn('conditionGrading')">Back</button>
+            <button
+              class="save-can-btn canc-bg-color"
+              (click)="backbtn('conditionGrading')"
+            >
+              Back
+            </button>
             <button
               class="save-can-btn save-btn-bg"
               (click)="onSubmit('scopeofdelivery')"
@@ -2022,7 +2480,7 @@
           <div class="container-fluid mt-3">
             <div class="help-card p-4">
               <div class="icon-placeholder">
-                <img src="../../../../assets/images/help-us.png" alt="img"/>
+                <img src="../../../../assets/images/help-us.png" alt="img" />
               </div>
               <h5>Having trouble?</h5>
               <p>If you cannot set the watch to a specified time:</p>
@@ -2047,8 +2505,12 @@
             class="d-flex align-items-center justify-content-end gap-2 mb-3"
             style="padding: 0 20px 0 20px"
           >
-            <button class="save-can-btn canc-bg-color"
-            (click)="backbtn('scopeofdelivery')">Back</button>
+            <button
+              class="save-can-btn canc-bg-color"
+              (click)="backbtn('scopeofdelivery')"
+            >
+              Back
+            </button>
             <button
               class="save-can-btn save-btn-bg"
               (click)="onSubmit('proofofownership')"
@@ -2068,7 +2530,8 @@
             Every watch will soon be verified by our team of experts to ensure
             it’s 100% authentic, giving buyers complete peace of mind.
           </p>
-          <div class="col-md-8">
+          <!-- this is seller -->
+          <!-- <div class="col-md-8">
             <div class="container-fluid mt-5">
               <mat-form-field
                 style="width: 100%"
@@ -2109,13 +2572,141 @@
                 </div>
               </mat-card>
             </div>
+          </div> -->
+
+          <!-- this is Dealer -->
+
+          <div class="col-md-12">
+            <div class="container-fluid mt-5 d-flex flex-wrap">
+              <div class="col-md-6">
+              <mat-form-field
+                style="width: 100%"
+                class="full-width"
+                appearance="outline"
+              >
+                <mat-label class="label-header">Watch Price</mat-label>
+                <input
+                  matInput
+                  type="number"
+                  [(ngModel)]="watchPrice"
+                  placeholder="Enter watch price"
+                  (input)="calculatePayout()"
+                />
+                <mat-hint align="end">4% Commission</mat-hint>
+              </mat-form-field>
+
+              <mat-form-field
+                style="width: 100%"
+                class="full-width"
+                appearance="outline"
+              >
+                <mat-label class="label-header">Shipping Type</mat-label>
+                <input
+                  matInput
+                  type="text"
+                  [(ngModel)]="shipping_type"
+                  placeholder="Enter Shipping Type"
+                />
+              </mat-form-field>
+
+              <mat-form-field
+                style="width: 100%"
+                class="full-width"
+                appearance="outline"
+              >
+                <mat-label class="label-header">Shipping Cost</mat-label>
+                <input
+                  matInput
+                  type="number"
+                  [(ngModel)]="shipping_charges"
+                  placeholder="Enter Shipping Cost"
+                  (input)="Payoutaftershippingcharges()"
+                />
+              </mat-form-field>
+
+              <mat-form-field
+                style="width: 100%"
+                class="full-width"
+                appearance="outline"
+              >
+                <mat-label class="label-header">Est. Delivery Time</mat-label>
+                <input
+                  matInput
+                  type="text"
+                  [(ngModel)]="estimate_delivery"
+                  placeholder="Enter Est. Delivery Time"
+                />
+              </mat-form-field>
+
+              <mat-checkbox [(ngModel)]="allow_to_make_offer"
+                >Allow make offers</mat-checkbox
+              >
+            </div>
+            <div class="col-md-6">
+              <mat-card class="info-card">
+                <p class="font-size-18 font-wight-700 color-132138">
+                  Payout Information
+                </p>
+                <div class="info-row d-flex justify-content-between">
+                  <p class="font-size-16 font-wight-400 color-909090">
+                    Watch Price
+                  </p>
+                  <p class="font-size-16 font-wight-600 color-0F172A">
+                    {{
+                      watchPriceDisplay | currency : "SR" : "symbol" : "1.2-2"
+                    }}
+                  </p>
+                </div>
+                <div class="info-row d-flex justify-content-between">
+                  <span class="font-size-16 font-wight-400 color-909090"
+                    >Platform Fee (4%)</span
+                  >
+                  <span class="font-size-16 font-wight-600 color-0F172A">
+                    - {{ platformFee | currency : "SR" : "symbol" : "1.2-2" }}
+                  </span>
+                </div>
+                <mat-divider></mat-divider>
+                <div class="info-row d-flex justify-content-between">
+                  <span class="font-size-16 font-wight-400 color-909090"
+                    >Payout</span
+                  >
+                  <span class="font-size-16 font-wight-600 color-0F172A">
+                    {{ estimatedPayout | currency : "SR" : "symbol" : "1.2-2" }}
+                  </span>
+                </div>
+
+                <div class="info-row d-flex justify-content-between">
+                  <span class="font-size-16 font-wight-400 color-909090"
+                    >Shipping Charges</span
+                  >
+                  <span class="font-size-16 font-wight-600 color-0F172A">
+                    {{ shipping_charges | currency : "SR" : "symbol" : "1.2-2" }}
+                  </span>
+                </div>
+                <mat-divider></mat-divider>
+                <div class="info-row d-flex justify-content-between">
+                  <span class="font-size-16 font-wight-400 color-909090"
+                    >Estimated Payout</span
+                  >
+                  <span class="font-size-16 font-wight-600 color-0F172A">
+                    {{ estimatedPayoutwithShipping | currency : "SR" : "symbol" : "1.2-2" }}
+                  </span>
+                </div>
+              </mat-card>
+            </div>
+            </div>
           </div>
 
           <div
             class="d-flex align-items-center justify-content-end gap-2 mb-3"
             style="padding: 0 20px 0 20px"
           >
-            <button class="save-can-btn canc-bg-color" (click)="backbtn('proofofownership')">Back</button>
+            <button
+              class="save-can-btn canc-bg-color"
+              (click)="backbtn('proofofownership')"
+            >
+              Back
+            </button>
             <button
               class="save-can-btn save-btn-bg"
               (click)="onSubmit('priceshipment')"
@@ -2250,7 +2841,12 @@
             class="d-flex align-items-center justify-content-end gap-2 mb-3"
             style="padding: 0 20px 0 20px"
           >
-            <button class="save-can-btn canc-bg-color" (click)="backbtn('priceshipment')">Back</button>
+            <button
+              class="save-can-btn canc-bg-color"
+              (click)="backbtn('priceshipment')"
+            >
+              Back
+            </button>
             <button
               class="save-can-btn save-btn-bg"
               (click)="onSubmit('billinginformation')"
@@ -2271,84 +2867,138 @@
             it’s 100% authentic, giving buyers complete peace of mind.
           </p>
 
-
           <div class="container-fluid mt-4">
             <div class="row">
               <!-- Ad Preview Section -->
               <div class="col-md-6">
                 <h6 class="text-muted font-weight-bold">Ad Preview</h6>
-                <div class="card p-3" style="background: #F7F7F8;border-radius: 15px;">
+                <div
+                  class="card p-3"
+                  style="background: #f7f7f8; border-radius: 15px"
+                >
                   <div class="d-flex align-items-center">
-                    <img src="./assets/images/interested-watches-1.png" alt="Watch Image" class="img-fluid" style="max-width: 140px;" />
+                    <img
+                      src="./assets/images/interested-watches-1.png"
+                      alt="Watch Image"
+                      class="img-fluid"
+                      style="max-width: 140px"
+                    />
                     <div class="ml-3">
                       <h6 class="text-secondary">Rolex | Speed Master II</h6>
-                      <p class="font-weight-bold mb-1">Rolex Speedmaster In A Good Condition But In Low Price</p>
-                      <p class="text-primary font-weight-bold mb-0">SR 2499.99</p>
+                      <p class="font-weight-bold mb-1">
+                        Rolex Speedmaster In A Good Condition But In Low Price
+                      </p>
+                      <p class="text-primary font-weight-bold mb-0">
+                        SR 2499.99
+                      </p>
                       <small class="text-muted">Excl. Shipping Charges</small>
                     </div>
                   </div>
                 </div>
               </div>
-          
+
               <!-- Price Info Section -->
               <div class="col-md-6">
                 <h6 class="text-muted font-weight-bold">Price Info</h6>
-                <div class="card p-3" style="background: #F7F7F8;border-radius: 15px;">
+                <div
+                  class="card p-3"
+                  style="background: #f7f7f8; border-radius: 15px"
+                >
                   <div class="d-flex justify-content-between">
-                    <p class="font-size-16 font-weight-400 color-909090">Watch Price</p>
-                    <p class="font-size-16 font-weight-600 color-0F172A">SR 2000.00</p>
+                    <p class="font-size-16 font-weight-400 color-909090">
+                      Watch Price
+                    </p>
+                    <p class="font-size-16 font-weight-600 color-0F172A">
+                      SR 2000.00
+                    </p>
                   </div>
                   <div class="d-flex justify-content-between">
-                    <p class="font-size-16 font-weight-400 color-909090">Platform Fee (4%)</p>
-                    <p class="font-size-16 font-weight-600 color-0F172A">- SR 80.00</p>
+                    <p class="font-size-16 font-weight-400 color-909090">
+                      Platform Fee (4%)
+                    </p>
+                    <p class="font-size-16 font-weight-600 color-0F172A">
+                      - SR 80.00
+                    </p>
                   </div>
                   <hr />
                   <div class="d-flex justify-content-between">
-                    <p class="font-size-16 font-weight-400 color-909090">Estimated Payout</p>
-                    <p class="font-size-16 font-weight-600 color-0F172A">SR 1920.00</p>
+                    <p class="font-size-16 font-weight-400 color-909090">
+                      Estimated Payout
+                    </p>
+                    <p class="font-size-16 font-weight-600 color-0F172A">
+                      SR 1920.00
+                    </p>
                   </div>
                 </div>
               </div>
             </div>
-          
+
             <!-- Billing Information Section -->
             <h6 class="text-muted font-weight-bold">Billing Information</h6>
-            <div class="card mt-4 p-3" style="background: #F7F7F8;border-radius: 15px;">
+            <div
+              class="card mt-4 p-3"
+              style="background: #f7f7f8; border-radius: 15px"
+            >
               <div class="row">
                 <div class="col-md-6">
                   <div>
-                    <p class="mb-1 font-size-16 font-weight-400 color-909090 ">Billing Address</p>
-                    <p class="font-size-16 font-wight-600 color-0F172A  b-0">Rest assured, each watch will undergo verification by our team of experts.</p>
+                    <p class="mb-1 font-size-16 font-weight-400 color-909090">
+                      Billing Address
+                    </p>
+                    <p class="font-size-16 font-wight-600 color-0F172A b-0">
+                      Rest assured, each watch will undergo verification by our
+                      team of experts.
+                    </p>
                   </div>
                   <div>
-                    <p class="mb-1 font-size-16 font-weight-400 color-909090 ">Street</p>
-                    <p class="font-size-16 font-wight-600 color-0F172A  b-0">Jamama Street #1234</p>
+                    <p class="mb-1 font-size-16 font-weight-400 color-909090">
+                      Street
+                    </p>
+                    <p class="font-size-16 font-wight-600 color-0F172A b-0">
+                      Jamama Street #1234
+                    </p>
                   </div>
                   <div>
-                    <p class="mb-1 font-size-16 font-weight-400 color-909090 ">City</p>
-                    <p class="font-size-16 font-wight-600 color-0F172A mb-0">Makkah</p>
+                    <p class="mb-1 font-size-16 font-weight-400 color-909090">
+                      City
+                    </p>
+                    <p class="font-size-16 font-wight-600 color-0F172A mb-0">
+                      Makkah
+                    </p>
                   </div>
                 </div>
-                <div class="col-md-6">  
+                <div class="col-md-6">
                   <div class="text-lg-end">
-                    <p class="mb-1 font-size-16 font-weight-400 color-909090 ">Street Line 2</p>
-                    <p class="font-size-16 font-wight-600 color-0F172A  b-0">Al Kharaj #1234</p>
+                    <p class="mb-1 font-size-16 font-weight-400 color-909090">
+                      Street Line 2
+                    </p>
+                    <p class="font-size-16 font-wight-600 color-0F172A b-0">
+                      Al Kharaj #1234
+                    </p>
                   </div>
                   <div class="text-lg-end">
-                    <p class="mb-1 font-size-16 font-weight-400 color-909090 ">Zip Code</p>
-                    <p class="font-size-16 font-wight-600 color-0F172A  b-0">479123</p>
+                    <p class="mb-1 font-size-16 font-weight-400 color-909090">
+                      Zip Code
+                    </p>
+                    <p class="font-size-16 font-wight-600 color-0F172A b-0">
+                      479123
+                    </p>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-          
 
           <div
             class="d-flex align-items-center justify-content-end gap-2 mb-3"
             style="padding: 0 20px 0 20px"
           >
-            <button class="save-can-btn canc-bg-color" (click)="backbtn('billinginformation')">Back</button>
+            <button
+              class="save-can-btn canc-bg-color"
+              (click)="backbtn('billinginformation')"
+            >
+              Back
+            </button>
             <button
               class="save-can-btn save-btn-bg"
               (click)="onSubmit('summary')"
