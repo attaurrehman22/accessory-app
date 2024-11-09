@@ -120,7 +120,8 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
   constructor(
     private http: HttpService,
     private alertService: AlertsServicesService,
-    private router:Router
+    private router:Router,
+    private dialog:MatDialog
   ) {}
 
   watchPrice: number = 0;
@@ -310,7 +311,26 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
     return true;
   }
 
+  loginFirst(){
+    const dialogRef = this.dialog.open(ModelLoginComponent, {
+      width: "600px",
+      data: { message: "dialog-box" },
+      disableClose:true
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        
+      }
+    });
+  }
+  
+
   ngOnInit() {
+    const isUserLogin = localStorage.getItem("Logged");
+    if(!isUserLogin){
+      this.loginFirst()
+    }
     this.checkScreenSize();
     this.getAllBrandsDropDown();
     this.getCategoriesDropDown();
