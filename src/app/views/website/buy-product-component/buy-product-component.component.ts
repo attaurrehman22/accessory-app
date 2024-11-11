@@ -39,9 +39,11 @@ export class BuyProductComponentComponent implements OnInit {
         const res = await this.http.getSimilarProductsByIDwithPage(this.ProductID, this.currentPage).toPromise();
         const newWatches = res.data.data.map((product: any) => ({
           ...product,
-          main_image: product.main_image.replace(/\\/g, ""),
+          // main_image: product.main_image.replace(/\\/g, ""),
+          main_image: product.main_image ? product.main_image.replace(/\\/g, "") : null,
         }));
         this.similarWatchesList = [...this.similarWatchesList, ...newWatches];
+        console.log("Similar watches in more watches function",this.similarWatchesList)
         this.totalPages = res.data.last_page;
       } catch (err) {
         console.error("Error loading more watches:", err);
@@ -82,6 +84,8 @@ export class BuyProductComponentComponent implements OnInit {
     this.initializeComponent();
   }
 
+  isReviewsCount:any;
+
   async initializeComponent() {
     try {
       await this.fetchProductDetails();
@@ -94,7 +98,7 @@ export class BuyProductComponentComponent implements OnInit {
       }
 
       if (this.isDealer === "dealer") {
-        if (this.productDetails.created_by.id) {
+        if (this.productDetails.created_by.id && this.isReviewsCount) {
           await this.fetchDealerDetails(this.productDetails.created_by.id);
           await this.fetchDealerUserDetails(this.productDetails.created_by.id);
         }
@@ -111,7 +115,7 @@ export class BuyProductComponentComponent implements OnInit {
       const res = await this.http.getProductsByID(this.ProductID).toPromise();
       this.isDealer = res.typeOfProduct;
       this.productDetails = res.data;
-
+      this.isReviewsCount=res.reviewsCount;
       if (this.productDetails.additional_images) {
         this.productDetails.additional_images = JSON.parse(
           this.productDetails.additional_images
@@ -170,14 +174,16 @@ export class BuyProductComponentComponent implements OnInit {
       this.similarWatchesList = res.data.data.map((product: any) => {
         return {
           ...product,
-          main_image: product.main_image.replace(/\\/g, ""),
+          main_image: product.main_image ? product.main_image.replace(/\\/g, "") : null,
         };
       });
+      console.log("this main images",this.similarWatchesList)
       this.totalPages = res.data.last_page;
     } catch (err) {
       console.error("Error fetching similar products:", err);
     }
   }
+  
 
   isDealer: any = "";
   dealerReviewsRatings: any;

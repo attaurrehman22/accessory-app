@@ -11,6 +11,12 @@ img {
   width: 100%;
 }
 
+.custom-card img:alt {
+  display: block;
+  margin: auto;
+}
+
+
 .alert ul {
   margin: 0;
   padding-left: 20px;

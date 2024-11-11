@@ -2,7 +2,7 @@
   <div class="row"
   [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }"
   >
-    <div class="col-md-6">
+     <div class="col-md-6">
       <img
         [src]="'https://api.chronosouq.com/' + selectedImage"
         style="
@@ -35,7 +35,7 @@
         </div>
       </div>
 
-      <div class="featured-bottom">
+      <div *ngIf="productDetails && productDetails.views_count" class="featured-bottom">
         <i class="fas fa-eye"></i>
         <p style="margin: 0">
           {{ productDetails.views_count }}
@@ -62,13 +62,13 @@
         </div>
       </div>
     </div>
-    <div class="col-md-6">
+    <div *ngIf="productDetails" class="col-md-6">
       <div class="routes-div">
         <p class="routes-styl" style="cursor: pointer" routerLink="/">
           Homepage
         </p>
-        <p *ngIf="productDetails.category" class="routes-styl-active">/ {{ productDetails.category.name }}</p>
-        <p *ngIf="productDetails.brand" class="routes-styl-active">/ {{ productDetails.brand.name }}</p>
+        <p *ngIf="productDetails.category" class="routes-styl-active">/ {{ productDetails.category?.name }}</p>
+        <p *ngIf="productDetails.brand.name" class="routes-styl-active">/ {{ productDetails.brand.name }}</p>
         <p *ngIf="productDetails.listing_code" class="routes-styl-active">/ {{ productDetails.listing_code }}</p>
       </div>
 
@@ -179,14 +179,14 @@
       </div>
       <div class="mt-4">
         <button (click)="buyNow()" class="buy-btn">Buy</button>
-        <button class="make-offer-btn mt-2">Make an Offer</button>
+        <button *ngIf="productDetails.allow_to_make_offer === 1" class="make-offer-btn mt-2">Make an Offer</button>
       </div>
     </div>
   </div>
 </div>
 
 <div
-  *ngIf="productDetails.created_by && dealerUserDetails"
+  *ngIf="productDetails.created_by && dealerUserDetails && isDealer === 'dealer'"
   class="container mt-2"
 >
   <div
@@ -548,7 +548,7 @@
           </div>
         </div>
       </div>
-      <!-- Security Tab -->
+      
       <div
         class="tab-pane fade"
         id="security"
@@ -564,8 +564,9 @@
   </div>
 </div>
 
-<div
-  *ngIf="isDealer && dealerUserDetails"
+
+ <div
+  *ngIf="isDealer && dealerUserDetails && dealerDetails"
   class="container mt-5 p-3"
   #targetContainer
 >
@@ -733,7 +734,7 @@
       style="border-radius: 16px; border: 1px solid #f3f3f3"
     >
       <div class="container my-4">
-        <!-- Overall Rating -->
+       
         <div class="d-flex align-items-center mb-2">
           <div class="text-warning">
             <i class="bi bi-star-fill"></i>
@@ -748,7 +749,6 @@
           </p>
         </div>
 
-        <!-- Rating Breakdown -->
         <div class="row align-items-center mb-1" *ngIf="dealerReviewsRatings">
           <div class="col-2 color-2c3e50">
             5<i class="bi bi-star-fill mx-2"></i>
@@ -870,7 +870,7 @@
               {{ review.review_date | date : "dd / MM / yyyy" }}
             </p>
 
-            <!-- Image and Reviewing Text -->
+           
             <div class="d-flex align-items-center mb-2 mt-2">
               <img
                 [src]="'https://api.chronosouq.com/' + review.main_image"
@@ -913,7 +913,7 @@
       <div class="col-lg-9 col-md-12 col-sm-12 d-flex flex-wrap">
         <div class="container mt-4">
           <div class="row text-center">
-            <!-- Cosmetic Condition -->
+            
             <div class="col-md-4" style="padding: 0 5px 0 5px">
               <p
                 class="font-wight-600 font-size-14 color-2c3e50"
@@ -970,7 +970,7 @@
               </div>
             </div>
 
-            <!-- Satisfaction -->
+           
             <div class="col-md-4" style="padding: 0 5px 0 5px">
               <p
                 class="font-wight-600 font-size-14 color-2c3e50"
@@ -1027,7 +1027,7 @@
               </div>
             </div>
 
-            <!-- Experience -->
+     
             <div class="col-md-4" style="padding: 0 5px 0 5px">
               <p
                 class="font-wight-600 font-size-14 color-2c3e50"
@@ -1075,7 +1075,7 @@
             </div>
           </div>
 
-          <!-- Product Description -->
+          
           <div class="row">
             <div class="col-12">
               <p class="font-wight-700 font-size-16 color-2c3e50">
@@ -1099,7 +1099,7 @@
   </div>
 </div>
 
-<div *ngIf="similarWatchesList.length > 0" class="container mt-3">
+ <div *ngIf="similarWatchesList.length > 0" class="container mt-3">
   <p class="font-wight-500 font-size-40 color-484848 text-center">
     {{ "product_details.similar_prod" | translate }}
   </p>
@@ -1112,7 +1112,7 @@
         <img
           [src]="'https://api.chronosouq.com/' + watch.main_image"
           class="card-img-top"
-          alt="watch image"
+          alt="No Image Exist"
         />
         <div class="card-body">
           <div class="d-flex justify-content-between align-items-center">
@@ -1129,7 +1129,7 @@
             </h5>
           </div>
           <div class="d-flex justify-content-between align-items-center mt-2">
-            <span class="price color-6a6a6a"
+            <span *ngIf="watch.shipping_charges" class="price color-6a6a6a"
               >+{{ watch.shipping_charges }} {{ watch.currency }} Shipping</span
             >
             <div class="price color-6a6a6a">Location</div>
