@@ -36,14 +36,21 @@ export class BuyProductComponentComponent implements OnInit {
     if (this.currentPage < this.totalPages) {
       this.currentPage++;
       try {
-        const res = await this.http.getSimilarProductsByIDwithPage(this.ProductID, this.currentPage).toPromise();
+        const res = await this.http
+          .getSimilarProductsByIDwithPage(this.ProductID, this.currentPage)
+          .toPromise();
         const newWatches = res.data.data.map((product: any) => ({
           ...product,
           // main_image: product.main_image.replace(/\\/g, ""),
-          main_image: product.main_image ? product.main_image.replace(/\\/g, "") : null,
+          main_image: product.main_image
+            ? product.main_image.replace(/\\/g, "")
+            : null,
         }));
         this.similarWatchesList = [...this.similarWatchesList, ...newWatches];
-        console.log("Similar watches in more watches function",this.similarWatchesList)
+        console.log(
+          "Similar watches in more watches function",
+          this.similarWatchesList
+        );
         this.totalPages = res.data.last_page;
       } catch (err) {
         console.error("Error loading more watches:", err);
@@ -77,14 +84,21 @@ export class BuyProductComponentComponent implements OnInit {
   productDetails: any;
   dealerDetails: any;
   dealerUserDetails: any;
-  ProductID:any;
+  ProductID: any;
+  routeFrom: any;
+
   ngOnInit(): void {
     window.scrollTo(0, 0);
-    this.ProductID = history.state.data.id;
+    this.routeFrom = history.state.param;
+    if (this.routeFrom === "listing-to-product") {
+      this.ProductID = history.state.ID;
+    } else {
+      this.ProductID = history.state.data.id;
+    }
     this.initializeComponent();
   }
 
-  isReviewsCount:any;
+  isReviewsCount: any;
 
   async initializeComponent() {
     try {
@@ -109,13 +123,12 @@ export class BuyProductComponentComponent implements OnInit {
     }
   }
 
-
   async fetchProductDetails() {
     try {
       const res = await this.http.getProductsByID(this.ProductID).toPromise();
       this.isDealer = res.typeOfProduct;
       this.productDetails = res.data;
-      this.isReviewsCount=res.reviewsCount;
+      this.isReviewsCount = res.reviewsCount;
       if (this.productDetails.additional_images) {
         this.productDetails.additional_images = JSON.parse(
           this.productDetails.additional_images
@@ -123,7 +136,10 @@ export class BuyProductComponentComponent implements OnInit {
       }
 
       if (this.productDetails.main_image) {
-        this.productDetails.main_image = this.productDetails.main_image.replace(/\\/g, "");
+        this.productDetails.main_image = this.productDetails.main_image.replace(
+          /\\/g,
+          ""
+        );
       }
     } catch (err) {
       console.error("Error fetching product details:", err);
@@ -149,10 +165,9 @@ export class BuyProductComponentComponent implements OnInit {
       const res = await this.http.getRevieweruserByID(userId).toPromise();
       this.dealerUserDetails = res.data;
       this.dealerReviewsRatings = res.data.ratings;
-      this.dealerReviewstotalRatings = Object.values(this.dealerReviewsRatings).reduce(
-        (a: number, b: number) => a + b,
-        0
-      );
+      this.dealerReviewstotalRatings = Object.values(
+        this.dealerReviewsRatings
+      ).reduce((a: number, b: number) => a + b, 0);
       this.cosmeticCondition = res.data.cosmetic_condition;
       this.satisfaction = res.data.satisfaction;
     } catch (err) {
@@ -170,20 +185,23 @@ export class BuyProductComponentComponent implements OnInit {
 
   async getAllSimilarProducts() {
     try {
-      const res = await this.http.getSimilarProductsByID(this.ProductID).toPromise();
+      const res = await this.http
+        .getSimilarProductsByID(this.ProductID)
+        .toPromise();
       this.similarWatchesList = res.data.data.map((product: any) => {
         return {
           ...product,
-          main_image: product.main_image ? product.main_image.replace(/\\/g, "") : null,
+          main_image: product.main_image
+            ? product.main_image.replace(/\\/g, "")
+            : null,
         };
       });
-      console.log("this main images",this.similarWatchesList)
+      console.log("this main images", this.similarWatchesList);
       this.totalPages = res.data.last_page;
     } catch (err) {
       console.error("Error fetching similar products:", err);
     }
   }
-  
 
   isDealer: any = "";
   dealerReviewsRatings: any;
@@ -240,5 +258,11 @@ export class BuyProductComponentComponent implements OnInit {
         }
       });
     }
+  }
+
+  backTo() {
+    this.router.navigate(["/new-product"], {
+      state: { ID: this.ProductID }
+    });
   }
 }

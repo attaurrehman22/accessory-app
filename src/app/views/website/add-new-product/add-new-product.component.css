@@ -144,6 +144,11 @@
   color: #FFFFFF !important;
 }
 
+.route-product-btn{
+border: none;
+background: none;
+}
+
 
 @media (max-width: 768px) {
   .step-content {

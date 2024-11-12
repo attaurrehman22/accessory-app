@@ -120,13 +120,13 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
   constructor(
     private http: HttpService,
     private alertService: AlertsServicesService,
-    private router:Router,
-    private dialog:MatDialog
+    private router: Router,
+    private dialog: MatDialog
   ) {}
 
   watchPrice: number = 0;
   shipping_type: any;
-  shipping_charges: number=0;
+  shipping_charges: number = 0;
   estimate_delivery: any;
   allow_to_make_offer: false;
   watchPriceDisplay: number = 0;
@@ -139,8 +139,9 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
     this.estimatedPayout = this.watchPrice - this.platformFee;
   }
 
-  Payoutaftershippingcharges(){
-    this.estimatedPayoutwithShipping=this.estimatedPayout-this.shipping_charges;
+  Payoutaftershippingcharges() {
+    this.estimatedPayoutwithShipping =
+      this.estimatedPayout - this.shipping_charges;
   }
 
   clocks: { hour: number; minute: number }[] = [];
@@ -209,8 +210,6 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
 
   toggleOption(option: any) {
     this.selectedOptions = option;
-    console.log("option", option);
-    console.log("this.selectedOptions", this.selectedOptions);
   }
 
   isSelected(option: any): boolean {
@@ -304,33 +303,37 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
 
   canDeactivate(): boolean {
     if (this.formDirty) {
-      return window.confirm(
-        'Are You Sure You Want to Cancel Form'
-      );
+      return window.confirm("Are You Sure You Want to Cancel Form");
     }
     return true;
   }
 
-  loginFirst(){
+  loginFirst() {
     const dialogRef = this.dialog.open(ModelLoginComponent, {
       width: "600px",
       data: { message: "dialog-box" },
-      disableClose:true
+      disableClose: true,
     });
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        
       }
     });
   }
-  
+
+  isProductID: any;
 
   ngOnInit() {
     const isUserLogin = localStorage.getItem("Logged");
-    if(!isUserLogin){
-      this.loginFirst()
+    if (!isUserLogin) {
+      // this.loginFirst()
     }
+    if (history?.state?.ID) {
+      this.productIDFromResponse = history.state.ID;
+      this.selectedSection = "summary";
+      this.calculatePayout()
+    }
+
     this.checkScreenSize();
     this.getAllBrandsDropDown();
     this.getCategoriesDropDown();
@@ -353,7 +356,6 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
     });
 
     this.watchDetailsForm = new FormGroup({
-      // product_id: new FormControl(this.productIDFromResponse || ''),
       reference_number: this.reference_number,
       serial_no: this.serial_no,
       gender: this.gender,
@@ -388,6 +390,101 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
       zip_code: this.zip_code,
       city: this.city,
     });
+
+    const listing_Form = sessionStorage.getItem("listingForm");
+    if (listing_Form) {
+      this.listingForm.setValue(JSON.parse(listing_Form));
+    }
+
+    const watch_Form = sessionStorage.getItem("watchDetailsForm");
+    if (watch_Form) {
+      this.watchDetailsForm.setValue(JSON.parse(watch_Form));
+    }
+
+    const billing_Form = sessionStorage.getItem("billingForm");
+    if (billing_Form) {
+      this.billingForm.setValue(JSON.parse(billing_Form));
+    }
+
+    const cond = sessionStorage.getItem("condition");
+    if (cond) {
+      const selectedConditionData = JSON.parse(cond);
+      const matchingCondition = this.conditions.find(
+        (condition) =>
+          condition.title === selectedConditionData.title &&
+          condition.description === selectedConditionData.description
+      );
+      if (matchingCondition) {
+        this.selectCondition(matchingCondition);
+      }
+    }
+
+    const scope_of_del = sessionStorage.getItem("scope_of_delivery");
+    if (scope_of_del) {
+      const selectedOptionData = JSON.parse(scope_of_del);
+
+      const matchingOption = this.options.find(
+        (option) => option.title === selectedOptionData.title
+      );
+
+      if (matchingOption) {
+        this.selectedOptions = matchingOption;
+      }
+    }
+
+    const price_ship = sessionStorage.getItem("priceandShipment");
+    if (price_ship) {
+      const parsedData = JSON.parse(price_ship);
+      this.watchPrice = parsedData.price;
+      this.shipping_type = parsedData.shipping_type;
+      this.shipping_charges = parsedData.shipping_charges;
+      this.estimate_delivery = parsedData.estimate_delivery;
+      this.allow_to_make_offer = parsedData.allow_to_make_offer;
+      this.estimatedPayoutwithShipping = parsedData.estimate_payout;
+      this.calculatePayout();
+    }
+
+    const coverImage = sessionStorage.getItem("coverImage");
+    if (coverImage) {
+      const parsedCoverImage = JSON.parse(coverImage);
+      this.coverImage = { file: null, url: parsedCoverImage.url };
+    }
+
+    const otherImages = sessionStorage.getItem("otherImages");
+    if (otherImages) {
+      this.otherImages = JSON.parse(otherImages).map(
+        (img: { url: string }) => ({
+          file: null,
+          url: img.url,
+          isUploading: false,
+        })
+      );
+    }
+
+    const savedData = sessionStorage.getItem("proofofownership");
+    if (savedData) {
+      const parsedData = JSON.parse(savedData);
+
+      // Load times for each clock
+      this.clocks = parsedData.map((data: any) => data.time);
+
+      this.imagePreviews = parsedData.map((data: any) => data.image?.content || '');
+
+      this.selectedFiles = parsedData.map((data: any, index: number) => {
+        if (data.image && data.image.content) {
+          const byteString = atob(data.image.content.split(",")[1]); // Decode base64
+          const mimeString = data.image.content.split(",")[0].split(":")[1].split(";")[0];
+          
+          const byteArray = new Uint8Array(byteString.length);
+          for (let i = 0; i < byteString.length; i++) {
+            byteArray[i] = byteString.charCodeAt(i);
+          }
+          return new File([byteArray], `clock_image_${index + 1}.png`, { type: mimeString });
+        }
+        return null;
+      });
+    }
+
   }
 
   checkScreenSize() {
@@ -452,11 +549,13 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
     this.otherImages = this.otherImages.filter((img) => img !== image);
   }
 
-  brandnametoDisplay:any;
+  brandnametoDisplay: any;
 
   matchBrandname() {
-    let SelectedbrandID = this.listingForm.get('brand_id').value;
-    const selectedBrand = this.brandsList.find(brand => brand.id === SelectedbrandID);
+    let SelectedbrandID = this.listingForm.get("brand_id").value;
+    const selectedBrand = this.brandsList.find(
+      (brand) => brand.id === SelectedbrandID
+    );
     this.brandnametoDisplay = selectedBrand ? selectedBrand.name : null;
   }
 
@@ -485,31 +584,30 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
         this.alertService.showAlert("warning", "Enter Form Values");
       }
     } else if (Param === "watchDetails") {
-    if(this.watchDetailsForm.valid){
-      const formDataWithProductID = {
-        ...this.watchDetailsForm.value,
-        product_id: this.productIDFromResponse,
-      };
+      if (this.watchDetailsForm.valid) {
+        const formDataWithProductID = {
+          ...this.watchDetailsForm.value,
+          product_id: this.productIDFromResponse,
+        };
 
-      this.http.addWatchDetails(formDataWithProductID).subscribe(
-        (res) => {
-          this.alertService.showAlert(
-            "success",
-            "Watch Details Add Successfully"
-          );
-          this.selectSection("uploadImages");
-        },
-        (err) => {
-          this.alertService.showAlert(
-            "danger",
-            "Error in adding listing details"
-          );
-        }
-      );
-    }else{
-      this.alertService.showAlert('warning',"Enter Required Form Values")
-    }
-
+        this.http.addWatchDetails(formDataWithProductID).subscribe(
+          (res) => {
+            this.alertService.showAlert(
+              "success",
+              "Watch Details Add Successfully"
+            );
+            this.selectSection("uploadImages");
+          },
+          (err) => {
+            this.alertService.showAlert(
+              "danger",
+              "Error in adding listing details"
+            );
+          }
+        );
+      } else {
+        this.alertService.showAlert("warning", "Enter Required Form Values");
+      }
     } else if (Param === "uploadImages") {
       if (!this.coverImage) {
         alert("Please upload a cover image.");
@@ -550,7 +648,7 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
         }
       );
     } else if (Param === "conditionGrading") {
-      if(this.selectedCondition){
+      if (this.selectedCondition) {
         const formData = {
           product_id: this.productIDFromResponse,
           condition: this.selectedCondition.title,
@@ -558,82 +656,63 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
 
         this.http.addCondition(formData).subscribe(
           (res) => {
-            this.alertService.showAlert("success", "Condition Add Successfully");
+            this.alertService.showAlert(
+              "success",
+              "Condition Add Successfully"
+            );
             this.selectSection("scopeofdelivery");
           },
           (err) => {
             this.alertService.showAlert("danger", "Error in adding Condition");
           }
         );
-      }else{
-        this.alertService.showAlert('warning','Select any Option')
+      } else {
+        this.alertService.showAlert("warning", "Select any Option");
       }
     } else if (Param === "scopeofdelivery") {
-      if(this.selectedOptions){
-      const formData = {
-        product_id: this.productIDFromResponse,
-        scope_of_delivery: this.selectedOptions.title,
-      };
-      this.http.addScopeOfDelivery(formData).subscribe(
-        (res) => {
-          this.alertService.showAlert("success", "Scope Add Successfully");
-          this.selectSection("proofofownership");
-        },
-        (err) => {
-          this.alertService.showAlert("danger", "Error in adding Scope");
-        }
-      );
-    }else{
-      this.alertService.showAlert('warning',"Select any Option")
-    }
+      if (this.selectedOptions) {
+        const formData = {
+          product_id: this.productIDFromResponse,
+          scope_of_delivery: this.selectedOptions.title,
+        };
+        this.http.addScopeOfDelivery(formData).subscribe(
+          (res) => {
+            this.alertService.showAlert("success", "Scope Add Successfully");
+            this.selectSection("proofofownership");
+          },
+          (err) => {
+            this.alertService.showAlert("danger", "Error in adding Scope");
+          }
+        );
+      } else {
+        this.alertService.showAlert("warning", "Select any Option");
+      }
     } else if (Param === "proofofownership") {
-      this.selectedFiles.forEach((file, index) => {
-        if (file) {
-          console.log(`File for Clock ${index + 1}:`, file);
-        } else {
-          console.log(`No file selected for Clock ${index + 1}`);
-        }
-      });
-      const formData = new FormData();
-
-      if(!this.selectedFiles[0] || !this.selectedFiles[1]){
-        this.alertService.showAlert('warning','Add Images')
-      }else{
-
-        // Set the product ID
+      if (!this.selectedFiles[0] || !this.selectedFiles[1]) {
+        this.alertService.showAlert("warning", "Add Images");
+      } else {
+        // Create FormData to send with the API request
+        const formData = new FormData();
+      
+        // Append product ID if available
         formData.append("product_id", this.productIDFromResponse);
-  
-        // Proof images
-        if (this.selectedFiles[0]) {
-          formData.append("proof_image_1", this.selectedFiles[0]);
-        }
-        if (this.selectedFiles[1]) {
-          formData.append("proof_image_2", this.selectedFiles[1]);
-        }
-  
-        // Proof times displayed on the clocks
-        formData.append(
-          "proof_time_text_1",
-          this.formatTime(this.clocks[0].hour, this.clocks[0].minute)
-        );
-        formData.append(
-          "proof_time_text_2",
-          this.formatTime(this.clocks[1].hour, this.clocks[1].minute)
-        );
-  
-        // Randomly generated times (as a sample; can adjust if different from proof times)
-        formData.append(
-          "generted_time_text_1",
-          this.formatTime(this.clocks[0].hour, this.clocks[0].minute)
-        );
-        formData.append(
-          "generted_time_text_2",
-          this.formatTime(this.clocks[1].hour, this.clocks[1].minute)
-        );
-  
+      
+        // Append proof images
+        formData.append("proof_image_1", this.selectedFiles[0]);
+        formData.append("proof_image_2", this.selectedFiles[1]);
+      
+        // Append proof times based on selected clock times
+        formData.append("proof_time_text_1", this.formatTime(this.clocks[0].hour, this.clocks[0].minute));
+        formData.append("proof_time_text_2", this.formatTime(this.clocks[1].hour, this.clocks[1].minute));
+      
+        // Optionally, append generated times if different (for now, using the same as proof times)
+        formData.append("generted_time_text_1", this.formatTime(this.clocks[0].hour, this.clocks[0].minute));
+        formData.append("generted_time_text_2", this.formatTime(this.clocks[1].hour, this.clocks[1].minute));
+      
+        // Call the API with the populated FormData
         this.http.addProffofOwnerShip(formData).subscribe(
           (res) => {
-            this.alertService.showAlert("success", "Images Add Successfully");
+            this.alertService.showAlert("success", "Images Added Successfully");
             this.selectSection("priceshipment");
           },
           (err) => {
@@ -641,64 +720,81 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
           }
         );
       }
-
     } else if (Param === "priceshipment") {
       console.log("Price and Shipent", this.watchPrice);
 
-      if(!this.watchPrice || !this.shipping_type || !this.shipping_charges || 
-        !this.estimate_delivery || !this.estimatedPayoutwithShipping){
-           this.alertService.showAlert('info','Enter Form Values')
-        }else{
-          const formData={
-            product_id:this.productIDFromResponse,
-            price:this.watchPrice,
-            shipping_type:this.shipping_type,
-            shipping_charges:this.shipping_charges,
-            estimate_delivery:this.estimate_delivery,
-            allow_to_make_offer:this.allow_to_make_offer,
-            estimate_payout:this.estimatedPayoutwithShipping
+      if (
+        !this.watchPrice ||
+        !this.shipping_type ||
+        !this.shipping_charges ||
+        !this.estimate_delivery ||
+        !this.estimatedPayoutwithShipping
+      ) {
+        this.alertService.showAlert("info", "Enter Form Values");
+      } else {
+        const formData = {
+          product_id: this.productIDFromResponse,
+          price: this.watchPrice,
+          shipping_type: this.shipping_type,
+          shipping_charges: this.shipping_charges,
+          estimate_delivery: this.estimate_delivery,
+          allow_to_make_offer: this.allow_to_make_offer,
+          estimate_payout: this.estimatedPayoutwithShipping,
+        };
+        this.http.addpriceAndShipment(formData).subscribe(
+          (res) => {
+            this.alertService.showAlert(
+              "success",
+              "Price and Shipment Add Successfully"
+            );
+            this.selectSection("billinginformation");
+          },
+          (err) => {
+            this.alertService.showAlert(
+              "danger",
+              "Error in adding Price and Shipment"
+            );
           }
-          this.http.addpriceAndShipment(formData).subscribe(
-            (res) => {
-              this.alertService.showAlert("success", "Price and Shipment Add Successfully");
-              this.selectSection("billinginformation");
-            },
-            (err) => {
-              this.alertService.showAlert("danger", "Error in adding Price and Shipment");
-            }
-          );
-        }
+        );
+      }
     } else if (Param === "billinginformation") {
+      if (this.billingForm.valid) {
+        const formDataWithProductID = {
+          ...this.billingForm.value,
+          product_id: this.productIDFromResponse,
+        };
 
-      if(this.billingForm.valid){
-
-      const formDataWithProductID = {
-        ...this.billingForm.value,
+        this.http.addbillingInformation(formDataWithProductID).subscribe(
+          (res) => {
+            this.alertService.showAlert(
+              "success",
+              "Billing Info Add Successfully"
+            );
+            this.matchBrandname();
+            this.selectSection("summary");
+          },
+          (err) => {
+            this.alertService.showAlert(
+              "danger",
+              "Error in adding Billing Info"
+            );
+          }
+        );
+      } else {
+        this.alertService.showAlert("warning", "Add Form Values");
+      }
+    } else if (Param === "summary") {
+      const formProductID = {
         product_id: this.productIDFromResponse,
       };
-
-      this.http.addbillingInformation(formDataWithProductID).subscribe(
-        (res) => {
-          this.alertService.showAlert("success", "Billing Info Add Successfully");
-          this.matchBrandname()
-          this.selectSection("summary");
-        },
-        (err) => {
-          this.alertService.showAlert("danger", "Error in adding Billing Info");
-        }
-      );
-    }else{
-      this.alertService.showAlert("warning", "Add Form Values");
-    }
-    } else if (Param === "summary") {
-      const formProductID={
-        product_id: this.productIDFromResponse
-      }
       this.http.addbpublishListing(formProductID).subscribe(
         (res) => {
-          this.alertService.showAlert("success", "Product Publish Successfully");
-          this.formDirty=false;
-          this.router.navigate(['/'])
+          this.alertService.showAlert(
+            "success",
+            "Product Publish Successfully"
+          );
+          this.formDirty = false;
+          this.router.navigate(["/"]);
         },
         (err) => {
           this.alertService.showAlert("danger", "Error in Product Publishing");
@@ -708,10 +804,96 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
   }
 
   cancelbtn() {
-    this.router.navigate(['/'])
+    this.router.navigate(["/"]);
   }
 
   backbtn(param: string) {
     this.selectSection(param);
+  }
+
+  async routeToProductDetail() {
+    sessionStorage.setItem(
+      "listingForm",
+      JSON.stringify(this.listingForm.value)
+    );
+    sessionStorage.setItem(
+      "watchDetailsForm",
+      JSON.stringify(this.watchDetailsForm.value)
+    );
+    sessionStorage.setItem(
+      "billingForm",
+      JSON.stringify(this.billingForm.value)
+    );
+    sessionStorage.setItem("condition", JSON.stringify(this.selectedCondition));
+    sessionStorage.setItem(
+      "scope_of_delivery",
+      JSON.stringify(this.selectedOptions)
+    );
+    const priceandShipment = {
+      price: this.watchPrice,
+      shipping_type: this.shipping_type,
+      shipping_charges: this.shipping_charges,
+      estimate_delivery: this.estimate_delivery,
+      allow_to_make_offer: this.allow_to_make_offer,
+      estimate_payout: this.estimatedPayoutwithShipping,
+    };
+    sessionStorage.setItem(
+      "priceandShipment",
+      JSON.stringify(priceandShipment)
+    );
+
+    if (this.coverImage) {
+      const coverImageData = { url: this.coverImage.url }; // Exclude file property
+      sessionStorage.setItem("coverImage", JSON.stringify(coverImageData));
+    }
+
+    const otherImagesData = this.otherImages.map((image) => ({
+      url: image.url,
+    }));
+    sessionStorage.setItem("otherImages", JSON.stringify(otherImagesData));
+
+    const fileDataArray = await Promise.all(
+      this.selectedFiles.map(async (file, index) => {
+        if (file) {
+          const base64 = await this.convertFileToBase64(file);
+          return {
+            image: {
+              name: file.name,
+              type: file.type,
+              size: file.size,
+              content: base64,
+            },
+            time: this.clocks[index],
+          };
+        }
+        return null; 
+      })
+    );
+
+    const cleanedFileDataArray = fileDataArray.filter(
+      (fileData) => fileData !== null
+    );
+
+    if (cleanedFileDataArray.length > 0) {
+      sessionStorage.setItem(
+        "proofofownership",
+        JSON.stringify(cleanedFileDataArray)
+      );
+    } else {
+      sessionStorage.removeItem("proofofownership");
+    }
+
+    this.router.navigate(["/buy-product"], {
+      state: { param: "listing-to-product", ID: this.productIDFromResponse },
+    });
+  }
+
+  private convertFileToBase64(file: File): Promise<string> {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result as string);
+      reader.onerror = (error) => reject(error);
+      reader.readAsDataURL(file);
+    });
   }
 }
