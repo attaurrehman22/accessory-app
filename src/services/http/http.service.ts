@@ -429,4 +429,23 @@ export class HttpService {
 
   // ----------------------------------  create Listing end ------------------------------
 
+
+
+  getWishList(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/api/wishlist/get`, {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+  }
+
+  addWishList(formData): Observable<any> {
+    return this.http.post(`${this.apiUrl}/api/wishlist/add`,formData, {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+  }
 }

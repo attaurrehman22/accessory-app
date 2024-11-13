@@ -10,35 +10,52 @@ import { HttpService } from "src/services/http/http.service";
 })
 export class ChronosouqBuyerProtectionComponentComponent implements OnInit {
   selectedCategory: any;
-  showList: any[] = []; // Store products for the selected category
+  showList: any[] = [];
   categoryNames: any[] = [];
   commentsList: any;
 
   changeCategory(category: any) {
     this.selectedCategory = category;
-
+  
     this.showList = (category.products || []).map((product: any) => {
-      if (product.main_image) {
-        product.main_image = product.main_image.replace(/\\/g, ""); // Remove all backslashes
-      }
-      return product;
+      return {
+        ...product,
+        main_image: product.main_image ? product.main_image.replace(/\\/g, '') : null
+      };
+    });
+  }
+  
+
+  wishList: any;
+  getWishList() {
+    this.http.getWishList().subscribe((res) => {
+      this.wishList = res.data;
+    });
+  }
+
+  addWishList(watch) {
+    const formData = {
+      product_id: watch.id,
+    };
+    this.http.addWishList(formData).subscribe(
+      (res) => {
+      this.wishList = res.data;
+      this.getWishList();
+      this.getAllTopNewArrivals()
     });
   }
 
   ngOnInit(): void {
+    this.getWishList();
     this.getAllTopNewArrivals();
-
-    // if (this.selectedCategory === "all") {
-    //   this.showList = this.watches;
-    // }
   }
 
   getAllTopNewArrivals() {
     this.http.getAllTopNewArrivalCategory().subscribe(
       (res) => {
-        this.categoryNames = res.data; // Store the entire category data
-        this.selectedCategory = this.categoryNames[0]; // Set the first category as default
-        this.showList = this.selectedCategory.products || []; // Load products for the default category
+        this.categoryNames = res.data; 
+        this.selectedCategory = this.categoryNames[0]; 
+        this.showList = this.selectedCategory.products || [];
       },
       (err) => {}
     );
@@ -59,10 +76,6 @@ export class ChronosouqBuyerProtectionComponentComponent implements OnInit {
     }
   }
 
-  toggleHeart(watch): void {
-    // this.watches[index].liked = !this.watches[index].liked;
-  }
-
   useLang(lang: string) {
     this.translateService.use(lang);
   }
@@ -73,7 +86,7 @@ export class ChronosouqBuyerProtectionComponentComponent implements OnInit {
     });
   }
 
-  goToList(){
-    this.router.navigate(['/product-list'])
+  goToList() {
+    this.router.navigate(["/product-list"]);
   }
 }

@@ -13,6 +13,27 @@ export class BrandsListComponent implements OnInit {
 
   ngOnInit(): void {
     this.getAllModels();
+    this.getWishList();
+  }
+
+  wishList: any;
+  getWishList() {
+    this.http.getWishList().subscribe((res) => {
+      this.wishList = res.data;
+    });
+  }
+
+  addWishList(watch) {
+    console.log("Watch ====== ",watch)
+    const formData = {
+      product_id: watch.id,
+    };
+    this.http.addWishList(formData).subscribe(
+      (res) => {
+      this.wishList = res.data;
+      this.getWishList();
+      this.getAllModels()
+    });
   }
 
   getAllModels() {
@@ -21,7 +42,7 @@ export class BrandsListComponent implements OnInit {
         this.showList = res.data.map(model => {
           return {
             ...model,
-            main_image: model.main_image.replace(/\\/g, '')
+            main_image: model.main_image ? model.main_image.replace(/\\/g, '') : null
           };
         });
       },
@@ -45,10 +66,6 @@ export class BrandsListComponent implements OnInit {
     if (supportedLanguages.includes(browserLang)) {
       this.translateService.use(browserLang);
     }
-  }
-
-  toggleHeart(watch): void {
-    // this.watches[index].liked = !this.watches[index].liked;
   }
 
   useLang(lang: string) {

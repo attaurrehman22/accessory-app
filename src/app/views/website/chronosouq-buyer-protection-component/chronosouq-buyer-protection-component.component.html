@@ -82,7 +82,7 @@
               </div>
             </div>
           </div>
-          <div class="heart-icon" (click)="toggleHeart(watch)">
+          <div class="heart-icon" (click)="addWishList(watch)">
             <div class="featured-icon">
               <div  *ngIf="watch.feature_item === 1">
               featured
@@ -90,7 +90,7 @@
             </div>
             <i
               class="fa"
-              [ngClass]="watch.liked ? 'fa-heart' : 'fa-heart fa-heart-o'"
+              [ngClass]="wishList.includes(watch.id) ? 'fa-heart' : 'fa-heart fa-heart-o'"
               aria-hidden="true"
             ></i>
           </div>
