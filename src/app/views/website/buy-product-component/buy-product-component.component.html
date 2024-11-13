@@ -27,7 +27,7 @@
 
       <div class="featured-card">
         <div class="featured-card-featred">
-          <p style="margin: 0">Featured</p>
+          <p *ngIf="productDetails.feature_item === 1" style="margin: 0">Featured</p>
         </div>
         <div class="featured-card-heart-sec">
           <div class="heart-icon-one" (click)="toggleHeart(selectedImage)">

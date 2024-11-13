@@ -257,7 +257,9 @@
                       matSuffix
                       >mm</span
                     >
-                    <mat-error *ngIf="case_diameter_value_1.hasError('required')">
+                    <mat-error
+                      *ngIf="case_diameter_value_1.hasError('required')"
+                    >
                       Case Diameter is required
                     </mat-error>
                   </mat-form-field>
@@ -280,7 +282,9 @@
                       matSuffix
                       >mm</span
                     >
-                    <mat-error *ngIf="case_diameter_value_2.hasError('required')">
+                    <mat-error
+                      *ngIf="case_diameter_value_2.hasError('required')"
+                    >
                       Other Diameter is required
                     </mat-error>
                   </mat-form-field>
@@ -1128,123 +1132,136 @@
 
               <div class="container-fluid mt-5 d-flex flex-wrap">
                 <div class="col-md-6">
-                <mat-form-field
-                  style="width: 100%"
-                  class="full-width"
-                  appearance="outline"
-                >
-                  <mat-label class="label-header">Watch Price</mat-label>
-                  <input
-                    matInput
-                    type="number"
-                    appPositiveNumber
-                    [(ngModel)]="watchPrice"
-                    placeholder="Enter watch price"
-                    (input)="calculatePayout()"
-                  />
-                  <mat-hint align="end">4% Commission</mat-hint>
-                </mat-form-field>
-  
-                <mat-form-field
-                  style="width: 100%"
-                  class="full-width"
-                  appearance="outline"
-                >
-                  <mat-label class="label-header">Shipping Type</mat-label>
-                  <input
-                    matInput
-                    type="text"
-                    [(ngModel)]="shipping_type"
-                    placeholder="Enter Shipping Type"
-                  />
-                </mat-form-field>
-  
-                <mat-form-field
-                  style="width: 100%"
-                  class="full-width"
-                  appearance="outline"
-                >
-                  <mat-label class="label-header">Shipping Cost</mat-label>
-                  <input
-                    matInput
-                    type="number"
-                    [(ngModel)]="shipping_charges"
-                    appPositiveNumber
-                    placeholder="Enter Shipping Cost"
-                    (input)="Payoutaftershippingcharges()"
-                  />
-                </mat-form-field>
-  
-                <mat-form-field
-                  style="width: 100%"
-                  class="full-width"
-                  appearance="outline"
-                >
-                  <mat-label class="label-header">Est. Delivery Time</mat-label>
-                  <input
-                    matInput
-                    type="text"
-                    [(ngModel)]="estimate_delivery"
-                    placeholder="Enter Est. Delivery Time"
-                  />
-                </mat-form-field>
-  
-                <mat-checkbox [(ngModel)]="allow_to_make_offer"
-                  >Allow make offers</mat-checkbox
-                >
-              </div>
-              <div class="col-md-6">
-                <mat-card class="info-card">
-                  <p class="font-size-18 font-wight-700 color-132138">
-                    Payout Information
-                  </p>
-                  <div class="info-row d-flex justify-content-between">
-                    <p class="font-size-16 font-wight-400 color-909090">
-                      Watch Price
+                  <mat-form-field
+                    style="width: 100%"
+                    class="full-width"
+                    appearance="outline"
+                  >
+                    <mat-label class="label-header">Watch Price</mat-label>
+                    <input
+                      matInput
+                      type="number"
+                      appPositiveNumber
+                      [(ngModel)]="watchPrice"
+                      placeholder="Enter watch price"
+                      (input)="calculatePayout()"
+                    />
+                    <mat-hint align="end">4% Commission</mat-hint>
+                  </mat-form-field>
+
+                  <mat-form-field
+                    style="width: 100%"
+                    class="full-width"
+                    appearance="outline"
+                  >
+                    <mat-label class="label-header">Shipping Type</mat-label>
+                    <input
+                      matInput
+                      type="text"
+                      [(ngModel)]="shipping_type"
+                      placeholder="Enter Shipping Type"
+                    />
+                  </mat-form-field>
+
+                  <mat-form-field
+                    style="width: 100%"
+                    class="full-width"
+                    appearance="outline"
+                  >
+                    <mat-label class="label-header">Shipping Cost</mat-label>
+                    <input
+                      matInput
+                      type="number"
+                      [(ngModel)]="shipping_charges"
+                      appPositiveNumber
+                      placeholder="Enter Shipping Cost"
+                      (input)="Payoutaftershippingcharges()"
+                    />
+                  </mat-form-field>
+
+                  <mat-form-field
+                    style="width: 100%"
+                    class="full-width"
+                    appearance="outline"
+                  >
+                    <mat-label class="label-header"
+                      >Est. Delivery Time</mat-label
+                    >
+                    <input
+                      matInput
+                      type="text"
+                      [(ngModel)]="estimate_delivery"
+                      placeholder="Enter Est. Delivery Time"
+                    />
+                  </mat-form-field>
+
+                  <mat-checkbox [(ngModel)]="allow_to_make_offer"
+                    >Allow make offers</mat-checkbox
+                  >
+                </div>
+                <div class="col-md-6">
+                  <mat-card class="info-card">
+                    <p class="font-size-18 font-wight-700 color-132138">
+                      Payout Information
                     </p>
-                    <p class="font-size-16 font-wight-600 color-0F172A">
-                      {{
-                        watchPriceDisplay | currency : "SR" : "symbol" : "1.2-2"
-                      }}
-                    </p>
-                  </div>
-                  <div class="info-row d-flex justify-content-between">
-                    <span class="font-size-16 font-wight-400 color-909090"
-                      >Platform Fee (4%)</span
-                    >
-                    <span class="font-size-16 font-wight-600 color-0F172A">
-                      - {{ platformFee | currency : "SR" : "symbol" : "1.2-2" }}
-                    </span>
-                  </div>
-                  <mat-divider></mat-divider>
-                  <div class="info-row d-flex justify-content-between">
-                    <span class="font-size-16 font-wight-400 color-909090"
-                      >Payout</span
-                    >
-                    <span class="font-size-16 font-wight-600 color-0F172A">
-                      {{ estimatedPayout | currency : "SR" : "symbol" : "1.2-2" }}
-                    </span>
-                  </div>
-  
-                  <div class="info-row d-flex justify-content-between">
-                    <span class="font-size-16 font-wight-400 color-909090"
-                      >Shipping Charges</span
-                    >
-                    <span class="font-size-16 font-wight-600 color-0F172A">
-                      + {{ shipping_charges | currency : "SR" : "symbol" : "1.2-2" }}
-                    </span>
-                  </div>
-                  <mat-divider></mat-divider>
-                  <div class="info-row d-flex justify-content-between">
-                    <span class="font-size-16 font-wight-400 color-909090"
-                      >Estimated Payout</span
-                    >
-                    <span class="font-size-16 font-wight-600 color-0F172A">
-                      {{ estimatedPayoutwithShipping | currency : "SR" : "symbol" : "1.2-2" }}
-                    </span>
-                  </div>
-                </mat-card>
-              </div>
+                    <div class="info-row d-flex justify-content-between">
+                      <p class="font-size-16 font-wight-400 color-909090">
+                        Watch Price
+                      </p>
+                      <p class="font-size-16 font-wight-600 color-0F172A">
+                        {{
+                          watchPriceDisplay
+                            | currency : "SR" : "symbol" : "1.2-2"
+                        }}
+                      </p>
+                    </div>
+                    <div class="info-row d-flex justify-content-between">
+                      <span class="font-size-16 font-wight-400 color-909090"
+                        >Platform Fee (4%)</span
+                      >
+                      <span class="font-size-16 font-wight-600 color-0F172A">
+                        -
+                        {{ platformFee | currency : "SR" : "symbol" : "1.2-2" }}
+                      </span>
+                    </div>
+                    <mat-divider></mat-divider>
+                    <div class="info-row d-flex justify-content-between">
+                      <span class="font-size-16 font-wight-400 color-909090"
+                        >Payout</span
+                      >
+                      <span class="font-size-16 font-wight-600 color-0F172A">
+                        {{
+                          estimatedPayout | currency : "SR" : "symbol" : "1.2-2"
+                        }}
+                      </span>
+                    </div>
+
+                    <div class="info-row d-flex justify-content-between">
+                      <span class="font-size-16 font-wight-400 color-909090"
+                        >Shipping Charges</span
+                      >
+                      <span class="font-size-16 font-wight-600 color-0F172A">
+                        +
+                        {{
+                          shipping_charges
+                            | currency : "SR" : "symbol" : "1.2-2"
+                        }}
+                      </span>
+                    </div>
+                    <mat-divider></mat-divider>
+                    <div class="info-row d-flex justify-content-between">
+                      <span class="font-size-16 font-wight-400 color-909090"
+                        >Estimated Payout</span
+                      >
+                      <span class="font-size-16 font-wight-600 color-0F172A">
+                        {{
+                          estimatedPayoutwithShipping
+                            | currency : "SR" : "symbol" : "1.2-2"
+                        }}
+                      </span>
+                    </div>
+                  </mat-card>
+                </div>
               </div>
 
               <div
@@ -1451,14 +1468,18 @@
                         />
                         <div class="ml-3">
                           <h6 class="text-secondary">
-                            {{brandnametoDisplay}} | {{listingForm.get('name').value}}
+                            {{ brandnametoDisplay }} |
+                            {{ listingForm.get("name").value }}
                           </h6>
                           <p class="font-weight-bold mb-1">
-                            {{brandnametoDisplay}} {{listingForm.get('name').value}} {{selectedCondition.title}}
+                            {{ brandnametoDisplay }}
+                            {{ listingForm.get("name").value }}
+                            {{ selectedCondition.title }}
                           </p>
                           <p class="text-primary font-weight-bold mb-0">
                             {{
-                              watchPriceDisplay | currency : "SR" : "symbol" : "1.2-2"
+                              watchPriceDisplay
+                                | currency : "SR" : "symbol" : "1.2-2"
                             }}
                           </p>
                           <small class="text-muted"
@@ -1481,7 +1502,8 @@
                         </p>
                         <p class="font-size-16 font-wight-600 color-0F172A">
                           {{
-                            watchPriceDisplay | currency : "SR" : "symbol" : "1.2-2"
+                            watchPriceDisplay
+                              | currency : "SR" : "symbol" : "1.2-2"
                           }}
                         </p>
                       </div>
@@ -1490,7 +1512,10 @@
                           >Platform Fee (4%)</span
                         >
                         <span class="font-size-16 font-wight-600 color-0F172A">
-                          - {{ platformFee | currency : "SR" : "symbol" : "1.2-2" }}
+                          -
+                          {{
+                            platformFee | currency : "SR" : "symbol" : "1.2-2"
+                          }}
                         </span>
                       </div>
                       <mat-divider></mat-divider>
@@ -1499,16 +1524,23 @@
                           >Payout</span
                         >
                         <span class="font-size-16 font-wight-600 color-0F172A">
-                          {{ estimatedPayout | currency : "SR" : "symbol" : "1.2-2" }}
+                          {{
+                            estimatedPayout
+                              | currency : "SR" : "symbol" : "1.2-2"
+                          }}
                         </span>
                       </div>
-      
+
                       <div class="info-row d-flex justify-content-between">
                         <span class="font-size-16 font-wight-400 color-909090"
                           >Shipping Charges</span
                         >
                         <span class="font-size-16 font-wight-600 color-0F172A">
-                          + {{ shipping_charges | currency : "SR" : "symbol" : "1.2-2" }}
+                          +
+                          {{
+                            shipping_charges
+                              | currency : "SR" : "symbol" : "1.2-2"
+                          }}
                         </span>
                       </div>
                       <mat-divider></mat-divider>
@@ -1517,7 +1549,10 @@
                           >Estimated Payout</span
                         >
                         <span class="font-size-16 font-wight-600 color-0F172A">
-                          {{ estimatedPayoutwithShipping | currency : "SR" : "symbol" : "1.2-2" }}
+                          {{
+                            estimatedPayoutwithShipping
+                              | currency : "SR" : "symbol" : "1.2-2"
+                          }}
                         </span>
                       </div>
                     </mat-card>
@@ -1535,45 +1570,60 @@
                   <div class="row">
                     <div class="col-md-6">
                       <div>
-                        <p class="mb-1 font-size-16 font-weight-400 color-909090">
+                        <p
+                          class="mb-1 font-size-16 font-weight-400 color-909090"
+                        >
                           Billing Address
                         </p>
                         <p class="font-size-16 font-wight-600 color-0F172A b-0">
-                          {{billingForm.get('billing_address').value}}
+                          {{ billingForm.get("billing_address").value }}
                         </p>
                       </div>
                       <div>
-                        <p class="mb-1 font-size-16 font-weight-400 color-909090">
+                        <p
+                          class="mb-1 font-size-16 font-weight-400 color-909090"
+                        >
                           Street
                         </p>
                         <p class="font-size-16 font-wight-600 color-0F172A b-0">
-                          {{billingForm.get('street').value}}
+                          {{ billingForm.get("street").value }}
                         </p>
                       </div>
                       <div>
-                        <p class="mb-1 font-size-16 font-weight-400 color-909090">
+                        <p
+                          class="mb-1 font-size-16 font-weight-400 color-909090"
+                        >
                           City
                         </p>
-                        <p class="font-size-16 font-wight-600 color-0F172A mb-0">
-                          {{billingForm.get('city').value}}
+                        <p
+                          class="font-size-16 font-wight-600 color-0F172A mb-0"
+                        >
+                          {{ billingForm.get("city").value }}
                         </p>
                       </div>
                     </div>
                     <div class="col-md-6">
-                      <div *ngIf="billingForm.get('street_line_2').value" class="text-lg-end">
-                        <p class="mb-1 font-size-16 font-weight-400 color-909090">
+                      <div
+                        *ngIf="billingForm.get('street_line_2').value"
+                        class="text-lg-end"
+                      >
+                        <p
+                          class="mb-1 font-size-16 font-weight-400 color-909090"
+                        >
                           Street Line 2
                         </p>
                         <p class="font-size-16 font-wight-600 color-0F172A b-0">
-                          {{billingForm.get('street_line_2').value}}
+                          {{ billingForm.get("street_line_2").value }}
                         </p>
                       </div>
                       <div class="text-lg-end">
-                        <p class="mb-1 font-size-16 font-weight-400 color-909090">
+                        <p
+                          class="mb-1 font-size-16 font-weight-400 color-909090"
+                        >
                           Zip Code
                         </p>
                         <p class="font-size-16 font-wight-600 color-0F172A b-0">
-                          {{billingForm.get('zip_code').value}}
+                          {{ billingForm.get("zip_code").value }}
                         </p>
                       </div>
                     </div>
@@ -1585,6 +1635,12 @@
                 class="d-flex align-items-center justify-content-end gap-2 mb-3"
                 style="padding: 0 20px 0 20px"
               >
+                <button
+                  class="route-product-btn"
+                  (click)="routeToProductDetail()"
+                >
+                  Preview your Ad
+                </button>
                 <button
                   class="save-can-btn canc-bg-color"
                   (click)="backbtn('billinginformation')"
@@ -1863,7 +1919,9 @@
                         matSuffix
                         >mm</span
                       >
-                      <mat-error *ngIf="case_diameter_value_1.hasError('required')">
+                      <mat-error
+                        *ngIf="case_diameter_value_1.hasError('required')"
+                      >
                         Case Diameter is required
                       </mat-error>
                     </mat-form-field>
@@ -1887,7 +1945,9 @@
                         >mm</span
                       >
 
-                      <mat-error *ngIf="case_diameter_value_2.hasError('required')">
+                      <mat-error
+                        *ngIf="case_diameter_value_2.hasError('required')"
+                      >
                         Other Diameter is required
                       </mat-error>
                     </mat-form-field>
@@ -1973,7 +2033,7 @@
                               <mat-label class="label-header"
                                 >No of Jewels</mat-label
                               >
-                            
+
                               <input
                                 matInput
                                 formControlName="no_of_jewels"
@@ -1993,13 +2053,13 @@
                                 placeholder="Enter Frequency"
                               />
                               <span
-                              style="
-                                padding: 17px 15px 17px 15px;
-                                background-color: #dbdbdb;
-                              "
-                              matSuffix
-                              >hz</span
-                            >
+                                style="
+                                  padding: 17px 15px 17px 15px;
+                                  background-color: #dbdbdb;
+                                "
+                                matSuffix
+                                >hz</span
+                              >
                             </mat-form-field>
                           </div>
                         </div>
@@ -2171,7 +2231,7 @@
                               <mat-label class="label-header"
                                 >Bracelet Material</mat-label
                               >
-                              
+
                               <input
                                 matInput
                                 formControlName="bracelet_material"
@@ -2205,13 +2265,13 @@
                                 placeholder="Enter Type of Clasp"
                               />
                               <span
-                              style="
-                                padding: 17px 15px 17px 15px;
-                                background-color: #dbdbdb;
-                              "
-                              matSuffix
-                              >mm</span
-                            >
+                                style="
+                                  padding: 17px 15px 17px 15px;
+                                  background-color: #dbdbdb;
+                                "
+                                matSuffix
+                                >mm</span
+                              >
                             </mat-form-field>
                           </div>
 
@@ -2427,7 +2487,7 @@
             What comes with your watch ?
           </p>
           <div class="container-fluid my-4">
-            <div class="col-8 d-flex flex-wrap ">
+            <div class="col-8 d-flex flex-wrap">
               <div
                 class="col-md-6 mb-3"
                 *ngFor="let option of options"
@@ -2688,123 +2748,131 @@
           <div class="col-md-12">
             <div class="container-fluid mt-5 d-flex flex-wrap">
               <div class="col-md-6">
-              <mat-form-field
-                style="width: 100%"
-                class="full-width"
-                appearance="outline"
-              >
-                <mat-label class="label-header">Watch Price</mat-label>
-                <input
-                  matInput
-                  type="number"
-                  [(ngModel)]="watchPrice"
-                  placeholder="Enter watch price"
-                  appPositiveNumber
-                  (input)="calculatePayout()"
-                />
-                <mat-hint align="end">4% Commission</mat-hint>
-              </mat-form-field>
+                <mat-form-field
+                  style="width: 100%"
+                  class="full-width"
+                  appearance="outline"
+                >
+                  <mat-label class="label-header">Watch Price</mat-label>
+                  <input
+                    matInput
+                    type="number"
+                    [(ngModel)]="watchPrice"
+                    placeholder="Enter watch price"
+                    appPositiveNumber
+                    (input)="calculatePayout()"
+                  />
+                  <mat-hint align="end">4% Commission</mat-hint>
+                </mat-form-field>
 
-              <mat-form-field
-                style="width: 100%"
-                class="full-width"
-                appearance="outline"
-              >
-                <mat-label class="label-header">Shipping Type</mat-label>
-                <input
-                  matInput
-                  type="text"
-                  [(ngModel)]="shipping_type"
-                  placeholder="Enter Shipping Type"
-                />
-              </mat-form-field>
+                <mat-form-field
+                  style="width: 100%"
+                  class="full-width"
+                  appearance="outline"
+                >
+                  <mat-label class="label-header">Shipping Type</mat-label>
+                  <input
+                    matInput
+                    type="text"
+                    [(ngModel)]="shipping_type"
+                    placeholder="Enter Shipping Type"
+                  />
+                </mat-form-field>
 
-              <mat-form-field
-                style="width: 100%"
-                class="full-width"
-                appearance="outline"
-              >
-                <mat-label class="label-header">Shipping Cost</mat-label>
-                <input
-                  matInput
-                  type="number"
-                  [(ngModel)]="shipping_charges"
-                  appPositiveNumber
-                  placeholder="Enter Shipping Cost"
-                  (input)="Payoutaftershippingcharges()"
-                />
-              </mat-form-field>
+                <mat-form-field
+                  style="width: 100%"
+                  class="full-width"
+                  appearance="outline"
+                >
+                  <mat-label class="label-header">Shipping Cost</mat-label>
+                  <input
+                    matInput
+                    type="number"
+                    [(ngModel)]="shipping_charges"
+                    appPositiveNumber
+                    placeholder="Enter Shipping Cost"
+                    (input)="Payoutaftershippingcharges()"
+                  />
+                </mat-form-field>
 
-              <mat-form-field
-                style="width: 100%"
-                class="full-width"
-                appearance="outline"
-              >
-                <mat-label class="label-header">Est. Delivery Time</mat-label>
-                <input
-                  matInput
-                  type="text"
-                  [(ngModel)]="estimate_delivery"
-                  placeholder="Enter Est. Delivery Time"
-                />
-              </mat-form-field>
+                <mat-form-field
+                  style="width: 100%"
+                  class="full-width"
+                  appearance="outline"
+                >
+                  <mat-label class="label-header">Est. Delivery Time</mat-label>
+                  <input
+                    matInput
+                    type="text"
+                    [(ngModel)]="estimate_delivery"
+                    placeholder="Enter Est. Delivery Time"
+                  />
+                </mat-form-field>
 
-              <mat-checkbox [(ngModel)]="allow_to_make_offer"
-                >Allow make offers</mat-checkbox
-              >
-            </div>
-            <div class="col-md-6">
-              <mat-card class="info-card">
-                <p class="font-size-18 font-wight-700 color-132138">
-                  Payout Information
-                </p>
-                <div class="info-row d-flex justify-content-between">
-                  <p class="font-size-16 font-wight-400 color-909090">
-                    Watch Price
+                <mat-checkbox [(ngModel)]="allow_to_make_offer"
+                  >Allow make offers</mat-checkbox
+                >
+              </div>
+              <div class="col-md-6">
+                <mat-card class="info-card">
+                  <p class="font-size-18 font-wight-700 color-132138">
+                    Payout Information
                   </p>
-                  <p class="font-size-16 font-wight-600 color-0F172A">
-                    {{
-                      watchPriceDisplay | currency : "SR" : "symbol" : "1.2-2"
-                    }}
-                  </p>
-                </div>
-                <div class="info-row d-flex justify-content-between">
-                  <span class="font-size-16 font-wight-400 color-909090"
-                    >Platform Fee (4%)</span
-                  >
-                  <span class="font-size-16 font-wight-600 color-0F172A">
-                    - {{ platformFee | currency : "SR" : "symbol" : "1.2-2" }}
-                  </span>
-                </div>
-                <mat-divider></mat-divider>
-                <div class="info-row d-flex justify-content-between">
-                  <span class="font-size-16 font-wight-400 color-909090"
-                    >Payout</span
-                  >
-                  <span class="font-size-16 font-wight-600 color-0F172A">
-                    {{ estimatedPayout | currency : "SR" : "symbol" : "1.2-2" }}
-                  </span>
-                </div>
+                  <div class="info-row d-flex justify-content-between">
+                    <p class="font-size-16 font-wight-400 color-909090">
+                      Watch Price
+                    </p>
+                    <p class="font-size-16 font-wight-600 color-0F172A">
+                      {{
+                        watchPriceDisplay | currency : "SR" : "symbol" : "1.2-2"
+                      }}
+                    </p>
+                  </div>
+                  <div class="info-row d-flex justify-content-between">
+                    <span class="font-size-16 font-wight-400 color-909090"
+                      >Platform Fee (4%)</span
+                    >
+                    <span class="font-size-16 font-wight-600 color-0F172A">
+                      - {{ platformFee | currency : "SR" : "symbol" : "1.2-2" }}
+                    </span>
+                  </div>
+                  <mat-divider></mat-divider>
+                  <div class="info-row d-flex justify-content-between">
+                    <span class="font-size-16 font-wight-400 color-909090"
+                      >Payout</span
+                    >
+                    <span class="font-size-16 font-wight-600 color-0F172A">
+                      {{
+                        estimatedPayout | currency : "SR" : "symbol" : "1.2-2"
+                      }}
+                    </span>
+                  </div>
 
-                <div class="info-row d-flex justify-content-between">
-                  <span class="font-size-16 font-wight-400 color-909090"
-                    >Shipping Charges</span
-                  >
-                  <span class="font-size-16 font-wight-600 color-0F172A">
-                   + {{ shipping_charges | currency : "SR" : "symbol" : "1.2-2" }}
-                  </span>
-                </div>
-                <mat-divider></mat-divider>
-                <div class="info-row d-flex justify-content-between">
-                  <span class="font-size-16 font-wight-400 color-909090"
-                    >Estimated Payout</span
-                  >
-                  <span class="font-size-16 font-wight-600 color-0F172A">
-                    {{ estimatedPayoutwithShipping | currency : "SR" : "symbol" : "1.2-2" }}
-                  </span>
-                </div>
-              </mat-card>
-            </div>
+                  <div class="info-row d-flex justify-content-between">
+                    <span class="font-size-16 font-wight-400 color-909090"
+                      >Shipping Charges</span
+                    >
+                    <span class="font-size-16 font-wight-600 color-0F172A">
+                      +
+                      {{
+                        shipping_charges | currency : "SR" : "symbol" : "1.2-2"
+                      }}
+                    </span>
+                  </div>
+                  <mat-divider></mat-divider>
+                  <div class="info-row d-flex justify-content-between">
+                    <span class="font-size-16 font-wight-400 color-909090"
+                      >Estimated Payout</span
+                    >
+                    <span class="font-size-16 font-wight-600 color-0F172A">
+                      {{
+                        estimatedPayoutwithShipping
+                          | currency : "SR" : "symbol" : "1.2-2"
+                      }}
+                    </span>
+                  </div>
+                </mat-card>
+              </div>
             </div>
           </div>
 
@@ -2938,11 +3006,7 @@
               appearance="outline"
             >
               <mat-label class="label-header">City</mat-label>
-              <input
-              matInput
-              formControlName="city"
-              placeholder="Enter City"
-            />
+              <input matInput formControlName="city" placeholder="Enter City" />
               <mat-error *ngIf="city.hasError('required')">
                 City is required
               </mat-error>
@@ -2997,13 +3061,18 @@
                     />
                     <div class="ml-3">
                       <h6 class="text-secondary">
-                        {{brandnametoDisplay}} | {{listingForm.get('name').value}}</h6>
+                        {{ brandnametoDisplay }} |
+                        {{ listingForm.get("name").value }}
+                      </h6>
                       <p class="font-weight-bold mb-1">
-                        {{brandnametoDisplay}} {{listingForm.get('name').value}} {{selectedCondition.title}}
+                        {{ brandnametoDisplay }}
+                        {{ listingForm.get("name").value }}
+                        {{ selectedCondition.title }}
                       </p>
                       <p class="text-primary font-weight-bold mb-0">
                         {{
-                          watchPriceDisplay | currency : "SR" : "symbol" : "1.2-2"
+                          watchPriceDisplay
+                            | currency : "SR" : "symbol" : "1.2-2"
                         }}
                       </p>
                       <small class="text-muted">Excl. Shipping Charges</small>
@@ -3042,16 +3111,21 @@
                       >Payout</span
                     >
                     <span class="font-size-16 font-wight-600 color-0F172A">
-                      {{ estimatedPayout | currency : "SR" : "symbol" : "1.2-2" }}
+                      {{
+                        estimatedPayout | currency : "SR" : "symbol" : "1.2-2"
+                      }}
                     </span>
                   </div>
-  
+
                   <div class="info-row d-flex justify-content-between">
                     <span class="font-size-16 font-wight-400 color-909090"
                       >Shipping Charges</span
                     >
                     <span class="font-size-16 font-wight-600 color-0F172A">
-                      + {{ shipping_charges | currency : "SR" : "symbol" : "1.2-2" }}
+                      +
+                      {{
+                        shipping_charges | currency : "SR" : "symbol" : "1.2-2"
+                      }}
                     </span>
                   </div>
                   <mat-divider></mat-divider>
@@ -3060,7 +3134,10 @@
                       >Estimated Payout</span
                     >
                     <span class="font-size-16 font-wight-600 color-0F172A">
-                      {{ estimatedPayoutwithShipping | currency : "SR" : "symbol" : "1.2-2" }}
+                      {{
+                        estimatedPayoutwithShipping
+                          | currency : "SR" : "symbol" : "1.2-2"
+                      }}
                     </span>
                   </div>
                 </mat-card>
@@ -3080,7 +3157,7 @@
                       Billing Address
                     </p>
                     <p class="font-size-16 font-wight-600 color-0F172A b-0">
-                      {{billingForm.get('billing_address').value}}
+                      {{ billingForm.get("billing_address").value }}
                     </p>
                   </div>
                   <div>
@@ -3088,7 +3165,7 @@
                       Street
                     </p>
                     <p class="font-size-16 font-wight-600 color-0F172A b-0">
-                      {{billingForm.get('street').value}}
+                      {{ billingForm.get("street").value }}
                     </p>
                   </div>
                   <div>
@@ -3096,17 +3173,20 @@
                       City
                     </p>
                     <p class="font-size-16 font-wight-600 color-0F172A mb-0">
-                      {{billingForm.get('city').value}}
+                      {{ billingForm.get("city").value }}
                     </p>
                   </div>
                 </div>
                 <div class="col-md-6">
-                  <div *ngIf="billingForm.get('street_line_2').value" class="text-lg-end">
+                  <div
+                    *ngIf="billingForm.get('street_line_2').value"
+                    class="text-lg-end"
+                  >
                     <p class="mb-1 font-size-16 font-weight-400 color-909090">
                       Street Line 2
                     </p>
                     <p class="font-size-16 font-wight-600 color-0F172A b-0">
-                      {{billingForm.get('street_line_2').value}}
+                      {{ billingForm.get("street_line_2").value }}
                     </p>
                   </div>
                   <div class="text-lg-end">
@@ -3114,7 +3194,7 @@
                       Zip Code
                     </p>
                     <p class="font-size-16 font-wight-600 color-0F172A b-0">
-                      {{billingForm.get('zip_code').value}}
+                      {{ billingForm.get("zip_code").value }}
                     </p>
                   </div>
                 </div>
@@ -3126,7 +3206,9 @@
             class="d-flex align-items-center justify-content-end gap-2 mb-3"
             style="padding: 0 20px 0 20px"
           >
-            <button class="route-product-btn" (click)="routeToProductDetail()">Preview your Ad</button>
+            <button class="route-product-btn" (click)="routeToProductDetail()">
+              Preview your Ad
+            </button>
             <button
               class="save-can-btn canc-bg-color"
               (click)="backbtn('billinginformation')"

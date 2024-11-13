@@ -84,7 +84,9 @@
           </div>
           <div class="heart-icon" (click)="toggleHeart(watch)">
             <div class="featured-icon">
+              <div  *ngIf="watch.feature_item === 1">
               featured
+            </div>
             </div>
             <i
               class="fa"

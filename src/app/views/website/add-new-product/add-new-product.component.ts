@@ -331,7 +331,8 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
     if (history?.state?.ID) {
       this.productIDFromResponse = history.state.ID;
       this.selectedSection = "summary";
-      this.calculatePayout()
+      this.calculatePayout();
+      this.formDirty = true;
     }
 
     this.checkScreenSize();
@@ -794,6 +795,7 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
             "Product Publish Successfully"
           );
           this.formDirty = false;
+          sessionStorage.clear();
           this.router.navigate(["/"]);
         },
         (err) => {
@@ -882,7 +884,7 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
     } else {
       sessionStorage.removeItem("proofofownership");
     }
-
+    this.formDirty = false;
     this.router.navigate(["/buy-product"], {
       state: { param: "listing-to-product", ID: this.productIDFromResponse },
     });
