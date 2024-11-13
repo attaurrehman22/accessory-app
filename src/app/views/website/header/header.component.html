@@ -21,7 +21,7 @@
       <button style="background: none; border: none; font-size: 16px" *ngIf="isUserLogin === 'false'" (click)="goToRegister()">
         {{ "header.Login" | translate }}
       </button>
-      <button style="background: none; border: none; font-size: 16px" *ngIf="showHideUser === true" (click)="logout()">
+      <button style="background: none; border: none; font-size: 16px" *ngIf="isUserLogin === 'true'" (click)="logout()">
         {{ "header.Logout" | translate }}
       </button>
     </mat-sidenav>

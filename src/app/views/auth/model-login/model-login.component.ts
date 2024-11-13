@@ -70,7 +70,7 @@ export class ModelLoginComponent implements OnInit {
   }
   gotoHome() {
     this.loginForm.markAllAsTouched();
-    localStorage.removeItem("Logged");
+    localStorage.removeItem("isLoggedIn");
     localStorage.removeItem("user_token");
     if (this.loginForm.valid) {
       this.http.login(this.loginForm.value).subscribe(
@@ -81,7 +81,7 @@ export class ModelLoginComponent implements OnInit {
               "Enter valid username/email and password"
             );
           } else {
-            localStorage.setItem("Logged", "LogIn");
+            localStorage.setItem("isLoggedIn", "true");
             localStorage.setItem("user_token", response.authorization.token);
             
             if (this.isDialog === "dialog-box") {

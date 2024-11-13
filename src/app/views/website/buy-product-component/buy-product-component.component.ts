@@ -243,7 +243,7 @@ export class BuyProductComponentComponent implements OnInit {
   }
 
   buyNow() {
-    const isUserLogin = localStorage.getItem("Logged");
+    const isUserLogin = localStorage.getItem("isLoggedIn");
     if (isUserLogin) {
       this.router.navigate(["/buy-now"]);
     } else {

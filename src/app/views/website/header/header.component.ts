@@ -125,11 +125,12 @@ export class HeaderComponent {
   }
 
   logout() {
-    localStorage.removeItem("Logged");
+    localStorage.removeItem("isLoggedIn");
     localStorage.removeItem("user_token");
     this.isUserLogin = false;
     this.loginStateService.updateLoginStatus(false);
     localStorage.setItem("isAdmin", "false");
+    localStorage.setItem("isLoggedIn", "false");
     localStorage.setItem("isLoggedIn", "false");
     this.router.navigateByUrl("login").then(() => {
       window.location.reload();

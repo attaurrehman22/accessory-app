@@ -57,8 +57,8 @@ export class RegisterComponent implements OnInit {
     validators: [Validators.required],
   });
 
-  country = new FormControl("", []);  // No initial validators
-  city = new FormControl("", []);     // No initial validators
+  country = new FormControl("", []);  
+  city = new FormControl("", []); 
 
   constructor(
     private alertService: AlertsServicesService,
@@ -93,7 +93,6 @@ export class RegisterComponent implements OnInit {
       this.translateService.use(browserlang);
     }
 
-    // Listen to type field changes and update validators for country and city
     this.registerForm.get("type").valueChanges.subscribe((value) => {
       if (value === "dealer") {
         this.registerForm.get("country").setValidators([Validators.required]);
@@ -114,10 +113,6 @@ export class RegisterComponent implements OnInit {
   }
 
   register() {
-    console.log("hello");
-
-    console.log("this.form", this.registerForm.value);
-    console.log("form", this.registerForm);
     this.registerForm.markAllAsTouched();
 
     if (this.registerForm.valid) {
@@ -125,7 +120,7 @@ export class RegisterComponent implements OnInit {
         .register(this.registerForm, this.registerForm.get("type").value)
         .subscribe(
           (response) => {
-            localStorage.setItem("Logged", "LogIn");
+            localStorage.setItem("isLoggedIn", "true");
             localStorage.setItem("user_token", response.authorisation.token);
 
             this.router.navigateByUrl("");

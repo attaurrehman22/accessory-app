@@ -324,9 +324,9 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
   isProductID: any;
 
   ngOnInit() {
-    const isUserLogin = localStorage.getItem("Logged");
+    let isUserLogin = localStorage.getItem("isLoggedIn");
     if (!isUserLogin) {
-      // this.loginFirst()
+      this.loginFirst()
     }
     if (history?.state?.ID) {
       this.productIDFromResponse = history.state.ID;
