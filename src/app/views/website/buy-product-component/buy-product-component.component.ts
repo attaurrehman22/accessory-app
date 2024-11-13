@@ -24,8 +24,23 @@ export class BuyProductComponentComponent implements OnInit {
     this.targetContainer.nativeElement.scrollIntoView({ behavior: "smooth" });
   }
 
-  toggleHearttwo(index: number): void {
-    // this.similarWatchesList[index].liked = !this.similarWatchesList[index].liked;
+  wishList: any;
+  getWishList() {
+    this.http.getWishList().subscribe((res) => {
+      this.wishList = res.data;
+    });
+  }
+
+  addWishList(id) {
+    const formData = {
+      product_id: id,
+    };
+    this.http.addWishList(formData).subscribe(
+      (res) => {
+      this.wishList = res.data;
+      this.getWishList();
+      this.initializeComponent();
+    });
   }
 
   displayedWatches: number = 6;
@@ -89,6 +104,7 @@ export class BuyProductComponentComponent implements OnInit {
 
   ngOnInit(): void {
     window.scrollTo(0, 0);
+    this.getWishList();
     this.routeFrom = history.state.param;
     if (this.routeFrom === "listing-to-product") {
       this.ProductID = history.state.ID;
@@ -206,10 +222,6 @@ export class BuyProductComponentComponent implements OnInit {
   isDealer: any = "";
   dealerReviewsRatings: any;
   dealerReviewstotalRatings: any;
-
-  toggleHeart(image): void {
-    // this.watches[index].liked = !this.watches[index].liked;
-  }
 
   getConditionPercentage(): number {
     return (this.cosmeticCondition / 5) * 100;

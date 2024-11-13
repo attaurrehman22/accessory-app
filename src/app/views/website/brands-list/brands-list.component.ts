@@ -24,7 +24,6 @@ export class BrandsListComponent implements OnInit {
   }
 
   addWishList(watch) {
-    console.log("Watch ====== ",watch)
     const formData = {
       product_id: watch.id,
     };

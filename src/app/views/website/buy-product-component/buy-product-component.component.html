@@ -30,10 +30,10 @@
           <p *ngIf="productDetails.feature_item === 1" style="margin: 0">Featured</p>
         </div>
         <div class="featured-card-heart-sec">
-          <div class="heart-icon-one" (click)="toggleHeart(selectedImage)">
+          <div class="heart-icon-one" (click)="addWishList(productDetails.id)">
             <i
               class="fa"
-              [ngClass]="selectedImage ? 'fa-heart' : 'fa-heart fa-heart-o'"
+              [ngClass]="wishList.includes(productDetails.id) ? 'fa-heart' : 'fa-heart fa-heart-o'"
               aria-hidden="true"
             ></i>
           </div>
@@ -1156,13 +1156,13 @@
           </div>
         </div>
       </div>
-      <div class="heart-icon" (click)="toggleHearttwo(i)">
+      <div class="heart-icon" (click)="addWishList(watch.id)">
         <div class="featured-icon">
           featured
         </div>
         <i
           class="fa"
-          [ngClass]="watch.liked ? 'fa-heart' : 'fa-heart fa-heart-o'"
+          [ngClass]="wishList.includes(watch.id)? 'fa-heart' : 'fa-heart fa-heart-o'"
           aria-hidden="true"
         ></i>
       </div>
