@@ -29,25 +29,36 @@ export class RegisterComponent implements OnInit {
   currentLanguage: string;
   isDialog: any = "";
   registerForm: FormGroup;
+  
+  // Define form controls with conditional validators
   username = new FormControl("", {
     validators: [Validators.required],
     asyncValidators: [usernameExists(this.userService)],
     updateOn: "blur",
   });
+  
   email = new FormControl("", {
     validators: [Validators.required, Validators.email],
     asyncValidators: [userEmailExists(this.userService)],
     updateOn: "blur",
   });
 
-  password: FormControl = new FormControl("", [
+  password = new FormControl("", [
     Validators.required,
     Validators.minLength(6),
     Validators.maxLength(30),
   ]);
-  confirmpassword: FormControl = new FormControl("", {
+
+  confirmpassword = new FormControl("", {
     validators: [Validators.required, notsame1()],
   });
+
+  type = new FormControl("", {
+    validators: [Validators.required],
+  });
+
+  country = new FormControl("", []);  // No initial validators
+  city = new FormControl("", []);     // No initial validators
 
   constructor(
     private alertService: AlertsServicesService,
@@ -61,7 +72,6 @@ export class RegisterComponent implements OnInit {
     this.translateService.setDefaultLang("ar");
 
     const browserlang = this.translateService.getBrowserLang();
-
     this.currentLanguage = browserlang;
 
     this.registerForm = this.formBuilder.group(
@@ -70,6 +80,9 @@ export class RegisterComponent implements OnInit {
         email: this.email,
         password: this.password,
         confirmpassword: this.confirmpassword,
+        type: this.type,
+        country: this.country,
+        city: this.city,
       },
       {
         validators: notsame1(),
@@ -79,7 +92,21 @@ export class RegisterComponent implements OnInit {
     if (this.supportLanguages.includes(browserlang)) {
       this.translateService.use(browserlang);
     }
+
+    // Listen to type field changes and update validators for country and city
+    this.registerForm.get("type").valueChanges.subscribe((value) => {
+      if (value === "dealer") {
+        this.registerForm.get("country").setValidators([Validators.required]);
+        this.registerForm.get("city").setValidators([Validators.required]);
+      } else {
+        this.registerForm.get("country").clearValidators();
+        this.registerForm.get("city").clearValidators();
+      }
+      this.registerForm.get("country").updateValueAndValidity();
+      this.registerForm.get("city").updateValueAndValidity();
+    });
   }
+
   ngOnInit(): void {}
 
   gotologin() {
@@ -87,22 +114,29 @@ export class RegisterComponent implements OnInit {
   }
 
   register() {
+    console.log("hello");
+
+    console.log("this.form", this.registerForm.value);
+    console.log("form", this.registerForm);
     this.registerForm.markAllAsTouched();
 
     if (this.registerForm.valid) {
-      this.http.register(this.registerForm).subscribe(
-        (response) => {
-          localStorage.setItem("Logged", "LogIn");
-          localStorage.setItem("user_token", response.authorisation.token);
+      this.http
+        .register(this.registerForm, this.registerForm.get("type").value)
+        .subscribe(
+          (response) => {
+            localStorage.setItem("Logged", "LogIn");
+            localStorage.setItem("user_token", response.authorisation.token);
 
-          this.router.navigateByUrl("");
-        },
-        (error) => {
-          console.error("Registration error", error);
-        }
-      );
+            this.router.navigateByUrl("");
+          },
+          (error) => {
+            console.error("Registration error", error);
+          }
+        );
     } else {
       this.alertService.showAlert("warning", "Enter Valid Form Values");
     }
   }
 }
+

@@ -112,18 +112,18 @@ export class ModelRegisterComponent implements OnInit {
     localStorage.removeItem("Logged")
     localStorage.removeItem("user_token")
     if (this.registerForm.valid) {
-      this.http.register(this.registerForm).subscribe(
-        (response) => {
-          localStorage.setItem("Logged", "LogIn");
-          localStorage.setItem("user_token", response.authorisation.token);
+      // this.http.register(this.registerForm).subscribe(
+      //   (response) => {
+      //     localStorage.setItem("Logged", "LogIn");
+      //     localStorage.setItem("user_token", response.authorisation.token);
           
-          this.dialogRef.close();
-        },
-        (error) => {
-          this.alertService.showAlert("warning", "Enter Form Values");
-          console.error("Registration error", error);
-        }
-      );
+      //     this.dialogRef.close();
+      //   },
+      //   (error) => {
+      //     this.alertService.showAlert("warning", "Enter Form Values");
+      //     console.error("Registration error", error);
+      //   }
+      // );
     } else {
       this.alertService.showAlert("warning", "Enter Form Values");
     }
