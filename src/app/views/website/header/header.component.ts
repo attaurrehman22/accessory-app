@@ -5,6 +5,10 @@ import {
   ElementRef,
   computed,
 } from "@angular/core";
+import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {MatDrawerMode, MatSidenavModule} from '@angular/material/sidenav';
+import {MatRadioModule} from '@angular/material/radio';
+import {MatButtonModule} from '@angular/material/button';
 import { Router } from "@angular/router";
 import { TranslateService } from "@ngx-translate/core";
 import { LanguageService } from "src/services/lang-service/language.service";
@@ -12,13 +16,15 @@ import { MatSidenav } from "@angular/material/sidenav";
 import { SearchServiceService } from "src/services/search-service/search-service.service";
 import { LoginStateService } from "src/services/login-service/login-state.service";
 import { ChangeDetectorRef } from "@angular/core";
-
 @Component({
-  selector: "app-header",
-  templateUrl: "./header.component.html",
-  styleUrls: ["./header.component.css"],
+  selector: 'app-header',
+  templateUrl: './header.component.html',
+  styleUrls: ['./header.component.css']
 })
 export class HeaderComponent {
+  mode = new FormControl('over' as MatDrawerMode);
+  shouldRun = /(^|.)(stackblitz|webcontainer).(io|com)$/.test(window.location.host);
+
   isSmallScreen: boolean = false;
   isUserLogin: any = false;
   searchQuery: string = "";
@@ -167,3 +173,4 @@ export class HeaderComponent {
     this.isSearchForm = !this.isSearchForm;
   }
 }
+

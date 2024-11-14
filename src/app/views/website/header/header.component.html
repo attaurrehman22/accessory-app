@@ -1,9 +1,14 @@
 <div class="global-main-wraper headerclass">
-  <mat-sidenav-container class="sidenav-container" [ngClass]="{ 'rtl-layout': isRtl }">
-    <mat-sidenav #drawer
-      [ngClass]="{ 'no-background': isSmallScreen && drawer.opened }"
-      class="sidenav" mode="over" [position]="isRtl && isSmallScreen ? 'start' : 'end'"
-      [style]="{ top: '0', right: '0', position: 'fixed', height: 'auto' }">
+  <mat-sidenav-container>
+    <mat-sidenav
+      #sidenav
+      [mode]="mode.value || 'over'"
+      style="background-color: aqua"
+    >
+      <p class="d-flex">
+        <button mat-button (click)="sidenav.toggle()"></button>
+      </p>
+
       <button class="drawer-btn" (click)="routeToBuyProduct()">
         {{ "header.buy_watch" | translate }}
       </button>
@@ -26,7 +31,7 @@
       </button>
     </mat-sidenav>
 
-    <mat-toolbar class="header-div">
+    <mat-sidenav-content class="header-div">
       <div [ngClass]="{ 'lag-logo-stl': isRtl }" class="logo">
         <img class="logo-img" routerLink="/" src="./assets/images/logo.png" alt="Cronosuq" style="cursor: pointer" />
       </div>
@@ -74,11 +79,19 @@
         <button *ngIf="selectedLang === 'ar'" class="custom-btn" (click)="useLang('en')">
           EN
         </button>
-
-        <button mat-icon-button class="menu-icon" (click)="drawer.toggle()" *ngIf="isSmallScreen">
-          <mat-icon>menu</mat-icon>
-        </button>
-      </div>
-    </mat-toolbar>
+      
+      <button mat-button (click)="sidenav.toggle()" *ngIf="isSmallScreen">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="20"
+          viewBox="0 0 448 512"
+        >
+          <path
+            d="M16 132h416c8.837.0 16-7.163 16-16V76c0-8.837-7.163-16-16-16H16C7.163 60 0 67.163.0 76v40c0 8.837 7.163 16 16 16zm0 160h416c8.837.0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837.0-16 7.163-16 16v40c0 8.837 7.163 16 16 16zm0 160h416c8.837.0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837.0-16 7.163-16 16v40c0 8.837 7.163 16 16 16z"
+          ></path>
+        </svg>
+      </button>
+    </div>
+    </mat-sidenav-content>
   </mat-sidenav-container>
 </div>
