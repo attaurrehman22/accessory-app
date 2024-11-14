@@ -30,7 +30,7 @@
           <p *ngIf="productDetails.feature_item === 1" style="margin: 0">Featured</p>
         </div>
         <div class="featured-card-heart-sec">
-          <div class="heart-icon-one" (click)="addWishList(productDetails.id)">
+          <div class="heart-icon-one"  *ngIf="isUserLogin ==='true'" (click)="addWishList(productDetails.id)">
             <i
               class="fa"
               [ngClass]="wishList.includes(productDetails.id) ? 'fa-heart' : 'fa-heart fa-heart-o'"
@@ -1156,11 +1156,13 @@
           </div>
         </div>
       </div>
-      <div class="heart-icon" (click)="addWishList(watch.id)">
+      <div class="heart-icon">
         <div class="featured-icon">
           featured
         </div>
         <i
+        *ngIf="isUserLogin ==='true'"
+        (click)="addWishList(watch.id)"
           class="fa"
           [ngClass]="wishList.includes(watch.id)? 'fa-heart' : 'fa-heart fa-heart-o'"
           aria-hidden="true"

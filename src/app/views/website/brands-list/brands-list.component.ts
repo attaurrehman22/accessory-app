@@ -1,19 +1,22 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { TranslateService } from "@ngx-translate/core";
 import { HttpService } from "src/services/http/http.service";
 
 @Component({
-  selector: 'app-brands-list',
-  templateUrl: './brands-list.component.html',
-  styleUrls: ['./brands-list.component.css']
+  selector: "app-brands-list",
+  templateUrl: "./brands-list.component.html",
+  styleUrls: ["./brands-list.component.css"],
 })
 export class BrandsListComponent implements OnInit {
   showList: any[] = [];
-
+  isUserLogin: any;
   ngOnInit(): void {
+    this.isUserLogin = localStorage.getItem("isLoggedIn");
+    if (this.isUserLogin === "true") {
+      this.getWishList();
+    }
     this.getAllModels();
-    this.getWishList();
   }
 
   wishList: any;
@@ -27,21 +30,22 @@ export class BrandsListComponent implements OnInit {
     const formData = {
       product_id: watch.id,
     };
-    this.http.addWishList(formData).subscribe(
-      (res) => {
+    this.http.addWishList(formData).subscribe((res) => {
       this.wishList = res.data;
       this.getWishList();
-      this.getAllModels()
+      this.getAllModels();
     });
   }
 
   getAllModels() {
     this.http.getAllPopularModels().subscribe(
       (res) => {
-        this.showList = res.data.map(model => {
+        this.showList = res.data.map((model) => {
           return {
             ...model,
-            main_image: model.main_image ? model.main_image.replace(/\\/g, '') : null
+            main_image: model.main_image
+              ? model.main_image.replace(/\\/g, "")
+              : null,
           };
         });
       },
@@ -50,7 +54,6 @@ export class BrandsListComponent implements OnInit {
       }
     );
   }
-  
 
   constructor(
     public translateService: TranslateService,
@@ -77,8 +80,7 @@ export class BrandsListComponent implements OnInit {
     });
   }
 
-  goToList(){
-    this.router.navigate(['/product-list'])
+  goToList() {
+    this.router.navigate(["/product-list"]);
   }
 }
-

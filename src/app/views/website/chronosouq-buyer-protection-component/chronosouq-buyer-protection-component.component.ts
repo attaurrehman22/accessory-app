@@ -44,9 +44,12 @@ export class ChronosouqBuyerProtectionComponentComponent implements OnInit {
       this.getAllTopNewArrivals()
     });
   }
-
+  isUserLogin:any;
   ngOnInit(): void {
+    this.isUserLogin = localStorage.getItem("isLoggedIn");
+    if(this.isUserLogin ==='true'){
     this.getWishList();
+  }
     this.getAllTopNewArrivals();
   }
 

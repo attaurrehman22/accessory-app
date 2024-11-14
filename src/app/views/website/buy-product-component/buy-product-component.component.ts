@@ -101,10 +101,13 @@ export class BuyProductComponentComponent implements OnInit {
   dealerUserDetails: any;
   ProductID: any;
   routeFrom: any;
-
+  isUserLogin:any;
   ngOnInit(): void {
     window.scrollTo(0, 0);
-    this.getWishList();
+    this.isUserLogin = localStorage.getItem("isLoggedIn");
+    if (this.isUserLogin === "true") {
+      this.getWishList();
+    }
     this.routeFrom = history.state.param;
     if (this.routeFrom === "listing-to-product") {
       this.ProductID = history.state.ID;

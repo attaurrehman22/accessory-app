@@ -32,34 +32,33 @@ export class PopularBrandsComponentComponent implements OnInit {
       this.translateService.use(browserLang);
     }
 
-
     this.responsiveOptions = [
       {
-        breakpoint: '1024px', // large screens
+        breakpoint: "1024px", // large screens
         numVisible: 3,
-        numScroll: 3
+        numScroll: 3,
       },
       {
-        breakpoint: '768px', // medium screens
+        breakpoint: "768px", // medium screens
         numVisible: 2,
-        numScroll: 2
+        numScroll: 2,
       },
       {
-        breakpoint: '560px', // small screens
+        breakpoint: "560px", // small screens
         numVisible: 1,
-        numScroll: 1
-      }
+        numScroll: 1,
+      },
     ];
   }
 
   ngOnInit(): void {
     this.getAllFeaturedProducts();
-    if (this.hours === "00" && this.minutes === "00") {
-      this.updateRemainingTime(
-        this.products[0].start_date,
-        this.products[0].end_date
-      );
-    }
+    // if (this.hours === "00" && this.minutes === "00") {
+    //   this.updateRemainingTime(
+    //     this.products[0].start_date,
+    //     this.products[0].end_date
+    //   );
+    // }
     this.logFirstProduct();
   }
 
@@ -67,12 +66,12 @@ export class PopularBrandsComponentComponent implements OnInit {
     this.http.getFeaturedList().subscribe(
       (res) => {
         this.products = res.data.map((product: any) => {
-          product.promotion_banner = product.promotion_banner.replace(
-            /\\/g,
-            ""
-          );
+          product.promotion_banner = product.promotion_banner.replace(/\\/g, "");
           return product;
         });
+          if (this.products.length > 0 && this.products[0].start_date && this.products[0].end_date) {
+          this.updateRemainingTime(this.products[0].start_date, this.products[0].end_date);
+        }
       },
       (err) => {
         console.error("Error fetching featured products:", err);
