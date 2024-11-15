@@ -322,11 +322,12 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
   }
 
   isProductID: any;
-
+  userType: any;
   ngOnInit() {
     let isUserLogin = localStorage.getItem("isLoggedIn");
+    this.userType = localStorage.getItem("userType");
     if (!isUserLogin) {
-      this.loginFirst()
+      this.loginFirst();
     }
     if (history?.state?.ID) {
       this.productIDFromResponse = history.state.ID;
@@ -469,23 +470,29 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
       // Load times for each clock
       this.clocks = parsedData.map((data: any) => data.time);
 
-      this.imagePreviews = parsedData.map((data: any) => data.image?.content || '');
+      this.imagePreviews = parsedData.map(
+        (data: any) => data.image?.content || ""
+      );
 
       this.selectedFiles = parsedData.map((data: any, index: number) => {
         if (data.image && data.image.content) {
           const byteString = atob(data.image.content.split(",")[1]); // Decode base64
-          const mimeString = data.image.content.split(",")[0].split(":")[1].split(";")[0];
-          
+          const mimeString = data.image.content
+            .split(",")[0]
+            .split(":")[1]
+            .split(";")[0];
+
           const byteArray = new Uint8Array(byteString.length);
           for (let i = 0; i < byteString.length; i++) {
             byteArray[i] = byteString.charCodeAt(i);
           }
-          return new File([byteArray], `clock_image_${index + 1}.png`, { type: mimeString });
+          return new File([byteArray], `clock_image_${index + 1}.png`, {
+            type: mimeString,
+          });
         }
         return null;
       });
     }
-
   }
 
   checkScreenSize() {
@@ -694,22 +701,34 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
       } else {
         // Create FormData to send with the API request
         const formData = new FormData();
-      
+
         // Append product ID if available
         formData.append("product_id", this.productIDFromResponse);
-      
+
         // Append proof images
         formData.append("proof_image_1", this.selectedFiles[0]);
         formData.append("proof_image_2", this.selectedFiles[1]);
-      
+
         // Append proof times based on selected clock times
-        formData.append("proof_time_text_1", this.formatTime(this.clocks[0].hour, this.clocks[0].minute));
-        formData.append("proof_time_text_2", this.formatTime(this.clocks[1].hour, this.clocks[1].minute));
-      
+        formData.append(
+          "proof_time_text_1",
+          this.formatTime(this.clocks[0].hour, this.clocks[0].minute)
+        );
+        formData.append(
+          "proof_time_text_2",
+          this.formatTime(this.clocks[1].hour, this.clocks[1].minute)
+        );
+
         // Optionally, append generated times if different (for now, using the same as proof times)
-        formData.append("generted_time_text_1", this.formatTime(this.clocks[0].hour, this.clocks[0].minute));
-        formData.append("generted_time_text_2", this.formatTime(this.clocks[1].hour, this.clocks[1].minute));
-      
+        formData.append(
+          "generted_time_text_1",
+          this.formatTime(this.clocks[0].hour, this.clocks[0].minute)
+        );
+        formData.append(
+          "generted_time_text_2",
+          this.formatTime(this.clocks[1].hour, this.clocks[1].minute)
+        );
+
         // Call the API with the populated FormData
         this.http.addProffofOwnerShip(formData).subscribe(
           (res) => {
@@ -722,26 +741,36 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
         );
       }
     } else if (Param === "priceshipment") {
-      console.log("Price and Shipent", this.watchPrice);
-
-      if (
-        !this.watchPrice ||
-        !this.shipping_type ||
-        !this.shipping_charges ||
-        !this.estimate_delivery ||
-        !this.estimatedPayoutwithShipping
-      ) {
-        this.alertService.showAlert("info", "Enter Form Values");
-      } else {
-        const formData = {
+      let formData;
+      if (this.userType === "user") {
+         formData = {
           product_id: this.productIDFromResponse,
           price: this.watchPrice,
-          shipping_type: this.shipping_type,
-          shipping_charges: this.shipping_charges,
-          estimate_delivery: this.estimate_delivery,
-          allow_to_make_offer: this.allow_to_make_offer,
-          estimate_payout: this.estimatedPayoutwithShipping,
+          estimate_payout: this.estimatedPayout,
         };
+      } else {
+        if (
+          !this.watchPrice ||
+          !this.shipping_type ||
+          !this.shipping_charges ||
+          !this.estimate_delivery ||
+          !this.estimatedPayoutwithShipping
+        ) {
+          this.alertService.showAlert("info", "Enter Form Values");
+        } else {
+           formData = {
+            product_id: this.productIDFromResponse,
+            price: this.watchPrice,
+            shipping_type: this.shipping_type,
+            shipping_charges: this.shipping_charges,
+            estimate_delivery: this.estimate_delivery,
+            allow_to_make_offer: this.allow_to_make_offer,
+            estimate_payout: this.estimatedPayoutwithShipping,
+          };
+        }
+      }
+
+      if(FormData){
         this.http.addpriceAndShipment(formData).subscribe(
           (res) => {
             this.alertService.showAlert(
@@ -868,7 +897,7 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
             time: this.clocks[index],
           };
         }
-        return null; 
+        return null;
       })
     );
 

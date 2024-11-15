@@ -94,6 +94,7 @@ export class LoginComponent implements OnInit {
             if (isAdmin) {
               localStorage.setItem("isAdmin", "true");
             }
+            localStorage.setItem('userType',response.user.type)
 
             this.router.navigateByUrl("").then(() => {
               window.location.reload();

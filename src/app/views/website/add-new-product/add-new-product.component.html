@@ -1087,7 +1087,7 @@
               *ngIf="selectedSection === 'priceshipment' && isSmallScreen"
             >
               <!-- this is for Seller -->
-              <!-- <div class="container-fluid mt-5">
+              <div *ngIf="userType ==='user'" class="container-fluid mt-5">
                 <mat-form-field
                   style="width: 100%"
                   class="full-width"
@@ -1126,11 +1126,11 @@
                     </span>
                   </div>
                 </mat-card>
-              </div> -->
+              </div>
 
               <!-- this is for Dealer -->
 
-              <div class="container-fluid mt-5 d-flex flex-wrap">
+              <div *ngIf="userType ==='dealer'" class="container-fluid mt-5 d-flex flex-wrap">
                 <div class="col-md-6">
                   <mat-form-field
                     style="width: 100%"
@@ -2700,7 +2700,7 @@
             it’s 100% authentic, giving buyers complete peace of mind.
           </p>
           <!-- this is seller -->
-          <!-- <div class="col-md-8">
+          <div *ngIf="userType ==='user'" class="col-md-8">
             <div class="container-fluid mt-5">
               <mat-form-field
                 style="width: 100%"
@@ -2741,11 +2741,11 @@
                 </div>
               </mat-card>
             </div>
-          </div> -->
+          </div>
 
           <!-- this is Dealer -->
 
-          <div class="col-md-12">
+          <div *ngIf="userType ==='dealer'" class="col-md-12">
             <div class="container-fluid mt-5 d-flex flex-wrap">
               <div class="col-md-6">
                 <mat-form-field
