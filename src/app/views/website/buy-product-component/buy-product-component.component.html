@@ -1151,8 +1151,11 @@
               {{ watch.created_by.city }}
             </div>
           </div>
-          <div class="d-flex mt-3 seller-chip">
+          <div *ngIf="watch.created_by.type === 'user'" class="d-flex mt-3 seller-chip">
             Private Seller
+          </div>
+          <div *ngIf="watch.created_by.type === 'dealer'" class="d-flex mt-3 seller-chip">
+           Dealer
           </div>
         </div>
       </div>
