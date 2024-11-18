@@ -14,11 +14,11 @@
         <button class="custom-btn btn btn-dark">
           {{ "find_dream.explore_now" | translate }}
         </button>
-        <button *ngIf="isUserLogin === 'false'" class="custom-btn btn mx-2">
+        <button (click)="routeToLogin()" *ngIf="isUserLogin === 'false'" class="custom-btn btn mx-2">
           {{ "find_dream.become_seller" | translate }}
         </button>
 
-        <button *ngIf="isUserLogin === 'true'" class="custom-btn btn mx-2">
+        <button (click)="routeTo()" *ngIf="isUserLogin === 'true'" class="custom-btn btn mx-2">
           {{ "find_dream.sell_now" | translate }}
         </button>
       </div>

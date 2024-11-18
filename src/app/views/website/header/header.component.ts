@@ -19,152 +19,166 @@ import { ChangeDetectorRef } from "@angular/core";
   styleUrls: ["./header.component.css"],
 })
 export class HeaderComponent {
-  isSmallScreen: boolean = false;
-  isUserLogin: any = false;
-  searchQuery: string = "";
-  dropdownOpen = false;
-  showHideAdminUser: any;
-  showHideUser: any;
+  // isSmallScreen: boolean = false;
+  // isUserLogin: any = false;
+  // searchQuery: string = "";
+  // dropdownOpen = false;
+  // showHideAdminUser: any;
+  // showHideUser: any;
 
-  isAdminUser = computed(() => this.loginStateService.isAdminUser());
-  isUserLoggedIn = computed(() => this.loginStateService.isUserLoggedIn());
+  // isAdminUser = computed(() => this.loginStateService.isAdminUser());
+  // isUserLoggedIn = computed(() => this.loginStateService.isUserLoggedIn());
 
-  searchFilter: boolean = true;
-  supportLanguages = [
-    { name: "English", value: "en" },
-    { name: "العربية", value: "ar" },
-    { name: "Français", value: "fr" },
-    { name: "தமிழ்", value: "ta" },
-    { name: "हिन्दी", value: "hi" },
-  ];
-  isRtl: boolean = false;
-  selectedLang: string = "en";
+  // searchFilter: boolean = true;
+  // supportLanguages = [
+  //   { name: "English", value: "en" },
+  //   { name: "العربية", value: "ar" },
+  //   { name: "Français", value: "fr" },
+  //   { name: "தமிழ்", value: "ta" },
+  //   { name: "हिन्दी", value: "hi" },
+  // ];
+  // isRtl: boolean = false;
+  // selectedLang: string = "en";
 
-  @ViewChild("drawer") drawer: MatSidenav;
-  @ViewChild("sidenav", { static: true }) sidenavRef: ElementRef;
-  @ViewChild("header", { static: false }) headerRef: ElementRef;
+  // @ViewChild('drawer') drawer: MatSidenav; 
+  // @ViewChild('header', { static: true }) headerRef: ElementRef; 
+  // @ViewChild('sidenav', { static: true }) sidenavRef: ElementRef;
 
-  constructor(
-    public translateService: TranslateService,
-    private languageService: LanguageService,
-    public router: Router,
-    private searchService: SearchServiceService,
-    private loginStateService: LoginStateService,
-    private cdRef: ChangeDetectorRef
-  ) {
-    const languagevalues = this.supportLanguages.map((lang) => lang.value);
-    this.translateService.addLangs(languagevalues);
-    this.translateService.setDefaultLang("en");
-    const browserlang = this.translateService.getBrowserLang();
+  // constructor(
+  //   public translateService: TranslateService,
+  //   private languageService: LanguageService,
+  //   public router: Router,
+  //   private searchService: SearchServiceService,
+  //   private loginStateService: LoginStateService,
+  //   private cdRef: ChangeDetectorRef
+  // ) {
+  //   const languagevalues = this.supportLanguages.map((lang) => lang.value);
+  //   this.translateService.addLangs(languagevalues);
+  //   this.translateService.setDefaultLang("en");
+  //   const browserlang = this.translateService.getBrowserLang();
 
-    if (languagevalues.includes(browserlang)) {
-      this.translateService.use(browserlang);
-      this.isRtl = browserlang !== "en";
-    }
+  //   if (languagevalues.includes(browserlang)) {
+  //     this.translateService.use(browserlang);
+  //     this.isRtl = browserlang !== "en";
+  //   }
 
-    this.router.events.subscribe(() => {
-      const currentRoute = this.router.url;
-      this.searchFilter = ["/product-list"].includes(currentRoute);
-    });
+  //   this.router.events.subscribe(() => {
+  //     const currentRoute = this.router.url;
+  //     this.searchFilter = ["/product-list"].includes(currentRoute);
+  //   });
 
-    this.languageService.currentLang$.subscribe((lang) => {
-      this.translateService.use(lang);
-      this.isRtl = lang !== "en";
-      this.selectedLang = lang;
-    });
+  //   this.languageService.currentLang$.subscribe((lang) => {
+  //     this.translateService.use(lang);
+  //     this.isRtl = lang !== "en";
+  //     this.selectedLang = lang;
+  //   });
+  // }
+
+  // @HostListener("window:resize", ["$event"])
+  // onResize(event: any) {
+  //   this.isSmallScreen = window.innerWidth <= 768;
+
+  //   if (!this.isSmallScreen && this.drawer.opened) {
+  //     this.drawer.close();
+  //   }
+  // }
+
+  // ngOnInit() {
+  //   this.isSmallScreen = window.innerWidth <= 1500;
+  //   this.isUserLogin = localStorage.getItem("isLoggedIn");
+  //   console.log("isUserLogin------", this.isUserLogin);
+  //   console.log("isAdminUser in header comp", this.isAdminUser());
+  //   if (this.isUserLoggedIn()) {
+  //     this.showHideUser = this.isUserLoggedIn();
+
+  //     if (this.isAdminUser()) {
+  //       this.showHideAdminUser = this.isAdminUser();
+  //     } else {
+  //       console.log("User is not an admin");
+  //     }
+  //   } else {
+  //     console.log("User is not logged in");
+  //   }
+  // }
+
+  // routeToAdminPannel() {
+  //   this.router.navigate(["/admin/dashboard"]);
+  // }
+
+  // onSearch(query: string) {
+  //   this.searchService.changeSearchQuery(query);
+  // }
+
+  // onSearchChange() {
+  //   this.onSearch(this.searchQuery);
+  // }
+
+  // useLang(lang: string) {
+  //   this.languageService.setLanguage(lang);
+  // }
+
+  // routeToBuyProduct() {
+  //   this.router.navigate(["/product-list"]);
+  // }
+
+  // goToRegister() {
+  //   this.router.navigateByUrl("login");
+  // }
+
+  // logout() {
+  //   localStorage.removeItem("isLoggedIn");
+  //   localStorage.removeItem("user_token");
+  //   this.isUserLogin = false;
+  //   this.loginStateService.updateLoginStatus(false);
+  //   localStorage.setItem("isAdmin", "false");
+  //   localStorage.setItem("isLoggedIn", "false");
+  //   localStorage.setItem("isLoggedIn", "false");
+  //   this.router.navigateByUrl("login").then(() => {
+  //     window.location.reload();
+  //   });
+  // }
+  // toggleDropdown() {
+  //   this.dropdownOpen = !this.dropdownOpen;
+  // }
+
+  // routeToNewProduct() {
+  //   this.router.navigate(["/new-product"]);
+  // }
+
+  // @HostListener("document:click", ["$event"])
+  // onClickOutside(event: Event): void {
+  //   console.log("event",event)
+  //   console.log("event.target",event.target)
+  //   console.log("event.target.addEventListener",event.target.addEventListener)
+  //   const clickedElement = event.target as HTMLElement;
+
+  //   const isOutsideHeader =
+  //     this.headerRef?.nativeElement &&
+  //     !this.headerRef.nativeElement.contains(clickedElement);
+
+  //   const isOutsideSidenav =
+  //     this.sidenavRef?.nativeElement &&
+  //     !this.sidenavRef.nativeElement.contains(clickedElement);
+
+  //   if (this.drawer?.opened && isOutsideHeader && isOutsideSidenav) {
+  //     this.drawer.close();
+  //   }
+  // }
+  
+  // isSearchForm: any = false;
+  // openSearchForm() {
+  //   this.isSearchForm = !this.isSearchForm;
+  // }
+
+
+
+  isNavbarOpen = false;
+
+  toggleNavbar(): void {
+    this.isNavbarOpen = !this.isNavbarOpen;
   }
 
-  @HostListener("window:resize", ["$event"])
-  onResize(event: any) {
-    this.isSmallScreen = window.innerWidth <= 768;
-
-    if (!this.isSmallScreen && this.drawer.opened) {
-      this.drawer.close();
-    }
-  }
-
-  ngOnInit() {
-    this.isSmallScreen = window.innerWidth <= 1500;
-    this.isUserLogin = localStorage.getItem("isLoggedIn");
-    console.log("isUserLogin------",this.isUserLogin)
-    console.log("isAdminUser in header comp", this.isAdminUser());
-    if (this.isUserLoggedIn()) {
-      this.showHideUser = this.isUserLoggedIn();
-
-      if (this.isAdminUser()) {
-        this.showHideAdminUser = this.isAdminUser();
-      } else {
-        console.log("User is not an admin");
-      }
-    } else {
-      console.log("User is not logged in");
-    }
-  }
-
-  routeToAdminPannel() {
-    this.router.navigate(["/admin/dashboard"]);
-  }
-
-  onSearch(query: string) {
-    this.searchService.changeSearchQuery(query);
-  }
-
-  onSearchChange() {
-    this.onSearch(this.searchQuery);
-  }
-
-  useLang(lang: string) {
-    this.languageService.setLanguage(lang);
-  }
-
-  routeToBuyProduct() {
-    this.router.navigate(["/product-list"]);
-  }
-
-  goToRegister() {
-    this.router.navigateByUrl("login");
-  }
-
-  logout() {
-    localStorage.removeItem("isLoggedIn");
-    localStorage.removeItem("user_token");
-    this.isUserLogin = false;
-    this.loginStateService.updateLoginStatus(false);
-    localStorage.setItem("isAdmin", "false");
-    localStorage.setItem("isLoggedIn", "false");
-    localStorage.setItem("isLoggedIn", "false");
-    this.router.navigateByUrl("login").then(() => {
-      window.location.reload();
-    });
-  }
-  toggleDropdown() {
-    this.dropdownOpen = !this.dropdownOpen;
-  }
-
-  routeToNewProduct() {
-    this.router.navigate(["/new-product"]);
-  }
-
-  @HostListener("document:click", ["$event"])
-  onClickOutside(event: Event) {
-    const clickedElement = event.target as HTMLElement;
-    const isOutsideHeader =
-      this.headerRef?.nativeElement &&
-      !this.headerRef.nativeElement.contains(clickedElement);
-    const isOutsideSidenav =
-      this.sidenavRef?.nativeElement &&
-      !this.sidenavRef.nativeElement.contains(clickedElement);
-
-    if (this.drawer && this.drawer.opened) {
-      if (isOutsideHeader && isOutsideSidenav) {
-        this.drawer.close();
-      }
-    }
-  }
-
-  isSearchForm: any = false;
-
-  openSearchForm() {
-    this.isSearchForm = !this.isSearchForm;
+  closeNavbar(): void {
+    this.isNavbarOpen = false;
   }
 }

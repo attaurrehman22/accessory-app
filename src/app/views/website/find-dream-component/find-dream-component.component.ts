@@ -1,4 +1,5 @@
 import { Component, HostListener, OnInit } from "@angular/core";
+import { Router } from "@angular/router";
 import { TranslateService } from "@ngx-translate/core";
 import { HttpService } from "src/services/http/http.service";
 import { LanguageService } from "src/services/lang-service/language.service";
@@ -47,7 +48,8 @@ export class eamFindDreamComponentComponent implements OnInit {
   constructor(
     public translateService: TranslateService,
     private http: HttpService,
-    private languageService:LanguageService
+    private languageService:LanguageService,
+    private router:Router
   ) {
     this.translateService.addLangs(this.supportLanguages);
     const savedLang = this.languageService.getCurrentLanguage();
@@ -62,6 +64,13 @@ export class eamFindDreamComponentComponent implements OnInit {
         this.languageService.setLanguage(browserLang);
       }
     }
+  }
 
+  routeTo(){
+    this.router.navigate(['/new-product'])
+  }
+
+  routeToLogin(){
+    this.router.navigate(['/login'])
   }
 }

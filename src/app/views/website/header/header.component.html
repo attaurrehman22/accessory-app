@@ -1,10 +1,10 @@
-<div class="global-main-wraper headerclass">
+<!-- <div class="global-main-wraper headerclass">
   <mat-sidenav-container class="sidenav-container" [ngClass]="{ 'rtl-layout': isRtl }">
-    <mat-sidenav #drawer
+    <mat-sidenav #drawer 
       [ngClass]="{ 'no-background': isSmallScreen && drawer.opened }"
       class="sidenav" mode="over" [position]="isRtl && isSmallScreen ? 'start' : 'end'"
       [style]="{ top: '0', right: '0', position: 'fixed', height: 'auto' }">
-      <button class="drawer-btn" (click)="routeToBuyProduct()">
+      <button class="drawer-btn" (click)="routeToBuyProduct(); $event.stopPropagation()">
         {{ "header.buy_watch" | translate }}
       </button>
       <button class="drawer-btn" (click)="routeToNewProduct()">
@@ -81,4 +81,56 @@
       </div>
     </mat-toolbar>
   </mat-sidenav-container>
+</div> -->
+
+
+<header>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">Navbar</a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        (click)="toggleNavbar()"
+        aria-controls="navbarSupportedContent"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="nav-overlay" [class.active]="isNavbarOpen" (click)="closeNavbar()"></div>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent" [class.show]="isNavbarOpen">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" routerLink="/">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/about">About Us</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a
+              class="nav-link dropdown-toggle"
+              href="#"
+              role="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              Services
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" routerLink="/services/1">Service 1</a></li>
+              <li><a class="dropdown-item" routerLink="/services/2">Service 2</a></li>
+              <li><a class="dropdown-item" routerLink="/services/3">Service 3</a></li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/contact">Contact Us</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="container">
+  <h1 class="mt-5 text-center">If you are seeing this in desktop view, resize the tab to see the effect</h1>
 </div>
