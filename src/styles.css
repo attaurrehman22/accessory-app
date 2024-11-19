@@ -29,6 +29,12 @@ body {
 }
 
 
+@media screen and (max-width: 991px) {
+  .navbar-collapse.collapse[_ngcontent-ng-c87935469]:not(.show) {
+      display: none !important;
+  }
+}
+
 .header-highligted-color {
   color: #242424;
 }

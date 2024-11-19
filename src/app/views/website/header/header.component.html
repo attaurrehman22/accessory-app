@@ -83,10 +83,12 @@
   </mat-sidenav-container>
 </div> -->
 
-
 <header>
   <nav class="navbar navbar-expand-lg">
-    <div class="d-flex global-main-wraper w-100" [ngClass]="{ 'rtl-reverse': isRtl }">
+    <div
+      class="d-flex global-main-wraper w-100"
+      [ngClass]="{ 'rtl-reverse': isRtl }"
+    >
       <button
         class="navbar-toggler"
         type="button"
@@ -95,42 +97,123 @@
         aria-expanded="false"
         aria-label="Toggle navigation"
       >
-      <svg class="navbar-toggler-icon" xmlns="http://www.w3.org/2000/svg" clip-rule="evenodd" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2" viewBox="0 0 24 24"><path d="m21 15.75c0-.414-.336-.75-.75-.75h-16.5c-.414 0-.75.336-.75.75s.336.75.75.75h16.5c.414 0 .75-.336.75-.75zm0-4c0-.414-.336-.75-.75-.75h-16.5c-.414 0-.75.336-.75.75s.336.75.75.75h16.5c.414 0 .75-.336.75-.75zm0-4c0-.414-.336-.75-.75-.75h-16.5c-.414 0-.75.336-.75.75s.336.75.75.75h16.5c.414 0 .75-.336.75-.75z" fill-rule="nonzero"/></svg>
-        <!-- <span class="navbar-toggler-icon"></span> -->
+        <svg
+          class="navbar-toggler-icon"
+          xmlns="http://www.w3.org/2000/svg"
+          clip-rule="evenodd"
+          fill-rule="evenodd"
+          stroke-linejoin="round"
+          stroke-miterlimit="2"
+          viewBox="0 0 24 24"
+        >
+          <path
+            d="m21 15.75c0-.414-.336-.75-.75-.75h-16.5c-.414 0-.75.336-.75.75s.336.75.75.75h16.5c.414 0 .75-.336.75-.75zm0-4c0-.414-.336-.75-.75-.75h-16.5c-.414 0-.75.336-.75.75s.336.75.75.75h16.5c.414 0 .75-.336.75-.75zm0-4c0-.414-.336-.75-.75-.75h-16.5c-.414 0-.75.336-.75.75s.336.75.75.75h16.5c.414 0 .75-.336.75-.75z"
+            fill-rule="nonzero"
+          />
+        </svg>
       </button>
-     <div class="query w-100" [ngClass]="{ 'rtl-layout-reverse': isRtl }">
+      <div class="query w-100" [ngClass]="{ 'rtl-layout-reverse': isRtl }">
         <div [ngClass]="{ 'lag-logo-stl': isRtl }" class="logo">
-          <img class="logo-img" routerLink="/" src="./assets/images/logo.png" alt="Cronosuq" style="cursor: pointer" />
+          <img
+            class="logo-img"
+            routerLink="/"
+            src="./assets/images/logo.png"
+            alt="Cronosuq"
+            style="cursor: pointer"
+          />
+        </div>
+        <div
+          class="header-content gap-4"
+          *ngIf="isSearchForm"
+          [ngClass]="{
+            'position-absolute search-box-small-screen': isSmallScreen
+          }"
+        >
+          <form
+            class="d-flex flex-grow-1 ms-3"
+            (ngSubmit)="onSearch(searchQuery)"
+          >
+            <input
+              [(ngModel)]="searchQuery"
+              (ngModelChange)="onSearchChange()"
+              class="form-control me-2"
+              type="search"
+              placeholder="Search through 597,161 watches worldwide"
+              aria-label="Search"
+            />
+          </form>
         </div>
         <div class="header-contact header-contact-lg gap-4">
-          <img src="./assets/images/search-icon.png" (click)="openSearchForm()" style="cursor: pointer" />
+          <img
+            src="./assets/images/search-icon.png"
+            (click)="openSearchForm()"
+            style="cursor: pointer"
+          />
           <mat-menu #profileMenu="matMenu">
-            <button mat-menu-item *ngIf="isUserLogin === 'false' || isUserLogin === null" (click)="goToRegister()">
+            <button
+              mat-menu-item
+              *ngIf="isUserLogin === 'false' || isUserLogin === null"
+              (click)="goToRegister()"
+            >
               {{ "header.Login" | translate }}
             </button>
-            <button mat-menu-item *ngIf="isUserLogin === 'true'" (click)="logout()">
+            <button
+              mat-menu-item
+              *ngIf="isUserLogin === 'true'"
+              (click)="logout()"
+            >
               {{ "header.Logout" | translate }}
             </button>
           </mat-menu>
 
-          <img src="./assets/images/profile-icon.png" alt="Profile" [matMenuTriggerFor]="profileMenu"
-            style="cursor: pointer" />
+          <img
+            src="./assets/images/profile-icon.png"
+            alt="Profile"
+            [matMenuTriggerFor]="profileMenu"
+            style="cursor: pointer"
+          />
 
-          <button *ngIf="selectedLang === 'en'" class="custom-btn" (click)="useLang('ar')">
+          <button
+            *ngIf="selectedLang === 'en'"
+            class="custom-btn"
+            (click)="useLang('ar')"
+          >
             ARB
           </button>
-          <button *ngIf="selectedLang === 'ar'" class="custom-btn" (click)="useLang('en')">
+          <button
+            *ngIf="selectedLang === 'ar'"
+            class="custom-btn"
+            (click)="useLang('en')"
+          >
             EN
           </button>
         </div>
-     </div>
-      <div class="nav-overlay" [class.active]="isNavbarOpen" (click)="closeNavbar()"></div>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent" [ngClass]="{ 'rtl-layout-reverse': isRtl }" [class.show]="isNavbarOpen">
-        <img class="logo-img sidebar-logo" routerLink="/" src="./assets/images/logo.png" alt="Cronosuq" style="cursor: pointer" />
+      </div>
+      <div
+        class="nav-overlay"
+        [class.active]="isNavbarOpen"
+        (click)="closeNavbar()"
+      ></div>
+      <div
+        class="collapse navbar-collapse"
+        id="navbarSupportedContent"
+        [ngClass]="{ 'rtl-layout-reverse': isRtl }"
+        [class.show]="isNavbarOpen"
+      >
+        <img
+          class="logo-img sidebar-logo"
+          routerLink="/"
+          src="./assets/images/logo.png"
+          alt="Cronosuq"
+          style="cursor: pointer"
+        />
         <div class="header-content gap-4" *ngIf="!isSearchForm">
           <button class="custom-btn position-relative">
             {{ "header.new_arrivals" | translate }}
-            <span class="notification-dot" *ngIf="isUserLogin === 'true'"></span>
+            <span
+              class="notification-dot"
+              *ngIf="isUserLogin === 'true'"
+            ></span>
           </button>
           <button class="custom-btn" (click)="routeToBuyProduct()">
             {{ "header.buy_watch" | translate }}
@@ -138,36 +221,83 @@
           <button class="custom-btn" (click)="routeToNewProduct()">
             {{ "header.sell_watch" | translate }}
           </button>
-          <button class="custom-btn" *ngIf="showHideAdminUser === true" (click)="routeToAdminPannel()">
+          <button
+            class="custom-btn"
+            *ngIf="showHideAdminUser === true"
+            (click)="routeToAdminPannel()"
+          >
             {{ "header.admin_pannel" | translate }}
           </button>
+          <button style="background: none; border: none; font-size: 16px" *ngIf="isUserLogin === 'false' || isUserLogin === null && isSmallScreen" (click)="goToRegister()">
+            {{ "header.Login" | translate }}
+          </button>
+          <button style="background: none; border: none; font-size: 16px" *ngIf="isUserLogin === 'true' && isSmallScreen" (click)="logout()">
+            {{ "header.Logout" | translate }}
+          </button>
         </div>
-        <div class="header-content gap-4" *ngIf="isSearchForm" [ngClass]="{
+        <div
+          class="header-content gap-4"
+          *ngIf="isSearchForm"
+          [ngClass]="{
             'position-absolute search-box-small-screen': isSmallScreen
-          }">
-          <form class="d-flex flex-grow-1 ms-3" (ngSubmit)="onSearch(searchQuery)">
-            <input [(ngModel)]="searchQuery" (ngModelChange)="onSearchChange()" class="form-control me-2" type="search"
-              placeholder="Search through 597,161 watches worldwide" aria-label="Search" />
+          }"
+        >
+          <form
+            class="d-flex flex-grow-1 ms-3"
+            (ngSubmit)="onSearch(searchQuery)"
+          >
+            <input
+              [(ngModel)]="searchQuery"
+              (ngModelChange)="onSearchChange()"
+              class="form-control me-2"
+              type="search"
+              placeholder="Search through 597,161 watches worldwide"
+              aria-label="Search"
+            />
           </form>
         </div>
         <div class="header-contact sidebar-acions gap-4">
-          <img src="./assets/images/search-icon.png" (click)="openSearchForm()" style="cursor: pointer" />
+          <img
+            src="./assets/images/search-icon.png"
+            (click)="openSearchForm()"
+            style="cursor: pointer"
+          />
           <mat-menu #profileMenu="matMenu">
-            <button mat-menu-item *ngIf="isUserLogin === 'false' || isUserLogin === null" (click)="goToRegister()">
+            <button
+              mat-menu-item
+              *ngIf="isUserLogin === 'false' || isUserLogin === null"
+              (click)="goToRegister()"
+            >
               {{ "header.Login" | translate }}
             </button>
-            <button mat-menu-item *ngIf="isUserLogin === 'true'" (click)="logout()">
+            <button
+              mat-menu-item
+              *ngIf="isUserLogin === 'true'"
+              (click)="logout()"
+            >
               {{ "header.Logout" | translate }}
             </button>
           </mat-menu>
-  
-          <img src="./assets/images/profile-icon.png" alt="Profile" [matMenuTriggerFor]="profileMenu"
-            style="cursor: pointer" />
-  
-          <button *ngIf="selectedLang === 'en'" class="custom-btn" (click)="useLang('ar')">
+
+          <img
+            src="./assets/images/profile-icon.png"
+            alt="Profile"
+            [matMenuTriggerFor]="profileMenu"
+            style="cursor: pointer"
+          />
+
+          <button
+            *ngIf="selectedLang === 'en'"
+            class="custom-btn"
+            (click)="useLang('ar')"
+          >
             ARB
           </button>
-          <button *ngIf="selectedLang === 'ar'" class="custom-btn" (click)="useLang('en')">
+          <button
+            *ngIf="selectedLang === 'ar'"
+            class="custom-btn"
+            (click)="useLang('en')"
+          >
             EN
           </button>
         </div>

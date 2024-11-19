@@ -287,11 +287,11 @@
   }
 }
 
-@media (max-width: 991px) {
+/* @media (max-width: 991px) {
   .navbar-collapse.collapse[_ngcontent-ng-c741373380]:not(.show) {
     display: none !important;
   }
-}
+} */
 
 .navbar-toggler {
   background: none;
