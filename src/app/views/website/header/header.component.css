@@ -116,6 +116,18 @@
   justify-content: flex-end;
 }
 
+.rtl-layout-reverse {
+  flex-direction: row-reverse;
+}
+
+.rtl-layout-reverse .sidebar-acions{
+justify-content: start;
+}
+
+.rtl-layout-reverse .header-contact-lg{
+  justify-content: start;
+  }
+
 .rtl-layout .header-div {
   flex-direction: row-reverse;
   padding: 0 45px 0 50px;
@@ -225,5 +237,30 @@
   }
   .nav-overlay.active {
     transform: translateX(0);
+  }
+}
+
+@media screen and (min-width: 992px) {
+  .query {
+    display: none;
+  }
+ 
+}
+
+@media screen and (max-width: 991px) {
+  .query {
+    display: flex;
+    justify-content: space-between;
+  }
+  .sidebar-logo {
+    display: none;
+  }
+  .header-content {
+    height: auto;
+    flex-direction: column;
+    width: 100%;
+  }
+  .sidebar-acions {
+    display: none;
   }
 }
