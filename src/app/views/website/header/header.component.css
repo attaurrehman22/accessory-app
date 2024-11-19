@@ -1,4 +1,4 @@
-/* .header-div {
+.header-div {
   height: 73px;
   display: flex;
   padding: 0px !important;
@@ -97,6 +97,13 @@
     justify-content: flex-end;
     width: 80%;
   }
+
+  .header-content {
+    height: 100%;
+    width: auto !important;
+    display: flex;
+   flex-direction: column !important;
+  }
 }
 
 .dropdown {
@@ -170,28 +177,7 @@
 
 .header-div.no-background {
   background: none !important;
-} */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+}
 
 
 .navbar-toggler {
@@ -213,7 +199,7 @@
     position: fixed;
     top: 0;
     left: 0;
-    background: #212529;
+    background: #FFFFFF;
     width: 215px;
     height: 100%;
     z-index: 9999;
