@@ -85,8 +85,8 @@
 
 
 <header>
-  <nav class="navbar navbar-expand-lg bg-dark navbar-dark">
-    <div class="d-flex global-main-wraper w-100">
+  <nav class="navbar navbar-expand-lg">
+    <div class="d-flex global-main-wraper w-100" [ngClass]="{ 'rtl-reverse': isRtl }">
       <button
         class="navbar-toggler"
         type="button"
@@ -95,7 +95,8 @@
         aria-expanded="false"
         aria-label="Toggle navigation"
       >
-        <span class="navbar-toggler-icon"></span>
+      <svg class="navbar-toggler-icon" xmlns="http://www.w3.org/2000/svg" clip-rule="evenodd" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2" viewBox="0 0 24 24"><path d="m21 15.75c0-.414-.336-.75-.75-.75h-16.5c-.414 0-.75.336-.75.75s.336.75.75.75h16.5c.414 0 .75-.336.75-.75zm0-4c0-.414-.336-.75-.75-.75h-16.5c-.414 0-.75.336-.75.75s.336.75.75.75h16.5c.414 0 .75-.336.75-.75zm0-4c0-.414-.336-.75-.75-.75h-16.5c-.414 0-.75.336-.75.75s.336.75.75.75h16.5c.414 0 .75-.336.75-.75z" fill-rule="nonzero"/></svg>
+        <!-- <span class="navbar-toggler-icon"></span> -->
       </button>
      <div class="query w-100" [ngClass]="{ 'rtl-layout-reverse': isRtl }">
         <div [ngClass]="{ 'lag-logo-stl': isRtl }" class="logo">
@@ -125,8 +126,7 @@
      </div>
       <div class="nav-overlay" [class.active]="isNavbarOpen" (click)="closeNavbar()"></div>
       <div class="collapse navbar-collapse" id="navbarSupportedContent" [ngClass]="{ 'rtl-layout-reverse': isRtl }" [class.show]="isNavbarOpen">
-     
-          <img class="logo-img sidebar-logo" routerLink="/" src="./assets/images/logo.png" alt="Cronosuq" style="cursor: pointer" />
+        <img class="logo-img sidebar-logo" routerLink="/" src="./assets/images/logo.png" alt="Cronosuq" style="cursor: pointer" />
         <div class="header-content gap-4" *ngIf="!isSearchForm">
           <button class="custom-btn position-relative">
             {{ "header.new_arrivals" | translate }}
@@ -150,7 +150,6 @@
               placeholder="Search through 597,161 watches worldwide" aria-label="Search" />
           </form>
         </div>
-  
         <div class="header-contact sidebar-acions gap-4">
           <img src="./assets/images/search-icon.png" (click)="openSearchForm()" style="cursor: pointer" />
           <mat-menu #profileMenu="matMenu">
