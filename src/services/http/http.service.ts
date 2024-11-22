@@ -1,40 +1,43 @@
 import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
-import { Injectable } from "@angular/core";
+import { Injectable, OnInit } from "@angular/core";
 import { Observable } from "rxjs";
 import { environment } from "src/environments/environment";
 
 @Injectable({
   providedIn: "root",
 })
-export class HttpService {
+export class HttpService implements OnInit {
   private apiUrl = environment.apipath;
-  constructor(private http: HttpClient) {}
-  token = localStorage.getItem("user_token");
+  token: any=localStorage.getItem("user_token");
+  constructor(private http: HttpClient) {
+    this.token = localStorage.getItem("user_token");
+  }
+  ngOnInit(): void {
+    this.token = localStorage.getItem("user_token");
+  }
 
   getuserEmail(email: string) {
-    
     const formData = new FormData();
-    formData.append('email', email);
-  
+    formData.append("email", email);
+
     return this.http.post(`${this.apiUrl}/api/check-email-existence`, formData);
   }
 
   getusername(username: string) {
-    
     const formData = new FormData();
-    formData.append('username', username);
-  
+    formData.append("username", username);
+
     return this.http.post(`${this.apiUrl}/api/check-user-existence`, formData);
   }
-  
-  register(FormControl: any,User:any): Observable<any> {
+
+  register(FormControl: any, User: any): Observable<any> {
     let formdate = new FormData();
-    if(User === 'user'){
+    if (User === "user") {
       formdate.append("name", FormControl.get("username").value);
       formdate.append("email", FormControl.get("email").value);
       formdate.append("password", FormControl.get("password").value);
       formdate.append("type", FormControl.get("type").value);
-    }else{
+    } else {
       formdate.append("name", FormControl.get("username").value);
       formdate.append("email", FormControl.get("email").value);
       formdate.append("password", FormControl.get("password").value);
@@ -48,14 +51,16 @@ export class HttpService {
 
   login(formData: any): Observable<any> {
     const headers = new HttpHeaders({
-      'Content-Type': 'application/x-www-form-urlencoded',
+      "Content-Type": "application/x-www-form-urlencoded",
     });
-  
+
     const body = new HttpParams()
-      .set('email', formData.email)
-      .set('password', formData.password);
-  
-    return this.http.post(`${this.apiUrl}/api/login`, body.toString(), { headers });
+      .set("email", formData.email)
+      .set("password", formData.password);
+
+    return this.http.post(`${this.apiUrl}/api/login`, body.toString(), {
+      headers,
+    });
   }
 
   getTopBrands(): Observable<any> {
@@ -66,12 +71,11 @@ export class HttpService {
     return this.http.get(`${this.apiUrl}/api/product-form-dropdown`);
   }
 
-
-  getProductsByCategory(catID:any){
+  getProductsByCategory(catID: any) {
     return this.http.get(`${this.apiUrl}/api/search-product-by?${catID}`);
   }
 
-  searchedProducts(name:any){
+  searchedProducts(name: any) {
     return this.http.get(`${this.apiUrl}/api/global-search?query=${name}`);
   }
 
@@ -82,7 +86,6 @@ export class HttpService {
   getBrandsDropDownFilter(): Observable<any> {
     return this.http.get(`${this.apiUrl}/api/brandDropDownForFilters`);
   }
-
 
   getCategory(): Observable<any> {
     return this.http.get(`${this.apiUrl}/api/categories`);
@@ -105,7 +108,6 @@ export class HttpService {
   }
 
   addProduct(formData: any): Observable<any> {
-    
     const url = `${this.apiUrl}/api/products/save`;
     return this.http.post(url, formData, {
       headers: {
@@ -119,27 +121,32 @@ export class HttpService {
     return this.http.get(`${this.apiUrl}/api/products`);
   }
 
-  getProductsByID(ID:any): Observable<any> {
+  getProductsByID(ID: any): Observable<any> {
     return this.http.get(`${this.apiUrl}/api/products/${ID}`);
   }
 
-  getRevieweruserByID(ID:any): Observable<any> {
+  getRevieweruserByID(ID: any): Observable<any> {
     return this.http.get(`${this.apiUrl}/api/dealer/${ID}/details`);
   }
 
-  getSimilarProductsByID(ID:any): Observable<any> {
+  getSimilarProductsByID(ID: any): Observable<any> {
     return this.http.get(`${this.apiUrl}/api/products/${ID}/similar`);
   }
 
-  getSimilarProductsByIDwithPage(productId: number, page: number = 1): Observable<any> {
-    return this.http.get(`https://api.chronosouq.com/api/products/${productId}/similar?page=${page}`);
+  getSimilarProductsByIDwithPage(
+    productId: number,
+    page: number = 1
+  ): Observable<any> {
+    return this.http.get(
+      `https://api.chronosouq.com/api/products/${productId}/similar?page=${page}`
+    );
   }
 
-  getDealerReviewsByID(ID:any): Observable<any> {
+  getDealerReviewsByID(ID: any): Observable<any> {
     return this.http.get(`${this.apiUrl}/api/dealer/${ID}/reviews`);
   }
 
-  getPopularproductsWithID(ID:any): Observable<any> {
+  getPopularproductsWithID(ID: any): Observable<any> {
     return this.http.get(`${this.apiUrl}/api/brands/${ID}`);
   }
 
@@ -192,7 +199,7 @@ export class HttpService {
   }
 
   addAdminBrand(formData): Observable<any> {
-    return this.http.post(`${this.apiUrl}/api/admin/brands`,formData, {
+    return this.http.post(`${this.apiUrl}/api/admin/brands`, formData, {
       headers: {
         Accept: "application/json",
         Authorization: `Bearer ${this.token}`,
@@ -200,8 +207,8 @@ export class HttpService {
     });
   }
 
-  editAdminBrand(formData,ID): Observable<any> {
-    return this.http.put(`${this.apiUrl}/api/admin/brands/${ID}`,formData, {
+  editAdminBrand(formData, ID): Observable<any> {
+    return this.http.put(`${this.apiUrl}/api/admin/brands/${ID}`, formData, {
       headers: {
         Accept: "application/json",
         Authorization: `Bearer ${this.token}`,
@@ -219,22 +226,29 @@ export class HttpService {
   }
 
   activateDeactivateAdminBrand(ID): Observable<any> {
-    return this.http.post(`${this.apiUrl}/api/admin/brands/${ID}/toggle-active`,{}, {
-      headers: {
-        Accept: "application/json",
-        Authorization: `Bearer ${this.token}`,
-      },
-    });
+    return this.http.post(
+      `${this.apiUrl}/api/admin/brands/${ID}/toggle-active`,
+      {},
+      {
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${this.token}`,
+        },
+      }
+    );
   }
 
-
   topAdminBrand(ID): Observable<any> {
-    return this.http.post(`${this.apiUrl}/api/admin/brands/${ID}/toggle-top`,{}, {
-      headers: {
-        Accept: "application/json",
-        Authorization: `Bearer ${this.token}`,
-      },
-    });
+    return this.http.post(
+      `${this.apiUrl}/api/admin/brands/${ID}/toggle-top`,
+      {},
+      {
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${this.token}`,
+        },
+      }
+    );
   }
 
   getAdminCategory(): Observable<any> {
@@ -247,7 +261,7 @@ export class HttpService {
   }
 
   addAdminCategory(formData): Observable<any> {
-    return this.http.post(`${this.apiUrl}/api/admin/categories`,formData, {
+    return this.http.post(`${this.apiUrl}/api/admin/categories`, formData, {
       headers: {
         Accept: "application/json",
         Authorization: `Bearer ${this.token}`,
@@ -255,13 +269,17 @@ export class HttpService {
     });
   }
 
-  editAdminCategory(formData,ID): Observable<any> {
-    return this.http.put(`${this.apiUrl}/api/admin/categories/${ID}`,formData, {
-      headers: {
-        Accept: "application/json",
-        Authorization: `Bearer ${this.token}`,
-      },
-    });
+  editAdminCategory(formData, ID): Observable<any> {
+    return this.http.put(
+      `${this.apiUrl}/api/admin/categories/${ID}`,
+      formData,
+      {
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${this.token}`,
+        },
+      }
+    );
   }
 
   deleteAdminCategory(ID): Observable<any> {
@@ -274,14 +292,17 @@ export class HttpService {
   }
 
   activateDeactivateAdminCategory(ID): Observable<any> {
-    return this.http.post(`${this.apiUrl}/api/admin/categories/${ID}/toggle-active`,{}, {
-      headers: {
-        Accept: "application/json",
-        Authorization: `Bearer ${this.token}`,
-      },
-    });
+    return this.http.post(
+      `${this.apiUrl}/api/admin/categories/${ID}/toggle-active`,
+      {},
+      {
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${this.token}`,
+        },
+      }
+    );
   }
-
 
   getAdminProducts(): Observable<any> {
     return this.http.get(`${this.apiUrl}/api/admin/products`, {
@@ -292,7 +313,6 @@ export class HttpService {
     });
   }
 
-
   deleteAdminProducts(ID): Observable<any> {
     return this.http.delete(`${this.apiUrl}/api/admin/products/${ID}`, {
       headers: {
@@ -302,24 +322,30 @@ export class HttpService {
     });
   }
 
-
   topAdminPopularProducts(ID): Observable<any> {
-    return this.http.patch(`${this.apiUrl}/api/admin/products/${ID}/toggle-popular`,{}, {
-      headers: {
-        Accept: "application/json",
-        Authorization: `Bearer ${this.token}`,
-      },
-    });
+    return this.http.patch(
+      `${this.apiUrl}/api/admin/products/${ID}/toggle-popular`,
+      {},
+      {
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${this.token}`,
+        },
+      }
+    );
   }
 
-
   activateAdminProducts(ID): Observable<any> {
-    return this.http.patch(`${this.apiUrl}/api/admin/products/${ID}/toggle-active`,{}, {
-      headers: {
-        Accept: "application/json",
-        Authorization: `Bearer ${this.token}`,
-      },
-    });
+    return this.http.patch(
+      `${this.apiUrl}/api/admin/products/${ID}/toggle-active`,
+      {},
+      {
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${this.token}`,
+        },
+      }
+    );
   }
 
   getAdminDashBoardDetails(): Observable<any> {
@@ -331,11 +357,10 @@ export class HttpService {
     });
   }
 
-
   // ----------------------------------  create Listing start ------------------------------
 
-  addListingDetails(formData:any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/api/listing/create`,formData, {
+  addListingDetails(formData: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/api/listing/create`, formData, {
       headers: {
         Accept: "application/json",
         Authorization: `Bearer ${this.token}`,
@@ -343,9 +368,8 @@ export class HttpService {
     });
   }
 
-
-  addWatchDetails(formData:any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/api/listing/watchDetails`,formData, {
+  addWatchDetails(formData: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/api/listing/watchDetails`, formData, {
       headers: {
         Accept: "application/json",
         Authorization: `Bearer ${this.token}`,
@@ -353,8 +377,8 @@ export class HttpService {
     });
   }
 
-  addUploadImages(formData:any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/api/listing/uploadImages`,formData, {
+  addUploadImages(formData: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/api/listing/uploadImages`, formData, {
       headers: {
         Accept: "application/json",
         Authorization: `Bearer ${this.token}`,
@@ -362,74 +386,97 @@ export class HttpService {
     });
   }
 
-  addCondition(formData:any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/api/listing/watchCondition`,formData, {
-      headers: {
-        Accept: "application/json",
-        Authorization: `Bearer ${this.token}`,
-      },
-    });
+  addCondition(formData: any): Observable<any> {
+    return this.http.post(
+      `${this.apiUrl}/api/listing/watchCondition`,
+      formData,
+      {
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${this.token}`,
+        },
+      }
+    );
   }
 
-
-  addScopeOfDelivery(formData:any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/api/listing/scopeOfDelivery`,formData, {
-      headers: {
-        Accept: "application/json",
-        Authorization: `Bearer ${this.token}`,
-      },
-    });
+  addScopeOfDelivery(formData: any): Observable<any> {
+    return this.http.post(
+      `${this.apiUrl}/api/listing/scopeOfDelivery`,
+      formData,
+      {
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${this.token}`,
+        },
+      }
+    );
   }
 
-  addProffofOwnerShip(formData:any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/api/listing/proofOfOwnership`,formData, {
-      headers: {
-        Accept: "application/json",
-        Authorization: `Bearer ${this.token}`,
-      },
-    });
+  addProffofOwnerShip(formData: any): Observable<any> {
+    return this.http.post(
+      `${this.apiUrl}/api/listing/proofOfOwnership`,
+      formData,
+      {
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${this.token}`,
+        },
+      }
+    );
   }
 
-
-  addpriceAndShipment(formData:any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/api/listing/priceAndShipment`,formData, {
-      headers: {
-        Accept: "application/json",
-        Authorization: `Bearer ${this.token}`,
-      },
-    });
+  addpriceAndShipment(formData: any): Observable<any> {
+    return this.http.post(
+      `${this.apiUrl}/api/listing/priceAndShipment`,
+      formData,
+      {
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${this.token}`,
+        },
+      }
+    );
   }
 
-  addbillingInformation(formData:any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/api/listing/billingInformation`,formData, {
-      headers: {
-        Accept: "application/json",
-        Authorization: `Bearer ${this.token}`,
-      },
-    });
+  addbillingInformation(formData: any): Observable<any> {
+    return this.http.post(
+      `${this.apiUrl}/api/listing/billingInformation`,
+      formData,
+      {
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${this.token}`,
+        },
+      }
+    );
   }
 
-  addbpublishListing(formData:any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/api/listing/publishListing`,formData, {
-      headers: {
-        Accept: "application/json",
-        Authorization: `Bearer ${this.token}`,
-      },
-    });
+  addbpublishListing(formData: any): Observable<any> {
+    return this.http.post(
+      `${this.apiUrl}/api/listing/publishListing`,
+      formData,
+      {
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${this.token}`,
+        },
+      }
+    );
   }
 
-  getSteper(productID:any): Observable<any> {
-    return this.http.get(`${this.apiUrl}/api/listing/getStep?product_id=${productID}`, {
-      headers: {
-        Accept: "application/json",
-        Authorization: `Bearer ${this.token}`,
-      },
-    });
+  getSteper(productID: any): Observable<any> {
+    return this.http.get(
+      `${this.apiUrl}/api/listing/getStep?product_id=${productID}`,
+      {
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${this.token}`,
+        },
+      }
+    );
   }
 
   // ----------------------------------  create Listing end ------------------------------
-
-
 
   getWishList(): Observable<any> {
     return this.http.get(`${this.apiUrl}/api/wishlist/get`, {
@@ -441,7 +488,7 @@ export class HttpService {
   }
 
   addWishList(formData): Observable<any> {
-    return this.http.post(`${this.apiUrl}/api/wishlist/add`,formData, {
+    return this.http.post(`${this.apiUrl}/api/wishlist/add`, formData, {
       headers: {
         Accept: "application/json",
         Authorization: `Bearer ${this.token}`,

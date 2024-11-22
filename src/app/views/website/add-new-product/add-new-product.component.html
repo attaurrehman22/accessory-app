@@ -6,7 +6,8 @@
         <!-- <-- Listing Details -- > -->
         <div
           class="list-item"
-          [ngClass]="{ active: selectedSection === 'listingDetails' }"
+          [ngClass]="{ active: selectedOptionsList.includes('listingDetails') }"
+     
         >
           <div class="step-circle">1</div>
           <div class="step-content">
@@ -159,7 +160,7 @@
 
         <div
           class="list-item"
-          [ngClass]="{ active: selectedSection === 'watchDetails' }"
+          [ngClass]="{ active: selectedOptionsList.includes('watchDetails') }"
         >
           <div class="step-circle">2</div>
           <div class="step-content">
@@ -654,7 +655,7 @@
         <!-- <-- Upload Images -- > -->
         <div
           class="list-item"
-          [ngClass]="{ active: selectedSection === 'uploadImages' }"
+          [ngClass]="{ active: selectedOptionsList.includes('uploadImages') }"
         >
           <div class="step-circle">3</div>
           <div class="step-content">
@@ -767,7 +768,7 @@
         <!-- <-- Condition Grading -- > -->
         <div
           class="list-item"
-          [ngClass]="{ active: selectedSection === 'conditionGrading' }"
+          [ngClass]="{ active: selectedOptionsList.includes('conditionGrading') }"
         >
           <div class="step-circle">4</div>
           <div class="step-content">
@@ -782,10 +783,35 @@
               *ngIf="selectedSection === 'conditionGrading' && isSmallScreen"
             >
               <div class="container-fluid my-4">
-                <div class="row">
+                <div *ngIf="userType ==='user'" class="row">
                   <div
                     class="col-md-6 mb-3"
                     *ngFor="let condition of conditions"
+                    (click)="selectCondition(condition)"
+                    [class.selected]="condition === selectedCondition"
+                  >
+                    <div
+                      class="card condition-card h-100"
+                      style="border-radius: 16px"
+                    >
+                      <div class="card-body">
+                        <p
+                          class="font-size-16 font-wight-700 color-242424 margin-0"
+                        >
+                          {{ condition.title }}
+                        </p>
+                        <p class="font-size-14 font-weight-400 color-909090">
+                          {{ condition.description }}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div *ngIf="userType ==='dealer'" class="row">
+                  <div
+                    class="col-md-6 mb-3"
+                    *ngFor="let condition of dealerconditions"
                     (click)="selectCondition(condition)"
                     [class.selected]="condition === selectedCondition"
                   >
@@ -832,7 +858,7 @@
         <!-- <-- Scope of Delivery -- > -->
         <div
           class="list-item"
-          [ngClass]="{ active: selectedSection === 'scopeofdelivery' }"
+          [ngClass]="{ active: selectedOptionsList.includes('scopeofdelivery') }"
         >
           <div class="step-circle">5</div>
           <div class="step-content">
@@ -892,7 +918,7 @@
         <!-- <-- Proof of Ownership -- > -->
         <div
           class="list-item"
-          [ngClass]="{ active: selectedSection === 'proofofownership' }"
+          [ngClass]="{ active: selectedOptionsList.includes('proofofownership') }"
         >
           <div class="step-circle">6</div>
           <div class="step-content">
@@ -1073,7 +1099,7 @@
         <!-- <-- Price & Shipment -- > -->
         <div
           class="list-item"
-          [ngClass]="{ active: selectedSection === 'priceshipment' }"
+          [ngClass]="{ active: selectedOptionsList.includes('priceshipment') }"
         >
           <div class="step-circle">7</div>
           <div class="step-content">
@@ -1288,7 +1314,7 @@
         <!-- <-- Billing Information -- > -->
         <div
           class="list-item"
-          [ngClass]="{ active: selectedSection === 'billinginformation' }"
+          [ngClass]="{ active:  selectedOptionsList.includes('billinginformation') }"
         >
           <div class="step-circle">8</div>
           <div class="step-content">
@@ -1437,7 +1463,7 @@
         <!-- <-- Summary -- > -->
         <div
           class="list-item"
-          [ngClass]="{ active: selectedSection === 'summary' }"
+          [ngClass]="{ active:  selectedOptionsList.includes('summary') }"
         >
           <div class="step-circle">9</div>
           <div class="step-content">
@@ -2431,11 +2457,36 @@
           <p class="font-weight-400 font-size-16 color-909090">
             Please indicate any signs of wear such as scratches or dents.
           </p>
-          <div class="container-fluid my-4">
-            <div class="row">
+          <div class="container-fluid my-4" style="padding-left: 0 !important;padding-right: 0 !important;">
+            <div  *ngIf="userType ==='user'" class="row">
               <div
                 class="col-md-6 mb-3"
                 *ngFor="let condition of conditions"
+                (click)="selectCondition(condition)"
+                [class.selected]="condition === selectedCondition"
+              >
+                <div
+                  class="card condition-card h-100"
+                  style="border-radius: 16px"
+                >
+                  <div class="card-body">
+                    <p
+                      class="font-size-16 font-wight-700 color-242424 margin-0"
+                    >
+                      {{ condition.title }}
+                    </p>
+                    <p class="font-size-14 font-weight-400 color-909090">
+                      {{ condition.description }}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div  *ngIf="userType ==='dealer'" class="row">
+              <div
+                class="col-md-6 mb-3"
+                *ngFor="let condition of dealerconditions"
                 (click)="selectCondition(condition)"
                 [class.selected]="condition === selectedCondition"
               >
@@ -2480,14 +2531,14 @@
         <!-- <-- Scope of Delivery -- > -->
 
         <div class="card-body" *ngIf="selectedSection === 'scopeofdelivery'">
-          <h5 class="font-weight-bold font-size-24 color-242424 margin-0">
+          <h5 class="font-weight-bold font-size-24 color-242424 mx-3">
             Scope of Delivery
           </h5>
-          <p class="font-weight-400 font-size-16 color-909090">
+          <p class="font-weight-400 font-size-16 color-909090 mx-3">
             What comes with your watch ?
           </p>
           <div class="container-fluid my-4">
-            <div class="col-8 d-flex flex-wrap">
+            <div class="col-8 d-flex flex-wrap" style="padding-left: 0 ;padding-right: 0;">
               <div
                 class="col-md-6 mb-3"
                 *ngFor="let option of options"
@@ -2646,8 +2697,8 @@
             </div>
           </div>
 
-          <div class="container-fluid mt-3">
-            <div class="help-card p-4">
+          <div class="container-fluid mt-4" style="padding-left: 0;padding-right: 0;">
+            <div class="help-card">
               <div class="icon-placeholder">
                 <img src="../../../../assets/images/help-us.png" alt="img" />
               </div>
@@ -2700,8 +2751,8 @@
             it’s 100% authentic, giving buyers complete peace of mind.
           </p>
           <!-- this is seller -->
-          <div *ngIf="userType ==='user'" class="col-md-8">
-            <div class="container-fluid mt-5">
+          <div *ngIf="userType ==='user'" class="col-md-8" style="padding-left: 0">
+            <div class="container-fluid mt-5" style="padding-left: 0">
               <mat-form-field
                 style="width: 100%"
                 class="full-width"
@@ -2745,9 +2796,9 @@
 
           <!-- this is Dealer -->
 
-          <div *ngIf="userType ==='dealer'" class="col-md-12">
-            <div class="container-fluid mt-5 d-flex flex-wrap">
-              <div class="col-md-6">
+          <div *ngIf="userType ==='dealer'" class="col-md-12" style="padding-left: 0">
+            <div class="container-fluid mt-5 d-flex flex-wrap" style="padding-left: 0">
+              <div class="col-md-6" style="padding-left: 0">
                 <mat-form-field
                   style="width: 100%"
                   class="full-width"
@@ -2813,7 +2864,7 @@
                   >Allow make offers</mat-checkbox
                 >
               </div>
-              <div class="col-md-6">
+              <div class="col-md-6" style="padding-left: 0">
                 <mat-card class="info-card">
                   <p class="font-size-18 font-wight-700 color-132138">
                     Payout Information

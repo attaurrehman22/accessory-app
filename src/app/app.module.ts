@@ -75,6 +75,7 @@ import { AdminPageHeaderComponent } from "./views/adminpages/admin-page-header/a
 import { BrandsListComponent } from './views/website/brands-list/brands-list.component';
 import { PositiveNumberDirective } from 'src/directives/positiveNumberDirective/positive-number.directive';
 import {MatRadioModule} from '@angular/material/radio';
+import { ChatComponent } from './views/website/chat/chat/chat.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -110,7 +111,8 @@ import {MatRadioModule} from '@angular/material/radio';
     AdminBrandsProductComponent,
     AdminCategoryProductComponent,
     BrandsListComponent,
-    PositiveNumberDirective
+    PositiveNumberDirective,
+    ChatComponent
   ],
   imports: [
     MatSortModule,

@@ -17,6 +17,7 @@ import { AdminBrandsProductComponent } from './views/adminpages/admin-brands-pro
 import { AdminCategoryProductComponent } from './views/adminpages/admin-category-product/admin-category-product.component';
 import { BuyNowComponent } from './views/website/buy-now/buy-now.component';
 import { CanDeactivateFormGuard } from './can-deactivate-form.guard';
+import { ChatComponent } from './views/website/chat/chat/chat.component';
 
 
 const routes: Routes = [
@@ -37,6 +38,7 @@ const routes: Routes = [
   { path: 'admin/category', component:  AdminCategoryComponent},
   { path: 'admin/category/product', component:  AdminCategoryProductComponent},
   { path: 'buy-now', component:  BuyNowComponent},
+  {path:'chat',component:ChatComponent}
 ];
 
 @NgModule({

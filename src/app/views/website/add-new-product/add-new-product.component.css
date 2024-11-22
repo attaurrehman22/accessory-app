@@ -64,12 +64,24 @@
   text-align: center;
   line-height: 20px;
   font-weight: bold;
-  color: #333;
+  color: #909090;
   margin-right: 15px;
 }
 
 .step-content {
   max-width: 345px;
+}
+
+.step-content strong {
+  font-weight: 700;
+  font-size: 18px;
+  color: #909090;
+}
+
+.step-content p {
+  font-weight: 300;
+  font-size: 14px;
+  color: #909090;
 }
 
 .list-item.active .step-circle {
@@ -89,7 +101,11 @@
 }
 
 .list-item.active .step-content strong {
-  color: #000;
+  color: #000 !important;
+}
+
+.list-item.active .step-content p {
+  color: #000 !important;
 }
 
 .list-item .text-muted {
@@ -393,8 +409,8 @@ background: none;
 .help-card {
   background-color: #f9f9f9;
   border-radius: 10px;
-  padding: 20px;
-  max-width: 500px;
+  padding: 15px;
+  max-width: 540px;
 }
 
 .icon-placeholder {

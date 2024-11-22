@@ -1,0 +1,127 @@
+.main-wrapper {
+    padding: 0 200px 0 200px;
+}
+
+.unread-btn {
+    background: none;
+    border: none;
+}
+
+.active-bottom-border {
+    border-bottom: 1px solid #242424 !important;
+    font-weight: 600;
+    font-size: 14px;
+    color: #242424;
+}
+
+.deactive-bottom-border {
+    border-bottom: 1px solid #F5F5F5 !important;
+    font-weight: 500;
+    font-size: 14px;
+    color: #909090B2;
+}
+
+.action-btn {
+    background: none;
+    border: none;
+    width: -webkit-fill-available;
+}
+
+.active-name-time {
+    font-weight: 600;
+    font-size: 12px;
+    color: #242424;
+    margin: 0 !important;
+}
+
+.deactive-name-time {
+    font-weight: 600;
+    font-size: 12px;
+    color: #909090B2;
+    margin: 0 !important;
+}
+
+.badge-styl {
+    background: #242424;
+    height: 30px;
+    width: 30px;
+    color: #FFFFFF !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 20px !important;
+}
+
+.list-group-item {
+    border: none;
+    background: #F9FAFB;
+    margin-bottom: 7px;
+    padding: 3px;
+}
+
+.img-thumbnail {
+    border: none;
+}
+
+.message {
+    margin-bottom: 15px;
+    display: flex;
+    align-items: flex-start;
+}
+
+.message.sent {
+    justify-content: flex-end;
+}
+
+.message.received {
+    justify-content: flex-start;
+}
+
+.message-content {
+    max-width: 70%;
+    background-color: #e1f7d5;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.message.sent .message-content {
+    background-color: #dcf8c6;
+}
+
+.view-add-btn {
+    background: none;
+    border: 1px solid #242424;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 400;
+    color: #242424;
+    height: 38px;
+    width: 106px;
+}
+
+.card-header {
+    border-bottom: none;
+}
+
+.card-header-bottom {
+    border-bottom: 1px solid rgba(0, 0, 0, .125);
+}
+
+.card {
+    border: 2px solid #F5F5F5;
+    border-radius: 12px;
+}
+
+.card-footer {
+    position: sticky;
+    bottom: 0;
+    display: flex;
+    justify-content: space-between;
+}
+
+input.form-control {
+    margin-right: 10px;
+}
+.input-group {
+    width: 95%;
+}

@@ -1,16 +1,5 @@
-import {
-  Component,
-  OnInit,
-  signal,
-  ElementRef,
-  ViewChild,
-} from "@angular/core";
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from "@angular/forms";
+import {Component,OnInit,signal,ElementRef,ViewChild} from "@angular/core";
+import {FormBuilder,FormControl,FormGroup,Validators} from "@angular/forms";
 import { MatExpansionModule } from "@angular/material/expansion";
 import { Router } from "@angular/router";
 import { TranslateService } from "@ngx-translate/core";
@@ -35,7 +24,8 @@ interface ImageFile {
   styleUrls: ["./add-new-product.component.css"],
 })
 export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
-  selectedSection: string = "listingDetails";
+  selectedSection: string = "proofofownership";
+  selectedOptionsList:any=['listingDetails','watchDetails','uploadImages','conditionGrading','scopeofdelivery'];
   formDirty = false;
   isSmallScreen: boolean = false;
   panelOpenState = false;
@@ -189,19 +179,19 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
 
   options = [
     {
-      title: "Watch only",
+      title: "Original Box & Original Papers",
       icon: "../assets/images/original-box-papers.png",
     },
     {
-      title: "Watch with original box",
+      title: "Original Box",
       icon: "../assets/images/original-box.png",
     },
     {
-      title: "Watch with original papers",
+      title: "Original Papers",
       icon: "/assets/images/original-papers.png",
     },
     {
-      title: "Watch with original box and papers",
+      title: "Watch Only",
       icon: "/assets/images/watch-only.png",
     },
   ];
@@ -220,7 +210,7 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
     }
   }
 
-  conditions = [
+  dealerconditions = [
     {
       title: "New",
       description:
@@ -250,6 +240,34 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
       title: "Incomplete",
       description: "The item is missing some parts and is not functional.",
     },
+  ];
+
+  conditions = [
+    {
+      title: "Like New & Unworn",
+      description:
+        "The item has no signs of wear such as scraches or dents and is unworn. The item has not been polished.",
+    },
+    {
+      title: "Very Good",
+      description:
+        "The item shows minor signs of wear, such as small but physically imperceptible scratches.",
+    },
+    {
+      title: "Good",
+      description:
+        "The item shows visible and physically perceptible signs of wear such as scratches, scuffs or small dents.",
+    },
+    {
+      title: "Fair",
+      description:
+        "The item shows major, visible signs of wear like scratches and dents.",
+    },
+    {
+      title: "Incomplete",
+      description:
+        "The item is missing some parts and is not functional.",
+    }
   ];
 
   selectedCondition = null;
@@ -411,6 +429,16 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
     const cond = sessionStorage.getItem("condition");
     if (cond) {
       const selectedConditionData = JSON.parse(cond);
+      if(this.userType === 'dealer'){
+      const matchingCondition = this.dealerconditions.find(
+        (condition) =>
+          condition.title === selectedConditionData.title &&
+          condition.description === selectedConditionData.description
+      );
+      if (matchingCondition) {
+        this.selectCondition(matchingCondition);
+      }
+    }else if(this.userType === 'user'){
       const matchingCondition = this.conditions.find(
         (condition) =>
           condition.title === selectedConditionData.title &&
@@ -419,6 +447,8 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
       if (matchingCondition) {
         this.selectCondition(matchingCondition);
       }
+    }
+      
     }
 
     const scope_of_del = sessionStorage.getItem("scope_of_delivery");
@@ -579,6 +609,7 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
               "Listing Details Add Successfully"
             );
             this.formDirty = true;
+            this.selectedOptionsList.push('watchDetails')
             this.selectSection("watchDetails");
           },
           (err) => {
@@ -604,6 +635,7 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
               "success",
               "Watch Details Add Successfully"
             );
+            this.selectedOptionsList.push('uploadImages')
             this.selectSection("uploadImages");
           },
           (err) => {
@@ -649,6 +681,7 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
       this.http.addUploadImages(formData).subscribe(
         (res) => {
           this.alertService.showAlert("success", "Images Add Successfully");
+          this.selectedOptionsList.push('conditionGrading')
           this.selectSection("conditionGrading");
         },
         (err) => {
@@ -668,6 +701,7 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
               "success",
               "Condition Add Successfully"
             );
+            this.selectedOptionsList.push('scopeofdelivery')
             this.selectSection("scopeofdelivery");
           },
           (err) => {
@@ -686,6 +720,7 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
         this.http.addScopeOfDelivery(formData).subscribe(
           (res) => {
             this.alertService.showAlert("success", "Scope Add Successfully");
+            this.selectedOptionsList.push('proofofownership')
             this.selectSection("proofofownership");
           },
           (err) => {
@@ -696,20 +731,18 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
         this.alertService.showAlert("warning", "Select any Option");
       }
     } else if (Param === "proofofownership") {
+
+      if(!this.productIDFromResponse){
+        this.productIDFromResponse=913
+      }
+
       if (!this.selectedFiles[0] || !this.selectedFiles[1]) {
         this.alertService.showAlert("warning", "Add Images");
       } else {
-        // Create FormData to send with the API request
         const formData = new FormData();
-
-        // Append product ID if available
         formData.append("product_id", this.productIDFromResponse);
-
-        // Append proof images
         formData.append("proof_image_1", this.selectedFiles[0]);
         formData.append("proof_image_2", this.selectedFiles[1]);
-
-        // Append proof times based on selected clock times
         formData.append(
           "proof_time_text_1",
           this.formatTime(this.clocks[0].hour, this.clocks[0].minute)
@@ -718,8 +751,6 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
           "proof_time_text_2",
           this.formatTime(this.clocks[1].hour, this.clocks[1].minute)
         );
-
-        // Optionally, append generated times if different (for now, using the same as proof times)
         formData.append(
           "generted_time_text_1",
           this.formatTime(this.clocks[0].hour, this.clocks[0].minute)
@@ -728,11 +759,10 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
           "generted_time_text_2",
           this.formatTime(this.clocks[1].hour, this.clocks[1].minute)
         );
-
-        // Call the API with the populated FormData
         this.http.addProffofOwnerShip(formData).subscribe(
           (res) => {
             this.alertService.showAlert("success", "Images Added Successfully");
+            this.selectedOptionsList.push('priceshipment')
             this.selectSection("priceshipment");
           },
           (err) => {
@@ -741,6 +771,7 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
         );
       }
     } else if (Param === "priceshipment") {
+      
       let formData;
       if (this.userType === "user") {
          formData = {
@@ -777,6 +808,7 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
               "success",
               "Price and Shipment Add Successfully"
             );
+            this.selectedOptionsList.push('billinginformation')
             this.selectSection("billinginformation");
           },
           (err) => {
@@ -801,6 +833,7 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
               "Billing Info Add Successfully"
             );
             this.matchBrandname();
+            this.selectedOptionsList.push('summary')
             this.selectSection("summary");
           },
           (err) => {
