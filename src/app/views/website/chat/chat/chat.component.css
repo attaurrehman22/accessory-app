@@ -1,5 +1,6 @@
 .main-wrapper {
     padding: 0 200px 0 200px;
+    height: 800px;
 }
 
 .unread-btn {
@@ -52,11 +53,18 @@
     border-radius: 20px !important;
 }
 
+.list-group {
+    height: 580px;
+    overflow-y: auto;
+}
+
+
 .list-group-item {
     border: none;
     background: #F9FAFB;
     margin-bottom: 7px;
     padding: 3px;
+
 }
 
 .img-thumbnail {

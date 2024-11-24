@@ -280,4 +280,10 @@ export class BuyProductComponentComponent implements OnInit {
       state: { ID: this.ProductID }
     });
   }
+
+  gotToChat() {
+    this.router.navigate(['/chat'],{
+      state:{data:this.productDetails}
+    })
+  }
 }

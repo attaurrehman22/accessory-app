@@ -495,4 +495,37 @@ export class HttpService implements OnInit {
       },
     });
   }
+
+
+
+  // -------------------------------------------- chat Section start --------------------------
+
+  getChatsWithLatestMessage(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/api/chat/list`, {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+  }
+
+  getChatsDetails(chatID): Observable<any> {
+    return this.http.get(`${this.apiUrl}/api/messages/${chatID}`, {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+  }
+
+  sendMessage(formData): Observable<any> {
+    return this.http.post(`${this.apiUrl}/api/chat/send`, formData,{
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+  }
+
+  // -------------------------------------------- chat Section end --------------------------
 }

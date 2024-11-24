@@ -1,4 +1,4 @@
-<div class="global-main-wraper" style="margin-top: 90px">
+<div class="global-main-wraper" style="margin-top: 45px">
   <div class="row">
     <div class="col-md-3 col-12" style="border-right: 1px solid #f3f3f3">
       <h5>Create Product Listing</h5>
@@ -9,7 +9,8 @@
           [ngClass]="{ active: selectedOptionsList.includes('listingDetails') }"
      
         >
-          <div class="step-circle">1</div>
+          <div *ngIf="selectedOptionsList.includes('listingDetails') && selectedSection === 'listingDetails'" class="step-circle">1</div>
+          <div *ngIf="selectedOptionsList.includes('listingDetails') && selectedSection !== 'listingDetails'" class="step-circle">✓</div>
           <div class="step-content">
             <h5 class="card-title">Listing Details</h5>
             <p class="card-text">
@@ -162,14 +163,14 @@
           class="list-item"
           [ngClass]="{ active: selectedOptionsList.includes('watchDetails') }"
         >
-          <div class="step-circle">2</div>
+          <div *ngIf="!selectedOptionsList.includes('watchDetails') || selectedSection === 'watchDetails'"  class="step-circle">2</div>
+          <div *ngIf="selectedOptionsList.includes('watchDetails') && selectedSection !== 'watchDetails'" class="step-circle">✓</div>
           <div class="step-content">
             <strong>Watch Details</strong>
             <p class="text-muted">
               Crypto ipsum bitcoin ethereum dogecoin litecoin. Revain neo gelen
               amp tecoin EOS chiliz...
             </p>
-
             <form
               [formGroup]="watchDetailsForm"
               *ngIf="selectedSection === 'watchDetails' && isSmallScreen"
@@ -657,7 +658,9 @@
           class="list-item"
           [ngClass]="{ active: selectedOptionsList.includes('uploadImages') }"
         >
-          <div class="step-circle">3</div>
+          <div  *ngIf="!selectedOptionsList.includes('uploadImages') || selectedSection === 'uploadImages'"  class="step-circle">3</div>
+          <div *ngIf="selectedOptionsList.includes('uploadImages') && selectedSection !== 'uploadImages'" class="step-circle">✓</div>
+
           <div class="step-content">
             <strong>Upload Images</strong>
             <p class="text-muted">
@@ -770,7 +773,9 @@
           class="list-item"
           [ngClass]="{ active: selectedOptionsList.includes('conditionGrading') }"
         >
-          <div class="step-circle">4</div>
+          <div *ngIf="!selectedOptionsList.includes('conditionGrading') || selectedSection === 'conditionGrading'" class="step-circle">4</div>
+          <div *ngIf="selectedOptionsList.includes('conditionGrading') && selectedSection !== 'conditionGrading'" class="step-circle">✓</div>
+
           <div class="step-content">
             <strong>Condition Grading</strong>
             <p class="text-muted">
@@ -860,7 +865,9 @@
           class="list-item"
           [ngClass]="{ active: selectedOptionsList.includes('scopeofdelivery') }"
         >
-          <div class="step-circle">5</div>
+          <div *ngIf="!selectedOptionsList.includes('scopeofdelivery') || selectedSection === 'scopeofdelivery'" class="step-circle">5</div>
+          <div *ngIf="selectedOptionsList.includes('scopeofdelivery') && selectedSection !== 'scopeofdelivery'" class="step-circle">✓</div>
+
           <div class="step-content">
             <strong>Scope of Delivery</strong>
             <p class="text-muted">
@@ -920,7 +927,9 @@
           class="list-item"
           [ngClass]="{ active: selectedOptionsList.includes('proofofownership') }"
         >
-          <div class="step-circle">6</div>
+          <div *ngIf="!selectedOptionsList.includes('proofofownership') || selectedSection === 'proofofownership'" class="step-circle">6</div>
+          <div *ngIf="selectedOptionsList.includes('proofofownership') && selectedSection !== 'proofofownership'" class="step-circle">✓</div>
+
           <div class="step-content">
             <strong>Proof of Ownership</strong>
             <p class="text-muted">
@@ -1101,7 +1110,9 @@
           class="list-item"
           [ngClass]="{ active: selectedOptionsList.includes('priceshipment') }"
         >
-          <div class="step-circle">7</div>
+          <div *ngIf="!selectedOptionsList.includes('priceshipment') || selectedSection === 'priceshipment'" class="step-circle">7</div>
+          <div *ngIf="selectedOptionsList.includes('priceshipment') && selectedSection !== 'priceshipment'" class="step-circle">✓</div>
+
           <div class="step-content">
             <strong>Price & Shipment</strong>
             <p class="text-muted">
@@ -1316,7 +1327,9 @@
           class="list-item"
           [ngClass]="{ active:  selectedOptionsList.includes('billinginformation') }"
         >
-          <div class="step-circle">8</div>
+          <div *ngIf="!selectedOptionsList.includes('billinginformation') || selectedSection === 'billinginformation'" class="step-circle">8</div>
+          <div *ngIf="selectedOptionsList.includes('billinginformation') && selectedSection !== 'billinginformation'" class="step-circle">✓</div>
+
           <div class="step-content">
             <strong>Billing Information</strong>
             <p class="text-muted">

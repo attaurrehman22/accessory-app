@@ -24,8 +24,8 @@ interface ImageFile {
   styleUrls: ["./add-new-product.component.css"],
 })
 export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
-  selectedSection: string = "proofofownership";
-  selectedOptionsList:any=['listingDetails','watchDetails','uploadImages','conditionGrading','scopeofdelivery'];
+  selectedSection: string = "listingDetails";
+  selectedOptionsList:any=['listingDetails'];
   formDirty = false;
   isSmallScreen: boolean = false;
   panelOpenState = false;
@@ -599,7 +599,6 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
 
   onSubmit(Param: string) {
     if (Param === "listingDetails") {
-      console.log(this.listingForm.value);
       if (this.listingForm.valid) {
         this.http.addListingDetails(this.listingForm.value).subscribe(
           (res) => {
@@ -607,6 +606,10 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
             this.alertService.showAlert(
               "success",
               "Listing Details Add Successfully"
+            );
+            sessionStorage.setItem(
+              "listingForm",
+              JSON.stringify(this.listingForm.value)
             );
             this.formDirty = true;
             this.selectedOptionsList.push('watchDetails')
@@ -634,6 +637,10 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
             this.alertService.showAlert(
               "success",
               "Watch Details Add Successfully"
+            );
+            sessionStorage.setItem(
+              "watchDetailsForm",
+              JSON.stringify(this.watchDetailsForm.value)
             );
             this.selectedOptionsList.push('uploadImages')
             this.selectSection("uploadImages");
@@ -681,6 +688,16 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
       this.http.addUploadImages(formData).subscribe(
         (res) => {
           this.alertService.showAlert("success", "Images Add Successfully");
+          if (this.coverImage) {
+            const coverImageData = { url: this.coverImage.url }; // Exclude file property
+            sessionStorage.setItem("coverImage", JSON.stringify(coverImageData));
+          }
+      
+          const otherImagesData = this.otherImages.map((image) => ({
+            url: image.url,
+          }));
+          sessionStorage.setItem("otherImages", JSON.stringify(otherImagesData));
+
           this.selectedOptionsList.push('conditionGrading')
           this.selectSection("conditionGrading");
         },
@@ -701,6 +718,7 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
               "success",
               "Condition Add Successfully"
             );
+            sessionStorage.setItem("condition", JSON.stringify(this.selectedCondition));
             this.selectedOptionsList.push('scopeofdelivery')
             this.selectSection("scopeofdelivery");
           },
@@ -720,6 +738,10 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
         this.http.addScopeOfDelivery(formData).subscribe(
           (res) => {
             this.alertService.showAlert("success", "Scope Add Successfully");
+            sessionStorage.setItem(
+              "scope_of_delivery",
+              JSON.stringify(this.selectedOptions)
+            );
             this.selectedOptionsList.push('proofofownership')
             this.selectSection("proofofownership");
           },
@@ -771,7 +793,6 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
         );
       }
     } else if (Param === "priceshipment") {
-      
       let formData;
       if (this.userType === "user") {
          formData = {
@@ -808,6 +829,22 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
               "success",
               "Price and Shipment Add Successfully"
             );
+
+            const priceandShipment = {
+              price: this.watchPrice,
+              shipping_type: this.shipping_type,
+              shipping_charges: this.shipping_charges,
+              estimate_delivery: this.estimate_delivery,
+              allow_to_make_offer: this.allow_to_make_offer,
+              estimate_payout: this.estimatedPayoutwithShipping,
+            };
+            sessionStorage.setItem(
+              "priceandShipment",
+              JSON.stringify(priceandShipment)
+            );
+
+            
+
             this.selectedOptionsList.push('billinginformation')
             this.selectSection("billinginformation");
           },
@@ -833,6 +870,10 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
               "Billing Info Add Successfully"
             );
             this.matchBrandname();
+            sessionStorage.setItem(
+              "billingForm",
+              JSON.stringify(this.billingForm.value)
+            );
             this.selectedOptionsList.push('summary')
             this.selectSection("summary");
           },
