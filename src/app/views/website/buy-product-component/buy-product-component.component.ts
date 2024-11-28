@@ -35,8 +35,7 @@ export class BuyProductComponentComponent implements OnInit {
     const formData = {
       product_id: id,
     };
-    this.http.addWishList(formData).subscribe(
-      (res) => {
+    this.http.addWishList(formData).subscribe((res) => {
       this.wishList = res.data;
       this.getWishList();
       this.initializeComponent();
@@ -101,7 +100,7 @@ export class BuyProductComponentComponent implements OnInit {
   dealerUserDetails: any;
   ProductID: any;
   routeFrom: any;
-  isUserLogin:any;
+  isUserLogin: any;
   ngOnInit(): void {
     window.scrollTo(0, 0);
     this.isUserLogin = localStorage.getItem("isLoggedIn");
@@ -277,13 +276,29 @@ export class BuyProductComponentComponent implements OnInit {
 
   backTo() {
     this.router.navigate(["/new-product"], {
-      state: { ID: this.ProductID }
+      state: { ID: this.ProductID },
     });
   }
 
   gotToChat() {
-    this.router.navigate(['/chat'],{
-      state:{data:this.productDetails}
-    })
+    const isUserLogin = localStorage.getItem("isLoggedIn");
+    if (isUserLogin) {
+      this.router.navigate(["/chat"], {
+        state: { data: this.productDetails },
+      });
+    } else {
+      const dialogRef = this.dialog.open(ModelLoginComponent, {
+        width: "600px",
+        data: { message: "dialog-box" },
+      });
+
+      dialogRef.afterClosed().subscribe((result) => {
+        if (result) {
+          this.router.navigate(["/chat"], {
+            state: { data: this.productDetails },
+          });
+        }
+      });
+    }
   }
 }

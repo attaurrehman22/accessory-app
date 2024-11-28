@@ -84,6 +84,7 @@ export class ModelLoginComponent implements OnInit {
             localStorage.setItem("isLoggedIn", "true");
             localStorage.setItem("user_token", response.authorization.token);
             localStorage.setItem('userType',response.user.type)
+            localStorage.setItem("userID", response.user.id);
             if (this.isDialog === "dialog-box") {
               this.dialogRef.close(true);
             } else {

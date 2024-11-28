@@ -123,6 +123,7 @@ export class RegisterComponent implements OnInit {
             localStorage.setItem("isLoggedIn", "true");
             localStorage.setItem("user_token", response.authorisation.token);
             localStorage.setItem('userType',response.user.type)
+            localStorage.setItem("userID", response.user.id);
             this.router.navigateByUrl("");
           },
           (error) => {

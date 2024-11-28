@@ -89,12 +89,12 @@ export class LoginComponent implements OnInit {
           } else {
             localStorage.setItem("user_token", response.authorization.token);
             localStorage.setItem("isLoggedIn", "true");
-
+            localStorage.setItem("userID", response.user.id);
             const isAdmin = response.user.type === "admin";
+            localStorage.setItem('userType',response.user.type)
             if (isAdmin) {
               localStorage.setItem("isAdmin", "true");
             }
-            localStorage.setItem('userType',response.user.type)
 
             this.router.navigateByUrl("").then(() => {
               window.location.reload();

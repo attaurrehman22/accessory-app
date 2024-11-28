@@ -24,7 +24,7 @@ interface ImageFile {
   styleUrls: ["./add-new-product.component.css"],
 })
 export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
-  selectedSection: string = "listingDetails";
+  selectedSection: string = "summary";
   selectedOptionsList:any=['listingDetails'];
   formDirty = false;
   isSmallScreen: boolean = false;
@@ -194,6 +194,10 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
       title: "Watch Only",
       icon: "/assets/images/watch-only.png",
     },
+    {
+      title:"Watch with original box",
+      icon: "/assets/images/watch-only.png",
+    }
   ];
 
   selectedOptions: any;

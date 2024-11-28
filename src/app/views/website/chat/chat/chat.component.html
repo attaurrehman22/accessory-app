@@ -42,11 +42,18 @@
         </button>
       </div>
       <div class="list-group">
-        <div *ngIf="!shouldHideDiv()" class="list-group-item d-flex justify-content-between align-items-start">
-          <div (click)="getMesageDetails(noMessageDetails)" style="cursor: pointer;width: 100%;" class="d-flex">
-            <div *ngIf="noMessageDetails.image; else noImage">
-              <img
+        <div *ngIf="noMessageDetails" class="list-group-item d-flex justify-content-between align-items-start">
+          <div *ngIf="!shouldHideDiv()" style="cursor: pointer;width: 100%;" class="d-flex">
+            <div *ngIf="noMessageDetails; else noImage">
+              <!-- <img
                 [src]="noMessageDetails.image"
+                alt="chat image"
+                class="img-thumbnail"
+                style="width: 90px; height: 90px"
+              /> -->
+
+              <img
+              [src]="'https://api.chronosouq.com/' + productDeatils.main_image"
                 alt="chat image"
                 class="img-thumbnail"
                 style="width: 90px; height: 90px"
@@ -69,7 +76,7 @@
                     noMessageDetails.unread_count > 0 ? 'active-name-time' : 'deactive-name-time'
                   "
                 >
-                  {{ noMessageDetails.name || 'N/A' }}
+                  {{ productDeatils.name || 'N/A' }}  {{ productDeatils.condition || 'N/A' }}
                 </p>
                 <p
                 *ngIf="noMessageDetails.unread_count"
@@ -104,9 +111,9 @@
           class="list-group-item d-flex justify-content-between align-items-start"
         >
           <div (click)="getMesageDetails(chat)" style="cursor: pointer;width: 100%;" class="d-flex">
-            <div *ngIf="chat.image; else noImage">
+            <div *ngIf="chat.product.main_image; else noImage">
               <img
-                [src]="chat.image"
+              [src]="'https://api.chronosouq.com/' + chat.product.main_image"
                 alt="chat image"
                 class="img-thumbnail"
                 style="width: 90px; height: 90px"
@@ -128,7 +135,7 @@
                     chat.unread_count > 0 ? 'active-name-time' : 'deactive-name-time'
                   "
                 >
-                  {{ chat.name || 'N/A' }}
+                  {{ chat.product.created_by.name || 'N/A' }}
                 </p>
                 <p
                   [ngClass]="
@@ -141,7 +148,7 @@
               <div class="d-flex flex-wrap justify-content-between w-100">
                 <div class="d-flex flex-column">
                   <p class="mb-1 font-size-16 font-weight-500 color-242424">
-                    {{ chat.modelName || 'N/A' }}
+                    {{ chat.product.name || 'N/A' }} {{ chat.product.condition || 'N/A' }}
                   </p>
                   <p class="font-size-14 font-weight-400 color-242424">
                     {{ chat.latest_message_preview.length > 45 ? (chat.latest_message_preview | slice:0:45) + '...' : chat.latest_message_preview }}
@@ -229,14 +236,12 @@
             <div class="d-flex flex-column mx-2">
               <p class="font-size-20 font-wight-600 color-242424 margin-0">
                 {{getProductDetails.name}}   {{getProductDetails.condition}}
-                <!-- Rolex Speedmaster in a Good Condition but in low price -->
                 <span
                   class="font-size-16 font-wight-400 color-909090 margin-0 mx-2"
                   >{{getProductDetails.serial_no}}</span
                 >
               </p>
               <p class="font-size-16 font-wight-400 color-909090 margin-0">
-                <!-- SR 2500 -->
                 {{getProductDetails.currency}} {{getProductDetails.price}}
               </p>
             </div>
@@ -257,6 +262,17 @@
                 <div class="message-content">
                   <p>{{ message.message }}</p>
                   <small>{{ message.created_at | date : "shortTime" }}</small>
+                </div>
+              </div>
+            </div>
+            <div *ngIf="isBuyNow" class="d-flex justify-content-center">
+              <div class="card" style="width: 60%;background: #F9FAFB;">
+                <div class="text-center">
+                  <p class="font-size-14 font-weight-400 color-242424" style="border-bottom: 1px solid #E6ECF1;margin: 10px 5px 10px 5px;padding-bottom: 10px;">Satisfied with the response? Close your deal now with the seller</p>
+                </div>
+                <div class="d-flex justify-content-center gap-5">
+                  <button style="border: none;background: none;font-size: 14px;font-weight: 600;color: #909090;border-right: 1px solid #E6ECF1">Create Offer</button>
+                  <button (click)="buyNowProduct()" style="border: none;background: none;font-size: 14px;font-weight: 600;color: #242424;">Buy Now</button>
                 </div>
               </div>
             </div>
@@ -288,13 +304,25 @@
                 <button mat-menu-item>
                     <span>Custom offer</span>
                 </button>
-                <button mat-menu-item>
+                <button (click)="buyNow()" mat-menu-item>
+                  <span>Buy Now</span>
+              </button>
+                <button (click)="uploadImages()" mat-menu-item>
                     <span>Upload Images</span>
                 </button>
                 </mat-menu>
+                <input 
+                  #fileInput 
+                  type="file" 
+                  accept="image/*" 
+                  (change)="onFileSelected($event)" 
+                  style="display:none"
+                  multiple
+                >
             </div>
           <div class="input-group">
             <input
+            *ngIf="reciever_ID"
               type="text"
               class="form-control"
               [(ngModel)]="newMessage"
