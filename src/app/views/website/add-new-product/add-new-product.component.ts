@@ -24,7 +24,7 @@ interface ImageFile {
   styleUrls: ["./add-new-product.component.css"],
 })
 export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
-  selectedSection: string = "summary";
+  selectedSection: string = "listingDetails";
   selectedOptionsList:any=['listingDetails'];
   formDirty = false;
   isSmallScreen: boolean = false;
