@@ -71,18 +71,48 @@ export class ChatComponent implements OnInit, AfterViewChecked {
 
   reciever_ID: any;
 
+  // getMesageDetails(param: any) {
+  //   console.log("param",param)
+  //   this.chat_id = param.chat_id;
+  //   this.getProductDetails=param.product;
+  //   this.http.getChatsDetails(param.chat_id).subscribe(
+  //     (res) => {
+  //     this.messages = res.messages;
+  //     this.reciever_ID = res.messages[0].sender_id;
+  //     this.addRecID();
+  //   }
+  //   );
+  // }
+
+
+
   getMesageDetails(param: any) {
-    console.log("param",param)
+    console.log("param", param);
     this.chat_id = param.chat_id;
-    this.getProductDetails=param.product;
+    this.getProductDetails = param.product;
+    
     this.http.getChatsDetails(param.chat_id).subscribe(
       (res) => {
-      this.messages = res.messages;
-      this.reciever_ID = res.messages[0].sender_id;
-      this.addRecID();
-    }
+        this.messages = res.messages;
+        this.reciever_ID = res.messages[0].sender_id;
+        this.addRecID();
+        this.messages.forEach(message => {
+          if (message.attachments) {
+            try {
+              message.attachments = JSON.parse(message.attachments);
+            } catch (error) {
+              console.error('Error parsing attachments:', error);
+            }
+          }
+        });
+
+      }
     );
-  }
+}
+
+isArray(attachments: any): boolean {
+  return Array.isArray(attachments);
+}
 
   addRecID(){
     this.reciever_ID=this.messages[0].sender_id;
@@ -117,7 +147,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
 
       if (this.selectedImages.length > 0) {
         this.selectedImages.forEach((file) => {
-          formData.append('attachments', file, file.name);
+          formData.append('attachments[]', file);
         });
       }
 
@@ -148,11 +178,21 @@ export class ChatComponent implements OnInit, AfterViewChecked {
         if (this.chat_id) {
           this.http.getChatsDetails(this.chat_id).subscribe((res) => {
             this.messages = res.messages;
+            this.reciever_ID = res.messages[0].sender_id;
+            this.addRecID();
+            this.messages.forEach(message => {
+              if (message.attachments) {
+                try {
+                  message.attachments = JSON.parse(message.attachments);
+                } catch (error) {
+                  console.error('Error parsing attachments:', error);
+                }
+              }
+            });
             this.getLatestMessage();
           });
         }
       });
-      // this.reciever_ID=null;
       this.newMessage = "";
       this.buyNowStatus = false;
       this.selectedImages = [];

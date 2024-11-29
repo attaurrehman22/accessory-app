@@ -256,11 +256,24 @@
             <div *ngFor="let message of reversedMessages">
               <div
                 class="message"
-                [class.sent]="message.sender_id"
-                [class.received]="message.receiver_id"
+                [class.received]="message.direction === 'STB'"
+                [class.sent]="message.direction === 'BTS'"
               >
                 <div class="message-content">
                   <p>{{ message.message }}</p>
+
+                  <div class="d-flex gap-2" *ngIf="message.attachments">
+                    <img *ngIf="!isArray(message.attachments)" 
+                         [src]="'https://api.chronosouq.com/' + message.attachments" 
+                         alt="Attachment">
+                
+                    <div *ngIf="isArray(message.attachments)">
+                      <img *ngFor="let attachment of message.attachments" 
+                           [src]="'https://api.chronosouq.com/' + attachment" 
+                           alt="Attachment">
+                    </div>
+                  </div>
+                  
                   <small>{{ message.created_at | date : "shortTime" }}</small>
                 </div>
               </div>
@@ -322,7 +335,6 @@
             </div>
           <div class="input-group">
             <input
-            *ngIf="reciever_ID"
               type="text"
               class="form-control"
               [(ngModel)]="newMessage"
