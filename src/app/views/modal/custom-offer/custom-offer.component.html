@@ -1,0 +1,39 @@
+<div class="edit-offer-container mat-elevation-z3">
+  <div class="col-md-12 d-flex flex-wrap">
+    <div class="col-md-6">
+        <h2>Custom Offer</h2>
+        <p>Send your custom offer to the Seller</p>
+    </div>
+    <div class="col-md-6 d-flex align-items-center justify-content-end">
+      <button *ngIf="isSeller" (click)="markAsSold()" style="background: none;border: 1px solid #242424;border-radius: 10px;color: #242424;height: 50px;width: 150px;">Mark as Sold</button>
+      
+    </div>
+  </div>
+    <form [formGroup]="offerForm" (ngSubmit)="onSendOffer()">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Price</mat-label>
+        <input matInput type="number" appPositiveNumber formControlName="offer_price" />
+      </mat-form-field>
+  
+      <mat-form-field *ngIf="compoName === 'editComp'" appearance="outline" class="full-width">
+        <mat-label>Shipping</mat-label>
+        <input matInput type="number" appPositiveNumber formControlName="ship_price" placeholder="Enter shipping cost" />
+      </mat-form-field>
+  
+      <mat-form-field *ngIf="compoName === 'editComp'" appearance="outline" class="full-width">
+        <mat-label>Offer Validity</mat-label>
+        <mat-select formControlName="validity_days">
+          <mat-option value="3">3 Days</mat-option>
+          <mat-option value="5">5 Days</mat-option>
+          <mat-option value="7">7 Days</mat-option>
+        </mat-select>
+        <!-- <input matInput type="number" appPositiveNumber formControlName="validity_days" placeholder="Enter validity days" /> -->
+      </mat-form-field>
+  
+      <div class="action-buttons">
+        <button (click)="onCancel()"  type="button" class="cancel-btn">Cancel</button>
+        <button class="send-btn" type="submit">Send Offer</button>
+      </div>
+      </form>
+  </div>
+  

@@ -528,4 +528,57 @@ export class HttpService implements OnInit {
   }
 
   // -------------------------------------------- chat Section end --------------------------
+
+// -------------------------------------------- Make Offer start --------------------------
+
+sendOffer(formData): Observable<any> {
+  return this.http.post(`${this.apiUrl}/api/offers`, formData,{
+    headers: {
+      Accept: "application/json",
+      Authorization: `Bearer ${this.token}`,
+    },
+  });
+}
+
+offerByFilter(productID:any,chatID:any): Observable<any> {
+  return this.http.get(`${this.apiUrl}/api/offer-by-filter?product_id=${productID}&chat_id=${chatID}`,{
+    headers: {
+      Accept: "application/json",
+      Authorization: `Bearer ${this.token}`,
+    },
+  });
+}
+
+editOffer(formData): Observable<any> {
+  return this.http.post(`${this.apiUrl}/api/update-offers`, formData,{
+    headers: {
+      Accept: "application/json",
+      Authorization: `Bearer ${this.token}`,
+    },
+  });
+}
+
+editOfferStatus(formData): Observable<any> {
+  return this.http.post(`${this.apiUrl}/api/offers/status`, formData,{
+    headers: {
+      Accept: "application/json",
+      Authorization: `Bearer ${this.token}`,
+    },
+  });
+}
+
+
+sendShipmenttoBuyer(formData): Observable<any> {
+  return this.http.post(`${this.apiUrl}/api/offers/shipment-offer/store`, formData,{
+    headers: {
+      Accept: "application/json",
+      Authorization: `Bearer ${this.token}`,
+    },
+  });
+}
+
+
+// -------------------------------------------- Make Offer End --------------------------
+
+
 }

@@ -4,7 +4,7 @@
     <div class="col-md-4">
       <div class="d-flex justify-content-between align-items-center mb-3">
         <h3>Chats</h3>
-        <button class="unread-btn">Unread Filter</button>
+        <button (click)="unreadFilter()" class="unread-btn">Unread Filter</button>
       </div>
       <div class="d-flex justify-content-between align-items-center mb-3">
         <button
@@ -45,13 +45,6 @@
         <div *ngIf="noMessageDetails" class="list-group-item d-flex justify-content-between align-items-start">
           <div *ngIf="!shouldHideDiv()" style="cursor: pointer;width: 100%;" class="d-flex">
             <div *ngIf="noMessageDetails; else noImage">
-              <!-- <img
-                [src]="noMessageDetails.image"
-                alt="chat image"
-                class="img-thumbnail"
-                style="width: 90px; height: 90px"
-              /> -->
-
               <img
               [src]="'https://api.chronosouq.com/' + productDeatils.main_image"
                 alt="chat image"
@@ -251,7 +244,7 @@
           </div>
         </div>
 
-        <div class="card-body" style="height: 450px; overflow-y: scroll">
+        <div class="card-body" style="height: 480px; overflow-y: scroll">
           <div *ngIf="messages">
             <div *ngFor="let message of reversedMessages">
               <div
@@ -261,15 +254,18 @@
               >
                 <div class="message-content">
                   <p>{{ message.message }}</p>
+                 
 
                   <div class="d-flex gap-2" *ngIf="message.attachments">
                     <img *ngIf="!isArray(message.attachments)" 
                          [src]="'https://api.chronosouq.com/' + message.attachments" 
+                         class="attachment-stl"
                          alt="Attachment">
                 
                     <div *ngIf="isArray(message.attachments)">
                       <img *ngFor="let attachment of message.attachments" 
                            [src]="'https://api.chronosouq.com/' + attachment" 
+                           class="attachment-stl"
                            alt="Attachment">
                     </div>
                   </div>
@@ -278,13 +274,73 @@
                 </div>
               </div>
             </div>
+            <div *ngIf="isCustomOffer && isOfferShowToUserandDealer" class="col-md-8">
+                <div class="d-flex flex-column card p-2">
+                  <div style="background: #F9FAFB;" class="d-flex align-items-baseline">
+                    <ng-container *ngIf="customOfferDetails.sender.img; else showInitials">
+                      <img [src]="'https://api.chronosouq.com/' + customOfferDetails.sender.img" alt="IMG"/>
+                    </ng-container>
+                    <ng-template #showInitials>
+                      <div class="initials">
+                        {{ customOfferDetails.sender.name | slice:0:2 }}
+                      </div>
+                    </ng-template>
+                    <p class="mx-2">Custom Offer</p>
+                  </div>
+                  
+                  <div class="d-flex justify-content-between align-items-center">
+                    <p>Listing ID</p>
+                    <p>{{customOfferDetails.product.serial_no}}</p>
+                  </div>
+                  <div style="border-bottom: 1px solid #F2F5F8;" class="d-flex justify-content-between align-items-center">
+                    <p>Add Price</p>
+                    <p>{{customOfferDetails.product.price}}</p>
+                  </div>
+                  <div style="border-bottom: 1px solid #F2F5F8;" class="d-flex justify-content-between align-items-center">
+                    <p>Custom Offer</p>
+                    <p>{{customOfferDetails.offer_price}}</p>
+                  </div>
+                  <div class="d-flex justify-content-center mt-3 gap-5">
+                    <button (click)="editOffer(customOfferDetails)" style="border: none;background: none;font-size: 14px;font-weight: 600;color: #909090;border-right: 1px solid #E6ECF1">Edit Offer</button>
+                    <button (click)="acceptOffer()" style="border: none;background: none;font-size: 14px;font-weight: 600;color: #242424;">Accept Offer</button>
+                  </div>
+                </div>
+            </div>
+
+
+            <div *ngIf="isShowBuyNowOffer " class="col-md-8">
+              <div *ngIf="isBuyerUser && !isBuyNowFromChatCheck" class="d-flex flex-column card p-2">
+                <div style="border-bottom: 1px solid #F2F5F8;" class="d-flex justify-content-between align-items-center">
+                  <p>Satisfied with the response? Close your deal now with the seller</p>
+                </div>
+                <div class="d-flex justify-content-center mt-3 gap-5">
+                  <button style="border: none;background: none;font-size: 14px;font-weight: 600;color: #909090;border-right: 1px solid #E6ECF1" (click)="createOfferFromChat()">Create Offer</button>
+                  <button style="border: none;background: none;font-size: 14px;font-weight: 600;color: #242424;" (click)="buyNowFromChat()">Buy Now</button>
+                </div>
+              </div>
+              <div *ngIf="!isBuyerUser && isBuyNowFromChatCheck"  class="d-flex flex-column card p-2">
+                <div style="border-bottom: 1px solid #F2F5F8;" class="d-flex justify-content-between align-items-center">
+                  <p>Buyer Initiated the order, please confirm watch availability and add shipping charges</p>
+                </div>
+                <div class="d-flex justify-content-center mt-3 gap-5">
+                  <button style="border: none;background: none;font-size: 14px;font-weight: 600;color: #909090;border-right: 1px solid #E6ECF1" (click)="MarkAsSoldfromChat()">Mark as Sold</button>
+                  <button style="border: none;background: none;font-size: 14px;font-weight: 600;color: #242424;" (click)="addShippingFromChat()">Add Shipping</button>
+                </div>
+              </div>
+          </div>
+          <button (click)="cancelOffer()" *ngIf="isCancelOfferBuyer" style="border: none;background: none;font-size: 14px;font-weight: 600;color: #909090;border-right: 1px solid #E6ECF1" >Cancel Offer</button>
+
             <div *ngIf="isBuyNow" class="d-flex justify-content-center">
               <div class="card" style="width: 60%;background: #F9FAFB;">
                 <div class="text-center">
-                  <p class="font-size-14 font-weight-400 color-242424" style="border-bottom: 1px solid #E6ECF1;margin: 10px 5px 10px 5px;padding-bottom: 10px;">Satisfied with the response? Close your deal now with the seller</p>
+                  <p class="font-size-14 font-weight-400 color-242424" 
+                    style="border-bottom: 1px solid #E6ECF1;margin: 10px 5px 10px 5px;padding-bottom: 10px;">
+                    Satisfied with the response? Close your deal now with the seller
+                  </p>
                 </div>
                 <div class="d-flex justify-content-center gap-5">
-                  <button style="border: none;background: none;font-size: 14px;font-weight: 600;color: #909090;border-right: 1px solid #E6ECF1">Create Offer</button>
+                  <button (click)="cancelOffer()" *ngIf="isCancelOfferBuyer" style="border: none;background: none;font-size: 14px;font-weight: 600;color: #909090;border-right: 1px solid #E6ECF1" >Cancel Offer</button>
+                  <button (click)="customOffer()" *ngIf="!isCancelOfferBuyer" style="border: none;background: none;font-size: 14px;font-weight: 600;color: #909090;border-right: 1px solid #E6ECF1">Create Offer</button>
                   <button (click)="buyNowProduct()" style="border: none;background: none;font-size: 14px;font-weight: 600;color: #242424;">Buy Now</button>
                 </div>
               </div>
@@ -314,12 +370,12 @@
                 </svg>
                 </button>
                 <mat-menu #menu="matMenu">
-                <button mat-menu-item>
+                <!-- <button *ngIf="!isBuyerUser" (click)="customOffer()" mat-menu-item>
                     <span>Custom offer</span>
-                </button>
-                <button (click)="buyNow()" mat-menu-item>
+                </button> -->
+                <!-- <button *ngIf="isBuyerUser" (click)="buyNow()" mat-menu-item>
                   <span>Buy Now</span>
-              </button>
+                </button> -->
                 <button (click)="uploadImages()" mat-menu-item>
                     <span>Upload Images</span>
                 </button>

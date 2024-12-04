@@ -1,4 +1,4 @@
-<div class="container mt-5" style="margin-top: 120px !important">
+<div class="container mt-5">
   <div
     class="col-12 d-flex justify-content-end"
     *ngIf="routeFrom === 'listing-to-product'"
@@ -214,6 +214,7 @@
         <button
           *ngIf="productDetails.allow_to_make_offer === 1"
           [disabled]="routeFrom === 'listing-to-product'"
+          (click)="makeanOffer()"
           class="make-offer-btn mt-2"
         >
           Make an Offer

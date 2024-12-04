@@ -1,88 +1,3 @@
-<!-- <div class="global-main-wraper headerclass">
-  <mat-sidenav-container class="sidenav-container" [ngClass]="{ 'rtl-layout': isRtl }">
-    <mat-sidenav #drawer 
-      [ngClass]="{ 'no-background': isSmallScreen && drawer.opened }"
-      class="sidenav" mode="over" [position]="isRtl && isSmallScreen ? 'start' : 'end'"
-      [style]="{ top: '0', right: '0', position: 'fixed', height: 'auto' }">
-      <button class="drawer-btn" (click)="routeToBuyProduct(); $event.stopPropagation()">
-        {{ "header.buy_watch" | translate }}
-      </button>
-      <button class="drawer-btn" (click)="routeToNewProduct()">
-        {{ "header.sell_watch" | translate }}
-      </button>
-      <button class="drawer-btn" *ngIf="showHideAdminUser === true" (click)="routeToAdminPannel()">
-        {{ "header.admin_pannel" | translate }}
-      </button>
-      <button class="drawer-btn position-relative">
-        {{ "header.new_arrivals" | translate }}
-        <span class="toggle-notification-dot" *ngIf="isUserLogin === 'true'"></span>
-      </button>
-
-      <button style="background: none; border: none; font-size: 16px" *ngIf="isUserLogin === 'false' || isUserLogin === null" (click)="goToRegister()">
-        {{ "header.Login" | translate }}
-      </button>
-      <button style="background: none; border: none; font-size: 16px" *ngIf="isUserLogin === 'true'" (click)="logout()">
-        {{ "header.Logout" | translate }}
-      </button>
-    </mat-sidenav>
-
-    <mat-toolbar class="header-div">
-      <div [ngClass]="{ 'lag-logo-stl': isRtl }" class="logo">
-        <img class="logo-img" routerLink="/" src="./assets/images/logo.png" alt="Cronosuq" style="cursor: pointer" />
-      </div>
-      <div class="header-content gap-4" *ngIf="!isSmallScreen && !isSearchForm">
-        <button class="custom-btn position-relative">
-          {{ "header.new_arrivals" | translate }}
-          <span class="notification-dot" *ngIf="isUserLogin === 'true'"></span>
-        </button>
-        <button class="custom-btn" (click)="routeToBuyProduct()">
-          {{ "header.buy_watch" | translate }}
-        </button>
-        <button class="custom-btn" (click)="routeToNewProduct()">
-          {{ "header.sell_watch" | translate }}
-        </button>
-        <button class="custom-btn" *ngIf="showHideAdminUser === true" (click)="routeToAdminPannel()">
-          {{ "header.admin_pannel" | translate }}
-        </button>
-      </div>
-      <div class="header-content gap-4" *ngIf="isSearchForm" [ngClass]="{
-          'position-absolute search-box-small-screen': isSmallScreen
-        }">
-        <form class="d-flex flex-grow-1 ms-3" (ngSubmit)="onSearch(searchQuery)">
-          <input [(ngModel)]="searchQuery" (ngModelChange)="onSearchChange()" class="form-control me-2" type="search"
-            placeholder="Search through 597,161 watches worldwide" aria-label="Search" />
-        </form>
-      </div>
-
-      <div class="header-contact gap-4">
-        <img src="./assets/images/search-icon.png" (click)="openSearchForm()" style="cursor: pointer" />
-        <mat-menu #profileMenu="matMenu">
-          <button mat-menu-item *ngIf="isUserLogin === 'false' || isUserLogin === null" (click)="goToRegister()">
-            {{ "header.Login" | translate }}
-          </button>
-          <button mat-menu-item *ngIf="isUserLogin === 'true'" (click)="logout()">
-            {{ "header.Logout" | translate }}
-          </button>
-        </mat-menu>
-
-        <img src="./assets/images/profile-icon.png" alt="Profile" [matMenuTriggerFor]="profileMenu"
-          style="cursor: pointer" />
-
-        <button *ngIf="selectedLang === 'en'" class="custom-btn" (click)="useLang('ar')">
-          ARB
-        </button>
-        <button *ngIf="selectedLang === 'ar'" class="custom-btn" (click)="useLang('en')">
-          EN
-        </button>
-
-        <button mat-icon-button class="menu-icon" (click)="drawer.toggle()" *ngIf="isSmallScreen">
-          <mat-icon>menu</mat-icon>
-        </button>
-      </div>
-    </mat-toolbar>
-  </mat-sidenav-container>
-</div> -->
-
 <header>
   <nav class="navbar navbar-expand-lg">
     <div
@@ -195,7 +110,7 @@
         (click)="closeNavbar()"
       ></div>
       <div
-        class="collapse navbar-collapse"
+        class="collapse navbar-collapse justify-content-between"
         id="navbarSupportedContent"
         [ngClass]="{ 'rtl-layout-reverse': isRtl }"
         [class.show]="isNavbarOpen"

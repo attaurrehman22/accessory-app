@@ -4,6 +4,10 @@ import { HttpService } from "src/services/http/http.service";
 // import { TimeAgoPipe } from 'time-ago-pipe';
 import * as timeago from "timeago.js";
 import { AfterViewChecked } from "@angular/core";
+import { MatDialog } from "@angular/material/dialog";
+import { CustomOfferComponent } from "src/app/views/modal/custom-offer/custom-offer.component";
+import { AlertsServicesService } from "src/services/alerts-service/alerts-services.service";
+import { AddShippingComponent } from "src/app/views/modal/add-shipping/add-shipping.component";
 
 interface MessageFormData {
   product_id?: any;
@@ -21,7 +25,6 @@ interface MessageFormData {
 export class ChatComponent implements OnInit, AfterViewChecked {
   isActive: any = "All";
   newMessage: string = "";
-
   productDeatils: any;
   detailsWithLatestMessages: any;
   messages: any;
@@ -30,8 +33,12 @@ export class ChatComponent implements OnInit, AfterViewChecked {
   chat_id: any;
   noImageName: any = "Kamran Ghulam";
   noMessageDetails: any;
-
-  constructor(private http: HttpService, private router: Router) {}
+  constructor(
+    private http: HttpService,
+    private router: Router,
+    private dialog: MatDialog,
+    private alertService:AlertsServicesService
+  ) {}
 
   ngOnInit(): void {
     if (history.state.data) {
@@ -59,63 +66,148 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     container.scrollTop = container.scrollHeight;
   }
 
+  unreadFilter(){
+    this.chats=this.chats.filter((item:any)=>item.unread_count>0)
+    console.log("Chats List",this.chats)
+  }
+
   getLatestMessage() {
     this.http.getChatsWithLatestMessage().subscribe((res) => {
-      this.chats = res.chats.map(chat => {
-        chat.product.main_image = chat.product.main_image.replace(/\\/g, '/');
+      this.chats = res.chats.map((chat) => {
+        chat.product.main_image = chat.product.main_image.replace(/\\/g, "/");
         return chat;
       });
     });
   }
-  
 
   reciever_ID: any;
-
-  // getMesageDetails(param: any) {
-  //   console.log("param",param)
-  //   this.chat_id = param.chat_id;
-  //   this.getProductDetails=param.product;
-  //   this.http.getChatsDetails(param.chat_id).subscribe(
-  //     (res) => {
-  //     this.messages = res.messages;
-  //     this.reciever_ID = res.messages[0].sender_id;
-  //     this.addRecID();
-  //   }
-  //   );
-  // }
-
-
+  isShowBuyNowOffer:boolean=false;
+  isBuyerUser:boolean=false;
 
   getMesageDetails(param: any) {
     console.log("param", param);
     this.chat_id = param.chat_id;
     this.getProductDetails = param.product;
-    
-    this.http.getChatsDetails(param.chat_id).subscribe(
-      (res) => {
-        this.messages = res.messages;
+   this.getChatDetails() 
+  }
+
+  isOfferShowToUserandDealer:boolean=false;
+
+  getChatDetails(){
+    let S_T_B='';
+    let B_T_S='';
+    this.http.getChatsDetails(this.chat_id).subscribe((res) => {
+      this.messages = res.messages;
+      if(res.messages.length > 0){
         this.reciever_ID = res.messages[0].sender_id;
         this.addRecID();
-        this.messages.forEach(message => {
-          if (message.attachments) {
-            try {
-              message.attachments = JSON.parse(message.attachments);
-            } catch (error) {
-              console.error('Error parsing attachments:', error);
-            }
-          }
-        });
-
       }
-    );
-}
+      this.messages.forEach((message) => {
+        if (message.attachments) {
+          try {
+            message.attachments = JSON.parse(message.attachments);
+          } catch (error) {
+            console.error("Error parsing attachments:", error);
+          }
+        }
 
-isArray(attachments: any): boolean {
-  return Array.isArray(attachments);
-}
+        if(message.valid_until){
+          this.isCancelOfferBuyer=true
+        }
 
-  addRecID(){
-    this.reciever_ID=this.messages[0].sender_id;
+        if(message.direction === 'STB'){
+          S_T_B='yes'
+        }
+        if(message.direction === 'BTS'){
+          B_T_S='yes'
+        }
+        if(message.offer_price >= 1){
+          this.isOfferShowToUserandDealer=true;
+        }
+         let useridd=localStorage.getItem('userID')
+         console.log(useridd)
+         console.log("receiver_id",message.receiver_id)
+        if(useridd == message.receiver_id){
+          console.log("useridd equal r")
+          if( message.direction == 'STB'){
+          console.log("you are a buyer")
+          this.isBuyerUser=true
+        }
+        }
+
+        if(message.action_type === 'buy_now'){
+          console.log('action type ok ')
+          this.isBuyNowFromChatCheck=true;
+        }
+
+      });
+      if(S_T_B === 'yes' && B_T_S === 'yes'){
+        this.isShowBuyNowOffer=true
+      }
+      this.getCustomOffer();
+    });
+  }
+
+  editOffer(customOfferDetails:any){
+    const dialogRef = this.dialog.open(CustomOfferComponent, {
+      width: "600px",
+      data: { customOfferDetails: customOfferDetails, param: "editComp" },
+      disableClose: true,
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if(result){
+        const formData ={
+          chat_id:this.chat_id.toString(),
+          product_id :this.messages[0].product_id,
+          action_type:'update_offer',
+          receiver_id :this.reciever_ID.toString()
+        }
+        this.http.sendMessage(formData).subscribe(
+          (res)=>{
+            this.getChatDetails()
+            this.getLatestMessage();
+            // this.http.getChatsDetails(this.chat_id).subscribe((res) => {
+            //   this.messages = res.messages;
+            //   this.reciever_ID = res.messages[0].sender_id;
+            //   this.addRecID();
+            //   this.messages.forEach((message) => {
+            //     if (message.attachments) {
+            //       try {
+            //         message.attachments = JSON.parse(message.attachments);
+            //       } catch (error) {
+            //         console.error("Error parsing attachments:", error);
+            //       }
+            //     }
+            //   });
+            //   this.getCustomOffer();
+            //   this.getLatestMessage();
+            // });
+
+          },(err)=>{
+          }
+        )   
+      }
+    });
+  }
+
+  isCustomOffer:any=false;
+  customOfferDetails:any;
+  getCustomOffer(){
+    this.http.offerByFilter(this.getProductDetails.id,this.chat_id).subscribe(
+      (res)=>{
+        this.isCustomOffer=true;
+           this.customOfferDetails=res.offer;
+      }
+    )
+  }
+
+  isArray(attachments: any): boolean {
+    return Array.isArray(attachments);
+  }
+
+  addRecID() {
+    this.reciever_ID = this.messages[0].receiver_id;
   }
 
   getDetailsofProduct(ID: any) {
@@ -129,7 +221,11 @@ isArray(attachments: any): boolean {
 
   activeOption(option: any) {
     this.isActive = option;
+    if(option === 'All'){
+      this.getLatestMessage()
+    }
   }
+  
 
   formatTime(date: string): string {
     return timeago.format(new Date(date));
@@ -140,65 +236,53 @@ isArray(attachments: any): boolean {
 
   sendMessage(): void {
     console.log("calling form buyNowProduct");
-      const formData = new FormData();
-      if (this.newMessage.trim()) {
-        formData.append("message", this.newMessage);
-      }
+    const formData = new FormData();
+    if (this.newMessage.trim()) {
+      formData.append("message", this.newMessage);
+    }
 
-      if (this.selectedImages.length > 0) {
-        this.selectedImages.forEach((file) => {
-          formData.append('attachments[]', file);
-        });
-      }
+    if (this.selectedImages.length > 0) {
+      this.selectedImages.forEach((file) => {
+        formData.append("attachments[]", file);
+      });
+    }
 
-      if (this.messages && this.messages.length > 0) {
-        formData.append("product_id", this.messages[0].product_id);
-      } else if (this.productDeatils) {
-        formData.append("product_id", this.productDeatils.id);
-      }
+    if (this.messages && this.messages.length > 0) {
+      formData.append("product_id", this.messages[0].product_id);
+    } else if (this.productDeatils) {
+      formData.append("product_id", this.productDeatils.id);
+    }
+
+    if (this.chat_id) {
+      formData.append("chat_id", this.chat_id.toString());
+    }
+
+    if (this.reciever_ID) {
+      formData.append("receiver_id", this.reciever_ID.toString());
+    } else if (!this.reciever_ID && this.productDeatils) {
+      formData.append(
+        "receiver_id",
+        this.productDeatils.created_by.id.toString()
+      );
+    }
+
+    if (this.buyNowStatus) {
+      formData.append("action_type", "buy_now");
+    }
+
+    this.http.sendMessage(formData).subscribe((res) => {
+      this.chat_id = res.data.chat_id;
 
       if (this.chat_id) {
-        formData.append("chat_id", this.chat_id.toString());
+        this.getChatDetails();
+        this.getLatestMessage();
       }
-
-      if (this.reciever_ID) {
-        formData.append("receiver_id", this.reciever_ID.toString());
-      } 
-      else if (!this.reciever_ID && this.productDeatils) {
-        formData.append("receiver_id",this.productDeatils.created_by.id.toString());
-      }
-
-      if (this.buyNowStatus) {
-        formData.append("action_type", "buy_now");
-      }
-
-      this.http.sendMessage(formData).subscribe((res) => {
-        this.chat_id = res.data.chat_id;
-
-        if (this.chat_id) {
-          this.http.getChatsDetails(this.chat_id).subscribe((res) => {
-            this.messages = res.messages;
-            this.reciever_ID = res.messages[0].sender_id;
-            this.addRecID();
-            this.messages.forEach(message => {
-              if (message.attachments) {
-                try {
-                  message.attachments = JSON.parse(message.attachments);
-                } catch (error) {
-                  console.error('Error parsing attachments:', error);
-                }
-              }
-            });
-            this.getLatestMessage();
-          });
-        }
-      });
-      this.newMessage = "";
-      this.buyNowStatus = false;
-      this.selectedImages = [];
-    
+    });
+    this.newMessage = "";
+    this.buyNowStatus = false;
+    this.selectedImages = [];
   }
-  @ViewChild('fileInput') fileInput!: ElementRef;
+  @ViewChild("fileInput") fileInput!: ElementRef;
 
   selectedImages: File[] = [];
 
@@ -226,7 +310,7 @@ isArray(attachments: any): boolean {
     }
     return this.chats.some(
       (chat) => chat.product_id === this.productDeatils.id
-    ); 
+    );
   }
 
   isBuyNow: any = false;
@@ -238,5 +322,139 @@ isArray(attachments: any): boolean {
   buyNowProduct() {
     this.buyNowStatus = true;
     this.sendMessage();
+  }
+
+  customOffer() {
+    const datawithChat_ID = {
+      reciever_ID: this.reciever_ID,
+      chat_ID: this.chat_id,
+      product_ID: this.messages[0].product_id,
+    };
+    const dialogRef = this.dialog.open(CustomOfferComponent, {
+      width: "600px",
+      data: { datawithChat_ID: datawithChat_ID, param: "chatComp" },
+      disableClose: true,
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      this.getChatDetails()
+      this.getLatestMessage();
+    });
+  }
+
+  acceptOffer(){
+    const formData={
+      offer_id:this.customOfferDetails.id,
+      offers_status:'accepted'
+    }
+
+    this.http.editOfferStatus(formData).subscribe(
+      (res)=>{
+        this.alertService.showAlert('success','Product Sold Succesfully')
+      },(err)=>{
+        this.alertService.showAlert('danger','Error in Product Sold')
+      }
+    );
+  }
+
+// assign this object true when click buyer 'Buy Now' and dealer get option 'Add Shipping' when this object is true also update this when buyer buy product
+  isBuyNowFromChatCheck:boolean=false;
+
+  buyNowFromChat(){
+      const formData ={
+        product_id:this.messages[0].product_id,
+        chat_id:this.chat_id,
+        receiver_id:this.reciever_ID,
+        action_type:'buy_now'
+
+      }
+    this.http.sendMessage(formData).subscribe(
+      (res)=>{
+        this.chat_id = res.messages.chat_id;
+        if(res.messages.action_type === 'buy_now'){
+          this.isBuyNowFromChatCheck=true;
+        }
+        if(this.chat_id){
+          this.getChatDetails();
+          this.getLatestMessage();
+        }
+      }
+    )
+  }
+
+
+  createOfferFromChat(){
+     this.customOffer()
+  }
+
+
+  MarkAsSoldfromChat(){
+    const formData ={
+      product_id:this.messages[0].product_id,
+      chat_id:this.chat_id,
+      receiver_id:this.reciever_ID,
+      action_type:'mark_sold'
+
+    }
+    this.http.sendMessage(formData).subscribe(
+      (res)=>{
+        this.chat_id = res.messages.chat_id;
+        // if(res.messages.action_type === 'buy_now'){
+        //   this.isBuyNowFromChatCheck=true;
+        // }
+        if(this.chat_id){
+          this.getChatDetails();
+          this.getLatestMessage();
+        }
+      }
+    )
+  }
+
+  isCancelOfferBuyer:boolean=false;
+
+  addShippingFromChat(){
+    const dialogRef = this.dialog.open(AddShippingComponent, {
+      width: "600px",
+      disableClose: true,
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log(result)
+      if(result){
+        const formData = {
+          chat_id: this.chat_id,
+          ship_price: result.formData.ship_price,
+          product_id: this.messages[0].product_id,
+          sender_id: localStorage.getItem('userID'),
+          receiver_id: this.reciever_ID,
+          validity_days: result.formData.validity_days
+        }
+        this.http.sendShipmenttoBuyer(formData).subscribe(
+          (res)=>{
+            this.isCancelOfferBuyer=true
+            this.getChatDetails();
+            this.getLatestMessage();
+          }
+        )
+      }
+    });
+  }
+  cancelOffer(){
+    const formData ={
+      product_id:this.messages[0].product_id,
+      chat_id:this.chat_id,
+      receiver_id:this.reciever_ID,
+      action_type:'cancel_order'
+
+    }
+    this.http.sendMessage(formData).subscribe(
+      (res)=>{
+        this.chat_id = res.messages.chat_id;
+        if(this.chat_id){
+          this.getChatDetails();
+          this.getLatestMessage();
+        }
+      }
+    )
   }
 }

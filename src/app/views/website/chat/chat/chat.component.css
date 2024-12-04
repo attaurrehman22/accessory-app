@@ -134,3 +134,20 @@ input.form-control {
 .input-group {
     width: 95%;
 }
+
+.initials {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: #ccc;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+  }
+
+  .attachment-stl {
+    max-width: 350px;
+    max-height: 300px;
+  }

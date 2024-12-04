@@ -1,0 +1,151 @@
+import { Component, Inject } from "@angular/core";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
+import { AlertsServicesService } from "src/services/alerts-service/alerts-services.service";
+import { HttpService } from "src/services/http/http.service";
+
+@Component({
+  selector: "app-custom-offer",
+  templateUrl: "./custom-offer.component.html",
+  styleUrls: ["./custom-offer.component.css"],
+})
+export class CustomOfferComponent {
+  offerForm: FormGroup;
+  compoName: any;
+  isSeller: boolean = false;
+  offerID: any;
+  constructor(
+    private fb: FormBuilder,
+    private alertService: AlertsServicesService,
+    private http: HttpService,
+    public dialogRef: MatDialogRef<CustomOfferComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any
+  ) {
+    this.compoName = this.data.param;
+    console.log("Product Detail:", this.data);
+    this.offerForm = this.fb.group({
+      offer_price: [null, [Validators.required, Validators.min(0)]],
+      product_id: [0],
+      sender_id: [0],
+      chat_id: [null],
+    });
+
+    if (this.compoName === "editComp") {
+      this.offerForm.addControl(
+        "ship_price",
+        this.fb.control(null, Validators.required)
+      );
+      this.offerForm.addControl(
+        "offer_id",
+        this.fb.control(null, Validators.required)
+      );
+      this.offerForm.addControl(
+        "validity_days",
+        this.fb.control(null, Validators.required)
+      );
+      const productDetail = this.data?.customOfferDetails;
+      if (productDetail !== null) {
+        this.offerForm.patchValue({
+          product_id: productDetail.product_id || 0,
+          sender_id: localStorage.getItem("userID") || 0,
+          offer_id: Number(productDetail.id) || 0,
+          offer_price: Number(productDetail.offer_price) || 0,
+          ship_price: productDetail.ship_price || 0,
+          // validity_days: productDetail.offer_price || 0,
+        });
+      }
+      if (productDetail !== null) {
+        this.offerID = productDetail.id;
+        let val = localStorage.getItem("userID");
+        console.log("val = ", val);
+        console.log("productDetail.sender.id = ", productDetail.sender.id);
+        if (productDetail.sender.id != val) {
+          this.isSeller = true;
+        } else {
+          this.isSeller = false;
+        }
+      }
+    } else {
+      if (this.data.param === "buyComp") {
+        const productDetail = this.data?.productDetail || {};
+        if (productDetail) {
+          this.offerForm.patchValue({
+            product_id: productDetail.id || 0,
+            sender_id: localStorage.getItem("userID") || 0,
+          });
+        }
+      } else {
+        const productDetail1 = this.data?.datawithChat_ID || {};
+        if (productDetail1 !== null) {
+          this.offerForm.patchValue({
+            product_id: productDetail1.product_ID || 0,
+            sender_id: localStorage.getItem("userID") || 0,
+          });
+        }
+      }
+    }
+  }
+
+  onSendOffer(): void {
+    if (this.compoName === "editComp") {
+      if (this.offerForm.valid) {
+        this.http.editOffer(this.offerForm.value).subscribe(
+          (res) => {
+            this.alertService.showAlert("success", "Offer Update Succesfully");
+            this.dialogRef.close(this.offerForm.value);
+          },
+          (err) => {
+            this.alertService.showAlert("danger", "Error in Updating offer");
+          }
+        );
+      } else {
+        this.alertService.showAlert("warning", "Form is invalid!");
+      }
+    } else {
+      if (this.offerForm.valid) {
+        this.http.sendOffer(this.offerForm.value).subscribe(
+          (res) => {
+            this.alertService.showAlert(
+              "success",
+              "Custom offer create Succesfully"
+            );
+            this.dialogRef.close(this.offerForm.value);
+          },
+          (err) => {
+            this.alertService.showAlert(
+              "danger",
+              "Error in creating custom offer"
+            );
+          }
+        );
+      } else {
+        this.alertService.showAlert("warning", "Form is invalid!");
+      }
+    }
+  }
+
+  markAsSold() {
+    const formData = {
+      offer_id: this.offerID,
+      offers_status: "accepted",
+    };
+
+    console.log("formData   ==---- 90909090  ", formData);
+    this.http.editOfferStatus(formData).subscribe(
+      (res) => {
+        this.alertService.showAlert(
+          "success",
+          "Product Mark as Sold Succesfully"
+        );
+        this.dialogRef.close(this.offerForm.value);
+      },
+      (err) => {
+        this.alertService.showAlert("danger", "Error in Product Mark as Sold");
+      }
+    );
+  }
+
+  onCancel(): void {
+    this.dialogRef.close();
+  }
+}

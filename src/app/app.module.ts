@@ -76,6 +76,9 @@ import { BrandsListComponent } from './views/website/brands-list/brands-list.com
 import { PositiveNumberDirective } from 'src/directives/positiveNumberDirective/positive-number.directive';
 import {MatRadioModule} from '@angular/material/radio';
 import { ChatComponent } from './views/website/chat/chat/chat.component';
+import { CustomOfferComponent } from './views/modal/custom-offer/custom-offer.component';
+import { AddShippingComponent } from './views/modal/add-shipping/add-shipping.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -112,7 +115,9 @@ import { ChatComponent } from './views/website/chat/chat/chat.component';
     AdminCategoryProductComponent,
     BrandsListComponent,
     PositiveNumberDirective,
-    ChatComponent
+    ChatComponent,
+    CustomOfferComponent,
+    AddShippingComponent
   ],
   imports: [
     MatSortModule,

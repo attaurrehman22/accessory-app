@@ -6,6 +6,7 @@ import { HttpService } from "src/services/http/http.service";
 import { ModelLoginComponent } from "../../auth/model-login/model-login.component";
 import { TranslateService } from "@ngx-translate/core";
 import { LanguageService } from "src/services/lang-service/language.service";
+import { CustomOfferComponent } from "../../modal/custom-offer/custom-offer.component";
 
 @Component({
   selector: "app-buy-product-component",
@@ -295,10 +296,45 @@ export class BuyProductComponentComponent implements OnInit {
       dialogRef.afterClosed().subscribe((result) => {
         if (result) {
           this.router.navigate(["/chat"], {
-            state: { data: this.productDetails },
+            state: { data: this.productDetails},
           });
         }
       });
     }
+  }
+
+
+
+  makeanOffer(){
+    const isUserLogin = localStorage.getItem("isLoggedIn");
+    if(!isUserLogin) {
+      const dialogRef = this.dialog.open(ModelLoginComponent, {
+        width: "600px",
+        data: { message: "dialog-box" },
+      });
+
+      dialogRef.afterClosed().subscribe((result) => {
+        if (result) {
+         this.openDialogForCustomOffer()
+        }
+      });
+    }else{
+      this.openDialogForCustomOffer()
+    }
+  }
+
+
+  openDialogForCustomOffer(){
+    const dialogRef = this.dialog.open(CustomOfferComponent, {
+      width: "600px",
+      data: { productDetail: this.productDetails,param:'buyComp' },
+      disableClose:true
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.router.navigate(["/chat"]);
+      }
+    });
   }
 }
