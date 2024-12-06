@@ -92,15 +92,16 @@ export class ChatComponent implements OnInit, AfterViewChecked {
   }
 
   isOfferShowToUserandDealer:boolean=false;
-
+  isShowPaymentMethod:boolean=false;
+  isShowMarkAsSold:boolean=false;
+  isShowCancelOffertoBuyer:boolean=false;
   getChatDetails(){
     let S_T_B='';
     let B_T_S='';
     this.http.getChatsDetails(this.chat_id).subscribe((res) => {
       this.messages = res.messages;
-      if(res.messages.length > 0){
+      if(res.messages.length > 0 && !this.reciever_ID){
         this.reciever_ID = res.messages[0].sender_id;
-        this.addRecID();
       }
       this.messages.forEach((message) => {
         if (message.attachments) {
@@ -110,7 +111,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
             console.error("Error parsing attachments:", error);
           }
         }
-
+        
         if(message.valid_until){
           this.isCancelOfferBuyer=true
         }
@@ -125,8 +126,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
           this.isOfferShowToUserandDealer=true;
         }
          let useridd=localStorage.getItem('userID')
-         console.log(useridd)
-         console.log("receiver_id",message.receiver_id)
+
         if(useridd == message.receiver_id){
           console.log("useridd equal r")
           if( message.direction == 'STB'){
@@ -138,6 +138,18 @@ export class ChatComponent implements OnInit, AfterViewChecked {
         if(message.action_type === 'buy_now'){
           console.log('action type ok ')
           this.isBuyNowFromChatCheck=true;
+        }
+
+        if(message.action_type === 'add_shipping'){
+          this.isShowPaymentMethod=true;
+        }
+
+        if(message.action_type === 'mark_sold'){
+          this.isShowMarkAsSold=true;
+        }
+
+        if(message.action_type === 'update_offer'){
+          this.isShowCancelOffertoBuyer=true;
         }
 
       });
@@ -167,23 +179,6 @@ export class ChatComponent implements OnInit, AfterViewChecked {
           (res)=>{
             this.getChatDetails()
             this.getLatestMessage();
-            // this.http.getChatsDetails(this.chat_id).subscribe((res) => {
-            //   this.messages = res.messages;
-            //   this.reciever_ID = res.messages[0].sender_id;
-            //   this.addRecID();
-            //   this.messages.forEach((message) => {
-            //     if (message.attachments) {
-            //       try {
-            //         message.attachments = JSON.parse(message.attachments);
-            //       } catch (error) {
-            //         console.error("Error parsing attachments:", error);
-            //       }
-            //     }
-            //   });
-            //   this.getCustomOffer();
-            //   this.getLatestMessage();
-            // });
-
           },(err)=>{
           }
         )   
@@ -193,11 +188,15 @@ export class ChatComponent implements OnInit, AfterViewChecked {
 
   isCustomOffer:any=false;
   customOfferDetails:any;
+  isOfferStatusAccepted:boolean=false;
   getCustomOffer(){
     this.http.offerByFilter(this.getProductDetails.id,this.chat_id).subscribe(
       (res)=>{
         this.isCustomOffer=true;
-           this.customOfferDetails=res.offer;
+        this.customOfferDetails=res.offer;
+        if(res.offer.offers_status === 'accepted'){
+          this.isOfferStatusAccepted=true
+        }
       }
     )
   }
@@ -206,9 +205,9 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     return Array.isArray(attachments);
   }
 
-  addRecID() {
-    this.reciever_ID = this.messages[0].receiver_id;
-  }
+  // addRecID() {
+  //   this.reciever_ID = this.messages[0].receiver_id;
+  // }
 
   getDetailsofProduct(ID: any) {
     this.http.getProductsByID(ID).subscribe((res) => {
@@ -235,7 +234,6 @@ export class ChatComponent implements OnInit, AfterViewChecked {
   }
 
   sendMessage(): void {
-    console.log("calling form buyNowProduct");
     const formData = new FormData();
     if (this.newMessage.trim()) {
       formData.append("message", this.newMessage);
@@ -258,8 +256,12 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     }
 
     if (this.reciever_ID) {
+
       formData.append("receiver_id", this.reciever_ID.toString());
-    } else if (!this.reciever_ID && this.productDeatils) {
+    } 
+    else if (!this.reciever_ID && this.productDeatils) {
+      this.reciever_ID=this.productDeatils.created_by.id
+      console.log("this.reciever_ID=this.productDeatils.created_by.id",this.reciever_ID=this.productDeatils.created_by.id)
       formData.append(
         "receiver_id",
         this.productDeatils.created_by.id.toString()
@@ -272,11 +274,8 @@ export class ChatComponent implements OnInit, AfterViewChecked {
 
     this.http.sendMessage(formData).subscribe((res) => {
       this.chat_id = res.data.chat_id;
-
-      if (this.chat_id) {
         this.getChatDetails();
         this.getLatestMessage();
-      }
     });
     this.newMessage = "";
     this.buyNowStatus = false;
@@ -342,15 +341,42 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     });
   }
 
+
+  cancelOfferStatus(){
+    const formData={
+      offer_id:this.customOfferDetails.id,
+      offers_status:'canceled',
+      sender_id:localStorage.getItem('userID'),
+      receiver_id:this.reciever_ID,
+      chat_id:this.chat_id
+    }
+
+    this.http.editOfferStatus(formData).subscribe(
+      (res)=>{
+        this.alertService.showAlert('success','Offer Canceled Succesfully')
+        this.getChatDetails()
+        this.getLatestMessage()
+      },(err)=>{
+        this.alertService.showAlert('danger','Error in Offer Canceling')
+      }
+    );
+  }
+
+
   acceptOffer(){
     const formData={
       offer_id:this.customOfferDetails.id,
-      offers_status:'accepted'
+      offers_status:'accepted',
+      sender_id:localStorage.getItem('userID'),
+      receiver_id:this.reciever_ID,
+      chat_id:this.chat_id
     }
 
     this.http.editOfferStatus(formData).subscribe(
       (res)=>{
         this.alertService.showAlert('success','Product Sold Succesfully')
+        this.getChatDetails()
+        this.getLatestMessage()
       },(err)=>{
         this.alertService.showAlert('danger','Error in Product Sold')
       }
@@ -446,6 +472,25 @@ export class ChatComponent implements OnInit, AfterViewChecked {
       receiver_id:this.reciever_ID,
       action_type:'cancel_order'
 
+    }
+    this.http.sendMessage(formData).subscribe(
+      (res)=>{
+        this.chat_id = res.messages.chat_id;
+        if(this.chat_id){
+          this.getChatDetails();
+          this.getLatestMessage();
+        }
+      }
+    )
+  }
+
+
+  makePayment(){
+    const formData ={
+      product_id:this.messages[0].product_id,
+      chat_id:this.chat_id,
+      receiver_id:this.reciever_ID,
+      action_type:'make_payment'
     }
     this.http.sendMessage(formData).subscribe(
       (res)=>{

@@ -161,6 +161,8 @@
     <!-- Right Section: Chat window -->
     <div class="col-md-8">
       <div class="card">
+
+        <!-- // dealer deatail of top first row -->
         <div
           class="card-header d-flex flex-wrap justify-content-between"
           style="background: #f9fafb"
@@ -201,6 +203,7 @@
           </div>
         </div>
 
+        <!-- // Product deatail of Second first row -->
         <div
           class="card-header d-flex flex-wrap justify-content-between card-header-bottom"
           *ngIf="getProductDetails"
@@ -244,6 +247,8 @@
           </div>
         </div>
 
+
+        <!-- // Message deatail -->
         <div class="card-body" style="height: 480px; overflow-y: scroll">
           <div *ngIf="messages">
             <div *ngFor="let message of reversedMessages">
@@ -254,7 +259,7 @@
               >
                 <div class="message-content">
                   <p>{{ message.message }}</p>
-                 
+                  <p *ngIf="isShowMarkAsSold && isBuyerUser && message.action_type === 'mark_sold'">Seller has change Status of Product as 'Mark as Sold'</p>
 
                   <div class="d-flex gap-2" *ngIf="message.attachments">
                     <img *ngIf="!isArray(message.attachments)" 
@@ -274,6 +279,7 @@
                 </div>
               </div>
             </div>
+
             <div *ngIf="isCustomOffer && isOfferShowToUserandDealer" class="col-md-8">
                 <div class="d-flex flex-column card p-2">
                   <div style="background: #F9FAFB;" class="d-flex align-items-baseline">
@@ -301,14 +307,18 @@
                     <p>{{customOfferDetails.offer_price}}</p>
                   </div>
                   <div class="d-flex justify-content-center mt-3 gap-5">
-                    <button (click)="editOffer(customOfferDetails)" style="border: none;background: none;font-size: 14px;font-weight: 600;color: #909090;border-right: 1px solid #E6ECF1">Edit Offer</button>
-                    <button (click)="acceptOffer()" style="border: none;background: none;font-size: 14px;font-weight: 600;color: #242424;">Accept Offer</button>
+                    <button *ngIf="isBuyerUser && isShowCancelOffertoBuyer"  (click)="cancelOfferStatus()" style="border: none;background: none;font-size: 14px;font-weight: 600;color: #909090;border-right: 1px solid #E6ECF1">Cancel Offer</button>
+                    <button *ngIf="!isBuyerUser"  (click)="editOffer(customOfferDetails)" style="border: none;background: none;font-size: 14px;font-weight: 600;color: #909090;border-right: 1px solid #E6ECF1">Edit Offer</button>
+                    <button *ngIf="!isOfferStatusAccepted && isBuyerUser"  (click)="acceptOffer()" style="border: none;background: none;font-size: 14px;font-weight: 600;color: #242424;">Accept Offer</button>
+
+                    <button *ngIf="isBuyerUser && isOfferStatusAccepted" style="border: none;background: none;font-size: 14px;font-weight: 600;color: #242424;" (click)="makePayment()">Make Payment</button>
+
                   </div>
                 </div>
             </div>
 
 
-            <div *ngIf="isShowBuyNowOffer " class="col-md-8">
+            <div *ngIf="!isCustomOffer && isShowBuyNowOffer" class="col-md-8">
               <div *ngIf="isBuyerUser && !isBuyNowFromChatCheck" class="d-flex flex-column card p-2">
                 <div style="border-bottom: 1px solid #F2F5F8;" class="d-flex justify-content-between align-items-center">
                   <p>Satisfied with the response? Close your deal now with the seller</p>
@@ -318,6 +328,7 @@
                   <button style="border: none;background: none;font-size: 14px;font-weight: 600;color: #242424;" (click)="buyNowFromChat()">Buy Now</button>
                 </div>
               </div>
+
               <div *ngIf="!isBuyerUser && isBuyNowFromChatCheck"  class="d-flex flex-column card p-2">
                 <div style="border-bottom: 1px solid #F2F5F8;" class="d-flex justify-content-between align-items-center">
                   <p>Buyer Initiated the order, please confirm watch availability and add shipping charges</p>
@@ -328,8 +339,23 @@
                 </div>
               </div>
           </div>
-          <button (click)="cancelOffer()" *ngIf="isCancelOfferBuyer" style="border: none;background: none;font-size: 14px;font-weight: 600;color: #909090;border-right: 1px solid #E6ECF1" >Cancel Offer</button>
 
+          <div *ngIf="isShowPaymentMethod && isBuyerUser" class="col-md-8">
+            <!-- // when buyer satisfied with product and dealer and 'Buy Now' and after 'Buy Now' dealer add shipping price then this section show message to buyer 'Add Payment' or 'Cancel Order' -->
+
+            <div class="d-flex flex-column card p-2">
+              <div style="border-bottom: 1px solid #F2F5F8;" class="d-flex justify-content-between align-items-center">
+                <p>Seller has confirmed the order. Please make your payment to complete the order</p>
+              </div>
+              <div class="d-flex justify-content-center mt-3 gap-5">
+                <button style="border: none;background: none;font-size: 14px;font-weight: 600;color: #909090;border-right: 1px solid #E6ECF1" (click)="cancelOffer()">Cancel Order</button>
+                <button style="border: none;background: none;font-size: 14px;font-weight: 600;color: #242424;" (click)="makePayment()">Make Payment</button>
+              </div>
+            </div>
+          </div>
+
+
+          
             <div *ngIf="isBuyNow" class="d-flex justify-content-center">
               <div class="card" style="width: 60%;background: #F9FAFB;">
                 <div class="text-center">
