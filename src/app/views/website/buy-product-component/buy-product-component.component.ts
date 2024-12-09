@@ -333,7 +333,7 @@ export class BuyProductComponentComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this.router.navigate(["/chat"]);
+        // this.router.navigate(["/chat"]);
       }
     });
   }

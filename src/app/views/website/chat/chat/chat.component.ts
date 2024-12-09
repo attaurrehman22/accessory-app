@@ -85,23 +85,30 @@ export class ChatComponent implements OnInit, AfterViewChecked {
   isBuyerUser:boolean=false;
 
   getMesageDetails(param: any) {
-    console.log("param", param);
     this.chat_id = param.chat_id;
     this.getProductDetails = param.product;
-   this.getChatDetails() 
+    this.getChatDetails() 
   }
 
   isOfferShowToUserandDealer:boolean=false;
   isShowPaymentMethod:boolean=false;
   isShowMarkAsSold:boolean=false;
   isShowCancelOffertoBuyer:boolean=false;
+  offerTypeStatus:boolean=false;
+
   getChatDetails(){
     let S_T_B='';
     let B_T_S='';
     this.http.getChatsDetails(this.chat_id).subscribe((res) => {
       this.messages = res.messages;
       if(res.messages.length > 0 && !this.reciever_ID){
-        this.reciever_ID = res.messages[0].sender_id;
+        let useridd=localStorage.getItem('userID')
+        console.log("let useridd",useridd)
+          if(useridd == res.messages[0]?.sender_id){
+            this.reciever_ID = res.messages[0]?.receiver_id;
+          }else{
+          this.reciever_ID = res.messages[0]?.sender_id;
+          }
       }
       this.messages.forEach((message) => {
         if (message.attachments) {
@@ -128,15 +135,17 @@ export class ChatComponent implements OnInit, AfterViewChecked {
          let useridd=localStorage.getItem('userID')
 
         if(useridd == message.receiver_id){
-          console.log("useridd equal r")
           if( message.direction == 'STB'){
-          console.log("you are a buyer")
-          this.isBuyerUser=true
+            this.isBuyerUser=true
+          }
         }
+        
+        if(!this.isBuyerUser){
+          if(message.direction === 'BTB' && useridd === message.sender_id){
+              this.isBuyerUser=true
+          }
         }
-
         if(message.action_type === 'buy_now'){
-          console.log('action type ok ')
           this.isBuyNowFromChatCheck=true;
         }
 
@@ -150,6 +159,10 @@ export class ChatComponent implements OnInit, AfterViewChecked {
 
         if(message.action_type === 'update_offer'){
           this.isShowCancelOffertoBuyer=true;
+        }
+
+        if(message.action_type === 'offer'){
+          this.isCustomOffer=true;
         }
 
       });
@@ -186,7 +199,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     });
   }
 
-  isCustomOffer:any=false;
+  isCustomOffer:boolean=false;
   customOfferDetails:any;
   isOfferStatusAccepted:boolean=false;
   getCustomOffer(){
@@ -204,10 +217,6 @@ export class ChatComponent implements OnInit, AfterViewChecked {
   isArray(attachments: any): boolean {
     return Array.isArray(attachments);
   }
-
-  // addRecID() {
-  //   this.reciever_ID = this.messages[0].receiver_id;
-  // }
 
   getDetailsofProduct(ID: any) {
     this.http.getProductsByID(ID).subscribe((res) => {

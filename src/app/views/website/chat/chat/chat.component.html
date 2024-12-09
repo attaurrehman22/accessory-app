@@ -256,6 +256,7 @@
                 class="message"
                 [class.received]="message.direction === 'STB'"
                 [class.sent]="message.direction === 'BTS'"
+                
               >
                 <div class="message-content">
                   <p>{{ message.message }}</p>
@@ -274,48 +275,50 @@
                            alt="Attachment">
                     </div>
                   </div>
+
+                  <div *ngIf="isCustomOffer && isOfferShowToUserandDealer && message.action_type" class="col-md-12">
+                    <div class="d-flex flex-column card p-2">
+                      <div style="background: #F9FAFB;" class="d-flex align-items-baseline">
+                        <ng-container *ngIf="customOfferDetails.sender.img; else showInitials">
+                          <img [src]="'https://api.chronosouq.com/' + customOfferDetails.sender.img" alt="IMG"/>
+                        </ng-container>
+                        <ng-template #showInitials>
+                          <div class="initials">
+                            {{ customOfferDetails.sender.name | slice:0:2 }}
+                          </div>
+                        </ng-template>
+                        <p class="mx-2">Custom Offer</p>
+                      </div>
+                      
+                      <div class="d-flex justify-content-between align-items-center">
+                        <p>Listing ID</p>
+                        <p>{{customOfferDetails.product.serial_no}}</p>
+                      </div>
+                      <div style="border-bottom: 1px solid #F2F5F8;" class="d-flex justify-content-between align-items-center">
+                        <p>Add Price</p>
+                        <p>{{customOfferDetails.product.price}}</p>
+                      </div>
+                      <div style="border-bottom: 1px solid #F2F5F8;" class="d-flex justify-content-between align-items-center">
+                        <p>Custom Offer</p>
+                        <p>{{message.offer_price}}</p>
+                      </div>
+                      <div class="d-flex justify-content-center mt-3 gap-5">
+                        <button *ngIf="!isBuyerUser || isBuyerUser  && !isOfferStatusAccepted || isOfferStatusAccepted" (click)="cancelOfferStatus()" class="first-action-btn">Cancel Offer</button>
+                        <button *ngIf="!isBuyerUser" (click)="editOffer(customOfferDetails)" class="first-action-btn">Edit Offer</button>
+                        <button *ngIf="!isOfferStatusAccepted && isBuyerUser" (click)="acceptOffer()" class="second-action-btn">Accept Offer</button>
+    
+                        <button *ngIf="isBuyerUser && isOfferStatusAccepted" class="second-action-btn" (click)="makePayment()">Make Payment</button>
+    
+                      </div>
+                    </div>
+                </div>
                   
                   <small>{{ message.created_at | date : "shortTime" }}</small>
                 </div>
               </div>
             </div>
 
-            <div *ngIf="isCustomOffer && isOfferShowToUserandDealer" class="col-md-8">
-                <div class="d-flex flex-column card p-2">
-                  <div style="background: #F9FAFB;" class="d-flex align-items-baseline">
-                    <ng-container *ngIf="customOfferDetails.sender.img; else showInitials">
-                      <img [src]="'https://api.chronosouq.com/' + customOfferDetails.sender.img" alt="IMG"/>
-                    </ng-container>
-                    <ng-template #showInitials>
-                      <div class="initials">
-                        {{ customOfferDetails.sender.name | slice:0:2 }}
-                      </div>
-                    </ng-template>
-                    <p class="mx-2">Custom Offer</p>
-                  </div>
-                  
-                  <div class="d-flex justify-content-between align-items-center">
-                    <p>Listing ID</p>
-                    <p>{{customOfferDetails.product.serial_no}}</p>
-                  </div>
-                  <div style="border-bottom: 1px solid #F2F5F8;" class="d-flex justify-content-between align-items-center">
-                    <p>Add Price</p>
-                    <p>{{customOfferDetails.product.price}}</p>
-                  </div>
-                  <div style="border-bottom: 1px solid #F2F5F8;" class="d-flex justify-content-between align-items-center">
-                    <p>Custom Offer</p>
-                    <p>{{customOfferDetails.offer_price}}</p>
-                  </div>
-                  <div class="d-flex justify-content-center mt-3 gap-5">
-                    <button *ngIf="isBuyerUser && isShowCancelOffertoBuyer"  (click)="cancelOfferStatus()" style="border: none;background: none;font-size: 14px;font-weight: 600;color: #909090;border-right: 1px solid #E6ECF1">Cancel Offer</button>
-                    <button *ngIf="!isBuyerUser"  (click)="editOffer(customOfferDetails)" style="border: none;background: none;font-size: 14px;font-weight: 600;color: #909090;border-right: 1px solid #E6ECF1">Edit Offer</button>
-                    <button *ngIf="!isOfferStatusAccepted && isBuyerUser"  (click)="acceptOffer()" style="border: none;background: none;font-size: 14px;font-weight: 600;color: #242424;">Accept Offer</button>
-
-                    <button *ngIf="isBuyerUser && isOfferStatusAccepted" style="border: none;background: none;font-size: 14px;font-weight: 600;color: #242424;" (click)="makePayment()">Make Payment</button>
-
-                  </div>
-                </div>
-            </div>
+           
 
 
             <div *ngIf="!isCustomOffer && isShowBuyNowOffer" class="col-md-8">
@@ -324,8 +327,8 @@
                   <p>Satisfied with the response? Close your deal now with the seller</p>
                 </div>
                 <div class="d-flex justify-content-center mt-3 gap-5">
-                  <button style="border: none;background: none;font-size: 14px;font-weight: 600;color: #909090;border-right: 1px solid #E6ECF1" (click)="createOfferFromChat()">Create Offer</button>
-                  <button style="border: none;background: none;font-size: 14px;font-weight: 600;color: #242424;" (click)="buyNowFromChat()">Buy Now</button>
+                  <button class="first-action-btn " (click)="createOfferFromChat()">Create Offer</button>
+                  <button class="second-action-btn" (click)="buyNowFromChat()">Buy Now</button>
                 </div>
               </div>
 
@@ -334,8 +337,8 @@
                   <p>Buyer Initiated the order, please confirm watch availability and add shipping charges</p>
                 </div>
                 <div class="d-flex justify-content-center mt-3 gap-5">
-                  <button style="border: none;background: none;font-size: 14px;font-weight: 600;color: #909090;border-right: 1px solid #E6ECF1" (click)="MarkAsSoldfromChat()">Mark as Sold</button>
-                  <button style="border: none;background: none;font-size: 14px;font-weight: 600;color: #242424;" (click)="addShippingFromChat()">Add Shipping</button>
+                  <button class="first-action-btn " (click)="MarkAsSoldfromChat()">Mark as Sold</button>
+                  <button class="second-action-btn" (click)="addShippingFromChat()">Add Shipping</button>
                 </div>
               </div>
           </div>
@@ -348,8 +351,8 @@
                 <p>Seller has confirmed the order. Please make your payment to complete the order</p>
               </div>
               <div class="d-flex justify-content-center mt-3 gap-5">
-                <button style="border: none;background: none;font-size: 14px;font-weight: 600;color: #909090;border-right: 1px solid #E6ECF1" (click)="cancelOffer()">Cancel Order</button>
-                <button style="border: none;background: none;font-size: 14px;font-weight: 600;color: #242424;" (click)="makePayment()">Make Payment</button>
+                <button class="first-action-btn " (click)="cancelOffer()">Cancel Order</button>
+                <button class="second-action-btn" (click)="makePayment()">Make Payment</button>
               </div>
             </div>
           </div>
@@ -365,9 +368,9 @@
                   </p>
                 </div>
                 <div class="d-flex justify-content-center gap-5">
-                  <button (click)="cancelOffer()" *ngIf="isCancelOfferBuyer" style="border: none;background: none;font-size: 14px;font-weight: 600;color: #909090;border-right: 1px solid #E6ECF1" >Cancel Offer</button>
-                  <button (click)="customOffer()" *ngIf="!isCancelOfferBuyer" style="border: none;background: none;font-size: 14px;font-weight: 600;color: #909090;border-right: 1px solid #E6ECF1">Create Offer</button>
-                  <button (click)="buyNowProduct()" style="border: none;background: none;font-size: 14px;font-weight: 600;color: #242424;">Buy Now</button>
+                  <button (click)="cancelOffer()" *ngIf="isCancelOfferBuyer" class="first-action-btn " >Cancel Offer</button>
+                  <button (click)="customOffer()" *ngIf="!isCancelOfferBuyer" class="first-action-btn ">Create Offer</button>
+                  <button (click)="buyNowProduct()" class="second-action-btn">Buy Now</button>
                 </div>
               </div>
             </div>

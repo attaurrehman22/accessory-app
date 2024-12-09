@@ -131,6 +131,7 @@
 input.form-control {
     margin-right: 10px;
 }
+
 .input-group {
     width: 95%;
 }
@@ -145,9 +146,26 @@ input.form-control {
     justify-content: center;
     align-items: center;
     font-weight: bold;
-  }
+}
 
-  .attachment-stl {
+.attachment-stl {
     max-width: 350px;
     max-height: 300px;
-  }
+}
+
+.first-action-btn {
+    border: none;
+    background: none;
+    font-size: 14px;
+    font-weight: 600;
+    color: #909090;
+    border-right: 1px solid #E6ECF1
+}
+
+.second-action-btn {
+    border: none;
+    background: none;
+    font-size: 14px;
+    font-weight: 600;
+    color: #242424;
+}
