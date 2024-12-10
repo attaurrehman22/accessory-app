@@ -124,7 +124,10 @@ export class RegisterComponent implements OnInit {
             localStorage.setItem("user_token", response.authorisation.token);
             localStorage.setItem('userType',response.user.type)
             localStorage.setItem("userID", response.user.id);
-            this.router.navigateByUrl("");
+            // this.router.navigateByUrl("");
+            this.router.navigateByUrl("").then(() => {
+              window.location.reload();
+            });
           },
           (error) => {
             console.error("Registration error", error);

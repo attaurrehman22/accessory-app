@@ -409,7 +409,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
         if(res.messages.action_type === 'buy_now'){
           this.isBuyNowFromChatCheck=true;
         }
-        if(this.chat_id){
+        if(res){
           this.getChatDetails();
           this.getLatestMessage();
         }
