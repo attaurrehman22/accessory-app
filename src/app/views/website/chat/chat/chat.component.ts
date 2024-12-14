@@ -1,7 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from "@angular/core";
 import { Router } from "@angular/router";
 import { HttpService } from "src/services/http/http.service";
-// import { TimeAgoPipe } from 'time-ago-pipe';
 import * as timeago from "timeago.js";
 import { AfterViewChecked } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
@@ -95,6 +94,8 @@ export class ChatComponent implements OnInit, AfterViewChecked {
   isShowMarkAsSold:boolean=false;
   isShowCancelOffertoBuyer:boolean=false;
   offerTypeStatus:boolean=false;
+  isExistMakePayment:boolean=true;
+  isActionTypeMakePaymentToHideCustomOffer:boolean=false;
 
   getChatDetails(){
     let S_T_B='';
@@ -104,11 +105,17 @@ export class ChatComponent implements OnInit, AfterViewChecked {
       if(res.messages.length > 0 && !this.reciever_ID){
         let useridd=localStorage.getItem('userID')
         console.log("let useridd",useridd)
+        // this.reciever_ID = res.messages[1]?.receiver_id;
           if(useridd == res.messages[0]?.sender_id){
+            console.log("hellollllllllll")
             this.reciever_ID = res.messages[0]?.receiver_id;
-          }else{
-          this.reciever_ID = res.messages[0]?.sender_id;
+          }else if (res.messages[0]?.receiver_id === null){
+            this.reciever_ID = res.messages[1]?.receiver_id;
           }
+          else{
+            this.reciever_ID = res.messages[0]?.sender_id;
+          }
+          console.log("reciever ID",this.reciever_ID)
       }
       this.messages.forEach((message) => {
         if (message.attachments) {
@@ -117,6 +124,10 @@ export class ChatComponent implements OnInit, AfterViewChecked {
           } catch (error) {
             console.error("Error parsing attachments:", error);
           }
+        }
+
+        if(message.action_type === 'make_payment'){
+          this.isExistMakePayment=false
         }
         
         if(message.valid_until){
@@ -137,12 +148,16 @@ export class ChatComponent implements OnInit, AfterViewChecked {
         if(useridd == message.receiver_id){
           if( message.direction == 'STB'){
             this.isBuyerUser=true
+          }else{
+            this.isBuyerUser=false
           }
         }
         
         if(!this.isBuyerUser){
           if(message.direction === 'BTB' && useridd === message.sender_id){
               this.isBuyerUser=true
+          }else{
+            this.isBuyerUser=false
           }
         }
         if(message.action_type === 'buy_now'){
@@ -165,6 +180,10 @@ export class ChatComponent implements OnInit, AfterViewChecked {
           this.isCustomOffer=true;
         }
 
+        if(message.action_type === 'make_payment'){
+          this.isActionTypeMakePaymentToHideCustomOffer=true;
+        }
+
       });
       if(S_T_B === 'yes' && B_T_S === 'yes'){
         this.isShowBuyNowOffer=true
@@ -174,6 +193,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
   }
 
   editOffer(customOfferDetails:any){
+    console.log("customOfferDetails",customOfferDetails)
     const dialogRef = this.dialog.open(CustomOfferComponent, {
       width: "600px",
       data: { customOfferDetails: customOfferDetails, param: "editComp" },
@@ -183,7 +203,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     dialogRef.afterClosed().subscribe((result) => {
       if(result){
         const formData ={
-          chat_id:this.chat_id.toString(),
+          chat_id:customOfferDetails.chat_id,
           product_id :this.messages[0].product_id,
           action_type:'update_offer',
           receiver_id :this.reciever_ID.toString()
@@ -202,13 +222,22 @@ export class ChatComponent implements OnInit, AfterViewChecked {
   isCustomOffer:boolean=false;
   customOfferDetails:any;
   isOfferStatusAccepted:boolean=false;
+  isProductReserved:boolean=false;
   getCustomOffer(){
+  
     this.http.offerByFilter(this.getProductDetails.id,this.chat_id).subscribe(
       (res)=>{
+       
         this.isCustomOffer=true;
         this.customOfferDetails=res.offer;
         if(res.offer.offers_status === 'accepted'){
           this.isOfferStatusAccepted=true
+        }
+        if(res.offer.offers_status !== 'accepted' && !this.isBuyNowFromChatCheck || !this.isActionTypeMakePaymentToHideCustomOffer && res.offer.product.sale_status === 'reserved'){
+          this.isProductReserved=true
+        }
+        else{
+          this.isProductReserved=false
         }
       }
     )
@@ -408,8 +437,9 @@ export class ChatComponent implements OnInit, AfterViewChecked {
         this.chat_id = res.messages.chat_id;
         if(res.messages.action_type === 'buy_now'){
           this.isBuyNowFromChatCheck=true;
-        }
-        if(res){
+          this.getChatDetails();
+          this.getLatestMessage();
+        }else{
           this.getChatDetails();
           this.getLatestMessage();
         }
@@ -504,10 +534,8 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     this.http.sendMessage(formData).subscribe(
       (res)=>{
         this.chat_id = res.messages.chat_id;
-        if(this.chat_id){
           this.getChatDetails();
           this.getLatestMessage();
-        }
       }
     )
   }

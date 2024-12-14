@@ -252,11 +252,23 @@
         <div class="card-body" style="height: 480px; overflow-y: scroll">
           <div *ngIf="messages">
             <div *ngFor="let message of reversedMessages">
-              <div
+              <!-- <div
                 class="message"
                 [class.received]="message.direction === 'STB'"
                 [class.sent]="message.direction === 'BTS'"
-              >
+              > -->
+              <!-- <div
+                class="message"
+                [class.received]="message.direction === 'BTS' && !isBuyerUser"
+                [class.sent]="message.direction === 'BTS' && isBuyerUser"
+                [class.received]="message.direction === 'STB' && isBuyerUser"
+                [class.sent]="message.direction === 'STB' && !isBuyerUser"
+              > -->
+              <div
+                  class="message"
+                  [class.sent]="(message.direction === 'BTS' && isBuyerUser) || (message.direction === 'STB' && !isBuyerUser)"
+                  [class.received]="(message.direction === 'STB' && isBuyerUser) || (message.direction === 'BTS' && !isBuyerUser)"
+                >
                 <div class="message-content">
                   <p>{{ message.message }}</p>
                   <p *ngIf="isShowMarkAsSold && isBuyerUser && message.action_type === 'mark_sold'">Seller has change Status of Product as 'Mark as Sold'</p>
@@ -275,7 +287,7 @@
                     </div>
                   </div>
 
-                  <div *ngIf="isCustomOffer && isOfferShowToUserandDealer && message.action_type" class="col-md-12">
+                  <div *ngIf="isCustomOffer && isOfferShowToUserandDealer && message.action_type && message.action_type !== 'make_payment'" class="col-md-12">
                     <div class="d-flex flex-column card p-2">
                       <div style="background: #F9FAFB;" class="d-flex align-items-baseline">
                         <ng-container *ngIf="customOfferDetails.sender.img; else showInitials">
@@ -340,21 +352,21 @@
                   <button class="second-action-btn" (click)="addShippingFromChat()">Add Shipping</button>
                 </div>
               </div>
-          </div>
+            </div>
 
-          <div *ngIf="isShowPaymentMethod && isBuyerUser" class="col-md-8">
-            <!-- // when buyer satisfied with product and dealer and 'Buy Now' and after 'Buy Now' dealer add shipping price then this section show message to buyer 'Add Payment' or 'Cancel Order' -->
+            <div *ngIf="isShowPaymentMethod && isBuyerUser && isExistMakePayment" class="col-md-8">
+              <!-- // when buyer satisfied with product and dealer and 'Buy Now' and after 'Buy Now' dealer add shipping price then this section show message to buyer 'Add Payment' or 'Cancel Order' -->
 
-            <div class="d-flex flex-column card p-2">
-              <div style="border-bottom: 1px solid #F2F5F8;" class="d-flex justify-content-between align-items-center">
-                <p>Seller has confirmed the order. Please make your payment to complete the order</p>
-              </div>
-              <div class="d-flex justify-content-center mt-3 gap-5">
-                <button class="first-action-btn " (click)="cancelOffer()">Cancel Order</button>
-                <button class="second-action-btn" (click)="makePayment()">Make Payment</button>
+              <div class="d-flex flex-column card p-2">
+                <div style="border-bottom: 1px solid #F2F5F8;" class="d-flex justify-content-between align-items-center">
+                  <p>Seller has confirmed the order. Please make your payment to complete the order</p>
+                </div>
+                <div class="d-flex justify-content-center mt-3 gap-5">
+                  <button class="first-action-btn " (click)="cancelOffer()">Cancel Order</button>
+                  <button class="second-action-btn" (click)="makePayment()">Make Payment</button>
+                </div>
               </div>
             </div>
-          </div>
 
 
           
@@ -374,6 +386,51 @@
               </div>
             </div>
           </div>
+
+
+
+          <div
+          class="card-header d-flex flex-wrap justify-content-between border rounded"
+          *ngIf="isProductReserved"
+        >
+          <div class="d-flex" style="width: 84%">
+            <div class="">
+              <ng-container *ngIf="getProductDetails.main_image; else fallbackImage">
+                <img
+                  [src]="'https://api.chronosouq.com/' + getProductDetails.main_image"
+                  alt="chat image"
+                  class="img-thumbnail"
+                  style="width: 48px; height: 48px; border-radius: 30px"
+                />
+              </ng-container>
+            
+              <ng-template #fallbackImage>
+                <div
+                  class="img-thumbnail"
+                  style="width: 48px; height: 48px; border-radius: 30px; display: flex; align-items: center; justify-content: center; background-color: #ccc; color: white; font-size: 20px;"
+                >
+                  {{ getProductDetails.name?.substring(0, 2) }}
+                </div>
+              </ng-template>
+            </div>
+            
+            <div class="d-flex flex-column mx-2">
+              <p class="font-size-20 font-wight-600 color-242424 margin-0">
+                Already Sold
+                <span
+                  class="font-size-16 font-wight-400 color-909090 margin-0 mx-2"
+                  >{{getProductDetails.serial_no}}</span
+                >
+              </p>
+              <p class="font-size-16 font-wight-400 color-909090 margin-0">
+                The Seller has marked this ad as sold, you can still chat with the dealer.
+              </p>
+            </div>
+          </div>
+          <div>
+            <button routerLink="/product-list" class="view-add-btn">Find More</button>
+          </div>
+        </div>
         </div>
         
         

@@ -47,10 +47,11 @@ export class CustomOfferComponent {
       if (productDetail !== null) {
         this.offerForm.patchValue({
           product_id: productDetail.product_id || 0,
-          sender_id: localStorage.getItem("userID") || 0,
+          sender_id: localStorage.getItem("userID").toString() || 0,
           offer_id: Number(productDetail.id) || 0,
           offer_price: Number(productDetail.offer_price) || 0,
           ship_price: productDetail.ship_price || 0,
+          chat_id: productDetail.chat_id.toString() || 0,
           // validity_days: productDetail.offer_price || 0,
         });
       }
@@ -112,9 +113,11 @@ export class CustomOfferComponent {
             this.dialogRef.close(this.offerForm.value);
           },
           (err) => {
+            console.log(err)
+            const errorMessage = err.error?.message || "Something went wrong!";
             this.alertService.showAlert(
               "danger",
-              "Error in creating custom offer"
+              errorMessage
             );
           }
         );
