@@ -67,7 +67,6 @@ export class ChatComponent implements OnInit, AfterViewChecked {
 
   unreadFilter(){
     this.chats=this.chats.filter((item:any)=>item.unread_count>0)
-    console.log("Chats List",this.chats)
   }
 
   getLatestMessage() {
@@ -104,10 +103,10 @@ export class ChatComponent implements OnInit, AfterViewChecked {
       this.messages = res.messages;
       if(res.messages.length > 0 && !this.reciever_ID){
         let useridd=localStorage.getItem('userID')
-        console.log("let useridd",useridd)
+       
         // this.reciever_ID = res.messages[1]?.receiver_id;
           if(useridd == res.messages[0]?.sender_id){
-            console.log("hellollllllllll")
+
             this.reciever_ID = res.messages[0]?.receiver_id;
           }else if (res.messages[0]?.receiver_id === null){
             this.reciever_ID = res.messages[1]?.receiver_id;
@@ -115,7 +114,6 @@ export class ChatComponent implements OnInit, AfterViewChecked {
           else{
             this.reciever_ID = res.messages[0]?.sender_id;
           }
-          console.log("reciever ID",this.reciever_ID)
       }
       this.messages.forEach((message) => {
         if (message.attachments) {
@@ -193,7 +191,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
   }
 
   editOffer(customOfferDetails:any){
-    console.log("customOfferDetails",customOfferDetails)
+   
     const dialogRef = this.dialog.open(CustomOfferComponent, {
       width: "600px",
       data: { customOfferDetails: customOfferDetails, param: "editComp" },
@@ -233,7 +231,14 @@ export class ChatComponent implements OnInit, AfterViewChecked {
         if(res.offer.offers_status === 'accepted'){
           this.isOfferStatusAccepted=true
         }
-        if(res.offer.offers_status !== 'accepted' && !this.isBuyNowFromChatCheck || !this.isActionTypeMakePaymentToHideCustomOffer && res.offer.product.sale_status === 'reserved'){
+        if(res.offer.offers_status !== 'accepted' && res.offer.product.sale_status === 'reserved'){
+        console.log("res.offer.offers_status !== 'accepted'",res.offer.offers_status)
+        console.log("this.isBuyNowFromChatCheck",this.isBuyNowFromChatCheck)
+        console.log("this.isActionTypeMakePaymentToHideCustomOffer",this.isActionTypeMakePaymentToHideCustomOffer)
+        console.log("res.offer.product.sale_status",res.offer.product.sale_status)
+        console.log("this.isBuyerUser",this.isBuyerUser)
+        console.log("",)
+
           this.isProductReserved=true
         }
         else{
@@ -299,7 +304,6 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     } 
     else if (!this.reciever_ID && this.productDeatils) {
       this.reciever_ID=this.productDeatils.created_by.id
-      console.log("this.reciever_ID=this.productDeatils.created_by.id",this.reciever_ID=this.productDeatils.created_by.id)
       formData.append(
         "receiver_id",
         this.productDeatils.created_by.id.toString()
@@ -367,6 +371,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
       chat_ID: this.chat_id,
       product_ID: this.messages[0].product_id,
     };
+    
     const dialogRef = this.dialog.open(CustomOfferComponent, {
       width: "600px",
       data: { datawithChat_ID: datawithChat_ID, param: "chatComp" },
@@ -484,7 +489,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      console.log(result)
+ 
       if(result){
         const formData = {
           chat_id: this.chat_id,

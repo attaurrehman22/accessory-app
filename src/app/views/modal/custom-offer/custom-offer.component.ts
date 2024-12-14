@@ -81,6 +81,7 @@ export class CustomOfferComponent {
           this.offerForm.patchValue({
             product_id: productDetail1.product_ID || 0,
             sender_id: localStorage.getItem("userID") || 0,
+            chat_id: productDetail1.chat_id || null,
           });
         }
       }

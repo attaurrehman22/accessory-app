@@ -82,6 +82,10 @@
     justify-content: flex-start;
 }
 
+.custom-sent {
+    justify-content: flex-start;
+}
+
 .message.received {
     justify-content: flex-end;
 }

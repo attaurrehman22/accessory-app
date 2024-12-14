@@ -266,8 +266,11 @@
               > -->
               <div
                   class="message"
+                  [class.custom-sent]="reversedMessages.length === 1"
                   [class.sent]="(message.direction === 'BTS' && isBuyerUser) || (message.direction === 'STB' && !isBuyerUser)"
                   [class.received]="(message.direction === 'STB' && isBuyerUser) || (message.direction === 'BTS' && !isBuyerUser)"
+                  [class.sent]="(message.direction === 'BTB' && isBuyerUser) || (message.direction === 'STS' && !isBuyerUser)"
+
                 >
                 <div class="message-content">
                   <p>{{ message.message }}</p>
@@ -391,7 +394,7 @@
 
           <div
           class="card-header d-flex flex-wrap justify-content-between border rounded"
-          *ngIf="isProductReserved"
+          *ngIf="isProductReserved && !isBuyerUser"
         >
           <div class="d-flex" style="width: 84%">
             <div class="">
