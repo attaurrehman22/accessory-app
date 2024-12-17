@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 import { AlertsServicesService } from "src/services/alerts-service/alerts-services.service";
 import { HttpService } from "src/services/http/http.service";
+import { priceValidator } from "../../validator/string.validator";
 
 @Component({
   selector: "app-custom-offer",
@@ -12,6 +13,7 @@ import { HttpService } from "src/services/http/http.service";
 export class CustomOfferComponent {
   offerForm: FormGroup;
   compoName: any;
+  productPrice:any;
   isSeller: boolean = false;
   offerID: any;
   constructor(
@@ -22,9 +24,26 @@ export class CustomOfferComponent {
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
     this.compoName = this.data.param;
-    console.log("Product Detail:", this.data);
+
+
+    console.log("this.data ----------------------------------------- ", this.data);
+
+    if(this.data?.productDetail){
+      this.productPrice=this.data.productDetail.price
+    }
+    if(this.data?.customOfferDetails?.product){
+      this.productPrice=this.data?.customOfferDetails?.product.price
+    }
+    if(this.data?.productDetail?.price){
+      this.productPrice=this.data.productDetail.price
+    }
+
+
+    
     this.offerForm = this.fb.group({
-      offer_price: [null, [Validators.required, Validators.min(0)]],
+      offer_price: [null, [Validators.required, 
+        priceValidator(this.productPrice) 
+        ,Validators.min(0)]],
       product_id: [0],
       sender_id: [0],
       chat_id: [null],
@@ -58,8 +77,6 @@ export class CustomOfferComponent {
       if (productDetail !== null) {
         this.offerID = productDetail.id;
         let val = localStorage.getItem("userID");
-        console.log("val = ", val);
-        console.log("productDetail.sender.id = ", productDetail.sender.id);
         if (productDetail.sender.id != val) {
           this.isSeller = true;
         } else {
@@ -69,6 +86,8 @@ export class CustomOfferComponent {
     } else {
       if (this.data.param === "buyComp") {
         const productDetail = this.data?.productDetail || {};
+        this.productPrice=productDetail.price
+        console.log("productPrice---------------",this.productPrice)
         if (productDetail) {
           this.offerForm.patchValue({
             product_id: productDetail.id || 0,
@@ -133,8 +152,6 @@ export class CustomOfferComponent {
       offer_id: this.offerID,
       offers_status: "accepted",
     };
-
-    console.log("formData   ==---- 90909090  ", formData);
     this.http.editOfferStatus(formData).subscribe(
       (res) => {
         this.alertService.showAlert(

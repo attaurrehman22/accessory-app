@@ -127,8 +127,8 @@ export class StringValidator {
 
 export function notsame1(): ValidatorFn {
   return (formGroup: AbstractControl): ValidationErrors | null => {
-    const passwordControl = formGroup.get('password');
-    const confirmPasswordControl = formGroup.get('confirmpassword');
+    const passwordControl = formGroup.get("password");
+    const confirmPasswordControl = formGroup.get("confirmpassword");
 
     if (!passwordControl || !confirmPasswordControl) {
       return null; // If either control is missing, skip validation
@@ -146,8 +146,6 @@ export function notsame1(): ValidatorFn {
     return password !== confirmPassword ? { notsame1: true } : null;
   };
 }
-
-
 
 export function notsame(password: AbstractControl): ValidatorFn {
   return (confirmPassword: AbstractControl): ValidationErrors | null => {
@@ -233,7 +231,7 @@ export function envNameExists(envs: any, ignore = false): ValidatorFn {
 export function userEmailExists(userService: UserService): AsyncValidatorFn {
   return (control: AbstractControl): Observable<ValidationErrors | null> => {
     if (!control.value) {
-      return of(null); 
+      return of(null);
     }
 
     return userService.checkUserEmailExists(control.value).pipe(
@@ -249,7 +247,7 @@ export function userEmailExists(userService: UserService): AsyncValidatorFn {
 export function usernameExists(userService: UserService): AsyncValidatorFn {
   return (control: AbstractControl): Observable<ValidationErrors | null> => {
     if (!control.value) {
-      return of(null); 
+      return of(null);
     }
 
     return userService.checkUsernameExists(control.value).pipe(
@@ -361,4 +359,13 @@ export function compareAssetsParameters(form: UntypedFormGroup) {
   form.controls["envlocalVars"].markAsTouched();
   form.controls["buildParams"].markAsTouched();
   return null;
+}
+
+export function priceValidator(productPrice: number): ValidatorFn {
+  return (control: AbstractControl): ValidationErrors | null => {
+    if (control.value && control.value > productPrice) {
+      return { priceExceeded: true };
+    }
+    return null;
+  };
 }
