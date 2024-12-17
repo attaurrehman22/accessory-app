@@ -25,13 +25,16 @@
     width: 100%;
     display: contents;
   }
+
   .heading-tag {
     font-size: 27px;
     width: 100%;
   }
+
   .para {
     font-size: 16px !important;
   }
+
   .custom-btn {
     height: auto !important;
     width: auto !important;
@@ -119,6 +122,9 @@
   border: 1px solid #242424;
   font-size: 20px;
   font-weight: 400;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .reverse-order .header-styl {

@@ -162,193 +162,198 @@
         <div
           [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }"
           class="row d-flex flex-wrap g-0"
-          (click)="routeTo(prod)"
         >
-          <div
-            class="col-lg-3 col-md-12 col-sm-12"
-            style="height: 330px; position: relative"
+          <a
+            [routerLink]="['/buy-product']"
+            [queryParams]="{ id: prod.id }"
+              class="row d-flex flex-wrap g-0"
           >
-            <img
-              [src]="'https://api.chronosouq.com/' + prod.main_image"
-              alt="{{ prod.name }}"
-              style="
-                object-fit: fill;
-                height: -webkit-fill-available;
-                width: -webkit-fill-available;
-                padding: 25px;
-              "
-              class="img-fluid rounded-start"
-              alt="Rolex Datejust 36"
-            />
-            <span class="badge bg-success m-2">{{
-              "product_list.promoted" | translate
-            }}</span>
-          </div>
-          <div class="col-lg-8 col-md-12 col-sm-12 d-flex">
-            <div class="card-body">
-              <h5 class="card-title">{{ prod.name }}</h5>
-              <p
-                class="card-text"
+            <div
+              class="col-lg-3 col-md-12 col-sm-12"
+              style="height: 330px; position: relative"
+            >
+              <img
+                [src]="'https://api.chronosouq.com/' + prod.main_image"
+                alt="{{ prod.name }}"
                 style="
-                  display: flex;
-                  justify-content: space-between;
-                  align-items: center;
+                  object-fit: fill;
+                  height: -webkit-fill-available;
+                  width: -webkit-fill-available;
+                  padding: 25px;
                 "
-              >
-                <strong>{{ prod.description }}</strong>
-                <button class="btn btn-light m-2">
-                  <i class="fas fa-heart"></i>
-                </button>
-              </p>
-              <div
-                class="d-flex flex-wrap"
-                [ngClass]="{
-                  'reverse-order-for-product-det':
-                    translateService.currentLang !== 'en'
-                }"
-              >
-                <div class="col-lg-6 col-md-12 col-sm-12 d-flex flex-wrap p-2">
-                  <ul
-                    class="list-unstyled"
-                    style="
-                      display: flex;
-                      justify-content: space-between;
-                      width: 100%;
-                    "
-                  >
-                    <li>
-                      <strong>
-                        {{ "product_list.movement" | translate }}</strong
-                      >
-                    </li>
-                    <li>{{ prod.movement }}</li>
-                  </ul>
-                  <ul
-                    class="list-unstyled"
-                    style="
-                      display: flex;
-                      justify-content: space-between;
-                      width: 100%;
-                    "
-                  >
-                    <li>
-                      <strong>
-                        {{
-                          "product_list.year_of_production" | translate
-                        }}</strong
-                      >
-                    </li>
-                    <li>{{ prod.year_of_production }}</li>
-                  </ul>
-                  <ul
-                    class="list-unstyled"
-                    style="
-                      display: flex;
-                      justify-content: space-between;
-                      width: 100%;
-                    "
-                  >
-                    <li>
-                      <strong>
-                        {{
-                          "product_list.reference_number" | translate
-                        }}</strong
-                      >
-                    </li>
-                    <li>{{ prod.reference_number }}</li>
-                  </ul>
-                  <ul
-                    class="list-unstyled"
-                    style="
-                      display: flex;
-                      justify-content: space-between;
-                      width: 100%;
-                    "
-                  >
-                    <li>
-                      <strong>
-                        {{ "product_list.case_material" | translate }}</strong
-                      >
-                    </li>
-                    <li>{{ prod.case_material }}</li>
-                  </ul>
-                </div>
-                <div class="col-lg-6 col-md-12 col-sm-12 d-flex flex-wrap p-2">
-                  <ul
-                    class="list-unstyled"
-                    style="
-                      display: flex;
-                      justify-content: space-between;
-                      width: 100%;
-                    "
-                  >
-                    <li>
-                      <strong>
-                        {{ "product_list.condition" | translate }}</strong
-                      >
-                    </li>
-                    <li>{{ prod.condition }}</li>
-                  </ul>
-                  <ul
-                    class="list-unstyled"
-                    style="
-                      display: flex;
-                      justify-content: space-between;
-                      width: 100%;
-                    "
-                  >
-                    <li>
-                      <strong>
-                        {{
-                          "product_list.scope_of_delivery" | translate
-                        }}</strong
-                      >
-                    </li>
-                    <li>{{ prod.scope_of_delivery }}</li>
-                  </ul>
-                  <ul
-                    class="list-unstyled"
-                    style="
-                      display: flex;
-                      justify-content: space-between;
-                      width: 100%;
-                    "
-                  >
-                    <li>
-                      <strong>
-                        {{ "product_list.case_diameter" | translate }}</strong
-                      >
-                    </li>
-                    <li>{{ prod.case_diameter }}</li>
-                  </ul>
-
-                  <ul
-                    class="list-unstyled"
-                    style="
-                      display: flex;
-                      justify-content: space-between;
-                      width: 100%;
-                    "
-                  >
-                    <li>
-                      <strong> {{ "product_list.gender" | translate }}</strong>
-                    </li>
-                    <li>{{ prod.gender }}</li>
-                  </ul>
-                </div>
-              </div>
-              <h5
-                [ngClass]="{
-                  'price-text-stl': translateService.currentLang !== 'en'
-                }"
-                class="text-danger price-text"
-              >
-                <p style="flex-direction: column; display: flex">
-                  ${{ prod.price }}
-                </p>
-              </h5>
+                class="img-fluid rounded-start"
+                alt="Rolex Datejust 36"
+              />
+              <span class="badge bg-success m-2">{{
+                "product_list.promoted" | translate
+              }}</span>
             </div>
-          </div>
+            <div class="col-lg-8 col-md-12 col-sm-12 d-flex">
+              <div class="card-body">
+                <h5 class="card-title">{{ prod.name }}</h5>
+                <p
+                  class="card-text"
+                  style="
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                  "
+                >
+                  <strong>{{ prod.description }}</strong>
+                  <button class="btn btn-light m-2">
+                    <i class="fas fa-heart"></i>
+                  </button>
+                </p>
+                <div
+                  class="d-flex flex-wrap"
+                  [ngClass]="{
+                    'reverse-order-for-product-det':
+                      translateService.currentLang !== 'en'
+                  }"
+                >
+                  <div class="col-lg-6 col-md-12 col-sm-12 d-flex flex-wrap p-2">
+                    <ul
+                      class="list-unstyled"
+                      style="
+                        display: flex;
+                        justify-content: space-between;
+                        width: 100%;
+                      "
+                    >
+                      <li>
+                        <strong>
+                          {{ "product_list.movement" | translate }}</strong
+                        >
+                      </li>
+                      <li>{{ prod.movement }}</li>
+                    </ul>
+                    <ul
+                      class="list-unstyled"
+                      style="
+                        display: flex;
+                        justify-content: space-between;
+                        width: 100%;
+                      "
+                    >
+                      <li>
+                        <strong>
+                          {{
+                            "product_list.year_of_production" | translate
+                          }}</strong
+                        >
+                      </li>
+                      <li>{{ prod.year_of_production }}</li>
+                    </ul>
+                    <ul
+                      class="list-unstyled"
+                      style="
+                        display: flex;
+                        justify-content: space-between;
+                        width: 100%;
+                      "
+                    >
+                      <li>
+                        <strong>
+                          {{
+                            "product_list.reference_number" | translate
+                          }}</strong
+                        >
+                      </li>
+                      <li>{{ prod.reference_number }}</li>
+                    </ul>
+                    <ul
+                      class="list-unstyled"
+                      style="
+                        display: flex;
+                        justify-content: space-between;
+                        width: 100%;
+                      "
+                    >
+                      <li>
+                        <strong>
+                          {{ "product_list.case_material" | translate }}</strong
+                        >
+                      </li>
+                      <li>{{ prod.case_material }}</li>
+                    </ul>
+                  </div>
+                  <div class="col-lg-6 col-md-12 col-sm-12 d-flex flex-wrap p-2">
+                    <ul
+                      class="list-unstyled"
+                      style="
+                        display: flex;
+                        justify-content: space-between;
+                        width: 100%;
+                      "
+                    >
+                      <li>
+                        <strong>
+                          {{ "product_list.condition" | translate }}</strong
+                        >
+                      </li>
+                      <li>{{ prod.condition }}</li>
+                    </ul>
+                    <ul
+                      class="list-unstyled"
+                      style="
+                        display: flex;
+                        justify-content: space-between;
+                        width: 100%;
+                      "
+                    >
+                      <li>
+                        <strong>
+                          {{
+                            "product_list.scope_of_delivery" | translate
+                          }}</strong
+                        >
+                      </li>
+                      <li>{{ prod.scope_of_delivery }}</li>
+                    </ul>
+                    <ul
+                      class="list-unstyled"
+                      style="
+                        display: flex;
+                        justify-content: space-between;
+                        width: 100%;
+                      "
+                    >
+                      <li>
+                        <strong>
+                          {{ "product_list.case_diameter" | translate }}</strong
+                        >
+                      </li>
+                      <li>{{ prod.case_diameter }}</li>
+                    </ul>
+
+                    <ul
+                      class="list-unstyled"
+                      style="
+                        display: flex;
+                        justify-content: space-between;
+                        width: 100%;
+                      "
+                    >
+                      <li>
+                        <strong> {{ "product_list.gender" | translate }}</strong>
+                      </li>
+                      <li>{{ prod.gender }}</li>
+                    </ul>
+                  </div>
+                </div>
+                <h5
+                  [ngClass]="{
+                    'price-text-stl': translateService.currentLang !== 'en'
+                  }"
+                  class="text-danger price-text"
+                >
+                  <p style="flex-direction: column; display: flex">
+                    ${{ prod.price }}
+                  </p>
+                </h5>
+              </div>
+            </div>
+          </a>
         </div>
       </div>
     </div>

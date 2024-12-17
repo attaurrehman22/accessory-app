@@ -10,7 +10,8 @@
     "security": "Security",
     "admin_pannel":"Admin Pannel",
     "Login":"Login",
-    "Logout":"Logout"
+    "Logout":"Logout",
+    "Chat":"My Chat"
   },
   "register": {
     "welcome": "Welcome to Chronosouq",

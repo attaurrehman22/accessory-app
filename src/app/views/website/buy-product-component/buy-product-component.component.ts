@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
-import { Router } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { AlertsServicesService } from "src/services/alerts-service/alerts-services.service";
 import { HttpService } from "src/services/http/http.service";
 import { ModelLoginComponent } from "../../auth/model-login/model-login.component";
@@ -89,7 +89,8 @@ export class BuyProductComponentComponent implements OnInit {
     private router: Router,
     private dialog: MatDialog,
     public translateService: TranslateService,
-    private languageService: LanguageService
+    private languageService: LanguageService,
+    private route: ActivatedRoute,
   ) {}
 
   swapImages(clickedImage: string): void {
@@ -109,10 +110,18 @@ export class BuyProductComponentComponent implements OnInit {
       this.getWishList();
     }
     this.routeFrom = history.state.param;
+   
+
     if (this.routeFrom === "listing-to-product") {
       this.ProductID = history.state.ID;
     } else {
-      this.ProductID = history.state.data.id;
+      const watchId = this.route.snapshot.queryParamMap.get('id');
+      if(watchId){
+        this.ProductID = watchId;
+      }else{
+        this.ProductID = history.state.data.id;
+      }
+      console.log("history.state.data",history.state.data)
     }
     this.initializeComponent();
   }

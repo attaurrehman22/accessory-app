@@ -13,13 +13,18 @@
       <div class="row">
         <div class="col-md-4 col-sm-6 mb-4" *ngFor="let watch of showList | slice:0:6">
           <div class="card h-100 shadow-sm">
+            <a
+            [routerLink]="['/buy-product']"
+            [queryParams]="{ id: watch.id }"
+              class="card-img-link"
+          >
             <img
             style="cursor: pointer;"
-            (click)="routeToDetailPage(watch)"
               [src]="'https://api.chronosouq.com/' + watch.main_image"
               class="card-img-top"
               alt="watch image"
             />
+            </a>
             <div class="card-body">
               <div
                 class="d-flex justify-content-between align-items-center mb-2"
