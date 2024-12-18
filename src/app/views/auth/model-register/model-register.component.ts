@@ -142,6 +142,7 @@ export class ModelRegisterComponent implements OnInit {
           localStorage.setItem("user_token", response.authorisation.token);
           localStorage.setItem('userType',response.user.type)
           localStorage.setItem("userID", response.user.id);
+            window.location.reload();
           this.dialogRef.close();
         },
         (error) => {

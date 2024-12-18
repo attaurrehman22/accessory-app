@@ -86,9 +86,15 @@ export class ModelLoginComponent implements OnInit {
             localStorage.setItem('userType',response.user.type)
             localStorage.setItem("userID", response.user.id);
             if (this.isDialog === "dialog-box") {
+          
+                window.location.reload();
+          
               this.dialogRef.close(true);
             } else {
-              this.router.navigateByUrl("");
+              this.router.navigateByUrl("").then(() => {
+                window.location.reload();
+              });
+              // this.router.navigateByUrl("");
             }
           }
         },

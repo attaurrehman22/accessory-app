@@ -1,9 +1,8 @@
-<div class="login-container"  [ngClass]="{'rtl': translateService.currentLang !== 'en', 'ltr': translateService.currentLang === 'en'}"
->
-  <div class="login-card">
-    <h2>{{ "login.hy_there" | translate }}</h2>
-    <h1>{{ "login.well_come" | translate }}</h1>
-    <form [formGroup]="loginForm"    >
+
+  <div  [ngClass]="{'rtl': translateService.currentLang !== 'en', 'ltr': translateService.currentLang === 'en'}" style="margin: 0 !important;max-width: -webkit-fill-available !important;"  class="login-card">
+    <p class="font-size-14 font-wight-400 margin-0 color-242424 text-center">{{ "login.hy_there" | translate }}</p>
+    <p class="font-size-28 font-wight-600 margin-0 color-242424 text-center">{{ "login.well_come" | translate }}</p>
+    <form [formGroup]="loginForm" class="mt-3" >
       <div [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'">
         <mat-form-field appearance="outline" style="width: 100%">
           <mat-label>{{ "login.email" | translate }}</mat-label>
@@ -45,13 +44,13 @@
       </div>
 
       <div class="mt-3" style="display: flex; justify-content: flex-end">
-        <a href="#">{{ "login.forgot_password" | translate }}</a>
+        <a class="font-size-14 font-wight-400 margin-0 color-242424" href="#">{{ "login.forgot_password" | translate }}</a>
       </div>
     </form>
     <button class="login-btn mt-3" type="submit" (click)="gotoHome()">
       {{ "login.login" | translate }}
     </button>
-    <div class="separator">{{ "login.or" | translate }}</div>
+    <div class="separator text-center">{{ "login.or" | translate }}</div>
     <div class="social-login">
       <button class="social-btn facebook"><mat-icon>facebook</mat-icon></button>
       <button class="social-btn apple"><mat-icon>apple</mat-icon></button>
@@ -59,7 +58,7 @@
         <img style="height: 3vh" src="./assets/images/google.png" />
       </button>
     </div>
-    <div class="mt-5">
+    <div class="mt-3 text-center">
       <p style="font-weight: 400; font-size: 14px; color: #909090">
         {{ "login.do_not_acc" | translate }}
         <a
@@ -75,4 +74,4 @@
       </p>
     </div>
   </div>
-</div>
+
