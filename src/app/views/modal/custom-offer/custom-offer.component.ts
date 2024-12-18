@@ -24,10 +24,6 @@ export class CustomOfferComponent {
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
     this.compoName = this.data.param;
-
-
-    console.log("this.data ----------------------------------------- ", this.data);
-
     if(this.data?.productDetail){
       this.productPrice=this.data.productDetail.price
     }
@@ -87,7 +83,6 @@ export class CustomOfferComponent {
       if (this.data.param === "buyComp") {
         const productDetail = this.data?.productDetail || {};
         this.productPrice=productDetail.price
-        console.log("productPrice---------------",this.productPrice)
         if (productDetail) {
           this.offerForm.patchValue({
             product_id: productDetail.id || 0,
