@@ -21,16 +21,118 @@ export class ProductListComponent implements OnInit {
 
   dataFrompopularbrands: any;
   searchQuery: string = "";
-  isCollapsed = true;
+  isCollapsed = false;
+  isCollapsed2 = false;
   isUserLogin: any;
+
+  checkedBrands: any[] = [];
+  checkedCategories: any[] = [];
 
   toggleCollapse() {
     this.isCollapsed = !this.isCollapsed;
   }
+
+  toggleCollapse2(){
+    this.isCollapsed2 = !this.isCollapsed2;
+  }
+
+  onCheckboxChange(event: Event, item: any, type: string) {
+    const isChecked = (event.target as HTMLInputElement).checked;
+
+    if (type === 'brand') {
+      if (isChecked) {
+        this.checkedBrands.push(item);  
+      } else {
+        this.checkedBrands = this.checkedBrands.filter(brand => brand.id !== item.id);  // Remove from checked list
+      }
+      console.log('Checked Brands:', this.checkedBrands);
+    } else if (type === 'category') {
+      if (isChecked) {
+        this.checkedCategories.push(item);  // Add to checked list
+      } else {
+        this.checkedCategories = this.checkedCategories.filter(category => category.id !== item.id);  // Remove from checked list
+      }
+      console.log('Checked Categories:', this.checkedCategories);
+    }
+
+    this.buildQueryString();
+  }
+
+
+  buildQueryString() {
+    let queryString = '';
+
+    // Add categories to the query string
+    if (this.checkedCategories.length > 0) {
+      this.checkedCategories.forEach((id, index) => {
+        queryString += `category_ids=${id.id}`;
+        if (index < this.checkedCategories.length - 1) {
+          queryString += '&';
+        }
+      });
+    }
+
+    // Add brands to the query string
+    if (this.checkedBrands.length > 0) {
+      if (queryString) {
+        queryString += '&';  // Add '&' if categories already exist
+      }
+      this.checkedBrands.forEach((id, index) => {
+        queryString += `brand_ids=${id.id}`;
+        if (index < this.checkedBrands.length - 1) {
+          queryString += '&';
+        }
+      });
+    }
+
+    // Call the API with the constructed query string
+    if (queryString) {
+      this.getProductsByCategory(queryString);
+    }
+  }
+
+  // Method to call the API with the generated query string
+  getProductsByCategory(queryString: string) {
+    this.http.getProductsByCategory(queryString).subscribe(
+      (res)=>{
+        this.productsList = res;
+        this.productsList.data.map((product: any) => {
+          if (product.main_image) {
+            product.main_image = product.main_image
+              .replace(/\\/g, "/")
+              .replace(/^\/+/, "");
+          }
+
+          if (product.folder) {
+            product.folder = product.folder
+              .replace(/\\/g, "/")
+              .replace(/^\/+/, "");
+          }
+
+          if (product.additional_images) {
+            try {
+              product.additional_images = JSON.parse(
+                product.additional_images
+              ).map((img: string) =>
+                img.replace(/\\/g, "/").replace(/^\/+/, "")
+              );
+            } catch (error) {
+              console.error("Error parsing additional_images:", error);
+            }
+          }
+
+          return product;
+        });
+
+        this.productsList.sort(
+          (a: any, b: any) =>
+            new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+        );
+      }
+    );
+  }
+
   ngOnInit(): void {
-    window.addEventListener("resize", () => {
-      this.updateSlides();
-    });
     this.isUserLogin = localStorage.getItem("isLoggedIn");
     if (this.isUserLogin === "true") {
       this.getWishList();
@@ -111,6 +213,18 @@ export class ProductListComponent implements OnInit {
     );
   }
 
+  showAll: boolean = false;
+
+  toggleSeeAll() {
+    this.showAll = !this.showAll;
+  }
+
+  showAll2: boolean = false;
+
+  toggleSeeAll2() {
+    this.showAll2 = !this.showAll2;
+  }
+
   getPopularBrandswithBrndsID() {
     this.http.getPopularproductsWithID(this.dataFrompopularbrands.id).subscribe(
       (res) => {
@@ -182,51 +296,9 @@ export class ProductListComponent implements OnInit {
     }
   }
 
-  slides: any;
-  updateSlides() {
-    this.slides = this.getCarouselSlides();
-  }
 
-  getCarouselSlides() {
-    const screenWidth = window.innerWidth;
-    let cardsPerSlide;
 
-    // Adjust the number of cards per slide based on screen width
-    if (screenWidth >= 1200) {
-      cardsPerSlide = 4; // 4 cards for large screens
-    } else if (screenWidth >= 992) {
-      cardsPerSlide = 3; // 3 cards for medium screens
-    } else if (screenWidth >= 768) {
-      cardsPerSlide = 2; // 2 cards for small screens
-    } else {
-      cardsPerSlide = 1; // 1 card for extra small screens
-    }
-
-    const slides = [];
-    for (let i = 0; i < this.filterdProducts.length; i += cardsPerSlide) {
-      slides.push(this.filterdProducts.slice(i, i + cardsPerSlide));
-    }
-    return slides;
-  }
-
-  nextSlide1() {
-    if (this.currentIndex1 < this.getCarouselSlides().length - 1) {
-      this.currentIndex1++;
-    } else {
-      this.currentIndex1 = 0; // Loop back to the first slide
-    }
-  }
-
-  previousSlide1() {
-    if (this.currentIndex1 > 0) {
-      this.currentIndex1--;
-    } else {
-      this.currentIndex1 = this.getCarouselSlides().length - 1; // Loop back to the last slide
-    }
-  }
-  goToSlide(index: number) {
-    this.currentIndex1 = index;
-  }
+ 
   currentIndex1: number = 0;
   itemsPerPage1: number = 4;
   filterdProducts: any[] = [];
@@ -375,28 +447,6 @@ export class ProductListComponent implements OnInit {
     });
   }
 
-  expandedIndex: number | null = null;
-  questions = [
-    {
-      question: "Why are Rolex watches so expensive?",
-      answer:
-        "Rolex watches are made from premium materials and crafted with precision and expertise.",
-    },
-    {
-      question: "What is the most expensive Rolex watch of all time?",
-      answer:
-        "The most expensive Rolex ever sold is the Paul Newman Daytona, which fetched over $17 million.",
-    },
-    {
-      question: "How much does a Rolex watch cost?",
-      answer:
-        "Prices for Rolex watches start at around $2,000 USD, but can exceed $1 million USD for rare models.",
-    },
-  ];
-
-  toggleAnswer(index: number) {
-    this.expandedIndex = this.expandedIndex === index ? null : index;
-  }
 
   wishList: any;
   getWishList() {

@@ -1,9 +1,8 @@
-<div class="global-main-wraper" style="display: flex; flex-wrap: wrap;margin-top: 90px;">
+<div class="global-main-wraper" style="display: flex; flex-wrap: wrap;margin-top: 30px;">
   <div class="col-lg-2 col-md-3 col-sm-12 mt-5">
    
 
     <div class="container">
-      <!-- Brands Section -->
       <div class="accordion" id="accordionExample">
         <div class="card" style="box-shadow: none !important;">
           <div class="card-header d-flex justify-content-between">
@@ -23,84 +22,74 @@
         
           <div [ngClass]="isCollapsed ? 'collapse' : 'collapse show'" id="collapseBrands">
             <div class="card-body">
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="brand1" />
-                <label class="form-check-label" for="brand1">A. Lange & Söhne</label>
+              <!-- Brands -->
+              <div *ngFor="let brand of (showAll ? brandsDataList : brandsDataList | slice:0:10)" class="form-check">
+                <input class="form-check-input" type="checkbox" 
+                       [id]="brand.id" 
+                       [checked]="brand.checked" 
+                       (change)="onCheckboxChange($event, brand, 'brand')" />
+                <label class="form-check-label" [for]="brand.id">{{brand.name}}</label>
               </div>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="brand2" />
-                <label class="form-check-label" for="brand2">Apple</label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="brand3" />
-                <label class="form-check-label" for="brand3">Audemars Piguet</label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="brand4" />
-                <label class="form-check-label" for="brand4">Baltic</label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="brand5" />
-                <label class="form-check-label" for="brand5">Baume & Mercier</label>
-              </div>
-              <a href="#" class="text-primary">See all</a>
+            
+              <!-- Toggle See All for Brands -->
+              <a style="cursor: pointer;" class="text-primary" (click)="toggleSeeAll()">
+                {{showAll ? 'See less' : 'See all'}}
+              </a>
             </div>
+            
+            
           </div>
         </div>
         
-
-        <!-- Luxury Section -->
-        <div class="card" style="box-shadow: none !important;">
-          <div class="card-header" id="headingLuxury">
-            <h5 class="mb-0">
-              Luxury
-            </h5>
-          </div>
-        
-            <div class="card-body">
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="luxury1" />
-                <label class="form-check-label" for="luxury1">Yes</label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="luxury2" />
-                <label class="form-check-label" for="luxury2">No</label>
-              </div>
-            </div>
-          
-        </div>
-
-        <!-- Gender Section -->
-        <div class="card" style="box-shadow: none !important;">
-          <div class="card-header" id="headingGender">
-            <h5 class="mb-0">
-              <!-- <button
-                class="btn btn-link collapsed"
-                type="button"
-                data-toggle="collapse"
-                data-target="#collapseGender"
-                aria-expanded="false"
-                aria-controls="collapseGender"
-              >
-                Gender
-              </button> -->
-              Gender
-            </h5>
-          </div>
-         
-            <div class="card-body">
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="gender1" />
-                <label class="form-check-label" for="gender1">Male</label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="gender2" />
-                <label class="form-check-label" for="gender2">Female</label>
-              </div>
-            </div>
-        
-        </div>
       </div>
+
+
+
+
+
+
+
+
+      <div class="accordion" id="accordionExample">
+        <div class="card" style="box-shadow: none !important;">
+          <div class="card-header d-flex justify-content-between">
+            <h5 class="mb-0">
+              Category
+            </h5> <a
+            class="text-decoration-none"
+            role="button"
+            (click)="toggleCollapse2()"
+            aria-expanded="false"
+            aria-controls="collapseBrands2"
+          >
+          
+            <mat-icon>{{ isCollapsed2 ? 'expand_more' : 'expand_less' }}</mat-icon>
+          </a>
+          </div>
+        
+          <div [ngClass]="isCollapsed2 ? 'collapse' : 'collapse show'" id="collapseBrands2">
+            <div class="card-body">
+              <!-- Categories -->
+              <div *ngFor="let category of (showAll2 ? category_sel_frm_popular_models : category_sel_frm_popular_models | slice:0:10)" class="form-check">
+                <input class="form-check-input" type="checkbox" 
+                       [id]="category.id" 
+                       [checked]="category.checked" 
+                       (change)="onCheckboxChange($event, category, 'category')" />
+                <label class="form-check-label" [for]="category.id">{{category.name}}</label>
+              </div>
+            
+              <!-- Toggle See All for Categories -->
+              <a style="cursor: pointer;" class="text-primary" (click)="toggleSeeAll2()">
+                {{showAll2 ? 'See less' : 'See all'}}
+              </a>
+            </div>
+            
+          </div>
+        </div>
+        
+      </div>
+
+
     </div>
 
   </div>
@@ -353,7 +342,7 @@
           [routerLink]="['/buy-product']"
           [queryParams]="{ id: prod.id }"
           
-          class="row card-a mb-3 g-0"
+          class="row card-a g-0"
         >
           <div class="col-lg-2 col-md-12 col-sm-12 img-div-ht">
             <img
@@ -464,55 +453,6 @@
            
         </a>
 
-      </div>
-    </div>
-
-
-
-    <div class="container mt-5 mb-5">
-      <div class="card p-4 shadow-sm" style="background: #f3f3f3">
-        <h2 class="card-title">
-          {{ "product_list.any_questions" | translate }}
-        </h2>
-        <div class="d-flex align-items-center justify-content-start mb-4">
-          <i class="bi bi-info-circle me-2"></i>
-          <span>+852 3002 0310</span>
-          <span class="ms-3"
-            ><i class="bi bi-envelope"></i>
-            <a> {{ "product_list.contact_us" | translate }}</a></span
-          >
-        </div>
-
-        <ul class="list-group" style="background: none !important">
-          <li
-            *ngFor="let item of questions; let i = index"
-            class="list-group-item"
-          >
-            <div
-              class="d-flex justify-content-between align-items-center"
-              (click)="toggleAnswer(i)"
-              style="cursor: pointer"
-            >
-              <span>{{ item.question }}</span>
-              <i
-                [class]="
-                  expandedIndex === i
-                    ? 'bi bi-chevron-up'
-                    : 'bi bi-chevron-down'
-                "
-              ></i>
-            </div>
-            <div *ngIf="expandedIndex === i" class="mt-2">
-              <p class="pt-2">{{ item.answer }}</p>
-            </div>
-          </li>
-        </ul>
-
-        <div class="mt-4">
-          <button class="btn btn-outline-secondary">
-            {{ "product_list.more_questions" | translate }}
-          </button>
-        </div>
       </div>
     </div>
   </div>

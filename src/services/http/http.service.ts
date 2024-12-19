@@ -71,8 +71,8 @@ export class HttpService implements OnInit {
     return this.http.get(`${this.apiUrl}/api/product-form-dropdown`);
   }
 
-  getProductsByCategory(catID: any) {
-    return this.http.get(`${this.apiUrl}/api/search-product-by?${catID}`);
+  getProductsByCategory(queryString: any) {
+    return this.http.get(`${this.apiUrl}/api/search-product-by?${queryString}`);
   }
 
   searchedProducts(name: any) {

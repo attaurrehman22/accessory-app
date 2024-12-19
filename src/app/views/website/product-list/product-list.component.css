@@ -205,6 +205,8 @@
   border-bottom: 1px solid #b3b3b3;
   display: flex;
   flex-wrap: wrap;
+  margin-bottom: 15px;
+  padding-bottom: 6px;
 }
 
 .fa-heart-o {
