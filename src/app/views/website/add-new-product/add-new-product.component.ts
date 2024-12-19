@@ -1,4 +1,4 @@
-import {Component,OnInit,signal,ElementRef,ViewChild} from "@angular/core";
+import {Component,OnInit,signal,ElementRef,ViewChild, computed} from "@angular/core";
 import {FormBuilder,FormControl,FormGroup,Validators} from "@angular/forms";
 import { MatExpansionModule } from "@angular/material/expansion";
 import { Router } from "@angular/router";
@@ -11,6 +11,7 @@ import { MAT_DIALOG_DATA } from "@angular/material/dialog";
 import { ModelLoginComponent } from "../../auth/model-login/model-login.component";
 import { LanguageService } from "src/services/lang-service/language.service";
 import { CanComponentDeactivate } from "src/app/can-deactivate-form.guard";
+import { LoginStateService } from "src/services/login-service/login-state.service";
 
 interface ImageFile {
   file: File;
@@ -35,6 +36,7 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
   otherImages: ImageFile[] = [];
   isCoverImageUploading = false;
   productIDFromResponse: any;
+  isAdminUser = computed(() => this.loginStateService.isAdminUser());
   @ViewChild("coverImageInput") coverImageInput!: ElementRef<HTMLInputElement>;
   @ViewChild("otherImagesInput")
   otherImagesInput!: ElementRef<HTMLInputElement>;
@@ -111,6 +113,7 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
     private http: HttpService,
     private alertService: AlertsServicesService,
     private router: Router,
+    private loginStateService: LoginStateService,
     private dialog: MatDialog
   ) {}
 
@@ -345,7 +348,14 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
 
   isProductID: any;
   userType: any;
+
+  isAdminLogin:boolean=false;
+
   ngOnInit() {
+    if(this.isAdminUser() === true){
+      console.log("isAdminUser in header comp", this.isAdminUser());
+      this.isAdminLogin=true;
+    }
     let isUserLogin = localStorage.getItem("isLoggedIn");
     this.userType = localStorage.getItem("userType");
     if (!isUserLogin) {
@@ -414,6 +424,20 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
       zip_code: this.zip_code,
       city: this.city,
     });
+
+
+    const Product_ID_refresh = sessionStorage.getItem("productIDFromResponse");
+
+    if(Product_ID_refresh){
+      this.productIDFromResponse=JSON.parse(Product_ID_refresh)
+    }
+
+    const selected_opt = sessionStorage.getItem("selectedOptionsList");
+    if(selected_opt){
+      this.selectedOptionsList=JSON.parse(selected_opt);
+      let lastItem = this.selectedOptionsList[this.selectedOptionsList.length - 1];
+      this.selectSection(lastItem);
+    }
 
     const listing_Form = sessionStorage.getItem("listingForm");
     if (listing_Form) {
@@ -529,11 +553,14 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
     }
   }
 
+  selectedUserTypeofConditionGradingForAdmin:any;
+
   checkScreenSize() {
     this.isSmallScreen = window.innerWidth < 768;
   }
 
   selectSection(section: string) {
+    console.log("Section",section)
     this.selectedSection = section;
   }
 
@@ -617,6 +644,8 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
             );
             this.formDirty = true;
             this.selectedOptionsList.push('watchDetails')
+            sessionStorage.setItem("selectedOptionsList",JSON.stringify(this.selectedOptionsList));
+            sessionStorage.setItem("productIDFromResponse",JSON.stringify(this.productIDFromResponse));
             this.selectSection("watchDetails");
           },
           (err) => {
@@ -647,6 +676,7 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
               JSON.stringify(this.watchDetailsForm.value)
             );
             this.selectedOptionsList.push('uploadImages')
+            sessionStorage.setItem("selectedOptionsList",JSON.stringify(this.selectedOptionsList));
             this.selectSection("uploadImages");
           },
           (err) => {
@@ -703,6 +733,7 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
           sessionStorage.setItem("otherImages", JSON.stringify(otherImagesData));
 
           this.selectedOptionsList.push('conditionGrading')
+          sessionStorage.setItem("selectedOptionsList",JSON.stringify(this.selectedOptionsList));
           this.selectSection("conditionGrading");
         },
         (err) => {
@@ -724,6 +755,7 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
             );
             sessionStorage.setItem("condition", JSON.stringify(this.selectedCondition));
             this.selectedOptionsList.push('scopeofdelivery')
+            sessionStorage.setItem("selectedOptionsList",JSON.stringify(this.selectedOptionsList));
             this.selectSection("scopeofdelivery");
           },
           (err) => {
@@ -747,6 +779,7 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
               JSON.stringify(this.selectedOptions)
             );
             this.selectedOptionsList.push('proofofownership')
+            sessionStorage.setItem("selectedOptionsList",JSON.stringify(this.selectedOptionsList));
             this.selectSection("proofofownership");
           },
           (err) => {
@@ -789,6 +822,7 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
           (res) => {
             this.alertService.showAlert("success", "Images Added Successfully");
             this.selectedOptionsList.push('priceshipment')
+            sessionStorage.setItem("selectedOptionsList",JSON.stringify(this.selectedOptionsList));
             this.selectSection("priceshipment");
           },
           (err) => {
@@ -798,7 +832,7 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
       }
     } else if (Param === "priceshipment") {
       let formData;
-      if (this.userType === "user") {
+      if (this.userType === "user" || this.selectedUserTypeofConditionGradingForAdmin === 'user') {
          formData = {
           product_id: this.productIDFromResponse,
           price: this.watchPrice,
@@ -850,6 +884,7 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
             
 
             this.selectedOptionsList.push('billinginformation')
+            sessionStorage.setItem("selectedOptionsList",JSON.stringify(this.selectedOptionsList));
             this.selectSection("billinginformation");
           },
           (err) => {
@@ -879,6 +914,7 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
               JSON.stringify(this.billingForm.value)
             );
             this.selectedOptionsList.push('summary')
+            sessionStorage.setItem("selectedOptionsList",JSON.stringify(this.selectedOptionsList));
             this.selectSection("summary");
           },
           (err) => {

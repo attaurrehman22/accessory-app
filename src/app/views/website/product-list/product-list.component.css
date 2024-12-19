@@ -16,6 +16,21 @@
   background-color: #000;
 }
 
+.product-card{
+  max-width: 100%;
+  border: 1px solid #ddd !important;
+  cursor: pointer;
+  max-height: 240px;
+  box-shadow: none !important;
+}
+
+.product-card-img {
+  object-fit: fill;
+  width: -webkit-fill-available;
+  padding: 25px;
+  height: 200px !important;
+}
+
 .card-title {
   font-size: 1rem;
   font-weight: 600;
@@ -28,15 +43,15 @@
 
 .card {
   border: none;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 5px 8px rgba(0, 0, 0, 0.1),
-    4px 0 8px rgba(0, 0, 0, 0.1), 5px 0 8px rgba(0, 0, 0, 0.1);
+  /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 5px 8px rgba(0, 0, 0, 0.1),
+    4px 0 8px rgba(0, 0, 0, 0.1), 5px 0 8px rgba(0, 0, 0, 0.1); */
   margin-bottom: 10px;
 }
 
 .badge {
   font-size: 0.8rem;
-  top: 10px;
-  left: 15px;
+  top: 0;
+  left: 4px;
   position: absolute;
 }
 

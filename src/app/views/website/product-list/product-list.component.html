@@ -152,12 +152,7 @@
     <div class="container p-0" style="margin-top: 50px">
       <div
         *ngFor="let prod of productsList"
-        class="card mb-3 mt-3"
-        style="
-          max-width: 100%;
-          border: 1px solid #ddd !important;
-          cursor: pointer;
-        "
+        class="card mb-3 mt-3 product-card"
       >
         <div
           [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }"
@@ -170,18 +165,11 @@
           >
             <div
               class="col-lg-3 col-md-12 col-sm-12"
-              style="height: 330px; position: relative"
             >
               <img
                 [src]="'https://api.chronosouq.com/' + prod.main_image"
                 alt="{{ prod.name }}"
-                style="
-                  object-fit: fill;
-                  height: -webkit-fill-available;
-                  width: -webkit-fill-available;
-                  padding: 25px;
-                "
-                class="img-fluid rounded-start"
+                class="img-fluid product-card-img rounded-start"
                 alt="Rolex Datejust 36"
               />
               <span class="badge bg-success m-2">{{

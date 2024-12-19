@@ -787,7 +787,15 @@
               *ngIf="selectedSection === 'conditionGrading' && isSmallScreen"
             >
               <div class="container-fluid my-4">
-                <div *ngIf="userType ==='user'" class="row">
+                <mat-form-field appearance="outline" *ngIf="isAdminLogin">
+                  <mat-label>Select Type</mat-label>
+                  <mat-select [(ngModel)]="selectedUserTypeofConditionGradingForAdmin">
+                    <mat-option value="user">User</mat-option>
+                    <mat-option value="dealer">Dealer</mat-option>
+                  </mat-select>
+                </mat-form-field>
+
+                <div *ngIf="userType ==='user' || selectedUserTypeofConditionGradingForAdmin === 'user'" class="row">
                   <div
                     class="col-md-6 mb-3"
                     *ngFor="let condition of conditions"
@@ -812,7 +820,7 @@
                   </div>
                 </div>
 
-                <div *ngIf="userType ==='dealer'" class="row">
+                <div *ngIf="userType ==='dealer' || selectedUserTypeofConditionGradingForAdmin === 'dealer'" class="row">
                   <div
                     class="col-md-6 mb-3"
                     *ngFor="let condition of dealerconditions"
@@ -1122,8 +1130,15 @@
               class="image-upload-container"
               *ngIf="selectedSection === 'priceshipment' && isSmallScreen"
             >
+            <mat-form-field appearance="outline" *ngIf="isAdminLogin">
+              <mat-label>Select Type</mat-label>
+              <mat-select [(ngModel)]="selectedUserTypeofConditionGradingForAdmin">
+                <mat-option value="user">User</mat-option>
+                <mat-option value="dealer">Dealer</mat-option>
+              </mat-select>
+            </mat-form-field>
               <!-- this is for Seller -->
-              <div *ngIf="userType ==='user'" class="container-fluid mt-5">
+              <div *ngIf="userType ==='user' || selectedUserTypeofConditionGradingForAdmin === 'user'" class="container-fluid mt-5">
                 <mat-form-field
                   style="width: 100%"
                   class="full-width"
@@ -1166,7 +1181,7 @@
 
               <!-- this is for Dealer -->
 
-              <div *ngIf="userType ==='dealer'" class="container-fluid mt-5 d-flex flex-wrap">
+              <div *ngIf="userType ==='dealer' || selectedUserTypeofConditionGradingForAdmin === 'dealer'" class="container-fluid mt-5 d-flex flex-wrap">
                 <div class="col-md-6">
                   <mat-form-field
                     style="width: 100%"
@@ -2470,7 +2485,14 @@
             Please indicate any signs of wear such as scratches or dents.
           </p>
           <div class="container-fluid my-4" style="padding-left: 0 !important;padding-right: 0 !important;">
-            <div  *ngIf="userType ==='user'" class="row">
+            <mat-form-field appearance="outline" *ngIf="isAdminLogin">
+              <mat-label>Select Type</mat-label>
+              <mat-select [(ngModel)]="selectedUserTypeofConditionGradingForAdmin">
+                <mat-option value="user">User</mat-option>
+                <mat-option value="dealer">Dealer</mat-option>
+              </mat-select>
+            </mat-form-field>
+            <div  *ngIf="userType ==='user' || selectedUserTypeofConditionGradingForAdmin === 'user'" class="row">
               <div
                 class="col-md-6 mb-3"
                 *ngFor="let condition of conditions"
@@ -2495,7 +2517,7 @@
               </div>
             </div>
 
-            <div  *ngIf="userType ==='dealer'" class="row">
+            <div  *ngIf="userType ==='dealer' || selectedUserTypeofConditionGradingForAdmin === 'dealer'" class="row">
               <div
                 class="col-md-6 mb-3"
                 *ngFor="let condition of dealerconditions"
@@ -2762,8 +2784,18 @@
             Every watch will soon be verified by our team of experts to ensure
             it’s 100% authentic, giving buyers complete peace of mind.
           </p>
+
+          <mat-form-field appearance="outline" *ngIf="isAdminLogin">
+            <mat-label>Select Type</mat-label>
+            <mat-select [(ngModel)]="selectedUserTypeofConditionGradingForAdmin">
+              <mat-option value="user">User</mat-option>
+              <mat-option value="dealer">Dealer</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+
           <!-- this is seller -->
-          <div *ngIf="userType ==='user'" class="col-md-8" style="padding-left: 0">
+          <div *ngIf="userType ==='user' || selectedUserTypeofConditionGradingForAdmin === 'user'" class="col-md-8" style="padding-left: 0">
             <div class="container-fluid mt-5" style="padding-left: 0">
               <mat-form-field
                 style="width: 100%"
@@ -2808,7 +2840,7 @@
 
           <!-- this is Dealer -->
 
-          <div *ngIf="userType ==='dealer'" class="col-md-12" style="padding-left: 0">
+          <div *ngIf="userType ==='dealer' || selectedUserTypeofConditionGradingForAdmin === 'dealer'" class="col-md-12" style="padding-left: 0">
             <div class="container-fluid mt-5 d-flex flex-wrap" style="padding-left: 0">
               <div class="col-md-6" style="padding-left: 0">
                 <mat-form-field
