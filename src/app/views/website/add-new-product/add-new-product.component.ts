@@ -196,10 +196,6 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
     {
       title: "Watch Only",
       icon: "/assets/images/watch-only.png",
-    },
-    {
-      title:"Watch with original box",
-      icon: "/assets/images/watch-only.png",
     }
   ];
 
