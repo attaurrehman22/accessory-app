@@ -20,20 +20,8 @@
   max-width: 100%;
   border: 1px solid #ddd !important;
   cursor: pointer;
-  max-height: 240px;
+  /* max-height: 240px; */
   box-shadow: none !important;
-}
-
-.product-card-img {
-  object-fit: fill;
-  width: -webkit-fill-available;
-  padding: 25px;
-  height: 200px !important;
-}
-
-.card-title {
-  font-size: 1rem;
-  font-weight: 600;
 }
 
 .card-text {
@@ -48,20 +36,16 @@
   margin-bottom: 10px;
 }
 
-.badge {
-  font-size: 0.8rem;
-  top: 0;
-  left: 4px;
-  position: absolute;
-}
+
 
 .card-title {
-  font-size: 1.25rem;
-  font-weight: 400;
+  font-size: 16px;
+  font-weight: 700;
+  color: #242424;
 }
 
 .card-text {
-  color: #6c757d;
+  color: #242424;
 }
 
 .card-footer small {
@@ -78,9 +62,7 @@
   padding: 10px;
 }
 
-.card-body {
-  height: 25%;
-}
+
 
 .carousel-item {
   height: 100% !important;
@@ -93,7 +75,9 @@
 
 
 .price-text {
-  display: flex; justify-content: space-between
+  display: flex; 
+  justify-content: space-between;
+  margin: 0 !important;
 }
 
 .carousel-item {
@@ -155,4 +139,90 @@
 .price-text-stl p{
   display: flex;
   text-align: start !important;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+.prod-card {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.img-div-ht{
+  height: 170px;
+}
+
+.product-card-img {
+  height: 100%;
+  width: 100%;
+  padding: 0;
+  object-fit: scale-down;
+}
+
+.badge {
+  font-size: 0.8rem;
+  top: 0;
+  left: 4px;
+  position: absolute;
+}
+
+.list-unstyled {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin: 0 !important;
+}
+
+.prod-lt-hg {
+  font-size: 14px;
+  font-weight: 500;
+  color: #666;
+  margin: 0 !important;
+}
+
+.li-val {
+  font-size: 14px;
+  font-weight: 500;
+  color: #666;
+  margin: 0 !important;
+}
+
+.card-body {
+  padding: 3px 15px 3px 15px !important;
+}
+
+.card-a {
+  border-bottom: 1px solid #b3b3b3;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.fa-heart-o {
+  color: #a09494 !important;
+}
+
+.fa-heart {
+  color: #ff4d4d;
+}
+
+.featured-icon {
+  background-color: #fff;
+  padding: 0 8px;
+  border-radius: 4px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  color: red;
+  font-size: 15px;
+  font-weight: 600;
 }

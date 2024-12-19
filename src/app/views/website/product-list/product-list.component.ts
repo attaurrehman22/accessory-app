@@ -22,17 +22,19 @@ export class ProductListComponent implements OnInit {
   dataFrompopularbrands: any;
   searchQuery: string = "";
   isCollapsed = true;
+  isUserLogin: any;
 
   toggleCollapse() {
     this.isCollapsed = !this.isCollapsed;
   }
   ngOnInit(): void {
-
-
-    window.addEventListener('resize', () => {
+    window.addEventListener("resize", () => {
       this.updateSlides();
     });
-
+    this.isUserLogin = localStorage.getItem("isLoggedIn");
+    if (this.isUserLogin === "true") {
+      this.getWishList();
+    }
     this.dataFrompopularbrands = history.state.brandData;
     this.brandsDataList = history.state.data;
     if (this.dataFrompopularbrands) {
@@ -50,6 +52,7 @@ export class ProductListComponent implements OnInit {
   }
 
   searchProducts() {
+    console.log("i am calling searchProducts() ")
     if (this.searchQuery) {
       this.http.searchedProducts(this.searchQuery).subscribe(
         (res) => {
@@ -90,8 +93,7 @@ export class ProductListComponent implements OnInit {
             );
           }
         },
-        (err) => {
-        }
+        (err) => {}
       );
     } else {
     }
@@ -105,8 +107,7 @@ export class ProductListComponent implements OnInit {
         this.brandsDataList = res.data;
         this.filterdProducts = res.data;
       },
-      (err) => {
-      }
+      (err) => {}
     );
   }
 
@@ -146,8 +147,7 @@ export class ProductListComponent implements OnInit {
             new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
         );
       },
-      (err) => {
-      }
+      (err) => {}
     );
   }
 
@@ -182,7 +182,7 @@ export class ProductListComponent implements OnInit {
     }
   }
 
-slides:any;
+  slides: any;
   updateSlides() {
     this.slides = this.getCarouselSlides();
   }
@@ -207,8 +207,7 @@ slides:any;
       slides.push(this.filterdProducts.slice(i, i + cardsPerSlide));
     }
     return slides;
-}
-
+  }
 
   nextSlide1() {
     if (this.currentIndex1 < this.getCarouselSlides().length - 1) {
@@ -268,8 +267,7 @@ slides:any;
             new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
         );
       },
-      (err) => {
-      }
+      (err) => {}
     );
   }
 
@@ -323,7 +321,6 @@ slides:any;
     // this.selectedCategories.forEach((id: number) =>
     //   params.append("category_ids[]", id.toString())
     // );
-
 
     const queryString = params.toString();
 
@@ -400,4 +397,27 @@ slides:any;
   toggleAnswer(index: number) {
     this.expandedIndex = this.expandedIndex === index ? null : index;
   }
+
+  wishList: any;
+  getWishList() {
+    this.http.getWishList().subscribe((res) => {
+      this.wishList = res.data;
+    });
+  }
+
+  addWishList(watch: any, event: MouseEvent) {
+    event.stopPropagation(); 
+    event.preventDefault(); 
+    const formData = {
+      product_id: watch.id,
+    };
+    this.http.addWishList(formData).subscribe((res) => {
+      this.wishList = res.data;
+      this.getWishList();
+      this.searchProducts();
+    });
+  }
+
+ 
+  
 }

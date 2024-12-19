@@ -149,7 +149,7 @@
       </div>
     </div> -->
 
-    <div class="container p-0" style="margin-top: 50px">
+    <!-- <div class="container p-0" style="margin-top: 50px">
       <div
         *ngFor="let prod of productsList"
         class="card mb-3 mt-3 product-card"
@@ -344,7 +344,130 @@
           </a>
         </div>
       </div>
+    </div> -->
+
+
+    <div class="container">
+      <div class="prod-card" *ngFor="let prod of productsList">
+        <a
+          [routerLink]="['/buy-product']"
+          [queryParams]="{ id: prod.id }"
+          
+          class="row card-a mb-3 g-0"
+        >
+          <div class="col-lg-2 col-md-12 col-sm-12 img-div-ht">
+            <img
+                [src]="'https://api.chronosouq.com/' + prod.main_image"
+                alt="{{ prod.name }}"
+                class="img-fluid product-card-img rounded-start"
+                alt="Rolex Datejust 36"
+              />
+              <span *ngIf="prod.feature_item === 1" class="featured-icon m-2">Featured</span>
+          </div>
+          <div class="col-lg-10 col-md-12 col-sm-12 d-flex">
+            <div class="card-body" >
+              <p class="card-title margin-0">{{ prod.name }}</p>
+              <p class="card-text margin-0 d-flex justify-content-between align-items-center">
+                <strong>{{ prod.description }}</strong>
+                <button class="btn btn-light"  *ngIf="isUserLogin ==='true'"
+                (click)="addWishList(prod, $event)">
+                  <i aria-hidden="true" [ngClass]="wishList.includes(prod.id) ? 'fa-heart' : 'fa-heart fa-heart-o'" class="fa"></i> 
+                </button>
+              </p>
+              <div class="d-flex flex-wrap" [ngClass]="{ 'reverse-order-for-product-det': translateService.currentLang !== 'en' }">
+                <div class="col-lg-6 col-md-12 col-sm-12 d-flex flex-wrap" style="padding: 0;">
+                  <ul class="list-unstyled">
+                    <li>
+                      <p class="prod-lt-hg"> {{ "product_list.movement" | translate }} </p>
+                    </li>
+                    <li class="li-val">{{ prod.movement }}</li>
+                  </ul>
+                  <ul class="list-unstyled">
+                    <li>
+                      <p class="prod-lt-hg">
+                        {{
+                          "product_list.year_of_production" | translate
+                        }}</p
+                      >
+                    </li>
+                    <li class="li-val">{{ prod.year_of_production }}</li>
+                  </ul>
+                  <ul
+                    class="list-unstyled" >
+                    <li>
+                      <p class="prod-lt-hg">
+                        {{
+                          "product_list.reference_number" | translate
+                        }}</p
+                      >
+                    </li>
+                    <li class="li-val">{{ prod.reference_number }}</li>
+                  </ul>
+                  <ul
+                    class="list-unstyled">
+                    <li>
+                      <p class="prod-lt-hg">
+                        {{ "product_list.case_material" | translate }}</p
+                      >
+                    </li>
+                    <li class="li-val">{{ prod.case_material }}</li>
+                  </ul>
+                </div>
+                <div class="col-lg-6 col-md-12 col-sm-12 d-flex flex-wrap" style="padding: 0 0 0 15px;">
+                  <ul
+                    class="list-unstyled" >
+                    <li>
+                      <p class="prod-lt-hg">
+                        {{ "product_list.condition" | translate }}</p
+                      >
+                    </li>
+                    <li class="li-val">{{ prod.condition }}</li>
+                  </ul>
+                  <ul
+                    class="list-unstyled" >
+                    <li>
+                      <p class="prod-lt-hg">
+                        {{
+                          "product_list.scope_of_delivery" | translate
+                        }}</p
+                      >
+                    </li>
+                    <li class="li-val">{{ prod.scope_of_delivery }}</li>
+                  </ul>
+                  <ul
+                    class="list-unstyled">
+                    <li>
+                      <p class="prod-lt-hg">
+                        {{ "product_list.case_diameter" | translate }}</p
+                      >
+                    </li>
+                    <li class="li-val">{{ prod.case_diameter }}</li>
+                  </ul>
+
+                  <ul
+                    class="list-unstyled">
+                    <li>
+                      <p class="prod-lt-hg"> {{ "product_list.gender" | translate }}</p>
+                    </li>
+                    <li class="li-val">{{ prod.gender }}</li>
+                  </ul>
+                </div>
+              </div>
+              <h6 [ngClass]="{'price-text-stl': translateService.currentLang !== 'en'}" class="text-danger price-text">
+                <p class="d-flex flex-column margin-0 mt-2">
+                  ${{ prod.price }}
+                </p>
+              </h6>
+            </div>
+
+          </div>
+           
+        </a>
+
+      </div>
     </div>
+
+
 
     <div class="container mt-5 mb-5">
       <div class="card p-4 shadow-sm" style="background: #f3f3f3">
