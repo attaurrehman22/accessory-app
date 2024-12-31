@@ -65,7 +65,6 @@ export class ProductListComponent implements OnInit {
 
   onCheckboxChange(event: Event, item: any, type: string) {
     const isChecked = (event.target as HTMLInputElement).checked;
-
     if (type === 'brand') {
       if (isChecked) {
         this.checkedBrands.push(item);  
@@ -82,6 +81,8 @@ export class ProductListComponent implements OnInit {
       console.log('Checked Categories:', this.checkedCategories);
     }
 
+   
+
     this.buildQueryString();
   }
 
@@ -92,9 +93,9 @@ export class ProductListComponent implements OnInit {
     // Add categories to the query string
     if (this.checkedCategories.length > 0) {
       this.checkedCategories.forEach((id, index) => {
-        queryString += `category_ids=${id.id}`;
+        queryString += `category_ids[]=${id.id}`;
         if (index < this.checkedCategories.length - 1) {
-          queryString += '&';
+          queryString += '&'; // Add an "&" if it's not the last element
         }
       });
     }
@@ -105,12 +106,13 @@ export class ProductListComponent implements OnInit {
         queryString += '&';  // Add '&' if categories already exist
       }
       this.checkedBrands.forEach((id, index) => {
-        queryString += `brand_ids=${id.id}`;
+        queryString += `brand_ids[]=${id.id}`;  // Use brand_ids[] to store as an array
         if (index < this.checkedBrands.length - 1) {
-          queryString += '&';
+          queryString += '&'; // Add '&' between values, not at the end
         }
       });
     }
+    
 
     // Call the API with the constructed query string
     if (queryString) {
@@ -377,24 +379,9 @@ export class ProductListComponent implements OnInit {
   getCategory(brandName: string, categoryType: string) {
     let params;
     let lastArray;
-    // this.slidercheck = false;
-    // if (option === "category") {
-    //   if (!this.selectedCategories) {
-    //     this.selectedCategories = [];
-    //   }
-
-    //   if (this.selectedCategories.includes(selectedCatId)) {
-    //     this.selectedCategories = this.selectedCategories.filter(
-    //       (id) => id !== selectedCatId
-    //     );
-    //   } else {
-    //     this.selectedCategories.push(selectedCatId);
-    //   }
-    //   lastArray = this.selectedCategories[this.selectedCategories.length - 1];
-    // }
 
     if (categoryType === "brand") {
-      this.selectedBrands = brandName; // Store the single selected brand (assuming it's the name)
+      this.selectedBrands = brandName; 
     }
     if (
       (!lastArray || lastArray.length === 0) &&
