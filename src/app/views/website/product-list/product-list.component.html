@@ -337,7 +337,7 @@
 
 
     <div class="container">
-      <div class="prod-card" *ngFor="let prod of productsList">
+      <div class="prod-card" *ngFor="let prod of productsList | slice:0:10">
         <a
           [routerLink]="['/buy-product']"
           [queryParams]="{ id: prod.id }"
@@ -452,8 +452,54 @@
           </div>
            
         </a>
-
       </div>
+
+      <div class="d-flex justify-content-between align-items-center mt-3 mb-3">
+        <!-- Dropdown for selecting items per page -->
+        <div class="col-md-6 d-flex align-items-center gap-2">
+          <label for="itemsPerPage" class="form-label">Items per page:</label>
+          <select
+            id="itemsPerPage"
+            class="form-select w-auto"
+            [(ngModel)]="itemsPerPage"
+            (change)="onItemsPerPageChange()"
+          >
+            <option *ngFor="let option of itemsPerPageOptions" [value]="option">
+              {{ option }}
+            </option>
+          </select>
+        </div>
+      
+      
+        <div class="col-md-6 d-flex justify-content-end align-items-center">
+          <button 
+            class="pagination-btn" 
+            [disabled]="currentPage === 1" 
+            (click)="changePage(currentPage - 1)"
+          >
+            &lt;
+          </button>
+      
+          <button 
+            *ngFor="let pageNumber of totalPageNumbers" 
+            class="pagination-btn" 
+            [ngClass]="{'active': pageNumber === currentPage}" 
+            (click)="changePage(pageNumber)"
+          >
+            {{ pageNumber }}
+          </button>
+      
+          <button 
+            class="pagination-btn" 
+            [disabled]="currentPage === totalPageNumbers.length" 
+            (click)="changePage(currentPage + 1)"
+          >
+            &gt;
+          </button>
+        </div>
+      </div>
+   
+      
     </div>
   </div>
 </div>
