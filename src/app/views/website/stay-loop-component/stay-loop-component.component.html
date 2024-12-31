@@ -1,68 +1,89 @@
-<div
-  class="container-fluid d-flex justify-content-center align-items-center vh-50 mt-5 mb-5 mt-5"
->
-  <div
-    class="row w-100"
-    [ngStyle]="{
-      'background-color':
-        translateService.currentLang === 'en' ? '#f8f8f8' : '#333333'
-    }"
-    [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }"
-  >
+<div id="productCarousel" class="carousel slide" data-bs-ride="carousel">
+  <div class="carousel-inner">
     <div
-      [ngClass]="{
-        'col-md-6': translateService.currentLang !== 'en',
-        'col-md-5': translateService.currentLang === 'en'
-      }"
-      class="col-12 bg-left"
+      class="carousel-item"
+      *ngFor="let product of productList; let i = index"
+      [class.active]="i === 0"
     >
       <div
-        [ngClass]="{
-          'reverse-order-res-img': translateService.currentLang !== 'en'
+        class="row w-100"
+        [ngStyle]="{
+          'background-color':
+            translateService.currentLang === 'en' ? '#f8f8f8' : '#333333'
         }"
+        [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }"
       >
-        <img
-          [src]="
-            'https://api.chronosouq.com/' + watchDetails.product.main_image
-          "
-          alt=""
-          style="width: 100%; height: 500px; object-fit: scale-down"
-        />
-      </div>
-    </div>
-    <div
-      class="col-12 position-relative bg-right"
-      [ngClass]="{
-        'col-md-6': translateService.currentLang !== 'en',
-        'col-md-7': translateService.currentLang === 'en'
-      }"
-    >
-      <div class="watch-details-div">
-        <div class="d-flex flex-column text-white">
-          <p class="mb-1">{{ watchDetails.product.name }}</p>
-          <h1 class="display-6 fw-bold mt-2">SpeedMaster</h1>
-          <p class="card-text">
-            {{ watchDetails.product.description }}
-          </p>
-
-          <div class="mb-3">
-            <span class="fw-bold">Type:</span>
-            <span
-              class="badge bg-light text-dark mx-2"
-              style="padding: 10px 10px 10px 10px"
-              >Limited Edition</span
-            >
+        <div
+          [ngClass]="{
+            'col-md-6': translateService.currentLang !== 'en',
+            'col-md-5': translateService.currentLang === 'en'
+          }"
+          class="col-12 bg-left"
+        >
+          <div
+            [ngClass]="{
+              'reverse-order-res-img': translateService.currentLang !== 'en'
+            }"
+          >
+            <img
+              [src]="'https://api.chronosouq.com/' + product.main_image"
+              alt=""
+              style="width: 100%; height: 500px; object-fit: scale-down"
+            />
           </div>
+        </div>
+        <div
+          class="col-12 position-relative bg-right"
+          [ngClass]="{
+            'col-md-6': translateService.currentLang !== 'en',
+            'col-md-7': translateService.currentLang === 'en'
+          }"
+        >
+          <div class="watch-details-div">
+            <div class="d-flex flex-column text-white">
+              <p class="mb-1">{{ product.name }}</p>
+              <h1 class="display-6 fw-bold mt-2">SpeedMaster</h1>
+              <p class="card-text">
+                {{ product.description }}
+              </p>
 
-          <h4>
-            {{ watchDetails.product.currency }} {{ watchDetails.product.price }}
-          </h4>
+              <div class="mb-3">
+                <span class="fw-bold">Type:</span>
+                <span
+                  class="badge bg-light text-dark mx-2"
+                  style="padding: 10px 10px 10px 10px"
+                  >Limited Edition</span
+                >
+              </div>
 
-          <button class="buy-btn" (click)="goToProductDetailPage()">
-            Buy Now
-          </button>
+              <h4>{{ product.currency }} {{ product.price }}</h4>
+
+              <button class="buy-btn" (click)="goToProductDetailPage()">
+                Buy Now
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </div>
+
+  <button
+    class="carousel-control-prev"
+    type="button"
+    data-bs-target="#productCarousel"
+    data-bs-slide="prev"
+  >
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button
+    class="carousel-control-next"
+    type="button"
+    data-bs-target="#productCarousel"
+    data-bs-slide="next"
+  >
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
 </div>

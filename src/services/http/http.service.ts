@@ -30,22 +30,15 @@ export class HttpService implements OnInit {
     return this.http.post(`${this.apiUrl}/api/check-user-existence`, formData);
   }
 
-  register(FormControl: any, User: any): Observable<any> {
+  register(FormControl: any): Observable<any> {
     let formdate = new FormData();
-    if (User === "user") {
+  
       formdate.append("name", FormControl.get("username").value);
       formdate.append("email", FormControl.get("email").value);
       formdate.append("password", FormControl.get("password").value);
-      formdate.append("type", FormControl.get("type").value);
-    } else {
-      formdate.append("name", FormControl.get("username").value);
-      formdate.append("email", FormControl.get("email").value);
-      formdate.append("password", FormControl.get("password").value);
-      formdate.append("type", FormControl.get("type").value);
       formdate.append("city", FormControl.get("city").value);
       formdate.append("country", FormControl.get("country").value);
-    }
-
+  
     return this.http.post(`${this.apiUrl}/api/register`, formdate);
   }
 

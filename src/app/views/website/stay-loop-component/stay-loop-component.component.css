@@ -14,7 +14,7 @@
 }
 
 .watch-details-div {
-  width: 60%;
+  width: 50%;
   padding: 0 15px 0 5px;
 }
 
@@ -75,4 +75,18 @@
   .reverse-order-res-img {
     width: 100%;
   }
+}
+.card {
+  margin: 15px;
+}
+.carousel-item .active {
+  display: flex;
+  justify-content: center;
+}
+
+.carousel-item {
+  /* display: none; */
+}
+.carousel-control-next, .carousel-control-prev {
+  width: 5% !important;
 }

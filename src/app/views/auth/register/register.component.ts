@@ -53,10 +53,6 @@ export class RegisterComponent implements OnInit {
     validators: [Validators.required, notsame1()],
   });
 
-  type = new FormControl("", {
-    validators: [Validators.required],
-  });
-
   country = new FormControl("", []);  
   city = new FormControl("", []); 
 
@@ -80,7 +76,6 @@ export class RegisterComponent implements OnInit {
         email: this.email,
         password: this.password,
         confirmpassword: this.confirmpassword,
-        type: this.type,
         country: this.country,
         city: this.city,
       },
@@ -92,18 +87,6 @@ export class RegisterComponent implements OnInit {
     if (this.supportLanguages.includes(browserlang)) {
       this.translateService.use(browserlang);
     }
-
-    this.registerForm.get("type").valueChanges.subscribe((value) => {
-      if (value === "dealer") {
-        this.registerForm.get("country").setValidators([Validators.required]);
-        this.registerForm.get("city").setValidators([Validators.required]);
-      } else {
-        this.registerForm.get("country").clearValidators();
-        this.registerForm.get("city").clearValidators();
-      }
-      this.registerForm.get("country").updateValueAndValidity();
-      this.registerForm.get("city").updateValueAndValidity();
-    });
   }
 
   ngOnInit(): void {}
@@ -117,7 +100,7 @@ export class RegisterComponent implements OnInit {
 
     if (this.registerForm.valid) {
       this.http
-        .register(this.registerForm, this.registerForm.get("type").value)
+        .register(this.registerForm)
         .subscribe(
           (response) => {
             localStorage.setItem("isLoggedIn", "true");
