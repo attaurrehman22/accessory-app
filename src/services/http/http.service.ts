@@ -65,7 +65,7 @@ export class HttpService implements OnInit {
   }
 
   getProductsByCategory(queryString: any) {
-    return this.http.get(`${this.apiUrl}/api/search-product-by?${queryString}`);
+    return this.http.get(`${this.apiUrl}/api/search-product-by/?${queryString}`);
   }
 
   searchedProducts(name: any) {

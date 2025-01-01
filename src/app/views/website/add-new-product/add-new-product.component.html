@@ -1205,16 +1205,16 @@
                     class="full-width"
                     appearance="outline"
                   >
-                    <mat-label class="label-header">Shipping Type</mat-label>
-                    <input
-                      matInput
-                      type="text"
-                      [(ngModel)]="shipping_type"
-                      placeholder="Enter Shipping Type"
-                    />
+                    <mat-label class="label-header">Select Shipping Type</mat-label>
+                    <mat-select [(ngModel)]="shipping_type">
+                      <mat-option value="exclusiveShipping">Exclusive Shipping</mat-option>
+                      <mat-option value="freeCharge">Free of Charge</mat-option>
+                      <mat-option value="inclusiveShipping">Inclusive Shipping</mat-option>
+                    </mat-select>
                   </mat-form-field>
 
                   <mat-form-field
+                  *ngIf="shipping_type === 'inclusiveShipping'"
                     style="width: 100%"
                     class="full-width"
                     appearance="outline"
@@ -1231,6 +1231,7 @@
                   </mat-form-field>
 
                   <mat-form-field
+                  *ngIf="shipping_type === 'inclusiveShipping'"
                     style="width: 100%"
                     class="full-width"
                     appearance="outline"
@@ -2865,16 +2866,16 @@
                   class="full-width"
                   appearance="outline"
                 >
-                  <mat-label class="label-header">Shipping Type</mat-label>
-                  <input
-                    matInput
-                    type="text"
-                    [(ngModel)]="shipping_type"
-                    placeholder="Enter Shipping Type"
-                  />
+                <mat-label class="label-header">Select Shipping Type</mat-label>
+                <mat-select [(ngModel)]="shipping_type">
+                  <mat-option value="exclusiveShipping">Exclusive Shipping</mat-option>
+                  <mat-option value="freeCharge">Free of Charge</mat-option>
+                  <mat-option value="inclusiveShipping">Inclusive Shipping</mat-option>
+                </mat-select>
                 </mat-form-field>
 
                 <mat-form-field
+                *ngIf="shipping_type === 'inclusiveShipping'"
                   style="width: 100%"
                   class="full-width"
                   appearance="outline"
@@ -2891,6 +2892,7 @@
                 </mat-form-field>
 
                 <mat-form-field
+                *ngIf="shipping_type === 'inclusiveShipping'"
                   style="width: 100%"
                   class="full-width"
                   appearance="outline"
