@@ -1,220 +1,258 @@
-<div class="global-main-wraper" style="display: flex; flex-wrap: wrap;margin-top: 30px;">
+<div
+  class="global-main-wraper"
+  style="display: flex; flex-wrap: wrap; margin-top: 30px"
+>
   <div class="col-lg-2 col-md-3 col-sm-12 mt-5">
-   
-
     <div class="container">
       <div class="accordion" id="accordionExample">
-        <div class="card" style="box-shadow: none !important;">
+        <div class="card" style="box-shadow: none !important">
           <div class="card-header d-flex justify-content-between">
-            <h5 class="mb-0">
-              Brands
-            </h5> <a
-            class="text-decoration-none"
-            role="button"
-            (click)="toggleCollapse()"
-            aria-expanded="false"
-            aria-controls="collapseBrands"
-          >
-          
-            <mat-icon>{{ isCollapsed ? 'expand_more' : 'expand_less' }}</mat-icon>
-          </a>
+            <h5 class="mb-0">Brands</h5>
+            <a
+              class="text-decoration-none"
+              role="button"
+              (click)="toggleCollapse()"
+              aria-expanded="false"
+              aria-controls="collapseBrands"
+            >
+              <mat-icon>{{
+                isCollapsed ? "expand_more" : "expand_less"
+              }}</mat-icon>
+            </a>
           </div>
-        
-          <div [ngClass]="isCollapsed ? 'collapse' : 'collapse show'" id="collapseBrands">
+          <div
+            [ngClass]="isCollapsed ? 'collapse' : 'collapse show'"
+            id="collapseBrands"
+          >
             <div class="card-body">
               <!-- Brands -->
-              <div *ngFor="let brand of (showAll ? brandsDataList : brandsDataList | slice:0:10)" class="form-check">
-                <input class="form-check-input" type="checkbox" 
-                       [id]="brand.id" 
-                       [checked]="brand.checked" 
-                       (change)="onCheckboxChange($event, brand, 'brand')" />
-                <label class="form-check-label" [for]="brand.id">{{brand.name}}</label>
+              <div
+                *ngFor="
+                  let brand of showAll
+                    ? brandsDataList
+                    : (brandsDataList | slice : 0 : 10)
+                "
+                class="form-check"
+              >
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  [id]="brand.id"
+                  [checked]="brand.checked"
+                  (change)="onCheckboxChange($event, brand, 'brand')"
+                />
+                <label class="form-check-label" [for]="brand.id">{{
+                  brand.name
+                }}</label>
               </div>
-            
               <!-- Toggle See All for Brands -->
-              <a style="cursor: pointer;" class="text-primary" (click)="toggleSeeAll()">
-                {{showAll ? 'See less' : 'See all'}}
+              <a
+                style="cursor: pointer"
+                class="text-primary"
+                (click)="toggleSeeAll()"
+              >
+                {{ showAll ? "See less" : "See all" }}
               </a>
             </div>
-            
-            
           </div>
         </div>
-        
       </div>
-
-
-
-
-
-
-
-
       <div class="accordion" id="accordionExample">
-        <div class="card" style="box-shadow: none !important;">
+        <div class="card" style="box-shadow: none !important">
           <div class="card-header d-flex justify-content-between">
-            <h5 class="mb-0">
-              Category
-            </h5> <a
-            class="text-decoration-none"
-            role="button"
-            (click)="toggleCollapse2()"
-            aria-expanded="false"
-            aria-controls="collapseBrands2"
-          >
-          
-            <mat-icon>{{ isCollapsed2 ? 'expand_more' : 'expand_less' }}</mat-icon>
-          </a>
+            <h5 class="mb-0">Category</h5>
+            <a
+              class="text-decoration-none"
+              role="button"
+              (click)="toggleCollapse2()"
+              aria-expanded="false"
+              aria-controls="collapseBrands2"
+            >
+              <mat-icon>{{
+                isCollapsed2 ? "expand_more" : "expand_less"
+              }}</mat-icon>
+            </a>
           </div>
-        
-          <div [ngClass]="isCollapsed2 ? 'collapse' : 'collapse show'" id="collapseBrands2">
+          <div
+            [ngClass]="isCollapsed2 ? 'collapse' : 'collapse show'"
+            id="collapseBrands2"
+          >
             <div class="card-body">
               <!-- Categories -->
-              <div *ngFor="let category of (showAll2 ? category_sel_frm_popular_models : category_sel_frm_popular_models | slice:0:10)" class="form-check">
-                <input class="form-check-input" type="checkbox" 
-                       [id]="category.id" 
-                       [checked]="category.checked" 
-                       (change)="onCheckboxChange($event, category, 'category')" />
-                <label class="form-check-label" [for]="category.id">{{category.name}}</label>
+              <div
+                *ngFor="
+                  let category of showAll2
+                    ? category_sel_frm_popular_models
+                    : (category_sel_frm_popular_models | slice : 0 : 10)
+                "
+                class="form-check"
+              >
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  [id]="category.id"
+                  [checked]="category.checked"
+                  (change)="onCheckboxChange($event, category, 'category')"
+                />
+                <label class="form-check-label" [for]="category.id">{{
+                  category.name
+                }}</label>
               </div>
-            
               <!-- Toggle See All for Categories -->
-              <a style="cursor: pointer;" class="text-primary" (click)="toggleSeeAll2()">
-                {{showAll2 ? 'See less' : 'See all'}}
+              <a
+                style="cursor: pointer"
+                class="text-primary"
+                (click)="toggleSeeAll2()"
+              >
+                {{ showAll2 ? "See less" : "See all" }}
               </a>
             </div>
-            
           </div>
         </div>
-        
       </div>
-
-
     </div>
-
   </div>
-
   <div class="col-lg-10 col-md-9 col-sm-12">
     <div class="container">
-      <div class="prod-card" *ngFor="let prod of productsList | slice:0:10">
+      <div class="prod-card" *ngFor="let prod of productsList">
         <a
           [routerLink]="['/buy-product']"
           [queryParams]="{ id: prod.id }"
-          
           class="row card-a g-0"
         >
           <div class="col-lg-2 col-md-12 col-sm-12 img-div-ht">
             <img
-                [src]="'https://api.chronosouq.com/' + prod.main_image"
-                alt="{{ prod.name }}"
-                class="img-fluid product-card-img rounded-start"
-                alt="Rolex Datejust 36"
-              />
-              <span *ngIf="prod.feature_item === 1" class="featured-icon m-2">Featured</span>
+              [src]="'https://api.chronosouq.com/' + prod.main_image"
+              alt="{{ prod.name }}"
+              class="img-fluid product-card-img rounded-start"
+              alt="Rolex Datejust 36"
+            />
+            <span *ngIf="prod.feature_item === 1" class="featured-icon m-2"
+              >Featured</span
+            >
           </div>
           <div class="col-lg-10 col-md-12 col-sm-12 d-flex">
-            <div class="card-body" >
+            <div class="card-body">
               <p class="card-title margin-0">{{ prod.name }}</p>
-              <p class="card-text margin-0 d-flex justify-content-between align-items-center">
+              <p
+                class="card-text margin-0 d-flex justify-content-between align-items-center"
+              >
                 <strong>{{ prod.description }}</strong>
-                <button class="btn btn-light"  *ngIf="isUserLogin ==='true'"
-                (click)="addWishList(prod, $event)">
-                  <i aria-hidden="true" [ngClass]="wishList.includes(prod.id) ? 'fa-heart' : 'fa-heart fa-heart-o'" class="fa"></i> 
+                <button
+                  class="btn btn-light"
+                  *ngIf="isUserLogin === 'true'"
+                  (click)="addWishList(prod, $event)"
+                >
+                  <i
+                    aria-hidden="true"
+                    [ngClass]="
+                      wishList.includes(prod.id)
+                        ? 'fa-heart'
+                        : 'fa-heart fa-heart-o'
+                    "
+                    class="fa"
+                  ></i>
                 </button>
               </p>
-              <div class="d-flex flex-wrap" [ngClass]="{ 'reverse-order-for-product-det': translateService.currentLang !== 'en' }">
-                <div class="col-lg-6 col-md-12 col-sm-12 d-flex flex-wrap" style="padding: 0;">
+              <div
+                class="d-flex flex-wrap"
+                [ngClass]="{
+                  'reverse-order-for-product-det':
+                    translateService.currentLang !== 'en'
+                }"
+              >
+                <div
+                  class="col-lg-6 col-md-12 col-sm-12 d-flex flex-wrap"
+                  style="padding: 0"
+                >
                   <ul class="list-unstyled">
                     <li>
-                      <p class="prod-lt-hg"> {{ "product_list.movement" | translate }} </p>
+                      <p class="prod-lt-hg">
+                        {{ "product_list.movement" | translate }}
+                      </p>
                     </li>
                     <li class="li-val">{{ prod.movement }}</li>
                   </ul>
                   <ul class="list-unstyled">
                     <li>
                       <p class="prod-lt-hg">
-                        {{
-                          "product_list.year_of_production" | translate
-                        }}</p
-                      >
+                        {{ "product_list.year_of_production" | translate }}
+                      </p>
                     </li>
                     <li class="li-val">{{ prod.year_of_production }}</li>
                   </ul>
-                  <ul
-                    class="list-unstyled" >
+                  <ul class="list-unstyled">
                     <li>
                       <p class="prod-lt-hg">
-                        {{
-                          "product_list.reference_number" | translate
-                        }}</p
-                      >
+                        {{ "product_list.reference_number" | translate }}
+                      </p>
                     </li>
                     <li class="li-val">{{ prod.reference_number }}</li>
                   </ul>
-                  <ul
-                    class="list-unstyled">
+                  <ul class="list-unstyled">
                     <li>
                       <p class="prod-lt-hg">
-                        {{ "product_list.case_material" | translate }}</p
-                      >
+                        {{ "product_list.case_material" | translate }}
+                      </p>
                     </li>
                     <li class="li-val">{{ prod.case_material }}</li>
                   </ul>
                 </div>
-                <div class="col-lg-6 col-md-12 col-sm-12 d-flex flex-wrap" style="padding: 0 0 0 15px;">
-                  <ul
-                    class="list-unstyled" >
+                <div
+                  class="col-lg-6 col-md-12 col-sm-12 d-flex flex-wrap"
+                  style="padding: 0 0 0 15px"
+                >
+                  <ul class="list-unstyled">
                     <li>
                       <p class="prod-lt-hg">
-                        {{ "product_list.condition" | translate }}</p
-                      >
+                        {{ "product_list.condition" | translate }}
+                      </p>
                     </li>
                     <li class="li-val">{{ prod.condition }}</li>
                   </ul>
-                  <ul
-                    class="list-unstyled" >
+                  <ul class="list-unstyled">
                     <li>
                       <p class="prod-lt-hg">
-                        {{
-                          "product_list.scope_of_delivery" | translate
-                        }}</p
-                      >
+                        {{ "product_list.scope_of_delivery" | translate }}
+                      </p>
                     </li>
                     <li class="li-val">{{ prod.scope_of_delivery }}</li>
                   </ul>
-                  <ul
-                    class="list-unstyled">
+                  <ul class="list-unstyled">
                     <li>
                       <p class="prod-lt-hg">
-                        {{ "product_list.case_diameter" | translate }}</p
-                      >
+                        {{ "product_list.case_diameter" | translate }}
+                      </p>
                     </li>
                     <li class="li-val">{{ prod.case_diameter }}</li>
                   </ul>
 
-                  <ul
-                    class="list-unstyled">
+                  <ul class="list-unstyled">
                     <li>
-                      <p class="prod-lt-hg"> {{ "product_list.gender" | translate }}</p>
+                      <p class="prod-lt-hg">
+                        {{ "product_list.gender" | translate }}
+                      </p>
                     </li>
                     <li class="li-val">{{ prod.gender }}</li>
                   </ul>
                 </div>
               </div>
-              <h6 [ngClass]="{'price-text-stl': translateService.currentLang !== 'en'}" class="text-danger price-text">
+              <h6
+                [ngClass]="{
+                  'price-text-stl': translateService.currentLang !== 'en'
+                }"
+                class="text-danger price-text"
+              >
                 <p class="d-flex flex-column margin-0 mt-2">
                   ${{ prod.price }}
                 </p>
               </h6>
             </div>
-
           </div>
-           
         </a>
       </div>
 
       <div class="d-flex justify-content-between align-items-center mt-3 mb-3">
-        <!-- Dropdown for selecting items per page -->
         <div class="col-md-6 d-flex align-items-center gap-2">
           <label for="itemsPerPage" class="form-label">Items per page:</label>
           <select
@@ -228,37 +266,34 @@
             </option>
           </select>
         </div>
-      
-      
+
         <div class="col-md-6 d-flex justify-content-end align-items-center">
-          <button 
-            class="pagination-btn" 
-            [disabled]="currentPage === 1" 
+          <button
+            class="pagination-btn"
+            [disabled]="currentPage === 1"
             (click)="changePage(currentPage - 1)"
           >
             &lt;
           </button>
-      
-          <button 
-            *ngFor="let pageNumber of totalPageNumbers" 
-            class="pagination-btn" 
-            [ngClass]="{'active': pageNumber === currentPage}" 
+
+          <button
+            *ngFor="let pageNumber of totalPageNumbers"
+            class="pagination-btn"
+            [ngClass]="{ active: pageNumber === currentPage }"
             (click)="changePage(pageNumber)"
           >
             {{ pageNumber }}
           </button>
-      
-          <button 
-            class="pagination-btn" 
-            [disabled]="currentPage === totalPageNumbers.length" 
+
+          <button
+            class="pagination-btn"
+            [disabled]="totalItems === currentPage"
             (click)="changePage(currentPage + 1)"
           >
             &gt;
           </button>
         </div>
       </div>
-   
-      
     </div>
   </div>
 </div>

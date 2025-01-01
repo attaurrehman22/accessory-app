@@ -16,14 +16,14 @@ export class ProductListComponent implements OnInit {
   productsList: any;
   title = "chronowatch";
   currentPage: number = 1;
-  totalItems: number = 50; // Total number of items
-  itemsPerPage: number = 20;
+
+  totalItems: number = 0;
+  itemsPerPage: number = 10;
   totalPageNumbers: number[] = [];
-  itemsPerPageOptions: number[] = [20, 50, 80];
+  itemsPerPageOptions: number[] = [10, 20, 50, 80];
   brandsDataList: any;
   category_sel_frm_popular_models: any;
 
-  dataFrompopularbrands: any;
   searchQuery: string = "";
   isCollapsed = false;
   isCollapsed2 = false;
@@ -32,70 +32,66 @@ export class ProductListComponent implements OnInit {
   checkedBrands: any[] = [];
   checkedCategories: any[] = [];
 
-
-
-  initializePagination() {
-    const totalPages = Math.ceil(this.totalItems / this.itemsPerPage);
-    this.totalPageNumbers = Array.from({ length: totalPages }, (_, i) => i + 1);
-  }
-
   changePage(page: number) {
     this.currentPage = page;
     // Call your API or data-fetching logic here to fetch items for the current page
     console.log(`Page changed to: ${page}`);
+    this.fetchProducts(); // Update products list based on new page
   }
 
   onItemsPerPageChange() {
     this.currentPage = 1; // Reset to the first page
-    this.initializePagination(); // Recalculate pagination
+    this.fetchProducts(); // Fetch products with updated items per page
     console.log(`Items per page changed to: ${this.itemsPerPage}`);
   }
 
-
-
-
+  fetchProducts() {
+    const queryString = this.buildQueryString();
+    // this.getProductsByCategory(queryString);
+  }
 
   toggleCollapse() {
     this.isCollapsed = !this.isCollapsed;
   }
 
-  toggleCollapse2(){
+  toggleCollapse2() {
     this.isCollapsed2 = !this.isCollapsed2;
   }
 
   onCheckboxChange(event: Event, item: any, type: string) {
     const isChecked = (event.target as HTMLInputElement).checked;
-    if (type === 'brand') {
+    if (type === "brand") {
       if (isChecked) {
-        this.checkedBrands.push(item);  
+        this.checkedBrands.push(item);
       } else {
-        this.checkedBrands = this.checkedBrands.filter(brand => brand.id !== item.id);  // Remove from checked list
+        this.checkedBrands = this.checkedBrands.filter(
+          (brand) => brand.id !== item.id
+        ); // Remove from checked list
       }
-      console.log('Checked Brands:', this.checkedBrands);
-    } else if (type === 'category') {
+      console.log("Checked Brands:", this.checkedBrands);
+    } else if (type === "category") {
       if (isChecked) {
-        this.checkedCategories.push(item);  // Add to checked list
+        this.checkedCategories.push(item); // Add to checked list
       } else {
-        this.checkedCategories = this.checkedCategories.filter(category => category.id !== item.id);  // Remove from checked list
+        this.checkedCategories = this.checkedCategories.filter(
+          (category) => category.id !== item.id
+        ); // Remove from checked list
       }
-      console.log('Checked Categories:', this.checkedCategories);
+      console.log("Checked Categories:", this.checkedCategories);
     }
-
-   
 
     this.buildQueryString();
   }
 
-
   buildQueryString() {
-    let queryString = '';
+    let queryString = "";
 
     // Add categories to the query string
     if (this.checkedCategories.length > 0) {
       this.checkedCategories.forEach((id, index) => {
         queryString += `category_ids[]=${id.id}`;
         if (index < this.checkedCategories.length - 1) {
-          queryString += '&'; // Add an "&" if it's not the last element
+          queryString += "&"; // Add an "&" if it's not the last element
         }
       });
     }
@@ -103,16 +99,18 @@ export class ProductListComponent implements OnInit {
     // Add brands to the query string
     if (this.checkedBrands.length > 0) {
       if (queryString) {
-        queryString += '&';  // Add '&' if categories already exist
+        queryString += "&"; // Add '&' if categories already exist
       }
       this.checkedBrands.forEach((id, index) => {
-        queryString += `brand_ids[]=${id.id}`;  // Use brand_ids[] to store as an array
+        queryString += `brand_ids[]=${id.id}`; // Use brand_ids[] to store as an array
         if (index < this.checkedBrands.length - 1) {
-          queryString += '&'; // Add '&' between values, not at the end
+          queryString += "&"; // Add '&' between values, not at the end
         }
       });
     }
-    
+
+    queryString += `&page=${this.currentPage}`;
+    queryString += `&per_page=${this.itemsPerPage}`;
 
     // Call the API with the constructed query string
     if (queryString) {
@@ -121,44 +119,37 @@ export class ProductListComponent implements OnInit {
   }
 
   // Method to call the API with the generated query string
-  getProductsByCategory(queryString: string) {
-    this.http.getProductsByCategory(queryString).subscribe(
-      (res)=>{
-        this.productsList = res;
-        this.productsList.data.map((product: any) => {
-          if (product.main_image) {
-            product.main_image = product.main_image
-              .replace(/\\/g, "/")
-              .replace(/^\/+/, "");
+  getProductsByCategory(queryString: any) {
+    this.http.getProductsByCategory(queryString).subscribe((res) => {
+      this.productsList = res;
+      this.totalItems = this.productsList.data.last_page;
+      this.currentPage = this.productsList.data.current_page;
+      this.productsList = this.productsList.data.data;
+      this.productsList.data.data.map((product: any) => {
+        if (product.main_image) {
+          product.main_image = product.main_image
+            .replace(/\\/g, "/")
+            .replace(/^\/+/, "");
+        }
+
+        if (product.folder) {
+          product.folder = product.folder
+            .replace(/\\/g, "/")
+            .replace(/^\/+/, "");
+        }
+
+        if (product.additional_images) {
+          try {
+            product.additional_images = JSON.parse(
+              product.additional_images
+            ).map((img: string) => img.replace(/\\/g, "/").replace(/^\/+/, ""));
+          } catch (error) {
+            console.error("Error parsing additional_images:", error);
           }
-
-          if (product.folder) {
-            product.folder = product.folder
-              .replace(/\\/g, "/")
-              .replace(/^\/+/, "");
-          }
-
-          if (product.additional_images) {
-            try {
-              product.additional_images = JSON.parse(
-                product.additional_images
-              ).map((img: string) =>
-                img.replace(/\\/g, "/").replace(/^\/+/, "")
-              );
-            } catch (error) {
-              console.error("Error parsing additional_images:", error);
-            }
-          }
-
-          return product;
-        });
-
-        this.productsList.sort(
-          (a: any, b: any) =>
-            new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
-        );
-      }
-    );
+        }
+        return product;
+      });
+    });
   }
 
   ngOnInit(): void {
@@ -166,68 +157,9 @@ export class ProductListComponent implements OnInit {
     if (this.isUserLogin === "true") {
       this.getWishList();
     }
-    this.dataFrompopularbrands = history.state.brandData;
-    this.brandsDataList = history.state.data;
-    if (this.dataFrompopularbrands) {
-      this.getPopularBrandswithBrndsID();
-    } else {
-      this.getAllProducts();
-    }
     this.getAllCategories();
     this.getAllBrands();
-    this.initializePagination();
-    this.searchService.currentSearchQuery.subscribe((query) => {
-      this.searchQuery = query;
-      this.searchProducts();
-    });
-  }
-
-  searchProducts() {
-    console.log("i am calling searchProducts() ")
-    if (this.searchQuery) {
-      this.http.searchedProducts(this.searchQuery).subscribe(
-        (res) => {
-          this.productsList = res;
-          if (this.productsList) {
-            this.productsList = this.productsList.products.map(
-              (product: any) => {
-                if (product.main_image) {
-                  product.main_image = product.main_image
-                    .replace(/\\/g, "/")
-                    .replace(/^\/+/, "");
-                }
-                if (product.folder) {
-                  product.folder = product.folder
-                    .replace(/\\/g, "/")
-                    .replace(/^\/+/, "");
-                }
-                if (product.additional_images) {
-                  try {
-                    product.additional_images = JSON.parse(
-                      product.additional_images
-                    ).map((img: string) =>
-                      img.replace(/\\/g, "/").replace(/^\/+/, "")
-                    );
-                  } catch (error) {
-                    console.error("Error parsing additional_images:", error);
-                  }
-                }
-
-                return product;
-              }
-            );
-
-            this.productsList.sort(
-              (a: any, b: any) =>
-                new Date(b.created_at).getTime() -
-                new Date(a.created_at).getTime()
-            );
-          }
-        },
-        (err) => {}
-      );
-    } else {
-    }
+    this.fetchProducts();
   }
 
   brandsDropDownList: any;
@@ -236,7 +168,6 @@ export class ProductListComponent implements OnInit {
     this.http.getBrandsDropDownFilter().subscribe(
       (res) => {
         this.brandsDataList = res.data;
-        this.filterdProducts = res.data;
       },
       (err) => {}
     );
@@ -252,46 +183,6 @@ export class ProductListComponent implements OnInit {
 
   toggleSeeAll2() {
     this.showAll2 = !this.showAll2;
-  }
-
-  getPopularBrandswithBrndsID() {
-    this.http.getPopularproductsWithID(this.dataFrompopularbrands.id).subscribe(
-      (res) => {
-        this.productsList = res.data.products.map((product: any) => {
-          if (product.main_image) {
-            product.main_image = product.main_image
-              .replace(/\\/g, "/")
-              .replace(/^\/+/, "");
-          }
-
-          if (product.folder) {
-            product.folder = product.folder
-              .replace(/\\/g, "/")
-              .replace(/^\/+/, "");
-          }
-
-          if (product.additional_images) {
-            try {
-              product.additional_images = JSON.parse(
-                product.additional_images
-              ).map((img: string) =>
-                img.replace(/\\/g, "/").replace(/^\/+/, "")
-              );
-            } catch (error) {
-              console.error("Error parsing additional_images:", error);
-            }
-          }
-
-          return product;
-        });
-
-        this.productsList.sort(
-          (a: any, b: any) =>
-            new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
-        );
-      },
-      (err) => {}
-    );
   }
 
   getAllCategories() {
@@ -325,142 +216,14 @@ export class ProductListComponent implements OnInit {
     }
   }
 
-
-
- 
   currentIndex1: number = 0;
   itemsPerPage1: number = 4;
-  filterdProducts: any[] = [];
-
-  getAllProducts() {
-    this.http.getProducts().subscribe(
-      (res) => {
-        this.productsList = res.data.map((product: any) => {
-          if (product.main_image) {
-            product.main_image = product.main_image
-              .replace(/\\/g, "/")
-              .replace(/^\/+/, "");
-          }
-
-          if (product.folder) {
-            product.folder = product.folder
-              .replace(/\\/g, "/")
-              .replace(/^\/+/, "");
-          }
-
-          if (product.additional_images) {
-            try {
-              product.additional_images = JSON.parse(
-                product.additional_images
-              ).map((img: string) =>
-                img.replace(/\\/g, "/").replace(/^\/+/, "")
-              );
-            } catch (error) {
-              console.error("Error parsing additional_images:", error);
-            }
-          }
-
-          return product;
-        });
-
-        this.productsList.sort(
-          (a: any, b: any) =>
-            new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
-        );
-      },
-      (err) => {}
-    );
-  }
-
-  selectedCategories: any[] = [];
-  slidercheck = false;
-  selectedBrands: any = "";
-
-  getCategory(brandName: string, categoryType: string) {
-    let params;
-    let lastArray;
-
-    if (categoryType === "brand") {
-      this.selectedBrands = brandName; 
-    }
-    if (
-      (!lastArray || lastArray.length === 0) &&
-      (!this.selectedBrands || this.selectedBrands === "")
-    ) {
-      if (this.dataFrompopularbrands) {
-        this.getPopularBrandswithBrndsID();
-        this.slidercheck = true;
-        return;
-      } else {
-        this.getAllProducts();
-        this.slidercheck = true;
-        return;
-      }
-    }
-
-    params = new URLSearchParams();
-
-    if (this.selectedBrands) {
-      params.append("name", this.selectedBrands); // Send brand name as a string
-    }
-
-    // this.selectedCategories.forEach((id: number) =>
-    //   params.append("category_ids[]", id.toString())
-    // );
-
-    const queryString = params.toString();
-
-    this.http.getProductsByCategory(queryString).subscribe(
-      (res) => {
-        this.productsList = res;
-        if (this.productsList.data) {
-          this.productsList = this.productsList.data;
-          this.productsList.map((product: any) => {
-            if (product.main_image) {
-              product.main_image = product.main_image
-                .replace(/\\/g, "/")
-                .replace(/^\/+/, "");
-            }
-
-            if (product.folder) {
-              product.folder = product.folder
-                .replace(/\\/g, "/")
-                .replace(/^\/+/, "");
-            }
-
-            if (product.additional_images) {
-              try {
-                product.additional_images = JSON.parse(
-                  product.additional_images
-                ).map((img: string) =>
-                  img.replace(/\\/g, "/").replace(/^\/+/, "")
-                );
-              } catch (error) {
-                console.error("Error parsing additional_images:", error);
-              }
-            }
-
-            return product;
-          });
-          this.productsList.sort(
-            (a: any, b: any) =>
-              new Date(b.created_at).getTime() -
-              new Date(a.created_at).getTime()
-          );
-        }
-      },
-      (err) => {
-        console.error("Error fetching products:", err);
-      }
-    );
-  }
 
   routeTo(slide) {
     this.router.navigate(["/buy-product"], {
       state: { data: slide },
     });
   }
-
 
   wishList: any;
   getWishList() {
@@ -470,19 +233,15 @@ export class ProductListComponent implements OnInit {
   }
 
   addWishList(watch: any, event: MouseEvent) {
-    event.stopPropagation(); 
-    event.preventDefault(); 
+    event.stopPropagation();
+    event.preventDefault();
     const formData = {
       product_id: watch.id,
     };
     this.http.addWishList(formData).subscribe((res) => {
       this.wishList = res.data;
       this.getWishList();
-      this.searchProducts();
+      this.fetchProducts();
     });
   }
-
-
- 
-  
 }
