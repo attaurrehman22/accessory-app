@@ -45,44 +45,6 @@
       </mat-form-field>
     </div>
 
-    <div
-      class="mt-1"
-      [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'"
-    >
-      <mat-form-field appearance="outline" style="width: 100%">
-        <mat-label>{{ "register.country" | translate }}</mat-label>
-        <input
-          type="text"
-          matInput
-          placeholder="{{ 'register.country' | translate }}"
-          required
-          formControlName="country"
-        />
-        <mat-error *ngIf="registerForm.get('country')?.hasError('required')">
-          {{ "register.country_required" | translate }}
-        </mat-error>
-      </mat-form-field>
-    </div>
-
-    <div
-      class="mt-1"
-      [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'"
-    >
-      <mat-form-field appearance="outline" style="width: 100%">
-        <mat-label>{{ "register.city" | translate }}</mat-label>
-        <input
-          type="text"
-          matInput
-          placeholder="{{ 'register.city' | translate }}"
-          required
-          formControlName="city"
-        />
-        <mat-error *ngIf="registerForm.get('city')?.hasError('required')">
-          {{ "register.city_required" | translate }}
-        </mat-error>
-      </mat-form-field>
-    </div>
-
     <div class="mt-1" [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'">
       <mat-form-field appearance="outline" style="width: 100%">
         <mat-label>{{ 'register.password' | translate }}</mat-label>

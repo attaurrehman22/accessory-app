@@ -51,9 +51,6 @@ export class ModelRegisterComponent implements OnInit {
     validators: [Validators.required, notsame1()],
   });
 
-  country = new FormControl("", []);  
-  city = new FormControl("", []); 
-
   constructor(
     private alertService: AlertsServicesService,
     private userService: UserService,
@@ -81,9 +78,7 @@ export class ModelRegisterComponent implements OnInit {
         username: this.username,
         email: this.email,
         password: this.password,
-        confirmpassword: this.confirmpassword,
-        country: this.country,
-        city: this.city,
+        confirmpassword: this.confirmpassword
       },
       {
         validators: notsame1(),

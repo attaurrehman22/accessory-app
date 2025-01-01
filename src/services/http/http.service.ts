@@ -36,8 +36,6 @@ export class HttpService implements OnInit {
       formdate.append("name", FormControl.get("username").value);
       formdate.append("email", FormControl.get("email").value);
       formdate.append("password", FormControl.get("password").value);
-      formdate.append("city", FormControl.get("city").value);
-      formdate.append("country", FormControl.get("country").value);
   
     return this.http.post(`${this.apiUrl}/api/register`, formdate);
   }
