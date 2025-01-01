@@ -62,11 +62,13 @@ export class StayLoopComponentComponent implements OnInit {
   getWatchOftheDay() {
     this.http.getWatchOfTheDay().subscribe(
       (res) => {
-        res.data.product.main_image = res.data.product.main_image.replace(
-          /\\/g,
-          ""
-        );
-        this.watchDetails = res.data;
+        this.watchDetails=res.data;
+        this.watchDetails.map((item:any)=>{
+            if(item.banner_img){
+              item.banner_img=item.banner_img.replace(/\\/g,"/").replace(/^\/+/,"");
+            }
+            return item;
+        })
       },
       (err) => {
         console.error("Error fetching Watch of the Day:", err);

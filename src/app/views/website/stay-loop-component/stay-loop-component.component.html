@@ -2,7 +2,7 @@
   <div class="carousel-inner">
     <div
       class="carousel-item"
-      *ngFor="let product of productList; let i = index"
+      *ngFor="let product of watchDetails; let i = index"
       [class.active]="i === 0"
     >
       <div
@@ -26,7 +26,7 @@
             }"
           >
             <img
-              [src]="'https://api.chronosouq.com/' + product.main_image"
+              [src]="'https://api.chronosouq.com/' + product.banner_img"
               alt=""
               style="width: 100%; height: 500px; object-fit: scale-down"
             />
@@ -41,10 +41,12 @@
         >
           <div class="watch-details-div">
             <div class="d-flex flex-column text-white">
-              <p class="mb-1">{{ product.name }}</p>
-              <h1 class="display-6 fw-bold mt-2">SpeedMaster</h1>
+              <p class="mb-1">{{ product.product.name }}</p>
+              <h1 class="display-6 fw-bold mt-2">
+                {{ product.product?.brand?.name || "N/A" }}
+              </h1>
               <p class="card-text">
-                {{ product.description }}
+                {{ product.product.description }}
               </p>
 
               <div class="mb-3">
@@ -56,7 +58,9 @@
                 >
               </div>
 
-              <h4>{{ product.currency }} {{ product.price }}</h4>
+              <h4>
+                {{ product.product.currency }} {{ product.product.price }}
+              </h4>
 
               <button class="buy-btn" (click)="goToProductDetailPage()">
                 Buy Now
@@ -74,8 +78,10 @@
     data-bs-target="#productCarousel"
     data-bs-slide="prev"
   >
+  <span class="prev-next-span">
     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
     <span class="visually-hidden">Previous</span>
+  </span>
   </button>
   <button
     class="carousel-control-next"
@@ -83,7 +89,9 @@
     data-bs-target="#productCarousel"
     data-bs-slide="next"
   >
-    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Next</span>
+    <span class="prev-next-span">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </span>
   </button>
 </div>
