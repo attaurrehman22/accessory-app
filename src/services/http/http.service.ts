@@ -572,4 +572,28 @@ sendShipmenttoBuyer(formData): Observable<any> {
 // -------------------------------------------- Make Offer End --------------------------
 
 
+// -------------------------------------------- My Listing Module APIs Start --------------------------
+
+
+getMyProductsListing(): Observable<any> {
+  return this.http.get(`${this.apiUrl}/api/listing/user-listings`, {
+    headers: {
+      Accept: "application/json",
+      Authorization: `Bearer ${this.token}`,
+    },
+  });
+}
+
+getProductDetailsByID(ProductID): Observable<any> {
+  return this.http.get(`${this.apiUrl}/api/listing/getStep?product_id=${ProductID}`, {
+    headers: {
+      Accept: "application/json",
+      Authorization: `Bearer ${this.token}`,
+    },
+  });
+}
+
+// -------------------------------------------- My Listing Module APIs end --------------------------
+
+
 }

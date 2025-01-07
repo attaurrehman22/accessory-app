@@ -78,6 +78,8 @@ import {MatRadioModule} from '@angular/material/radio';
 import { ChatComponent } from './views/website/chat/chat/chat.component';
 import { CustomOfferComponent } from './views/modal/custom-offer/custom-offer.component';
 import { AddShippingComponent } from './views/modal/add-shipping/add-shipping.component';
+import { MyListingDetailsComponent } from './views/website/my-listing-details/my-listing-details.component';
+
 
 @NgModule({
   declarations: [
@@ -117,7 +119,8 @@ import { AddShippingComponent } from './views/modal/add-shipping/add-shipping.co
     PositiveNumberDirective,
     ChatComponent,
     CustomOfferComponent,
-    AddShippingComponent
+    AddShippingComponent,
+    MyListingDetailsComponent
   ],
   imports: [
     MatSortModule,

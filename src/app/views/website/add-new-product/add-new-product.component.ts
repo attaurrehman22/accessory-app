@@ -344,8 +344,137 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
 
   isProductID: any;
   userType: any;
-
+  isFromMyListingComponent:boolean=false;
   isAdminLogin:boolean=false;
+
+  productDetails:any;
+  latestActiveForm:string='';
+  getProductDetails(){
+      this.http.getProductDetailsByID(this.productIDFromResponse).subscribe(
+        (res)=>{
+          this.productDetails=res.product;
+          this.latestActiveForm=res.step;
+
+          if (this.productDetails.main_image) {
+            this.productDetails.main_image = this.productDetails.main_image.replace(/\\/g, '');
+          }
+    
+          if (this.productDetails.additional_images) {
+            try {
+              this.productDetails.additional_images = JSON.parse(this.productDetails.additional_images)
+                .map(image => image.replace(/\\/g, '')); 
+            } catch (e) {
+              console.error('Failed to parse additional_images', e);
+            }
+          }
+
+          if (this.latestActiveForm === 'completed') {
+            this.selectedOptionsList = this.selectedOptionsList.concat([
+              'watchDetails',
+              'uploadImages',
+              'conditionGrading',
+              'scopeofdelivery',
+              'proofofownership',
+              'priceshipment',
+              'billinginformation',
+              'summary'
+            ]);
+            this.selectSection("summary");
+          }
+
+          this.patchFormDetails()
+        }
+      )
+  }
+
+  patchFormDetails(){
+    // listingForm
+    this.listingForm.get('brand_id').setValue(this.productDetails.brand_id)
+    // this.listingForm.get('category_ids').setValue(this.productDetails.)
+    this.listingForm.get('name').setValue(this.productDetails.name)
+    this.listingForm.get('model').setValue(this.productDetails.model)
+    this.listingForm.get('title').setValue(this.productDetails.title)
+    this.listingForm.get('description').setValue(this.productDetails.description)
+    this.listingForm.get('watch_type').setValue(this.productDetails.watch_type)
+    this.listingForm.get('year_of_production').setValue(this.productDetails.year_of_production)
+    this.listingForm.get('approximation').setValue(this.productDetails.approximate_year)
+    // this.listingForm.get('unknown').setValue(this.productDetails.)
+
+    // watchDetailsForm 
+    this.watchDetailsForm.get('reference_number').setValue(this.productDetails.reference_number);
+    this.watchDetailsForm.get('serial_no').setValue(this.productDetails.serial_no);
+    this.watchDetailsForm.get('gender').setValue(this.productDetails.gender);
+    this.watchDetailsForm.get('movement').setValue(this.productDetails.movement);
+    this.watchDetailsForm.get('case_diameter_value_1').setValue(this.productDetails.case_diameter_value_1);
+    this.watchDetailsForm.get('case_diameter_value_2').setValue(this.productDetails.case_diameter_value_2);
+    this.watchDetailsForm.get('dial_color').setValue(this.productDetails.dial_color);
+    this.watchDetailsForm.get('caliber_movement').setValue(this.productDetails.caliber_movement);
+    this.watchDetailsForm.get('base_caliber').setValue(this.productDetails.base_caliber);
+    this.watchDetailsForm.get('power_reserve').setValue(this.productDetails.power_reserve);
+    this.watchDetailsForm.get('no_of_jewels').setValue(this.productDetails.no_of_jewels);
+    this.watchDetailsForm.get('frequency').setValue(this.productDetails.frequency);
+    this.watchDetailsForm.get('additional_details').setValue(this.productDetails.additional_details);
+    this.watchDetailsForm.get('case_material').setValue(this.productDetails.case_material);
+    this.watchDetailsForm.get('bezel_material').setValue(this.productDetails.bezel_material);
+    this.watchDetailsForm.get('thickness').setValue(this.productDetails.thickness);
+    this.watchDetailsForm.get('crystal').setValue(this.productDetails.crystal);
+    this.watchDetailsForm.get('water_resistance').setValue(this.productDetails.water_resistance);
+    this.watchDetailsForm.get('dial_numerals').setValue(this.productDetails.dial_numerals);
+    this.watchDetailsForm.get('bracelet_material').setValue(this.productDetails.bracelet_material);
+    this.watchDetailsForm.get('bracelet_color').setValue(this.productDetails.bracelet_color);
+    this.watchDetailsForm.get('type_of_clasp').setValue(this.productDetails.type_of_clasp);
+    this.watchDetailsForm.get('clasp_material').setValue(this.productDetails.clasp_material);
+    
+
+   // billingForm 
+    this.billingForm.get('billing_address').setValue(this.productDetails.billing_address || '');
+    this.billingForm.get('first_name').setValue(this.productDetails.first_name || '');
+    this.billingForm.get('last_name').setValue(this.productDetails.last_name || '');
+    this.billingForm.get('street').setValue(this.productDetails.street || '');
+    this.billingForm.get('street_line_2').setValue(this.productDetails.street_line_2 || '');
+    this.billingForm.get('zip_code').setValue(this.productDetails.zip_code || '');
+    this.billingForm.get('city').setValue(this.productDetails.city || '');
+
+    // PriceandShipment
+    this.watchPrice = this.productDetails.price;
+    this.shipping_type = this.productDetails.shipping_type;
+    this.shipping_charges = this.productDetails.shipping_charges;
+    this.estimate_delivery = this.productDetails.estimate_delivery;
+    this.allow_to_make_offer = this.productDetails.allow_to_make_offer;
+    this.estimatedPayoutwithShipping = this.productDetails.estimate_payout;
+  
+    // If the form has a method to calculate payout
+    this.calculatePayout();
+
+    // Condition
+    let selectedCondition;
+    if(this.userType === 'dealer'){
+      selectedCondition = this.dealerconditions.find(
+        (condition) =>
+          condition.title === this.productDetails.condition
+      );
+    }else{
+      selectedCondition = this.conditions.find(
+        (condition) =>
+          condition.title === this.productDetails.condition
+      );
+      selectedCondition=this.conditions.filter((item:any)=>{item.title === this.productDetails.condition})
+
+    }
+
+    this.selectCondition(selectedCondition);
+  
+
+
+    //scopeofDelivery
+    const scopeofDelivery = this.options.find(
+      (option) => option.title === this.productDetails.scope_of_delivery
+    );
+
+    this.selectedOptions=scopeofDelivery
+
+
+  }
 
   ngOnInit() {
     if(this.isAdminUser() === true){
@@ -357,12 +486,20 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
     if (!isUserLogin) {
       this.loginFirst();
     }
-    if (history?.state?.ID) {
-      this.productIDFromResponse = history.state.ID;
-      this.selectedSection = "summary";
-      this.calculatePayout();
-      this.formDirty = true;
+    if(history?.state){
+      if (history?.state?.ID) {
+        this.productIDFromResponse = history.state.ID;
+        this.selectedSection = "summary";
+        this.calculatePayout();
+        this.formDirty = true;
+      }
+      if(history?.state?.productID){
+        this.productIDFromResponse=history?.state?.productID;
+        this.isFromMyListingComponent=true;
+        this.getProductDetails()
+      }
     }
+    
 
     this.checkScreenSize();
     this.getAllBrandsDropDown();

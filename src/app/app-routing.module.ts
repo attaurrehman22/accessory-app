@@ -18,7 +18,7 @@ import { AdminCategoryProductComponent } from './views/adminpages/admin-category
 import { BuyNowComponent } from './views/website/buy-now/buy-now.component';
 import { CanDeactivateFormGuard } from './can-deactivate-form.guard';
 import { ChatComponent } from './views/website/chat/chat/chat.component';
-
+import { MyListingDetailsComponent } from './views/website/my-listing-details/my-listing-details.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -38,6 +38,7 @@ const routes: Routes = [
   { path: 'admin/category', component:  AdminCategoryComponent},
   { path: 'admin/category/product', component:  AdminCategoryProductComponent},
   { path: 'buy-now', component:  BuyNowComponent},
+  { path: 'myListing', component:  MyListingDetailsComponent},
   {path:'chat',component:ChatComponent}
 ];
 

@@ -160,4 +160,8 @@ export class HeaderComponent {
   closeNavbar(): void {
     this.isNavbarOpen = false;
   }
+
+  userListing(){
+    this.router.navigate(['/myListing'])
+  }
 }

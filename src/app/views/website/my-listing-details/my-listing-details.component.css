@@ -1,0 +1,31 @@
+.nav-link {
+    padding: 10px 15px;
+    border-radius: 5px;
+    color: #000;
+    text-decoration: none;
+  }
+  
+  .nav-link.active {
+    background-color: #000;
+    color: #fff !important;
+  }
+  
+  .nav-link i {
+    margin-right: 10px;
+  }
+  
+
+  .card {
+    border-radius: 10px;
+  }
+
+  .list-cards{
+    height: 600px;
+    overflow-y: auto;
+  }
+  
+  .badge {
+    font-size: 12px;
+    padding: 5px 10px;
+  }
+  
