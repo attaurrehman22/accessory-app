@@ -473,7 +473,19 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
 
     this.selectedOptions=scopeofDelivery
 
+    this.coverImage = { file: null, url: 'https://api.chronosouq.com/'+this.productDetails.main_image };
+    console.log(" this.coverImage", this.coverImage)
 
+
+    if(this.productDetails.additional_images){
+      this.otherImages = this.productDetails.additional_images.map(
+        (img: { url: string }) => ({
+          file: null,
+          url: 'https://api.chronosouq.com/'+img,
+          isUploading: false,
+        })
+      );
+    }
   }
 
   ngOnInit() {
@@ -764,30 +776,58 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
   onSubmit(Param: string) {
     if (Param === "listingDetails") {
       if (this.listingForm.valid) {
-        this.http.addListingDetails(this.listingForm.value).subscribe(
-          (res) => {
-            this.productIDFromResponse = res.id;
-            this.alertService.showAlert(
-              "success",
-              "Listing Details Add Successfully"
-            );
-            sessionStorage.setItem(
-              "listingForm",
-              JSON.stringify(this.listingForm.value)
-            );
-            this.formDirty = true;
-            this.selectedOptionsList.push('watchDetails')
-            sessionStorage.setItem("selectedOptionsList",JSON.stringify(this.selectedOptionsList));
-            sessionStorage.setItem("productIDFromResponse",JSON.stringify(this.productIDFromResponse));
-            this.selectSection("watchDetails");
-          },
-          (err) => {
-            this.alertService.showAlert(
-              "danger",
-              "Error in adding listing details"
-            );
-          }
-        );
+        if(this.isFromMyListingComponent){
+          const formData={...this.listingForm.value , product_id:this.productIDFromResponse}
+          this.http.updateListingDetails(formData).subscribe(
+            (res) => {
+              this.productIDFromResponse = res.id;
+              this.alertService.showAlert(
+                "success",
+                "Listing Details Add Successfully"
+              );
+              sessionStorage.setItem(
+                "listingForm",
+                JSON.stringify(this.listingForm.value)
+              );
+              this.formDirty = true;
+              this.selectedOptionsList.push('watchDetails')
+              sessionStorage.setItem("selectedOptionsList",JSON.stringify(this.selectedOptionsList));
+              sessionStorage.setItem("productIDFromResponse",JSON.stringify(this.productIDFromResponse));
+              this.selectSection("watchDetails");
+            },
+            (err) => {
+              this.alertService.showAlert(
+                "danger",
+                "Error in adding listing details"
+              );
+            }
+          );
+        }else{
+          this.http.addListingDetails(this.listingForm.value).subscribe(
+            (res) => {
+              this.productIDFromResponse = res.id;
+              this.alertService.showAlert(
+                "success",
+                "Listing Details Add Successfully"
+              );
+              sessionStorage.setItem(
+                "listingForm",
+                JSON.stringify(this.listingForm.value)
+              );
+              this.formDirty = true;
+              this.selectedOptionsList.push('watchDetails')
+              sessionStorage.setItem("selectedOptionsList",JSON.stringify(this.selectedOptionsList));
+              sessionStorage.setItem("productIDFromResponse",JSON.stringify(this.productIDFromResponse));
+              this.selectSection("watchDetails");
+            },
+            (err) => {
+              this.alertService.showAlert(
+                "danger",
+                "Error in adding listing details"
+              );
+            }
+          );
+        }
       } else {
         this.alertService.showAlert("warning", "Enter Form Values");
       }
