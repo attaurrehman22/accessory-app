@@ -79,6 +79,7 @@ import { ChatComponent } from './views/website/chat/chat/chat.component';
 import { CustomOfferComponent } from './views/modal/custom-offer/custom-offer.component';
 import { AddShippingComponent } from './views/modal/add-shipping/add-shipping.component';
 import { MyListingDetailsComponent } from './views/website/my-listing-details/my-listing-details.component';
+import { ForgotPasswordComponent } from './views/auth/forgot-password/forgot-password.component';
 
 
 @NgModule({
@@ -120,7 +121,8 @@ import { MyListingDetailsComponent } from './views/website/my-listing-details/my
     ChatComponent,
     CustomOfferComponent,
     AddShippingComponent,
-    MyListingDetailsComponent
+    MyListingDetailsComponent,
+    ForgotPasswordComponent
   ],
   imports: [
     MatSortModule,
