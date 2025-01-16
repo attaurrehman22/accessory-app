@@ -16,6 +16,7 @@ export class ProductListComponent implements OnInit {
   isUserLogin: any;
   watchTypes:any[]=[];
   categories:any[]=[];
+  searchQuery: string = "";
 
   ngOnInit(): void {
     this.getAllCategories()
@@ -25,6 +26,12 @@ export class ProductListComponent implements OnInit {
       this.getWishList();
     }
     this.applyFilters();
+    this.searchService.currentSearchQuery.subscribe((query) => {
+      this.searchQuery = query;
+      console.log("Search query received in ProductListComponent:", this.searchQuery);
+      this.applyFilters();
+     
+    });
     // this.getAllModels();
   }
 
@@ -100,7 +107,10 @@ export class ProductListComponent implements OnInit {
     let itemsPerPage=100;
     queryString += `&page=${currentPage}`;
     queryString += `&per_page=${itemsPerPage}`;
-
+    
+    if(this.searchQuery){
+      queryString += `&name=${this.searchQuery}`;
+    }
     // // Call the API with the constructed query string
     if (queryString) {
       this.getProductsByCategory(queryString);
@@ -110,8 +120,6 @@ export class ProductListComponent implements OnInit {
   getProductsByCategory(queryString: any) {
     this.http.getProductsByCategory(queryString).subscribe((res) => {
       this.showList = res;
-      // this.totalItems = this.productsList.data.last_page;
-      // this.currentPage = this.productsList.data.current_page;
       this.showList = this.showList.data.data;
       this.showList.data.data.map((product: any) => {
         if (product.main_image) {
@@ -138,45 +146,8 @@ export class ProductListComponent implements OnInit {
         return product;
       });
 
-      console.log("this.showList",this.showList)
     });
   }
-
-
-  // buildQueryString() {
-  //   let queryString = "";
-
-  //   // Add categories to the query string
-  //   if (this.checkedCategories.length > 0) {
-  //     this.checkedCategories.forEach((id, index) => {
-  //       queryString += `category_ids[]=${id.id}`;
-  //       if (index < this.checkedCategories.length - 1) {
-  //         queryString += "&"; // Add an "&" if it's not the last element
-  //       }
-  //     });
-  //   }
-
-  //   // Add brands to the query string
-  //   if (this.checkedBrands.length > 0) {
-  //     if (queryString) {
-  //       queryString += "&"; // Add '&' if categories already exist
-  //     }
-  //     this.checkedBrands.forEach((id, index) => {
-  //       queryString += `brand_ids[]=${id.id}`; // Use brand_ids[] to store as an array
-  //       if (index < this.checkedBrands.length - 1) {
-  //         queryString += "&"; // Add '&' between values, not at the end
-  //       }
-  //     });
-  //   }
-
-  //   queryString += `&page=${this.currentPage}`;
-  //   queryString += `&per_page=${this.itemsPerPage}`;
-
-  //   // Call the API with the constructed query string
-  //   if (queryString) {
-  //     this.getProductsByCategory(queryString);
-  //   }
-  // }
 
   getAllBrands() {
     this.http.getBrandsDropDownFilter().subscribe(
@@ -187,28 +158,11 @@ export class ProductListComponent implements OnInit {
     );
   }
 
-  // getAllModels() {
-  //   this.http.getAllPopularModels().subscribe(
-  //     (res) => {
-  //       this.showList = res.data.map((model) => {
-  //         return {
-  //           ...model,
-  //           main_image: model.main_image
-  //             ? model.main_image.replace(/\\/g, "")
-  //             : null,
-  //         };
-  //       });
-  //     },
-  //     (err) => {
-  //       console.error(err);
-  //     }
-  //   );
-  // }
-
   constructor(
     public translateService: TranslateService,
     private http: HttpService,
-    private router: Router
+    private router: Router,
+    private searchService: SearchServiceService
   ) {
     const supportedLanguages = ["en", "ar"];
     this.translateService.addLangs(supportedLanguages);
@@ -232,7 +186,6 @@ export class ProductListComponent implements OnInit {
 
   priceRange = { from: 200, to: 50000 };
 
- 
 
   isShowFilters:boolean=false;
 
