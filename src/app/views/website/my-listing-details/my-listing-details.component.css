@@ -9,23 +9,129 @@
     background-color: #000;
     color: #fff !important;
   }
+
+  .nav-link.active:hover {
+    /* background-color: #000; */
+    color: #fff !important;
+    cursor: pointer;
+  }
+
+  .nav-link:hover {
+    font-weight: bold; /* Make text bold on hover */
+    color: #000 !important; /* Ensure color stays black even on hover */
+    text-decoration: none; /* Remove underline on hover if you want */
+    cursor: pointer;
+  }
   
   .nav-link i {
     margin-right: 10px;
   }
   
 
-  .card {
+  .list-cards {
+    height: 510px;
+    overflow-y: auto;
+    overflow-x: hidden; 
     border-radius: 10px;
+    padding: 0 7px 0 0;
   }
 
-  .list-cards{
-    height: 600px;
-    overflow-y: auto;
-  }
-  
-  .badge {
+.card {
+    margin-bottom: 15px;
+    border-radius: 10px;
+    border: 1px solid #F3F3F3
+}
+
+.card:hover {
+  background-color: #F7F7F8;
+}
+
+
+.card-body {
+    display: flex;
+    justify-content: space-between; /* Spread the content across the card */
+}
+
+.card-body h6 {
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.card-body small {
+    color: #888; /* Slightly muted color for the smaller text */
+}
+
+.badge {
     font-size: 12px;
-    padding: 5px 10px;
-  }
+    padding: 8px 15px;
+    background: #F7F7F8;
+    color: #242424;
+    border-radius: 15px;
+    margin-top: 7px;
+}
+
+.mat-icon-button {
+    background-color: transparent; /* No background color for the button */
+    border: none; /* Remove the border */
+    padding: 5px; /* Padding for button */
+}
+
+.mat-menu-item {
+    padding: 8px 16px; /* Increase padding for menu items */
+}
+
+.mat-menu-item:hover {
+    background-color: #f1f1f1; /* Hover effect for menu items */
+}
+
+.list-cards::-webkit-scrollbar {
+    width: 8px; /* Set width of the scrollbar */
+}
+
+.list-cards::-webkit-scrollbar-thumb {
+    background: #888; /* Color of the scrollbar */
+    border-radius: 10px;
+}
+
+.list-cards::-webkit-scrollbar-thumb:hover {
+    background: #555; /* Hover effect for the scrollbar */
+}
+
+.list-cards::-webkit-scrollbar-track {
+    background: #f1f1f1; /* Background of the track (where the thumb moves) */
+    border-radius: 10px;
+}
+
   
+.form-select-sm {
+  border-radius: 14px !important;
+    width: fit-content !important;
+    height: 37px !important;
+    border-color: #242424 !important;
+}
+
+form {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+img {
+  vertical-align: middle;
+}
+
+
+.submit-btn {
+  border-radius: 12px;
+  background: #242424;
+  color: white;
+  width: 240px;
+  height: 56px;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.form-label {
+   font-size: 14px;
+   font-weight: 400 !important;
+   color: #242424;
+}

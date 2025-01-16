@@ -1,7 +1,7 @@
 import {Component,OnInit,signal,ElementRef,ViewChild, computed} from "@angular/core";
 import {FormBuilder,FormControl,FormGroup,Validators} from "@angular/forms";
 import { MatExpansionModule } from "@angular/material/expansion";
-import { Router } from "@angular/router";
+import { NavigationStart, Router } from "@angular/router";
 import { TranslateService } from "@ngx-translate/core";
 import { AlertsServicesService } from "src/services/alerts-service/alerts-services.service";
 import { HttpService } from "src/services/http/http.service";
@@ -368,6 +368,14 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
             }
           }
 
+          if (this.productDetails.proof_image_1) {
+            this.productDetails.proof_image_1 = this.productDetails.proof_image_1.replace(/\\/g, '');
+          }
+
+          if (this.productDetails.proof_image_2) {
+            this.productDetails.proof_image_2 = this.productDetails.proof_image_2.replace(/\\/g, '');
+          }
+
           if (this.latestActiveForm === 'completed') {
             this.selectedOptionsList = this.selectedOptionsList.concat([
               'watchDetails',
@@ -381,6 +389,79 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
             ]);
             this.selectSection("summary");
           }
+          if (this.latestActiveForm === 'billingInformation') {
+            this.selectedOptionsList = this.selectedOptionsList.concat([
+              'watchDetails',
+              'uploadImages',
+              'conditionGrading',
+              'scopeofdelivery',
+              'proofofownership',
+              'priceshipment',
+              'billinginformation',
+            ]);
+            this.selectSection("summary");
+          }
+
+          if (this.latestActiveForm === 'priceAndShipment') {
+            this.selectedOptionsList = this.selectedOptionsList.concat([
+              'watchDetails',
+              'uploadImages',
+              'conditionGrading',
+              'scopeofdelivery',
+              'proofofownership',
+              'priceshipment',
+            ]);
+            this.selectSection("billingInformation");
+          }
+
+          if (this.latestActiveForm === 'proofOfOwnership') {
+            this.selectedOptionsList = this.selectedOptionsList.concat([
+              'watchDetails',
+              'uploadImages',
+              'conditionGrading',
+              'scopeofdelivery',
+              'proofofownership',
+            ]);
+            this.selectSection("priceshipment");
+          }
+
+          if (this.latestActiveForm === 'scopeOfDelivery') {
+            this.selectedOptionsList = this.selectedOptionsList.concat([
+              'watchDetails',
+              'uploadImages',
+              'conditionGrading',
+              'scopeofdelivery',
+            ]);
+            this.selectSection("proofofownership");
+          }
+
+          if (this.latestActiveForm === 'conditionGrading') {
+            this.selectedOptionsList = this.selectedOptionsList.concat([
+              'watchDetails',
+              'uploadImages',
+              'conditionGrading',
+            ]);
+            this.selectSection("scopeofdelivery");
+          }
+
+          if (this.latestActiveForm === 'uploadImages') {
+            this.selectedOptionsList = this.selectedOptionsList.concat([
+              'watchDetails',
+              'uploadImages',
+            ]);
+            this.selectSection("conditionGrading");
+          }
+
+          if (this.latestActiveForm === 'watchDetails') {
+            this.selectedOptionsList = this.selectedOptionsList.concat([
+              'watchDetails',
+            ]);
+            this.selectSection("uploadImages");
+          }
+
+          if (this.latestActiveForm === 'listingDetails') {
+            this.selectSection("watchDetails");
+          }
 
           this.patchFormDetails()
         }
@@ -389,20 +470,62 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
 
   patchFormDetails(){
     // listingForm
-    this.listingForm.get('brand_id').setValue(this.productDetails.brand_id)
-    // this.listingForm.get('category_ids').setValue(this.productDetails.)
-    this.listingForm.get('name').setValue(this.productDetails.name)
-    this.listingForm.get('model').setValue(this.productDetails.model)
-    this.listingForm.get('title').setValue(this.productDetails.title)
+    this.listingForm.get('brand_id').setValue(this.productDetails.brand_id);
+    if (this.productDetails.brand_id) {
+        this.listingForm.get('brand_id').disable();
+    }
+
+    let ids = this.productDetails.categories.map((item: any) => item.id);
+    this.listingForm.get('category_ids').setValue(ids);
+    if (ids.length > 0) {
+        this.listingForm.get('category_ids').disable();
+    }
+
+    this.listingForm.get('name').setValue(this.productDetails.name);
+    if (this.productDetails.name) {
+        this.listingForm.get('name').disable();
+    }
+
+    this.listingForm.get('model').setValue(this.productDetails.model);
+    if (this.productDetails.model) {
+        this.listingForm.get('model').disable();
+    }
+
+    this.listingForm.get('title').setValue(this.productDetails.title);
+    if (this.productDetails.title) {
+        this.listingForm.get('title').disable();
+    }
     this.listingForm.get('description').setValue(this.productDetails.description)
-    this.listingForm.get('watch_type').setValue(this.productDetails.watch_type)
-    this.listingForm.get('year_of_production').setValue(this.productDetails.year_of_production)
-    this.listingForm.get('approximation').setValue(this.productDetails.approximate_year)
+    this.listingForm.get('watch_type').setValue(this.productDetails.watch_type);
+    if (this.productDetails.watch_type) {
+        this.listingForm.get('watch_type').disable();
+    }
+
+    // Additional fields with checks
+    this.listingForm.get('year_of_production').setValue(this.productDetails.year_of_production);
+    if (this.productDetails.year_of_production) {
+        this.listingForm.get('year_of_production').disable();
+    }
+
+    this.listingForm.get('approximation').setValue(this.productDetails.approximate_year);
+    if (this.productDetails.approximate_year) {
+        this.listingForm.get('approximation').disable();
+    }
     // this.listingForm.get('unknown').setValue(this.productDetails.)
 
     // watchDetailsForm 
     this.watchDetailsForm.get('reference_number').setValue(this.productDetails.reference_number);
+
+    if(this.productDetails.reference_number){
+      this.watchDetailsForm.get('reference_number').disable();
+    }
+    
     this.watchDetailsForm.get('serial_no').setValue(this.productDetails.serial_no);
+
+    if(this.productDetails.serial_no){
+      this.watchDetailsForm.get('serial_no').disable();
+    }
+
     this.watchDetailsForm.get('gender').setValue(this.productDetails.gender);
     this.watchDetailsForm.get('movement').setValue(this.productDetails.movement);
     this.watchDetailsForm.get('case_diameter_value_1').setValue(this.productDetails.case_diameter_value_1);
@@ -427,13 +550,40 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
     
 
    // billingForm 
-    this.billingForm.get('billing_address').setValue(this.productDetails.billing_address || '');
+   this.billingForm.get('billing_address').setValue(this.productDetails.billing_address || '');
+    if (this.productDetails.billing_address) {
+        this.billingForm.get('billing_address').disable();
+    }
+
     this.billingForm.get('first_name').setValue(this.productDetails.first_name || '');
+    if (this.productDetails.first_name) {
+        this.billingForm.get('first_name').disable();
+    }
+
     this.billingForm.get('last_name').setValue(this.productDetails.last_name || '');
+    if (this.productDetails.last_name) {
+        this.billingForm.get('last_name').disable();
+    }
+
     this.billingForm.get('street').setValue(this.productDetails.street || '');
+    if (this.productDetails.street) {
+        this.billingForm.get('street').disable();
+    }
+
     this.billingForm.get('street_line_2').setValue(this.productDetails.street_line_2 || '');
+    if (this.productDetails.street_line_2) {
+        this.billingForm.get('street_line_2').disable();
+    }
+
     this.billingForm.get('zip_code').setValue(this.productDetails.zip_code || '');
+    if (this.productDetails.zip_code) {
+        this.billingForm.get('zip_code').disable();
+    }
+
     this.billingForm.get('city').setValue(this.productDetails.city || '');
+    if (this.productDetails.city) {
+        this.billingForm.get('city').disable();
+    }
 
     // PriceandShipment
     this.watchPrice = this.productDetails.price;
@@ -449,17 +599,22 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
     // Condition
     let selectedCondition;
     if(this.userType === 'dealer'){
+    
+    
       selectedCondition = this.dealerconditions.find(
         (condition) =>
           condition.title === this.productDetails.condition
       );
+
+     this.dealerconditions = [selectedCondition]
+
     }else{
       selectedCondition = this.conditions.find(
         (condition) =>
           condition.title === this.productDetails.condition
       );
-      selectedCondition=this.conditions.filter((item:any)=>{item.title === this.productDetails.condition})
-
+      // selectedCondition=this.conditions.filter((item:any)=>{item.title === this.productDetails.condition})
+      this.conditions = [selectedCondition]
     }
 
     this.selectCondition(selectedCondition);
@@ -486,9 +641,43 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
         })
       );
     }
+   if(this.productDetails?.proof_image_1){
+    this.isEnableProofofOwnerShip=true
+     this.imagePreviews[0]='https://api.chronosouq.com/'+this.productDetails.proof_image_1;
+   }
+   if(this.productDetails?.proof_image_2){
+      this.isEnableProofofOwnerShip=true
+    this.imagePreviews[1]='https://api.chronosouq.com/'+this.productDetails.proof_image_2;
+  }
   }
 
+  isEnableProofofOwnerShip:boolean=false
+
   ngOnInit() {
+
+    if(!this.productIDFromResponse){
+      this.productIDFromResponse=localStorage.getItem('productID');
+      const selectedOptionsListString = localStorage.getItem('selectedOptionsList');
+
+      if (selectedOptionsListString) {
+        const selectedOptionsList = selectedOptionsListString;
+        console.log("selectedOptionsList",selectedOptionsList)
+        // Assign the last element of the list to selectedSection
+        if (selectedOptionsList.length > 0) {
+          this.selectedSection = selectedOptionsList[selectedOptionsList.length - 1];
+        }
+      }
+    }
+    if(this.productIDFromResponse){
+      this.getProductDetails()
+    }
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationStart) {
+        localStorage.removeItem('productID');
+        localStorage.removeItem('selectedOptionsList');
+      }
+    });
+    
     if(this.isAdminUser() === true){
       console.log("isAdminUser in header comp", this.isAdminUser());
       this.isAdminLogin=true;
@@ -569,133 +758,6 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
       zip_code: this.zip_code,
       city: this.city,
     });
-
-
-    const Product_ID_refresh = sessionStorage.getItem("productIDFromResponse");
-
-    if(Product_ID_refresh){
-      this.productIDFromResponse=JSON.parse(Product_ID_refresh)
-    }
-
-    const selected_opt = sessionStorage.getItem("selectedOptionsList");
-    if(selected_opt){
-      this.selectedOptionsList=JSON.parse(selected_opt);
-      let lastItem = this.selectedOptionsList[this.selectedOptionsList.length - 1];
-      this.selectSection(lastItem);
-    }
-
-    const listing_Form = sessionStorage.getItem("listingForm");
-    if (listing_Form) {
-      this.listingForm.setValue(JSON.parse(listing_Form));
-    }
-
-    const watch_Form = sessionStorage.getItem("watchDetailsForm");
-    if (watch_Form) {
-      this.watchDetailsForm.setValue(JSON.parse(watch_Form));
-    }
-
-    const billing_Form = sessionStorage.getItem("billingForm");
-    if (billing_Form) {
-      this.billingForm.setValue(JSON.parse(billing_Form));
-    }
-
-    const cond = sessionStorage.getItem("condition");
-    if (cond) {
-      const selectedConditionData = JSON.parse(cond);
-      if(this.userType === 'dealer'){
-      const matchingCondition = this.dealerconditions.find(
-        (condition) =>
-          condition.title === selectedConditionData.title &&
-          condition.description === selectedConditionData.description
-      );
-      if (matchingCondition) {
-        this.selectCondition(matchingCondition);
-      }
-    }else if(this.userType === 'user'){
-      const matchingCondition = this.conditions.find(
-        (condition) =>
-          condition.title === selectedConditionData.title &&
-          condition.description === selectedConditionData.description
-      );
-      if (matchingCondition) {
-        this.selectCondition(matchingCondition);
-      }
-    }
-      
-    }
-
-    const scope_of_del = sessionStorage.getItem("scope_of_delivery");
-    if (scope_of_del) {
-      const selectedOptionData = JSON.parse(scope_of_del);
-
-      const matchingOption = this.options.find(
-        (option) => option.title === selectedOptionData.title
-      );
-
-      if (matchingOption) {
-        this.selectedOptions = matchingOption;
-      }
-    }
-
-    const price_ship = sessionStorage.getItem("priceandShipment");
-    if (price_ship) {
-      const parsedData = JSON.parse(price_ship);
-      this.watchPrice = parsedData.price;
-      this.shipping_type = parsedData.shipping_type;
-      this.shipping_charges = parsedData.shipping_charges;
-      this.estimate_delivery = parsedData.estimate_delivery;
-      this.allow_to_make_offer = parsedData.allow_to_make_offer;
-      this.estimatedPayoutwithShipping = parsedData.estimate_payout;
-      this.calculatePayout();
-    }
-
-    const coverImage = sessionStorage.getItem("coverImage");
-    if (coverImage) {
-      const parsedCoverImage = JSON.parse(coverImage);
-      this.coverImage = { file: null, url: parsedCoverImage.url };
-    }
-
-    const otherImages = sessionStorage.getItem("otherImages");
-    if (otherImages) {
-      this.otherImages = JSON.parse(otherImages).map(
-        (img: { url: string }) => ({
-          file: null,
-          url: img.url,
-          isUploading: false,
-        })
-      );
-    }
-
-    const savedData = sessionStorage.getItem("proofofownership");
-    if (savedData) {
-      const parsedData = JSON.parse(savedData);
-
-      // Load times for each clock
-      this.clocks = parsedData.map((data: any) => data.time);
-
-      this.imagePreviews = parsedData.map(
-        (data: any) => data.image?.content || ""
-      );
-
-      this.selectedFiles = parsedData.map((data: any, index: number) => {
-        if (data.image && data.image.content) {
-          const byteString = atob(data.image.content.split(",")[1]); // Decode base64
-          const mimeString = data.image.content
-            .split(",")[0]
-            .split(":")[1]
-            .split(";")[0];
-
-          const byteArray = new Uint8Array(byteString.length);
-          for (let i = 0; i < byteString.length; i++) {
-            byteArray[i] = byteString.charCodeAt(i);
-          }
-          return new File([byteArray], `clock_image_${index + 1}.png`, {
-            type: mimeString,
-          });
-        }
-        return null;
-      });
-    }
   }
 
   selectedUserTypeofConditionGradingForAdmin:any;
@@ -781,18 +843,15 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
           this.http.updateListingDetails(formData).subscribe(
             (res) => {
               this.productIDFromResponse = res.id;
+              localStorage.setItem('productID', res.id);
               this.alertService.showAlert(
                 "success",
                 "Listing Details Add Successfully"
               );
-              sessionStorage.setItem(
-                "listingForm",
-                JSON.stringify(this.listingForm.value)
-              );
+             
               this.formDirty = true;
               this.selectedOptionsList.push('watchDetails')
-              sessionStorage.setItem("selectedOptionsList",JSON.stringify(this.selectedOptionsList));
-              sessionStorage.setItem("productIDFromResponse",JSON.stringify(this.productIDFromResponse));
+              localStorage.setItem('selectedOptionsList', this.selectedOptionsList);
               this.selectSection("watchDetails");
             },
             (err) => {
@@ -806,18 +865,14 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
           this.http.addListingDetails(this.listingForm.value).subscribe(
             (res) => {
               this.productIDFromResponse = res.id;
+              localStorage.setItem('productID', res.id);
               this.alertService.showAlert(
                 "success",
                 "Listing Details Add Successfully"
               );
-              sessionStorage.setItem(
-                "listingForm",
-                JSON.stringify(this.listingForm.value)
-              );
               this.formDirty = true;
               this.selectedOptionsList.push('watchDetails')
-              sessionStorage.setItem("selectedOptionsList",JSON.stringify(this.selectedOptionsList));
-              sessionStorage.setItem("productIDFromResponse",JSON.stringify(this.productIDFromResponse));
+              localStorage.setItem('selectedOptionsList', this.selectedOptionsList);
               this.selectSection("watchDetails");
             },
             (err) => {
@@ -844,12 +899,8 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
               "success",
               "Watch Details Add Successfully"
             );
-            sessionStorage.setItem(
-              "watchDetailsForm",
-              JSON.stringify(this.watchDetailsForm.value)
-            );
             this.selectedOptionsList.push('uploadImages')
-            sessionStorage.setItem("selectedOptionsList",JSON.stringify(this.selectedOptionsList));
+            localStorage.setItem('selectedOptionsList', this.selectedOptionsList);
             this.selectSection("uploadImages");
           },
           (err) => {
@@ -895,18 +946,8 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
       this.http.addUploadImages(formData).subscribe(
         (res) => {
           this.alertService.showAlert("success", "Images Add Successfully");
-          if (this.coverImage) {
-            const coverImageData = { url: this.coverImage.url }; // Exclude file property
-            sessionStorage.setItem("coverImage", JSON.stringify(coverImageData));
-          }
-      
-          const otherImagesData = this.otherImages.map((image) => ({
-            url: image.url,
-          }));
-          sessionStorage.setItem("otherImages", JSON.stringify(otherImagesData));
-
           this.selectedOptionsList.push('conditionGrading')
-          sessionStorage.setItem("selectedOptionsList",JSON.stringify(this.selectedOptionsList));
+          localStorage.setItem('selectedOptionsList', this.selectedOptionsList);
           this.selectSection("conditionGrading");
         },
         (err) => {
@@ -926,9 +967,8 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
               "success",
               "Condition Add Successfully"
             );
-            sessionStorage.setItem("condition", JSON.stringify(this.selectedCondition));
             this.selectedOptionsList.push('scopeofdelivery')
-            sessionStorage.setItem("selectedOptionsList",JSON.stringify(this.selectedOptionsList));
+            localStorage.setItem('selectedOptionsList', this.selectedOptionsList);
             this.selectSection("scopeofdelivery");
           },
           (err) => {
@@ -947,12 +987,8 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
         this.http.addScopeOfDelivery(formData).subscribe(
           (res) => {
             this.alertService.showAlert("success", "Scope Add Successfully");
-            sessionStorage.setItem(
-              "scope_of_delivery",
-              JSON.stringify(this.selectedOptions)
-            );
             this.selectedOptionsList.push('proofofownership')
-            sessionStorage.setItem("selectedOptionsList",JSON.stringify(this.selectedOptionsList));
+            localStorage.setItem('selectedOptionsList', this.selectedOptionsList);
             this.selectSection("proofofownership");
           },
           (err) => {
@@ -995,7 +1031,7 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
           (res) => {
             this.alertService.showAlert("success", "Images Added Successfully");
             this.selectedOptionsList.push('priceshipment')
-            sessionStorage.setItem("selectedOptionsList",JSON.stringify(this.selectedOptionsList));
+            localStorage.setItem('selectedOptionsList', this.selectedOptionsList);
             this.selectSection("priceshipment");
           },
           (err) => {
@@ -1049,15 +1085,9 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
               allow_to_make_offer: this.allow_to_make_offer,
               estimate_payout: this.estimatedPayoutwithShipping,
             };
-            sessionStorage.setItem(
-              "priceandShipment",
-              JSON.stringify(priceandShipment)
-            );
-
-            
-
+      
             this.selectedOptionsList.push('billinginformation')
-            sessionStorage.setItem("selectedOptionsList",JSON.stringify(this.selectedOptionsList));
+            localStorage.setItem('selectedOptionsList', this.selectedOptionsList);
             this.selectSection("billinginformation");
           },
           (err) => {
@@ -1082,12 +1112,8 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
               "Billing Info Add Successfully"
             );
             this.matchBrandname();
-            sessionStorage.setItem(
-              "billingForm",
-              JSON.stringify(this.billingForm.value)
-            );
             this.selectedOptionsList.push('summary')
-            sessionStorage.setItem("selectedOptionsList",JSON.stringify(this.selectedOptionsList));
+            localStorage.setItem('selectedOptionsList', this.selectedOptionsList);
             this.selectSection("summary");
           },
           (err) => {
@@ -1111,7 +1137,6 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
             "Product Publish Successfully"
           );
           this.formDirty = false;
-          sessionStorage.clear();
           this.router.navigate(["/"]);
         },
         (err) => {
@@ -1130,88 +1155,9 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
   }
 
   async routeToProductDetail() {
-    sessionStorage.setItem(
-      "listingForm",
-      JSON.stringify(this.listingForm.value)
-    );
-    sessionStorage.setItem(
-      "watchDetailsForm",
-      JSON.stringify(this.watchDetailsForm.value)
-    );
-    sessionStorage.setItem(
-      "billingForm",
-      JSON.stringify(this.billingForm.value)
-    );
-    sessionStorage.setItem("condition", JSON.stringify(this.selectedCondition));
-    sessionStorage.setItem(
-      "scope_of_delivery",
-      JSON.stringify(this.selectedOptions)
-    );
-    const priceandShipment = {
-      price: this.watchPrice,
-      shipping_type: this.shipping_type,
-      shipping_charges: this.shipping_charges,
-      estimate_delivery: this.estimate_delivery,
-      allow_to_make_offer: this.allow_to_make_offer,
-      estimate_payout: this.estimatedPayoutwithShipping,
-    };
-    sessionStorage.setItem(
-      "priceandShipment",
-      JSON.stringify(priceandShipment)
-    );
-
-    if (this.coverImage) {
-      const coverImageData = { url: this.coverImage.url }; // Exclude file property
-      sessionStorage.setItem("coverImage", JSON.stringify(coverImageData));
-    }
-
-    const otherImagesData = this.otherImages.map((image) => ({
-      url: image.url,
-    }));
-    sessionStorage.setItem("otherImages", JSON.stringify(otherImagesData));
-
-    const fileDataArray = await Promise.all(
-      this.selectedFiles.map(async (file, index) => {
-        if (file) {
-          const base64 = await this.convertFileToBase64(file);
-          return {
-            image: {
-              name: file.name,
-              type: file.type,
-              size: file.size,
-              content: base64,
-            },
-            time: this.clocks[index],
-          };
-        }
-        return null;
-      })
-    );
-
-    const cleanedFileDataArray = fileDataArray.filter(
-      (fileData) => fileData !== null
-    );
-
-    if (cleanedFileDataArray.length > 0) {
-      sessionStorage.setItem(
-        "proofofownership",
-        JSON.stringify(cleanedFileDataArray)
-      );
-    } else {
-      sessionStorage.removeItem("proofofownership");
-    }
     this.formDirty = false;
     this.router.navigate(["/buy-product"], {
       state: { param: "listing-to-product", ID: this.productIDFromResponse },
-    });
-  }
-
-  private convertFileToBase64(file: File): Promise<string> {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.onload = () => resolve(reader.result as string);
-      reader.onerror = (error) => reject(error);
-      reader.readAsDataURL(file);
     });
   }
 }

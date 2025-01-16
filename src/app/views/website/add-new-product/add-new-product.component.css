@@ -475,3 +475,7 @@ background: none;
 /* ------------------------- Price & Shipment end--------------------------- */
 
 
+.disabled {
+  pointer-events: none; /* Disable all click events */
+  opacity: 0.5; /* Optional, to visually indicate it is disabled */
+}

@@ -1,5 +1,5 @@
 <div class="container mt-5">
-  <div class="col-12 d-flex flex-wrap">
+  <div class="col-12 d-flex flex-wrap mb-3">
     <div class="col-md-3">
       <div class="d-flex flex-column p-3 bg-light">
         <ul class="nav nav-pills flex-column mb-auto">
@@ -18,33 +18,37 @@
     <div class="col-md-9">
       <!-- if "My Listing" is Active -->
       <div *ngIf="activeIndex === 3" class="container">
-        <h4 class="mb-4">My Listings</h4>
+       
         <div class="d-flex justify-content-between align-items-center mb-3">
-          <div>
-            <select class="form-select form-select-sm" style="width: 150px">
-              <option selected>Status</option>
-              <option value="1">In Process</option>
-              <option value="2">Delivered</option>
-              <option value="3">Cancelled</option>
-            </select>
-          </div>
-          <div>
-            <select class="form-select form-select-sm" style="width: 150px">
-              <option selected>4 Weeks</option>
-              <option value="1">1 Week</option>
-              <option value="2">1 Month</option>
-              <option value="3">6 Months</option>
-            </select>
+          <h4 class="">My Listings</h4>
+          <div class="d-flex justify-content-between align-items-center gap-2">
+            <div>
+              <select class="form-select form-select-sm" style="width: 150px">
+                <option selected>Status</option>
+                <option value="1">In Process</option>
+                <option value="2">Delivered</option>
+                <option value="3">Cancelled</option>
+              </select>
+            </div>
+            <div>
+              <select class="form-select form-select-sm" style="width: 150px">
+                <option selected>4 Weeks</option>
+                <option value="1">1 Week</option>
+                <option value="2">1 Month</option>
+                <option value="3">6 Months</option>
+              </select>
+            </div>
           </div>
         </div>
         <div class="list-cards">
           <div *ngFor="let listing of listings" class="card mb-3">
             <div class="card-body d-flex align-items-center">
               <div class="col-md-6">
-                <small class="text-muted"
-                  >Listing ID {{ listing.listing_code || "N/A" }} | Created
-                  {{ listing.created_at }}</small
-                >
+                <small class="text-muted">
+                  Listing ID {{ listing.listing_code || "N/A" }} | Created
+                  {{ listing.created_at | date:'yyyy-MM-dd' }}
+                </small>
+                
                 <h6 class="mt-1 mb-1">
                   {{ listing.brand.name }} {{ listing.model }}
                   {{ listing.title }}
@@ -63,7 +67,7 @@
                 <mat-menu #menu="matMenu">
                   <button mat-menu-item (click)="editListing(listing)">
                     <mat-icon>edit</mat-icon>
-                    <span>Edit Product</span>
+                    <span>Edit</span>
                   </button>
                   <button mat-menu-item (click)="deleteListing(listing)">
                     <mat-icon color="warn">delete</mat-icon>
@@ -76,6 +80,281 @@
           </div>
         </div>
       </div>
+      <!-- if "Personal Info" is Active -->
+      <div *ngIf="activeIndex === 0" class="container">
+        <form>
+          <h3>Personal Information</h3>
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label for="firstName" class="form-label">First Name</label>
+              <input type="text" id="firstName" class="form-control" placeholder="Enter your first name" />
+            </div>
+            <div class="col-md-6 mb-3">
+              <label for="lastName" class="form-label">Last Name</label>
+              <input type="text" id="lastName" class="form-control" placeholder="Enter your last name" />
+            </div>
+          </div>
+      
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label for="gender" class="form-label">Gender</label>
+              <select id="gender" class="form-select">
+                <option selected>Select gender...</option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+            <div class="col-md-6 mb-3">
+              <label for="dob" class="form-label">Date of Birth</label>
+              <input type="date" id="dob" class="form-control" />
+            </div>
+          </div>
+      
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label for="phone" class="form-label">Phone</label>
+              <div class="input-group">
+                <select class="form-select" style="max-width: 100px;">
+                  <option value="KSA">KSA</option>
+                  <!-- Add more options as needed -->
+                </select>
+                <input type="text" id="phone" class="form-control" placeholder="+966 55 000 0000" />
+              </div>
+            </div>
+            <div class="col-md-6 mb-3">
+              <label for="language" class="form-label">Language</label>
+              <select id="language" class="form-select">
+                <option selected>English</option>
+                <option value="arabic">Arabic</option>
+                <!-- Add more languages -->
+              </select>
+            </div>
+          </div>
+      
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label for="occupation" class="form-label">Occupation</label>
+              <input type="text" id="occupation" class="form-control" placeholder="Occupation" />
+            </div>
+            <div class="col-md-6 mb-3">
+              <label for="aboutMe" class="form-label">About Me</label>
+              <textarea id="aboutMe" class="form-control" rows="2" placeholder="Description"></textarea>
+            </div>
+          </div>
+      
+          <h3>Login Information</h3>
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label for="email" class="form-label">Email Address</label>
+              <input type="email" id="email" class="form-control" placeholder="Enter your email address" />
+            </div>
+            <div class="col-md-6 mb-3">
+              <label for="password" class="form-label">Password</label>
+              <a href="#" class="d-block text-decoration-none">Change password</a>
+            </div>
+          </div>
+      
+          <h3>Login with Google/Apple</h3>
+          <div class="d-flex gap-3 my-3">
+            <button type="button" class="btn btn-outline-secondary w-100">
+              <img src="../assets/images/download.png" alt="Google Logo" class="me-2" style="width: 20px;" />
+              Sign in with Google
+            </button>
+            <button type="button" class="btn btn-outline-secondary w-100">
+              <img src="../assets/images/apple-logo.png" alt="Apple Logo" class="me-2" style="width: 20px;" />
+              Sign in with Apple
+            </button>
+          </div>
+      
+          <div class="text-end">
+            <button type="submit" class="submit-btn">Save Changes</button>
+          </div>
+        </form>
+      </div>
+      <!-- if "Shipping Address" is Active -->
+      <div *ngIf="activeIndex === 1" class="container">
+        <form>
+          <h3>Shipping Address</h3>
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label for="firstName" class="form-label">First Name</label>
+              <input type="text" id="firstName" class="form-control" placeholder="Enter your first name..." />
+            </div>
+            <div class="col-md-6 mb-3">
+              <label for="lastName" class="form-label">Last Name</label>
+              <input type="text" id="lastName" class="form-control" placeholder="Enter your last name..." />
+            </div>
+          </div>
+      
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label for="street" class="form-label">Street</label>
+              <input type="text" id="street" class="form-control" placeholder="Enter street address..." />
+            </div>
+            <div class="col-md-6 mb-3">
+              <label for="street2" class="form-label">Street Line 2</label>
+              <input type="text" id="street2" class="form-control" placeholder="Enter street line address..." />
+            </div>
+          </div>
+      
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label for="zipCode" class="form-label">ZIP Code</label>
+              <input type="text" id="zipCode" class="form-control" placeholder="Enter zip code..." />
+            </div>
+            <div class="col-md-6 mb-3">
+              <label for="city" class="form-label">City</label>
+              <input type="text" id="city" class="form-control" placeholder="Enter city..." />
+            </div>
+          </div>
+      
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label for="country" class="form-label">Country</label>
+              <input type="text" id="country" class="form-control" placeholder="Enter your country..." />
+            </div>
+            <div class="col-md-6 mb-3">
+              <label for="state" class="form-label">State</label>
+              <input type="text" id="state" class="form-control" placeholder="Enter your state..." />
+            </div>
+          </div>
+      
+          <div class="text-end">
+            <button type="submit" class="submit-btn">Save Changes</button>
+          </div>
+        </form>
+      </div>
+
+        <!-- if "Buy Orders" is Active -->
+        <div *ngIf="activeIndex === 4" class="container">
+       
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <h4 class="">Buy Orders</h4>
+            <div class="d-flex justify-content-between align-items-center gap-2">
+              <div>
+                <select class="form-select form-select-sm" style="width: 150px">
+                  <option selected>Status</option>
+                  <option value="1">In Process</option>
+                  <option value="2">Delivered</option>
+                  <option value="3">Cancelled</option>
+                </select>
+              </div>
+              <div>
+                <select class="form-select form-select-sm" style="width: 150px">
+                  <option selected>4 Weeks</option>
+                  <option value="1">1 Week</option>
+                  <option value="2">1 Month</option>
+                  <option value="3">6 Months</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="list-cards">
+            <div *ngFor="let listing of listings" class="card mb-3">
+              <div class="card-body d-flex align-items-center">
+                <div class="col-md-6">
+                  <small class="text-muted">
+                    Listing ID {{ listing.listing_code || "N/A" }} | Created
+                    {{ listing.created_at | date:'yyyy-MM-dd' }}
+                  </small>
+                  
+                  <h6 class="mt-1 mb-1">
+                    {{ listing.brand.name }} {{ listing.model }}
+                    {{ listing.title }}
+                  </h6>
+                  <!-- <span class="badge" [ngClass]="listing.statusClass">{{ listing.status || "In Process" }}</span> -->
+                  <span class="badge">{{ listing?.status || "In Process" }}</span>
+                </div>
+                <div class="col-md-6 d-flex justify-content-end">
+                  <button
+                    mat-icon-button
+                    [matMenuTriggerFor]="menu"
+                    aria-label="More options"
+                  >
+                    <mat-icon>more_vert</mat-icon>
+                  </button>
+                  <mat-menu #menu="matMenu">
+                    <button mat-menu-item (click)="editListing(listing)">
+                      <mat-icon>edit</mat-icon>
+                      <span>Edit</span>
+                    </button>
+                    <button mat-menu-item (click)="deleteListing(listing)">
+                      <mat-icon color="warn">delete</mat-icon>
+                      <span>Delete</span>
+                    </button>
+                  </mat-menu>
+                </div>
+                
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- if "Sell Orders" is Active -->
+        <div *ngIf="activeIndex === 5" class="container">
+       
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <h4 class="">Sell Orders</h4>
+            <div class="d-flex justify-content-between align-items-center gap-2">
+              <div>
+                <select class="form-select form-select-sm" style="width: 150px">
+                  <option selected>Status</option>
+                  <option value="1">In Process</option>
+                  <option value="2">Delivered</option>
+                  <option value="3">Cancelled</option>
+                </select>
+              </div>
+              <div>
+                <select class="form-select form-select-sm" style="width: 150px">
+                  <option selected>4 Weeks</option>
+                  <option value="1">1 Week</option>
+                  <option value="2">1 Month</option>
+                  <option value="3">6 Months</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="list-cards">
+            <div *ngFor="let listing of listings" class="card mb-3">
+              <div class="card-body d-flex align-items-center">
+                <div class="col-md-6">
+                  <small class="text-muted">
+                    Listing ID {{ listing.listing_code || "N/A" }} | Created
+                    {{ listing.created_at | date:'yyyy-MM-dd' }}
+                  </small>
+                  
+                  <h6 class="mt-1 mb-1">
+                    {{ listing.brand.name }} {{ listing.model }}
+                    {{ listing.title }}
+                  </h6>
+                  <!-- <span class="badge" [ngClass]="listing.statusClass">{{ listing.status || "In Process" }}</span> -->
+                  <span class="badge">{{ listing?.status || "In Process" }}</span>
+                </div>
+                <div class="col-md-6 d-flex justify-content-end">
+                  <button
+                    mat-icon-button
+                    [matMenuTriggerFor]="menu"
+                    aria-label="More options"
+                  >
+                    <mat-icon>more_vert</mat-icon>
+                  </button>
+                  <mat-menu #menu="matMenu">
+                    <button mat-menu-item (click)="editListing(listing)">
+                      <mat-icon>edit</mat-icon>
+                      <span>Edit</span>
+                    </button>
+                    <button mat-menu-item (click)="deleteListing(listing)">
+                      <mat-icon color="warn">delete</mat-icon>
+                      <span>Delete</span>
+                    </button>
+                  </mat-menu>
+                </div>
+                
+              </div>
+            </div>
+          </div>
+        </div>
     </div>
   </div>
 </div>

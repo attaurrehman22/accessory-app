@@ -363,7 +363,7 @@ export class HttpService implements OnInit {
 
 
   updateListingDetails(formData: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/api/listing/create`, formData, {
+    return this.http.post(`${this.apiUrl}/api/listing/update`, formData, {
       headers: {
         Accept: "application/json",
         Authorization: `Bearer ${this.token}`,

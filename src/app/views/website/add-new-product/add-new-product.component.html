@@ -980,7 +980,7 @@
                     </div>
                   </div>
                   <!-- Image upload area for Clock 1 -->
-                  <div class="upload-container" (click)="triggerFileInput(0)">
+                  <div [ngClass]="{ 'disabled': isEnableProofofOwnerShip }" class="upload-container" (click)="triggerFileInput(0)">
                     <div *ngIf="!imagePreviews[0]" class="upload-placeholder">
                       <span class="plus-icon">+</span>
                     </div>
@@ -1041,7 +1041,7 @@
                     </div>
                   </div>
                   <!-- Button to open file input -->
-                  <div class="upload-container" (click)="triggerFileInput(1)">
+                  <div [ngClass]="{ 'disabled': isEnableProofofOwnerShip }" class="upload-container" (click)="triggerFileInput(1)">
                     <div *ngIf="!imagePreviews[1]" class="upload-placeholder">
                       <span class="plus-icon">+</span>
                     </div>
@@ -2387,6 +2387,7 @@
                 <div class="upload-box" (click)="selectCoverImage()">
                   <ng-container *ngIf="coverImage; else uploadPlaceholder">
                     <img
+                      *ngIf="coverImage?.url"
                       style="height: 100%; width: 100%; object-fit: fill"
                       [src]="coverImage.url"
                       alt="Cover Image"
@@ -2629,6 +2630,7 @@
             <div
               class="clock"
               style="flex-direction: row; gap: 10px; background-color: #f9f9f9"
+              [ngClass]="{ 'disabled': isEnableProofofOwnerShip }"
             >
               <div style="display: flex; flex-direction: column">
                 <div class="clock-face">
@@ -2653,7 +2655,7 @@
                 </div>
               </div>
               <!-- Image upload area for Clock 1 -->
-              <div class="upload-container" (click)="triggerFileInput(0)">
+              <div  class="upload-container" (click)="triggerFileInput(0)">
                 <div *ngIf="!imagePreviews[0]" class="upload-placeholder">
                   <span class="plus-icon">+</span>
                 </div>
@@ -2686,6 +2688,7 @@
             <div
               class="clock"
               style="flex-direction: row; gap: 10px; background-color: #f9f9f9"
+              [ngClass]="{ 'disabled': isEnableProofofOwnerShip }"
             >
               <div style="display: flex; flex-direction: column">
                 <div class="clock-face">
@@ -2710,7 +2713,7 @@
                 </div>
               </div>
               <!-- Button to open file input -->
-              <div class="upload-container" (click)="triggerFileInput(1)">
+              <div [ngClass]="{ 'disabled': isEnableProofofOwnerShip }" class="upload-container" (click)="triggerFileInput(1)">
                 <div *ngIf="!imagePreviews[1]" class="upload-placeholder">
                   <span class="plus-icon">+</span>
                 </div>
