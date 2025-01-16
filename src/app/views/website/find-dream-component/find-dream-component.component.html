@@ -11,7 +11,7 @@
       </div>
       <p class="para">{{ "find_dream.grow_business" | translate }}</p>
       <div class="d-flex pb-3 mb-sm-3">
-        <a class="custom-btn btn btn-dark">
+        <a [routerLink]="'/product-list'" class="custom-btn btn btn-dark">
           {{ "find_dream.explore_now" | translate }}
         </a>
         <a  [routerLink]="'/login'" *ngIf="isUserLogin === 'false' || !isUserLogin" class="custom-btn btn mx-2">
