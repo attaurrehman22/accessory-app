@@ -376,7 +376,7 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
             this.productDetails.proof_image_2 = this.productDetails.proof_image_2.replace(/\\/g, '');
           }
 
-          if (this.latestActiveForm === 'completed') {
+          if (this.latestActiveForm === 'completed' || this.latestActiveForm === 'publishListing') {
             this.selectedOptionsList = this.selectedOptionsList.concat([
               'watchDetails',
               'uploadImages',
