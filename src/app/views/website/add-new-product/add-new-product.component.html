@@ -12,8 +12,11 @@
           <div *ngIf="selectedOptionsList.includes('listingDetails') && selectedSection === 'listingDetails'" class="step-circle">1</div>
           <div style="cursor: pointer;" (click)="selectSection('listingDetails')" *ngIf="selectedOptionsList.includes('listingDetails') && selectedSection !== 'listingDetails'" class="step-circle">✓</div>
           <div class="step-content">
-            <h5 class="card-title">Listing Details</h5>
-            <p class="card-text">
+            <h5 class="card-title"
+            style="cursor: pointer;"
+             (click)="moveToForm('listingDetails')"
+            >Listing Details</h5>
+            <p class="card-text" style="cursor: pointer;" (click)="moveToForm('listingDetails')">
               Every watch will soon be verified by our team of experts to ensure
               it’s 100% authentic, giving buyers complete peace of mind.
             </p>
@@ -130,10 +133,17 @@
                 </mat-error>
               </mat-form-field>
 
-              <mat-checkbox formControlName="approximation"
-                >Approximation</mat-checkbox
-              >
-              <mat-checkbox formControlName="unknown">Unknown</mat-checkbox>
+              <mat-checkbox formControlName="approximation">
+                <label class="mdc-label" style="margin-top: 13px; margin-bottom: 5px;">
+                  Approximation
+                </label>
+              </mat-checkbox>
+              
+              <mat-checkbox formControlName="unknown">
+                <label class="mdc-label" style="margin-top: 13px; margin-bottom: 5px;">
+                  Unknown
+                </label>
+              </mat-checkbox>
 
               <div class="d-flex justify-content-end gap-2 mb-3 mt-3">
                 <button
@@ -165,8 +175,12 @@
           <div *ngIf="!selectedOptionsList.includes('watchDetails') || selectedSection === 'watchDetails'"  class="step-circle">2</div>
           <div style="cursor: pointer;" (click)="selectSection('watchDetails')"  *ngIf="selectedOptionsList.includes('watchDetails') && selectedSection !== 'watchDetails'" class="step-circle">✓</div>
           <div class="step-content">
-            <strong>Watch Details</strong>
-            <p class="text-muted">
+            <strong
+            style="cursor: pointer;"
+            (click)="moveToForm('watchDetails')"
+            >Watch Details</strong>
+            <p class="text-muted"     style="cursor: pointer;"
+            (click)="moveToForm('watchDetails')">
               Crypto ipsum bitcoin ethereum dogecoin litecoin. Revain neo gelen
               amp tecoin EOS chiliz...
             </p>
@@ -661,8 +675,14 @@
           <div style="cursor: pointer;" (click)="selectSection('uploadImages')" *ngIf="selectedOptionsList.includes('uploadImages') && selectedSection !== 'uploadImages'" class="step-circle">✓</div>
 
           <div class="step-content">
-            <strong>Upload Images</strong>
-            <p class="text-muted">
+            <strong
+            style="cursor: pointer;"
+            (click)="moveToForm('uploadImages')"
+            >Upload Images</strong>
+            <p class="text-muted"
+            style="cursor: pointer;"
+            (click)="moveToForm('uploadImages')"
+            >
               Crypto ipsum bitcoin ethereum dogecoin litecoin. Revain neo gelen
               amp tecoin EOS chiliz...
             </p>
@@ -776,8 +796,12 @@
           <div style="cursor: pointer;" (click)="selectSection('conditionGrading')" *ngIf="selectedOptionsList.includes('conditionGrading') && selectedSection !== 'conditionGrading'" class="step-circle">✓</div>
 
           <div class="step-content">
-            <strong>Condition Grading</strong>
-            <p class="text-muted">
+            <strong
+            style="cursor: pointer;"
+            (click)="moveToForm('conditionGrading')"
+            >Condition Grading</strong>
+            <p class="text-muted"  style="cursor: pointer;"
+            (click)="moveToForm('conditionGrading')">
               Crypto ipsum bitcoin ethereum dogecoin litecoin. Revain neo gelen
               amp tecoin EOS chiliz...
             </p>
@@ -876,8 +900,14 @@
           <div style="cursor: pointer;" (click)="selectSection('scopeofdelivery')" *ngIf="selectedOptionsList.includes('scopeofdelivery') && selectedSection !== 'scopeofdelivery'" class="step-circle">✓</div>
 
           <div class="step-content">
-            <strong>Scope of Delivery</strong>
-            <p class="text-muted">
+            <strong
+            style="cursor: pointer;"
+            (click)="moveToForm('scopeofdelivery')"
+            >Scope of Delivery</strong>
+            <p
+            style="cursor: pointer;"
+            (click)="moveToForm('scopeofdelivery')" 
+            class="text-muted">
               Crypto ipsum bitcoin ethereum dogecoin litecoin. Revain neo gelen
               amp tecoin EOS chiliz...
             </p>
@@ -946,8 +976,14 @@
           <div style="cursor: pointer;" (click)="selectSection('proofofownership')" *ngIf="selectedOptionsList.includes('proofofownership') && selectedSection !== 'proofofownership'" class="step-circle">✓</div>
 
           <div class="step-content">
-            <strong>Proof of Ownership</strong>
-            <p class="text-muted">
+            <strong
+            style="cursor: pointer;"
+            (click)="moveToForm('proofofownership')"
+            >Proof of Ownership</strong>
+            <p class="text-muted"
+            style="cursor: pointer;"
+            (click)="moveToForm('proofofownership')"
+            >
               Crypto ipsum bitcoin ethereum dogecoin litecoin. Revain neo gelen
               amp tecoin EOS chiliz...
             </p>
@@ -1137,8 +1173,14 @@
           <div style="cursor: pointer;" (click)="selectSection('priceshipment')" *ngIf="selectedOptionsList.includes('priceshipment') && selectedSection !== 'priceshipment'" class="step-circle">✓</div>
 
           <div class="step-content">
-            <strong>Price & Shipment</strong>
-            <p class="text-muted">
+            <strong
+            style="cursor: pointer;"
+            (click)="moveToForm('priceshipment')"
+            >Price & Shipment</strong>
+            <p class="text-muted"
+            style="cursor: pointer;"
+            (click)="moveToForm('priceshipment')"
+            >
               Crypto ipsum bitcoin ethereum dogecoin litecoin. Revain neo golem
               amp telcoin EOS chiliz...
             </p>
@@ -1263,9 +1305,13 @@
                     />
                   </mat-form-field>
 
-                  <mat-checkbox [(ngModel)]="allow_to_make_offer"
-                    >Allow make offers</mat-checkbox
-                  >
+                  <mat-checkbox [(ngModel)]="allow_to_make_offer">
+                    <label class="mdc-label" style="margin-top: 13px; margin-bottom: 5px;">
+                      Allow make offers
+                    </label>
+                  </mat-checkbox>
+                  
+
                 </div>
                 <div class="col-md-6">
                   <mat-card class="info-card">
@@ -1362,8 +1408,14 @@
           <div style="cursor: pointer;" (click)="selectSection('billinginformation')" *ngIf="selectedOptionsList.includes('billinginformation') && selectedSection !== 'billinginformation'" class="step-circle">✓</div>
 
           <div class="step-content">
-            <strong>Billing Information</strong>
-            <p class="text-muted">
+            <strong
+            style="cursor: pointer;"
+            (click)="moveToForm('billinginformation')"
+            >Billing Information</strong>
+            <p
+            style="cursor: pointer;"
+            (click)="moveToForm('billinginformation')"
+            class="text-muted">
               Crypto ipsum bitcoin ethereum dogecoin litecoin. Revain neo golem
               amp telcoin EOS chiliz...
             </p>
@@ -1521,8 +1573,14 @@
         <div style="cursor: pointer;" (click)="selectSection('summary')" *ngIf="selectedOptionsList.includes('summary') && selectedSection !== 'summary'" class="step-circle">✓</div>
           <!-- <div class="step-circle">9</div> -->
           <div class="step-content">
-            <strong>Summary</strong>
-            <p class="text-muted">
+            <strong
+            style="cursor: pointer;"
+            (click)="moveToForm('summary')"
+            >Summary</strong>
+            <p 
+            style="cursor: pointer;"
+            (click)="moveToForm('summary')"
+            class="text-muted">
               Crypto ipsum bitcoin ethereum dogecoin litecoin. Revain neo golem
               amp telcoin EOS chiliz...
             </p>
@@ -1863,10 +1921,17 @@
               </mat-error>
             </mat-form-field>
 
-            <mat-checkbox formControlName="approximation"
-              >Approximation</mat-checkbox
-            >
-            <mat-checkbox formControlName="unknown">Unknown</mat-checkbox>
+            <mat-checkbox formControlName="approximation">
+              <label class="mdc-label" style="margin-top: 13px; margin-bottom: 5px;">
+                Approximation
+              </label>
+            </mat-checkbox>
+            
+            <mat-checkbox formControlName="unknown">
+              <label class="mdc-label" style="margin-top: 13px; margin-bottom: 5px;">
+                Unknown
+              </label>
+            </mat-checkbox>
 
             <div class="d-flex justify-content-end gap-2 mb-3 mt-3">
               <button
@@ -2951,9 +3016,11 @@
                   />
                 </mat-form-field>
 
-                <mat-checkbox [(ngModel)]="allow_to_make_offer"
-                  >Allow make offers</mat-checkbox
-                >
+                <mat-checkbox [(ngModel)]="allow_to_make_offer">
+                  <label class="mdc-label" style="margin-top: 13px; margin-bottom: 5px;">
+                    Allow make offers
+                  </label>
+                </mat-checkbox>
               </div>
               <div class="col-md-6" style="padding-left: 0">
                 <mat-card class="info-card">

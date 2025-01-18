@@ -1188,4 +1188,54 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
       state: { param: "listing-to-product", ID: this.productIDFromResponse },
     });
   }
+
+
+  moveToForm(formName){
+    if(formName === 'listingDetails'){
+      if(this.selectedOptionsList.includes('listingDetails') && this.selectedSection !== 'listingDetails'){
+        this.selectSection('listingDetails')
+      }
+    }
+    else if(formName === 'watchDetails'){
+      if(this.selectedOptionsList.includes('watchDetails') && this.selectedSection !== 'watchDetails'){
+        this.selectSection('watchDetails')
+      }
+    }
+    else if(formName === 'uploadImages'){
+      if(this.selectedOptionsList.includes('uploadImages') && this.selectedSection !== 'uploadImages'){
+        this.selectSection('uploadImages')
+      }
+    }
+    else if(formName === 'conditionGrading'){
+      if(this.selectedOptionsList.includes('conditionGrading') && this.selectedSection !== 'conditionGrading'){
+        this.selectSection('conditionGrading')
+      }
+    }
+    else if(formName === 'scopeofdelivery'){
+      if(this.selectedOptionsList.includes('scopeofdelivery') && this.selectedSection !== 'scopeofdelivery'){
+        this.selectSection('scopeofdelivery')
+      }
+    }
+    else if(formName === 'proofofownership'){
+      if(this.selectedOptionsList.includes('proofofownership') && this.selectedSection !== 'proofofownership'){
+        this.selectSection('proofofownership')
+      }
+    }
+    else if(formName === 'priceshipment'){
+      if(this.selectedOptionsList.includes('priceshipment') && this.selectedSection !== 'priceshipment'){
+        this.selectSection('priceshipment')
+      }
+    }
+    else if(formName === 'billinginformation'){
+      if(this.selectedOptionsList.includes('billinginformation') && this.selectedSection !== 'billinginformation'){
+        this.selectSection('billinginformation')
+      }
+    }
+    else if(formName === 'summary'){
+      if(this.selectedOptionsList.includes('summary') && this.selectedSection !== 'summary'){
+        this.selectSection('summary')
+      }
+    }
+  }
+
 }
