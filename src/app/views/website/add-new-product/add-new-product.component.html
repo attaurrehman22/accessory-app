@@ -10,7 +10,7 @@
      
         >
           <div *ngIf="selectedOptionsList.includes('listingDetails') && selectedSection === 'listingDetails'" class="step-circle">1</div>
-          <div *ngIf="selectedOptionsList.includes('listingDetails') && selectedSection !== 'listingDetails'" class="step-circle">✓</div>
+          <div style="cursor: pointer;" (click)="selectSection('listingDetails')" *ngIf="selectedOptionsList.includes('listingDetails') && selectedSection !== 'listingDetails'" class="step-circle">✓</div>
           <div class="step-content">
             <h5 class="card-title">Listing Details</h5>
             <p class="card-text">
@@ -163,7 +163,7 @@
           [ngClass]="{ active: selectedOptionsList.includes('watchDetails') }"
         >
           <div *ngIf="!selectedOptionsList.includes('watchDetails') || selectedSection === 'watchDetails'"  class="step-circle">2</div>
-          <div *ngIf="selectedOptionsList.includes('watchDetails') && selectedSection !== 'watchDetails'" class="step-circle">✓</div>
+          <div style="cursor: pointer;" (click)="selectSection('watchDetails')"  *ngIf="selectedOptionsList.includes('watchDetails') && selectedSection !== 'watchDetails'" class="step-circle">✓</div>
           <div class="step-content">
             <strong>Watch Details</strong>
             <p class="text-muted">
@@ -658,7 +658,7 @@
           [ngClass]="{ active: selectedOptionsList.includes('uploadImages') }"
         >
           <div  *ngIf="!selectedOptionsList.includes('uploadImages') || selectedSection === 'uploadImages'"  class="step-circle">3</div>
-          <div *ngIf="selectedOptionsList.includes('uploadImages') && selectedSection !== 'uploadImages'" class="step-circle">✓</div>
+          <div style="cursor: pointer;" (click)="selectSection('uploadImages')" *ngIf="selectedOptionsList.includes('uploadImages') && selectedSection !== 'uploadImages'" class="step-circle">✓</div>
 
           <div class="step-content">
             <strong>Upload Images</strong>
@@ -773,7 +773,7 @@
           [ngClass]="{ active: selectedOptionsList.includes('conditionGrading') }"
         >
           <div *ngIf="!selectedOptionsList.includes('conditionGrading') || selectedSection === 'conditionGrading'" class="step-circle">4</div>
-          <div *ngIf="selectedOptionsList.includes('conditionGrading') && selectedSection !== 'conditionGrading'" class="step-circle">✓</div>
+          <div style="cursor: pointer;" (click)="selectSection('conditionGrading')" *ngIf="selectedOptionsList.includes('conditionGrading') && selectedSection !== 'conditionGrading'" class="step-circle">✓</div>
 
           <div class="step-content">
             <strong>Condition Grading</strong>
@@ -873,7 +873,7 @@
           [ngClass]="{ active: selectedOptionsList.includes('scopeofdelivery') }"
         >
           <div *ngIf="!selectedOptionsList.includes('scopeofdelivery') || selectedSection === 'scopeofdelivery'" class="step-circle">5</div>
-          <div *ngIf="selectedOptionsList.includes('scopeofdelivery') && selectedSection !== 'scopeofdelivery'" class="step-circle">✓</div>
+          <div style="cursor: pointer;" (click)="selectSection('scopeofdelivery')" *ngIf="selectedOptionsList.includes('scopeofdelivery') && selectedSection !== 'scopeofdelivery'" class="step-circle">✓</div>
 
           <div class="step-content">
             <strong>Scope of Delivery</strong>
@@ -919,10 +919,18 @@
                   Back
                 </button>
                 <button
+                  *ngIf="!isNextButtonShowonScopeOfdelivery"
                   class="save-can-btn save-btn-bg"
                   (click)="onSubmit('conditionGrading')"
                 >
                   Save
+                </button>
+                <button
+                  *ngIf="isNextButtonShowonScopeOfdelivery"
+                  class="save-can-btn save-btn-bg"
+                  (click)="nextMoveToScopeOfDelivery()"
+                >
+                  Next
                 </button>
               </div>
             </div>
@@ -935,7 +943,7 @@
           [ngClass]="{ active: selectedOptionsList.includes('proofofownership') }"
         >
           <div *ngIf="!selectedOptionsList.includes('proofofownership') || selectedSection === 'proofofownership'" class="step-circle">6</div>
-          <div *ngIf="selectedOptionsList.includes('proofofownership') && selectedSection !== 'proofofownership'" class="step-circle">✓</div>
+          <div style="cursor: pointer;" (click)="selectSection('proofofownership')" *ngIf="selectedOptionsList.includes('proofofownership') && selectedSection !== 'proofofownership'" class="step-circle">✓</div>
 
           <div class="step-content">
             <strong>Proof of Ownership</strong>
@@ -1102,11 +1110,19 @@
                   Back
                 </button>
                 <button
-                  class="save-can-btn save-btn-bg"
-                  (click)="onSubmit('proofofownership')"
-                >
-                  Save
-                </button>
+                  *ngIf="!isNextButtonShowonProofofOwnerShip"
+                    class="save-can-btn save-btn-bg"
+                    (click)="onSubmit('proofofownership')"
+                  >
+                    Save
+                  </button>
+                  <button
+                  *ngIf="isNextButtonShowonProofofOwnerShip"
+                    class="save-can-btn save-btn-bg"
+                    (click)="nextMoveToBillingInformation()"
+                  >
+                    Next
+                  </button>
               </div>
             </div>
           </div>
@@ -1118,7 +1134,7 @@
           [ngClass]="{ active: selectedOptionsList.includes('priceshipment') }"
         >
           <div *ngIf="!selectedOptionsList.includes('priceshipment') || selectedSection === 'priceshipment'" class="step-circle">7</div>
-          <div *ngIf="selectedOptionsList.includes('priceshipment') && selectedSection !== 'priceshipment'" class="step-circle">✓</div>
+          <div style="cursor: pointer;" (click)="selectSection('priceshipment')" *ngIf="selectedOptionsList.includes('priceshipment') && selectedSection !== 'priceshipment'" class="step-circle">✓</div>
 
           <div class="step-content">
             <strong>Price & Shipment</strong>
@@ -1343,7 +1359,7 @@
           [ngClass]="{ active:  selectedOptionsList.includes('billinginformation') }"
         >
           <div *ngIf="!selectedOptionsList.includes('billinginformation') || selectedSection === 'billinginformation'" class="step-circle">8</div>
-          <div *ngIf="selectedOptionsList.includes('billinginformation') && selectedSection !== 'billinginformation'" class="step-circle">✓</div>
+          <div style="cursor: pointer;" (click)="selectSection('billinginformation')" *ngIf="selectedOptionsList.includes('billinginformation') && selectedSection !== 'billinginformation'" class="step-circle">✓</div>
 
           <div class="step-content">
             <strong>Billing Information</strong>
@@ -1478,11 +1494,19 @@
                   Back
                 </button>
                 <button
-                  class="save-can-btn save-btn-bg"
-                  (click)="onSubmit('billinginformation')"
-                >
-                  Save
-                </button>
+                *ngIf="!isNextButtonShowonBillingInformation"
+                class="save-can-btn save-btn-bg"
+                (click)="onSubmit('billinginformation')"
+              >
+                Save
+              </button>
+              <button
+                *ngIf="isNextButtonShowonBillingInformation"
+                class="save-can-btn save-btn-bg"
+                (click)="nextMoveToSummary()"
+              >
+                Next
+              </button>
               </div>
             </div>
           </div>
@@ -1493,7 +1517,9 @@
           class="list-item"
           [ngClass]="{ active:  selectedOptionsList.includes('summary') }"
         >
-          <div class="step-circle">9</div>
+        <div *ngIf="!selectedOptionsList.includes('summary') || selectedSection === 'summary'" class="step-circle">9</div>
+        <div style="cursor: pointer;" (click)="selectSection('summary')" *ngIf="selectedOptionsList.includes('summary') && selectedSection !== 'summary'" class="step-circle">✓</div>
+          <!-- <div class="step-circle">9</div> -->
           <div class="step-content">
             <strong>Summary</strong>
             <p class="text-muted">
@@ -1512,7 +1538,7 @@
                       style="background: #f7f7f8; border-radius: 15px"
                       class="card p-3"
                     >
-                      <h6 class="text-muted font-weight-bold">Ad Preview</h6>
+                      <h6 class="font-weight-bold">Ad Preview</h6>
                       <div class="d-flex align-items-center">
                         <img
                           [src]="coverImage.url"
@@ -1618,7 +1644,7 @@
                   class="card mt-4 p-3"
                   style="background: #f7f7f8; border-radius: 15px"
                 >
-                  <h6 class="text-muted font-weight-bold">
+                  <h6 class="font-weight-bold">
                     Billing Information
                   </h6>
                   <div class="row">
@@ -2556,10 +2582,18 @@
               Back
             </button>
             <button
+              *ngIf="!isNextButtonShowonScopeOfdelivery"
               class="save-can-btn save-btn-bg"
               (click)="onSubmit('conditionGrading')"
             >
               Save
+            </button>
+            <button
+              *ngIf="isNextButtonShowonScopeOfdelivery"
+              class="save-can-btn save-btn-bg"
+              (click)="nextMoveToScopeOfDelivery()"
+            >
+              Next
             </button>
           </div>
         </div>
@@ -2770,10 +2804,18 @@
               Back
             </button>
             <button
+            *ngIf="!isNextButtonShowonProofofOwnerShip"
               class="save-can-btn save-btn-bg"
               (click)="onSubmit('proofofownership')"
             >
               Save
+            </button>
+            <button
+            *ngIf="isNextButtonShowonProofofOwnerShip"
+              class="save-can-btn save-btn-bg"
+              (click)="nextMoveToBillingInformation()"
+            >
+              Next
             </button>
           </div>
         </div>
@@ -2977,7 +3019,7 @@
           </div>
 
           <div
-            class="d-flex align-items-center justify-content-end gap-2 mb-3"
+            class="d-flex align-items-center justify-content-end gap-2 mb-3 mt-3"
             style="padding: 0 20px 0 20px"
           >
             <button
@@ -3124,10 +3166,18 @@
               Back
             </button>
             <button
+              *ngIf="!isNextButtonShowonBillingInformation"
               class="save-can-btn save-btn-bg"
               (click)="onSubmit('billinginformation')"
             >
               Save
+            </button>
+            <button
+              *ngIf="isNextButtonShowonBillingInformation"
+              class="save-can-btn save-btn-bg"
+              (click)="nextMoveToSummary()"
+            >
+              Next
             </button>
           </div>
         </div>
@@ -3147,7 +3197,7 @@
             <div class="row">
               <!-- Ad Preview Section -->
               <div class="col-md-6">
-                <h6 class="text-muted font-weight-bold">Ad Preview</h6>
+                <h6 class="font-weight-bold">Ad Preview</h6>
                 <div
                   class="card p-3"
                   style="background: #f7f7f8; border-radius: 15px;height: 200px;"
@@ -3245,7 +3295,7 @@
             </div>
 
             <!-- Billing Information Section -->
-            <h6 class="text-muted font-weight-bold">Billing Information</h6>
+            <h6 class="font-weight-bold">Billing Information</h6>
             <div
               class="card mt-4 p-3"
               style="background: #f7f7f8; border-radius: 15px"

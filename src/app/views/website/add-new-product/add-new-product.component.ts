@@ -349,6 +349,22 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
 
   productDetails:any;
   latestActiveForm:string='';
+  isNextButtonShowonBillingInformation:boolean=false;
+  isNextButtonShowonProofofOwnerShip:boolean=false;
+  isNextButtonShowonScopeOfdelivery:boolean=false;
+
+  nextMoveToSummary(){
+    this.selectSection("summary");
+  }
+
+  nextMoveToBillingInformation(){
+    this.selectSection("priceshipment");
+  }
+
+  nextMoveToScopeOfDelivery(){
+    this.selectSection("scopeofdelivery");
+  }
+
   getProductDetails(){
       this.http.getProductDetailsByID(this.productIDFromResponse).subscribe(
         (res)=>{
@@ -387,6 +403,9 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
               'billinginformation',
               'summary'
             ]);
+            this.isNextButtonShowonBillingInformation=true;
+            this.isNextButtonShowonProofofOwnerShip=true
+            this.isNextButtonShowonScopeOfdelivery=true
             this.selectSection("summary");
           }
           if (this.latestActiveForm === 'billingInformation') {
@@ -399,6 +418,9 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
               'priceshipment',
               'billinginformation',
             ]);
+            this.isNextButtonShowonBillingInformation=true;
+            this.isNextButtonShowonProofofOwnerShip=true;
+            this.isNextButtonShowonScopeOfdelivery=true
             this.selectSection("summary");
           }
 
@@ -411,6 +433,8 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
               'proofofownership',
               'priceshipment',
             ]);
+            this.isNextButtonShowonProofofOwnerShip=true;
+            this.isNextButtonShowonScopeOfdelivery=true
             this.selectSection("billingInformation");
           }
 
@@ -422,6 +446,8 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
               'scopeofdelivery',
               'proofofownership',
             ]);
+            this.isNextButtonShowonProofofOwnerShip=true;
+            this.isNextButtonShowonScopeOfdelivery=true
             this.selectSection("priceshipment");
           }
 
@@ -432,6 +458,7 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
               'conditionGrading',
               'scopeofdelivery',
             ]);
+            this.isNextButtonShowonScopeOfdelivery=true;
             this.selectSection("proofofownership");
           }
 
@@ -441,6 +468,7 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
               'uploadImages',
               'conditionGrading',
             ]);
+            this.isNextButtonShowonScopeOfdelivery=true;
             this.selectSection("scopeofdelivery");
           }
 
