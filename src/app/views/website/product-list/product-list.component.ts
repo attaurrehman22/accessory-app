@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { Router } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { TranslateService } from "@ngx-translate/core";
 import { HttpService } from "src/services/http/http.service";
 import { LanguageService } from "src/services/lang-service/language.service";
@@ -26,11 +26,10 @@ export class ProductListComponent implements OnInit {
       this.getWishList();
     }
     this.applyFilters();
-    this.searchService.currentSearchQuery.subscribe((query) => {
-      this.searchQuery = query;
+    this.route.queryParams.subscribe((params) => {
+      this.searchQuery = params['query'] || '';  // Read query parameter, or default to an empty string
       console.log("Search query received in ProductListComponent:", this.searchQuery);
       this.applyFilters();
-     
     });
     // this.getAllModels();
   }
@@ -162,7 +161,8 @@ export class ProductListComponent implements OnInit {
     public translateService: TranslateService,
     private http: HttpService,
     private router: Router,
-    private searchService: SearchServiceService
+    private searchService: SearchServiceService,
+    private route: ActivatedRoute,
   ) {
     const supportedLanguages = ["en", "ar"];
     this.translateService.addLangs(supportedLanguages);

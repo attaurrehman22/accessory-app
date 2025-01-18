@@ -105,7 +105,8 @@ export class HeaderComponent {
   }
 
   onSearch(query: string) {
-    this.searchService.changeSearchQuery(query);
+    this.searchService.changeSearchQuery(query);  
+    this.router.navigate(['/product-list'], { queryParams: { query } }); 
   }
 
   onSearchChange() {
