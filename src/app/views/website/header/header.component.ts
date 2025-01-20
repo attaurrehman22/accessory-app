@@ -128,11 +128,18 @@ export class HeaderComponent {
   logout() {
     localStorage.removeItem("isLoggedIn");
     localStorage.removeItem("user_token");
+    localStorage.removeItem("isLoggedIn");
+    localStorage.removeItem("userID");
+    localStorage.removeItem("isAdmin");
+    // localStorage.removeItem("selectedLanguage");
+    localStorage.removeItem("userType");
+
+
     this.isUserLogin = false;
     this.loginStateService.updateLoginStatus(false);
     localStorage.setItem("isAdmin", "false");
-    localStorage.setItem("isLoggedIn", "false");
-    localStorage.setItem("isLoggedIn", "false");
+    // localStorage.setItem("isLoggedIn", "false");
+    // localStorage.setItem("isLoggedIn", "false");
     this.router.navigateByUrl("login").then(() => {
       window.location.reload();
     });

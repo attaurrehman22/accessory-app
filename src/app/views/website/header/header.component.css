@@ -283,15 +283,14 @@
 
   .rtl-layout-reverse {
     right: 0;
-    left: auto;
+    left: unset !important;
   }
-}
 
-/* @media (max-width: 991px) {
-  .navbar-collapse.collapse[_ngcontent-ng-c741373380]:not(.show) {
-    display: none !important;
+  .rtl-layout-reverse .navbar-collapse.collapse[_ngcontent-ng-c3027936152]:not(.show) {
+    transform: translate(100%) !important
   }
-} */
+  
+}
 
 .navbar-toggler {
   background: none;

@@ -8,6 +8,12 @@
   padding: 0 155px 0 0;
 }
 
+.bg-img {
+  background-image: url('/assets/images/Bg.png');
+  background-size: cover;
+}
+
+
 .para {
   font-size: 20px;
   font-weight: 400;

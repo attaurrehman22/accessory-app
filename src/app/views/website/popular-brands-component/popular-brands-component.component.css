@@ -171,7 +171,7 @@
 ::ng-deep .p-carousel-item .border-round .mb-3 .relative img {
   height: 100%;
   width: 100%;
-  object-fit: fill;
+  object-fit: cover;
 }
 
 
