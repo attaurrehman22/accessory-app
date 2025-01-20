@@ -286,9 +286,10 @@
     left: unset !important;
   }
 
-  .rtl-layout-reverse .navbar-collapse.collapse[_ngcontent-ng-c3027936152]:not(.show) {
-    transform: translate(100%) !important
+  .rtl-layout-reverse.navbar-collapse.collapse:not(.show) {
+    transform: translate(100%) !important;
   }
+  
   
 }
 
