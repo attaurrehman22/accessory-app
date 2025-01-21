@@ -13,6 +13,16 @@
     "Logout":"Logout",
     "Chat":"My Chat"
   },
+  "product_listing":{
+    "Watch_Listing": "Watch Listing",
+    "filters":"Filters",
+    "cleaer_filter":"Clear Filters",
+    "categories":"Categories",
+    "watch_type":"Watch Type",
+    "price_range":"Price Range",
+    "from":"From",
+    "to":"To"
+  },
   "register": {
     "welcome": "Welcome to Chronosouq",
     "create_account": "Create a new account",

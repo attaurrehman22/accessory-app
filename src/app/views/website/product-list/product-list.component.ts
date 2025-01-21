@@ -11,7 +11,8 @@ import { SearchServiceService } from "src/services/search-service/search-service
   styleUrls: ["./product-list.component.css"],
 })
 export class ProductListComponent implements OnInit {
-
+  supportLanguages = ["en", "ar", "fr", "ta", "hi"];
+  currentLanguage: string;
   showList: any;
   isUserLogin: any;
   watchTypes:any[]=[
@@ -186,6 +187,7 @@ export class ProductListComponent implements OnInit {
     private router: Router,
     private searchService: SearchServiceService,
     private route: ActivatedRoute,
+    private languageService:LanguageService,
   ) {
     const supportedLanguages = ["en", "ar"];
     this.translateService.addLangs(supportedLanguages);
@@ -194,6 +196,20 @@ export class ProductListComponent implements OnInit {
     const browserLang = this.translateService.getBrowserLang();
     if (supportedLanguages.includes(browserLang)) {
       this.translateService.use(browserLang);
+    }
+
+    this.translateService.addLangs(this.supportLanguages);
+    const savedLang = this.languageService.getCurrentLanguage();
+    if (this.supportLanguages.includes(savedLang)) {
+      this.translateService.use(savedLang);
+    } else {
+      const browserLang = this.translateService.getBrowserLang();
+      this.currentLanguage = browserLang;
+
+      if (this.supportLanguages.includes(browserLang)) {
+        this.translateService.use(browserLang);
+        this.languageService.setLanguage(browserLang);
+      }
     }
   }
 

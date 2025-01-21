@@ -153,6 +153,7 @@ export class BuyProductComponentComponent implements OnInit {
 
   viewProduct(watchID){
     this.ProductID = watchID;
+    window.scrollTo(0, 0);
     this.initializeComponent();
   }
 

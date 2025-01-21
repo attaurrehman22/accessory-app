@@ -13,6 +13,16 @@
     "Logout": "تسجيل الخروج",
     "Chat":"الدردشة"
   },
+  "product_listing":{
+    "Watch_Listing": "قائمة المشاهدة",
+     "filters":"المرشحات",
+     "cleaer_filter":"مسح المرشحات",
+     "categories":"الفئات",
+     "watch_type":"نوع الساعة",
+     "price_range":"نطاق السعر",
+      "from":"من",
+      "to":"إلى"
+  },
   "register": {
     "welcome": "مرحبًا بك في كرونوسوق",
     "create_account": "إنشاء حساب جديد",

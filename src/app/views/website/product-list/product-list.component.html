@@ -1,26 +1,28 @@
 <div
   class="global-main-wraper d-flex flex-wrap justify-content-between mt-5 mb-5"
-  [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }"
 >
   <div class="container-fluid list-data">
     <div class="col-lg-12 col-md-12 col-sm-12 d-flex justify-content-between align-items-center">
       <p class="text-center font-size-28 font-wight-600 color-242424">
-        Watch Listing
+        
+        {{ "product_listing.Watch_Listing" | translate }}
       </p>
       <button style="border-radius: 10px;border: 1px solid black;background: none;height: 50px;width: 150px;display: flex;justify-content: space-around;align-items: center;" (click)="openFilters()">
         <img src="../assets/images/hugeicons_filter.png" />
-        Filters
+        {{ "product_listing.filters" | translate }}
         <img src="../assets/images/FiChevronDown.png" />
       </button>
     </div>
     <div *ngIf="isShowFilters" class="filter-Div p-3 border rounded">
       <div class="d-flex justify-content-between align-items-center">
-        <h5 class="mb-3">Filters</h5>
-        <button style="border: none;background: none;color: #242424;" (click)="clearFilters()">Clear Filters</button>
+        <h5 class="mb-3">{{ "product_listing.filters" | translate }}</h5>
+        <button style="border: none;background: none;color: #242424;" (click)="clearFilters()">{{ "product_listing.cleaer_filter" | translate }}</button>
       </div>
         <!-- Categories Section -->
         <div class="mb-4 border-bottom-color">
-          <p class="font-size-16 font-wight-600 color-242424 margin-0">Categories</p>
+          <p 
+          [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }"
+          class="font-size-16 font-wight-600 color-242424 margin-0">{{ "product_listing.categories" | translate }}</p>
           <div class="row mt-2">
             <div class="col-md-4 d-flex flex-wrap" *ngFor="let category of categories | slice :0:8">
               <div class="form-check d-flex flex-wrap">
@@ -40,7 +42,7 @@
       
         <!-- Watch Type Section -->
         <div class="mb-4 border-bottom-color">
-          <p class="font-size-16 font-wight-600 color-242424 margin-0">Watch Type</p>
+          <p    [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }" class="font-size-16 font-wight-600 color-242424 margin-0">{{ "product_listing.watch_type" | translate }}</p>
           <div class="row mt-2">
             <div class="col-md-4 d-flex flex-wrap" *ngFor="let type of watchTypes| slice :0:8">
               <div class="form-check d-flex flex-wrap">
@@ -60,7 +62,7 @@
       
         <!-- Price Range Section -->
         <div class="mb-4">
-          <p class="font-size-16 font-wight-600 color-242424 margin-0">Price Range</p>
+          <p    [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }" class="font-size-16 font-wight-600 color-242424 margin-0">{{ "product_listing.price_range" | translate }}</p>
           <div class="range mt-4" #range (mousedown)="startDragging($event, range)">
             <span
               class="range-thumb"
@@ -72,11 +74,11 @@
           </div>
           <div class="d-flex align-items-center justify-content-between mt-4">
             <div style="display: flex; flex-direction: column;">
-              <p class="font-size-14 font-wight-400 color-969696 margin-0">From</p>
+              <p class="font-size-14 font-wight-400 color-969696 margin-0">{{ "product_listing.from" | translate }}</p>
               <p class="font-size-16 font-wight-700 color-242424 margin-0">SR {{ currentValue }}</p>
             </div>
             <div style="display: flex; flex-direction: column;">
-              <p class="font-size-14 font-wight-400 color-969696 margin-0">To</p>
+              <p class="font-size-14 font-wight-400 color-969696 margin-0">{{ "product_listing.to" | translate }}</p>
               <p class="font-size-16 font-wight-700 color-242424 margin-0">SR 50,000</p>
             </div>
           </div>
