@@ -22,7 +22,8 @@
   width: fit-content;
   padding: 10px 50px 10px 50px;
   border-radius: 9px;
-  font-weight: 500;
+  font-weight: 400;
+  font-size: 20px;
   border: none;
 }
 
@@ -105,4 +106,9 @@
   justify-content: center;
   border-radius: 50%;
   box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.3), -4px -4px 8px rgba(0, 0, 0, 0.2); 
+}
+
+.badge {
+  font-weight: 400;
+  font-size: 16px;
 }

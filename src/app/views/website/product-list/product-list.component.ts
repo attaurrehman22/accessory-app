@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, HostListener, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { TranslateService } from "@ngx-translate/core";
 import { HttpService } from "src/services/http/http.service";
@@ -14,13 +14,19 @@ export class ProductListComponent implements OnInit {
 
   showList: any;
   isUserLogin: any;
-  watchTypes:any[]=[];
+  watchTypes:any[]=[
+    {id:1,name:'Promoted'},
+    {id:2,name:'Featured'},
+    {id:3,name:'Popular'}
+  ];
+
+  // this.watchTypes = 
   categories:any[]=[];
   searchQuery: string = "";
 
   ngOnInit(): void {
     this.getAllCategories()
-    this.getAllBrands()
+    // this.getAllBrands()
     this.isUserLogin = localStorage.getItem("isLoggedIn");
     if (this.isUserLogin === "true") {
       this.getWishList();
@@ -65,20 +71,19 @@ export class ProductListComponent implements OnInit {
   clearFilters(){
     this.categories.forEach(category => (category.selected = false));
     this.watchTypes.forEach(type => (type.selected = false));
-    this.priceRange = { from: 200, to: 50000 };
+    // this.priceRange = { from: 200, to: 50000 };
+      // Optionally, update slider UI if used
+    this.currentValue = 200; // Update the "From" value on the slider
+    this.currentPercentage = 0
     this.applyFilters();
   }
 
 
   applyFilters() {
-    console.log('Selected Categories:', this.categories.filter(c => c.selected));
-    console.log('Selected Watch Types:', this.watchTypes.filter(w => w.selected));
-    console.log('Price Range:', this.priceRange);
     let queryString = "";
     // // Add categories to the query string
     if (this.categories.length > 0) {
       this.categories.forEach((id, index) => {
-        console.log("Category ID ------ ",id)
         if(id.selected){
           queryString += `category_ids[]=${id.id}`;
           if (index < this.categories.length - 1) {
@@ -95,7 +100,23 @@ export class ProductListComponent implements OnInit {
       this.watchTypes.forEach((id, index) => {
         console.log("Brand ID ------ ",id)
         if(id.selected){
-          queryString += `brand_ids[]=${id.id}`; // Use brand_ids[] to store as an array
+          let isPROMO=1
+          if(id.id === 1){
+            console.log("id.id === 1")
+            queryString += `&is_promoted=${isPROMO}`
+            console.log("queryString",queryString)
+          }
+          if(id.id === 2){
+            console.log("id.id === 2")
+            queryString += `&feature_item=${isPROMO}`
+            console.log("queryString",queryString)
+          }
+          if(id.id === 3){
+            console.log("id.id === 3")
+            queryString += `&popular_item=${isPROMO}`
+            console.log("queryString",queryString)
+          }
+          // queryString += `brand_ids[]=${id.id}`; // Use brand_ids[] to store as an array
           if (index < this.watchTypes.length - 1) {
             queryString += "&"; // Add '&' between values, not at the end
           }
@@ -106,6 +127,8 @@ export class ProductListComponent implements OnInit {
     let itemsPerPage=100;
     queryString += `&page=${currentPage}`;
     queryString += `&per_page=${itemsPerPage}`;
+    queryString += `&min_price=${this.currentValue}`;
+    queryString += `&max_price=${this.max}`;
     
     if(this.searchQuery){
       queryString += `&name=${this.searchQuery}`;
@@ -148,14 +171,14 @@ export class ProductListComponent implements OnInit {
     });
   }
 
-  getAllBrands() {
-    this.http.getBrandsDropDownFilter().subscribe(
-      (res) => {
-        this.watchTypes = res.data;
-      },
-      (err) => {}
-    );
-  }
+  // getAllBrands() {
+  //   this.http.getBrandsDropDownFilter().subscribe(
+  //     (res) => {
+  //       this.watchTypes = res.data;
+  //     },
+  //     (err) => {}
+  //   );
+  // }
 
   constructor(
     public translateService: TranslateService,
@@ -191,6 +214,53 @@ export class ProductListComponent implements OnInit {
 
   openFilters(){
    this.isShowFilters=!this.isShowFilters
+  }
+
+  min = 200; 
+  max = 50000;
+  currentValue = this.min; 
+  currentPercentage = 0; 
+
+  dragging = false; // State to track dragging
+
+  // Handle mousedown to start dragging
+  startDragging(event: MouseEvent, range: HTMLElement): void {
+    this.dragging = true;
+    this.updateValue(event, range);
+  }
+
+  // Listen for mousemove to update the slider thumb and value
+  @HostListener('window:mousemove', ['$event'])
+  onDragging(event: MouseEvent): void {
+    if (this.dragging) {
+      const range = document.querySelector('.range') as HTMLElement;
+      if (range) {
+        this.updateValue(event, range);
+      }
+    }
+  }
+
+  // Stop dragging on mouseup
+  @HostListener('window:mouseup')
+  stopDragging(): void {
+    this.dragging = false;
+    console.log('Final Value:', this.currentValue);
+  }
+
+  // Update the value and position of the thumb
+  updateValue(event: MouseEvent, range: HTMLElement): void {
+    const rangeRect = range.getBoundingClientRect();
+    let newLeft = event.clientX - rangeRect.left;
+
+    // Constrain within the slider bounds
+    if (newLeft < 0) newLeft = 0;
+    if (newLeft > rangeRect.width) newLeft = rangeRect.width;
+
+    // Calculate percentage and value
+    this.currentPercentage = (newLeft / rangeRect.width) * 100;
+    this.currentValue = Math.round(
+      this.min + (this.currentPercentage / 100) * (this.max - this.min)
+    );
   }
 
 }

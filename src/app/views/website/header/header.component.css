@@ -228,7 +228,7 @@
     z-index: 9999;
     padding: 25px;
     transform: translateX(-215px);
-    transition: 0.5s ease-in-out;
+    /* transition: 0.5s ease-in-out; */
     display: block;
   }
 
@@ -289,23 +289,24 @@
   .rtl-layout-reverse.navbar-collapse.collapse:not(.show) {
     transform: translate(100%) !important;
   }
-  
-  
+
+
 }
 
 .navbar-toggler {
   background: none;
 }
+
 @media screen and (max-width: 991px) {
   .rtl-layout-reverse[_ngcontent-ng-c206065230] {
-      right: 0;
-      left: auto;
+    right: 0;
+    left: auto;
   }
 }
 
 
 @media screen and (max-width: 991px) {
   .navbar-collapse.collapse[_ngcontent-ng-c206065230]:not(.show) {
-      display: none !important;
+    display: none !important;
   }
 }

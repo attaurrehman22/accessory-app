@@ -7,9 +7,6 @@
       <p class="text-center font-size-28 font-wight-600 color-242424">
         Watch Listing
       </p>
-      <!-- <p class="text-center font-size-40 font-wight-600 color-484848">
-        Filters
-      </p> -->
       <button style="border-radius: 10px;border: 1px solid black;background: none;height: 50px;width: 150px;display: flex;justify-content: space-around;align-items: center;" (click)="openFilters()">
         <img src="../assets/images/hugeicons_filter.png" />
         Filters
@@ -24,9 +21,9 @@
         <!-- Categories Section -->
         <div class="mb-4 border-bottom-color">
           <p class="font-size-16 font-wight-600 color-242424 margin-0">Categories</p>
-          <div class="row">
-            <div class="col-4" *ngFor="let category of categories | slice :0:8">
-              <div class="form-check">
+          <div class="row mt-2">
+            <div class="col-md-4 d-flex flex-wrap" *ngFor="let category of categories | slice :0:8">
+              <div class="form-check d-flex flex-wrap">
                 <input
                   type="checkbox"
                   class="form-check-input"
@@ -44,9 +41,9 @@
         <!-- Watch Type Section -->
         <div class="mb-4 border-bottom-color">
           <p class="font-size-16 font-wight-600 color-242424 margin-0">Watch Type</p>
-          <div class="row">
-            <div class="col-4" *ngFor="let type of watchTypes| slice :0:8">
-              <div class="form-check">
+          <div class="row mt-2">
+            <div class="col-md-4 d-flex flex-wrap" *ngFor="let type of watchTypes| slice :0:8">
+              <div class="form-check d-flex flex-wrap">
                 <input
                   type="checkbox"
                   class="form-check-input"
@@ -64,21 +61,28 @@
         <!-- Price Range Section -->
         <div class="mb-4">
           <p class="font-size-16 font-wight-600 color-242424 margin-0">Price Range</p>
-          <div class="d-flex align-items-center">
-            <input
-              type="number"
-              class="form-control me-2"
-              placeholder="From"
-              [(ngModel)]="priceRange.from"
-            />
-            <input
-              type="number"
-              class="form-control"
-              placeholder="To"
-              [(ngModel)]="priceRange.to"
-            />
+          <div class="range mt-4" #range (mousedown)="startDragging($event, range)">
+            <span
+              class="range-thumb"
+              [style.left.%]="currentPercentage"
+              (mousedown)="startDragging($event, range)"
+            >
+           <img style="margin-top: 5px;" src="../assets/images/price-range-icon.png" />
+            </span>
           </div>
-        </div>  
+          <div class="d-flex align-items-center justify-content-between mt-4">
+            <div style="display: flex; flex-direction: column;">
+              <p class="font-size-14 font-wight-400 color-969696 margin-0">From</p>
+              <p class="font-size-16 font-wight-700 color-242424 margin-0">SR {{ currentValue }}</p>
+            </div>
+            <div style="display: flex; flex-direction: column;">
+              <p class="font-size-14 font-wight-400 color-969696 margin-0">To</p>
+              <p class="font-size-16 font-wight-700 color-242424 margin-0">SR 50,000</p>
+            </div>
+          </div>
+        </div>
+        
+        
       
         <!-- Apply Filters Button -->
         <button class="btn btn-dark w-100 custom-apply-filter-btn" (click)="applyFilters()">
@@ -103,7 +107,7 @@
               class="card-img-top"
               alt="watch image"
             />
-            </a>
+          </a>
             <div class="card-body">
               <div
                 class="d-flex justify-content-between align-items-center mb-2"
@@ -152,9 +156,13 @@
           </div>
           <div class="heart-icon">
             <div class="featured-icon">
-              <div *ngIf="watch.feature_item === 1">
-              featured
-            </div>
+              <div *ngIf="watch.feature_item === 1" class="featured-promoted-class-badge">
+                Featured
+              </div>
+          
+              <div *ngIf="watch.feature_item !== 1 && watch.is_promoted === 1" class="featured-promoted-class-badge">
+                Promoted
+              </div>
             </div>
             <i
             *ngIf="isUserLogin ==='true'"

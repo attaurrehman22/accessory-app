@@ -5,14 +5,12 @@
 }
 
 .header-styl {
-  padding: 0 155px 0 0;
+  /* padding: 0 155px 0 0; */
 }
-
 .bg-img {
   background-image: url('/assets/images/Bg.png');
   background-size: cover;
 }
-
 
 .para {
   font-size: 20px;
@@ -21,9 +19,10 @@
 }
 
 .heading-tag {
-  font-size: 48px;
-  font-weight: 500;
+  font-size: 70px;
+  font-weight: 700;
   color: #242424;
+  line-height: 90px;
 }
 
 @media (max-width: 670px) {
@@ -35,6 +34,7 @@
   .heading-tag {
     font-size: 27px;
     width: 100%;
+    line-height: 40px;
   }
 
   .para {
@@ -120,7 +120,6 @@
 .reverse-order h2 {
   text-align: end;
 }
-
 .custom-btn {
   height: 60px;
   width: 215px;

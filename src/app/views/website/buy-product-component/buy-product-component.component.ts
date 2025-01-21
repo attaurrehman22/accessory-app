@@ -151,6 +151,11 @@ export class BuyProductComponentComponent implements OnInit {
     }
   }
 
+  viewProduct(watchID){
+    this.ProductID = watchID;
+    this.initializeComponent();
+  }
+
   async fetchProductDetails() {
     try {
       const res = await this.http.getProductsByID(this.ProductID).toPromise();

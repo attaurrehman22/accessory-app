@@ -10,7 +10,7 @@
           'reverse-order-labels': translateService.currentLang !== 'en'
         }"
       >
-        <p class="header-label">
+        <p class="header-label cormorant-styl">
           {{ "popular_brands.label" | translate }}
         </p>
         <p
@@ -20,9 +20,9 @@
         </p>
 
         <div class="w-100 d-flex">
-          <button class="btn btn-dark btn-lg mb-5" style="width: 200px">
+          <a [routerLink]="'/product-list'" class="btn btn-dark btn-lg mb-5" style="width: 200px">
             {{ "popular_brands.view_listing" | translate }}
-          </button>
+          </a>
         </div>
         <div
           class="countdown-timer"
@@ -35,6 +35,7 @@
           >
             {{ "popular_brands.hurry_up" | translate }}
           </p>
+
           <div class="d-flex gap-2">
             <div class="d-flex flex-column">
               <div class="timer-box">
@@ -76,17 +77,15 @@
           (onPage)="onCarouselMove($event)"
         >
           <ng-template let-product let-i="index" pTemplate="item">
-            <div class="surface-border border-round m-1" style="cursor: pointer;" (click)="logProductName(product.product)">
+            <div class="surface-border border-round m-2" style="cursor: pointer;" (click)="logProductName(product.product)">
               <div class="mb-3">
                 <div class="relative mx-auto">
                   <img
-                    
                     [src]="
                       'https://api.chronosouq.com/' + product.promotion_banner
                     "
                     [alt]="product.name"
                     class="w-full border-round card-img img-fluid"
-                    
                   />
                   <div class="img-details">
                     <div class="d-flex">

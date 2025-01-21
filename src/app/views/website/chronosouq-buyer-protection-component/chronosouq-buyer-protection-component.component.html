@@ -4,7 +4,7 @@
 >
   <div class="container d-flex flex-wrap justify-content-center">
     <div class="col-lg-8 col-md-10 col-sm-12">
-      <p class="text-center font-size-40 font-wight-600 color-484848">
+      <p class="text-center cormorant-styl font-size-64 font-wight-700 color-484848" style="line-height: 70px;">
         {{ "chrono_buyer.label" | translate }}
       </p>
     </div>
@@ -93,9 +93,13 @@
           </div>
           <div class="heart-icon">
             <div class="featured-icon">
-              <div  *ngIf="watch.feature_item === 1">
-              featured
-            </div>
+              <div *ngIf="watch.feature_item === 1" class="featured-promoted-class-badge">
+                Featured
+              </div>
+          
+              <div *ngIf="watch.feature_item !== 1 && watch.is_promoted === 1" class="featured-promoted-class-badge">
+                Promoted
+              </div>
             </div>
             <i
               *ngIf="isUserLogin ==='true'"

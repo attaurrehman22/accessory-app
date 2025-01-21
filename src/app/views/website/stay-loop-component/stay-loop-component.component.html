@@ -42,7 +42,7 @@
           <div class="watch-details-div">
             <div class="d-flex flex-column text-white">
               <p class="mb-1">{{ product.product.name }}</p>
-              <h1 class="display-6 fw-bold mt-2">
+              <h1 class="display-6 font-size-64 font-wight-700 mt-2 cormorant-styl">
                 {{ product.product?.brand?.name || "N/A" }}
               </h1>
               <p class="card-text">
@@ -50,7 +50,7 @@
               </p>
 
               <div class="mb-3">
-                <span class="fw-bold">Type:</span>
+                <span class="font-wight-400 font-size-16">Type:</span>
                 <span
                   class="badge bg-light text-dark mx-2"
                   style="padding: 10px 10px 10px 10px"
@@ -58,7 +58,7 @@
                 >
               </div>
 
-              <h4>
+              <h4 class="font-wight-400">
                 {{ product.product.currency }} {{ product.product.price }}
               </h4>
 

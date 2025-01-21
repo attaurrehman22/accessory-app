@@ -1,13 +1,12 @@
 .container-div {
   padding: 0 0 0 135px;
 }
-
 .header-label {
-  font-size: 35px;
-  font-weight: 600;
+  font-size: 64px;
+  font-weight: 700;
   color: #242424;
+  line-height: 70px;
 }
-
 .timer-box {
   background-color: #f8f9fa;
   border-radius: 8px;
@@ -16,7 +15,6 @@
   text-align: center;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
-
 .timer-box p {
   font-weight: 500;
   margin: 0;
@@ -24,9 +22,11 @@
 }
 
 .display-4 {
-  font-weight: 500;
+  font-weight: 400;
   margin-bottom: 0;
-  font-size: 3vh !important;
+  font-size: 32px;
+  line-height: 32px;
+  font-family:'Digital Numbers Regular'
 }
 
 .carousel-inner img {
