@@ -416,12 +416,11 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
               'scopeofdelivery',
               'proofofownership',
               'priceshipment',
-              'billinginformation',
+              'billinginformation'
             ]);
-            this.isNextButtonShowonBillingInformation=true;
             this.isNextButtonShowonProofofOwnerShip=true;
             this.isNextButtonShowonScopeOfdelivery=true
-            this.selectSection("summary");
+            this.selectSection("billinginformation");
           }
 
           if (this.latestActiveForm === 'priceAndShipment') {
@@ -431,24 +430,23 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
               'conditionGrading',
               'scopeofdelivery',
               'proofofownership',
-              'priceshipment',
+              'priceshipment'
             ]);
             this.isNextButtonShowonProofofOwnerShip=true;
             this.isNextButtonShowonScopeOfdelivery=true
-            this.selectSection("billingInformation");
+            this.selectSection("priceshipment");
           }
-
           if (this.latestActiveForm === 'proofOfOwnership') {
+            
             this.selectedOptionsList = this.selectedOptionsList.concat([
               'watchDetails',
               'uploadImages',
               'conditionGrading',
               'scopeofdelivery',
-              'proofofownership',
+              'proofofownership'
             ]);
-            this.isNextButtonShowonProofofOwnerShip=true;
-            this.isNextButtonShowonScopeOfdelivery=true
-            this.selectSection("priceshipment");
+            this.isNextButtonShowonScopeOfdelivery=true;
+            this.selectSection("proofofownership");
           }
 
           if (this.latestActiveForm === 'scopeOfDelivery') {
@@ -456,39 +454,34 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
               'watchDetails',
               'uploadImages',
               'conditionGrading',
-              'scopeofdelivery',
+              'scopeofdelivery'
             ]);
             this.isNextButtonShowonScopeOfdelivery=true;
-            this.selectSection("proofofownership");
+            this.selectSection("scopeofdelivery");
           }
 
           if (this.latestActiveForm === 'conditionGrading') {
             this.selectedOptionsList = this.selectedOptionsList.concat([
               'watchDetails',
               'uploadImages',
-              'conditionGrading',
+              'conditionGrading'
             ]);
-            this.isNextButtonShowonScopeOfdelivery=true;
-            this.selectSection("scopeofdelivery");
+            this.selectSection("conditionGrading");
           }
 
           if (this.latestActiveForm === 'uploadImages') {
             this.selectedOptionsList = this.selectedOptionsList.concat([
               'watchDetails',
-              'uploadImages',
-            ]);
-            this.selectSection("conditionGrading");
-          }
-
-          if (this.latestActiveForm === 'watchDetails') {
-            this.selectedOptionsList = this.selectedOptionsList.concat([
-              'watchDetails',
+              'uploadImages'
             ]);
             this.selectSection("uploadImages");
           }
 
           if (this.latestActiveForm === 'listingDetails') {
-            this.selectSection("watchDetails");
+            this.selectedOptionsList = this.selectedOptionsList.concat([
+              'watchDetails',
+            ]);
+            this.selectSection("watchDetails"); 
           }
 
           this.patchFormDetails()
@@ -625,28 +618,28 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
     this.calculatePayout();
 
     // Condition
-    let selectedCondition;
-    if(this.userType === 'dealer'){
-    
-    
-      selectedCondition = this.dealerconditions.find(
-        (condition) =>
-          condition.title === this.productDetails.condition
-      );
+    if(this.productDetails.condition){
+      let selectedCondition;
+      if(this.userType === 'dealer'){
+      
+      
+        selectedCondition = this.dealerconditions.find(
+          (condition) =>
+            condition.title === this.productDetails.condition
+        );
 
-     this.dealerconditions = [selectedCondition]
+      this.dealerconditions = [selectedCondition]
 
-    }else{
-      selectedCondition = this.conditions.find(
-        (condition) =>
-          condition.title === this.productDetails.condition
-      );
-      // selectedCondition=this.conditions.filter((item:any)=>{item.title === this.productDetails.condition})
-      this.conditions = [selectedCondition]
+      }else{
+        selectedCondition = this.conditions.find(
+          (condition) =>
+            condition.title === this.productDetails.condition
+        );
+        // selectedCondition=this.conditions.filter((item:any)=>{item.title === this.productDetails.condition})
+        this.conditions = [selectedCondition]
+      }
+      this.selectCondition(selectedCondition);
     }
-
-    this.selectCondition(selectedCondition);
-  
 
 
     //scopeofDelivery
@@ -809,20 +802,29 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
 
   onCoverImageSelected(event: Event) {
     const file = (event.target as HTMLInputElement).files?.[0];
+  
     if (file) {
+      const allowedExtensions = ['jpeg', 'png', 'jpg', 'gif', 'svg'];
+      const fileExtension = file.name.split('.').pop()?.toLowerCase();
+  
+      if (!fileExtension || !allowedExtensions.includes(fileExtension)) {
+        this.alertService.showAlert('warning','Invalid file type. Please select an image with one of the following extensions: jpeg, png, jpg, gif, svg.')
+        return;
+      }
+  
       this.isCoverImageUploading = true;
-
+  
       const reader = new FileReader();
       reader.onload = () => {
         setTimeout(() => {
-          // Store both file and URL for preview and upload
           this.coverImage = { file, url: reader.result as string };
           this.isCoverImageUploading = false;
-        }, 3000); // Simulate upload delay
+        }, 3000); 
       };
       reader.readAsDataURL(file);
     }
   }
+  
 
   removeCoverImage() {
     this.coverImage = null;

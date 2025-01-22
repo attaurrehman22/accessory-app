@@ -696,14 +696,16 @@
                 <p>Cover Image</p>
                 <div class="d-flex flex-wrap">
                   <div class="upload-box" (click)="selectCoverImage()">
-                    <ng-container *ngIf="coverImage; else uploadPlaceholder">
+                    <ng-container *ngIf="coverImage?.url && coverImage.url !== 'https://api.chronosouq.com/null'; else uploadPlaceholder">
                       <img
-                        style="height: 100%; width: 100%; object-fit: fill"
+                      *ngIf="coverImage?.url && coverImage.url !== 'https://api.chronosouq.com/null'"
+                        style="height: 100%; width: 100%; object-fit: cover"
                         [src]="coverImage.url"
                         alt="Cover Image"
                       />
                       <!-- Show delete button when cover image is present -->
-                      <button class="delete-btn" (click)="removeCoverImage()">
+                      <button *ngIf="coverImage?.url && coverImage.url !== 'https://api.chronosouq.com/null'"
+                      class="delete-btn" (click)="removeCoverImage()">
                         <mat-icon>delete</mat-icon>
                       </button>
                     </ng-container>
@@ -881,10 +883,18 @@
                   Back
                 </button>
                 <button
+                *ngIf="!isNextButtonShowonScopeOfdelivery"
                   class="save-can-btn save-btn-bg"
                   (click)="onSubmit('conditionGrading')"
                 >
                   Save
+                </button>
+                <button
+                  *ngIf="isNextButtonShowonScopeOfdelivery"
+                  class="save-can-btn save-btn-bg"
+                  (click)="nextMoveToScopeOfDelivery()"
+                >
+                  Next
                 </button>
               </div>
             </div>
@@ -949,19 +959,13 @@
                   Back
                 </button>
                 <button
-                  *ngIf="!isNextButtonShowonScopeOfdelivery"
+                  
                   class="save-can-btn save-btn-bg"
                   (click)="onSubmit('conditionGrading')"
                 >
                   Save
                 </button>
-                <button
-                  *ngIf="isNextButtonShowonScopeOfdelivery"
-                  class="save-can-btn save-btn-bg"
-                  (click)="nextMoveToScopeOfDelivery()"
-                >
-                  Next
-                </button>
+                
               </div>
             </div>
           </div>
@@ -1599,6 +1603,7 @@
                       <h6 class="font-weight-bold">Ad Preview</h6>
                       <div class="d-flex align-items-center">
                         <img
+                        
                           [src]="coverImage.url"
                           alt="Watch Image"
                           class="img-fluid"
@@ -2476,15 +2481,16 @@
               <p>Cover Image</p>
               <div class="d-flex flex-wrap">
                 <div class="upload-box" (click)="selectCoverImage()">
-                  <ng-container *ngIf="coverImage; else uploadPlaceholder">
+                  <ng-container *ngIf="coverImage?.url && coverImage.url !== 'https://api.chronosouq.com/null'; else uploadPlaceholder">
                     <img
-                      *ngIf="coverImage?.url"
-                      style="height: 100%; width: 100%; object-fit: fill"
+                      *ngIf="coverImage?.url && coverImage.url !== 'https://api.chronosouq.com/null'"
+                      style="height: 100%; width: 100%; object-fit: cover"
                       [src]="coverImage.url"
                       alt="Cover Image"
-                    />
+                    />  
                     <!-- Show delete button when cover image is present -->
-                    <button class="delete-btn" (click)="removeCoverImage()">
+                    <button *ngIf="coverImage?.url && coverImage.url !== 'https://api.chronosouq.com/null'"
+                     class="delete-btn" (click)="removeCoverImage()">
                       <mat-icon>delete</mat-icon>
                     </button>
                   </ng-container>
