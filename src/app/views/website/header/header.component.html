@@ -77,7 +77,7 @@
             >
               {{ "header.Logout" | translate }}
             </button>
-            <button  mat-menu-item  *ngIf="isUserLogin === 'true'" (click)="userListing()">Listing</button>
+            <button  mat-menu-item  *ngIf="isUserLogin === 'true'" (click)="userListing()"> {{ "header.settings" | translate }}</button>
           </mat-menu>
 
           <img
