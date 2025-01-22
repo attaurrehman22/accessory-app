@@ -11,7 +11,8 @@
     "admin_pannel":"Admin Pannel",
     "Login":"Login",
     "Logout":"Logout",
-    "Chat":"My Chat"
+    "Chat":"My Chat",
+    "settings":"Settings"
   },
   "product_listing":{
     "Watch_Listing": "Watch Listing",

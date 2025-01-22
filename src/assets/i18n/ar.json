@@ -11,7 +11,8 @@
     "security": "الأمان",
     "Login": "تسجيل الدخول",
     "Logout": "تسجيل الخروج",
-    "Chat":"الدردشة"
+    "Chat":"الدردشة",
+    "settings": "الإعدادات"
   },
   "product_listing":{
     "Watch_Listing": "قائمة المشاهدة",
