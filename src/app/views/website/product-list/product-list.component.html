@@ -4,21 +4,13 @@
   <div class="container-fluid list-data">
     <div
       class="col-lg-12 col-md-12 col-sm-12 d-flex justify-content-between align-items-center"
+      [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }"
     >
       <p class="text-center font-size-28 font-wight-600 color-242424">
         {{ "product_listing.Watch_Listing" | translate }}
       </p>
       <button
-        style="
-          border-radius: 10px;
-          border: 1px solid black;
-          background: none;
-          height: 50px;
-          width: 150px;
-          display: flex;
-          justify-content: space-around;
-          align-items: center;
-        "
+        class="custom-filter-btn"
         (click)="openFilters()"
       >
         <img src="../assets/images/hugeicons_filter.png" />
@@ -26,8 +18,9 @@
         <img src="../assets/images/FiChevronDown.png" />
       </button>
     </div>
-    <div *ngIf="isShowFilters" class="filter-Div p-3 border rounded">
-      <div class="d-flex justify-content-between align-items-center">
+    <div [ngClass]="{ 'reverse-filter-order': translateService.currentLang !== 'en' }"
+     *ngIf="isShowFilters" class="filter-Div p-3 border rounded">
+      <div class="filters-top-header">
         <h5 class="mb-3">{{ "product_listing.filters" | translate }}</h5>
         <button
           style="border: none; background: none; color: #242424"
@@ -254,5 +247,57 @@
         </div>
       </div>
     </div>
+
+
+
+    <div [ngClass]="{ 'reverse-pagination-order': translateService.currentLang !== 'en' }"
+     *ngIf="showList.length !== 0" class="col-md-12 d-flex justify-content-between align-items-center mt-3 mb-3">
+      <div class="col-md-6 d-flex align-items-center gap-2 revere-pagination-one">
+        <label for="itemsPerPage" class="form-label">Showing {{fromItem}} to {{toItem}} of {{totalItems}}:</label>
+        <select
+          id="itemsPerPage"
+          class="form-select w-auto"
+          [(ngModel)]="itemsPerPage"
+          (change)="onItemsPerPageChange()"
+        >
+          <option *ngFor="let option of itemsPerPageOptions" [value]="option">
+            {{ option }}
+          </option>
+        </select>
+      </div>
+    
+      <div class="col-md-6 revere-pagination-two">
+        <button
+          class="pagination-btn"
+          [disabled]="currentPage === 1"
+          (click)="changePage(currentPage - 1)"
+        >
+          &lt;
+        </button>
+    
+        <button
+          *ngFor="let pageNumber of totalPageNumbers"
+          class="pagination-btn"
+          [ngClass]="{ active: pageNumber === currentPage }"
+          (click)="changePage(pageNumber)"
+        >
+          {{ pageNumber }}
+        </button>
+    
+        <button
+          class="pagination-btn"
+          [disabled]="!isnextPage"
+          (click)="changePage(currentPage + 1)"
+        >
+          &gt;
+        </button>
+      </div>
+    </div>
+
+
   </div>
 </div>
+
+
+
+

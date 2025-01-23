@@ -1,4 +1,4 @@
-import { Component, HostListener, OnInit } from "@angular/core";
+import { Component, ElementRef, HostListener, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { TranslateService } from "@ngx-translate/core";
 import { HttpService } from "src/services/http/http.service";
@@ -20,14 +20,11 @@ export class ProductListComponent implements OnInit {
     {id:2,name:'Featured'},
     {id:3,name:'Popular'}
   ];
-
-  // this.watchTypes = 
   categories:any[]=[];
   searchQuery: string = "";
 
   ngOnInit(): void {
     this.getAllCategories()
-    // this.getAllBrands()
     this.isUserLogin = localStorage.getItem("isLoggedIn");
     if (this.isUserLogin === "true") {
       this.getWishList();
@@ -38,7 +35,6 @@ export class ProductListComponent implements OnInit {
       console.log("Search query received in ProductListComponent:", this.searchQuery);
       this.applyFilters();
     });
-    // this.getAllModels();
   }
 
   wishList: any;
@@ -56,7 +52,6 @@ export class ProductListComponent implements OnInit {
       this.wishList = res.data;
       this.getWishList();
       this.applyFilters();
-      // this.getAllModels();
     });
   }
 
@@ -79,6 +74,25 @@ export class ProductListComponent implements OnInit {
     this.applyFilters();
   }
 
+  itemsPerPage:number=30;
+  currentPage:number=1;
+  totalItems:number=0;
+  fromItem:number=1;
+  toItem:number=1;
+  itemsPerPageOptions: number[] = [30, 60, 90, 100];
+  totalPageNumbers: number[] = [];
+  isnextPage:boolean=true;
+  changePage(page: number) {
+    this.currentPage = page;
+    console.log(`Page changed to: ${page}`);
+    this.applyFilters(); 
+  }
+
+  onItemsPerPageChange() {
+    this.currentPage = 1; 
+    console.log(`Items per page changed to: ${this.itemsPerPage}`);
+    this.applyFilters(); 
+  }
 
   applyFilters() {
     let queryString = "";
@@ -124,10 +138,10 @@ export class ProductListComponent implements OnInit {
         }
       });
     }
-    let currentPage=1;
-    let itemsPerPage=100;
-    queryString += `&page=${currentPage}`;
-    queryString += `&per_page=${itemsPerPage}`;
+    // this.currentPage=1;
+    // this.itemsPerPage=100;
+    queryString += `&page=${this.currentPage}`;
+    queryString += `&per_page=${this.itemsPerPage}`;
     queryString += `&min_price=${this.currentValue}`;
     queryString += `&max_price=${this.max}`;
     
@@ -143,6 +157,14 @@ export class ProductListComponent implements OnInit {
   getProductsByCategory(queryString: any) {
     this.http.getProductsByCategory(queryString).subscribe((res) => {
       this.showList = res;
+      this.totalItems=this.showList.data.total;
+      this.fromItem=this.showList.data.from;
+      this.toItem=this.showList.data.to;
+      if(this.showList.data.next_page_url === null){
+        this.isnextPage=false
+      }else{
+        this.isnextPage=true
+      }
       this.showList = this.showList.data.data;
       this.showList.data.data.map((product: any) => {
         if (product.main_image) {
@@ -172,19 +194,11 @@ export class ProductListComponent implements OnInit {
     });
   }
 
-  // getAllBrands() {
-  //   this.http.getBrandsDropDownFilter().subscribe(
-  //     (res) => {
-  //       this.watchTypes = res.data;
-  //     },
-  //     (err) => {}
-  //   );
-  // }
-
   constructor(
     public translateService: TranslateService,
     private http: HttpService,
     private router: Router,
+    private elRef: ElementRef,
     private searchService: SearchServiceService,
     private route: ActivatedRoute,
     private languageService:LanguageService,
@@ -229,7 +243,7 @@ export class ProductListComponent implements OnInit {
   isShowFilters:boolean=false;
 
   openFilters(){
-   this.isShowFilters=!this.isShowFilters
+   this.isShowFilters=!this.isShowFilters;
   }
 
   min = 200; 

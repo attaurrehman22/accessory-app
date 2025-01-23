@@ -157,6 +157,17 @@
   font-weight: 400;
 }
 
+.custom-filter-btn {
+  border-radius: 10px;
+  border: 1px solid black;
+  background: none;
+  height: 50px;
+  width: 150px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
 @media (max-width: 1024px) {
   .filter-Div{
     position: absolute;
@@ -165,6 +176,11 @@
     z-index: 1000;
     width: 500px;
     background: #ffffff
+  }
+
+  .reverse-filter-order {
+    top: 183px;
+    left: 68px !important;
   }
 }
 
@@ -177,6 +193,11 @@
     width: 300px;
     background: #ffffff
   }
+
+  .reverse-filter-order {
+    top: 183px;
+    left: 192px;
+  }
 }
 
 @media (max-width: 468px) {
@@ -188,6 +209,17 @@
     width: 300px;
     background: #ffffff
   }
+
+  .reverse-filter-order {
+    top: 200px !important;
+    left: 192px;
+  }
+}
+
+.filters-top-header{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 
@@ -199,13 +231,13 @@
   margin-top: 10px;
   display: flex;
   align-items: center;
+  direction: ltr; /* Default left-to-right direction */
 }
 
 .range-thumb {
   position: absolute;
   width: 20px;
   height: 20px;
-  /* background-color: black; */
   color: white;
   font-size: 12px;
   display: flex;
@@ -215,8 +247,123 @@
   transform: translate(-50%, -50%);
   cursor: pointer;
   top: 50%;
+  transition: all 0.3s ease; /* Smooth transition for thumb movement */
 }
 
+
 .reverse-order{
+  flex-direction: row-reverse;
   text-align: end;
+}
+
+.reverse-order .custom-filter-btn {
+  flex-direction: row-reverse;
+}
+
+.reverse-filter-order {
+  top: 183px;
+  left: 192px;
+}
+
+.reverse-filter-order .filters-top-header{
+  flex-direction: row-reverse;
+}
+
+.revere-pagination-two{
+display: flex;
+align-items: center;
+justify-content: end;
+}
+
+.reverse-pagination-order{
+  flex-direction: row-reverse;
+}
+
+.reverse-pagination-order .revere-pagination-one{
+  /* flex-direction: row-reverse; */
+justify-content: end;
+}
+
+.reverse-pagination-order .revere-pagination-two{
+  /* flex-direction: row-reverse; */
+justify-content: start;
+}
+
+
+.pagination-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pagination-btn {
+  background: none;
+  border: 1px solid #ddd;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  text-align: center;
+  line-height: 40px;
+  margin: 0 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;  
+}
+
+.pagination-btn.active {
+  background-color: #007bff;
+  color: white;
+  border-color: #007bff;
+}
+
+.pagination-btn:disabled {
+  background-color: #f8f9fa;
+  color: #ccc;
+  cursor: not-allowed;
+}
+
+
+.dropdown-pagination-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.pagination-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pagination-btn {
+  background: none;
+  border: 1px solid #ddd;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  text-align: center;
+  line-height: 40px;
+  margin: 0 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: all 0.3s ease;
+}
+
+.pagination-btn.active {
+  background-color: #007bff;
+  color: white;
+  border-color: #007bff;
+}
+
+.pagination-btn:disabled {
+  background-color: #f8f9fa;
+  color: #ccc;
+  cursor: not-allowed;
+}
+
+.form-select {
+  font-size: 14px;
 }
