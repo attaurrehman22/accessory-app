@@ -6,6 +6,7 @@ import { MatTableDataSource } from "@angular/material/table";
 import { Router } from "@angular/router";
 import { AlertsServicesService } from "src/services/alerts-service/alerts-services.service";
 import { HttpService } from "src/services/http/http.service";
+import { AdminBrandsProductComponent } from "../admin-brands-product/admin-brands-product.component";
 
 export interface UserData {
   name: any;
@@ -81,9 +82,19 @@ export class AdminBrandsComponent {
   }
 
   openModal() {
-    this.router.navigate(["admin","brands","product"], {
-      state: { param: "Create" },
+    const dialogRef = this.dialog.open(AdminBrandsProductComponent, {
+      width: '1000px',
+      height: 'auto',
+      disableClose: true,
+      data: { param: 'Create' },
     });
+ 
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+         this.allUser()
+      } 
+    });
+
   }
 
   allUser() {
@@ -115,9 +126,20 @@ export class AdminBrandsComponent {
   }
 
   editBrand(data: any) {
-    this.router.navigate(["admin","brands","product"], {
-      state: { param: "Edit", data: data },
+
+    const dialogRef = this.dialog.open(AdminBrandsProductComponent, {
+      width: '1000px',
+      height: 'auto',
+      disableClose: true,
+      data: { param: 'Edit',data:data },
     });
+ 
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+         this.allUser()
+      } 
+    });
+    
   }
 
   deleteBrand(data) {

@@ -45,3 +45,10 @@ td {
     width: fit-content !important;
   }
 }
+
+
+.custom-modal .mat-dialog-container {
+  min-width: 900px !important;
+  max-width: 1200px !important;
+  width: 100%; /* Ensures it respects the `width` set in the dialog config */
+}

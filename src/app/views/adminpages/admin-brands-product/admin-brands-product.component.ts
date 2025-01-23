@@ -1,11 +1,11 @@
-import { Component } from "@angular/core";
+import { Component, Inject } from "@angular/core";
 import {
   FormBuilder,
   FormControl,
   FormGroup,
   Validators,
 } from "@angular/forms";
-import { MatDialog } from "@angular/material/dialog";
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from "@angular/material/dialog";
 import { Router } from "@angular/router";
 import { AlertsServicesService } from "src/services/alerts-service/alerts-services.service";
 import { HttpService } from "src/services/http/http.service";
@@ -25,10 +25,11 @@ export class AdminBrandsProductComponent {
     private dialog: MatDialog,
     private toast: AlertsServicesService,
     private http: HttpService,
-    private router: Router
-  ) {}
-
-  ngOnInit(): void {
+    private router: Router,
+    public dialogRef: MatDialogRef<AdminBrandsProductComponent>,
+    @Inject(MAT_DIALOG_DATA) data: any
+  ) {
+    this.paramVal=data.param;
     this.form = this.fb.group({
       name: new FormControl("", [Validators.required]),
       slug: new FormControl("", [
@@ -43,11 +44,19 @@ export class AdminBrandsProductComponent {
       meta_description: new FormControl(""),
       meta_keywords: new FormControl(""),
     });
-    this.paramVal = history.state.param;
-    this.data = history.state.data;
-    if (this.data) {
+    if(data?.data){
+      this.data=data.data;
       this.populateForm(this.data);
     }
+  }
+
+  ngOnInit(): void {
+   
+    // this.paramVal = history.state.param;
+    // this.data = history.state.data;
+    // if (this.data) {
+    //   this.populateForm(this.data);
+    // }
   }
 
   fileName:any;
@@ -95,7 +104,8 @@ export class AdminBrandsProductComponent {
         this.http.editAdminBrand(formData, this.data.id).subscribe(
           (res) => {
             this.toast.showAlert("success", "Brands Update SuccessFully");
-            this.router.navigate(["/admin-brands"]);
+            // this.router.navigate(["/admin-brands"]);
+            this.dialog.closeAll()
           },
           (err) => {
             this.toast.showAlert("danger", "Error Updating Brand");
@@ -108,7 +118,8 @@ export class AdminBrandsProductComponent {
         this.http.addAdminBrand(formData).subscribe(
           (res) => {
             this.toast.showAlert("success", "Brands Add SuccessFully");
-            this.router.navigate(["/admin-brands"]);
+            // this.router.navigate(["/admin-brands"]);
+            this.dialog.closeAll()
           },
           (err) => {
             this.toast.showAlert("danger", "Error Creating Brand");

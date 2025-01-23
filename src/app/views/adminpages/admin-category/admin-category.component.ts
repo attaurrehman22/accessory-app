@@ -6,6 +6,7 @@ import { MatTableDataSource } from "@angular/material/table";
 import { Router } from "@angular/router";
 import { AlertsServicesService } from "src/services/alerts-service/alerts-services.service";
 import { HttpService } from "src/services/http/http.service";
+import { AdminCategoryProductComponent } from "../admin-category-product/admin-category-product.component";
 
 export interface UserData {
   userName: string;
@@ -101,8 +102,21 @@ export class AdminCategoryComponent {
   }
 
   openModal() {
-    this.router.navigate(["admin","category","product"], {
-      state: { param: "Create" },
+    // this.router.navigate(["admin","category","product"], {
+    //   state: { param: "Create" },
+    // });
+
+    const dialogRef = this.dialog.open(AdminCategoryProductComponent, {
+      width: '1000px',
+      height: 'auto',
+      disableClose: true,
+      data: { param: 'Create' },
+    });
+  
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+          this.allUser()
+      } 
     });
   }
 
@@ -126,8 +140,21 @@ export class AdminCategoryComponent {
   }
 
   editUser(data: any) {
-    this.router.navigate(["admin","category","product"], {
-      state: { param: "Edit", data: data },
+    // this.router.navigate(["admin","category","product"], {
+    //   state: { param: "Edit", data: data },
+    // });
+
+    const dialogRef = this.dialog.open(AdminCategoryProductComponent, {
+      width: '1000px',
+      height: 'auto',
+      disableClose: true,
+      data: { param: 'Edit',data: data },
+    });
+  
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+          this.allUser()
+      } 
     });
   }
 

@@ -1,11 +1,11 @@
-import { Component } from "@angular/core";
+import { Component, Inject } from "@angular/core";
 import {
   FormBuilder,
   FormControl,
   FormGroup,
   Validators,
 } from "@angular/forms";
-import { MatDialog } from "@angular/material/dialog";
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from "@angular/material/dialog";
 import { Router } from "@angular/router";
 import { AlertsServicesService } from "src/services/alerts-service/alerts-services.service";
 import { HttpService } from "src/services/http/http.service";
@@ -32,20 +32,7 @@ export class AdminCategoryProductComponent {
   data: any;
 
   createForm() {
-    this.form = this.fb.group({
-      name: new FormControl("", [Validators.required]),
-      slug: new FormControl("", [
-        Validators.required,
-        Validators.pattern("^[a-zA-Z0-9-]+$"),
-      ]),
-      parent_id: new FormControl(),
-      description: new FormControl(""),
-      cover_image: new FormControl(null),
-      meta_title: new FormControl(""),
-      meta_description: new FormControl(""),
-      is_active: new FormControl(false, [Validators.required]),
-      meta_keywords: new FormControl(""),
-    });
+   
   }
 
   onFileSelected(event: any) {
@@ -61,17 +48,40 @@ export class AdminCategoryProductComponent {
     private dialog: MatDialog,
     private http: HttpService,
     private router: Router,
-    private toast: AlertsServicesService
-  ) {}
-  ngOnInit(): void {
-    this.paramval = history.state.param;
+    private toast: AlertsServicesService,
+     public dialogRef: MatDialogRef<AdminCategoryProductComponent>,
+        @Inject(MAT_DIALOG_DATA) data: any
+  ) {
+    this.paramval=data.param;
+    this.form = this.fb.group({
+      name: new FormControl("", [Validators.required]),
+      slug: new FormControl("", [
+        Validators.required,
+        Validators.pattern("^[a-zA-Z0-9-]+$"),
+      ]),
+      parent_id: new FormControl(),
+      description: new FormControl(""),
+      cover_image: new FormControl(null),
+      meta_title: new FormControl(""),
+      meta_description: new FormControl(""),
+      is_active: new FormControl(false, [Validators.required]),
+      meta_keywords: new FormControl(""),
+    });
 
-    this.createForm();
-
-    this.data = history.state.data;
-    if (this.data) {
+    if(data?.data){
+      this.data=data.data;
       this.populateForm(this.data);
     }
+  }
+  ngOnInit(): void {
+    // this.paramval = history.state.param;
+
+    // this.createForm();
+
+    // this.data = history.state.data;
+    // if (this.data) {
+    //   this.populateForm(this.data);
+    // }
   }
 
   selectedFile: File | null = null;
@@ -132,7 +142,8 @@ export class AdminCategoryProductComponent {
       this.http.addAdminCategory(formData).subscribe(
         (res) => {
           this.toast.showAlert("success", "Category added successfully.");
-          this.router.navigate(["/admin-category"]);
+          this.dialog.closeAll()
+          // this.router.navigate(["/admin-category"]);
         },
         (err) => {
           this.toast.showAlert(
@@ -145,7 +156,9 @@ export class AdminCategoryProductComponent {
       this.http.editAdminCategory(formData, this.data.id).subscribe(
         (res) => {
           this.toast.showAlert("success", "Category Update successfully.");
-          this.router.navigate(["/admin-category"]);
+          // this.dialogRef.afterClosed()
+          this.dialog.closeAll()
+          // this.router.navigate(["/admin-category"]);
         },
         (err) => {
           this.toast.showAlert(
@@ -158,6 +171,7 @@ export class AdminCategoryProductComponent {
   }
 
   cancel() {
-    this.router.navigate(["/admin-category"]);
+    // this.router.navigate(["/admin-category"]);
+    this.dialog.closeAll()
   }
 }

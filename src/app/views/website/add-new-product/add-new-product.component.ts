@@ -365,12 +365,16 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
     this.selectSection("scopeofdelivery");
   }
 
+  isListingCompleted:boolean=false;
+
   getProductDetails(){
       this.http.getProductDetailsByID(this.productIDFromResponse).subscribe(
         (res)=>{
           this.productDetails=res.product;
           this.latestActiveForm=res.step;
-
+          if(res.is_listing_completed === 1){
+            this.isListingCompleted=true
+          }
           if (this.productDetails.main_image) {
             this.productDetails.main_image = this.productDetails.main_image.replace(/\\/g, '');
           }
@@ -392,7 +396,7 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
             this.productDetails.proof_image_2 = this.productDetails.proof_image_2.replace(/\\/g, '');
           }
 
-          if (this.latestActiveForm === 'completed' || this.latestActiveForm === 'publishListing') {
+          if (this.latestActiveForm === 'completed' || this.latestActiveForm === 'publishListing' || this.isListingCompleted) {
             this.selectedOptionsList = this.selectedOptionsList.concat([
               'watchDetails',
               'uploadImages',
@@ -460,7 +464,7 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
             this.selectSection("scopeofdelivery");
           }
 
-          if (this.latestActiveForm === 'conditionGrading') {
+          if (this.latestActiveForm === 'conditionGrading' && !this.isListingCompleted) {
             this.selectedOptionsList = this.selectedOptionsList.concat([
               'watchDetails',
               'uploadImages',
@@ -866,10 +870,7 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
   }
 
   onSubmit(Param: string) {
-    console.log("isUserLogin")
-    console.log("isUserLogin",localStorage.getItem("isLoggedIn"))
     let isUserLogin = localStorage.getItem("isLoggedIn");
-    console.log("isUserLogin",isUserLogin)
     if (isUserLogin == 'false') {
       this.loginFirst();
     }

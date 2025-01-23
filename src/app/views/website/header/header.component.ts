@@ -12,6 +12,8 @@ import { MatSidenav } from "@angular/material/sidenav";
 import { SearchServiceService } from "src/services/search-service/search-service.service";
 import { LoginStateService } from "src/services/login-service/login-state.service";
 import { ChangeDetectorRef } from "@angular/core";
+import { MatDialog } from "@angular/material/dialog";
+import { ModelLoginComponent } from "../../auth/model-login/model-login.component";
 
 @Component({
   selector: "app-header",
@@ -50,7 +52,8 @@ export class HeaderComponent {
     public router: Router,
     private searchService: SearchServiceService,
     private loginStateService: LoginStateService,
-    private cdRef: ChangeDetectorRef
+    private cdRef: ChangeDetectorRef,
+     private dialog: MatDialog
   ) {
     const languagevalues = this.supportLanguages.map((lang) => lang.value);
     this.translateService.addLangs(languagevalues);
@@ -131,15 +134,10 @@ export class HeaderComponent {
     localStorage.removeItem("isLoggedIn");
     localStorage.removeItem("userID");
     localStorage.removeItem("isAdmin");
-    // localStorage.removeItem("selectedLanguage");
     localStorage.removeItem("userType");
-
-
     this.isUserLogin = false;
     this.loginStateService.updateLoginStatus(false);
     localStorage.setItem("isAdmin", "false");
-    // localStorage.setItem("isLoggedIn", "false");
-    // localStorage.setItem("isLoggedIn", "false");
     this.router.navigateByUrl("login").then(() => {
       window.location.reload();
     });
@@ -148,8 +146,29 @@ export class HeaderComponent {
     this.dropdownOpen = !this.dropdownOpen;
   }
 
+   loginFirst() {
+      const dialogRef = this.dialog.open(ModelLoginComponent, {
+        width: "600px",
+        data: { message: "header" },
+        disableClose: true,
+      });
+  
+      dialogRef.afterClosed().subscribe((result) => {
+        if (result) {
+        }
+      });
+    }
+
   routeToNewProduct() {
-    this.router.navigate(["/new-product"]);
+    let isUserLogin = localStorage.getItem("isLoggedIn");
+    if (isUserLogin == 'false') {
+      this.loginFirst();
+    }
+
+    isUserLogin = localStorage.getItem("isLoggedIn");
+    if(isUserLogin != 'false'){
+      this.router.navigate(["/new-product"]);
+    }
   }
   
   isSearchForm: any = false;

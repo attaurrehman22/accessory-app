@@ -2,12 +2,25 @@
   class="global-main-wraper d-flex flex-wrap justify-content-between mt-5 mb-5"
 >
   <div class="container-fluid list-data">
-    <div class="col-lg-12 col-md-12 col-sm-12 d-flex justify-content-between align-items-center">
+    <div
+      class="col-lg-12 col-md-12 col-sm-12 d-flex justify-content-between align-items-center"
+    >
       <p class="text-center font-size-28 font-wight-600 color-242424">
-        
         {{ "product_listing.Watch_Listing" | translate }}
       </p>
-      <button style="border-radius: 10px;border: 1px solid black;background: none;height: 50px;width: 150px;display: flex;justify-content: space-around;align-items: center;" (click)="openFilters()">
+      <button
+        style="
+          border-radius: 10px;
+          border: 1px solid black;
+          background: none;
+          height: 50px;
+          width: 150px;
+          display: flex;
+          justify-content: space-around;
+          align-items: center;
+        "
+        (click)="openFilters()"
+      >
         <img src="../assets/images/hugeicons_filter.png" />
         {{ "product_listing.filters" | translate }}
         <img src="../assets/images/FiChevronDown.png" />
@@ -16,111 +29,161 @@
     <div *ngIf="isShowFilters" class="filter-Div p-3 border rounded">
       <div class="d-flex justify-content-between align-items-center">
         <h5 class="mb-3">{{ "product_listing.filters" | translate }}</h5>
-        <button style="border: none;background: none;color: #242424;" (click)="clearFilters()">{{ "product_listing.cleaer_filter" | translate }}</button>
-      </div>
-        <!-- Categories Section -->
-        <div class="mb-4 border-bottom-color">
-          <p 
-          [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }"
-          class="font-size-16 font-wight-600 color-242424 margin-0">{{ "product_listing.categories" | translate }}</p>
-          <div class="row mt-2">
-            <div class="col-md-4 d-flex flex-wrap" *ngFor="let category of categories | slice :0:8">
-              <div class="form-check d-flex flex-wrap">
-                <input
-                  type="checkbox"
-                  class="form-check-input"
-                  [id]="category.id"
-                  [(ngModel)]="category.selected"
-                />
-                <label class="form-check-label" [for]="category.id">
-                  {{ category.name }}
-                </label>
-              </div>
-            </div>
-          </div>
-        </div>
-      
-        <!-- Watch Type Section -->
-        <div class="mb-4 border-bottom-color">
-          <p    [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }" class="font-size-16 font-wight-600 color-242424 margin-0">{{ "product_listing.watch_type" | translate }}</p>
-          <div class="row mt-2">
-            <div class="col-md-4 d-flex flex-wrap" *ngFor="let type of watchTypes| slice :0:8">
-              <div class="form-check d-flex flex-wrap">
-                <input
-                  type="checkbox"
-                  class="form-check-input"
-                  [id]="type.id"
-                  [(ngModel)]="type.selected"
-                />
-                <label class="form-check-label" [for]="type.id">
-                  {{ type.name }}
-                </label>
-              </div>
-            </div>
-          </div>
-        </div>
-      
-        <!-- Price Range Section -->
-        <div class="mb-4">
-          <p    [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }" class="font-size-16 font-wight-600 color-242424 margin-0">{{ "product_listing.price_range" | translate }}</p>
-          <div class="range mt-4" #range (mousedown)="startDragging($event, range)">
-            <span
-              class="range-thumb"
-              [style.left.%]="currentPercentage"
-              (mousedown)="startDragging($event, range)"
-            >
-           <img style="margin-top: 5px;" src="../assets/images/price-range-icon.png" />
-            </span>
-          </div>
-          <div class="d-flex align-items-center justify-content-between mt-4">
-            <div style="display: flex; flex-direction: column;">
-              <p class="font-size-14 font-wight-400 color-969696 margin-0">{{ "product_listing.from" | translate }}</p>
-              <p class="font-size-16 font-wight-700 color-242424 margin-0">SR {{ currentValue }}</p>
-            </div>
-            <div style="display: flex; flex-direction: column;">
-              <p class="font-size-14 font-wight-400 color-969696 margin-0">{{ "product_listing.to" | translate }}</p>
-              <p class="font-size-16 font-wight-700 color-242424 margin-0">SR 50,000</p>
-            </div>
-          </div>
-        </div>
-        
-        
-      
-        <!-- Apply Filters Button -->
-        <button class="btn btn-dark w-100 custom-apply-filter-btn" (click)="applyFilters()">
-          Apply Filters
+        <button
+          style="border: none; background: none; color: #242424"
+          (click)="clearFilters()"
+        >
+          {{ "product_listing.cleaer_filter" | translate }}
         </button>
-    
-      
+      </div>
+      <!-- Categories Section -->
+      <div class="mb-4 border-bottom-color">
+        <p
+          [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }"
+          class="font-size-16 font-wight-600 color-242424 margin-0"
+        >
+          {{ "product_listing.categories" | translate }}
+        </p>
+        <div class="row mt-2">
+          <div
+            class="col-md-4 d-flex flex-wrap"
+            *ngFor="let category of categories | slice : 0 : 8"
+          >
+            <div class="form-check d-flex flex-wrap">
+              <input
+                type="checkbox"
+                class="form-check-input"
+                [id]="category.id"
+                [(ngModel)]="category.selected"
+              />
+              <label class="form-check-label" [for]="category.id">
+                {{ category.name }}
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Watch Type Section -->
+      <div class="mb-4 border-bottom-color">
+        <p
+          [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }"
+          class="font-size-16 font-wight-600 color-242424 margin-0"
+        >
+          {{ "product_listing.watch_type" | translate }}
+        </p>
+        <div class="row mt-2">
+          <div
+            class="col-md-4 d-flex flex-wrap"
+            *ngFor="let type of watchTypes | slice : 0 : 8"
+          >
+            <div class="form-check d-flex flex-wrap">
+              <input
+                type="checkbox"
+                class="form-check-input"
+                [id]="type.id"
+                [(ngModel)]="type.selected"
+              />
+              <label class="form-check-label" [for]="type.id">
+                {{ type.name }}
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Price Range Section -->
+      <div class="mb-4">
+        <p
+          [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }"
+          class="font-size-16 font-wight-600 color-242424 margin-0"
+        >
+          {{ "product_listing.price_range" | translate }}
+        </p>
+        <div
+          class="range mt-4"
+          #range
+          (mousedown)="startDragging($event, range)"
+        >
+          <span
+            class="range-thumb"
+            [style.left.%]="currentPercentage"
+            (mousedown)="startDragging($event, range)"
+          >
+            <img
+              style="margin-top: 5px"
+              src="../assets/images/price-range-icon.png"
+            />
+          </span>
+        </div>
+        <div class="d-flex align-items-center justify-content-between mt-4">
+          <div style="display: flex; flex-direction: column">
+            <p class="font-size-14 font-wight-400 color-969696 margin-0">
+              {{ "product_listing.from" | translate }}
+            </p>
+            <p class="font-size-16 font-wight-700 color-242424 margin-0">
+              SR {{ currentValue }}
+            </p>
+          </div>
+          <div style="display: flex; flex-direction: column">
+            <p class="font-size-14 font-wight-400 color-969696 margin-0">
+              {{ "product_listing.to" | translate }}
+            </p>
+            <p class="font-size-16 font-wight-700 color-242424 margin-0">
+              SR 50,000
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Apply Filters Button -->
+      <button
+        class="btn btn-dark w-100 custom-apply-filter-btn"
+        (click)="applyFilters()"
+      >
+        Apply Filters
+      </button>
     </div>
 
     <div class="container-fluid mt-3">
       <div class="row">
+        <div
+          class="col-12"
+          *ngIf="showList.length == 0"
+          style="
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 34px;
+            font-weight: 500;
+          "
+        >
+          No record exist
+        </div>
         <div class="col-md-3 col-sm-6 mb-4" *ngFor="let watch of showList">
           <div class="card h-100 shadow-sm">
             <a
-            [routerLink]="['/buy-product']"
-            [queryParams]="{ id: watch.id }"
+              [routerLink]="['/buy-product']"
+              [queryParams]="{ id: watch.id }"
               class="card-img-link"
-          >
-            <img
-              style="cursor: pointer;"
-              [src]="'https://api.chronosouq.com/' + watch.main_image"
-              class="card-img-top"
-              alt="watch image"
-            />
-          </a>
+            >
+              <img
+                style="cursor: pointer"
+                [src]="'https://api.chronosouq.com/' + watch.main_image"
+                class="card-img-top"
+                alt="watch image"
+              />
+            </a>
             <div class="card-body">
               <div
                 class="d-flex justify-content-between align-items-center mb-2"
               >
                 <div>
-                  <p class="font-size-16 font-wight-400 color-6a6a6a"
-                    style="
-                      margin: 0 !important;
-                    "
+                  <p
+                    class="font-size-16 font-wight-400 color-6a6a6a"
+                    style="margin: 0 !important"
                   >
-                    {{ watch.brand.name }} | {{watch.model || 'N/A'}}
+                    {{ watch.brand.name }} | {{ watch.model || "N/A" }}
                   </p>
                 </div>
                 <div>
@@ -148,29 +211,43 @@
                 <p class="card-title-two">{{ watch.price }}</p>
                 <p class="card-title-two">{{ watch.created_by.city }}</p>
               </div>
-              <div *ngIf="watch.created_by.type === 'user'" class="d-flex mt-2 seller-chip">
+              <div
+                *ngIf="watch.created_by.type === 'user'"
+                class="d-flex mt-2 seller-chip"
+              >
                 Private Seller
               </div>
-              <div *ngIf="watch.created_by.type === 'dealer'" class="d-flex mt-2 seller-chip">
+              <div
+                *ngIf="watch.created_by.type === 'dealer'"
+                class="d-flex mt-2 seller-chip"
+              >
                 Dealer
               </div>
             </div>
           </div>
           <div class="heart-icon">
             <div class="featured-icon">
-              <div *ngIf="watch.feature_item === 1" class="featured-promoted-class-badge">
+              <div
+                *ngIf="watch.feature_item === 1"
+                class="featured-promoted-class-badge"
+              >
                 Featured
               </div>
-          
-              <div *ngIf="watch.feature_item !== 1 && watch.is_promoted === 1" class="featured-promoted-class-badge">
+
+              <div
+                *ngIf="watch.feature_item !== 1 && watch.is_promoted === 1"
+                class="featured-promoted-class-badge"
+              >
                 Promoted
               </div>
             </div>
             <i
-            *ngIf="isUserLogin ==='true'"
-            (click)="addWishList(watch)"
+              *ngIf="isUserLogin === 'true'"
+              (click)="addWishList(watch)"
               class="fa"
-              [ngClass]="wishList.includes(watch.id) ? 'fa-heart' : 'fa-heart fa-heart-o'"
+              [ngClass]="
+                wishList.includes(watch.id) ? 'fa-heart' : 'fa-heart fa-heart-o'
+              "
               aria-hidden="true"
             ></i>
           </div>
