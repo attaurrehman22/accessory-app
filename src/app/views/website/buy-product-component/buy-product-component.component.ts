@@ -154,43 +154,6 @@ export class BuyProductComponentComponent implements OnInit {
     } catch (err) {
       console.error("Error fetching product details:", err);
     }
-    // try {
-    //   const res = await this.http.getProductsofUnverifiedByID(this.ProductID).toPromise();
-      
-    //   this.isDealer = res.typeOfProduct;
-    //   this.productDetails = res.data;
-    //   this.isReviewsCount = res.reviewsCount;
-    //   console.log("productDetails", this.productDetails);
-  
-    //   if (this.productDetails.additional_images) {
-    //     const parsedImages = JSON.parse(this.productDetails.additional_images);
-    //     this.thumbnails = parsedImages.map((image: string) => 
-    //       image.replace(/\\/g, "")
-    //     );
-    //   } else {
-    //     this.thumbnails = []; 
-    //   }
-  
-    //   console.log("this.thumbnails", this.thumbnails);
-  
-    //   if (this.thumbnails.length > 0) {
-    //     this.selectedImage = this.thumbnails[0];
-    //   }
-  
-    //   if (this.productDetails.main_image) {
-    //     this.productDetails.main_image = this.productDetails.main_image.replace(/\\/g, "");
-    //     this.productMainImage = this.productDetails.main_image;
-    //   }
-  
-    //   if (this.productDetails.additional_images) {
-    //     this.productDetails.additional_images = JSON.parse(this.productDetails.additional_images);
-    //   }
-  
-    //   console.log("------------------", this.productDetails);
-  
-    // } catch (err) {
-    //   console.error("Error fetching product details:", err);
-    // }
   }
   
 
@@ -211,13 +174,15 @@ export class BuyProductComponentComponent implements OnInit {
         this.selectedImage = this.thumbnails[0];
       }
 
-      if (this.isDealer === "dealer") {
+      if (this.isDealer === "dealer" && this.routeFrom !== "listing-to-product") {
         if (this.productDetails.created_by.id && this.isReviewsCount) {
           await this.fetchDealerDetails(this.productDetails.created_by.id);
           await this.fetchDealerUserDetails(this.productDetails.created_by.id);
         }
       }
-      await this.getAllSimilarProducts();
+ 
+        await this.getAllSimilarProducts();
+      
     } catch (err) {
       console.error("Error initializing component:", err);
     }

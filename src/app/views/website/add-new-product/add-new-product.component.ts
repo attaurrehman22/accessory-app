@@ -52,59 +52,88 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
   name = new FormControl("", [Validators.required]);
   model = new FormControl("", [Validators.required]);
   title = new FormControl("", [Validators.required]);
-  description = new FormControl("");
+  description = new FormControl("",[
+    Validators.minLength(5), // Minimum 10 characters
+    Validators.maxLength(250) // Maximum 100 characters
+  ]);
   watch_type = new FormControl("", [Validators.required]);
-  year_of_production = new FormControl("", [Validators.required]);
+  year_of_production = new FormControl("",  [
+    Validators.required,                         // Ensures the field is required
+    Validators.minLength(4),                     // Minimum length of 4 digits
+    Validators.maxLength(4),                     // Maximum length of 4 digits
+    Validators.pattern('^[0-9]{4}$')             // Ensures the value is a 4-digit number
+  ]);
   approximation = new FormControl(false);
   unknown = new FormControl(false);
 
   // Watch Form Details
 
   reference_number = new FormControl("", [
-    Validators.required,
-    Validators.pattern("^[^\\s]+(\\s+[^\\s]+)*$"),
+    Validators.required,                         // Field must not be empty
+    Validators.pattern('^[a-zA-Z0-9]*$'),        // Only alphanumeric characters (letters and numbers)
+    Validators.maxLength(30),                    // Maximum length of 30 characters
   ]);
+
+  decimalPattern = '^[0-9]{1,3}(\.[0-9]{1,2})?$';
+
   serial_no = new FormControl("", [
-    Validators.required,
-    Validators.pattern("^[^\\s]+(\\s+[^\\s]+)*$"),
+    Validators.required,                         // Field must not be empty
+    Validators.pattern('^[a-zA-Z0-9]*$'),        // Only alphanumeric characters (letters and numbers)
+    Validators.maxLength(30), 
   ]);
   gender = new FormControl("", Validators.required);
   movement = new FormControl("", Validators.required);
+
   case_diameter_value_1 = new FormControl(null, [
     Validators.required,
-    Validators.pattern("^[0-9]*$"),
+    Validators.pattern(this.decimalPattern),
   ]);
   case_diameter_value_2 = new FormControl(null, [
     Validators.required,
-    Validators.pattern("^[0-9]*$"),
+    Validators.pattern(this.decimalPattern),
   ]);
   dial_color = new FormControl("");
   caliber_movement = new FormControl("");
   base_caliber = new FormControl("");
   power_reserve = new FormControl("");
-  no_of_jewels = new FormControl();
-  frequency = new FormControl("");
+  no_of_jewels = new FormControl(null,[
+    Validators.pattern('^[0-9]{1,4}$'),           // Ensures only numbers with a maximum of 4 digits
+  ]);
+  frequency = new FormControl("",[
+    Validators.pattern(this.decimalPattern),           // Ensures only numbers with a maximum of 4 digits
+  ]);
   additional_details = new FormControl("");
 
   case_material = new FormControl("");
   bezel_material = new FormControl("");
-  thickness = new FormControl(null, [Validators.pattern("^[0-9]*$")]);
+  thickness = new FormControl(null,
+     [Validators.pattern(this.decimalPattern)]);
   crystal = new FormControl("");
   water_resistance = new FormControl("");
 
-  dial_numerals = new FormControl("");
+  dial_numerals = new FormControl("",[Validators.pattern(this.decimalPattern)]);
   bracelet_material = new FormControl("");
   bracelet_color = new FormControl("");
-  type_of_clasp = new FormControl("");
+  type_of_clasp = new FormControl("",[Validators.pattern(this.decimalPattern)]);
   clasp_material = new FormControl("");
 
   // Billing Information Form Details
   billing_address = new FormControl("", [Validators.required]);
   first_name = new FormControl("", [Validators.required]);
   last_name = new FormControl("", [Validators.required]);
-  street = new FormControl("", [Validators.required]);
-  street_line_2 = new FormControl("");
-  zip_code = new FormControl("", [Validators.required]);
+  street = new FormControl("", [
+    Validators.required,                          // Ensures the field is not empty
+    Validators.pattern('^[a-zA-Z0-9 ]*$'),         // Allows only alphanumeric characters and spaces (A-Z, a-z, 0-9, space)
+    Validators.maxLength(30),                      // Limits the input to 30 characters
+  ]);
+  
+  street_line_2 = new FormControl("", [
+    Validators.pattern('^[a-zA-Z0-9 ]*$'),         // Allows only alphanumeric characters and spaces (A-Z, a-z, 0-9, space)
+    Validators.maxLength(30),                      // Limits the input to 30 characters
+  ]);
+  zip_code = new FormControl("", [  Validators.required,               // Ensures the field is not empty
+    Validators.pattern('^[0-9]*$'),     // Ensures only numeric values (digits)
+    Validators.maxLength(10), ]);
   city = new FormControl("", [Validators.required]);
 
   cities = ["City 1", "City 2", "City 3"];

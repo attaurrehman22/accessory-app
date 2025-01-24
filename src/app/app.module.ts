@@ -80,7 +80,9 @@ import { CustomOfferComponent } from './views/modal/custom-offer/custom-offer.co
 import { AddShippingComponent } from './views/modal/add-shipping/add-shipping.component';
 import { MyListingDetailsComponent } from './views/website/my-listing-details/my-listing-details.component';
 import { ForgotPasswordComponent } from './views/auth/forgot-password/forgot-password.component';
-
+import { FieldLimitIntoHunderedDirective } from './views/directives/hundered-character-limit/field-limit-into-hundered.directive';
+import { OnlyCharacterLimitThirtyDirective } from './views/directives/only-character-limit-thirty/only-character-limit-thirty.directive';
+import { PriceLimitDirective } from './views/directives/price-limit/price-limit.directive';
 
 @NgModule({
   declarations: [
@@ -122,7 +124,10 @@ import { ForgotPasswordComponent } from './views/auth/forgot-password/forgot-pas
     CustomOfferComponent,
     AddShippingComponent,
     MyListingDetailsComponent,
-    ForgotPasswordComponent
+    ForgotPasswordComponent,
+    FieldLimitIntoHunderedDirective,
+    OnlyCharacterLimitThirtyDirective,
+    PriceLimitDirective
   ],
   imports: [
     MatSortModule,

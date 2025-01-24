@@ -1225,7 +1225,7 @@
   </div>
 </div>
 
-<div *ngIf="similarWatchesList.length > 0" class="container mt-3">
+<div *ngIf="similarWatchesList.length > 0 &&  this.routeFrom !== 'listing-to-product'" class="container mt-3">
   <p class="font-wight-700 font-size-64 color-484848 text-center cormorant-styl">
     {{ "product_details.similar_prod" | translate }}
   </p>
