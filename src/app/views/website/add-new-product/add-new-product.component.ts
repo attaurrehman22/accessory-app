@@ -147,6 +147,15 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
     });
   }
 
+  getClockRotations(timeText: string) {
+    const [hour, minute] = timeText.split(':').map(Number); // Convert to number
+
+    const hourRotation = hour * 30 + minute * 0.5;  // Calculate hour hand rotation
+    const minuteRotation = minute * 6;              // Calculate minute hand rotation
+
+    return { hourRotation, minuteRotation };
+  }
+
   formatTime(hour: number, minute: number): string {
     const formattedHour = hour.toString().padStart(2, "0");
     const formattedMinute = minute.toString().padStart(2, "0");
@@ -693,9 +702,7 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
         }
       }
     }
-    if(this.productIDFromResponse){
-      this.getProductDetails()
-    }
+   
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationStart) {
         localStorage.removeItem('productID');
@@ -724,6 +731,10 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
         this.isFromMyListingComponent=true;
         this.getProductDetails()
       }
+    }
+
+    if(this.productIDFromResponse){
+      this.getProductDetails()
     }
     
 
@@ -1194,8 +1205,29 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
 
   async routeToProductDetail() {
     this.formDirty = false;
+   let backUpProduct;
+    this.http.getProductDetailsByID(this.productIDFromResponse).subscribe(
+      (res)=>{
+        backUpProduct=res.product;
+        if (backUpProduct.main_image) {
+          backUpProduct.main_image = backUpProduct.main_image.replace(/\\/g, '');
+        }
+  
+        if (backUpProduct.additional_images) {
+          try {
+            backUpProduct.additional_images = JSON.parse(backUpProduct.additional_images)
+              .map(image => image.replace(/\\/g, '')); 
+          } catch (e) {
+            console.error('Failed to parse additional_images', e);
+          }
+        }
+      }
+    )
+
+    console.log("backUpProduct",backUpProduct)
+
     this.router.navigate(["/buy-product"], {
-      state: { param: "listing-to-product", ID: this.productIDFromResponse },
+      state: { param: "listing-to-product", ID: this.productIDFromResponse,data:backUpProduct },
     });
   }
 

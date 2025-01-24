@@ -26,7 +26,7 @@
 
       <div class="featured-card">
         <div class="featured-card-featred">
-          <p *ngIf="productDetails.feature_item === 1" style="margin: 0">
+          <p *ngIf="productDetails?.feature_item === 1" style="margin: 0">
             Featured
           </p>
         </div>
@@ -90,8 +90,8 @@
         <p *ngIf="productDetails.category" class="routes-styl-active">
           / {{ productDetails.category?.name }}
         </p>
-        <p *ngIf="productDetails.brand.name" class="routes-styl-active">
-          / {{ productDetails.brand.name }}
+        <p *ngIf="productDetails?.brand?.name" class="routes-styl-active">
+          / {{ productDetails?.brand?.name }}
         </p>
         <p *ngIf="productDetails.listing_code" class="routes-styl-active">
           / {{ productDetails.listing_code }}
@@ -99,16 +99,16 @@
       </div>
 
       <div
-        *ngIf="productDetails.created_by.city"
+        *ngIf="productDetails?.created_by?.city"
         class="d-flex gap-2 align-items-baseline"
       >
         <i class="fas fa-map-marker-alt"></i>
-        <p class="routes-styl">{{ productDetails.created_by.city }}</p>
+        <p class="routes-styl">{{ productDetails?.created_by?.city }}</p>
       </div>
 
       <div class="d-flex flex-wrap">
         <p class="brand-name-title">
-          {{ productDetails.brand.name }} {{ productDetails.model }}
+          {{ productDetails?.brand?.name }} {{ productDetails.model }}
           {{ productDetails.title }}
         </p>
       </div>
@@ -124,7 +124,7 @@
           </div>
           <div style="display: flex; flex-direction: column">
             <p class="margin-0">Brand</p>
-            <p class="margin-0">{{ productDetails.brand.name }}</p>
+            <p class="margin-0">{{ productDetails?.brand?.name }}</p>
           </div>
         </div>
 
@@ -225,7 +225,7 @@
 </div>
 
 <div
-  *ngIf="productDetails.created_by && isDealer === 'dealer'"
+  *ngIf="productDetails?.created_by && isDealer === 'dealer'"
   class="container mt-2"
 >
   <div
@@ -253,7 +253,7 @@
             "
             (click)="scrollToTarget()"
           >
-            {{ productDetails.created_by.name }}
+            {{ productDetails?.created_by?.name }}
           </h5>
           <small
             class="text-muted"
@@ -321,7 +321,7 @@
               padding-right: 7px;
             "
           >
-            {{ productDetails.created_by.name }}
+            {{ productDetails?.created_by?.name }}
           </h5>
           <small
             class="text-muted"
@@ -400,8 +400,8 @@
         <div class="row">
           <div class="col-12 d-flex flex-wrap justify-content-center">
             <p class="brand-name-title margin-0">
-              {{ productDetails.brand.name }} {{ productDetails.name }}
-              {{ productDetails.condition }}
+              {{ productDetails?.brand?.name }} {{ productDetails?.name }}
+              {{ productDetails?.condition }}
             </p>
           </div>
 
@@ -410,14 +410,14 @@
               <p
                 class="font-size-20 font-wight-600 color-242424 margin-0 text-center"
               >
-                {{ productDetails.meta_description }}
+                {{ productDetails?.meta_description || 'N/A' }}
               </p>
             </div>
             <div class="col-12">
               <p
                 class="font-size-16 font-wight-400 color-666666 margin-0 text-center"
               >
-                {{ productDetails.description }}
+                {{ productDetails?.description || 'N/A' }}
               </p>
             </div>
           </div>
@@ -461,26 +461,26 @@
                   [ngClass]="{
                     'reverse-order-tr': translateService.currentLang !== 'en'
                   }"
-                  *ngIf="productDetails.listing_Code"
+                  *ngIf="productDetails?.listing_Code"
                 >
                   <th class="tbl-head" scope="row">
                     {{ "product_details.listing_code" | translate }}
                   </th>
                   <td class="tbl-td">
-                    {{ productDetails.listing_Code }}
+                    {{ productDetails?.listing_Code || 'N/A' }}
                   </td>
                 </tr>
                 <tr
                   [ngClass]="{
                     'reverse-order-tr': translateService.currentLang !== 'en'
                   }"
-                  *ngIf="productDetails.brand"
+                  *ngIf="productDetails?.brand"
                 >
                   <th class="tbl-head" scope="row">
                     {{ "product_details.brand" | translate }}
                   </th>
                   <td class="tbl-td">
-                    {{ productDetails.brand.name }}
+                    {{ productDetails?.brand?.name }}
                   </td>
                 </tr>
                 <tr
@@ -735,7 +735,7 @@
                 padding-right: 7px;
               "
             >
-              {{ dealerUserDetails.user_details.name }}
+              {{ dealerUserDetails?.user_details?.name }}
             </h5>
             <small
               class="text-muted"
@@ -987,7 +987,7 @@
           <div class="p-3" style="width: 18rem; border-radius: 0 !important">
             <div class="d-flex gap-2">
               <p class="margin-0 font-wight-700 font-size-16 color-2c3e50">
-                {{ review.reviewer_name }}
+                {{ review?.reviewer_name }}
               </p>
               <img
                 src="../../../../assets/images/check-mark-icon.png"
@@ -1014,7 +1014,7 @@
                   class="margin-0 font-wight-400 font-size-14 color-2c3e50"
                   style="width: 90%"
                 >
-                  {{ review.product_name }}
+                  {{ review?.product_name }}
                 </p>
               </div>
             </div>
@@ -1272,18 +1272,18 @@
             <div *ngIf="watch.city" class="card-title color-6a6a6a">
               {{ watch.city }}
             </div>
-            <div *ngIf="watch.created_by.city" class="card-title color-6a6a6a">
-              {{ watch.created_by.city }}
+            <div *ngIf="watch?.created_by?.city" class="card-title color-6a6a6a">
+              {{ watch?.created_by?.city }}
             </div>
           </div>
           <div
-            *ngIf="watch.created_by.type === 'user'"
+            *ngIf="watch?.created_by?.type === 'user'"
             class="d-flex mt-3 seller-chip"
           >
             Private Seller
           </div>
           <div
-            *ngIf="watch.created_by.type === 'dealer'"
+            *ngIf="watch?.created_by?.type === 'dealer'"
             class="d-flex mt-3 seller-chip"
           >
             Dealer
@@ -1292,11 +1292,11 @@
       </div>
       <div class="heart-icon">
         <div class="featured-icon">
-          <div *ngIf="watch.feature_item === 1" class="featured-promoted-class-badge">
+          <div *ngIf="watch?.feature_item === 1" class="featured-promoted-class-badge">
             Featured
           </div>
       
-          <div *ngIf="watch.feature_item !== 1 && watch.is_promoted === 1" class="featured-promoted-class-badge">
+          <div *ngIf="watch?.feature_item !== 1 && watch.is_promoted === 1" class="featured-promoted-class-badge">
             Promoted
           </div>
         </div>

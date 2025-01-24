@@ -10,11 +10,11 @@ import { HttpService } from "src/services/http/http.service";
 export interface UserData {
   name: any;
   slug: any;
-  description: any;
+  brand: any;
   cover_image: any;
-  meta_title: any;
-  meta_description: any;
-  meta_keywords: any;
+  created_by: any;
+  price: any;
+  model: any;
   is_active: any;
   top_brand: any;
 }
@@ -28,11 +28,11 @@ export class AdminProductsComponent {
   displayedColumns: string[] = [
     "name",
     "slug",
-    "description",
+    "brand",
     "cover_image",
-    "meta_title",
-    "meta_description",
-    "meta_keywords",
+    "created_by",
+    "price",
+    "model",
     "is_active",
     "top_brand",
     "edit",
@@ -92,8 +92,8 @@ export class AdminProductsComponent {
         this.allData = res.data;
 
         this.allData = this.allData.map((product: any) => {
-          if (product.cover_image) {
-            product.cover_image = product.cover_image
+          if (product.main_image) {
+            product.main_image = product.main_image
               .replace(/\\/g, "/")
               .replace(/^\/+/, "");
           }

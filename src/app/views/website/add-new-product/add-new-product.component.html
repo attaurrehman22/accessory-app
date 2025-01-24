@@ -2740,23 +2740,37 @@
               <div style="display: flex; flex-direction: column">
                 <div class="clock-face">
                   <span
+                  *ngIf="productDetails?.generted_time_text_1"
                     class="hour-hand"
                     [ngStyle]="{
-                      transform:
-                        'rotate(' +
-                        (clocks[0].hour * 30 + clocks[0].minute * 0.5) +
-                        'deg)'
+                      transform: 'rotate(' + getClockRotations(productDetails?.generted_time_text_1)?.hourRotation + 'deg)'
                     }"
                   ></span>
                   <span
+                  *ngIf="productDetails?.generted_time_text_1"
                     class="minute-hand"
                     [ngStyle]="{
-                      transform: 'rotate(' + clocks[0].minute * 6 + 'deg)'
+                      transform: 'rotate(' + getClockRotations(productDetails?.generted_time_text_1)?.minuteRotation + 'deg)'
                     }"
                   ></span>
+                  <span
+                  *ngIf="!productDetails?.generted_time_text_1"
+                    class="hour-hand"
+                    [ngStyle]="{
+                      transform:'rotate('+ (clocks[0].hour * 30 + clocks[0].minute * 0.5) + 'deg)'
+                    }"
+                  ></span>
+                  <span
+                    *ngIf="!productDetails?.generted_time_text_1"
+                    class="minute-hand"
+                    [ngStyle]="{transform: 'rotate(' + clocks[0].minute * 6 + 'deg)'}"
+                  ></span>
                 </div>
-                <div class="time-display">
+                <div *ngIf="!productDetails?.generted_time_text_1" class="time-display">
                   {{ formatTime(clocks[0].hour, clocks[0].minute) }}
+                </div>
+                <div *ngIf="productDetails?.generted_time_text_1" class="time-display">
+                  {{ productDetails?.generted_time_text_1 }}
                 </div>
               </div>
               <!-- Image upload area for Clock 1 -->
@@ -2798,23 +2812,39 @@
               <div style="display: flex; flex-direction: column">
                 <div class="clock-face">
                   <span
+                  *ngIf="productDetails?.generted_time_text_2"
                     class="hour-hand"
                     [ngStyle]="{
-                      transform:
-                        'rotate(' +
-                        (clocks[1].hour * 30 + clocks[1].minute * 0.5) +
-                        'deg)'
+                      transform: 'rotate(' + getClockRotations(productDetails?.generted_time_text_2)?.hourRotation + 'deg)'
                     }"
                   ></span>
                   <span
+                  *ngIf="productDetails?.generted_time_text_2"
+                    class="minute-hand"
+                    [ngStyle]="{
+                      transform: 'rotate(' + getClockRotations(productDetails?.generted_time_text_2)?.minuteRotation + 'deg)'
+                    }"
+                  ></span>
+                  <span
+                  *ngIf="!productDetails?.generted_time_text_2"
+                    class="hour-hand"
+                    [ngStyle]="{
+                      transform:'rotate(' +(clocks[1].hour * 30 + clocks[1].minute * 0.5) +'deg)'
+                    }"
+                  ></span>
+                  <span
+                  *ngIf="!productDetails?.generted_time_text_2"
                     class="minute-hand"
                     [ngStyle]="{
                       transform: 'rotate(' + clocks[1].minute * 6 + 'deg)'
                     }"
                   ></span>
                 </div>
-                <div class="time-display">
+                <div *ngIf="!productDetails?.generted_time_text_2" class="time-display">
                   {{ formatTime(clocks[1].hour, clocks[1].minute) }}
+                </div>
+                <div *ngIf="productDetails?.generted_time_text_2" class="time-display">
+                  {{ productDetails?.generted_time_text_2 }}
                 </div>
               </div>
               <!-- Button to open file input -->
@@ -3429,7 +3459,8 @@
             class="d-flex align-items-center justify-content-end gap-2 mb-3"
             style="padding: 0 20px 0 20px"
           >
-            <button class="save-can-btn canc-bg-color" (click)="routeToProductDetail()">
+            <button class="save-can-btn canc-bg-color"
+             (click)="routeToProductDetail()">
               Preview your Ad
             </button>
             <button

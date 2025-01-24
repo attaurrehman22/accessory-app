@@ -12,7 +12,7 @@ export interface UserData {
   name: any;
   slug: any;
   description: any;
-  cover_image: any;
+  // cover_image: any;
   meta_title: any;
   meta_description: any;
   meta_keywords: any;
@@ -30,7 +30,7 @@ export class AdminBrandsComponent {
     "name",
     "slug",
     "description",
-    "cover_image",
+    // "cover_image",
     "meta_title",
     "meta_description",
     "meta_keywords",

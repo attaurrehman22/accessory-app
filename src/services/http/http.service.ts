@@ -116,6 +116,10 @@ export class HttpService implements OnInit {
     return this.http.get(`${this.apiUrl}/api/products/${ID}`);
   }
 
+  getProductsofUnverifiedByID(ID: any): Observable<any> {
+    return this.http.get(`${this.apiUrl}/api/product-perview/${ID}`);
+  }
+
   getRevieweruserByID(ID: any): Observable<any> {
     return this.http.get(`${this.apiUrl}/api/dealer/${ID}/details`);
   }

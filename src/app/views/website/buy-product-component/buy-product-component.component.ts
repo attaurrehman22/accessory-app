@@ -103,6 +103,7 @@ export class BuyProductComponentComponent implements OnInit {
   ProductID: any;
   routeFrom: any;
   isUserLogin: any;
+
   ngOnInit(): void {
     window.scrollTo(0, 0);
     this.isUserLogin = localStorage.getItem("isLoggedIn");
@@ -114,6 +115,10 @@ export class BuyProductComponentComponent implements OnInit {
 
     if (this.routeFrom === "listing-to-product") {
       this.ProductID = history.state.ID;
+      console.log("history.state.data",history.state.data)
+      this.productDetails=history.state.data;
+      this.getDetailsofUnVerfiedProduct()
+      console.log("productDetails",this.productDetails)
     } else {
       const watchId = this.route.snapshot.queryParamMap.get('id');
       if(watchId){
@@ -123,14 +128,81 @@ export class BuyProductComponentComponent implements OnInit {
       }
       console.log("history.state.data",history.state.data)
     }
-    this.initializeComponent();
+    // if(this.routeFrom !== "listing-to-product"){
+      this.initializeComponent();
+    // }
   }
+
+  async getDetailsofUnVerfiedProduct() {
+    try {
+      const res = await this.http.getProductsofUnverifiedByID(this.ProductID).toPromise();
+      this.isDealer = res.typeOfProduct;
+      this.productDetails = res.data;
+      this.isReviewsCount = res.reviewsCount;
+      if (this.productDetails.additional_images) {
+        this.productDetails.additional_images = JSON.parse(
+          this.productDetails.additional_images
+        );
+      }
+
+      if (this.productDetails.main_image) {
+        this.productDetails.main_image = this.productDetails.main_image.replace(
+          /\\/g,
+          ""
+        );
+      }
+    } catch (err) {
+      console.error("Error fetching product details:", err);
+    }
+    // try {
+    //   const res = await this.http.getProductsofUnverifiedByID(this.ProductID).toPromise();
+      
+    //   this.isDealer = res.typeOfProduct;
+    //   this.productDetails = res.data;
+    //   this.isReviewsCount = res.reviewsCount;
+    //   console.log("productDetails", this.productDetails);
+  
+    //   if (this.productDetails.additional_images) {
+    //     const parsedImages = JSON.parse(this.productDetails.additional_images);
+    //     this.thumbnails = parsedImages.map((image: string) => 
+    //       image.replace(/\\/g, "")
+    //     );
+    //   } else {
+    //     this.thumbnails = []; 
+    //   }
+  
+    //   console.log("this.thumbnails", this.thumbnails);
+  
+    //   if (this.thumbnails.length > 0) {
+    //     this.selectedImage = this.thumbnails[0];
+    //   }
+  
+    //   if (this.productDetails.main_image) {
+    //     this.productDetails.main_image = this.productDetails.main_image.replace(/\\/g, "");
+    //     this.productMainImage = this.productDetails.main_image;
+    //   }
+  
+    //   if (this.productDetails.additional_images) {
+    //     this.productDetails.additional_images = JSON.parse(this.productDetails.additional_images);
+    //   }
+  
+    //   console.log("------------------", this.productDetails);
+  
+    // } catch (err) {
+    //   console.error("Error fetching product details:", err);
+    // }
+  }
+  
 
   isReviewsCount: any;
 
   async initializeComponent() {
     try {
-      await this.fetchProductDetails();
+      if(this.routeFrom !== "listing-to-product"){
+        await this.fetchProductDetails();
+      }else{
+        await this.getDetailsofUnVerfiedProduct()
+      }
       this.productMainImage = this.productDetails.main_image;
       this.thumbnails = this.productDetails.additional_images.map((image) =>
         image.replace(/\\/g, "")

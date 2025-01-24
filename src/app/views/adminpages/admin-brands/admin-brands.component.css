@@ -1,8 +1,8 @@
 .table {
-  overflow-x: auto;
+  /* overflow-x: auto; */
   min-width: 100% !important;
   max-width: 100% !important;
-  overflow-y: auto;
+  /* overflow-y: auto; */
 }
 
 @media only screen and (max-width: 660px) {
