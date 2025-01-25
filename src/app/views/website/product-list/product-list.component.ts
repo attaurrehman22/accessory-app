@@ -82,6 +82,7 @@ export class ProductListComponent implements OnInit {
   itemsPerPageOptions: number[] = [30, 60, 90, 100];
   totalPageNumbers: number[] = [];
   isnextPage:boolean=true;
+
   changePage(page: number) {
     this.currentPage = page;
     console.log(`Page changed to: ${page}`);
@@ -95,6 +96,7 @@ export class ProductListComponent implements OnInit {
   }
 
   applyFilters() {
+    this.isShowFilters=false;
     let queryString = "";
     // // Add categories to the query string
     if (this.categories.length > 0) {
