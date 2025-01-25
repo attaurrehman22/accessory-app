@@ -6,6 +6,7 @@ import { MatTableDataSource } from "@angular/material/table";
 import { Router } from "@angular/router";
 import { AlertsServicesService } from "src/services/alerts-service/alerts-services.service";
 import { HttpService } from "src/services/http/http.service";
+import { AdminAddProductComponent } from "../admin-add-product/admin-add-product.component";
 
 export interface UserData {
   name: any;
@@ -203,5 +204,24 @@ export class AdminProductsComponent {
         }
       });
     }
+  }
+
+  editProduct(data){
+      const dialogRef = this.dialog.open(AdminAddProductComponent, {
+          width: '1000px',
+          height: 'auto',
+          disableClose: true,
+          data: { param: 'Edit',data:data },
+        });
+     
+        dialogRef.afterClosed().subscribe((param) => {
+          if (param) {
+            if(param === 'approved' || param === 'reject'){
+               this.activateProduct(data)
+            }else{
+              this.allUser()
+            }
+          } 
+        });
   }
 }

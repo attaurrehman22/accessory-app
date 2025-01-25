@@ -36,3 +36,7 @@ form {
   padding: 10px 40px;
   background: #03181c;
 }
+
+.list-group-item {
+border: none !important;
+}
