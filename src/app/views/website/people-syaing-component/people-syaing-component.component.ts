@@ -65,9 +65,17 @@ export class PeopleSyaingComponentComponent implements AfterViewInit, OnInit {
       ".carousel-item.active"
     );
     this.activeIndex = Array.from(carouselItems).indexOf(activeElement);
+    console.log("this.activeIndex",this.activeIndex)
   }
 
   getNextIndex(offset: number = 1): number {
-    return (this.activeIndex + offset) % this.testimonials.length;
+    if (offset < 0) {
+      console.log("Negative offset detected:", offset);
+      // If the offset is negative, add the length of testimonials to handle wrapping around correctly
+      return (this.activeIndex + offset + this.testimonials.length) % this.testimonials.length;
+    } else {
+      return (this.activeIndex + offset) % this.testimonials.length;
+    }
   }
+  
 }

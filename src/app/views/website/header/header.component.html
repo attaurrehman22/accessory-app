@@ -49,12 +49,12 @@
         <div class="header-contact header-contact-lg gap-4">
            <img
             src="./assets/images/search-icon.png"
-            [matMenuTriggerFor]="search2Menu"
-            #search2MenuTrigger="matMenuTrigger"
+            [matMenuTriggerFor]="search3Menu"
+            #search3MenuTrigger="matMenuTrigger"
             style="cursor: pointer"
           />
-          <!--
-          <mat-menu #search2Menu="matMenu">
+          
+          <mat-menu #search3Menu="matMenu">
             <form class="d-flex flex-grow-1 ms-3" (ngSubmit)="onSearch(searchQuery)" (click)="$event.stopPropagation()">
               <input
                 [(ngModel)]="searchQuery"
@@ -65,7 +65,7 @@
                 aria-label="Search"
               />
             </form>
-          </mat-menu> -->
+          </mat-menu>
 
           <mat-menu #profileMenu="matMenu">
             <button
