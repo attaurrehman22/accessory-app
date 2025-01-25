@@ -14,6 +14,7 @@ import { LoginStateService } from "src/services/login-service/login-state.servic
 import { ChangeDetectorRef } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 import { ModelLoginComponent } from "../../auth/model-login/model-login.component";
+import { MatMenuTrigger } from "@angular/material/menu";
 
 @Component({
   selector: "app-header",
@@ -76,11 +77,13 @@ export class HeaderComponent {
       this.selectedLang = lang;
     });
   }
-
+  @ViewChild('search2MenuTrigger') search2MenuTrigger: MatMenuTrigger;
   @HostListener("window:resize", ["$event"])
   onResize(event: any) {
     this.isSmallScreen = window.innerWidth <= 768;
-
+    if (this.search2MenuTrigger && this.search2MenuTrigger.menuOpen) {
+      this.search2MenuTrigger.closeMenu();
+    }
     if (!this.isSmallScreen && this.drawer.opened) {
       this.drawer.close();
     }

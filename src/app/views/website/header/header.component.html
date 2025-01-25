@@ -44,24 +44,29 @@
             'position-absolute search-box-small-screen': isSmallScreen
           }"
         >
-        <form class="d-flex flex-grow-1 ms-3" (ngSubmit)="onSearch(searchQuery)">
-          <input
-            [(ngModel)]="searchQuery"
-            (ngModelChange)="onSearchChange()"
-            class="form-control me-2"
-            type="search"
-            placeholder="Search"
-            aria-label="Search"
-          />
-        </form>
         
         </div>
         <div class="header-contact header-contact-lg gap-4">
-          <img
+           <img
             src="./assets/images/search-icon.png"
-            (click)="openSearchForm()"
+            [matMenuTriggerFor]="search2Menu"
+            #search2MenuTrigger="matMenuTrigger"
             style="cursor: pointer"
           />
+          <!--
+          <mat-menu #search2Menu="matMenu">
+            <form class="d-flex flex-grow-1 ms-3" (ngSubmit)="onSearch(searchQuery)" (click)="$event.stopPropagation()">
+              <input
+                [(ngModel)]="searchQuery"
+                (ngModelChange)="onSearchChange()"
+                class="form-control me-2"
+                type="search"
+                placeholder="Search"
+                aria-label="Search"
+              />
+            </form>
+          </mat-menu> -->
+
           <mat-menu #profileMenu="matMenu">
             <button
               mat-menu-item
@@ -156,23 +161,28 @@
             'position-absolute search-box-small-screen': isSmallScreen
           }"
         >
-        <form class="d-flex flex-grow-1 ms-3" (ngSubmit)="onSearch(searchQuery)">
-          <input
-            [(ngModel)]="searchQuery"
-            (ngModelChange)="onSearchChange()"
-            class="form-control me-2"
-            type="search"
-            placeholder="Search"
-            aria-label="Search"
-          />
-        </form>
+       
         </div>
         <div class="header-contact sidebar-acions gap-4">
           <img
             src="./assets/images/search-icon.png"
-            (click)="openSearchForm()"
+            [matMenuTriggerFor]="search2Menu"
+            #search2MenuTrigger="matMenuTrigger"
             style="cursor: pointer"
           />
+
+          <mat-menu #search2Menu="matMenu">
+            <form class="d-flex flex-grow-1 ms-3" (ngSubmit)="onSearch(searchQuery)" (click)="$event.stopPropagation()">
+              <input
+                [(ngModel)]="searchQuery"
+                (ngModelChange)="onSearchChange()"
+                class="form-control me-2"
+                type="search"
+                placeholder="Search"
+                aria-label="Search"
+              />
+            </form>
+          </mat-menu>
           <mat-menu #profileMenu="matMenu">
             <button
               mat-menu-item
