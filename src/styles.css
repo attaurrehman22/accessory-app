@@ -361,8 +361,39 @@ a {
 
 /* --------------------------- Login and Register CSS End ------------------------------- */
 
-
+/* ::ng-deep.notificationsMenu.mat-mdc-menu-panel {   
+  max-width: 500px !important; 
+} */
 .featured-promoted-class-badge {
   background-color: #fff;
   padding: 0 5px 0 5px;
+}
+/* ::ng-deep.mat-menu-panel {
+  max-width: none !important;
+} */
+
+#mat-menu-panel-2 {
+  max-width: 1000px !important;
+  min-width: 60vw !important;
+  margin-top: 10px;
+  margin-right: 7vw;
+  margin-left: 10vw;
+}
+
+/* Adjust for screens smaller than 1200px (tablets and below) */
+@media screen and (max-width: 1199px) {
+  #mat-menu-panel-2 {
+      max-width: 90% !important;
+      min-width: 90% !important;
+      margin-right: 50px; /* Adjust margin for smaller screens */
+  }
+}
+
+/* Adjust for screens smaller than 768px (mobile devices) */
+@media screen and (max-width: 767px) {
+  #mat-menu-panel-2 {
+      max-width: 95% !important;
+      min-width: 95% !important;
+      margin-right: 10px; /* Adjust margin for mobile screens */
+  }
 }

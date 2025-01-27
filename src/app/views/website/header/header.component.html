@@ -46,7 +46,7 @@
         >
         
         </div>
-        <div class="header-contact header-contact-lg gap-4">
+        <div class="header-contact header-contact-lg gap-4 mat-menu-nav">
            <img
             src="./assets/images/search-icon.png"
             [matMenuTriggerFor]="search3Menu"
@@ -54,8 +54,8 @@
             style="cursor: pointer"
           />
           
-          <mat-menu #search3Menu="matMenu">
-            <form class="d-flex flex-grow-1 ms-3" (ngSubmit)="onSearch(searchQuery)" (click)="$event.stopPropagation()">
+          <mat-menu #search3Menu="matMenu"  class="notificationsMenu">
+            <form class="d-flex flex-grow-1 ms-3 mat-menu-nav" (ngSubmit)="onSearch(searchQuery)" (click)="$event.stopPropagation()">
               <input
                 [(ngModel)]="searchQuery"
                 (ngModelChange)="onSearchChange()"
