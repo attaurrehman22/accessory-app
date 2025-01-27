@@ -200,7 +200,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
   }
 
   editOffer(customOfferDetails:any){
-   
+   console.log("customOfferDetails",customOfferDetails)
     const dialogRef = this.dialog.open(CustomOfferComponent, {
       width: "600px",
       data: { customOfferDetails: customOfferDetails, param: "editComp" },
@@ -375,6 +375,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
   }
 
   customOffer() {
+    console.log("chat_ID -------------- ",this.chat_id)
     const datawithChat_ID = {
       reciever_ID: this.reciever_ID,
       chat_ID: this.chat_id,

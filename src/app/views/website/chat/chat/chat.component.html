@@ -318,7 +318,7 @@
                       </div>
                       <div class="d-flex justify-content-center mt-3 gap-5">
                         <button *ngIf="!isBuyerUser || isBuyerUser  && !isOfferStatusAccepted || isOfferStatusAccepted" (click)="cancelOfferStatus()" class="first-action-btn">Cancel Offer</button>
-                        <button *ngIf="!isBuyerUser" (click)="editOffer(customOfferDetails)" class="first-action-btn">Edit Offer</button>
+                        <button (click)="editOffer(customOfferDetails)" class="first-action-btn">Edit Offer</button>
                         <button *ngIf="!isOfferStatusAccepted && isBuyerUser" (click)="acceptOffer()" class="second-action-btn">Accept Offer</button>
     
                         <button *ngIf="isBuyerUser && isOfferStatusAccepted" class="second-action-btn" (click)="makePayment()">Make Payment</button>

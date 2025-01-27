@@ -16,6 +16,7 @@ export class CustomOfferComponent {
   productPrice:any;
   isSeller: boolean = false;
   offerID: any;
+  offerDetails:any;
   constructor(
     private fb: FormBuilder,
     private alertService: AlertsServicesService,
@@ -28,6 +29,7 @@ export class CustomOfferComponent {
       this.productPrice=this.data.productDetail.price
     }
     if(this.data?.customOfferDetails?.product){
+      this.offerDetails=data?.customOfferDetails
       this.productPrice=this.data?.customOfferDetails?.product.price
     }
     if(this.data?.productDetail?.price){
@@ -95,7 +97,7 @@ export class CustomOfferComponent {
           this.offerForm.patchValue({
             product_id: productDetail1.product_ID || 0,
             sender_id: localStorage.getItem("userID") || 0,
-            chat_id: productDetail1.chat_id || null,
+            chat_id: productDetail1.chat_ID || null,
           });
         }
       }
@@ -145,9 +147,13 @@ export class CustomOfferComponent {
   markAsSold() {
     const formData = {
       offer_id: this.offerID,
-      offers_status: "accepted",
+      product_id:this.offerDetails.product.id,
+      action_type: "mark_sold",
+      chat_id:this.offerDetails.chat_id,
+      receiver_id:this.offerDetails.sender_id,
+      sender_id:localStorage.getItem("userID")
     };
-    this.http.editOfferStatus(formData).subscribe(
+    this.http.sendMessage(formData).subscribe(
       (res) => {
         this.alertService.showAlert(
           "success",

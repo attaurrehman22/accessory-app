@@ -19,6 +19,7 @@ export class PeopleSyaingComponentComponent implements AfterViewInit, OnInit {
   testimonials:any;
 
   ngOnInit(): void {
+    this.testimonials=[];
     this.getAllStaticstestimonials();
   }
 
@@ -36,7 +37,6 @@ export class PeopleSyaingComponentComponent implements AfterViewInit, OnInit {
     );
   }
   
-
   constructor(
     private translateService: TranslateService,
     private http: HttpService
@@ -69,13 +69,14 @@ export class PeopleSyaingComponentComponent implements AfterViewInit, OnInit {
   }
 
   getNextIndex(offset: number = 1): number {
-    if (offset < 0) {
-      // console.log("Negative offset detected:", offset);
-      // If the offset is negative, add the length of testimonials to handle wrapping around correctly
-      return (this.activeIndex + offset + this.testimonials.length) % this.testimonials.length;
-    } else {
-      return (this.activeIndex + offset) % this.testimonials.length;
+    if (!this.testimonials || this.testimonials.length === 0) {
+      console.error('Testimonials not available or empty');
+      return 0; // or return a default index, e.g., 0
     }
+  
+    return (this.activeIndex + offset + this.testimonials.length) % this.testimonials.length;
   }
+  
+  
   
 }
