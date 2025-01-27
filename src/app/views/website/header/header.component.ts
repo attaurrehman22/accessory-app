@@ -159,7 +159,6 @@ export class HeaderComponent {
       const dialogRef = this.dialog.open(ModelLoginComponent, {
         width: "600px",
         data: { message: "header" },
-        disableClose: true,
       });
   
       dialogRef.afterClosed().subscribe((result) => {

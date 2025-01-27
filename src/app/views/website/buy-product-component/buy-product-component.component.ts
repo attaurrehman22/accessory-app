@@ -310,9 +310,26 @@ export class BuyProductComponentComponent implements OnInit {
   }
 
   buyNow() {
+    const bodyData={
+      product_id:this.productDetails.id,
+      receiver_id:this.productDetails.created_by.id,
+      message:'I want to buy this product.'
+    }
     const isUserLogin = localStorage.getItem("isLoggedIn");
     if (isUserLogin) {
-      this.router.navigate(["/buy-now"]);
+      this.http.buyNowFromDetailsProduct(this.productDetails.id,bodyData).subscribe(
+        (res)=>{
+          this.alertService.showAlert('success','Message send to Seller.')
+          this.router.navigate(['/chat'],{
+            state:{chatID:res.data.chat_id}
+          }
+        )
+        },(err)=>{
+          console.log("err",err)
+          this.alertService.showAlert('warning',`${err.error.message}`)
+        }
+      )
+      // this.router.navigate(["/buy-now"]);
     } else {
       const dialogRef = this.dialog.open(ModelLoginComponent, {
         width: "600px",
@@ -321,7 +338,16 @@ export class BuyProductComponentComponent implements OnInit {
 
       dialogRef.afterClosed().subscribe((result) => {
         if (result) {
-          this.router.navigate(["/buy-now"]);
+          this.http.buyNowFromDetailsProduct(this.productDetails.id,bodyData).subscribe(
+            (res)=>{
+              this.alertService.showAlert('success','Message send to Seller.')
+              this.router.navigate(['/chat'],{
+                state:{chat:res.data}
+              })
+            },(err)=>{
+              this.alertService.showAlert('warning',`${err.error.message}`)
+            }
+          )
         }
       });
     }

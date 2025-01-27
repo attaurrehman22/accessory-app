@@ -50,6 +50,14 @@ export class AdminSidebarComponent {
       iconWidth: 20,
       iconHeight: 20,
     },
+    Users: {
+      label: 'Users',
+      router: '/admin/users',
+      routerActive: 'navbar-button-active',
+      icon: 'assets/images/dashboard-2-svgrepo-com (1).svg',
+      iconWidth: 20,
+      iconHeight: 20,
+    },
     // FeeManagement: {
     //   label: 'FeeManagement',
     //   router: '/Fee-Management',

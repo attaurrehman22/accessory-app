@@ -40,9 +40,18 @@ export class ChatComponent implements OnInit, AfterViewChecked {
   ) {}
 
   ngOnInit(): void {
-    if (history.state.data) {
+    console.log("history.state",history.state)
+    if (history?.state?.data) {
       this.productDeatils = history.state.data;
       this.noMessageDetails = this.productDeatils.created_by;
+    }
+    if (history?.state?.chat) {
+      this.getLatestMessage();
+      console.log("history?.state?.chat",history?.state?.chat)
+      this.getDetailsofProduct(history?.state?.chat.product_id);
+      this.chat_id=history?.state?.chat.chat_id
+      this.getChatDetails();
+      // this. getMesageDetails(history?.state?.chat)
     }
     if (this.productDeatils) {
       this.getLatestMessage();

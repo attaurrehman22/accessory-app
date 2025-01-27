@@ -26,6 +26,7 @@ export class AppComponent implements OnInit {
     "/admin/products",
     "/admin/add-product",
     "/admin/brands",
+    "/admin/users",
     "/admin/brands-product",
     "/admin/category",
     "/admin/category-product",

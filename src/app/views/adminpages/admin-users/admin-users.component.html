@@ -1,0 +1,159 @@
+<div class="">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="row">
+          <div class="col-md-2">
+            <br />
+            <h1>Users</h1>
+          </div>
+          <div class="col-md-1"></div>
+        </div>
+      </div>
+      <div class="row g-0">
+        
+        <div class="col-lg-12 col-md-12 col-sm-12">
+          <div class="table">
+            <mat-card class="mt">
+              <mat-card-content>
+                <div class="row">
+                  <div class="col-8 col-lg-8 col-md-8 col-sm-6">
+                    <mat-form-field appearance="outline">
+                      <mat-label>Search</mat-label>
+  
+                      <input
+                        matInput
+                        (keyup)="applyFilter($event)"
+                        placeholder="Ex. Admin"
+                        #input
+                      />
+                    </mat-form-field>
+                    &nbsp;
+                  </div>
+                  
+                  <div class="col-4 col-lg-4 col-md-4 col-sm-6 d-flex justify-content-end align-items-center">
+                    <!-- <button
+                      [hidden]="!isAdmin()"
+                      mat-raised-button
+                      color="primary"
+                      (click)="openModal()"
+                    >
+                      <mat-icon>add_circle_outline</mat-icon>Add Category 
+                    </button> -->
+                  </div>
+                </div>
+                <mat-card>
+                  <div class="mat-elevation-z8">
+                    <table class="table" mat-table [dataSource]="dataSource">
+                      <!-- ID Column -->
+                      <ng-container class="column" matColumnDef="name">
+                        <th mat-header-cell class="column" *matHeaderCellDef>
+                        Name
+                        </th>
+                        <td mat-cell class="column" *matCellDef="let row">
+                          {{ row.name }}
+                        </td>
+                      </ng-container>
+  
+                      <!-- First Name Column -->
+                      <ng-container class="column" matColumnDef="email">
+                        <th mat-header-cell class="column" *matHeaderCellDef>
+                          Email
+                        </th>
+                        <td mat-cell class="column" *matCellDef="let row; in">
+                          {{ row.email }}
+                        </td>
+                      </ng-container>
+  
+                      <!-- Last Name Column -->
+                      <ng-container class="column" matColumnDef="country">
+                        <th mat-header-cell class="column" *matHeaderCellDef>
+                        Country
+                        </th>
+                        <td mat-cell class="column" *matCellDef="let row; in">
+                          {{ row.country }}
+                        </td>
+                      </ng-container>
+
+                      <ng-container class="column" matColumnDef="city">
+                        <th mat-header-cell class="column" *matHeaderCellDef>
+                            City
+                        </th>
+                        <td mat-cell class="column" *matCellDef="let row; in">
+                          {{ row.city }}
+                        </td>
+                      </ng-container>
+  
+                      <ng-container class="column" matColumnDef="type">
+                        <th mat-header-cell class="column" *matHeaderCellDef>
+                            Type
+                        </th>
+                        <td mat-cell class="column" *matCellDef="let row; in">
+                          {{ row.type }}
+                        </td>
+                      </ng-container>
+  
+                      <!-- Status Column -->
+                      <ng-container class="column" matColumnDef="edit">
+                        <th mat-header-cell class="column" *matHeaderCellDef>
+                          Action
+                        </th>
+                        <td mat-cell class="column" *matCellDef="let row; in">
+            
+
+                          <button
+                          style="width: 0; height: 0; padding: 0"
+                          mat-icon-button
+                          [matMenuTriggerFor]="menu"
+                          (click)="$event.stopPropagation()"
+                        >
+                          <mat-icon>info</mat-icon>
+                        </button>
+                        <mat-menu #menu="matMenu">
+                          <button mat-menu-item (click)="changeUserType(row)">
+                            <mat-icon>refresh</mat-icon>
+                            <span *ngIf="row.type === 'admin'">Admin</span>
+                            <span *ngIf="row.type === 'dealer'">Change into User</span>
+                            <span *ngIf="row.type === 'user'">Change into Dealer</span>
+                            <span *ngIf="row.type === null">Change into User</span>
+                            <!-- <span *ngIf="row.type === 'dealer'">Change into Seller</span> -->
+                            <!-- <span *ngIf="row.type === 'dealer'">Dealer</span> -->
+                          </button>
+                        </mat-menu>
+
+
+                        </td>
+                      </ng-container>
+  
+                      <tr
+                        mat-header-row
+                        *matHeaderRowDef="displayedColumns; sticky: true"
+                      ></tr>
+                      <tr
+                        mat-row
+                        *matRowDef="let row; columns: displayedColumns"
+                      ></tr>
+  
+                      <!-- Row shown when there is no matching data. -->
+                      <tr class="mat-row" *matNoDataRow>
+                        <td class="mat-cell" colspan="4">
+                          No data matching the filter "{{ input.value }}"
+                        </td>
+                      </tr>
+                    </table>
+  
+                    <mat-paginator
+                      #paginator
+                      [pageSizeOptions]="[5, 10, 20]"
+                      showFirstLastButtons
+                    ></mat-paginator>
+                  </div>
+                </mat-card>
+              </mat-card-content>
+            </mat-card>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+

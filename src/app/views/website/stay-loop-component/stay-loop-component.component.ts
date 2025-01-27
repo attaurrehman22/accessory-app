@@ -45,11 +45,12 @@ export class StayLoopComponentComponent implements OnInit {
     }
   }
 
-  goToProductDetailPage() {
-    this.router.navigate(["/buy-product"], {
-      state: { data: this.watchDetails.product },
+  goToProductDetailPage(product) {
+    this.router.navigate(['/buy-product'], {
+      queryParams: { id: product.product.id },
     });
   }
+  
 }
 
 

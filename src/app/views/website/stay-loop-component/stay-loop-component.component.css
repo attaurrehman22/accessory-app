@@ -94,7 +94,8 @@
 
 
 .card-text{
-  width: 620px;
+  min-width: 318px;
+  max-width: 524px;
 }
 
 .prev-next-span {

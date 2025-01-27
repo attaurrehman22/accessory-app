@@ -246,6 +246,25 @@ export class HttpService implements OnInit {
     );
   }
 
+  getAdminUsers(pageIndex: number = 0, pageSize: number = 100): Observable<any> {
+    let pageSize2=100;
+    return this.http.get(`${this.apiUrl}/api/admin/user/list?page=${pageIndex + 1}&per_page=${pageSize2}`, {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+  }
+
+  changeUserType(formData): Observable<any> {
+    return this.http.post(`${this.apiUrl}/api/admin/user/update-user-type`, formData, {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+  }
+
   getAdminCategory(): Observable<any> {
     return this.http.get(`${this.apiUrl}/api/admin/categories`, {
       headers: {
@@ -342,6 +361,8 @@ export class HttpService implements OnInit {
       }
     );
   }
+
+
 
   getAdminDashBoardDetails(): Observable<any> {
     return this.http.get(`${this.apiUrl}/api/admin/dashboard/stats`, {
@@ -507,6 +528,15 @@ export class HttpService implements OnInit {
 
   // -------------------------------------------- chat Section start --------------------------
 
+  buyNowFromDetailsProduct(ID:any,bodyData:any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/api/buy-product/${ID}`, bodyData,{
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+  }
+  
   getChatsWithLatestMessage(): Observable<any> {
     return this.http.get(`${this.apiUrl}/api/chat/list`, {
       headers: {
@@ -515,6 +545,8 @@ export class HttpService implements OnInit {
       },
     });
   }
+
+
 
   getChatsDetails(chatID): Observable<any> {
     return this.http.get(`${this.apiUrl}/api/messages/${chatID}`, {

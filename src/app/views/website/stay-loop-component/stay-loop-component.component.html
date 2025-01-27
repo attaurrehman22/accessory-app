@@ -42,8 +42,8 @@
           <div class="watch-details-div">
             <div class="d-flex flex-column text-white">
               <p class="mb-1">{{ product.product.name }}</p>
-              <h1 class="display-6 font-size-64 font-wight-700 mt-2 cormorant-styl">
-                {{ product.product?.brand?.name || "N/A" }}
+              <h1 class="display-6 font-size-40 font-wight-600 mt-2 cormorant-styl">
+                {{ product.product?.watch_type || "N/A" }}
               </h1>
               <p class="card-text">
                 {{ product.product.description }}
@@ -62,7 +62,7 @@
                 {{ product.product.currency }} {{ product.product.price }}
               </h4>
 
-              <button class="buy-btn" (click)="goToProductDetailPage()">
+              <button class="buy-btn"  (click)="goToProductDetailPage(product)">
                 Buy Now
               </button>
             </div>

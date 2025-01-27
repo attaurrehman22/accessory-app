@@ -13,16 +13,32 @@ export class ChronosouqBuyerProtectionComponentComponent implements OnInit {
   showList: any[] = [];
   categoryNames: any[] = [];
   commentsList: any;
+  allProducts: any[] = [];
 
   changeCategory(category: any) {
     this.selectedCategory = category;
-  
-    this.showList = (category.products || []).map((product: any) => {
-      return {
-        ...product,
-        main_image: product.main_image ? product.main_image.replace(/\\/g, '') : null
-      };
-    });
+
+    // If the "All Products" category is selected, show both category products and all products
+    if (category.name === 'All Products') {
+      this.showList = [
+        ...this.allProducts.map((product: any) => {
+          return {
+            ...product,
+            main_image: product.main_image ? product.main_image.replace(/\\/g, '') : null
+          };
+        })
+      ];
+    } else {
+      // If a regular category is selected, show only its products
+      this.showList = [
+        ...category.products.map((product: any) => {
+          return {
+            ...product,
+            main_image: product.main_image ? product.main_image.replace(/\\/g, '') : null
+          };
+        })
+      ];
+    }
   }
   
 
@@ -57,12 +73,20 @@ export class ChronosouqBuyerProtectionComponentComponent implements OnInit {
     this.http.getAllTopNewArrivalCategory().subscribe(
       (res) => {
         this.categoryNames = res.data; 
-        this.selectedCategory = this.categoryNames[0]; 
+        this.allProducts = res.allProducts || []; // Store all products
+        // Add 'All Products' category to the category list
+        this.categoryNames.push({ name: 'All Products', products: this.allProducts });
+        this.selectedCategory = this.categoryNames[0]; // Default to the first category
         this.showList = this.selectedCategory.products || [];
       },
-      (err) => {}
+      (err) => {
+        // Handle error
+        console.error(err);
+      }
     );
   }
+
+  
 
   constructor(
     public translateService: TranslateService,

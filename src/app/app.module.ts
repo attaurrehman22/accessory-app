@@ -83,7 +83,7 @@ import { ForgotPasswordComponent } from './views/auth/forgot-password/forgot-pas
 import { FieldLimitIntoHunderedDirective } from './views/directives/hundered-character-limit/field-limit-into-hundered.directive';
 import { OnlyCharacterLimitThirtyDirective } from './views/directives/only-character-limit-thirty/only-character-limit-thirty.directive';
 import { PriceLimitDirective } from './views/directives/price-limit/price-limit.directive';
-
+import { AdminUsersComponent } from './views/adminpages/admin-users/admin-users.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -127,7 +127,8 @@ import { PriceLimitDirective } from './views/directives/price-limit/price-limit.
     ForgotPasswordComponent,
     FieldLimitIntoHunderedDirective,
     OnlyCharacterLimitThirtyDirective,
-    PriceLimitDirective
+    PriceLimitDirective,
+    AdminUsersComponent
   ],
   imports: [
     MatSortModule,

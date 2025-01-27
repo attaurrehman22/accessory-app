@@ -18,14 +18,25 @@
     <div
       class="col-lg-12 col-md-12 col-sm-12 d-flex flex-wrap justify-content-center gap-2 mt-3"
     >
-      <button
-        *ngFor="let category of categoryNames"
-        (click)="changeCategory(category)"
-        class="category_btn"
-        [ngClass]="{ 'selected-category': selectedCategory === category }"
-      >
-        {{ category.name }}
-      </button>
+      <!-- Button for All Products category -->
+<!-- <button
+(click)="changeCategory({name: 'All Products', products: allProducts})"
+class="category_btn"
+[ngClass]="{ 'selected-category': selectedCategory.name === 'All Products' }"
+>
+All Products
+</button> -->
+
+<!-- Buttons for other categories -->
+<button
+*ngFor="let category of categoryNames"
+(click)="changeCategory(category)"
+class="category_btn"
+[ngClass]="{ 'selected-category': selectedCategory === category }"
+>
+{{ category.name }}
+</button>
+
     </div>
 
     <div class="container mt-5">
@@ -55,7 +66,7 @@
                       margin: 0 !important;
                     "
                   >
-                    {{ watch.brand.name }} | {{watch.model || 'N/A'}}
+                    {{ watch?.brand?.name }} | {{watch?.model || 'N/A'}}
                   </p>
                 </div>
                 <div>
@@ -66,14 +77,14 @@
                 class="d-flex justify-content-between align-items-center mt-2"
               >
                 <p class="card-title d-flex flex-wrap">
-                  {{ watch.title }}
+                  {{ watch?.title }}
                 </p>
               </div>
               <div
                 class="d-flex justify-content-between align-items-center mt-3"
               >
-                <p class="price">
-                  +{{ watch.shipping_charges }} {{ watch.currency }} Shipping
+                <p *ngIf="watch?.shipping_charges" class="price">
+                  +{{ watch?.shipping_charges }} {{ watch?.currency }} Shipping
                 </p>
                 <div>
                   <p class="price">Location</p>
@@ -81,9 +92,9 @@
               </div>
               <div class="d-flex justify-content-between align-items-center">
                 <p class="card-title-two">{{ watch.price }}</p>
-                <p class="card-title-two">{{ watch.created_by.city }}</p>
+                <p *ngIf="watch?.created_by?.city" class="card-title-two">{{ watch.created_by.city }}</p>
               </div>
-              <div *ngIf="watch.created_by.type === 'user'" class="d-flex mt-2 seller-chip">
+              <div *ngIf="watch?.created_by?.type === 'user'" class="d-flex mt-2 seller-chip">
                 Private Seller
               </div>
               <div *ngIf="watch.created_by.type === 'dealer'" class="d-flex mt-2 seller-chip">
@@ -93,11 +104,11 @@
           </div>
           <div class="heart-icon">
             <div class="featured-icon">
-              <div *ngIf="watch.feature_item === 1" class="featured-promoted-class-badge">
+              <div *ngIf="watch?.feature_item === 1" class="featured-promoted-class-badge">
                 Featured
               </div>
           
-              <div *ngIf="watch.feature_item !== 1 && watch.is_promoted === 1" class="featured-promoted-class-badge">
+              <div *ngIf="watch?.feature_item !== 1 && watch.is_promoted === 1" class="featured-promoted-class-badge">
                 Promoted
               </div>
             </div>

@@ -199,6 +199,11 @@
   background: none !important;
 }
 
+.mat-mdc-menu-panel.mat-mdc-menu-panel {
+  max-width: 480px !important;
+  min-width: 310px !important;
+  max-height: 500px;
+}
 
 .navbar-toggler {
   width: 50px;
@@ -258,7 +263,6 @@
   .query {
     display: none;
   }
-
 }
 
 @media screen and (max-width: 991px) {
@@ -289,8 +293,6 @@
   .rtl-layout-reverse.navbar-collapse.collapse:not(.show) {
     transform: translate(100%) !important;
   }
-
-
 }
 
 .navbar-toggler {
