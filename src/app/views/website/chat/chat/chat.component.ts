@@ -83,6 +83,12 @@ export class ChatComponent implements OnInit, AfterViewChecked {
       this.chats = res.chats.map((chat) => {
         chat.product.main_image = chat.product.main_image.replace(/\\/g, "/");
         return chat;
+      },(err)=>{
+        if(err && err.error){
+          this.alertService.showAlert('warning',`${err.error.message}`)
+        }else{
+          this.alertService.showAlert('warning','Error in getting message Please try again')
+        }
       });
     });
   }
@@ -153,20 +159,27 @@ export class ChatComponent implements OnInit, AfterViewChecked {
          let useridd=localStorage.getItem('userID')
 
         if(useridd == message.receiver_id){
-          if( message.direction == 'STB'){
+          if(message.direction == 'STB'){
             this.isBuyerUser=true
           }else{
             this.isBuyerUser=false
           }
         }
-        
-        if(!this.isBuyerUser){
-          if(message.direction === 'BTB' && useridd === message.sender_id){
-              this.isBuyerUser=true
+        if(this.isBuyerUser == false){
+          console.log("before isBuyerUser",this.isBuyerUser)
+          console.log("message.direction",message.direction)
+          console.log("message.sender_id",message.sender_id)
+          console.log("useridd",useridd)
+          if( (message.direction == 'BTB' || message.direction == 'BTS')  && useridd == message.sender_id){
+            console.log("hello")
+            this.isBuyerUser=true
           }else{
             this.isBuyerUser=false
           }
+
+
         }
+        console.log("after isBuyerUser",this.isBuyerUser)
         if(message.action_type === 'buy_now'){
           this.isBuyNowFromChatCheck=true;
         }
@@ -195,7 +208,14 @@ export class ChatComponent implements OnInit, AfterViewChecked {
       if(S_T_B === 'yes' && B_T_S === 'yes'){
         this.isShowBuyNowOffer=true
       }
+      
       this.getCustomOffer();
+    },(err)=>{
+      if(err && err.error){
+        this.alertService.showAlert('warning',`${err.error.message}`)
+      }else{
+        this.alertService.showAlert('warning','Error in getting chat Details Please try again')
+      }
     });
   }
 
@@ -220,6 +240,11 @@ export class ChatComponent implements OnInit, AfterViewChecked {
             this.getChatDetails()
             this.getLatestMessage();
           },(err)=>{
+            if(err && err.error){
+              this.alertService.showAlert('warning',`${err.error.message}`)
+            }else{
+              this.alertService.showAlert('warning','Error in sending message Please try again')
+            }
           }
         )   
       }
@@ -253,6 +278,12 @@ export class ChatComponent implements OnInit, AfterViewChecked {
         else{
           this.isProductReserved=false
         }
+      },(err)=>{
+        // if(err && err.error){
+        //   this.alertService.showAlert('warning',`${err.error.message}`)
+        // }else{
+        //   this.alertService.showAlert('warning','Error in getting Custom offer')
+        // }
       }
     )
   }
@@ -262,11 +293,18 @@ export class ChatComponent implements OnInit, AfterViewChecked {
   }
 
   getDetailsofProduct(ID: any) {
-    this.http.getProductsByID(ID).subscribe((res) => {
+    this.http.getProductsByID(ID).subscribe(
+      (res) => {
       if (res.data.main_image) {
         res.data.main_image = res.data.main_image.replace(/\\/g, "");
       }
       this.getProductDetails = res.data;
+    },(err)=>{
+      if(err && err.error){
+        this.alertService.showAlert('warning',`${err.error.message}`)
+      }else{
+        this.alertService.showAlert('warning','Error in getting product details')
+      }
     });
   }
 
@@ -323,11 +361,20 @@ export class ChatComponent implements OnInit, AfterViewChecked {
       formData.append("action_type", "buy_now");
     }
 
-    this.http.sendMessage(formData).subscribe((res) => {
+    this.http.sendMessage(formData).subscribe(
+      (res) => {
       this.chat_id = res.data.chat_id;
         this.getChatDetails();
         this.getLatestMessage();
-    });
+    },(err)=>{
+      if(err && err.error){
+        this.alertService.showAlert('warning',`${err.error.message}`)
+      }else{
+        this.alertService.showAlert('warning','Error in sending message Please try again')
+
+      }
+    }
+  );
     this.newMessage = "";
     this.buyNowStatus = false;
     this.selectedImages = [];
@@ -410,7 +457,11 @@ export class ChatComponent implements OnInit, AfterViewChecked {
         this.getChatDetails()
         this.getLatestMessage()
       },(err)=>{
+        if(err && err.error){
+          this.alertService.showAlert('warning',`${err.error.message}`)
+        }else{
         this.alertService.showAlert('danger','Error in Offer Canceling')
+        }
       }
     );
   }
@@ -431,7 +482,12 @@ export class ChatComponent implements OnInit, AfterViewChecked {
         this.getChatDetails()
         this.getLatestMessage()
       },(err)=>{
-        this.alertService.showAlert('danger','Error in Product Sold')
+        if(err && err.error){
+          this.alertService.showAlert('warning',`${err.error.message}`)
+        }else{
+          this.alertService.showAlert('danger','Error in Product Sold')
+        }
+       
       }
     );
   }
@@ -514,6 +570,12 @@ export class ChatComponent implements OnInit, AfterViewChecked {
             this.isCancelOfferBuyer=true
             this.getChatDetails();
             this.getLatestMessage();
+          },(err)=>{
+            if(err && err.error){
+              this.alertService.showAlert('warning',`${err.error.message}`)
+            }else{
+              this.alertService.showAlert('warning','Error in add Shipment Please try again with correct form data')
+            }
           }
         )
       }
@@ -534,6 +596,12 @@ export class ChatComponent implements OnInit, AfterViewChecked {
           this.getChatDetails();
           this.getLatestMessage();
         }
+      },(err)=>{
+        if(err && err.error){
+          this.alertService.showAlert('warning',`${err.error.message}`)
+        }else{
+          this.alertService.showAlert('warning','Error in Cancel Order Please try again')
+        }
       }
     )
   }
@@ -551,6 +619,12 @@ export class ChatComponent implements OnInit, AfterViewChecked {
         this.chat_id = res.messages.chat_id;
           this.getChatDetails();
           this.getLatestMessage();
+      },(err)=>{
+        if(err && err.error){
+          this.alertService.showAlert('warning',`${err.error.message}`)
+        }else{
+          this.alertService.showAlert('warning','Error in Making payment Please try again')
+        }
       }
     )
   }

@@ -533,7 +533,7 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
 
   patchFormDetails(){
     // listingForm
-    this.listingForm.get('brand_id').setValue(this.productDetails.brand_id);
+    this.listingForm.get('brand_id').setValue(this.productDetails.brand.id);
     if (this.productDetails.brand_id) {
         this.listingForm.get('brand_id').disable();
     }
@@ -574,19 +574,21 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
     if (this.productDetails.approximate_year) {
         this.listingForm.get('approximation').disable();
     }
+
+    console.log("listing form",this.listingForm.value)
     // this.listingForm.get('unknown').setValue(this.productDetails.)
 
     // watchDetailsForm 
     this.watchDetailsForm.get('reference_number').setValue(this.productDetails.reference_number);
 
     if(this.productDetails.reference_number){
-      this.watchDetailsForm.get('reference_number').disable();
+      // this.watchDetailsForm.get('reference_number').disable();
     }
     
     this.watchDetailsForm.get('serial_no').setValue(this.productDetails.serial_no);
 
     if(this.productDetails.serial_no){
-      this.watchDetailsForm.get('serial_no').disable();
+      // this.watchDetailsForm.get('serial_no').disable();
     }
 
     this.watchDetailsForm.get('gender').setValue(this.productDetails.gender);
@@ -917,11 +919,13 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
       if (Param === "listingDetails") {
         if (this.listingForm.valid) {
           if(this.isFromMyListingComponent){
+            console.log("hello edit case")
+            console.log("this.productIDFromResponse",this.productIDFromResponse)
             const formData={...this.listingForm.value , product_id:this.productIDFromResponse}
             this.http.updateListingDetails(formData).subscribe(
               (res) => {
-                this.productIDFromResponse = res.id;
-                localStorage.setItem('productID', res.id);
+                this.productIDFromResponse = res.data.id;
+                localStorage.setItem('productID',  res.data.id);
                 this.alertService.showAlert(
                   "success",
                   "Listing Details Add Successfully"
@@ -1128,13 +1132,15 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
         } else {
           if (
             !this.watchPrice ||
-            !this.shipping_type ||
-            !this.shipping_charges ||
-            !this.estimate_delivery ||
-            !this.estimatedPayoutwithShipping
+            !this.shipping_type
           ) {
             this.alertService.showAlert("info", "Enter Form Values");
+            return
           } else {
+            if(this.shipping_type === 'inclusiveShipping' && (!this.shipping_charges || !this.estimate_delivery)){
+              this.alertService.showAlert("info", "Enter Form Values");
+              return
+            }else{
             formData = {
               product_id: this.productIDFromResponse,
               price: this.watchPrice,
@@ -1144,6 +1150,7 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
               allow_to_make_offer: this.allow_to_make_offer,
               estimate_payout: this.estimatedPayoutwithShipping,
             };
+          }
           }
         }
 

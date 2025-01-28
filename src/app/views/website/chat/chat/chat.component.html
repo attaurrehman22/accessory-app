@@ -252,18 +252,6 @@
         <div class="card-body" style="height: 480px; overflow-y: scroll">
           <div *ngIf="messages">
             <div *ngFor="let message of reversedMessages">
-              <!-- <div
-                class="message"
-                [class.received]="message.direction === 'STB'"
-                [class.sent]="message.direction === 'BTS'"
-              > -->
-              <!-- <div
-                class="message"
-                [class.received]="message.direction === 'BTS' && !isBuyerUser"
-                [class.sent]="message.direction === 'BTS' && isBuyerUser"
-                [class.received]="message.direction === 'STB' && isBuyerUser"
-                [class.sent]="message.direction === 'STB' && !isBuyerUser"
-              > -->
               <div
                   class="message"
                   [class.custom-sent]="reversedMessages.length === 1"

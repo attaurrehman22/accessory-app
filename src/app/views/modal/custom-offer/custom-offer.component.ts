@@ -159,7 +159,7 @@ export class CustomOfferComponent {
           "success",
           "Product Mark as Sold Succesfully"
         );
-        this.dialogRef.close(this.offerForm.value);
+        // this.dialogRef.close(this.offerForm.value);
       },
       (err) => {
         this.alertService.showAlert("danger", "Error in Product Mark as Sold");

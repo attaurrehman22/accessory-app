@@ -204,6 +204,7 @@
                 <mat-label class="label-header">Reference No.</mat-label>
                 <input
                   matInput
+                  [readonly]="productDetails.reference_number ? true : false"
                   formControlName="reference_number"
                   placeholder="Enter your Reference Number"
                   required=""
@@ -221,6 +222,7 @@
                     >
                     <input
                       matInput
+                      [readonly]="productDetails.serial_no ? true : false"
                       formControlName="serial_no"
                       placeholder="Enter serial number"
                       required
@@ -2095,6 +2097,7 @@
                   <mat-label class="label-header">Reference No.</mat-label>
                   <input
                     matInput
+                    [readonly]="productDetails.reference_number ? true : false"
                     formControlName="reference_number"
                     placeholder="Enter your Reference Number"
                     required
@@ -2118,6 +2121,7 @@
                       >
                       <input
                         matInput
+                        [readonly]="productDetails.serial_no ? true : false"
                         formControlName="serial_no"
                         placeholder="Enter serial number"
                         required
