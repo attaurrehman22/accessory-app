@@ -179,9 +179,9 @@ export class PopularBrandsComponentComponent implements OnInit {
     if (this.products.length > 0) {
       const productName = this.products[this.firstVisibleIndex]?.name;
       if (productName) {
-        console.log("First product:", productName);
+   
       } else {
-        console.log("No product found at the first index.");
+       
       }
     }
   }

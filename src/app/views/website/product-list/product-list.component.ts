@@ -32,7 +32,6 @@ export class ProductListComponent implements OnInit {
     this.applyFilters();
     this.route.queryParams.subscribe((params) => {
       this.searchQuery = params['query'] || '';  // Read query parameter, or default to an empty string
-      console.log("Search query received in ProductListComponent:", this.searchQuery);
       this.applyFilters();
     });
   }
@@ -85,13 +84,12 @@ export class ProductListComponent implements OnInit {
 
   changePage(page: number) {
     this.currentPage = page;
-    console.log(`Page changed to: ${page}`);
+
     this.applyFilters(); 
   }
 
   onItemsPerPageChange() {
     this.currentPage = 1; 
-    console.log(`Items per page changed to: ${this.itemsPerPage}`);
     this.applyFilters(); 
   }
 
@@ -115,23 +113,23 @@ export class ProductListComponent implements OnInit {
         queryString += "&"; // Add '&' if categories already exist
       }
       this.watchTypes.forEach((id, index) => {
-        console.log("Brand ID ------ ",id)
+ 
         if(id.selected){
           let isPROMO=1
           if(id.id === 1){
-            console.log("id.id === 1")
+
             queryString += `&is_promoted=${isPROMO}`
-            console.log("queryString",queryString)
+          
           }
           if(id.id === 2){
-            console.log("id.id === 2")
+          
             queryString += `&feature_item=${isPROMO}`
-            console.log("queryString",queryString)
+          
           }
           if(id.id === 3){
-            console.log("id.id === 3")
+   
             queryString += `&popular_item=${isPROMO}`
-            console.log("queryString",queryString)
+          
           }
           // queryString += `brand_ids[]=${id.id}`; // Use brand_ids[] to store as an array
           if (index < this.watchTypes.length - 1) {
@@ -276,7 +274,7 @@ export class ProductListComponent implements OnInit {
   @HostListener('window:mouseup')
   stopDragging(): void {
     this.dragging = false;
-    console.log('Final Value:', this.currentValue);
+
   }
 
   // Update the value and position of the thumb

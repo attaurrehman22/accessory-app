@@ -22,9 +22,7 @@ export class AdminAddProductComponent {
     public dialogRef: MatDialogRef<AdminAddProductComponent>,
     @Inject(MAT_DIALOG_DATA) data: any
   ) {
-    console.log("data.data",data.data)
     this.product=data.data;
-    // console.log(" this.data", this.data)
   }
   ngOnInit(): void {
 

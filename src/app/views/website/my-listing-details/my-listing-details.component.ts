@@ -39,7 +39,7 @@ export class MyListingDetailsComponent implements OnInit{
           return detail;
         });
 
-        console.log(this.listings)
+  
       }
      )
     // this.listings = [

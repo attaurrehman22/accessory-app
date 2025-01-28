@@ -105,10 +105,10 @@ export class HeaderComponent {
       if (this.isAdminUser()) {
         this.showHideAdminUser = this.isAdminUser();
       } else {
-        console.log("User is not an admin");
+
       }
     } else {
-      console.log("User is not logged in");
+
     }
   }
 

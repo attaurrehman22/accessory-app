@@ -40,14 +40,14 @@ export class ChatComponent implements OnInit, AfterViewChecked {
   ) {}
 
   ngOnInit(): void {
-    console.log("history.state",history.state)
+
     if (history?.state?.data) {
       this.productDeatils = history.state.data;
       this.noMessageDetails = this.productDeatils.created_by;
     }
     if (history?.state?.chat) {
       this.getLatestMessage();
-      console.log("history?.state?.chat",history?.state?.chat)
+
       this.getDetailsofProduct(history?.state?.chat.product_id);
       this.chat_id=history?.state?.chat.chat_id
       this.getChatDetails();
@@ -166,12 +166,10 @@ export class ChatComponent implements OnInit, AfterViewChecked {
           }
         }
         if(this.isBuyerUser == false){
-          console.log("before isBuyerUser",this.isBuyerUser)
-          console.log("message.direction",message.direction)
-          console.log("message.sender_id",message.sender_id)
-          console.log("useridd",useridd)
+         
+   
           if( (message.direction == 'BTB' || message.direction == 'BTS')  && useridd == message.sender_id){
-            console.log("hello")
+          
             this.isBuyerUser=true
           }else{
             this.isBuyerUser=false
@@ -179,7 +177,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
 
 
         }
-        console.log("after isBuyerUser",this.isBuyerUser)
+
         if(message.action_type === 'buy_now'){
           this.isBuyNowFromChatCheck=true;
         }
@@ -220,7 +218,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
   }
 
   editOffer(customOfferDetails:any){
-   console.log("customOfferDetails",customOfferDetails)
+
     const dialogRef = this.dialog.open(CustomOfferComponent, {
       width: "600px",
       data: { customOfferDetails: customOfferDetails, param: "editComp" },
@@ -266,12 +264,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
           this.isOfferStatusAccepted=true
         }
         if(res.offer.offers_status !== 'accepted' && res.offer.product.sale_status === 'reserved'){
-        console.log("res.offer.offers_status !== 'accepted'",res.offer.offers_status)
-        console.log("this.isBuyNowFromChatCheck",this.isBuyNowFromChatCheck)
-        console.log("this.isActionTypeMakePaymentToHideCustomOffer",this.isActionTypeMakePaymentToHideCustomOffer)
-        console.log("res.offer.product.sale_status",res.offer.product.sale_status)
-        console.log("this.isBuyerUser",this.isBuyerUser)
-        console.log("",)
+     
 
           this.isProductReserved=true
         }
@@ -422,7 +415,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
   }
 
   customOffer() {
-    console.log("chat_ID -------------- ",this.chat_id)
+
     const datawithChat_ID = {
       reciever_ID: this.reciever_ID,
       chat_ID: this.chat_id,

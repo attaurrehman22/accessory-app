@@ -208,8 +208,6 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
     if (fileInput.files && fileInput.files[0]) {
       const file = fileInput.files[0];
       this.selectedFiles[clockIndex] = file; // Store the selected file
-      console.log(`Selected file for clock ${clockIndex + 1}:`, file);
-
       const reader = new FileReader();
       reader.onload = (e: any) => {
         this.imagePreviews[clockIndex] = e.target.result;
@@ -574,8 +572,6 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
     if (this.productDetails.approximate_year) {
         this.listingForm.get('approximation').disable();
     }
-
-    console.log("listing form",this.listingForm.value)
     // this.listingForm.get('unknown').setValue(this.productDetails.)
 
     // watchDetailsForm 
@@ -694,7 +690,6 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
     this.selectedOptions=scopeofDelivery
 
     this.coverImage = { file: null, url: 'https://api.chronosouq.com/'+this.productDetails.main_image };
-    console.log(" this.coverImage", this.coverImage)
 
 
     if(this.productDetails.additional_images){
@@ -726,7 +721,6 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
 
       if (selectedOptionsListString) {
         const selectedOptionsList = selectedOptionsListString;
-        console.log("selectedOptionsList",selectedOptionsList)
         // Assign the last element of the list to selectedSection
         if (selectedOptionsList.length > 0) {
           this.selectedSection = selectedOptionsList[selectedOptionsList.length - 1];
@@ -742,7 +736,6 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
     });
     
     if(this.isAdminUser() === true){
-      console.log("isAdminUser in header comp", this.isAdminUser());
       this.isAdminLogin=true;
     }
     let isUserLogin = localStorage.getItem("isLoggedIn");
@@ -834,7 +827,6 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
   }
 
   selectSection(section: string) {
-    console.log("Section",section)
     this.selectedSection = section;
   }
 
@@ -919,8 +911,7 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
       if (Param === "listingDetails") {
         if (this.listingForm.valid) {
           if(this.isFromMyListingComponent){
-            console.log("hello edit case")
-            console.log("this.productIDFromResponse",this.productIDFromResponse)
+       
             const formData={...this.listingForm.value , product_id:this.productIDFromResponse}
             this.http.updateListingDetails(formData).subscribe(
               (res) => {
@@ -1259,8 +1250,6 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
         }
       }
     )
-
-    console.log("backUpProduct",backUpProduct)
 
     this.router.navigate(["/buy-product"], {
       state: { param: "listing-to-product", ID: this.productIDFromResponse,data:backUpProduct },

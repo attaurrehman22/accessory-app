@@ -130,7 +130,6 @@ export class CustomOfferComponent {
             this.dialogRef.close(this.offerForm.value);
           },
           (err) => {
-            console.log(err)
             const errorMessage = err.error?.message || "Something went wrong!";
             this.alertService.showAlert(
               "danger",

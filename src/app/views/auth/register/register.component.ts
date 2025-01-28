@@ -95,8 +95,6 @@ export class RegisterComponent implements OnInit {
     this.registerForm.markAllAsTouched();
 
     if (this.registerForm.valid) {
-      console.log(this.registerForm.value)
-      console.log(this.registerForm)
       this.http
         .register(this.registerForm)
         .subscribe(

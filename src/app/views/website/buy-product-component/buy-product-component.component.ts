@@ -62,10 +62,6 @@ export class BuyProductComponentComponent implements OnInit {
             : null,
         }));
         this.similarWatchesList = [...this.similarWatchesList, ...newWatches];
-        console.log(
-          "Similar watches in more watches function",
-          this.similarWatchesList
-        );
         this.totalPages = res.data.last_page;
       } catch (err) {
         console.error("Error loading more watches:", err);
@@ -115,10 +111,10 @@ export class BuyProductComponentComponent implements OnInit {
 
     if (this.routeFrom === "listing-to-product") {
       this.ProductID = history.state.ID;
-      console.log("history.state.data",history.state.data)
+   
       this.productDetails=history.state.data;
       this.getDetailsofUnVerfiedProduct()
-      console.log("productDetails",this.productDetails)
+   
     } else {
       const watchId = this.route.snapshot.queryParamMap.get('id');
       if(watchId){
@@ -126,7 +122,7 @@ export class BuyProductComponentComponent implements OnInit {
       }else{
         this.ProductID = history.state.data.id;
       }
-      console.log("history.state.data",history.state.data)
+      
     }
     // if(this.routeFrom !== "listing-to-product"){
       this.initializeComponent();
@@ -267,7 +263,7 @@ export class BuyProductComponentComponent implements OnInit {
             : null,
         };
       });
-      console.log("this main images", this.similarWatchesList);
+ 
       this.totalPages = res.data.last_page;
     } catch (err) {
       console.error("Error fetching similar products:", err);
@@ -325,7 +321,7 @@ export class BuyProductComponentComponent implements OnInit {
           }
         )
         },(err)=>{
-          console.log("err",err)
+  
           this.alertService.showAlert('warning',`${err.error.message}`)
         }
       )
