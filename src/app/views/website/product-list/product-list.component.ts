@@ -69,7 +69,7 @@ export class ProductListComponent implements OnInit {
   wishList: any;
   getWishList() {
     this.http.getWishList().subscribe((res) => {
-      this.wishList = res.data;
+      this.wishList = res?.data;
     });
   }
 
@@ -78,7 +78,7 @@ export class ProductListComponent implements OnInit {
       product_id: watch.id,
     };
     this.http.addWishList(formData).subscribe((res) => {
-      this.wishList = res.data;
+      this.wishList = res?.data;
       this.getWishList();
       this.applyFilters();
     });
@@ -87,7 +87,7 @@ export class ProductListComponent implements OnInit {
   getAllCategories() {
     this.http.getCategoryDropDown().subscribe(
       (res) => {
-        this.categories = res.data;
+        this.categories = res?.data;
       },
       (err) => {}
     );
@@ -130,18 +130,18 @@ export class ProductListComponent implements OnInit {
     this.isShowFilters=false;
     let queryString = "";
     // // Add categories to the query string
-    if (this.categories.length > 0) {
+    if (this.categories?.length > 0) {
       this.categories.forEach((id, index) => {
-        if(id.selected){
+        if(id?.selected){
           queryString += `category_ids[]=${id.id}`;
-          if (index < this.categories.length - 1) {
+          if (index < this.categories?.length - 1) {
             queryString += "&"; // Add an "&" if it's not the last element
           }
         }
       });
     }
     // // Add brands to the query string
-    if (this.watchTypes.length > 0) {
+    if (this.watchTypes?.length > 0) {
       if (queryString) {
         queryString += "&"; // Add '&' if categories already exist
       }
@@ -158,7 +158,7 @@ export class ProductListComponent implements OnInit {
             queryString += `&popular_item=${isPROMO}`
           }
           // queryString += `brand_ids[]=${id.id}`; // Use brand_ids[] to store as an array
-          if (index < this.watchTypes.length - 1) {
+          if (index < this.watchTypes?.length - 1) {
             queryString += "&"; // Add '&' between values, not at the end
           }
         }
@@ -183,9 +183,9 @@ export class ProductListComponent implements OnInit {
   getProductsByCategory(queryString: any) {
     this.http.getProductsByCategory(queryString).subscribe((res) => {
       this.showList = res;
-      this.totalItems=this.showList.data.total;
-      this.fromItem=this.showList.data.from;
-      this.toItem=this.showList.data.to;
+      this.totalItems=this.showList?.data?.total;
+      this.fromItem=this.showList?.data?.from;
+      this.toItem=this.showList?.data?.to;
 
       if(this.showList?.minPrice){
         this.min=this.showList.minPrice;
@@ -198,13 +198,13 @@ export class ProductListComponent implements OnInit {
       }else{
         this.max = 3000;
       }
-      if(this.showList.data.next_page_url === null){
+      if(this.showList?.data?.next_page_url === null){
         this.isnextPage=false
       }else{
         this.isnextPage=true
       }
-      this.showList = this.showList.data.data;
-      this.showList.data.data.map((product: any) => {
+      this.showList = this.showList?.data?.data;
+      this.showList?.data?.data?.map((product: any) => {
         if (product.main_image) {
           product.main_image = product.main_image
             .replace(/\\/g, "/")
@@ -246,19 +246,19 @@ export class ProductListComponent implements OnInit {
     this.translateService.setDefaultLang("en");
 
     const browserLang = this.translateService.getBrowserLang();
-    if (supportedLanguages.includes(browserLang)) {
+    if (supportedLanguages?.includes(browserLang)) {
       this.translateService.use(browserLang);
     }
 
     this.translateService.addLangs(this.supportLanguages);
     const savedLang = this.languageService.getCurrentLanguage();
-    if (this.supportLanguages.includes(savedLang)) {
+    if (this.supportLanguages?.includes(savedLang)) {
       this.translateService.use(savedLang);
     } else {
       const browserLang = this.translateService.getBrowserLang();
       this.currentLanguage = browserLang;
 
-      if (this.supportLanguages.includes(browserLang)) {
+      if (this.supportLanguages?.includes(browserLang)) {
         this.translateService.use(browserLang);
         this.languageService.setLanguage(browserLang);
       }
