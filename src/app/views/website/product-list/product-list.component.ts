@@ -186,6 +186,18 @@ export class ProductListComponent implements OnInit {
       this.totalItems=this.showList.data.total;
       this.fromItem=this.showList.data.from;
       this.toItem=this.showList.data.to;
+
+      if(this.showList?.minPrice){
+        this.min=this.showList.minPrice;
+       this.currentValue = this.min; 
+      }else{
+        this.min = 1000;
+      }
+      if(this.showList?.maxPrice){
+        this.min=this.showList.maxPrice;
+      }else{
+        this.max = 3000;
+      }
       if(this.showList.data.next_page_url === null){
         this.isnextPage=false
       }else{
