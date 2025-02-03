@@ -479,3 +479,15 @@ background: none;
   pointer-events: none; /* Disable all click events */
   opacity: 0.5; /* Optional, to visually indicate it is disabled */
 }
+
+.selected-categories {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.mat-chip {
+  background-color: #e0e0e0;
+}
+
+  

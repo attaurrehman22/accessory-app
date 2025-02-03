@@ -98,10 +98,9 @@ export class HeaderComponent {
   ngOnInit() {
     this.isSmallScreen = window.innerWidth <= 1500;
     this.isUserLogin = localStorage.getItem("isLoggedIn");
-
+    console.log("isUser Login",this.isUserLoggedIn)
     if (this.isUserLoggedIn()) {
       this.showHideUser = this.isUserLoggedIn();
-
       if (this.isAdminUser()) {
         this.showHideAdminUser = this.isAdminUser();
       } else {

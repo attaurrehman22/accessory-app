@@ -81,7 +81,9 @@
             >
               {{ "header.Logout" | translate }}
             </button>
-            <button  mat-menu-item  *ngIf="isUserLogin === 'true'" (click)="userListing()"> {{ "header.settings" | translate }}</button>
+            <a routerLink="/myListing"  mat-menu-item  *ngIf="isUserLogin === 'true'"> 
+              {{ "header.settings" | translate }}
+            </a>
           </mat-menu>
 
           <img
@@ -126,32 +128,35 @@
           style="cursor: pointer"
         />
         <div class="header-content gap-4" *ngIf="!isSearchForm">
-          <button class="custom-btn position-relative">
+          <a routerLink="/" class="custom-btn position-relative">
             {{ "header.new_arrivals" | translate }}
             <span
               class="notification-dot"
               *ngIf="isUserLogin === 'true'"
             ></span>
-          </button>
-          <button class="custom-btn" (click)="routeToBuyProduct()">
+          </a>
+          <a class="custom-btn" routerLink="/product-list">
             {{ "header.buy_watch" | translate }}
-          </button>
-          <button class="custom-btn" (click)="routeToNewProduct()">
+          </a>
+          <button class="custom-btn" *ngIf="isUserLogin === 'false' || isUserLogin == null" (click)="routeToNewProduct()">
             {{ "header.sell_watch" | translate }}
           </button>
-          <button
+          <a routerLink="/new-product" class="custom-btn" *ngIf="isUserLogin === 'true'">
+            {{ "header.sell_watch" | translate }}
+          </a>
+          <a
             class="custom-btn"
             *ngIf="showHideAdminUser === true"
-            (click)="routeToAdminPannel()"
+            routerLink="/admin/dashboard"
           >
             {{ "header.admin_pannel" | translate }}
-          </button>
+          </a>
           <!-- <button style="background: none; border: none; font-size: 16px" *ngIf="isUserLogin === 'false' || isUserLogin === null && isSmallScreen" (click)="goToRegister()">
             {{ "header.Login" | translate }}
           </button> -->
-          <button style="background: none; border: none; font-size: 16px" *ngIf="isUserLogin === 'true'" routerLink="/chat">
+          <a class="custom-btn" *ngIf="isUserLogin === 'true'" routerLink="/chat">
             {{ "header.Chat" | translate }}
-          </button>
+          </a>
         </div>
         <div
           class="header-content gap-4"
@@ -197,7 +202,9 @@
             >
               {{ "header.Logout" | translate }}
             </button>
-            <button  mat-menu-item  *ngIf="isUserLogin === 'true'" (click)="userListing()"> {{ "header.settings" | translate }}</button>
+            <a  mat-menu-item  *ngIf="isUserLogin === 'true'" routerLink="/myListing"> 
+              {{ "header.settings" | translate }}
+            </a>
           </mat-menu>
 
           <img

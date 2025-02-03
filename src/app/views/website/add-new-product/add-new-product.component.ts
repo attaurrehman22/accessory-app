@@ -1,5 +1,18 @@
-import {Component,OnInit,signal,ElementRef,ViewChild, computed} from "@angular/core";
-import {FormBuilder,FormControl,FormGroup,Validators} from "@angular/forms";
+import {
+  Component,
+  OnInit,
+  signal,
+  ElementRef,
+  ViewChild,
+  computed,
+} from "@angular/core";
+import {
+  FormArray,
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from "@angular/forms";
 import { MatExpansionModule } from "@angular/material/expansion";
 import { NavigationStart, Router } from "@angular/router";
 import { TranslateService } from "@ngx-translate/core";
@@ -12,11 +25,23 @@ import { ModelLoginComponent } from "../../auth/model-login/model-login.componen
 import { LanguageService } from "src/services/lang-service/language.service";
 import { CanComponentDeactivate } from "src/app/can-deactivate-form.guard";
 import { LoginStateService } from "src/services/login-service/login-state.service";
+import { Observable } from "rxjs";
+import { map, startWith } from "rxjs/operators";
 
 interface ImageFile {
   file: File;
   url: string;
   isUploading: boolean;
+}
+
+export interface Brand {
+  name: string;
+  id: any;
+}
+
+export interface Category {
+  name: string;
+  id: any;
 }
 
 @Component({
@@ -26,7 +51,7 @@ interface ImageFile {
 })
 export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
   selectedSection: string = "listingDetails";
-  selectedOptionsList:any=['listingDetails'];
+  selectedOptionsList: any = ["listingDetails"];
   formDirty = false;
   isSmallScreen: boolean = false;
   panelOpenState = false;
@@ -52,16 +77,16 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
   name = new FormControl("", [Validators.required]);
   model = new FormControl("", [Validators.required]);
   title = new FormControl("", [Validators.required]);
-  description = new FormControl("",[
+  description = new FormControl("", [
     Validators.minLength(5), // Minimum 10 characters
-    Validators.maxLength(250) // Maximum 100 characters
+    Validators.maxLength(250), // Maximum 100 characters
   ]);
-  watch_type = new FormControl("", [Validators.required]);
-  year_of_production = new FormControl("",  [
-    Validators.required,                         // Ensures the field is required
-    Validators.minLength(4),                     // Minimum length of 4 digits
-    Validators.maxLength(4),                     // Maximum length of 4 digits
-    Validators.pattern('^[0-9]{4}$')             // Ensures the value is a 4-digit number
+  watch_type = new FormControl("Wrist watch", [Validators.required]);
+  year_of_production = new FormControl("", [
+    Validators.required, // Ensures the field is required
+    Validators.minLength(4), // Minimum length of 4 digits
+    Validators.maxLength(4), // Maximum length of 4 digits
+    Validators.pattern("^[0-9]{4}$"), // Ensures the value is a 4-digit number
   ]);
   approximation = new FormControl(false);
   unknown = new FormControl(false);
@@ -69,17 +94,17 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
   // Watch Form Details
 
   reference_number = new FormControl("", [
-    Validators.required,                         // Field must not be empty
-    Validators.pattern('^[a-zA-Z0-9]*$'),        // Only alphanumeric characters (letters and numbers)
-    Validators.maxLength(30),                    // Maximum length of 30 characters
+    Validators.required, // Field must not be empty
+    Validators.pattern("^[a-zA-Z0-9]*$"), // Only alphanumeric characters (letters and numbers)
+    Validators.maxLength(30), // Maximum length of 30 characters
   ]);
 
-  decimalPattern = '^[0-9]{1,3}(\.[0-9]{1,2})?$';
+  decimalPattern = "^[0-9]{1,3}(.[0-9]{1,2})?$";
 
   serial_no = new FormControl("", [
-    Validators.required,                         // Field must not be empty
-    Validators.pattern('^[a-zA-Z0-9]*$'),        // Only alphanumeric characters (letters and numbers)
-    Validators.maxLength(30), 
+    Validators.required, // Field must not be empty
+    Validators.pattern("^[a-zA-Z0-9]*$"), // Only alphanumeric characters (letters and numbers)
+    Validators.maxLength(30),
   ]);
   gender = new FormControl("", Validators.required);
   movement = new FormControl("", Validators.required);
@@ -96,25 +121,28 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
   caliber_movement = new FormControl("");
   base_caliber = new FormControl("");
   power_reserve = new FormControl("");
-  no_of_jewels = new FormControl(null,[
-    Validators.pattern('^[0-9]{1,4}$'),           // Ensures only numbers with a maximum of 4 digits
+  no_of_jewels = new FormControl(null, [
+    Validators.pattern("^[0-9]{1,4}$"), // Ensures only numbers with a maximum of 4 digits
   ]);
-  frequency = new FormControl("",[
-    Validators.pattern(this.decimalPattern),           // Ensures only numbers with a maximum of 4 digits
+  frequency = new FormControl("", [
+    Validators.pattern(this.decimalPattern), // Ensures only numbers with a maximum of 4 digits
   ]);
   additional_details = new FormControl("");
 
   case_material = new FormControl("");
   bezel_material = new FormControl("");
-  thickness = new FormControl(null,
-     [Validators.pattern(this.decimalPattern)]);
+  thickness = new FormControl(null, [Validators.pattern(this.decimalPattern)]);
   crystal = new FormControl("");
   water_resistance = new FormControl("");
 
-  dial_numerals = new FormControl("",[Validators.pattern(this.decimalPattern)]);
+  dial_numerals = new FormControl("", [
+    Validators.pattern(this.decimalPattern),
+  ]);
   bracelet_material = new FormControl("");
   bracelet_color = new FormControl("");
-  type_of_clasp = new FormControl("",[Validators.pattern(this.decimalPattern)]);
+  type_of_clasp = new FormControl("", [
+    Validators.pattern(this.decimalPattern),
+  ]);
   clasp_material = new FormControl("");
 
   // Billing Information Form Details
@@ -122,18 +150,20 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
   first_name = new FormControl("", [Validators.required]);
   last_name = new FormControl("", [Validators.required]);
   street = new FormControl("", [
-    Validators.required,                          // Ensures the field is not empty
-    Validators.pattern('^[a-zA-Z0-9 ]*$'),         // Allows only alphanumeric characters and spaces (A-Z, a-z, 0-9, space)
-    Validators.maxLength(30),                      // Limits the input to 30 characters
+    Validators.required, // Ensures the field is not empty
+    Validators.pattern("^[a-zA-Z0-9 ]*$"), // Allows only alphanumeric characters and spaces (A-Z, a-z, 0-9, space)
+    Validators.maxLength(30), // Limits the input to 30 characters
   ]);
-  
+
   street_line_2 = new FormControl("", [
-    Validators.pattern('^[a-zA-Z0-9 ]*$'),         // Allows only alphanumeric characters and spaces (A-Z, a-z, 0-9, space)
-    Validators.maxLength(30),                      // Limits the input to 30 characters
+    Validators.pattern("^[a-zA-Z0-9 ]*$"), // Allows only alphanumeric characters and spaces (A-Z, a-z, 0-9, space)
+    Validators.maxLength(30), // Limits the input to 30 characters
   ]);
-  zip_code = new FormControl("", [  Validators.required,               // Ensures the field is not empty
-    Validators.pattern('^[0-9]*$'),     // Ensures only numeric values (digits)
-    Validators.maxLength(10), ]);
+  zip_code = new FormControl("", [
+    Validators.required, // Ensures the field is not empty
+    Validators.pattern("^[0-9]*$"), // Ensures only numeric values (digits)
+    Validators.maxLength(10),
+  ]);
   city = new FormControl("", [Validators.required]);
 
   cities = ["City 1", "City 2", "City 3"];
@@ -177,10 +207,10 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
   }
 
   getClockRotations(timeText: string) {
-    const [hour, minute] = timeText.split(':').map(Number); // Convert to number
+    const [hour, minute] = timeText.split(":").map(Number); // Convert to number
 
-    const hourRotation = hour * 30 + minute * 0.5;  // Calculate hour hand rotation
-    const minuteRotation = minute * 6;              // Calculate minute hand rotation
+    const hourRotation = hour * 30 + minute * 0.5; // Calculate hour hand rotation
+    const minuteRotation = minute * 6; // Calculate minute hand rotation
 
     return { hourRotation, minuteRotation };
   }
@@ -208,6 +238,8 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
     if (fileInput.files && fileInput.files[0]) {
       const file = fileInput.files[0];
       this.selectedFiles[clockIndex] = file; // Store the selected file
+   
+
       const reader = new FileReader();
       reader.onload = (e: any) => {
         this.imagePreviews[clockIndex] = e.target.result;
@@ -232,7 +264,7 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
     {
       title: "Watch Only",
       icon: "/assets/images/watch-only.png",
-    }
+    },
   ];
 
   selectedOptions: any;
@@ -304,9 +336,8 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
     },
     {
       title: "Incomplete",
-      description:
-        "The item is missing some parts and is not functional.",
-    }
+      description: "The item is missing some parts and is not functional.",
+    },
   ];
 
   selectedCondition = null;
@@ -316,17 +347,111 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
   }
 
   brandsList: any;
-  categoryList: any;
-  getAllBrandsDropDown() {
-    this.http.getAllBrandsDropdDown().subscribe((res) => {
+ 
+  myControl = new FormControl<string | Brand>("");
+  filteredOptions: Observable<Brand[]>;
+  async getAllBrandsDropDown() {
+    try {
+      // Wait for the API response
+      const res = await this.http.getAllBrandsDropdDown().toPromise();
       this.brandsList = res.data;
-    });
+      this.filteredOptions = this.myControl.valueChanges.pipe(
+        startWith(""),
+        map((value) => {
+          // Determine the name (either the string or the value's name property)
+          const name = typeof value === "string" ? value : value?.name;
+          // Return the filtered results or the full brandsList if no name
+          return name
+            ? this._filter(name as string)
+            : this.brandsList
+            ? this.brandsList.slice()
+            : [];
+        })
+      );
+     
+
+
+      // Log the brands list
+    } catch (error) {
+      // Log error if something goes wrong with the API request
+      console.error("Error fetching brands:", error);
+    }
   }
 
-  getCategoriesDropDown() {
-    this.http.getCategoryDropDown().subscribe((res) => {
+  displayFn(user: Brand): string {
+    return user.name;
+  }
+
+  private _filter(name: string): Brand[] {
+    const filterValue = name.toLowerCase();
+
+    return this.brandsList.filter((option) =>
+      option.name.toLowerCase().includes(filterValue)
+    );
+  }
+
+  categoryList: any;
+  myCategoryControl = new FormControl<string | Category>("");
+  selectedCategories: FormArray = new FormArray([]);
+  filteredCategoryOptions: Observable<Category[]>;
+  MAX_CATEGORY_SELECTION = 5;
+  async getCategoriesDropDown() {
+    try {
+      // Await the promise returned by the HTTP request
+      const res = await this.http.getCategoryDropDown().toPromise();
+  
+      // Extract data from the response
       this.categoryList = res.data;
-    });
+  
+      // Set up filtered options for category input
+      this.filteredCategoryOptions = this.myCategoryControl.valueChanges.pipe(
+        startWith(''),
+        map((value) => {
+          const name = typeof value === 'string' ? value : value?.name;
+          return name
+            ? this._filterCategories(name)
+            : this.categoryList;
+        })
+      );
+    } catch (error) {
+      console.error("Error fetching categories:", error);
+    }
+  }
+  
+  displayCategoryFn(category: Category): string {
+    return category ? category.name : '';
+  }
+
+  addCategory(category: Category): void {
+
+    if (this.selectedCategories.controls.length >= this.MAX_CATEGORY_SELECTION) {
+      return; // Do not add more than MAX_CATEGORY_SELECTION
+    }
+
+    if (this.selectedCategories.controls.some(ctrl => ctrl.value.id === category.id)) {
+      return; // If already selected, do not add again
+    }
+
+    this.selectedCategories.push(new FormControl(category));
+  }
+
+  // Remove selected category from the FormArray
+  removeCategory(category: Category): void {
+
+    const index = this.selectedCategories.controls.findIndex(ctrl => ctrl.value.id === category.id);
+    if (index !== -1) {
+      this.selectedCategories.removeAt(index);
+    }
+  }
+
+  // Filtering categories
+  private _filterCategories(name: string): Category[] {
+    const filterValue = name.toLowerCase();
+    let val=this.categoryList.filter(option =>
+      option.name.toLowerCase().includes(filterValue)
+    );
+    
+    return val;
   }
 
   formdropdownListData: any = {};
@@ -337,6 +462,7 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
       this.formdropdownListData.watch_type = Object.entries(
         res.data.watch_type
       ).map(([key, value]) => ({ key, value }));
+      console.log("formdropdownListData",this.formdropdownListData)
       this.formdropdownListData.gender = Object.entries(res.data.gender).map(
         ([key, value]) => ({ key, value })
       );
@@ -380,270 +506,387 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
 
   isProductID: any;
   userType: any;
-  isFromMyListingComponent:boolean=false;
-  isAdminLogin:boolean=false;
+  isFromMyListingComponent: boolean = false;
+  isAdminLogin: boolean = false;
 
-  productDetails:any;
-  latestActiveForm:string='';
-  isNextButtonShowonBillingInformation:boolean=false;
-  isNextButtonShowonProofofOwnerShip:boolean=false;
-  isNextButtonShowonScopeOfdelivery:boolean=false;
+  productDetails: any;
+  latestActiveForm: string = "";
+  isNextButtonShowonBillingInformation: boolean = false;
+  isNextButtonShowonProofofOwnerShip: boolean = false;
+  isNextButtonShowonScopeOfdelivery: boolean = false;
 
-  nextMoveToSummary(){
+  nextMoveToSummary() {
     this.selectSection("summary");
   }
 
-  nextMoveToBillingInformation(){
+  nextMoveToBillingInformation() {
     this.selectSection("priceshipment");
   }
 
-  nextMoveToScopeOfDelivery(){
+  nextMoveToScopeOfDelivery() {
     this.selectSection("scopeofdelivery");
   }
 
-  isListingCompleted:boolean=false;
+  isListingCompleted: boolean = false;
 
-  getProductDetails(){
-      this.http.getProductDetailsByID(this.productIDFromResponse).subscribe(
-        (res)=>{
-          this.productDetails=res.product;
-          this.latestActiveForm=res.step;
-          if(res.is_listing_completed === 1){
-            this.isListingCompleted=true
-          }
-          if (this.productDetails.main_image) {
-            this.productDetails.main_image = this.productDetails.main_image.replace(/\\/g, '');
-          }
-    
-          if (this.productDetails.additional_images) {
-            try {
-              this.productDetails.additional_images = JSON.parse(this.productDetails.additional_images)
-                .map(image => image.replace(/\\/g, '')); 
-            } catch (e) {
-              console.error('Failed to parse additional_images', e);
-            }
-          }
+  getOnlyDetails(){
+    this.http
+    .getProductDetailsByID(this.productIDFromResponse)
+    .subscribe((res) => {
+      this.productDetails = res.product;
+      this.latestActiveForm = res.step;
+      if (res.is_listing_completed === 1) {
+        this.isListingCompleted = true;
+      }
+      if (this.productDetails?.main_image) {
+        this.productDetails.main_image =
+          this.productDetails?.main_image.replace(/\\/g, "");
+      }
 
-          if (this.productDetails.proof_image_1) {
-            this.productDetails.proof_image_1 = this.productDetails.proof_image_1.replace(/\\/g, '');
-          }
-
-          if (this.productDetails.proof_image_2) {
-            this.productDetails.proof_image_2 = this.productDetails.proof_image_2.replace(/\\/g, '');
-          }
-
-          if (this.latestActiveForm === 'completed' || this.latestActiveForm === 'publishListing' || this.isListingCompleted) {
-            this.selectedOptionsList = this.selectedOptionsList.concat([
-              'watchDetails',
-              'uploadImages',
-              'conditionGrading',
-              'scopeofdelivery',
-              'proofofownership',
-              'priceshipment',
-              'billinginformation',
-              'summary'
-            ]);
-            this.isNextButtonShowonBillingInformation=true;
-            this.isNextButtonShowonProofofOwnerShip=true
-            this.isNextButtonShowonScopeOfdelivery=true
-            this.selectSection("summary");
-          }
-          if (this.latestActiveForm === 'billingInformation') {
-            this.selectedOptionsList = this.selectedOptionsList.concat([
-              'watchDetails',
-              'uploadImages',
-              'conditionGrading',
-              'scopeofdelivery',
-              'proofofownership',
-              'priceshipment',
-              'billinginformation'
-            ]);
-            this.isNextButtonShowonProofofOwnerShip=true;
-            this.isNextButtonShowonScopeOfdelivery=true
-            this.selectSection("billinginformation");
-          }
-
-          if (this.latestActiveForm === 'priceAndShipment') {
-            this.selectedOptionsList = this.selectedOptionsList.concat([
-              'watchDetails',
-              'uploadImages',
-              'conditionGrading',
-              'scopeofdelivery',
-              'proofofownership',
-              'priceshipment'
-            ]);
-            this.isNextButtonShowonProofofOwnerShip=true;
-            this.isNextButtonShowonScopeOfdelivery=true
-            this.selectSection("priceshipment");
-          }
-          if (this.latestActiveForm === 'proofOfOwnership') {
-            
-            this.selectedOptionsList = this.selectedOptionsList.concat([
-              'watchDetails',
-              'uploadImages',
-              'conditionGrading',
-              'scopeofdelivery',
-              'proofofownership'
-            ]);
-            this.isNextButtonShowonScopeOfdelivery=true;
-            this.selectSection("proofofownership");
-          }
-
-          if (this.latestActiveForm === 'scopeOfDelivery') {
-            this.selectedOptionsList = this.selectedOptionsList.concat([
-              'watchDetails',
-              'uploadImages',
-              'conditionGrading',
-              'scopeofdelivery'
-            ]);
-            this.isNextButtonShowonScopeOfdelivery=true;
-            this.selectSection("scopeofdelivery");
-          }
-
-          if (this.latestActiveForm === 'conditionGrading' && !this.isListingCompleted) {
-            this.selectedOptionsList = this.selectedOptionsList.concat([
-              'watchDetails',
-              'uploadImages',
-              'conditionGrading'
-            ]);
-            this.selectSection("conditionGrading");
-          }
-
-          if (this.latestActiveForm === 'uploadImages') {
-            this.selectedOptionsList = this.selectedOptionsList.concat([
-              'watchDetails',
-              'uploadImages'
-            ]);
-            this.selectSection("uploadImages");
-          }
-
-          if (this.latestActiveForm === 'listingDetails') {
-            this.selectedOptionsList = this.selectedOptionsList.concat([
-              'watchDetails',
-            ]);
-            this.selectSection("watchDetails"); 
-          }
-
-          this.patchFormDetails()
+      if (this.productDetails?.additional_images) {
+        try {
+          this.productDetails.additional_images = JSON.parse(
+            this.productDetails?.additional_images
+          ).map((image) => image.replace(/\\/g, ""));
+        } catch (e) {
+          console.error("Failed to parse additional_images", e);
         }
-      )
+      }
+
+      if (this.productDetails?.proof_image_1) {
+        this.productDetails.proof_image_1 =
+          this.productDetails?.proof_image_1.replace(/\\/g, "");
+      }
+
+      if (this.productDetails?.proof_image_2) {
+        this.productDetails.proof_image_2 =
+          this.productDetails?.proof_image_2.replace(/\\/g, "");
+      }
+    }
+  )
+  this.patchFormDetails()
   }
 
-  patchFormDetails(){
+  getProductDetails() {
+    this.http
+      .getProductDetailsByID(this.productIDFromResponse)
+      .subscribe((res) => {
+        this.productDetails = res.product;
+        this.latestActiveForm = res.step;
+        if (res.is_listing_completed === 1) {
+          this.isListingCompleted = true;
+        }
+        if (this.productDetails.main_image) {
+          this.productDetails.main_image =
+            this.productDetails.main_image.replace(/\\/g, "");
+        }
+
+        if (this.productDetails.additional_images) {
+          try {
+            this.productDetails.additional_images = JSON.parse(
+              this.productDetails.additional_images
+            ).map((image) => image.replace(/\\/g, ""));
+          } catch (e) {
+            console.error("Failed to parse additional_images", e);
+          }
+        }
+
+        if (this.productDetails.proof_image_1) {
+          this.productDetails.proof_image_1 =
+            this.productDetails.proof_image_1.replace(/\\/g, "");
+        }
+
+        if (this.productDetails.proof_image_2) {
+          this.productDetails.proof_image_2 =
+            this.productDetails.proof_image_2.replace(/\\/g, "");
+        }
+
+        if (
+          this.latestActiveForm === "completed" ||
+          this.latestActiveForm === "publishListing" ||
+          this.isListingCompleted
+        ) {
+          this.selectedOptionsList = this.selectedOptionsList.concat([
+            "watchDetails",
+            "uploadImages",
+            "conditionGrading",
+            "scopeofdelivery",
+            "proofofownership",
+            "priceshipment",
+            "billinginformation",
+            "summary",
+          ]);
+          this.isNextButtonShowonBillingInformation = true;
+          this.isNextButtonShowonProofofOwnerShip = true;
+          this.isNextButtonShowonScopeOfdelivery = true;
+          this.selectSection("summary");
+        }
+        if (this.latestActiveForm === "billingInformation") {
+          this.selectedOptionsList = this.selectedOptionsList.concat([
+            "watchDetails",
+            "uploadImages",
+            "conditionGrading",
+            "scopeofdelivery",
+            "proofofownership",
+            "priceshipment",
+            "billinginformation",
+          ]);
+          this.isNextButtonShowonProofofOwnerShip = true;
+          this.isNextButtonShowonScopeOfdelivery = true;
+          this.selectSection("billinginformation");
+        }
+
+        if (this.latestActiveForm === "priceAndShipment") {
+          this.selectedOptionsList = this.selectedOptionsList.concat([
+            "watchDetails",
+            "uploadImages",
+            "conditionGrading",
+            "scopeofdelivery",
+            "proofofownership",
+            "priceshipment",
+          ]);
+          this.isNextButtonShowonProofofOwnerShip = true;
+          this.isNextButtonShowonScopeOfdelivery = true;
+          this.selectSection("priceshipment");
+        }
+        if (this.latestActiveForm === "proofOfOwnership") {
+          this.selectedOptionsList = this.selectedOptionsList.concat([
+            "watchDetails",
+            "uploadImages",
+            "conditionGrading",
+            "scopeofdelivery",
+            "proofofownership",
+          ]);
+          this.isNextButtonShowonScopeOfdelivery = true;
+          this.selectSection("proofofownership");
+        }
+
+        if (this.latestActiveForm === "scopeOfDelivery") {
+          this.selectedOptionsList = this.selectedOptionsList.concat([
+            "watchDetails",
+            "uploadImages",
+            "conditionGrading",
+            "scopeofdelivery",
+          ]);
+          this.isNextButtonShowonScopeOfdelivery = true;
+          this.selectSection("scopeofdelivery");
+        }
+
+        if (
+          this.latestActiveForm === "conditionGrading" &&
+          !this.isListingCompleted
+        ) {
+          this.selectedOptionsList = this.selectedOptionsList.concat([
+            "watchDetails",
+            "uploadImages",
+            "conditionGrading",
+          ]);
+          this.selectSection("conditionGrading");
+        }
+
+        if (this.latestActiveForm === "uploadImages") {
+          this.selectedOptionsList = this.selectedOptionsList.concat([
+            "watchDetails",
+            "uploadImages",
+          ]);
+          this.selectSection("uploadImages");
+        }
+
+        if (this.latestActiveForm === "listingDetails") {
+          this.selectedOptionsList = this.selectedOptionsList.concat([
+            "watchDetails",
+          ]);
+          this.selectSection("watchDetails");
+        }
+
+        this.patchFormDetails();
+      });
+  }
+
+  patchFormDetails() {
+    if(this.productDetails){
     // listingForm
-    this.listingForm.get('brand_id').setValue(this.productDetails.brand.id);
+    const selectedBrand = this.productDetails.brand;
+    // Patch the brand value into the form control
+    if (selectedBrand) {
+      this.myControl.setValue(selectedBrand); // Set the full brand object
+    }
+  
+    // Disable the brand input field if brand_id exists
     if (this.productDetails.brand_id) {
-        this.listingForm.get('brand_id').disable();
+      this.listingForm.get("brand_id").disable();
     }
 
-    let ids = this.productDetails.categories.map((item: any) => item.id);
-    this.listingForm.get('category_ids').setValue(ids);
+    let ids = this.productDetails.categories.map(
+      (item: any) => 
+      item.id);
+    this.productDetails.categories.map(
+        (item: any) => this.addCategory(item));
+    // this.filteredCategoryOptions=this.productDetails.categories
+    this.listingForm.get("category_ids").setValue(ids);
     if (ids.length > 0) {
-        this.listingForm.get('category_ids').disable();
+      this.listingForm.get("category_ids").disable();
     }
 
-    this.listingForm.get('name').setValue(this.productDetails.name);
+    this.listingForm.get("name").setValue(this.productDetails.name);
     if (this.productDetails.name) {
-        this.listingForm.get('name').disable();
+      // this.listingForm.get("name").disable();
     }
 
-    this.listingForm.get('model').setValue(this.productDetails.model);
+    this.listingForm.get("model").setValue(this.productDetails.model);
     if (this.productDetails.model) {
-        this.listingForm.get('model').disable();
+      // this.listingForm.get("model").disable();
     }
 
-    this.listingForm.get('title').setValue(this.productDetails.title);
+    this.listingForm.get("title").setValue(this.productDetails.title);
     if (this.productDetails.title) {
-        this.listingForm.get('title').disable();
+      // this.listingForm.get("title").disable();
     }
-    this.listingForm.get('description').setValue(this.productDetails.description)
-    this.listingForm.get('watch_type').setValue(this.productDetails.watch_type);
+    this.listingForm
+      .get("description")
+      .setValue(this.productDetails.description);
+    this.listingForm.get("watch_type").setValue(this.productDetails.watch_type);
     if (this.productDetails.watch_type) {
-        this.listingForm.get('watch_type').disable();
+      // this.listingForm.get("watch_type").disable();
     }
 
     // Additional fields with checks
-    this.listingForm.get('year_of_production').setValue(this.productDetails.year_of_production);
+    this.listingForm
+      .get("year_of_production")
+      .setValue(this.productDetails.year_of_production);
     if (this.productDetails.year_of_production) {
-        this.listingForm.get('year_of_production').disable();
+      // this.listingForm.get("year_of_production").disable();
     }
 
-    this.listingForm.get('approximation').setValue(this.productDetails.approximate_year);
+    this.listingForm
+      .get("approximation")
+      .setValue(this.productDetails.approximate_year);
     if (this.productDetails.approximate_year) {
-        this.listingForm.get('approximation').disable();
+      this.listingForm.get("approximation").disable();
     }
     // this.listingForm.get('unknown').setValue(this.productDetails.)
 
-    // watchDetailsForm 
-    this.watchDetailsForm.get('reference_number').setValue(this.productDetails.reference_number);
+    // watchDetailsForm
+    this.watchDetailsForm
+      .get("reference_number")
+      .setValue(this.productDetails.reference_number);
 
-    if(this.productDetails.reference_number){
-      // this.watchDetailsForm.get('reference_number').disable();
-    }
-    
-    this.watchDetailsForm.get('serial_no').setValue(this.productDetails.serial_no);
-
-    if(this.productDetails.serial_no){
-      // this.watchDetailsForm.get('serial_no').disable();
+    if (this.productDetails.reference_number) {
+      // this.watchDetailsForm.get("reference_number").disable();
     }
 
-    this.watchDetailsForm.get('gender').setValue(this.productDetails.gender);
-    this.watchDetailsForm.get('movement').setValue(this.productDetails.movement);
-    this.watchDetailsForm.get('case_diameter_value_1').setValue(this.productDetails.case_diameter_value_1);
-    this.watchDetailsForm.get('case_diameter_value_2').setValue(this.productDetails.case_diameter_value_2);
-    this.watchDetailsForm.get('dial_color').setValue(this.productDetails.dial_color);
-    this.watchDetailsForm.get('caliber_movement').setValue(this.productDetails.caliber_movement);
-    this.watchDetailsForm.get('base_caliber').setValue(this.productDetails.base_caliber);
-    this.watchDetailsForm.get('power_reserve').setValue(this.productDetails.power_reserve);
-    this.watchDetailsForm.get('no_of_jewels').setValue(this.productDetails.no_of_jewels);
-    this.watchDetailsForm.get('frequency').setValue(this.productDetails.frequency);
-    this.watchDetailsForm.get('additional_details').setValue(this.productDetails.additional_details);
-    this.watchDetailsForm.get('case_material').setValue(this.productDetails.case_material);
-    this.watchDetailsForm.get('bezel_material').setValue(this.productDetails.bezel_material);
-    this.watchDetailsForm.get('thickness').setValue(this.productDetails.thickness);
-    this.watchDetailsForm.get('crystal').setValue(this.productDetails.crystal);
-    this.watchDetailsForm.get('water_resistance').setValue(this.productDetails.water_resistance);
-    this.watchDetailsForm.get('dial_numerals').setValue(this.productDetails.dial_numerals);
-    this.watchDetailsForm.get('bracelet_material').setValue(this.productDetails.bracelet_material);
-    this.watchDetailsForm.get('bracelet_color').setValue(this.productDetails.bracelet_color);
-    this.watchDetailsForm.get('type_of_clasp').setValue(this.productDetails.type_of_clasp);
-    this.watchDetailsForm.get('clasp_material').setValue(this.productDetails.clasp_material);
-    
+    this.watchDetailsForm
+      .get("serial_no")
+      .setValue(this.productDetails.serial_no);
 
-   // billingForm 
-   this.billingForm.get('billing_address').setValue(this.productDetails.billing_address || '');
+    if (this.productDetails.serial_no) {
+      // this.watchDetailsForm.get("serial_no").disable();
+    }
+
+    this.watchDetailsForm.get("gender").setValue(this.productDetails.gender);
+    this.watchDetailsForm
+      .get("movement")
+      .setValue(this.productDetails.movement);
+    this.watchDetailsForm
+      .get("case_diameter_value_1")
+      .setValue(this.productDetails.case_diameter_value_1);
+    this.watchDetailsForm
+      .get("case_diameter_value_2")
+      .setValue(this.productDetails.case_diameter_value_2);
+    this.watchDetailsForm
+      .get("dial_color")
+      .setValue(this.productDetails.dial_color);
+    this.watchDetailsForm
+      .get("caliber_movement")
+      .setValue(this.productDetails.caliber_movement);
+    this.watchDetailsForm
+      .get("base_caliber")
+      .setValue(this.productDetails.base_caliber);
+    this.watchDetailsForm
+      .get("power_reserve")
+      .setValue(this.productDetails.power_reserve);
+    this.watchDetailsForm
+      .get("no_of_jewels")
+      .setValue(this.productDetails.no_of_jewels);
+    this.watchDetailsForm
+      .get("frequency")
+      .setValue(this.productDetails.frequency);
+    this.watchDetailsForm
+      .get("additional_details")
+      .setValue(this.productDetails.additional_details);
+    this.watchDetailsForm
+      .get("case_material")
+      .setValue(this.productDetails.case_material);
+    this.watchDetailsForm
+      .get("bezel_material")
+      .setValue(this.productDetails.bezel_material);
+    this.watchDetailsForm
+      .get("thickness")
+      .setValue(this.productDetails.thickness);
+    this.watchDetailsForm.get("crystal").setValue(this.productDetails.crystal);
+    this.watchDetailsForm
+      .get("water_resistance")
+      .setValue(this.productDetails.water_resistance);
+    this.watchDetailsForm
+      .get("dial_numerals")
+      .setValue(this.productDetails.dial_numerals);
+    this.watchDetailsForm
+      .get("bracelet_material")
+      .setValue(this.productDetails.bracelet_material);
+    this.watchDetailsForm
+      .get("bracelet_color")
+      .setValue(this.productDetails.bracelet_color);
+    this.watchDetailsForm
+      .get("type_of_clasp")
+      .setValue(this.productDetails.type_of_clasp);
+    this.watchDetailsForm
+      .get("clasp_material")
+      .setValue(this.productDetails.clasp_material);
+
+    // billingForm
+    this.billingForm
+      .get("billing_address")
+      .setValue(this.productDetails.billing_address || "");
     if (this.productDetails.billing_address) {
-        this.billingForm.get('billing_address').disable();
+      this.billingForm.get("billing_address").disable();
     }
 
-    this.billingForm.get('first_name').setValue(this.productDetails.first_name || '');
+    this.billingForm
+      .get("first_name")
+      .setValue(this.productDetails.first_name || "");
     if (this.productDetails.first_name) {
-        this.billingForm.get('first_name').disable();
+      this.billingForm.get("first_name").disable();
     }
 
-    this.billingForm.get('last_name').setValue(this.productDetails.last_name || '');
+    this.billingForm
+      .get("last_name")
+      .setValue(this.productDetails.last_name || "");
     if (this.productDetails.last_name) {
-        this.billingForm.get('last_name').disable();
+      this.billingForm.get("last_name").disable();
     }
 
-    this.billingForm.get('street').setValue(this.productDetails.street || '');
+    this.billingForm.get("street").setValue(this.productDetails.street || "");
     if (this.productDetails.street) {
-        this.billingForm.get('street').disable();
+      this.billingForm.get("street").disable();
     }
 
-    this.billingForm.get('street_line_2').setValue(this.productDetails.street_line_2 || '');
+    this.billingForm
+      .get("street_line_2")
+      .setValue(this.productDetails.street_line_2 || "");
     if (this.productDetails.street_line_2) {
-        this.billingForm.get('street_line_2').disable();
+      this.billingForm.get("street_line_2").disable();
     }
 
-    this.billingForm.get('zip_code').setValue(this.productDetails.zip_code || '');
+    this.billingForm
+      .get("zip_code")
+      .setValue(this.productDetails.zip_code || "");
     if (this.productDetails.zip_code) {
-        this.billingForm.get('zip_code').disable();
+      this.billingForm.get("zip_code").disable();
     }
 
-    this.billingForm.get('city').setValue(this.productDetails.city || '');
+    this.billingForm.get("city").setValue(this.productDetails.city || "");
     if (this.productDetails.city) {
-        this.billingForm.get('city').disable();
+      this.billingForm.get("city").disable();
     }
 
     // PriceandShipment
@@ -653,114 +896,115 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
     this.estimate_delivery = this.productDetails.estimate_delivery;
     this.allow_to_make_offer = this.productDetails.allow_to_make_offer;
     this.estimatedPayoutwithShipping = this.productDetails.estimate_payout;
-  
+
     // If the form has a method to calculate payout
     this.calculatePayout();
 
     // Condition
-    if(this.productDetails.condition){
+    if (this.productDetails.condition) {
       let selectedCondition;
-      if(this.userType === 'dealer'){
-      
-      
+      if (this.userType === "dealer") {
         selectedCondition = this.dealerconditions.find(
-          (condition) =>
-            condition.title === this.productDetails.condition
+          (condition) => condition.title === this.productDetails.condition
         );
 
-      this.dealerconditions = [selectedCondition]
-
-      }else{
+        this.dealerconditions = [selectedCondition];
+      } else {
         selectedCondition = this.conditions.find(
-          (condition) =>
-            condition.title === this.productDetails.condition
+          (condition) => condition.title === this.productDetails.condition
         );
         // selectedCondition=this.conditions.filter((item:any)=>{item.title === this.productDetails.condition})
-        this.conditions = [selectedCondition]
+        this.conditions = [selectedCondition];
       }
       this.selectCondition(selectedCondition);
     }
-
 
     //scopeofDelivery
     const scopeofDelivery = this.options.find(
       (option) => option.title === this.productDetails.scope_of_delivery
     );
 
-    this.selectedOptions=scopeofDelivery
+    this.selectedOptions = scopeofDelivery;
 
-    this.coverImage = { file: null, url: 'https://api.chronosouq.com/'+this.productDetails.main_image };
+    this.coverImage = {
+      file: null,
+      url: "https://api.chronosouq.com/" + this.productDetails.main_image,
+    };
 
-
-    if(this.productDetails.additional_images){
+    if (this.productDetails.additional_images) {
       this.otherImages = this.productDetails.additional_images.map(
         (img: { url: string }) => ({
           file: null,
-          url: 'https://api.chronosouq.com/'+img,
+          url: "https://api.chronosouq.com/" + img,
           isUploading: false,
         })
       );
     }
-   if(this.productDetails?.proof_image_1){
-    this.isEnableProofofOwnerShip=true
-     this.imagePreviews[0]='https://api.chronosouq.com/'+this.productDetails.proof_image_1;
-   }
-   if(this.productDetails?.proof_image_2){
-      this.isEnableProofofOwnerShip=true
-    this.imagePreviews[1]='https://api.chronosouq.com/'+this.productDetails.proof_image_2;
+    if (this.productDetails?.proof_image_1) {
+      this.isEnableProofofOwnerShip = true;
+      this.imagePreviews[0] =
+        "https://api.chronosouq.com/" + this.productDetails.proof_image_1;
+    }
+    if (this.productDetails?.proof_image_2) {
+      this.isEnableProofofOwnerShip = true;
+      this.imagePreviews[1] =
+        "https://api.chronosouq.com/" + this.productDetails.proof_image_2;
+    }
   }
   }
 
-  isEnableProofofOwnerShip:boolean=false
+  isEnableProofofOwnerShip: boolean = false;
 
   ngOnInit() {
-
-    if(!this.productIDFromResponse){
-      this.productIDFromResponse=localStorage.getItem('productID');
-      const selectedOptionsListString = localStorage.getItem('selectedOptionsList');
+    if (!this.productIDFromResponse) {
+      this.productIDFromResponse = localStorage.getItem("productID");
+      const selectedOptionsListString = localStorage.getItem(
+        "selectedOptionsList"
+      );
 
       if (selectedOptionsListString) {
         const selectedOptionsList = selectedOptionsListString;
         // Assign the last element of the list to selectedSection
         if (selectedOptionsList.length > 0) {
-          this.selectedSection = selectedOptionsList[selectedOptionsList.length - 1];
+          this.selectedSection =
+            selectedOptionsList[selectedOptionsList.length - 1];
         }
       }
     }
-   
+
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationStart) {
-        localStorage.removeItem('productID');
-        localStorage.removeItem('selectedOptionsList');
+        localStorage.removeItem("productID");
+        localStorage.removeItem("selectedOptionsList");
       }
     });
-    
-    if(this.isAdminUser() === true){
-      this.isAdminLogin=true;
+
+    if (this.isAdminUser() === true) {
+      this.isAdminLogin = true;
     }
     let isUserLogin = localStorage.getItem("isLoggedIn");
     this.userType = localStorage.getItem("userType");
     if (!isUserLogin) {
       this.loginFirst();
     }
-    if(history?.state){
+    if (history?.state) {
       if (history?.state?.ID) {
         this.productIDFromResponse = history.state.ID;
         this.selectedSection = "summary";
         this.calculatePayout();
         this.formDirty = true;
       }
-      if(history?.state?.productID){
-        this.productIDFromResponse=history?.state?.productID;
-        this.isFromMyListingComponent=true;
-        this.getProductDetails()
+      if (history?.state?.productID) {
+        this.productIDFromResponse = history?.state?.productID;
+        this.isFromMyListingComponent = true;
+        this.getProductDetails();
       }
     }
 
-    if(this.productIDFromResponse){
-      this.getProductDetails()
+    if (this.productIDFromResponse) {
+      this.isFromMyListingComponent = true;
+      this.getProductDetails();
     }
-    
 
     this.checkScreenSize();
     this.getAllBrandsDropDown();
@@ -768,6 +1012,26 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
     this.allDropDownData();
     window.addEventListener("resize", () => this.checkScreenSize());
     this.generateRandomClocks(2);
+    this.filteredOptions = this.myControl.valueChanges.pipe(
+      startWith(""),
+      map((value) => {
+        const name = typeof value === "string" ? value : value?.name;
+        return name
+          ? this._filter(name as string)
+          : this.brandsList
+          ? this.brandsList.slice()
+          : [];
+      })
+    );
+    this.filteredCategoryOptions = this.myCategoryControl.valueChanges.pipe(
+      startWith(''),
+      map((value) => {
+        const name = typeof value === 'string' ? value : value?.name;
+        return name
+          ? this._filterCategories(name as string)
+          : this.categoryList;
+      })
+    );
 
     // Listing Form
     this.listingForm = new FormGroup({
@@ -820,13 +1084,14 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
     });
   }
 
-  selectedUserTypeofConditionGradingForAdmin:any;
+  selectedUserTypeofConditionGradingForAdmin: any;
 
   checkScreenSize() {
     this.isSmallScreen = window.innerWidth < 768;
   }
 
   selectSection(section: string) {
+    this.getOnlyDetails()
     this.selectedSection = section;
   }
 
@@ -840,29 +1105,31 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
 
   onCoverImageSelected(event: Event) {
     const file = (event.target as HTMLInputElement).files?.[0];
-  
+
     if (file) {
-      const allowedExtensions = ['jpeg', 'png', 'jpg', 'gif', 'svg'];
-      const fileExtension = file.name.split('.').pop()?.toLowerCase();
-  
+      const allowedExtensions = ["jpeg", "png", "jpg", "gif", "svg"];
+      const fileExtension = file.name.split(".").pop()?.toLowerCase();
+
       if (!fileExtension || !allowedExtensions.includes(fileExtension)) {
-        this.alertService.showAlert('warning','Invalid file type. Please select an image with one of the following extensions: jpeg, png, jpg, gif, svg.')
+        this.alertService.showAlert(
+          "warning",
+          "Invalid file type. Please select an image with one of the following extensions: jpeg, png, jpg, gif, svg."
+        );
         return;
       }
-  
+
       this.isCoverImageUploading = true;
-  
+
       const reader = new FileReader();
       reader.onload = () => {
         setTimeout(() => {
           this.coverImage = { file, url: reader.result as string };
           this.isCoverImageUploading = false;
-        }, 3000); 
+        }, 3000);
       };
       reader.readAsDataURL(file);
     }
   }
-  
 
   removeCoverImage() {
     this.coverImage = null;
@@ -896,7 +1163,13 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
   brandnametoDisplay: any;
 
   matchBrandname() {
-    let SelectedbrandID = this.listingForm.get("brand_id").value;
+    let SelectedbrandID
+    if(this.productDetails){
+      SelectedbrandID = this.productDetails.brand.id;
+    }else{
+      SelectedbrandID = this.listingForm.get("brand_id").value();
+    }
+    // console.log("this listingForm getbrand_id",this.listingForm.get("brand_id").value)
     const selectedBrand = this.brandsList.find(
       (brand) => brand.id === SelectedbrandID
     );
@@ -905,76 +1178,40 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
 
   onSubmit(Param: string) {
     let isUserLogin = localStorage.getItem("isLoggedIn");
-    if (isUserLogin == 'false') {
+    if (isUserLogin == "false") {
       this.loginFirst();
     }
-      if (Param === "listingDetails") {
-        if (this.listingForm.valid) {
-          if(this.isFromMyListingComponent){
-       
-            const formData={...this.listingForm.value , product_id:this.productIDFromResponse}
-            this.http.updateListingDetails(formData).subscribe(
-              (res) => {
-                this.productIDFromResponse = res.data.id;
-                localStorage.setItem('productID',  res.data.id);
-                this.alertService.showAlert(
-                  "success",
-                  "Listing Details Add Successfully"
-                );
-              
-                this.formDirty = true;
-                this.selectedOptionsList.push('watchDetails')
-                localStorage.setItem('selectedOptionsList', this.selectedOptionsList);
-                this.selectSection("watchDetails");
-              },
-              (err) => {
-                this.alertService.showAlert(
-                  "danger",
-                  "Error in adding listing details"
-                );
-              }
-            );
-          }else{
-            this.http.addListingDetails(this.listingForm.value).subscribe(
-              (res) => {
-                this.productIDFromResponse = res.id;
-                localStorage.setItem('productID', res.id);
-                this.alertService.showAlert(
-                  "success",
-                  "Listing Details Add Successfully"
-                );
-                this.formDirty = true;
-                this.selectedOptionsList.push('watchDetails')
-                localStorage.setItem('selectedOptionsList', this.selectedOptionsList);
-                this.selectSection("watchDetails");
-              },
-              (err) => {
-                this.alertService.showAlert(
-                  "danger",
-                  "Error in adding listing details"
-                );
-              }
-            );
-          }
-        } else {
-          this.alertService.showAlert("warning", "Enter Form Values");
-        }
-      } else if (Param === "watchDetails") {
-        if (this.watchDetailsForm.valid) {
-          const formDataWithProductID = {
-            ...this.watchDetailsForm.value,
+    if (Param === "listingDetails") {
+     
+      if(this.myControl.value){
+        this.listingForm.get('brand_id').setValue(this.myControl.value && typeof this.myControl.value !== 'string' ? this.myControl.value.id : null)
+      }
+      if(this.selectedCategories.value.length > 0){
+        this.listingForm.get('category_ids').setValue(this.selectedCategories.value.map(category => category.id))
+      }
+
+      if (this.listingForm.valid) {
+        if (this.isFromMyListingComponent) {
+          const formData = {
+            ...this.listingForm.value,
             product_id: this.productIDFromResponse,
           };
-
-          this.http.addWatchDetails(formDataWithProductID).subscribe(
+          this.http.updateListingDetails(formData).subscribe(
             (res) => {
+              this.productIDFromResponse = res.data.id;
+              localStorage.setItem("productID", res.data.id);
               this.alertService.showAlert(
                 "success",
-                "Watch Details Add Successfully"
+                "Listing Details Add Successfully"
               );
-              this.selectedOptionsList.push('uploadImages')
-              localStorage.setItem('selectedOptionsList', this.selectedOptionsList);
-              this.selectSection("uploadImages");
+
+              this.formDirty = true;
+              this.selectedOptionsList.push("watchDetails");
+              localStorage.setItem(
+                "selectedOptionsList",
+                this.selectedOptionsList
+              );
+              this.selectSection("watchDetails");
             },
             (err) => {
               this.alertService.showAlert(
@@ -984,154 +1221,225 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
             }
           );
         } else {
-          this.alertService.showAlert("warning", "Enter Required Form Values");
-        }
-      } else if (Param === "uploadImages") {
-        if (!this.coverImage) {
-          alert("Please upload a cover image.");
-          return;
-        }
-
-        if (this.otherImages.length === 0) {
-          alert("Please upload at least one other image.");
-          return;
-        }
-        const formData = new FormData();
-        formData.append("product_id", this.productIDFromResponse);
-        if (this.coverImage && this.coverImage.file) {
-          formData.append(
-            "main_image",
-            this.coverImage.file,
-            this.coverImage.file.name || "main_image.jpg"
+          this.http.addListingDetails(this.listingForm.value).subscribe(
+            (res) => {
+              this.productIDFromResponse = res.id;
+              localStorage.setItem("productID", res.id);
+              this.alertService.showAlert(
+                "success",
+                "Listing Details Add Successfully"
+              );
+              this.formDirty = true;
+              this.selectedOptionsList.push("watchDetails");
+              localStorage.setItem(
+                "selectedOptionsList",
+                this.selectedOptionsList
+              );
+              this.selectSection("watchDetails");
+            },
+            (err) => {
+              this.alertService.showAlert(
+                "danger",
+                "Error in adding listing details"
+              );
+            }
           );
         }
-        this.otherImages.forEach((image, index) => {
-          if (image.file) {
-            formData.append(
-              `additional_images[]`,
-              image.file,
-              image.file.name || `additional_image_${index}.jpg`
+      } else {
+        this.alertService.showAlert("warning", "Enter Form Values");
+      }
+    } else if (Param === "watchDetails") {
+      if (this.watchDetailsForm.valid) {
+        const formDataWithProductID = {
+          ...this.watchDetailsForm.value,
+          product_id: this.productIDFromResponse,
+        };
+
+        this.http.addWatchDetails(formDataWithProductID).subscribe(
+          (res) => {
+            this.alertService.showAlert(
+              "success",
+              "Watch Details Add Successfully"
+            );
+            this.selectedOptionsList.push("uploadImages");
+            localStorage.setItem(
+              "selectedOptionsList",
+              this.selectedOptionsList
+            );
+            this.selectSection("uploadImages");
+          },
+          (err) => {
+            this.alertService.showAlert(
+              "danger",
+              "Error in adding listing details"
             );
           }
-        });
-        formData.forEach((value, key) => console.log(key, value));
+        );
+      } else {
+        this.alertService.showAlert("warning", "Enter Required Form Values");
+      }
+    } else if (Param === "uploadImages") {
+      if (!this.coverImage) {
+        alert("Please upload a cover image.");
+        return;
+      }
 
-        this.http.addUploadImages(formData).subscribe(
+      if (this.otherImages.length === 0) {
+        alert("Please upload at least one other image.");
+        return;
+      }
+      const formData = new FormData();
+      formData.append("product_id", this.productIDFromResponse);
+      if (this.coverImage && this.coverImage.file) {
+        formData.append(
+          "main_image",
+          this.coverImage.file,
+          this.coverImage.file.name || "main_image.jpg"
+        );
+      }
+      this.otherImages.forEach((image, index) => {
+        if (image.file) {
+          formData.append(
+            `additional_images[]`,
+            image.file,
+            image.file.name || `additional_image_${index}.jpg`
+          );
+        }
+      });
+      formData.forEach((value, key) => console.log(key, value));
+
+      this.http.addUploadImages(formData).subscribe(
+        (res) => {
+          this.alertService.showAlert("success", "Images Add Successfully");
+          this.selectedOptionsList.push("conditionGrading");
+          localStorage.setItem("selectedOptionsList", this.selectedOptionsList);
+          this.selectSection("conditionGrading");
+        },
+        (err) => {
+          if(err && err.error){
+            this.alertService.showAlert("warning", `${err.error.error}`);
+          }else{
+            this.alertService.showAlert("warning", "Error in adding Images");
+          }
+          console.log("err",err)
+        }
+      );
+    } else if (Param === "conditionGrading") {
+      if (this.selectedCondition) {
+        const formData = {
+          product_id: this.productIDFromResponse,
+          condition: this.selectedCondition.title,
+        };
+
+        this.http.addCondition(formData).subscribe(
           (res) => {
-            this.alertService.showAlert("success", "Images Add Successfully");
-            this.selectedOptionsList.push('conditionGrading')
-            localStorage.setItem('selectedOptionsList', this.selectedOptionsList);
-            this.selectSection("conditionGrading");
+            this.alertService.showAlert(
+              "success",
+              "Condition Add Successfully"
+            );
+            this.selectedOptionsList.push("scopeofdelivery");
+            localStorage.setItem(
+              "selectedOptionsList",
+              this.selectedOptionsList
+            );
+            this.selectSection("scopeofdelivery");
+          },
+          (err) => {
+            this.alertService.showAlert("danger", "Error in adding Condition");
+          }
+        );
+      } else {
+        this.alertService.showAlert("warning", "Select any Option");
+      }
+    } else if (Param === "scopeofdelivery") {
+      if (this.selectedOptions) {
+        const formData = {
+          product_id: this.productIDFromResponse,
+          scope_of_delivery: this.selectedOptions.title,
+        };
+        this.http.addScopeOfDelivery(formData).subscribe(
+          (res) => {
+            this.alertService.showAlert("success", "Scope Add Successfully");
+            this.selectedOptionsList.push("proofofownership");
+            localStorage.setItem(
+              "selectedOptionsList",
+              this.selectedOptionsList
+            );
+            this.selectSection("proofofownership");
+          },
+          (err) => {
+            this.alertService.showAlert("danger", "Error in adding Scope");
+          }
+        );
+      } else {
+        this.alertService.showAlert("warning", "Select any Option");
+      }
+    } else if (Param === "proofofownership") {
+      if (!this.productIDFromResponse) {
+        this.productIDFromResponse = 913;
+      }
+
+      if (!this.selectedFiles[0] || !this.selectedFiles[1]) {
+        this.alertService.showAlert("warning", "Add Images");
+      } else {
+        const formData = new FormData();
+        formData.append("product_id", this.productIDFromResponse);
+        formData.append("proof_image_1", this.selectedFiles[0]);
+        formData.append("proof_image_2", this.selectedFiles[1]);
+        formData.append(
+          "proof_time_text_1",
+          this.formatTime(this.clocks[0].hour, this.clocks[0].minute)
+        );
+        formData.append(
+          "proof_time_text_2",
+          this.formatTime(this.clocks[1].hour, this.clocks[1].minute)
+        );
+        formData.append(
+          "generted_time_text_1",
+          this.formatTime(this.clocks[0].hour, this.clocks[0].minute)
+        );
+        formData.append(
+          "generted_time_text_2",
+          this.formatTime(this.clocks[1].hour, this.clocks[1].minute)
+        );
+        this.http.addProffofOwnerShip(formData).subscribe(
+          (res) => {
+            this.alertService.showAlert("success", "Images Added Successfully");
+            this.selectedOptionsList.push("priceshipment");
+            localStorage.setItem(
+              "selectedOptionsList",
+              this.selectedOptionsList
+            );
+            this.selectSection("priceshipment");
           },
           (err) => {
             this.alertService.showAlert("danger", "Error in adding Images");
           }
         );
-      } else if (Param === "conditionGrading") {
-        if (this.selectedCondition) {
-          const formData = {
-            product_id: this.productIDFromResponse,
-            condition: this.selectedCondition.title,
-          };
-
-          this.http.addCondition(formData).subscribe(
-            (res) => {
-              this.alertService.showAlert(
-                "success",
-                "Condition Add Successfully"
-              );
-              this.selectedOptionsList.push('scopeofdelivery')
-              localStorage.setItem('selectedOptionsList', this.selectedOptionsList);
-              this.selectSection("scopeofdelivery");
-            },
-            (err) => {
-              this.alertService.showAlert("danger", "Error in adding Condition");
-            }
-          );
-        } else {
-          this.alertService.showAlert("warning", "Select any Option");
-        }
-      } else if (Param === "scopeofdelivery") {
-        if (this.selectedOptions) {
-          const formData = {
-            product_id: this.productIDFromResponse,
-            scope_of_delivery: this.selectedOptions.title,
-          };
-          this.http.addScopeOfDelivery(formData).subscribe(
-            (res) => {
-              this.alertService.showAlert("success", "Scope Add Successfully");
-              this.selectedOptionsList.push('proofofownership')
-              localStorage.setItem('selectedOptionsList', this.selectedOptionsList);
-              this.selectSection("proofofownership");
-            },
-            (err) => {
-              this.alertService.showAlert("danger", "Error in adding Scope");
-            }
-          );
-        } else {
-          this.alertService.showAlert("warning", "Select any Option");
-        }
-      } else if (Param === "proofofownership") {
-
-        if(!this.productIDFromResponse){
-          this.productIDFromResponse=913
-        }
-
-        if (!this.selectedFiles[0] || !this.selectedFiles[1]) {
-          this.alertService.showAlert("warning", "Add Images");
-        } else {
-          const formData = new FormData();
-          formData.append("product_id", this.productIDFromResponse);
-          formData.append("proof_image_1", this.selectedFiles[0]);
-          formData.append("proof_image_2", this.selectedFiles[1]);
-          formData.append(
-            "proof_time_text_1",
-            this.formatTime(this.clocks[0].hour, this.clocks[0].minute)
-          );
-          formData.append(
-            "proof_time_text_2",
-            this.formatTime(this.clocks[1].hour, this.clocks[1].minute)
-          );
-          formData.append(
-            "generted_time_text_1",
-            this.formatTime(this.clocks[0].hour, this.clocks[0].minute)
-          );
-          formData.append(
-            "generted_time_text_2",
-            this.formatTime(this.clocks[1].hour, this.clocks[1].minute)
-          );
-          this.http.addProffofOwnerShip(formData).subscribe(
-            (res) => {
-              this.alertService.showAlert("success", "Images Added Successfully");
-              this.selectedOptionsList.push('priceshipment')
-              localStorage.setItem('selectedOptionsList', this.selectedOptionsList);
-              this.selectSection("priceshipment");
-            },
-            (err) => {
-              this.alertService.showAlert("danger", "Error in adding Images");
-            }
-          );
-        }
-      } else if (Param === "priceshipment") {
-        let formData;
-        if (this.userType === "user" || this.selectedUserTypeofConditionGradingForAdmin === 'user') {
-          formData = {
-            product_id: this.productIDFromResponse,
-            price: this.watchPrice,
-            estimate_payout: this.estimatedPayout,
-          };
+      }
+    } else if (Param === "priceshipment") {
+      let formData;
+      if (
+        this.userType === "user" ||
+        this.selectedUserTypeofConditionGradingForAdmin === "user"
+      ) {
+        formData = {
+          product_id: this.productIDFromResponse,
+          price: this.watchPrice,
+          estimate_payout: this.estimatedPayout,
+        };
+      } else {
+        if (!this.watchPrice || !this.shipping_type) {
+          this.alertService.showAlert("info", "Enter Form Values");
+          return;
         } else {
           if (
-            !this.watchPrice ||
-            !this.shipping_type
+            this.shipping_type === "inclusiveShipping" &&
+            (!this.shipping_charges)
           ) {
             this.alertService.showAlert("info", "Enter Form Values");
-            return
+            return;
           } else {
-            if(this.shipping_type === 'inclusiveShipping' && (!this.shipping_charges || !this.estimate_delivery)){
-              this.alertService.showAlert("info", "Enter Form Values");
-              return
-            }else{
             formData = {
               product_id: this.productIDFromResponse,
               price: this.watchPrice,
@@ -1142,84 +1450,90 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
               estimate_payout: this.estimatedPayoutwithShipping,
             };
           }
-          }
         }
+      }
 
-        if(FormData){
-          this.http.addpriceAndShipment(formData).subscribe(
-            (res) => {
-              this.alertService.showAlert(
-                "success",
-                "Price and Shipment Add Successfully"
-              );
-
-              const priceandShipment = {
-                price: this.watchPrice,
-                shipping_type: this.shipping_type,
-                shipping_charges: this.shipping_charges,
-                estimate_delivery: this.estimate_delivery,
-                allow_to_make_offer: this.allow_to_make_offer,
-                estimate_payout: this.estimatedPayoutwithShipping,
-              };
-        
-              this.selectedOptionsList.push('billinginformation')
-              localStorage.setItem('selectedOptionsList', this.selectedOptionsList);
-              this.selectSection("billinginformation");
-            },
-            (err) => {
-              this.alertService.showAlert(
-                "danger",
-                "Error in adding Price and Shipment"
-              );
-            }
-          );
-        }
-      } else if (Param === "billinginformation") {
-        if (this.billingForm.valid) {
-          const formDataWithProductID = {
-            ...this.billingForm.value,
-            product_id: this.productIDFromResponse,
-          };
-
-          this.http.addbillingInformation(formDataWithProductID).subscribe(
-            (res) => {
-              this.alertService.showAlert(
-                "success",
-                "Billing Info Add Successfully"
-              );
-              this.matchBrandname();
-              this.selectedOptionsList.push('summary')
-              localStorage.setItem('selectedOptionsList', this.selectedOptionsList);
-              this.selectSection("summary");
-            },
-            (err) => {
-              this.alertService.showAlert(
-                "danger",
-                "Error in adding Billing Info"
-              );
-            }
-          );
-        } else {
-          this.alertService.showAlert("warning", "Add Form Values");
-        }
-      } else if (Param === "summary") {
-        const formProductID = {
-          product_id: this.productIDFromResponse,
-        };
-        this.http.addbpublishListing(formProductID).subscribe(
+      if (FormData) {
+        this.http.addpriceAndShipment(formData).subscribe(
           (res) => {
             this.alertService.showAlert(
               "success",
-              "Product Publish Successfully"
+              "Price and Shipment Add Successfully"
             );
-            this.formDirty = false;
-            this.router.navigate(["/"]);
+
+            const priceandShipment = {
+              price: this.watchPrice,
+              shipping_type: this.shipping_type,
+              shipping_charges: this.shipping_charges,
+              estimate_delivery: this.estimate_delivery,
+              allow_to_make_offer: this.allow_to_make_offer,
+              estimate_payout: this.estimatedPayoutwithShipping,
+            };
+
+            this.selectedOptionsList.push("billinginformation");
+            localStorage.setItem(
+              "selectedOptionsList",
+              this.selectedOptionsList
+            );
+            this.selectSection("billinginformation");
           },
           (err) => {
-            this.alertService.showAlert("danger", "Error in Product Publishing");
+            this.alertService.showAlert(
+              "danger",
+              "Error in adding Price and Shipment"
+            );
           }
         );
       }
+    } else if (Param === "billinginformation") {
+      if (this.billingForm.valid) {
+        const formDataWithProductID = {
+          ...this.billingForm.value,
+          product_id: this.productIDFromResponse,
+        };
+
+        this.http.addbillingInformation(formDataWithProductID).subscribe(
+          (res) => {
+            this.alertService.showAlert(
+              "success",
+              "Billing Info Add Successfully"
+            );
+            this.matchBrandname();
+            this.selectedOptionsList.push("summary");
+            localStorage.setItem(
+              "selectedOptionsList",
+              this.selectedOptionsList
+            );
+            this.selectSection("summary");
+          },
+          (err) => {
+            this.alertService.showAlert(
+              "danger",
+              "Error in adding Billing Info"
+            );
+          }
+        );
+      } else {
+        this.alertService.showAlert("warning", "Add Form Values");
+      }
+    } else if (Param === "summary") {
+      const formProductID = {
+        product_id: this.productIDFromResponse,
+      };
+      this.http.addbpublishListing(formProductID).subscribe(
+        (res) => {
+          this.alertService.showAlert(
+            "success",
+            "Product Publish Successfully"
+          );
+          this.formDirty = false;
+          this.router.navigate(["/"]);
+        },
+        (err) => {
+          this.alertService.showAlert("danger", "Error in Product Publishing");
+        }
+      );
+    }
   }
 
   cancelbtn() {
@@ -1227,82 +1541,109 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
   }
 
   backbtn(param: string) {
+    this.getOnlyDetails();
     this.selectSection(param);
   }
 
   async routeToProductDetail() {
     this.formDirty = false;
-   let backUpProduct;
-    this.http.getProductDetailsByID(this.productIDFromResponse).subscribe(
-      (res)=>{
-        backUpProduct=res.product;
+    let backUpProduct;
+    this.http
+      .getProductDetailsByID(this.productIDFromResponse)
+      .subscribe((res) => {
+        backUpProduct = res.product;
         if (backUpProduct.main_image) {
-          backUpProduct.main_image = backUpProduct.main_image.replace(/\\/g, '');
+          backUpProduct.main_image = backUpProduct.main_image.replace(
+            /\\/g,
+            ""
+          );
         }
-  
+
         if (backUpProduct.additional_images) {
           try {
-            backUpProduct.additional_images = JSON.parse(backUpProduct.additional_images)
-              .map(image => image.replace(/\\/g, '')); 
+            backUpProduct.additional_images = JSON.parse(
+              backUpProduct.additional_images
+            ).map((image) => image.replace(/\\/g, ""));
           } catch (e) {
-            console.error('Failed to parse additional_images', e);
+            console.error("Failed to parse additional_images", e);
           }
         }
-      }
-    )
+      });
 
     this.router.navigate(["/buy-product"], {
-      state: { param: "listing-to-product", ID: this.productIDFromResponse,data:backUpProduct },
+      state: {
+        param: "listing-to-product",
+        ID: this.productIDFromResponse,
+        data: backUpProduct,
+      },
     });
   }
 
-
-  moveToForm(formName){
-    if(formName === 'listingDetails'){
-      if(this.selectedOptionsList.includes('listingDetails') && this.selectedSection !== 'listingDetails'){
-        this.selectSection('listingDetails')
+  moveToForm(formName) {
+    this.getOnlyDetails()
+    if (formName === "listingDetails") {
+      if (
+        this.selectedOptionsList.includes("listingDetails") &&
+        this.selectedSection !== "listingDetails"
+      ) {
+        this.selectSection("listingDetails");
       }
-    }
-    else if(formName === 'watchDetails'){
-      if(this.selectedOptionsList.includes('watchDetails') && this.selectedSection !== 'watchDetails'){
-        this.selectSection('watchDetails')
+    } else if (formName === "watchDetails") {
+      if (
+        this.selectedOptionsList.includes("watchDetails") &&
+        this.selectedSection !== "watchDetails"
+      ) {
+        this.selectSection("watchDetails");
       }
-    }
-    else if(formName === 'uploadImages'){
-      if(this.selectedOptionsList.includes('uploadImages') && this.selectedSection !== 'uploadImages'){
-        this.selectSection('uploadImages')
+    } else if (formName === "uploadImages") {
+      if (
+        this.selectedOptionsList.includes("uploadImages") &&
+        this.selectedSection !== "uploadImages"
+      ) {
+        this.selectSection("uploadImages");
       }
-    }
-    else if(formName === 'conditionGrading'){
-      if(this.selectedOptionsList.includes('conditionGrading') && this.selectedSection !== 'conditionGrading'){
-        this.selectSection('conditionGrading')
+    } else if (formName === "conditionGrading") {
+      if (
+        this.selectedOptionsList.includes("conditionGrading") &&
+        this.selectedSection !== "conditionGrading"
+      ) {
+        this.selectSection("conditionGrading");
       }
-    }
-    else if(formName === 'scopeofdelivery'){
-      if(this.selectedOptionsList.includes('scopeofdelivery') && this.selectedSection !== 'scopeofdelivery'){
-        this.selectSection('scopeofdelivery')
+    } else if (formName === "scopeofdelivery") {
+      if (
+        this.selectedOptionsList.includes("scopeofdelivery") &&
+        this.selectedSection !== "scopeofdelivery"
+      ) {
+        this.selectSection("scopeofdelivery");
       }
-    }
-    else if(formName === 'proofofownership'){
-      if(this.selectedOptionsList.includes('proofofownership') && this.selectedSection !== 'proofofownership'){
-        this.selectSection('proofofownership')
+    } else if (formName === "proofofownership") {
+      if (
+        this.selectedOptionsList.includes("proofofownership") &&
+        this.selectedSection !== "proofofownership"
+      ) {
+        this.selectSection("proofofownership");
       }
-    }
-    else if(formName === 'priceshipment'){
-      if(this.selectedOptionsList.includes('priceshipment') && this.selectedSection !== 'priceshipment'){
-        this.selectSection('priceshipment')
+    } else if (formName === "priceshipment") {
+      if (
+        this.selectedOptionsList.includes("priceshipment") &&
+        this.selectedSection !== "priceshipment"
+      ) {
+        this.selectSection("priceshipment");
       }
-    }
-    else if(formName === 'billinginformation'){
-      if(this.selectedOptionsList.includes('billinginformation') && this.selectedSection !== 'billinginformation'){
-        this.selectSection('billinginformation')
+    } else if (formName === "billinginformation") {
+      if (
+        this.selectedOptionsList.includes("billinginformation") &&
+        this.selectedSection !== "billinginformation"
+      ) {
+        this.selectSection("billinginformation");
       }
-    }
-    else if(formName === 'summary'){
-      if(this.selectedOptionsList.includes('summary') && this.selectedSection !== 'summary'){
-        this.selectSection('summary')
+    } else if (formName === "summary") {
+      if (
+        this.selectedOptionsList.includes("summary") &&
+        this.selectedSection !== "summary"
+      ) {
+        this.selectSection("summary");
       }
     }
   }
-
 }

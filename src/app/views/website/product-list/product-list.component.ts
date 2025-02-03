@@ -15,6 +15,7 @@ export class ProductListComponent implements OnInit {
   currentLanguage: string;
   showList: any;
   isUserLogin: any;
+  featured: boolean = false;
   watchTypes:any[]=[
     {id:1,name:'Promoted'},
     {id:2,name:'Featured'},
@@ -29,11 +30,40 @@ export class ProductListComponent implements OnInit {
     if (this.isUserLogin === "true") {
       this.getWishList();
     }
-    this.applyFilters();
     this.route.queryParams.subscribe((params) => {
       this.searchQuery = params['query'] || '';  // Read query parameter, or default to an empty string
+      this.featured = params['name'] === 'featured';  // Check if 'name' is 'featured' and set the flag
+      if(this.featured){
+        this.watchTypes[1].selected = true;
+      }
       this.applyFilters();
     });
+  }
+
+  get selectedCategories() {
+    return this.categories.filter(category => category.selected);
+  }
+
+  get selectedWatchTypes() {
+    return this.watchTypes.filter(type => type.selected);
+  }
+
+   // Method to remove category from selected categories
+   removeCategory(categoryId: number) {
+    const category = this.categories.find(cat => cat.id === categoryId);
+    if (category) {
+      category.selected = false;  // Deselect the category
+      this.applyFilters();  // Reapply filters after removal
+    }
+  }
+
+  // Method to remove watch type from selected watch types
+  removeWatchType(watchTypeId: number) {
+    const watchType = this.watchTypes.find(type => type.id === watchTypeId);
+    if (watchType) {
+      watchType.selected = false;  // Deselect the watch type
+      this.applyFilters();  // Reapply filters after removal
+    }
   }
 
   wishList: any;
@@ -64,6 +94,7 @@ export class ProductListComponent implements OnInit {
   }
 
   clearFilters(){
+    this.isApplyFiltere=false;
     this.categories.forEach(category => (category.selected = false));
     this.watchTypes.forEach(type => (type.selected = false));
     // this.priceRange = { from: 200, to: 50000 };
@@ -93,7 +124,9 @@ export class ProductListComponent implements OnInit {
     this.applyFilters(); 
   }
 
+  isApplyFiltere:boolean=false;
   applyFilters() {
+    this.isApplyFiltere=true;
     this.isShowFilters=false;
     let queryString = "";
     // // Add categories to the query string
@@ -113,23 +146,16 @@ export class ProductListComponent implements OnInit {
         queryString += "&"; // Add '&' if categories already exist
       }
       this.watchTypes.forEach((id, index) => {
- 
         if(id.selected){
           let isPROMO=1
           if(id.id === 1){
-
             queryString += `&is_promoted=${isPROMO}`
-          
           }
           if(id.id === 2){
-          
             queryString += `&feature_item=${isPROMO}`
-          
           }
           if(id.id === 3){
-   
             queryString += `&popular_item=${isPROMO}`
-          
           }
           // queryString += `brand_ids[]=${id.id}`; // Use brand_ids[] to store as an array
           if (index < this.watchTypes.length - 1) {

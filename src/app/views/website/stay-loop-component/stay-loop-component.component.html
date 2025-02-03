@@ -62,9 +62,15 @@
                 {{ product.product.currency }} {{ product.product.price }}
               </h4>
 
-              <button class="buy-btn"  (click)="goToProductDetailPage(product)">
+              <!-- <button class="buy-btn"  (click)="goToProductDetailPage(product)">
                 Buy Now
-              </button>
+              </button> -->
+
+              <a class="buy-btn" 
+                [routerLink]="['/buy-product']" 
+                [queryParams]="{ id:product.product.id, name: 'featured' }">
+                Buy Now
+              </a>
             </div>
           </div>
         </div>

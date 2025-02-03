@@ -25,15 +25,15 @@
               (ngSubmit)="onSubmit('listing')"
               *ngIf="selectedSection === 'listingDetails' && isSmallScreen"
             >
+
               <mat-form-field appearance="outline" class="w-100 mt-2">
                 <mat-label class="label-header">Brand</mat-label>
-                <mat-select formControlName="brand_id">
-                  <mat-option
-                    *ngFor="let brand of brandsList"
-                    [value]="brand.id"
-                    >{{ brand.name }}</mat-option
-                  >
-                </mat-select>
+                <input type="text" matInput [formControl]="myControl" [matAutocomplete]="auto">
+                <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+                  @for (option of filteredOptions | async; track option) {
+                    <mat-option [disabled]="productDetails?.brand_id ? true : false" [value]="option">{{option.name}}</mat-option>
+                  }
+                </mat-autocomplete>
                 <mat-error *ngIf="brand_id.hasError('required')">
                   Brand is required
                 </mat-error>
@@ -41,14 +41,28 @@
 
               <mat-form-field appearance="outline" class="w-100 mt-2">
                 <mat-label class="label-header">Category</mat-label>
-                <mat-select multiple formControlName="category_ids">
-                  <mat-option
-                    *ngFor="let category of categoryList"
-                    [value]="category.id"
-                    >{{ category.name }}</mat-option
-                  >
-                </mat-select>
-                <mat-error *ngIf="category_ids.hasError('required')">
+                <input type="text" matInput [formControl]="myCategoryControl" [matAutocomplete]="autoCategory">
+              
+                <mat-autocomplete #autoCategory="matAutocomplete" [displayWith]="displayCategoryFn">
+                  <mat-option [disabled]="productDetails?.categories ? true : false" *ngFor="let option of filteredCategoryOptions | async" [value]="option" (onSelectionChange)="addCategory(option)">
+                    {{ option.name }}
+                  </mat-option>
+                </mat-autocomplete>
+              
+                <!-- Display selected categories as chips -->
+                <div *ngIf="selectedCategories?.controls?.length > 0" class="selected-categories">
+                  <mat-chip-list #chipList aria-label="Category selection">
+                    <mat-chip *ngFor="let category of selectedCategories?.controls" [removable]="true" (click)="productDetails?.categories ? null : removeCategory(category.value)">
+                      {{ category.value.name }}
+                      <mat-icon matChipRemove>cancel</mat-icon>
+                    </mat-chip>
+                  </mat-chip-list>
+                </div>
+                <mat-hint>Select any Category max limit is 5</mat-hint>
+                <mat-error *ngIf="selectedCategories?.controls?.length >= MAX_CATEGORY_SELECTION">
+                  You can only select up to 5 categories.
+                </mat-error>
+                <mat-error *ngIf="selectedCategories?.controls?.length === 0">
                   Category is required
                 </mat-error>
               </mat-form-field>
@@ -57,6 +71,7 @@
                 <mat-label class="label-header">Name</mat-label>
                 <input
                   matInput
+                  [readonly]="productDetails?.name ? true : false"
                   placeholder="Enter Name"
                   formControlName="name"
                   required
@@ -71,6 +86,7 @@
                 <mat-label class="label-header">Model</mat-label>
                 <input
                   matInput
+                  [readonly]="productDetails?.model ? true : false"
                   placeholder="Enter your model name"
                   formControlName="model"
                   required
@@ -86,6 +102,7 @@
                 <input
                   matInput
                   placeholder="Enter your ad title"
+                  [readonly]="productDetails?.title ? true : false"
                   formControlName="title"
                   required
                   appFieldLimitIntoHundered
@@ -114,7 +131,7 @@
               <mat-form-field appearance="outline" class="w-100 mt-2">
                 <mat-label class="label-header">Watch Type</mat-label>
                 <mat-select formControlName="watch_type">
-                  <mat-option
+                  <mat-option [disabled]="productDetails?.watch_type ? true : false"
                     *ngFor="let data of formdropdownListData.watch_type"
                     [value]="data.key"
                   >
@@ -134,6 +151,7 @@
                   type="text"
                   placeholder="e.g. 2024"
                   formControlName="year_of_production"
+                  [readonly]="productDetails?.year_of_production ? true : false"
                   appPositiveNumber
                   required
                 />
@@ -204,7 +222,7 @@
                 <mat-label class="label-header">Reference No.</mat-label>
                 <input
                   matInput
-                  [readonly]="productDetails.reference_number ? true : false"
+                  [readonly]="productDetails?.reference_number ? true : false"
                   formControlName="reference_number"
                   placeholder="Enter your Reference Number"
                   required=""
@@ -218,11 +236,11 @@
                 <div class="col-md-4 mb-3">
                   <mat-form-field appearance="outline" class="w-100">
                     <mat-label class="label-header"
-                      >Serial No. (if not polished)</mat-label
+                      >Serial No. ( Will not Published )</mat-label
                     >
                     <input
                       matInput
-                      [readonly]="productDetails.serial_no ? true : false"
+                      [readonly]="productDetails?.serial_no ? true : false"
                       formControlName="serial_no"
                       placeholder="Enter serial number"
                       required
@@ -1918,13 +1936,12 @@
           <form [formGroup]="listingForm" (ngSubmit)="onSubmit('listing')">
             <mat-form-field appearance="outline" class="w-100 mt-2">
               <mat-label class="label-header">Brand</mat-label>
-              <mat-select formControlName="brand_id">
-                <mat-option
-                  *ngFor="let brand of brandsList"
-                  [value]="brand.id"
-                  >{{ brand.name }}</mat-option
-                >
-              </mat-select>
+              <input type="text" matInput [formControl]="myControl" [matAutocomplete]="auto">
+              <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+                @for (option of filteredOptions | async; track option) {
+                  <mat-option [disabled]="productDetails?.brand_id ? true : false" [value]="option">{{option.name}}</mat-option>
+                }
+              </mat-autocomplete>
               <mat-error *ngIf="brand_id.hasError('required')">
                 Brand is required
               </mat-error>
@@ -1932,22 +1949,40 @@
 
             <mat-form-field appearance="outline" class="w-100 mt-2">
               <mat-label class="label-header">Category</mat-label>
-              <mat-select multiple formControlName="category_ids">
-                <mat-option
-                  *ngFor="let category of categoryList"
-                  [value]="category.id"
-                  >{{ category.name }}</mat-option
-                >
-              </mat-select>
-              <mat-error *ngIf="category_ids.hasError('required')">
+              <input type="text" matInput [formControl]="myCategoryControl" [matAutocomplete]="autoCategory">
+            
+              <mat-autocomplete #autoCategory="matAutocomplete" [displayWith]="displayCategoryFn">
+                <mat-option [disabled]="productDetails?.categories ? true : false" *ngFor="let option of filteredCategoryOptions | async" [value]="option" (onSelectionChange)="addCategory(option)">
+                  {{ option.name }}
+                </mat-option>
+              </mat-autocomplete>
+            
+              <!-- Display selected categories as chips -->
+              <div *ngIf="selectedCategories?.controls?.length > 0" class="selected-categories">
+                <mat-chip-list #chipList aria-label="Category selection">
+                  <mat-chip *ngFor="let category of selectedCategories?.controls" [removable]="true"  (click)="productDetails?.categories ? null : removeCategory(category.value)">
+                    {{ category.value.name }}
+                    <mat-icon matChipRemove>cancel</mat-icon>
+                  </mat-chip>
+                </mat-chip-list>
+              </div>
+              <mat-hint>Select any Category max limit is 5</mat-hint>
+              <mat-error *ngIf="selectedCategories?.controls.length >= MAX_CATEGORY_SELECTION">
+                You can only select up to 5 categories.
+              </mat-error>
+              <mat-error *ngIf="selectedCategories?.controls.length === 0">
                 Category is required
               </mat-error>
             </mat-form-field>
+            
+            
+            
 
             <mat-form-field appearance="outline" class="w-100 mt-2">
               <mat-label class="label-header">Name</mat-label>
               <input
                 matInput
+                [readonly]="productDetails?.name ? true : false"
                 placeholder="Enter Name"
                 formControlName="name"
                 required
@@ -1962,6 +1997,7 @@
               <mat-label class="label-header">Model</mat-label>
               <input
                 matInput
+                [readonly]="productDetails?.model ? true : false"
                 placeholder="Enter your model name"
                 formControlName="model"
                 required
@@ -1976,6 +2012,7 @@
               <mat-label class="label-header">Title</mat-label>
               <input
                 matInput
+                [readonly]="productDetails?.title ? true : false"
                 placeholder="Enter your ad title"
                 formControlName="title"
                 required
@@ -2004,8 +2041,8 @@
 
             <mat-form-field appearance="outline" class="w-100 mt-2">
               <mat-label class="label-header">Watch Type</mat-label>
-              <mat-select formControlName="watch_type">
-                <mat-option
+              <mat-select  formControlName="watch_type">
+                <mat-option [disabled]="productDetails?.watch_type ? true : false"
                   *ngFor="let data of formdropdownListData.watch_type"
                   [value]="data.key"
                 >
@@ -2021,6 +2058,7 @@
               <mat-label class="label-header">Year of Production</mat-label>
               <input
                 matInput
+                [readonly]="productDetails?.year_of_production ? true : false"
                 type="text"
                 placeholder="e.g. 2024"
                 formControlName="year_of_production"
@@ -2097,7 +2135,7 @@
                   <mat-label class="label-header">Reference No.</mat-label>
                   <input
                     matInput
-                    [readonly]="productDetails.reference_number ? true : false"
+                    [readonly]="productDetails?.reference_number ? true : false"
                     formControlName="reference_number"
                     placeholder="Enter your Reference Number"
                     required
@@ -2117,11 +2155,11 @@
                   <div class="col-md-4 mb-3">
                     <mat-form-field appearance="outline" class="w-100">
                       <mat-label class="label-header"
-                        >Serial No. (if not polished)</mat-label
+                        >Serial No. ( Will not Published )</mat-label
                       >
                       <input
                         matInput
-                        [readonly]="productDetails.serial_no ? true : false"
+                        [readonly]="productDetails?.serial_no ? true : false"
                         formControlName="serial_no"
                         placeholder="Enter serial number"
                         required

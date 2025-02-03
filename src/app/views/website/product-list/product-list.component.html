@@ -138,6 +138,49 @@
       </button>
     </div>
 
+    <div *ngIf="(selectedCategories.length > 0 || selectedWatchTypes.length > 0) && isApplyFiltere" class="container-fluid mt-3">
+      <div class="col-md-12 d-flex flex-wrap align-items-center">
+        <div class="col-md-10 d-flex flex-wrap">
+          <!-- Display selected categories -->
+ 
+            <!-- <h5>Selected Categories:</h5> -->
+            <ul *ngIf="selectedCategories.length > 0" class="d-flex flex-wrap align-items-center gap-1" style="list-style: none !important;">
+              <li *ngFor="let category of selectedCategories" class="d-flex align-items-center li-styl">
+                <span>{{ category.name }}</span>
+                <button type="button" class="btn btn-link p-0 ms-2" (click)="removeCategory(category.id)">
+                  <i class="fas fa-times-circle" style="color: white;"></i>
+                </button>
+              </li>
+            </ul>
+     
+    
+            <!-- <h5>Selected Watch Types:</h5> -->
+            <ul *ngIf="selectedWatchTypes.length > 0" class="d-flex flex-wrap align-items-center gap-1" style="list-style: none !important;">
+              <li *ngFor="let watchType of selectedWatchTypes" class="d-flex align-items-center li-styl">
+                <span>{{ watchType.name }}</span>
+                <button type="button" class="btn btn-link p-0 ms-2" (click)="removeWatchType(watchType.id)">
+                  <i class="fas fa-times-circle" style="color: white;"></i>
+                </button>
+              </li>
+            </ul>
+      
+        </div>
+    
+        <div class="col-md-2 d-flex justify-content-end">
+          <button
+          style="border: none; background: none; color: #242424"
+          (click)="clearFilters()"
+        >
+          {{ "product_listing.cleaer_filter" | translate }}
+        </button>
+     
+        </div>
+      </div>
+    </div>
+    
+    
+    
+
     <div class="container-fluid mt-3">
       <div class="row">
         <div

@@ -124,9 +124,9 @@ class="category_btn"
       </div>
 
       <div class="text-center">
-        <button class="view_btn" (click)="goToList()">
+        <a class="view_btn" [routerLink]="['/product-list']">
           {{ "chrono_buyer.view_more" | translate }}
-        </button>
+        </a>
       </div>
     </div>
   </div>

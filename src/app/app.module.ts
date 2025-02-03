@@ -84,6 +84,8 @@ import { FieldLimitIntoHunderedDirective } from './views/directives/hundered-cha
 import { OnlyCharacterLimitThirtyDirective } from './views/directives/only-character-limit-thirty/only-character-limit-thirty.directive';
 import { PriceLimitDirective } from './views/directives/price-limit/price-limit.directive';
 import { AdminUsersComponent } from './views/adminpages/admin-users/admin-users.component';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatOptionModule } from '@angular/material/core';
 @NgModule({
   declarations: [
     AppComponent,
@@ -163,7 +165,7 @@ import { AdminUsersComponent } from './views/adminpages/admin-users/admin-users.
     TagModule,MatRadioModule,
     MatExpansionModule,
     BidiModule,HighchartsChartModule,
-    BidiModule, HighchartsChartModule,
+    BidiModule, HighchartsChartModule,MatOptionModule,MatAutocompleteModule,
     // MatExpansionModule,
     TranslateModule.forRoot({
         loader: {

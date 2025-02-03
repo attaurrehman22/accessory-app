@@ -20,7 +20,7 @@
         </p>
 
         <div class="w-100 d-flex">
-          <a [routerLink]="'/product-list'" class="btn btn-dark btn-lg mb-5" style="width: 200px">
+          <a [routerLink]="['/product-list']" [queryParams]="{ name: 'featured' }" class="btn btn-dark btn-lg mb-5" style="width: 200px">
             {{ "popular_brands.view_listing" | translate }}
           </a>
         </div>

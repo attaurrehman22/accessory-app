@@ -367,3 +367,10 @@ justify-content: start;
 .form-select {
   font-size: 14px;
 }
+
+.li-styl{
+  background: #242424;
+  color: #F8F8F8;
+  padding: 5px 10px 5px 10px;
+  border-radius: 24px;
+}
