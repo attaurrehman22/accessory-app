@@ -391,3 +391,20 @@ a {
       margin-right: 10px; /* Adjust margin for mobile screens */
   }
 }
+
+
+.loader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 20px;
+  font-weight: bold;
+  z-index: 9999;
+}

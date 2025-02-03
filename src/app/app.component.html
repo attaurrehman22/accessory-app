@@ -6,6 +6,9 @@
   <app-header></app-header>
   <router-outlet></router-outlet>
   <app-footer-component></app-footer-component>
+  <div *ngIf="isLoading$ | async" class="loader">
+    Loading...
+  </div>
 </div>
 
 <div style="position: absolute; right: 15px; top: 80px; width: auto" class="container mt-4"
@@ -15,3 +18,5 @@
     <button type="button" class="btn-close" (click)="closeAlert()" aria-label="Close"></button>
   </div>
 </div>
+
+<router-outlet></router-outlet>

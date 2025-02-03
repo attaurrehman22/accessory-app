@@ -5,7 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { TranslateModule, TranslateLoader, TranslateService } from "@ngx-translate/core";
 import { TranslateHttpLoader } from "@ngx-translate/http-loader";
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule, provideHttpClient, withInterceptors } from '@angular/common/http';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { MatIconModule } from '@angular/material/icon';
 import { HomeComponent } from './views/website/home/home.component';
@@ -86,6 +86,7 @@ import { PriceLimitDirective } from './views/directives/price-limit/price-limit.
 import { AdminUsersComponent } from './views/adminpages/admin-users/admin-users.component';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatOptionModule } from '@angular/material/core';
+import { authInterceptorInterceptor } from './auth-interceptor.interceptor';
 @NgModule({
   declarations: [
     AppComponent,
@@ -175,7 +176,11 @@ import { MatOptionModule } from '@angular/material/core';
         }
     }),
 ],
-  providers: [TranslateService, provideAnimationsAsync()],
+providers: [
+  TranslateService,
+  provideAnimationsAsync(),
+  provideHttpClient(withInterceptors([authInterceptorInterceptor])) 
+],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

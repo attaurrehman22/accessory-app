@@ -3,6 +3,7 @@ import { TranslateService } from "@ngx-translate/core";
 import { marker as TRANSLATE_ME } from "@biesbjerg/ngx-translate-extract-marker";
 import { NavigationEnd, Router } from "@angular/router";
 import { AlertsServicesService } from "src/services/alerts-service/alerts-services.service";
+import { LoaderService } from "./loader.service";
 
 @Component({
   selector: "app-root",
@@ -45,6 +46,11 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     const val = TRANSLATE_ME("home.title");
+
+    // this.isLoading$.subscribe(isLoading => {
+    //   console.log('Loading Status:', isLoading);
+    // });
+    
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         const currentRoute = this.router.url;
@@ -55,12 +61,14 @@ export class AppComponent implements OnInit {
     });
   }
 
+  isLoading$ = this.loaderService.isLoading;
   supportLanguages = ["en", "ar", "fr", "ta", "hi"];
 
   constructor(
     private translateService: TranslateService,
     private router: Router,
-    public alertService: AlertsServicesService
+    public alertService: AlertsServicesService,
+    private loaderService: LoaderService
   ) {
     this.translateService.addLangs(this.supportLanguages);
     this.translateService.setDefaultLang("en");
