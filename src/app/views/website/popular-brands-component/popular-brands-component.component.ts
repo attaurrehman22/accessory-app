@@ -39,12 +39,12 @@ export class PopularBrandsComponentComponent implements OnInit {
       {
         breakpoint: "1024px", // large screens
         numVisible: 3,
-        numScroll: 3,
+        numScroll: 1,
       },
       {
         breakpoint: "768px", // medium screens
         numVisible: 2,
-        numScroll: 2,
+        numScroll: 1,
       },
       {
         breakpoint: "560px", // small screens
@@ -141,10 +141,6 @@ export class PopularBrandsComponentComponent implements OnInit {
     this.hours=hours;
     this.minutes=minutes;
     this.seconds=seconds;
-
-    // console.log("days", days);
-    // console.log("hours", hours);
-    // console.log("minutes", minutes);
 
     // Update countdownTimers array with remaining time for the promotion
     this.countdownTimers[index] = { days, hours, minutes, seconds };
