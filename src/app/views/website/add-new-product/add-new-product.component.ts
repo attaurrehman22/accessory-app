@@ -238,7 +238,6 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
     if (fileInput.files && fileInput.files[0]) {
       const file = fileInput.files[0];
       this.selectedFiles[clockIndex] = file; // Store the selected file
-   
 
       const reader = new FileReader();
       reader.onload = (e: any) => {
@@ -347,7 +346,7 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
   }
 
   brandsList: any;
- 
+
   myControl = new FormControl<string | Brand>("");
   filteredOptions: Observable<Brand[]>;
   async getAllBrandsDropDown() {
@@ -368,8 +367,6 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
             : [];
         })
       );
-     
-
 
       // Log the brands list
     } catch (error) {
@@ -385,8 +382,8 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
   private _filter(name: string): Brand[] {
     const filterValue = name.toLowerCase();
 
-    return this.brandsList.filter((option) =>
-      option.name.toLowerCase().includes(filterValue)
+    return this.brandsList?.filter((option) =>
+      option?.name?.toLowerCase().includes(filterValue)
     );
   }
 
@@ -399,36 +396,39 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
     try {
       // Await the promise returned by the HTTP request
       const res = await this.http.getCategoryDropDown().toPromise();
-  
+
       // Extract data from the response
       this.categoryList = res.data;
-  
+
       // Set up filtered options for category input
       this.filteredCategoryOptions = this.myCategoryControl.valueChanges.pipe(
-        startWith(''),
+        startWith(""),
         map((value) => {
-          const name = typeof value === 'string' ? value : value?.name;
-          return name
-            ? this._filterCategories(name)
-            : this.categoryList;
+          const name = typeof value === "string" ? value : value?.name;
+          return name ? this._filterCategories(name) : this.categoryList;
         })
       );
     } catch (error) {
       console.error("Error fetching categories:", error);
     }
   }
-  
+
   displayCategoryFn(category: Category): string {
-    return category ? category.name : '';
+    return category ? category.name : "";
   }
 
   addCategory(category: Category): void {
-
-    if (this.selectedCategories.controls.length >= this.MAX_CATEGORY_SELECTION) {
+    if (
+      this.selectedCategories.controls.length >= this.MAX_CATEGORY_SELECTION
+    ) {
       return; // Do not add more than MAX_CATEGORY_SELECTION
     }
 
-    if (this.selectedCategories.controls.some(ctrl => ctrl.value.id === category.id)) {
+    if (
+      this.selectedCategories.controls.some(
+        (ctrl) => ctrl.value.id === category.id
+      )
+    ) {
       return; // If already selected, do not add again
     }
 
@@ -437,8 +437,9 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
 
   // Remove selected category from the FormArray
   removeCategory(category: Category): void {
-
-    const index = this.selectedCategories.controls.findIndex(ctrl => ctrl.value.id === category.id);
+    const index = this.selectedCategories.controls.findIndex(
+      (ctrl) => ctrl.value.id === category.id
+    );
     if (index !== -1) {
       this.selectedCategories.removeAt(index);
     }
@@ -447,10 +448,10 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
   // Filtering categories
   private _filterCategories(name: string): Category[] {
     const filterValue = name.toLowerCase();
-    let val=this.categoryList.filter(option =>
+    let val = this.categoryList.filter((option) =>
       option.name.toLowerCase().includes(filterValue)
     );
-    
+
     return val;
   }
 
@@ -462,7 +463,7 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
       this.formdropdownListData.watch_type = Object.entries(
         res.data.watch_type
       ).map(([key, value]) => ({ key, value }));
-      console.log("formdropdownListData",this.formdropdownListData)
+      console.log("formdropdownListData", this.formdropdownListData);
       this.formdropdownListData.gender = Object.entries(res.data.gender).map(
         ([key, value]) => ({ key, value })
       );
@@ -529,42 +530,41 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
 
   isListingCompleted: boolean = false;
 
-  getOnlyDetails(){
+  getOnlyDetails() {
     this.http
-    .getProductDetailsByID(this.productIDFromResponse)
-    .subscribe((res) => {
-      this.productDetails = res.product;
-      this.latestActiveForm = res.step;
-      if (res.is_listing_completed === 1) {
-        this.isListingCompleted = true;
-      }
-      if (this.productDetails?.main_image) {
-        this.productDetails.main_image =
-          this.productDetails?.main_image.replace(/\\/g, "");
-      }
-
-      if (this.productDetails?.additional_images) {
-        try {
-          this.productDetails.additional_images = JSON.parse(
-            this.productDetails?.additional_images
-          ).map((image) => image.replace(/\\/g, ""));
-        } catch (e) {
-          console.error("Failed to parse additional_images", e);
+      .getProductDetailsByID(this.productIDFromResponse)
+      .subscribe((res) => {
+        this.productDetails = res.product;
+        this.latestActiveForm = res.step;
+        if (res.is_listing_completed === 1) {
+          this.isListingCompleted = true;
         }
-      }
+        if (this.productDetails?.main_image) {
+          this.productDetails.main_image =
+            this.productDetails?.main_image.replace(/\\/g, "");
+        }
 
-      if (this.productDetails?.proof_image_1) {
-        this.productDetails.proof_image_1 =
-          this.productDetails?.proof_image_1.replace(/\\/g, "");
-      }
+        if (this.productDetails?.additional_images) {
+          try {
+            this.productDetails.additional_images = JSON.parse(
+              this.productDetails?.additional_images
+            ).map((image) => image.replace(/\\/g, ""));
+          } catch (e) {
+            console.error("Failed to parse additional_images", e);
+          }
+        }
 
-      if (this.productDetails?.proof_image_2) {
-        this.productDetails.proof_image_2 =
-          this.productDetails?.proof_image_2.replace(/\\/g, "");
-      }
-    }
-  )
-  this.patchFormDetails()
+        if (this.productDetails?.proof_image_1) {
+          this.productDetails.proof_image_1 =
+            this.productDetails?.proof_image_1.replace(/\\/g, "");
+        }
+
+        if (this.productDetails?.proof_image_2) {
+          this.productDetails.proof_image_2 =
+            this.productDetails?.proof_image_2.replace(/\\/g, "");
+        }
+      });
+    this.patchFormDetails();
   }
 
   getProductDetails() {
@@ -704,257 +704,305 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
   }
 
   patchFormDetails() {
-    if(this.productDetails){
-    // listingForm
-    const selectedBrand = this.productDetails.brand;
-    // Patch the brand value into the form control
-    if (selectedBrand) {
-      this.myControl.setValue(selectedBrand); // Set the full brand object
-    }
-  
-    // Disable the brand input field if brand_id exists
-    if (this.productDetails.brand_id) {
-      this.listingForm.get("brand_id").disable();
-    }
-
-    let ids = this.productDetails.categories.map(
-      (item: any) => 
-      item.id);
-    this.productDetails.categories.map(
-        (item: any) => this.addCategory(item));
-    // this.filteredCategoryOptions=this.productDetails.categories
-    this.listingForm.get("category_ids").setValue(ids);
-    if (ids.length > 0) {
-      this.listingForm.get("category_ids").disable();
-    }
-
-    this.listingForm.get("name").setValue(this.productDetails.name);
-    if (this.productDetails.name) {
-      // this.listingForm.get("name").disable();
-    }
-
-    this.listingForm.get("model").setValue(this.productDetails.model);
-    if (this.productDetails.model) {
-      // this.listingForm.get("model").disable();
-    }
-
-    this.listingForm.get("title").setValue(this.productDetails.title);
-    if (this.productDetails.title) {
-      // this.listingForm.get("title").disable();
-    }
-    this.listingForm
-      .get("description")
-      .setValue(this.productDetails.description);
-    this.listingForm.get("watch_type").setValue(this.productDetails.watch_type);
-    if (this.productDetails.watch_type) {
-      // this.listingForm.get("watch_type").disable();
-    }
-
-    // Additional fields with checks
-    this.listingForm
-      .get("year_of_production")
-      .setValue(this.productDetails.year_of_production);
-    if (this.productDetails.year_of_production) {
-      // this.listingForm.get("year_of_production").disable();
-    }
-
-    this.listingForm
-      .get("approximation")
-      .setValue(this.productDetails.approximate_year);
-    if (this.productDetails.approximate_year) {
-      this.listingForm.get("approximation").disable();
-    }
-    // this.listingForm.get('unknown').setValue(this.productDetails.)
-
-    // watchDetailsForm
-    this.watchDetailsForm
-      .get("reference_number")
-      .setValue(this.productDetails.reference_number);
-
-    if (this.productDetails.reference_number) {
-      // this.watchDetailsForm.get("reference_number").disable();
-    }
-
-    this.watchDetailsForm
-      .get("serial_no")
-      .setValue(this.productDetails.serial_no);
-
-    if (this.productDetails.serial_no) {
-      // this.watchDetailsForm.get("serial_no").disable();
-    }
-
-    this.watchDetailsForm.get("gender").setValue(this.productDetails.gender);
-    this.watchDetailsForm
-      .get("movement")
-      .setValue(this.productDetails.movement);
-    this.watchDetailsForm
-      .get("case_diameter_value_1")
-      .setValue(this.productDetails.case_diameter_value_1);
-    this.watchDetailsForm
-      .get("case_diameter_value_2")
-      .setValue(this.productDetails.case_diameter_value_2);
-    this.watchDetailsForm
-      .get("dial_color")
-      .setValue(this.productDetails.dial_color);
-    this.watchDetailsForm
-      .get("caliber_movement")
-      .setValue(this.productDetails.caliber_movement);
-    this.watchDetailsForm
-      .get("base_caliber")
-      .setValue(this.productDetails.base_caliber);
-    this.watchDetailsForm
-      .get("power_reserve")
-      .setValue(this.productDetails.power_reserve);
-    this.watchDetailsForm
-      .get("no_of_jewels")
-      .setValue(this.productDetails.no_of_jewels);
-    this.watchDetailsForm
-      .get("frequency")
-      .setValue(this.productDetails.frequency);
-    this.watchDetailsForm
-      .get("additional_details")
-      .setValue(this.productDetails.additional_details);
-    this.watchDetailsForm
-      .get("case_material")
-      .setValue(this.productDetails.case_material);
-    this.watchDetailsForm
-      .get("bezel_material")
-      .setValue(this.productDetails.bezel_material);
-    this.watchDetailsForm
-      .get("thickness")
-      .setValue(this.productDetails.thickness);
-    this.watchDetailsForm.get("crystal").setValue(this.productDetails.crystal);
-    this.watchDetailsForm
-      .get("water_resistance")
-      .setValue(this.productDetails.water_resistance);
-    this.watchDetailsForm
-      .get("dial_numerals")
-      .setValue(this.productDetails.dial_numerals);
-    this.watchDetailsForm
-      .get("bracelet_material")
-      .setValue(this.productDetails.bracelet_material);
-    this.watchDetailsForm
-      .get("bracelet_color")
-      .setValue(this.productDetails.bracelet_color);
-    this.watchDetailsForm
-      .get("type_of_clasp")
-      .setValue(this.productDetails.type_of_clasp);
-    this.watchDetailsForm
-      .get("clasp_material")
-      .setValue(this.productDetails.clasp_material);
-
-    // billingForm
-    this.billingForm
-      .get("billing_address")
-      .setValue(this.productDetails.billing_address || "");
-    if (this.productDetails.billing_address) {
-      this.billingForm.get("billing_address").disable();
-    }
-
-    this.billingForm
-      .get("first_name")
-      .setValue(this.productDetails.first_name || "");
-    if (this.productDetails.first_name) {
-      this.billingForm.get("first_name").disable();
-    }
-
-    this.billingForm
-      .get("last_name")
-      .setValue(this.productDetails.last_name || "");
-    if (this.productDetails.last_name) {
-      this.billingForm.get("last_name").disable();
-    }
-
-    this.billingForm.get("street").setValue(this.productDetails.street || "");
-    if (this.productDetails.street) {
-      this.billingForm.get("street").disable();
-    }
-
-    this.billingForm
-      .get("street_line_2")
-      .setValue(this.productDetails.street_line_2 || "");
-    if (this.productDetails.street_line_2) {
-      this.billingForm.get("street_line_2").disable();
-    }
-
-    this.billingForm
-      .get("zip_code")
-      .setValue(this.productDetails.zip_code || "");
-    if (this.productDetails.zip_code) {
-      this.billingForm.get("zip_code").disable();
-    }
-
-    this.billingForm.get("city").setValue(this.productDetails.city || "");
-    if (this.productDetails.city) {
-      this.billingForm.get("city").disable();
-    }
-
-    // PriceandShipment
-    this.watchPrice = this.productDetails.price;
-    this.shipping_type = this.productDetails.shipping_type;
-    this.shipping_charges = this.productDetails.shipping_charges;
-    this.estimate_delivery = this.productDetails.estimate_delivery;
-    this.allow_to_make_offer = this.productDetails.allow_to_make_offer;
-    this.estimatedPayoutwithShipping = this.productDetails.estimate_payout;
-
-    // If the form has a method to calculate payout
-    this.calculatePayout();
-
-    // Condition
-    if (this.productDetails.condition) {
-      let selectedCondition;
-      if (this.userType === "dealer") {
-        selectedCondition = this.dealerconditions.find(
-          (condition) => condition.title === this.productDetails.condition
-        );
-
-        this.dealerconditions = [selectedCondition];
-      } else {
-        selectedCondition = this.conditions.find(
-          (condition) => condition.title === this.productDetails.condition
-        );
-        // selectedCondition=this.conditions.filter((item:any)=>{item.title === this.productDetails.condition})
-        this.conditions = [selectedCondition];
+    if (this.productDetails) {
+      // listingForm
+      const selectedBrand = this.productDetails.brand;
+      // Patch the brand value into the form control
+      if (selectedBrand) {
+        this.myControl.setValue(selectedBrand); // Set the full brand object
       }
-      this.selectCondition(selectedCondition);
-    }
 
-    //scopeofDelivery
-    const scopeofDelivery = this.options.find(
-      (option) => option.title === this.productDetails.scope_of_delivery
-    );
+      // Disable the brand input field if brand_id exists
+      if (this.productDetails.brand_id) {
+        this.listingForm.get("brand_id").disable();
+      }
 
-    this.selectedOptions = scopeofDelivery;
+      let ids = this.productDetails.categories.map((item: any) => item.id);
+      this.productDetails.categories.map((item: any) => this.addCategory(item));
+      // this.filteredCategoryOptions=this.productDetails.categories
+      this.listingForm.get("category_ids").setValue(ids);
+      if (ids.length > 0) {
+        this.listingForm.get("category_ids").disable();
+      }
 
-    this.coverImage = {
-      file: null,
-      url: "https://api.chronosouq.com/" + this.productDetails.main_image,
-    };
+      this.listingForm.get("name").setValue(this.productDetails.name);
+      if (this.productDetails.name) {
+        // this.listingForm.get("name").disable();
+      }
 
-    if (this.productDetails.additional_images) {
-      this.otherImages = this.productDetails.additional_images.map(
-        (img: { url: string }) => ({
-          file: null,
-          url: "https://api.chronosouq.com/" + img,
-          isUploading: false,
-        })
+      this.listingForm.get("model").setValue(this.productDetails.model);
+      if (this.productDetails.model) {
+        // this.listingForm.get("model").disable();
+      }
+
+      this.listingForm.get("title").setValue(this.productDetails.title);
+      if (this.productDetails.title) {
+        // this.listingForm.get("title").disable();
+      }
+      this.listingForm
+        .get("description")
+        .setValue(this.productDetails.description);
+      this.listingForm
+        .get("watch_type")
+        .setValue(this.productDetails.watch_type);
+      if (this.productDetails.watch_type) {
+        // this.listingForm.get("watch_type").disable();
+      }
+
+      // Additional fields with checks
+      this.listingForm
+        .get("year_of_production")
+        .setValue(this.productDetails.year_of_production);
+      if (this.productDetails.year_of_production) {
+        // this.listingForm.get("year_of_production").disable();
+      }
+
+      this.listingForm
+        .get("approximation")
+        .setValue(this.productDetails.approximate_year);
+      if (this.productDetails.approximate_year) {
+        this.listingForm.get("approximation").disable();
+      }
+      // this.listingForm.get('unknown').setValue(this.productDetails.)
+
+      // watchDetailsForm
+      this.watchDetailsForm
+        .get("reference_number")
+        .setValue(this.productDetails.reference_number);
+
+      if (this.productDetails.reference_number) {
+        // this.watchDetailsForm.get("reference_number").disable();
+      }
+
+      this.watchDetailsForm
+        .get("serial_no")
+        .setValue(this.productDetails.serial_no);
+
+      if (this.productDetails.serial_no) {
+        // this.watchDetailsForm.get("serial_no").disable();
+      }
+
+      this.watchDetailsForm.get("gender").setValue(this.productDetails.gender);
+      this.watchDetailsForm
+        .get("movement")
+        .setValue(this.productDetails.movement);
+      this.watchDetailsForm
+        .get("case_diameter_value_1")
+        .setValue(this.productDetails.case_diameter_value_1);
+      this.watchDetailsForm
+        .get("case_diameter_value_2")
+        .setValue(this.productDetails.case_diameter_value_2);
+      this.watchDetailsForm
+        .get("dial_color")
+        .setValue(this.productDetails.dial_color);
+      this.watchDetailsForm
+        .get("caliber_movement")
+        .setValue(this.productDetails.caliber_movement);
+      this.watchDetailsForm
+        .get("base_caliber")
+        .setValue(this.productDetails.base_caliber);
+      this.watchDetailsForm
+        .get("power_reserve")
+        .setValue(this.productDetails.power_reserve);
+      this.watchDetailsForm
+        .get("no_of_jewels")
+        .setValue(this.productDetails.no_of_jewels);
+      this.watchDetailsForm
+        .get("frequency")
+        .setValue(this.productDetails.frequency);
+      this.watchDetailsForm
+        .get("additional_details")
+        .setValue(this.productDetails.additional_details);
+      this.watchDetailsForm
+        .get("case_material")
+        .setValue(this.productDetails.case_material);
+      this.watchDetailsForm
+        .get("bezel_material")
+        .setValue(this.productDetails.bezel_material);
+      this.watchDetailsForm
+        .get("thickness")
+        .setValue(this.productDetails.thickness);
+      this.watchDetailsForm
+        .get("crystal")
+        .setValue(this.productDetails.crystal);
+      this.watchDetailsForm
+        .get("water_resistance")
+        .setValue(this.productDetails.water_resistance);
+      this.watchDetailsForm
+        .get("dial_numerals")
+        .setValue(this.productDetails.dial_numerals);
+      this.watchDetailsForm
+        .get("bracelet_material")
+        .setValue(this.productDetails.bracelet_material);
+      this.watchDetailsForm
+        .get("bracelet_color")
+        .setValue(this.productDetails.bracelet_color);
+      this.watchDetailsForm
+        .get("type_of_clasp")
+        .setValue(this.productDetails.type_of_clasp);
+      this.watchDetailsForm
+        .get("clasp_material")
+        .setValue(this.productDetails.clasp_material);
+
+      // billingForm
+      
+
+      let citval = this.billingForm.get("city")?.value;
+      if (!citval) {
+        this.billingForm.get("city").setValue(this.productDetails.city || "");
+      }
+      
+      if(this.billingForm.get("billing_address")?.value){
+        
+      }else{
+        this.billingForm
+        .get("billing_address")
+        .setValue(this.productDetails.billing_address || "");
+      }
+
+      if(this.billingForm.get("first_name")?.value){
+        
+      }else{
+        this.billingForm
+        .get("first_name")
+        .setValue(this.productDetails.first_name || "");
+      }
+
+      if(this.billingForm.get("last_name")?.value){
+        
+      }else{
+        this.billingForm
+        .get("last_name")
+        .setValue(this.productDetails.last_name || "");
+      }
+
+      if(this.billingForm.get("street")?.value){
+        
+      }else{
+        this.billingForm
+          .get("street")
+          .setValue(this.productDetails.street || "");
+      }
+       
+      if(this.billingForm.get("street_line_2")?.value){
+        
+      }else{
+        this.billingForm
+        .get("street_line_2")
+        .setValue(this.productDetails.street_line_2 || "");
+      }
+
+      if(this.billingForm.get("zip_code")?.value){
+        
+      }else{
+        this.billingForm
+        .get("zip_code")
+        .setValue(this.productDetails.zip_code || "");
+      }
+        
+
+      
+
+      // PriceandShipment
+      this.watchPrice = this.productDetails.price;
+      this.shipping_type = this.productDetails.shipping_type;
+      this.shipping_charges = this.productDetails.shipping_charges;
+      this.estimate_delivery = this.productDetails.estimate_delivery;
+      this.allow_to_make_offer = this.productDetails.allow_to_make_offer;
+      this.estimatedPayoutwithShipping = this.productDetails.estimate_payout;
+
+      // If the form has a method to calculate payout
+      this.calculatePayout();
+
+      // Condition
+      if (this.productDetails.condition) {
+        let selectedCondition;
+        if (this.userType === "dealer") {
+          selectedCondition = this.dealerconditions.find(
+            (condition) => condition.title === this.productDetails.condition
+          );
+
+          this.dealerconditions = [selectedCondition];
+        } else {
+          selectedCondition = this.conditions.find(
+            (condition) => condition.title === this.productDetails.condition
+          );
+          // selectedCondition=this.conditions.filter((item:any)=>{item.title === this.productDetails.condition})
+          this.conditions = [selectedCondition];
+        }
+        this.selectCondition(selectedCondition);
+      }
+
+      //scopeofDelivery
+      const scopeofDelivery = this.options.find(
+        (option) => option.title === this.productDetails.scope_of_delivery
       );
-    }
-    if (this.productDetails?.proof_image_1) {
-      this.isEnableProofofOwnerShip = true;
-      this.imagePreviews[0] =
-        "https://api.chronosouq.com/" + this.productDetails.proof_image_1;
-    }
-    if (this.productDetails?.proof_image_2) {
-      this.isEnableProofofOwnerShip = true;
-      this.imagePreviews[1] =
-        "https://api.chronosouq.com/" + this.productDetails.proof_image_2;
+
+      this.selectedOptions = scopeofDelivery;
+
+      this.coverImage = {
+        file: null,
+        url: "https://api.chronosouq.com/" + this.productDetails.main_image,
+      };
+
+      if (this.productDetails.additional_images) {
+        this.otherImages = this.productDetails.additional_images.map(
+          (img: { url: string }) => ({
+            file: null,
+            url: "https://api.chronosouq.com/" + img,
+            isUploading: false,
+          })
+        );
+      }
+      if (this.productDetails?.proof_image_1) {
+        this.isEnableProofofOwnerShip = true;
+        this.imagePreviews[0] =
+          "https://api.chronosouq.com/" + this.productDetails.proof_image_1;
+      }
+      if (this.productDetails?.proof_image_2) {
+        this.isEnableProofofOwnerShip = true;
+        this.imagePreviews[1] =
+          "https://api.chronosouq.com/" + this.productDetails.proof_image_2;
+      }
     }
   }
+
+  getBillingInformation() {
+    let userID: any = localStorage.getItem("userID");
+    this.http.getDealerDetails(userID).subscribe((res) => {
+      // billingForm
+      this.billingInformationDetails = res?.data?.user_details;
+      this.billingForm
+        .get("billing_address")
+        .setValue(this.billingInformationDetails.billing_address || "");
+
+      this.billingForm
+        .get("first_name")
+        .setValue(this.billingInformationDetails.first_name || "");
+
+      this.billingForm
+        .get("last_name")
+        .setValue(this.billingInformationDetails.last_name || "");
+
+      this.billingForm
+        .get("street")
+        .setValue(this.billingInformationDetails.street || "");
+      this.billingForm
+        .get("street_line_2")
+        .setValue(this.billingInformationDetails.street_line_2 || "");
+
+      this.billingForm
+        .get("zip_code")
+        .setValue(this.billingInformationDetails.zip_code || "");
+
+      this.billingForm
+        .get("city")
+        .setValue(this.billingInformationDetails.city || "");
+    });
   }
 
   isEnableProofofOwnerShip: boolean = false;
-
+  billingInformationDetails: any;
   ngOnInit() {
     if (!this.productIDFromResponse) {
       this.productIDFromResponse = localStorage.getItem("productID");
@@ -970,6 +1018,11 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
             selectedOptionsList[selectedOptionsList.length - 1];
         }
       }
+    }
+
+    let userID: any = localStorage.getItem("userID");
+    if (userID) {
+      this.getBillingInformation();
     }
 
     this.router.events.subscribe((event) => {
@@ -1024,9 +1077,9 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
       })
     );
     this.filteredCategoryOptions = this.myCategoryControl.valueChanges.pipe(
-      startWith(''),
+      startWith(""),
       map((value) => {
-        const name = typeof value === 'string' ? value : value?.name;
+        const name = typeof value === "string" ? value : value?.name;
         return name
           ? this._filterCategories(name as string)
           : this.categoryList;
@@ -1091,7 +1144,7 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
   }
 
   selectSection(section: string) {
-    this.getOnlyDetails()
+    this.getOnlyDetails();
     this.selectedSection = section;
   }
 
@@ -1163,10 +1216,10 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
   brandnametoDisplay: any;
 
   matchBrandname() {
-    let SelectedbrandID
-    if(this.productDetails){
+    let SelectedbrandID;
+    if (this.productDetails) {
       SelectedbrandID = this.productDetails.brand.id;
-    }else{
+    } else {
       SelectedbrandID = this.listingForm.get("brand_id").value();
     }
     // console.log("this listingForm getbrand_id",this.listingForm.get("brand_id").value)
@@ -1182,12 +1235,21 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
       this.loginFirst();
     }
     if (Param === "listingDetails") {
-     
-      if(this.myControl.value){
-        this.listingForm.get('brand_id').setValue(this.myControl.value && typeof this.myControl.value !== 'string' ? this.myControl.value.id : null)
+      if (this.myControl.value) {
+        this.listingForm
+          .get("brand_id")
+          .setValue(
+            this.myControl.value && typeof this.myControl.value !== "string"
+              ? this.myControl.value.id
+              : null
+          );
       }
-      if(this.selectedCategories.value.length > 0){
-        this.listingForm.get('category_ids').setValue(this.selectedCategories.value.map(category => category.id))
+      if (this.selectedCategories.value.length > 0) {
+        this.listingForm
+          .get("category_ids")
+          .setValue(
+            this.selectedCategories.value.map((category) => category.id)
+          );
       }
 
       if (this.listingForm.valid) {
@@ -1316,12 +1378,12 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
           this.selectSection("conditionGrading");
         },
         (err) => {
-          if(err && err.error){
+          if (err && err.error) {
             this.alertService.showAlert("warning", `${err.error.error}`);
-          }else{
+          } else {
             this.alertService.showAlert("warning", "Error in adding Images");
           }
-          console.log("err",err)
+          console.log("err", err);
         }
       );
     } else if (Param === "conditionGrading") {
@@ -1435,7 +1497,7 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
         } else {
           if (
             this.shipping_type === "inclusiveShipping" &&
-            (!this.shipping_charges)
+            !this.shipping_charges
           ) {
             this.alertService.showAlert("info", "Enter Form Values");
             return;
@@ -1580,7 +1642,7 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
   }
 
   moveToForm(formName) {
-    this.getOnlyDetails()
+    this.getOnlyDetails();
     if (formName === "listingDetails") {
       if (
         this.selectedOptionsList.includes("listingDetails") &&

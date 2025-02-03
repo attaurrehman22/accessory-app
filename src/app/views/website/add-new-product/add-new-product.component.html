@@ -1532,6 +1532,7 @@
                     formControlName="billing_address"
                     placeholder="Enter address here"
                     appFieldLimitIntoHundered
+                    [readonly]="(billingInformationDetails?.billing_address || productDetails?.billing_address) ? true : false"
                   />
                   <mat-error *ngIf="billing_address.hasError('required')">
                     Billing Address is required
@@ -1549,6 +1550,7 @@
                     formControlName="first_name"
                     appOnlyCharacterLimitThirty
                     placeholder="Enter first name"
+                    [readonly]="(billingInformationDetails?.first_name || productDetails?.first_name)? true : false"
                   />
                   <mat-error *ngIf="first_name.hasError('required')">
                     First Name is required
@@ -1566,6 +1568,7 @@
                     appOnlyCharacterLimitThirty
                     formControlName="last_name"
                     placeholder="Enter last name"
+                    [readonly]="(billingInformationDetails?.last_name || productDetails?.last_name) ? true : false"
                   />
                   <mat-error *ngIf="last_name.hasError('required')">
                     Last Name is required
@@ -1582,6 +1585,7 @@
                     matInput
                     formControlName="street"
                     placeholder="Enter street address"
+                    [readonly]="(billingInformationDetails?.street || productDetails?.street )? true : false"
                   />
                   <mat-error *ngIf="street.hasError('required')">
                     Street is required
@@ -1604,6 +1608,7 @@
                     matInput
                     formControlName="street_line_2"
                     placeholder="Enter street address"
+                    [readonly]="(billingInformationDetails?.street_line_2 || productDetails?.street_line_2)? true : false"
                   />
                   <mat-error *ngIf="street_line_2.hasError('pattern')">
                     Street can only contain letters and numbers.
@@ -1624,6 +1629,7 @@
                     formControlName="zip_code"
                     appPositiveNumber
                     placeholder="Enter zip code"
+                    [readonly]="(billingInformationDetails?.zip_code || productDetails?.zip_code) ? true : false"
                   />
                   <mat-error *ngIf="zip_code.hasError('required')">
                     ZIP Code is required
@@ -1647,6 +1653,7 @@
                     formControlName="city"
                     appOnlyCharacterLimitThirty
                     placeholder="Enter City"
+                    [readonly]="(billingInformationDetails?.city || productDetails?.city) ? true : false"
                   />
                   <mat-error *ngIf="city.hasError('required')">
                     City is required
@@ -3357,6 +3364,7 @@
                 formControlName="billing_address"
                 placeholder="Enter address here"
                 appFieldLimitIntoHundered
+                [readonly]="(billingInformationDetails?.billing_address || productDetails?.billing_address) ? true : false"
               />
               <mat-error *ngIf="billing_address.hasError('required')">
                 Billing Address is required
@@ -3372,8 +3380,9 @@
               <input
                 matInput
                 formControlName="first_name"
-                placeholder="Enter first name"
                 appOnlyCharacterLimitThirty
+                placeholder="Enter first name"
+                [readonly]="(billingInformationDetails?.first_name || productDetails?.first_name)? true : false"
               />
               <mat-error *ngIf="first_name.hasError('required')">
                 First Name is required
@@ -3388,9 +3397,10 @@
               <mat-label class="label-header">Last Name</mat-label>
               <input
                 matInput
+                appOnlyCharacterLimitThirty
                 formControlName="last_name"
                 placeholder="Enter last name"
-                appOnlyCharacterLimitThirty
+                [readonly]="(billingInformationDetails?.last_name || productDetails?.last_name) ? true : false"
               />
               <mat-error *ngIf="last_name.hasError('required')">
                 Last Name is required
@@ -3407,6 +3417,7 @@
                 matInput
                 formControlName="street"
                 placeholder="Enter street address"
+                [readonly]="(billingInformationDetails?.street || productDetails?.street )? true : false"
               />
               <mat-error *ngIf="street.hasError('required')">
                 Street is required
@@ -3429,8 +3440,8 @@
                 matInput
                 formControlName="street_line_2"
                 placeholder="Enter street address"
+                [readonly]="(billingInformationDetails?.street_line_2 || productDetails?.street_line_2)? true : false"
               />
-
               <mat-error *ngIf="street_line_2.hasError('pattern')">
                 Street can only contain letters and numbers.
               </mat-error>
@@ -3448,8 +3459,9 @@
               <input
                 matInput
                 formControlName="zip_code"
-                placeholder="Enter zip code"
                 appPositiveNumber
+                placeholder="Enter zip code"
+                [readonly]="(billingInformationDetails?.zip_code || productDetails?.zip_code) ? true : false"
               />
               <mat-error *ngIf="zip_code.hasError('required')">
                 ZIP Code is required
@@ -3468,7 +3480,13 @@
               appearance="outline"
             >
               <mat-label class="label-header">City</mat-label>
-              <input matInput formControlName="city" placeholder="Enter City" appOnlyCharacterLimitThirty />
+              <input
+                matInput
+                formControlName="city"
+                appOnlyCharacterLimitThirty
+                placeholder="Enter City"
+                [readonly]="(billingInformationDetails?.city || productDetails?.city) ? true : false"
+              />
               <mat-error *ngIf="city.hasError('required')">
                 City is required
               </mat-error>
@@ -3486,19 +3504,19 @@
               Back
             </button>
             <button
-              *ngIf="!isNextButtonShowonBillingInformation"
-              class="save-can-btn save-btn-bg"
-              (click)="onSubmit('billinginformation')"
-            >
-              Save
-            </button>
-            <button
-              *ngIf="isNextButtonShowonBillingInformation"
-              class="save-can-btn save-btn-bg"
-              (click)="nextMoveToSummary()"
-            >
-              Next
-            </button>
+            *ngIf="!isNextButtonShowonBillingInformation"
+            class="save-can-btn save-btn-bg"
+            (click)="onSubmit('billinginformation')"
+          >
+            Save
+          </button>
+          <button
+            *ngIf="isNextButtonShowonBillingInformation"
+            class="save-can-btn save-btn-bg"
+            (click)="nextMoveToSummary()"
+          >
+            Next
+          </button>
           </div>
         </div>
 

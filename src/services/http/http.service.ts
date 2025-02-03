@@ -98,6 +98,10 @@ export class HttpService implements OnInit {
     return this.http.get(`${this.apiUrl}/api/most-popular-models`);
   }
 
+  getDealerDetails(ID:any): Observable<any> {
+    return this.http.get(`${this.apiUrl}/api/dealer/${ID}/details`);
+  }
+
   addProduct(formData: any): Observable<any> {
     const url = `${this.apiUrl}/api/products/save`;
     return this.http.post(url, formData, {
