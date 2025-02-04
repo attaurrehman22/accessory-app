@@ -62,6 +62,7 @@ export class PopularBrandsComponentComponent implements OnInit {
   getAllFeaturedProducts() {
     this.http.getFeaturedList().subscribe(
       (res) => {
+        console.log("res", res);
         this.products = res.data.map((product: any) => {
           product.promotion_banner = product.promotion_banner.replace(/\\/g, "");
           return product;
@@ -102,7 +103,7 @@ export class PopularBrandsComponentComponent implements OnInit {
     const formattedEndDate = endDate.replace(" ", "T");
 
     // Log the formatted dates to verify they are correct
-    
+
 
     // Parsing the dates to ensure they're valid
     const end = new Date(formattedEndDate).getTime();
@@ -167,9 +168,9 @@ export class PopularBrandsComponentComponent implements OnInit {
     if (this.products.length > 0) {
       const productName = this.products[this.firstVisibleIndex]?.name;
       if (productName) {
-   
+
       } else {
-       
+
       }
     }
   }

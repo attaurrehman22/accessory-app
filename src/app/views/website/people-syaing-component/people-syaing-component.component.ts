@@ -36,7 +36,7 @@ export class PeopleSyaingComponentComponent implements AfterViewInit, OnInit {
       }
     );
   }
-  
+
   constructor(
     private translateService: TranslateService,
     private http: HttpService
@@ -70,13 +70,13 @@ export class PeopleSyaingComponentComponent implements AfterViewInit, OnInit {
 
   getNextIndex(offset: number = 1): number {
     if (!this.testimonials || this.testimonials.length === 0) {
-      console.error('Testimonials not available or empty');
+      // console.error('Testimonials not available or empty');
       return 0; // or return a default index, e.g., 0
     }
-  
+
     return (this.activeIndex + offset + this.testimonials.length) % this.testimonials.length;
   }
-  
-  
-  
+
+
+
 }
