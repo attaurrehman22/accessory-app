@@ -10,7 +10,7 @@
   @if(!!testimonials){
 
   <div class="col-12 carosal-div mt-3">
-    <div id="testimonialCarousel" class="carousel slide carousal-div pt-3 pb-3" data-bs-ride="carousel"
+    <div id="testimonialCarousel" class="carousel slide carousel-fade carousal-div pt-3 pb-3" data-bs-ride="carousel"
       #testimonialCarousel>
       <div class="carousel-inner carosal-inner-custom">
 
@@ -134,12 +134,12 @@
         <span class="custom-arrow-left"></span>
         <span class="visually-hidden">Previous</span>
       </button>
-
-      <!-- Next Button -->
+      
       <button class="carousel-control-next next-btn" type="button" (click)="activeIndex = getNextIndex(1)">
         <span class="custom-arrow-right"></span>
         <span class="visually-hidden">Next</span>
       </button>
+      
 
     </div>
   </div>

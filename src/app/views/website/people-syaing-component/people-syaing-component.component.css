@@ -87,8 +87,21 @@
 
 
 .carousel-item {
-  transition: transform 0.5s ease-in-out;
+  transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
 }
+
+.smooth-transition {
+  transition: transform 0.5s, opacity 0.5s, box-shadow 0.3s;
+}
+
+/* .smooth-transition:hover {
+  transform: scale(1.1) rotate(5deg) translateY(-10px);
+  opacity: 0.8;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+} */
+
+
+
 
 .carousel-control-prev-icon,
 .carousel-control-next-icon {
@@ -181,14 +194,11 @@
 @media (max-width: 468px) {
 
   .image-container-active{
-    margin-top: 120px !important;
+    margin-top: 5px !important;
   }
-}
 
-@media (max-width: 468px) {
-
-  .image-container-active{
-    margin-top: 120px !important;
+  .card-text{
+    font-size: 12px !important;
   }
 }
 
