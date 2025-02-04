@@ -138,12 +138,19 @@
           <a class="custom-btn" routerLink="/product-list">
             {{ "header.buy_watch" | translate }}
           </a>
-          <button class="custom-btn" *ngIf="isUserLogin === 'false' || isUserLogin == null" (click)="routeToNewProduct()">
-            {{ "header.sell_watch" | translate }}
-          </button>
-          <a routerLink="/new-product" class="custom-btn" *ngIf="isUserLogin === 'true'">
+          <!-- <a class="custom-btn" *ngIf="isUserLogin === 'false' || isUserLogin == null" (click)="routeToNewProduct()">
             {{ "header.sell_watch" | translate }}
           </a>
+          <a routerLink="/new-product" class="custom-btn" *ngIf="isUserLogin === 'true'">
+            {{ "header.sell_watch" | translate }}
+          </a> -->
+          <a
+            class="custom-btn" 
+            routerLink="/new-product"
+          >
+            {{ "header.sell_watch" | translate }}
+          </a>
+
           <a
             class="custom-btn"
             *ngIf="showHideAdminUser === true"

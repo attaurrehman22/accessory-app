@@ -100,9 +100,27 @@ export class BuyProductComponentComponent implements OnInit {
   routeFrom: any;
   isUserLogin: any;
 
+  loginFirst() {
+    const dialogRef = this.dialog.open(ModelLoginComponent, {
+      backdropClass: "hello",
+ 
+      width: "600px",
+      
+      data: { message: "header" },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+      }
+    });
+  }
+
   ngOnInit(): void {
     window.scrollTo(0, 0);
     this.isUserLogin = localStorage.getItem("isLoggedIn");
+    if (this.isUserLogin == 'false') {
+      this.loginFirst();
+    }
     if (this.isUserLogin === "true") {
       this.getWishList();
     }
