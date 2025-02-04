@@ -153,6 +153,14 @@ export class HttpService implements OnInit {
     return this.http.get(`${this.apiUrl}/api/get-watch-of-the-day`);
   }
 
+  getFilteredData(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/api/get-filters-data`);
+  }
+
+  getTopBrandsData(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/api/get-top-brands-data`);
+  }
+
   getAllStaticstestimonial(): Observable<any> {
     return this.http.get(`${this.apiUrl}/api/testimonials`);
   }

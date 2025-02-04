@@ -85,25 +85,17 @@ export class PopularBrandsComponentComponent implements OnInit {
   }
 
   onCarouselMove(event: any) {
-    // console.log("event", event);
     this.firstVisibleIndex = event.page;
-    // console.log("firstVisibleIndex", this.firstVisibleIndex);
-    if (
-      this.firstVisibleIndex >= 0 &&
-      this.firstVisibleIndex < this.products.length
-    ) {
-      const activeProduct = this.products[this.firstVisibleIndex];
-      // console.log("Active product", activeProduct);
-      this.activePromotions.forEach((promotion, index) => {
-        this.updateRemainingTime(promotion.start_date, promotion.end_date, index);
-        this.startCountdown(promotion.start_date, promotion.end_date, index); // Start the countdown for each promotion
-      });
-      this.logFirstProduct();
-    } else {
-      console.error("Invalid firstVisibleIndex:", this.firstVisibleIndex);
+  
+    // Ensure first item is visible when looping back
+    if (this.firstVisibleIndex >= this.products.length - this.responsiveOptions[0].numVisible) {
+      setTimeout(() => {
+        this.firstVisibleIndex = 0;
+      }, 500); // Delay for a smooth transition
     }
   }
 
+  
   updateRemainingTime(startDate: string, endDate: string, index: number) {
     // Ensure the start and end dates are in ISO 8601 format (properly replace the space with 'T')
     const formattedStartDate = startDate.replace(" ", "T");

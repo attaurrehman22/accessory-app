@@ -14,9 +14,18 @@ export class MostPopularModelsComponentComponent implements OnInit {
     this.getAllPopularModels();
   }
   getAllPopularModels() {
-    this.http.getPopularModels().subscribe(
+    this.http.getTopBrandsData().subscribe(
       (res) => {
-        this.popularModels = res.data;
+        this.popularModels = res.top_brands;
+        this.popularModels?.map((product: any) => {
+          if (product.cover_image) {
+            product.cover_image = product.cover_image
+              .replace(/\\/g, "/")
+              .replace(/^\/+/, "");
+          }
+          return product;
+        });
+
       },
       (err) => {
       }

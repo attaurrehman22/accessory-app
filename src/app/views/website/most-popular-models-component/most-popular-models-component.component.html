@@ -1,54 +1,9 @@
 <div class="global-main-wraper d-flex justify-content-center pt-5 pb-5 mt-5 mb-5">
   <div class="logo-container">
     <div class="logo-wrapper">
-      <img
+      <img *ngFor="let item of popularModels"
         class="img-stl"
-        src="../../../../assets/images/ROLEX_LOGO.png"
-        alt="rolex"
-      />
-      <img
-        class="img-stl"
-        src="../../../../assets/images/Breitling_Logo.png"
-        alt="rolex"
-      />
-      <img
-        class="img-stl"
-        src="../../../../assets/images/Cartier_Logo.png"
-        alt="rolex"
-      />
-      <img
-        class="img-stl"
-        src="../../../../assets/images/IWC_Logo.png"
-        alt="rolex"
-      />
-      <img
-        class="img-stl"
-        src="../../../../assets/images/OMEGA_Logo.png"
-        alt="rolex"
-      />
-      <img
-        class="img-stl"
-        src="../../../../assets/images/ROLEX_LOGO.png"
-        alt="rolex"
-      />
-      <img
-        class="img-stl"
-        src="../../../../assets/images/Breitling_Logo.png"
-        alt="rolex"
-      />
-      <img
-        class="img-stl"
-        src="../../../../assets/images/Cartier_Logo.png"
-        alt="rolex"
-      />
-      <img
-        class="img-stl"
-        src="../../../../assets/images/IWC_Logo.png"
-        alt="rolex"
-      />
-      <img
-        class="img-stl"
-        src="../../../../assets/images/OMEGA_Logo.png"
+        [src]="'https://api.chronosouq.com/' + item.cover_image"
         alt="rolex"
       />
     </div>

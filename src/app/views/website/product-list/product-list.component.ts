@@ -24,8 +24,28 @@ export class ProductListComponent implements OnInit {
   categories:any[]=[];
   searchQuery: string = "";
 
+  getFilteredData(){
+    this.http.getFilteredData().subscribe(
+      (res)=>{
+        this.categories=res.top_categories;
+        if(res?.min_price){
+          this.min=Math.round(res.min_price);
+         this.currentValue = this.min; 
+        }else{
+          this.min = 1000;
+        }
+        if(res?.max_price){
+          this.max=Math.round(res.max_price);
+        }else{
+          this.max = 3000;
+        }
+      }
+    )
+  }
+
   ngOnInit(): void {
-    this.getAllCategories()
+    this.getAllCategories();
+    this.getFilteredData()
     this.isUserLogin = localStorage.getItem("isLoggedIn");
     if (this.isUserLogin === "true") {
       this.getWishList();
@@ -187,17 +207,7 @@ export class ProductListComponent implements OnInit {
       this.fromItem=this.showList?.data?.from;
       this.toItem=this.showList?.data?.to;
 
-      if(this.showList?.minPrice){
-        this.min=this.showList.minPrice;
-       this.currentValue = this.min; 
-      }else{
-        this.min = 1000;
-      }
-      if(this.showList?.maxPrice){
-        this.min=this.showList.maxPrice;
-      }else{
-        this.max = 3000;
-      }
+     
       if(this.showList?.data?.next_page_url === null){
         this.isnextPage=false
       }else{
