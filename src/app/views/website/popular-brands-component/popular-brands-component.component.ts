@@ -62,17 +62,20 @@ export class PopularBrandsComponentComponent implements OnInit {
   getAllFeaturedProducts() {
     this.http.getFeaturedList().subscribe(
       (res) => {
-        console.log("res", res);
         this.products = res.data.map((product: any) => {
           product.promotion_banner = product.promotion_banner.replace(/\\/g, "");
           return product;
         });
-
+    
+        // Duplicate the first two items and append them to the end of the list
+        const firstTwoItems = this.products.slice(0, 2); // Get the first two items
+        this.products = [...this.products, ...firstTwoItems]; // Add them to the end of the array
+    
         // Filter out active promotions
         this.activePromotions = this.products.filter(
           (product) => product.start_date && product.end_date && product.is_active
         );
-
+    
         // Start countdowns for active promotions
         this.activePromotions.forEach((promotion, index) => {
           this.updateRemainingTime(promotion.start_date, promotion.end_date, index);
@@ -83,6 +86,7 @@ export class PopularBrandsComponentComponent implements OnInit {
         console.error("Error fetching featured products:", err);
       }
     );
+    
   }
 
   onCarouselMove(event: any) {
