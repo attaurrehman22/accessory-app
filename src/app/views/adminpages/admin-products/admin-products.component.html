@@ -123,7 +123,7 @@
                         {{ row.price }}
                       </td>
                     </ng-container>
-                    
+
 
                     <ng-container class="column" matColumnDef="model">
                       <th mat-header-cell class="column" *matHeaderCellDef>
@@ -165,7 +165,7 @@
                         [matMenuTriggerFor]="menu"
                         (click)="$event.stopPropagation()"
                       >
-                        <mat-icon>info</mat-icon>
+                        <mat-icon>more_vert</mat-icon>
                       </button>
                       <mat-menu #menu="matMenu">
                         <!-- <button mat-menu-item (click)="editBrand(row)">
