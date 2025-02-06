@@ -1,164 +1,441 @@
-<div class="container" style="height:500px;padding: 10px 20px 10px 20px;">
-  <h2 class="mb-4 text-center">Product Details</h2>
-  <!-- Accordion -->
-  <div class="accordion" id="productAccordion">
-    <!-- Basic Info Section -->
-    <div class="accordion-item">
-      <h2 class="accordion-header" id="basicInfoHeading">
-        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#basicInfoCollapse" aria-expanded="true" aria-controls="basicInfoCollapse">
-          Basic Info
-        </button>
-      </h2>
-      <div id="basicInfoCollapse" class="accordion-collapse collapse show" aria-labelledby="basicInfoHeading" data-bs-parent="#productAccordion">
-        <div class="accordion-body">
-          <ul class="list-group">
-            <li class="list-group-item"><strong>Name:</strong> {{ product.name }}</li>
-            <li class="list-group-item"><strong>Brand:</strong> {{ product.brand.name }}</li>
-            <li class="list-group-item"><strong>Model:</strong> {{ product.model }}</li>
-            <li class="list-group-item"><strong>Watch Type:</strong> {{ product.watch_type }}</li>
-            <li class="list-group-item"><strong>Price:</strong> ${{ product.price }}</li>
-            <li class="list-group-item"><strong>Condition:</strong> {{ product.condition }}</li>
-            <li class="list-group-item"><strong>Year of Production:</strong> {{ product.year_of_production }}</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-    <!-- Additional Details Section -->
-    <div class="accordion-item">
-      <h2 class="accordion-header" id="additionalDetailsHeading">
-        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#additionalDetailsCollapse" aria-expanded="true" aria-controls="additionalDetailsCollapse">
-          Additional Details
-        </button>
-      </h2>
-      <div id="additionalDetailsCollapse" class="accordion-collapse collapse show" aria-labelledby="additionalDetailsHeading" data-bs-parent="#productAccordion">
-        <div class="accordion-body">
-          <table class="table table-borderless">
-            <tbody>
-              <tr *ngIf="product?.listing_Code">
-                <th class="tbl-head" scope="row">{{ "product_details.listing_code" | translate }}</th>
-                <td class="tbl-td">{{ product?.listing_Code || 'N/A' }}</td>
-              </tr>
-              <tr *ngIf="product?.brand">
-                <th class="tbl-head" scope="row">{{ "product_details.brand" | translate }}</th>
-                <td class="tbl-td">{{ product?.brand?.name }}</td>
-              </tr>
-              <tr *ngIf="product.model">
-                <th class="tbl-head" scope="row">{{ "product_details.model" | translate }}</th>
-                <td class="tbl-td">{{ product.model }}</td>
-              </tr>
-              <tr *ngIf="product.reference_number">
-                <th class="tbl-head" scope="row">{{ "product_details.reference_number" | translate }}</th>
-                <td class="tbl-td">{{ product.reference_number }}</td>
-              </tr>
-              <tr *ngIf="product.movement">
-                <th class="tbl-head" scope="row">{{ "product_details.movement" | translate }}</th>
-                <td class="tbl-td">{{ product.movement }}</td>
-              </tr>
-              <tr *ngIf="product.case_material">
-                <th class="tbl-head" scope="row">{{ "product_details.case_material" | translate }}</th>
-                <td class="tbl-td">{{ product.case_material }}</td>
-              </tr>
-              <tr *ngIf="product.bracelet_material">
-                <th class="tbl-head" scope="row">{{ "product_details.bracelet_material" | translate }}</th>
-                <td class="tbl-td">{{ product.bracelet_material }}</td>
-              </tr>
-              <tr *ngIf="product.year_of_production">
-                <th class="tbl-head" scope="row">{{ "product_details.year_of_production" | translate }}</th>
-                <td class="tbl-td">{{ product.year_of_production }}</td>
-              </tr>
-              <tr *ngIf="product.condition">
-                <th class="tbl-head" scope="row">{{ "product_details.condition" | translate }}</th>
-                <td class="tbl-td">{{ product.condition }}</td>
-              </tr>
-              <tr *ngIf="product.scope_of_delivery">
-                <th class="tbl-head" scope="row">{{ "product_details.scope_of_delivery" | translate }}</th>
-                <td class="tbl-td">{{ product.scope_of_delivery }}</td>
-              </tr>
-              <tr *ngIf="product.gender">
-                <th class="tbl-head" scope="row">{{ "product_details.gender" | translate }}</th>
-                <td class="tbl-td">{{ product.gender }}</td>
-              </tr>
-              <tr *ngIf="product.location">
-                <th class="tbl-head" scope="row">{{ "product_details.location" | translate }}</th>
-                <td class="tbl-td">{{ product.location }}</td>
-              </tr>
-              <tr *ngIf="product.price">
-                <th class="tbl-head" scope="row">{{ "product_details.price" | translate }}</th>
-                <td class="tbl-td">{{ product.currency }} {{ product.price }}</td>
-              </tr>
-              <tr *ngIf="product.available">
-                <th class="tbl-head" scope="row">{{ "product_details.availability" | translate }}</th>
-                <td class="tbl-td">{{ product.available }}</td>
-              </tr>
-              <tr *ngIf="product.description">
-                <th class="tbl-head" scope="row">{{ "product_details.description" | translate }}</th>
-                <td class="tbl-td">
-                  <small style="font-size: 14px !important; font-weight: 500">{{ product.description }}</small>
-                </td>
-              </tr>
-              <tr *ngIf="product.bezel_material">
-                <th class="tbl-head" scope="row">{{ "product_details.bazel_material" | translate }}</th>
-                <td class="tbl-td">{{ product.bezel_material }}</td>
-              </tr>
-              <tr *ngIf="product.dial">
-                <th class="tbl-head" scope="row">{{ "product_details.dial" | translate }}</th>
-                <td class="tbl-td">{{ product.dial }}</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
+<div class="container" style="height: 500px; padding: 10px 20px 10px 20px">
+  <p class="mb-4 text-center brand-name-title">Product Details</p>
 
-    <!-- Images Section -->
-    <div class="accordion-item">
-      <h2 class="accordion-header" id="imagesHeading">
-        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#imagesCollapse" aria-expanded="true" aria-controls="imagesCollapse">
-          Images
-        </button>
-      </h2>
-      <div id="imagesCollapse" class="accordion-collapse collapse show" aria-labelledby="imagesHeading" data-bs-parent="#productAccordion">
-        <div class="accordion-body">
-          <div class="mb-3  d-flex align-items-center justify-content-center">
-            <img style="height: 150px;
-            width: 150px;
-            object-fit: contain;" [src]="'https://api.chronosouq.com/'+product.main_image" class="img-fluid" alt="Main Image">
+  <div class="col-md-12 d-flex flex-wrap">
+    <div class="col-md-6">
+      <div class="img-div">
+        <img
+          [src]="'https://api.chronosouq.com/' + selectedImage"
+          style="
+            object-fit: scale-down;
+            height: 485px;
+            width: 100%;
+            border: none !important;
+            border-radius: 16px;
+            background: #f8f8f8;
+          "
+          class="img-fluid"
+          alt="Main Image"
+        />
+      </div>
+      <div class="mt-3" style="display: flex; overflow-x: auto">
+        <div
+          class="col-3"
+          style="height: 110px"
+          *ngFor="let image of thumbnails"
+        >
+          <img
+            [src]="'https://api.chronosouq.com/' + image"
+            style="
+              background: #f8f8f8;
+              object-fit: scale-down;
+              width: 100% !important;
+              height: 97px !important;
+            "
+            class="img-fluid"
+            alt="thumbnail"
+            [ngClass]="{
+              'blur-image': image !== selectedImage,
+              'hover-remove-blur': true
+            }"
+            (click)="swapImages(image)"
+          />
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="routes-div">
+        <p *ngIf="product.category" class="routes-styl-active">
+          / {{ product.category?.name }}
+        </p>
+        <p *ngIf="product?.brand?.name" class="routes-styl-active">
+          / {{ product?.brand?.name }}
+        </p>
+        <p *ngIf="product.listing_code" class="routes-styl-active">
+          / {{ product.listing_code }}
+        </p>
+      </div>
+
+      <div
+        *ngIf="product?.created_by?.city"
+        class="d-flex gap-2 align-items-baseline"
+      >
+        <i class="fas fa-map-marker-alt"></i>
+        <p class="routes-styl">{{ product?.created_by?.city }}</p>
+        <p *ngIf="product?.published_date" class="routes-styl">
+          Published At : {{ product.published_date | date : "yyyy-MM-dd" }}
+        </p>
+      </div>
+
+      <div class="d-flex flex-wrap">
+        <p class="brand-name-title">
+          {{ product?.brand?.name }} {{ product.model }}
+          {{ product.title }}
+        </p>
+      </div>
+
+      <div class="watch-brand-details-div">
+        <div class="brand-sec">
+          <div>
+            <img
+              class="watch-brand-details-img"
+              src="../../../../assets/images/brand-icon.png"
+              alt="brand"
+            />
           </div>
-          <div class="mb-3 d-flex align-items-center justify-content-between" *ngIf="product.proof_image_1">
-            <p> First Image Generated Time : {{product.proof_time_text_1}} </p>
-            <img style="height: 100px;width: 100px;object-fit: contain;" [src]="'https://api.chronosouq.com/'+product.proof_image_1" class="img-fluid" alt="Proof Image 1">
+          <div style="display: flex; flex-direction: column">
+            <p class="margin-0">Brand</p>
+            <p class="margin-0 font-size-12">{{ product?.brand?.name }}</p>
           </div>
-          <div class="mb-3 d-flex align-items-center justify-content-between" *ngIf="product.proof_image_2">
-            <p> Second Image Generated Time : {{product.proof_time_text_2}} </p>
-            <img style="height: 100px;width: 100px;object-fit: contain;" [src]="'https://api.chronosouq.com/'+product.proof_image_2" class="img-fluid" alt="Proof Image 2">
+        </div>
+
+        <div class="brand-sec">
+          <div>
+            <img
+              class="watch-brand-details-img"
+              src="../../../../assets/images/model-icon.png"
+              alt="brand"
+            />
+          </div>
+          <div style="display: flex; flex-direction: column">
+            <p class="margin-0">Model</p>
+            <p class="margin-0 font-size-12">{{ product?.model }}</p>
+          </div>
+        </div>
+
+        <div class="time-sec">
+          <div>
+            <img
+              class="watch-brand-details-img"
+              src="../../../../assets/images/watch-icon.png"
+              alt="brand"
+            />
+          </div>
+          <div style="display: flex; flex-direction: column">
+            <p class="margin-0">Year of Production</p>
+            <p class="margin-0 font-size-12">
+              {{ product?.year_of_production }}
+            </p>
           </div>
         </div>
       </div>
-    </div>
 
-    <!-- Seller Info Section -->
-    <div class="accordion-item">
-      <h2 class="accordion-header" id="sellerInfoHeading">
-        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#sellerInfoCollapse" aria-expanded="true" aria-controls="sellerInfoCollapse">
-          Seller Info
-        </button>
-      </h2>
-      <div id="sellerInfoCollapse" class="accordion-collapse collapse show" aria-labelledby="sellerInfoHeading" data-bs-parent="#productAccordion">
-        <div class="accordion-body">
-          <ul class="list-group">
-            <li class="list-group-item"><strong>Name:</strong> {{ product.created_by.name }}</li>
-            <li class="list-group-item"><strong>Email:</strong> {{ product.created_by.email }}</li>
-            <li class="list-group-item"><strong>Location:</strong> {{ product.city }}</li>
-          </ul>
+      <div class="d-flex mt-4 gap-3">
+        <p class="header-highligted-color brand-name-title">
+          {{ product?.currency }} {{ product?.price }}
+        </p>
+        <p class="color-666666 font-wight-400 font-size-14">
+          Exclu. Shipping Charges
+        </p>
+      </div>
+
+      <div class="d-flex flex-column">
+        <p
+          class="header-highligted-color font-wight-400 font-size-16 margin-0"
+          style="padding-bottom: 7px"
+        >
+          Condition:
+        </p>
+        <button class="condition-btn">{{ product?.condition }}</button>
+      </div>
+
+      <div class="d-flex flex-column mt-3">
+        <p
+          class="header-highligted-color font-wight-400 font-size-16 margin-0"
+          style="padding-bottom: 7px"
+        >
+          Scope of Delivery:
+        </p>
+        <div class="d-flex flex-wrap gap-2">
+          <button class="watch-btn">
+            {{ product?.scope_of_delivery }}
+          </button>
         </div>
       </div>
-    </div>
 
+      <div class="d-flex flex-column mt-3">
+        <p
+          class="header-highligted-color font-wight-400 font-size-16 margin-0"
+          style="padding-bottom: 7px"
+        >
+          Est. Delivery
+        </p>
+        <button class="condition-btn">
+          {{ product?.estimate_delivery }}
+        </button>
+      </div>
+    </div>
   </div>
 
-  <div class="d-flex justify-content-center align-items-center gap-2 mt-3 mb-3 col-12 flex-wrap">
-    <button class="save-btn mb-3" *ngIf="product.is_active === 0" (click)="save('approved')">Approved</button>
-    <button class="save-btn mb-3" *ngIf="product.is_active === 1"  (click)="save('reject')">Reject</button>
+  <div class="row mt-3">
+    <div class="col-12 d-flex flex-wrap justify-content-center">
+      <p class="brand-name-title margin-0">
+        {{ product?.brand?.name }} {{ product?.name }}
+        {{ product?.condition }}
+      </p>
+    </div>
+
+    <div class="col-12">
+      <div class="col-12 d-flex flex-wrap justify-content-center">
+        <p
+          class="font-size-20 font-wight-600 color-242424 margin-0 text-center"
+        >
+          {{ product?.meta_description || "N/A" }}
+        </p>
+      </div>
+      <div class="col-12">
+        <p
+          class="font-size-16 font-wight-400 color-666666 margin-0 text-center"
+        >
+          {{ product?.description || "N/A" }}
+        </p>
+      </div>
+    </div>
+
+    <div class="col-12 d-flex justify-content-center">
+      <div
+        style="
+          min-width: 335px;
+          height: 270px;
+          border-radius: 12px;
+          background-color: #f8f8f8;
+        "
+      >
+        <img
+          [src]="'https://api.chronosouq.com/' + productMainImage"
+          style="
+            object-fit: scale-down;
+            height: 100%;
+            width: 100%;
+            border: none;
+            border-radius: 12px;
+          "
+          class="img-fluid"
+          alt="Selected Watch"
+        />
+      </div>
+    </div>
+
+    <div class="col-12">
+      <p class="font-size-24 font-wight-700 color-242424 margin-0 text-center">
+        {{ "product_details.watch_spec" | translate }}
+      </p>
+    </div>
+
+    <div class="col-12">
+      <table class="table table-borderless">
+        <tbody>
+          <tr *ngIf="product?.listing_Code">
+            <th class="tbl-head" scope="row">
+              {{ "product_details.listing_code" | translate }}
+            </th>
+            <td class="tbl-td">
+              {{ product?.listing_Code || "N/A" }}
+            </td>
+          </tr>
+          <tr *ngIf="product?.brand">
+            <th class="tbl-head" scope="row">
+              {{ "product_details.brand" | translate }}
+            </th>
+            <td class="tbl-td">
+              {{ product?.brand?.name }}
+            </td>
+          </tr>
+          <tr *ngIf="product.model">
+            <th class="tbl-head" scope="row">
+              {{ "product_details.model" | translate }}
+            </th>
+            <td class="tbl-td">
+              {{ product.model }}
+            </td>
+          </tr>
+          <tr *ngIf="product.reference_number">
+            <th class="tbl-head" scope="row">
+              {{ "product_details.reference_number" | translate }}
+            </th>
+            <td class="tbl-td">{{ product.reference_number }}</td>
+          </tr>
+          <tr *ngIf="product.movement">
+            <th class="tbl-head" scope="row">
+              {{ "product_details.movement" | translate }}
+            </th>
+            <td class="tbl-td">{{ product.movement }}</td>
+          </tr>
+          <tr *ngIf="product.case_material">
+            <th class="tbl-head" scope="row">
+              {{ "product_details.case_material" | translate }}
+            </th>
+            <td class="tbl-td">{{ product.case_material }}</td>
+          </tr>
+          <tr *ngIf="product.bracelet_material">
+            <th class="tbl-head" scope="row">
+              {{ "product_details.bracelet_material" | translate }}
+            </th>
+            <td class="tbl-td">{{ product.bracelet_material }}</td>
+          </tr>
+          <tr *ngIf="product.year_of_production">
+            <th class="tbl-head" scope="row">
+              {{ "product_details.year_of_production" | translate }}
+            </th>
+            <td class="tbl-td">
+              {{ product.year_of_production }}
+            </td>
+          </tr>
+          <tr *ngIf="product.condition">
+            <th class="tbl-head" scope="row">
+              {{ "product_details.condition" | translate }}
+            </th>
+            <td class="tbl-td">
+              {{ product.condition }}
+            </td>
+          </tr>
+
+          <tr *ngIf="product.scope_of_delivery">
+            <th class="tbl-head" scope="row">
+              {{ "product_details.scope_of_delivery" | translate }}
+            </th>
+            <td class="tbl-td">
+              {{ product.scope_of_delivery }}
+            </td>
+          </tr>
+
+          <tr *ngIf="product.gender">
+            <th class="tbl-head" scope="row">
+              {{ "product_details.gender" | translate }}
+            </th>
+            <td class="tbl-td">
+              {{ product.gender }}
+            </td>
+          </tr>
+
+          <tr *ngIf="product.location">
+            <th class="tbl-head" scope="row">
+              {{ "product_details.location" | translate }}
+            </th>
+            <td class="tbl-td">
+              {{ product.location }}
+            </td>
+          </tr>
+          <tr *ngIf="product.price">
+            <th class="tbl-head" scope="row">
+              {{ "product_details.price" | translate }}
+            </th>
+            <td class="tbl-td">{{ product.currency }} {{ product.price }}</td>
+          </tr>
+
+          <tr *ngIf="product.available">
+            <th class="tbl-head" scope="row">
+              {{ "product_details.availability" | translate }}
+            </th>
+            <td class="tbl-td">
+              {{ product.available }}
+            </td>
+          </tr>
+
+          <tr *ngIf="product.description">
+            <th class="tbl-head" scope="row">
+              {{ "product_details.description" | translate }}
+            </th>
+            <td class="tbl-td">
+              <small style="font-size: 14px !important; font-weight: 500">
+                {{ product.description }}
+              </small>
+            </td>
+          </tr>
+          <tr *ngIf="product.bezel_material">
+            <th class="tbl-head" scope="row">
+              {{ "product_details.bazel_material" | translate }}
+            </th>
+            <td class="tbl-td">{{ product.bezel_material }}</td>
+          </tr>
+          <tr *ngIf="product.dial">
+            <th class="tbl-head" scope="row">
+              {{ "product_details.dial" | translate }}
+            </th>
+            <td class="tbl-td">{{ product.dial }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Seller Info Section -->
+
+  <div class="col-12">
+    <p class="font-size-24 font-wight-700 color-242424 margin-0 text-center">
+      Seller Info
+    </p>
+  </div>
+
+  <div class="col-12">
+    <table class="table table-borderless">
+      <tbody>
+        <tr *ngIf="product?.created_by?.name ">
+          <th class="tbl-head" scope="row">
+           Name
+          </th>
+          <td class="tbl-td">
+            {{ product.created_by.name}}
+          </td>
+        </tr>
+        <tr *ngIf="product?.created_by?.email">
+          <th class="tbl-head" scope="row">
+           Email
+          </th>
+          <td class="tbl-td">
+            {{product.created_by.email }}
+          </td>
+        </tr>
+
+        <tr *ngIf="product?.created_by?.country">
+          <th class="tbl-head" scope="row">
+            Coutry
+          </th>
+          <td class="tbl-td">
+            {{ product.created_by.country }}
+          </td>
+        </tr>
+
+        <tr *ngIf="product?.created_by?.city">
+          <th class="tbl-head" scope="row">
+            City
+          </th>
+          <td class="tbl-td">
+            {{ product.created_by.city }}
+          </td>
+        </tr>
+
+        <tr *ngIf="product?.created_by?.type">
+          <th class="tbl-head" scope="row">
+            User Type
+          </th>
+          <td class="tbl-td">
+            {{ product.created_by.type }}
+          </td>
+        </tr>
+
+
+      </tbody>
+    </table>
+  </div>
+
+  <div
+    class="d-flex justify-content-center align-items-center gap-2 mt-3 mb-3 col-12 flex-wrap"
+  >
+    <button
+      class="save-btn mb-3"
+      *ngIf="product.is_active === 0"
+      (click)="save('approved')"
+    >
+      Approved
+    </button>
+    <!-- <button
+      class="save-btn mb-3"
+      *ngIf="product.is_active === 1"
+      (click)="save('reject')"
+    >
+      Reject
+    </button> -->
     <button class="cancel-btn mb-3" (click)="cancel()">Cancel</button>
   </div>
 </div>

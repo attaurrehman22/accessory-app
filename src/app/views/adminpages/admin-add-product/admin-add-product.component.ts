@@ -15,6 +15,9 @@ import { AlertsServicesService } from "src/services/alerts-service/alerts-servic
 })
 export class AdminAddProductComponent {
   product:any;
+  productMainImage: any;
+  thumbnails: string[] = [];
+  selectedImage: string;
   constructor(
     private fb: FormBuilder,
     private dialog: MatDialog,
@@ -23,14 +26,51 @@ export class AdminAddProductComponent {
     @Inject(MAT_DIALOG_DATA) data: any
   ) {
     this.product=data.data;
+    console.log("this.product",this.product)
+    if (this.product) {
+      this.productMainImage = this.product.main_image;
+    
+      // Check if additional_images is a valid JSON string and parse it
+      try {
+        this.thumbnails = JSON.parse(this.product.additional_images);
+      } catch (error) {
+        console.error("Error parsing additional_images:", error);
+        this.thumbnails = []; // Default to an empty array if parsing fails
+      }
+    
+      console.log("this.thumbnails", this.thumbnails);
+    
+      if (!Array.isArray(this.thumbnails)) {
+        this.thumbnails = []; // Ensure it's an array
+      }
+    
+      // Add proof images if they exist
+      if (this.product?.proof_image_1) {
+        console.log("this.product.proof_image_1", this.product.proof_image_1);
+        this.thumbnails.push(this.product.proof_image_1);
+      }
+    
+      if (this.product?.proof_image_2) {
+        this.thumbnails.push(this.product.proof_image_2);
+      }
+    
+      if (this.thumbnails.length > 0) {
+        this.selectedImage = this.thumbnails[0];
+      }
+    }
+    
   }
   ngOnInit(): void {
-
+   
   }
   save(param:string) {
     this.dialogRef.close(param);  
   }
   cancel() {
     this.dialogRef.close()
+  }
+
+  swapImages(clickedImage: string): void {
+    this.selectedImage = clickedImage;
   }
 }

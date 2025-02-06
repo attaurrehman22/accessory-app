@@ -222,16 +222,6 @@ img {
 
 
 
-.blur-image {
-  border: none !important;
-}
-
-.hover-remove-blur {
-  border: 1px solid #242424;
-}
-
-
-
 .carousel-control-prev-icon,
 .carousel-control-next-icon {
   background-color: #f8f9fa;
@@ -295,28 +285,6 @@ mat-grid-list {
 }
 
 
-
-.routes-div {
-  display: flex;
-  gap: 5px;
-}
-
-.routes-styl {
-  font-size: 16px;
-  font-weight: 400;
-  color: #8E8E8E;
-}
-
-.routes-styl-active {
-  font-size: 16px;
-  font-weight: 400;
-  color: #4B4B4B;
-}
-
-.brand-name-title {
-  font-size: 30px;
-  font-weight: 700;
-}
 
 .featured-card {
   position: absolute;
@@ -384,31 +352,6 @@ mat-grid-list {
   align-items: baseline;
   gap: 5px;
   border-radius: 8px;
-}
-
-.watch-brand-details-div {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  border: 1px solid #F3F3F3;
-  border-radius: 16px;
-  padding: 5px 5px 5px 5px;
-}
-
-.brand-sec {
-  width: 32%;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  border-right: 1px solid #F3F3F3;
-}
-
-.time-sec {
-  width: 36%;
-  display: flex;
-  align-items: center;
-  gap: 10px;
 }
 
 .watch-brand-details-img {

@@ -422,3 +422,72 @@ a {
 .cdk-overlay-backdrop.cdk-overlay-backdrop-showing{
   backdrop-filter: blur(10px) !important;
 }
+
+
+/* ---------------------------  product detail Styling Start  -----------------------------------------  */
+
+.img-div {
+  object-fit: scale-down;
+  height: 485px;
+  width: 100%;
+  border: none !important;
+  border-radius: 16px;
+  background: #f8f8f8;
+}
+
+.routes-div {
+  display: flex;
+  gap: 5px;
+}
+
+.routes-styl {
+  font-size: 16px;
+  font-weight: 400;
+  color: #8E8E8E;
+}
+
+.routes-styl-active {
+  font-size: 16px;
+  font-weight: 400;
+  color: #4B4B4B;
+}
+
+.watch-brand-details-div {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid #F3F3F3;
+  border-radius: 16px;
+  padding: 5px 5px 5px 5px;
+}
+
+.brand-sec {
+  width: 32%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-right: 1px solid #F3F3F3;
+}
+
+.time-sec {
+  width: 36%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.brand-name-title {
+  font-size: 30px;
+  font-weight: 700;
+}
+
+.blur-image {
+  border: none !important;
+}
+
+.hover-remove-blur {
+  border: 1px solid #242424;
+}
+
+/* ---------------------------  product detail Styling End  -----------------------------------------  */
