@@ -8,7 +8,7 @@ import { HttpService } from "src/services/http/http.service";
   styleUrls: ["./most-popular-models-component.component.css"],
 })
 export class MostPopularModelsComponentComponent implements OnInit {
-  popularModels: any;
+  popularModels: any=[];
 
   ngOnInit(): void {
     this.getAllPopularModels();

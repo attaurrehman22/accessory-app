@@ -184,6 +184,23 @@ export class BuyProductComponentComponent implements OnInit {
       this.thumbnails = this.productDetails.additional_images.map((image) =>
         image.replace(/\\/g, "")
       );
+      
+      if (this.productDetails?.proof_image_1) {
+        this.productDetails.proof_image_1 = this.productDetails.proof_image_1.replace(
+          /\\/g,
+          ""
+        );
+      }
+
+      if (this.productDetails?.proof_image_2) {
+        this.productDetails.proof_image_2 = this.productDetails.proof_image_2.replace(
+          /\\/g,
+          ""
+        );
+      }
+
+      this.thumbnails.push(this.productDetails?.proof_image_1);
+      this.thumbnails.push(this.productDetails?.proof_image_2);
       if (this.thumbnails.length > 0) {
         this.selectedImage = this.thumbnails[0];
       }

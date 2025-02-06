@@ -9,6 +9,7 @@ import { HttpService } from "src/services/http/http.service";
 })
 export class StayLoopComponentComponent implements OnInit {
   watchDetails: any;
+  activeProductIndex: number = 0;
   ngOnInit(): void {
     this.getWatchOftheDay();
   }
@@ -23,6 +24,9 @@ export class StayLoopComponentComponent implements OnInit {
             }
             return item;
         })
+        this.watchDetails = [this.watchDetails[0]];
+
+        this.activeProductDetails=this.watchDetails[0]
       },
       (err) => {
         console.error("Error fetching Watch of the Day:", err);
@@ -50,7 +54,14 @@ export class StayLoopComponentComponent implements OnInit {
       queryParams: { id: product.product.id },
     });
   }
-  
+
+  activeProductDetails:any;
+
+  onSlide(index: number) {
+    this.activeProductIndex = index;
+    this.activeProductDetails=this.watchDetails[this.activeProductIndex]
+    console.log("Active Product: ", this.watchDetails[this.activeProductIndex]);
+  }
 }
 
 

@@ -1026,12 +1026,26 @@
                 >
                   Back
                 </button>
-                <button
+                <!-- <button
                   
                   class="save-can-btn save-btn-bg"
                   (click)="onSubmit('conditionGrading')"
                 >
                   Save
+                </button> -->
+                <button
+                *ngIf="!isNextButtonShowonScopeOfdelivery"
+                  class="save-can-btn save-btn-bg"
+                  (click)="onSubmit('scopeofdelivery')"
+                >
+                  Save
+                </button>
+                <button
+                  *ngIf="isNextButtonShowonScopeOfdelivery"
+                  class="save-can-btn save-btn-bg"
+                  (click)="nextMoveToScopeOfDelivery()"
+                >
+                  Next
                 </button>
                 
               </div>
@@ -2913,12 +2927,26 @@
             >
               Back
             </button>
-            <button
+            <!-- <button
               class="save-can-btn save-btn-bg"
               (click)="onSubmit('scopeofdelivery')"
             >
               Save
-            </button>
+            </button> -->
+            <button
+                *ngIf="!isNextButtonShowonScopeOfdelivery"
+                  class="save-can-btn save-btn-bg"
+                  (click)="onSubmit('scopeofdelivery')"
+                >
+                  Save
+                </button>
+                <button
+                  *ngIf="isNextButtonShowonScopeOfdelivery"
+                  class="save-can-btn save-btn-bg"
+                  (click)="nextMoveToScopeOfDelivery()"
+                >
+                  Next
+                </button>
           </div>
         </div>
 

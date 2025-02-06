@@ -1,4 +1,4 @@
-.img-stl{
+.img-stl {
   height: 40px;
 }
 
@@ -15,8 +15,7 @@
   animation: scroll-logos 20s linear infinite;
 }
 
-.img-stl {
-  height: 40px;
+.logo-item {
   flex-shrink: 0;
 }
 
