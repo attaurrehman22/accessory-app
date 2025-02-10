@@ -87,6 +87,7 @@ import { AdminUsersComponent } from './views/adminpages/admin-users/admin-users.
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatOptionModule } from '@angular/material/core';
 import { authInterceptorInterceptor } from './auth-interceptor.interceptor';
+import { NgImageSliderModule } from 'ng-image-slider';
 @NgModule({
   declarations: [
     AppComponent,
@@ -164,6 +165,7 @@ import { authInterceptorInterceptor } from './auth-interceptor.interceptor';
     CarouselModule,
     ButtonModule,
     TagModule,MatRadioModule,
+    NgImageSliderModule,
     MatExpansionModule,
     BidiModule,HighchartsChartModule,
     BidiModule, HighchartsChartModule,MatOptionModule,MatAutocompleteModule,

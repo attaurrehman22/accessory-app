@@ -73,13 +73,33 @@ export class AdminProductsComponent {
   }
 
   applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-
+    const filterValue = (event.target as HTMLInputElement).value.trim().toLowerCase();
+  
+    // Custom filter to check every field
+    this.dataSource.filterPredicate = (data: any, filter: string) => {
+      // You can specify which fields you want to filter on here
+      return (
+        data.name.toLowerCase().includes(filter) ||
+        data.watch_type.toLowerCase().includes(filter) ||
+        (data.brand && data.brand.name.toLowerCase().includes(filter)) ||
+        (data.created_by && data.created_by.name.toLowerCase().includes(filter)) ||
+        (data.price && data.price.toString().includes(filter)) ||
+        (data.model && data.model.toLowerCase().includes(filter)) ||
+        (data.is_active && data.is_active.toString().includes(filter)) ||
+        (data.top_brand && data.top_brand.toString().includes(filter)) ||
+        (data.categories && data.categories.some((category: any) => category.name.toLowerCase().includes(filter))) || // Categories
+        (data.description && data.description.toLowerCase().includes(filter)) // Description
+      );
+    };
+  
+    // Apply the filter to the dataSource
+    this.dataSource.filter = filterValue;
+  
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
   }
+  
 
   openModal() {
     this.router.navigate(["/admin-brands-product"], {

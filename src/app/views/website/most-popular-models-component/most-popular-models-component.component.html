@@ -1,12 +1,23 @@
-<div class="global-main-wraper d-flex justify-content-center pt-5 pb-5 mt-5 mb-5">
-  <div class="logo-container">
-    <div class="logo-wrapper">
-      <img *ngFor="let item of popularModels"
-        class="img-stl"
-        [src]="'https://api.chronosouq.com/' + item.cover_image"
-        alt="rolex"
-      />
-    </div>
+
+
+
+
+<div class="row">
+  <div class="col-1"></div>
+  <div class="col-10">
+
+    <!-- <ng-image-slider
+    [autoSlide]="1"
+    [infinite]="true"
+    #nav
+    [images]="imageObject"
+  ></ng-image-slider> -->
+  <ng-image-slider
+  [infinite]="true"
+  [autoSlide]="1"
+  #nav
+  [images]="imageObject"
+></ng-image-slider>
   </div>
-  
+  <div class="col-1"></div>
 </div>

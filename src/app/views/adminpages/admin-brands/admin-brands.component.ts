@@ -15,7 +15,7 @@ export interface UserData {
   // cover_image: any;
   meta_title: any;
   meta_description: any;
-  meta_keywords: any;
+  // meta_keywords: any;
   is_active: any;
   top_brand: any;
 }
@@ -33,7 +33,7 @@ export class AdminBrandsComponent {
     // "cover_image",
     "meta_title",
     "meta_description",
-    "meta_keywords",
+    // "meta_keywords",
     "is_active",
     "top_brand",
     "edit",
