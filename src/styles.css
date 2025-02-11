@@ -499,7 +499,7 @@ a {
 .ng-image-slider > .ng-image-slider-container > .main > .main-inner {
   height: 65% !important;
   display: flex !important;
-  gap: 50px !important;
+  gap: 20px !important;
 }
 
 .ng-image-slider > .ng-image-slider-container > .main > .prev {
