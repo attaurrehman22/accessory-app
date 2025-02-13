@@ -39,7 +39,8 @@
 .card {
     margin-bottom: 15px;
     border-radius: 10px;
-    border: 1px solid #F3F3F3
+    border: 1px solid #F3F3F3;
+    background: none !important;
 }
 
 .card:hover {
@@ -49,7 +50,8 @@
 
 .card-body {
     display: flex;
-    justify-content: space-between; /* Spread the content across the card */
+    justify-content: space-between;
+    padding: 0 !important;
 }
 
 .card-body h6 {
@@ -134,4 +136,33 @@ img {
    font-size: 14px;
    font-weight: 400 !important;
    color: #242424;
+}
+
+.list-group-item {
+  display: flex;
+  align-items: center;
+}
+
+.list-group-item.text-muted {
+  opacity: 0.6;
+}
+
+.list-group-item.active {
+  background-color: #f8f9fa;
+  font-weight: bold;
+}
+
+.prev-btn {
+  height: 45px;
+  width: 47px;
+  border: none;
+  background: none;
+}
+
+.action-btn {
+  background: none;
+  width: 100px;
+  height: 38px;
+  border-radius: 10px;
+  border: 1px solid #242424;
 }

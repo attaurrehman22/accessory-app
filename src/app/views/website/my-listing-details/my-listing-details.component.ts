@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
 import { HttpService } from 'src/services/http/http.service';
 
 @Component({
@@ -42,41 +43,49 @@ export class MyListingDetailsComponent implements OnInit{
   
       }
      )
-    // this.listings = [
-    //   {
-    //     id: '3354654654526',
-    //     title: 'Rolex Speedmaster In A Good Condition But In Low Price',
-    //     created: '1 day ago',
-    //     status: 'In Process',
-    //     statusClass: 'bg-warning text-dark',
-    //   },
-    //   {
-    //     id: '3354654654526',
-    //     title: 'Rolex Speedmaster In A Good Condition But In Low Price',
-    //     created: '1 week ago',
-    //     status: 'In Process',
-    //     statusClass: 'bg-warning text-dark',
-    //   },
-    //   {
-    //     id: '3354654654526',
-    //     title: 'Rolex Speedmaster In A Good Condition But In Low Price',
-    //     created: 'Oct 30, 2024',
-    //     status: 'Delivered',
-    //     statusClass: 'bg-success text-light',
-    //   },
-    //   {
-    //     id: '3354654654526',
-    //     title: 'Rolex Speedmaster In A Good Condition But In Low Price',
-    //     created: 'Oct 30, 2024',
-    //     status: 'Cancelled',
-    //     statusClass: 'bg-danger text-light',
-    //   },
-    // ];
   }
 
   activeIndex: number = 0; // Default: First item is active
   setActive(index: number): void {
     this.activeIndex = index;
+    if(this.activeIndex == 4){
+      this.getBuyOrders()
+    } else if(this.activeIndex == 5){
+      this.getSellOrders()
+    }
+  }
+
+  buyOrdersListings: any[] = [];
+
+  getBuyOrders(){
+    this.http.getBuyOrders().subscribe(
+      (res)=>{
+        this.buyOrdersListings = res.orders.map((detail: any) => {
+          if (detail.product.main_image) {
+            detail.product.main_image = detail.product.main_image.replace(/\\/g, "");
+          }
+          return detail;
+        });
+        console.log(res)
+      }
+    )
+  }
+
+  sellOrders: any[] = [];
+
+  getSellOrders(){
+    this.http.getSellOrders().subscribe(
+      (res)=>{
+        console.log(res)
+        this.sellOrders = res.orders.map((detail: any) => {
+          if (detail.product.main_image) {
+            detail.product.main_image = detail.product.main_image.replace(/\\/g, "");
+          }
+          return detail;
+        });
+        console.log("this.sellOrders",this.sellOrders)
+      }
+    )
   }
 
   editListing(listing){
@@ -85,7 +94,58 @@ export class MyListingDetailsComponent implements OnInit{
    })
   }
 
+  isShowSellOrdersListngDetails: boolean = false;
+  isShowBuyOrdersListngDetails: boolean = false;
+  sellerDetails: any = null;
+  buyerDetails: any = null;
+  
+  detailListing(listing: any): void {
+    this.isShowSellOrdersListngDetails = true;
+    this.fetchOrderStatus(listing.id, 'seller');
+  }
+  
+  detailsBuyListing(listing: any): void {
+    this.isShowBuyOrdersListngDetails = true;
+    this.fetchOrderStatus(listing.id, 'buyer');
+  }
+  
+  fetchOrderStatus(orderID: number, type: 'seller' | 'buyer'): void {
+    this.getOrderStatus(orderID).subscribe(
+      (res) => {
+        console.log('Order Status Details:', res);
+        
+        if (type === 'seller') {
+          this.sellerDetails = res;
+          if(res?.status_flow){
+            if(res?.status_flow?.initiated){
+              this.statuses[0].active = true;
+            }
+          }
+        } else if (type === 'buyer') {
+          this.buyerDetails = res;
+        }
+      },
+      (error) => {
+        console.error('Error fetching order status:', error);
+      }
+    );
+  }
+  
+  getOrderStatus(orderID: number): Observable<any> {
+    return this.http.getOrderStatus(orderID);
+  }
+
   deleteListing(listing){
 
   }
+
+  statuses = [
+    { label: 'Order Initiated', description: 'Order has been initiated.', active: false },
+    { label: 'Awaiting For Confirmation', description: 'Waiting for seller to confirm the order.', active: false },
+    { label: 'Make Payment', description: 'Make a payment for your order.', active: false },
+    { label: 'Preparing Shipment', description: 'Seller is preparing your order.', active: false },
+    { label: 'Delivery in Progress', description: 'Click to track your order.', active: false },
+    { label: 'Order Delivered', description: 'Authorize payout for your order.', active: false },
+    { label: 'Order Completed', description: 'Your order has been completed successfully.', active: false }
+  ];
 }

@@ -653,6 +653,33 @@ getProductDetailsByID(ProductID): Observable<any> {
   });
 }
 
+getBuyOrders(): Observable<any> {
+  return this.http.get(`${this.apiUrl}/api/order/buyList`, {
+    headers: {
+      Accept: "application/json",
+      Authorization: `Bearer ${this.token}`,
+    },
+  });
+}
+
+getSellOrders(): Observable<any> {
+  return this.http.get(`${this.apiUrl}/api/order/sold-orders`, {
+    headers: {
+      Accept: "application/json",
+      Authorization: `Bearer ${this.token}`,
+    },
+  });
+}
+
+getOrderStatus(orderID): Observable<any> {
+  return this.http.get(`${this.apiUrl}/api/order/status/${orderID}`, {
+    headers: {
+      Accept: "application/json",
+      Authorization: `Bearer ${this.token}`,
+    },
+  });
+}
+
 // -------------------------------------------- My Listing Module APIs end --------------------------
 
 

@@ -1,4 +1,10 @@
-<div class="container mt-5">
+<div
+  [ngClass]="{
+    container: !isShowSellOrdersListngDetails,
+    'global-main-wraper': isShowSellOrdersListngDetails
+  }"
+  class="mt-5"
+>
   <div class="col-12 d-flex flex-wrap mb-3">
     <div class="col-md-3">
       <div class="d-flex flex-column p-3 bg-light">
@@ -18,7 +24,6 @@
     <div class="col-md-9">
       <!-- if "My Listing" is Active -->
       <div *ngIf="activeIndex === 3" class="container">
-       
         <div class="d-flex justify-content-between align-items-center mb-3">
           <h4 class="">My Listings</h4>
           <div class="d-flex justify-content-between align-items-center gap-2">
@@ -46,9 +51,9 @@
               <div class="col-md-6">
                 <small class="text-muted">
                   Listing ID {{ listing.listing_code || "N/A" }} | Created
-                  {{ listing.created_at | date:'yyyy-MM-dd' }}
+                  {{ listing.created_at | date : "yyyy-MM-dd" }}
                 </small>
-                
+
                 <h6 class="mt-1 mb-1">
                   {{ listing.brand.name }} {{ listing.model }}
                   {{ listing.title }}
@@ -75,7 +80,6 @@
                   </button>
                 </mat-menu>
               </div>
-              
             </div>
           </div>
         </div>
@@ -87,14 +91,24 @@
           <div class="row">
             <div class="col-md-6 mb-3">
               <label for="firstName" class="form-label">First Name</label>
-              <input type="text" id="firstName" class="form-control" placeholder="Enter your first name" />
+              <input
+                type="text"
+                id="firstName"
+                class="form-control"
+                placeholder="Enter your first name"
+              />
             </div>
             <div class="col-md-6 mb-3">
               <label for="lastName" class="form-label">Last Name</label>
-              <input type="text" id="lastName" class="form-control" placeholder="Enter your last name" />
+              <input
+                type="text"
+                id="lastName"
+                class="form-control"
+                placeholder="Enter your last name"
+              />
             </div>
           </div>
-      
+
           <div class="row">
             <div class="col-md-6 mb-3">
               <label for="gender" class="form-label">Gender</label>
@@ -110,16 +124,21 @@
               <input type="date" id="dob" class="form-control" />
             </div>
           </div>
-      
+
           <div class="row">
             <div class="col-md-6 mb-3">
               <label for="phone" class="form-label">Phone</label>
               <div class="input-group">
-                <select class="form-select" style="max-width: 100px;">
+                <select class="form-select" style="max-width: 100px">
                   <option value="KSA">KSA</option>
                   <!-- Add more options as needed -->
                 </select>
-                <input type="text" id="phone" class="form-control" placeholder="+966 55 000 0000" />
+                <input
+                  type="text"
+                  id="phone"
+                  class="form-control"
+                  placeholder="+966 55 000 0000"
+                />
               </div>
             </div>
             <div class="col-md-6 mb-3">
@@ -131,42 +150,69 @@
               </select>
             </div>
           </div>
-      
+
           <div class="row">
             <div class="col-md-6 mb-3">
               <label for="occupation" class="form-label">Occupation</label>
-              <input type="text" id="occupation" class="form-control" placeholder="Occupation" />
+              <input
+                type="text"
+                id="occupation"
+                class="form-control"
+                placeholder="Occupation"
+              />
             </div>
             <div class="col-md-6 mb-3">
               <label for="aboutMe" class="form-label">About Me</label>
-              <textarea id="aboutMe" class="form-control" rows="2" placeholder="Description"></textarea>
+              <textarea
+                id="aboutMe"
+                class="form-control"
+                rows="2"
+                placeholder="Description"
+              ></textarea>
             </div>
           </div>
-      
+
           <h3>Login Information</h3>
           <div class="row">
             <div class="col-md-6 mb-3">
               <label for="email" class="form-label">Email Address</label>
-              <input type="email" id="email" class="form-control" placeholder="Enter your email address" />
+              <input
+                type="email"
+                id="email"
+                class="form-control"
+                placeholder="Enter your email address"
+              />
             </div>
             <div class="col-md-6 mb-3">
               <label for="password" class="form-label">Password</label>
-              <a href="#" class="d-block text-decoration-none">Change password</a>
+              <a href="#" class="d-block text-decoration-none"
+                >Change password</a
+              >
             </div>
           </div>
-      
+
           <h3>Login with Google/Apple</h3>
           <div class="d-flex gap-3 my-3">
             <button type="button" class="btn btn-outline-secondary w-100">
-              <img src="../assets/images/download.png" alt="Google Logo" class="me-2" style="width: 20px;" />
+              <img
+                src="../assets/images/download.png"
+                alt="Google Logo"
+                class="me-2"
+                style="width: 20px"
+              />
               Sign in with Google
             </button>
             <button type="button" class="btn btn-outline-secondary w-100">
-              <img src="../assets/images/apple-logo.png" alt="Apple Logo" class="me-2" style="width: 20px;" />
+              <img
+                src="../assets/images/apple-logo.png"
+                alt="Apple Logo"
+                class="me-2"
+                style="width: 20px"
+              />
               Sign in with Apple
             </button>
           </div>
-      
+
           <div class="text-end">
             <button type="submit" class="submit-btn">Save Changes</button>
           </div>
@@ -179,157 +225,209 @@
           <div class="row">
             <div class="col-md-6 mb-3">
               <label for="firstName" class="form-label">First Name</label>
-              <input type="text" id="firstName" class="form-control" placeholder="Enter your first name..." />
+              <input
+                type="text"
+                id="firstName"
+                class="form-control"
+                placeholder="Enter your first name..."
+              />
             </div>
             <div class="col-md-6 mb-3">
               <label for="lastName" class="form-label">Last Name</label>
-              <input type="text" id="lastName" class="form-control" placeholder="Enter your last name..." />
+              <input
+                type="text"
+                id="lastName"
+                class="form-control"
+                placeholder="Enter your last name..."
+              />
             </div>
           </div>
-      
+
           <div class="row">
             <div class="col-md-6 mb-3">
               <label for="street" class="form-label">Street</label>
-              <input type="text" id="street" class="form-control" placeholder="Enter street address..." />
+              <input
+                type="text"
+                id="street"
+                class="form-control"
+                placeholder="Enter street address..."
+              />
             </div>
             <div class="col-md-6 mb-3">
               <label for="street2" class="form-label">Street Line 2</label>
-              <input type="text" id="street2" class="form-control" placeholder="Enter street line address..." />
+              <input
+                type="text"
+                id="street2"
+                class="form-control"
+                placeholder="Enter street line address..."
+              />
             </div>
           </div>
-      
+
           <div class="row">
             <div class="col-md-6 mb-3">
               <label for="zipCode" class="form-label">ZIP Code</label>
-              <input type="text" id="zipCode" class="form-control" placeholder="Enter zip code..." />
+              <input
+                type="text"
+                id="zipCode"
+                class="form-control"
+                placeholder="Enter zip code..."
+              />
             </div>
             <div class="col-md-6 mb-3">
               <label for="city" class="form-label">City</label>
-              <input type="text" id="city" class="form-control" placeholder="Enter city..." />
+              <input
+                type="text"
+                id="city"
+                class="form-control"
+                placeholder="Enter city..."
+              />
             </div>
           </div>
-      
+
           <div class="row">
             <div class="col-md-6 mb-3">
               <label for="country" class="form-label">Country</label>
-              <input type="text" id="country" class="form-control" placeholder="Enter your country..." />
+              <input
+                type="text"
+                id="country"
+                class="form-control"
+                placeholder="Enter your country..."
+              />
             </div>
             <div class="col-md-6 mb-3">
               <label for="state" class="form-label">State</label>
-              <input type="text" id="state" class="form-control" placeholder="Enter your state..." />
+              <input
+                type="text"
+                id="state"
+                class="form-control"
+                placeholder="Enter your state..."
+              />
             </div>
           </div>
-      
+
           <div class="text-end">
             <button type="submit" class="submit-btn">Save Changes</button>
           </div>
         </form>
       </div>
 
-        <!-- if "Buy Orders" is Active -->
-        <div *ngIf="activeIndex === 4" class="container">
-       
-          <div class="d-flex justify-content-between align-items-center mb-3">
-            <h4 class="">Buy Orders</h4>
-            <div class="d-flex justify-content-between align-items-center gap-2">
-              <div>
-                <select class="form-select form-select-sm" style="width: 150px">
-                  <option selected>Status</option>
-                  <option value="1">In Process</option>
-                  <option value="2">Delivered</option>
-                  <option value="3">Cancelled</option>
-                </select>
-              </div>
-              <div>
-                <select class="form-select form-select-sm" style="width: 150px">
-                  <option selected>4 Weeks</option>
-                  <option value="1">1 Week</option>
-                  <option value="2">1 Month</option>
-                  <option value="3">6 Months</option>
-                </select>
-              </div>
+      <!-- if "Buy Orders" is Active -->
+      <div *ngIf="activeIndex === 4" class="container">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h4 class="">Buy Orders</h4>
+          <div class="d-flex justify-content-between align-items-center gap-2">
+            <div>
+              <select class="form-select form-select-sm" style="width: 150px">
+                <option selected>Status</option>
+                <option value="1">In Process</option>
+                <option value="2">Delivered</option>
+                <option value="3">Cancelled</option>
+              </select>
             </div>
-          </div>
-          <div class="list-cards">
-            <div *ngFor="let listing of listings" class="card mb-3">
-              <div class="card-body d-flex align-items-center">
-                <div class="col-md-6">
-                  <small class="text-muted">
-                    Listing ID {{ listing.listing_code || "N/A" }} | Created
-                    {{ listing.created_at | date:'yyyy-MM-dd' }}
-                  </small>
-                  
-                  <h6 class="mt-1 mb-1">
-                    {{ listing.brand.name }} {{ listing.model }}
-                    {{ listing.title }}
-                  </h6>
-                  <!-- <span class="badge" [ngClass]="listing.statusClass">{{ listing.status || "In Process" }}</span> -->
-                  <span class="badge">{{ listing?.status || "In Process" }}</span>
-                </div>
-                <div class="col-md-6 d-flex justify-content-end">
-                  <button
-                    mat-icon-button
-                    [matMenuTriggerFor]="menu"
-                    aria-label="More options"
-                  >
-                    <mat-icon>more_vert</mat-icon>
-                  </button>
-                  <mat-menu #menu="matMenu">
-                    <button mat-menu-item (click)="editListing(listing)">
-                      <mat-icon>edit</mat-icon>
-                      <span>Edit</span>
-                    </button>
-                    <button mat-menu-item (click)="deleteListing(listing)">
-                      <mat-icon color="warn">delete</mat-icon>
-                      <span>Delete</span>
-                    </button>
-                  </mat-menu>
-                </div>
-                
-              </div>
+            <div>
+              <select class="form-select form-select-sm" style="width: 150px">
+                <option selected>4 Weeks</option>
+                <option value="1">1 Week</option>
+                <option value="2">1 Month</option>
+                <option value="3">6 Months</option>
+              </select>
             </div>
           </div>
         </div>
+        <div class="list-cards">
+          <div *ngFor="let listing of buyOrdersListings" class="card mb-3">
+            <div class="card-body d-flex align-items-center">
+              <div class="col-md-6">
+                <small class="text-muted">
+                  Listing ID {{ listing.product.listing_code || "N/A" }} |
+                  Created
+                  {{ listing.product.created_at | date : "yyyy-MM-dd" }}
+                </small>
 
-        <!-- if "Sell Orders" is Active -->
-        <div *ngIf="activeIndex === 5" class="container">
-       
-          <div class="d-flex justify-content-between align-items-center mb-3">
-            <h4 class="">Sell Orders</h4>
-            <div class="d-flex justify-content-between align-items-center gap-2">
-              <div>
-                <select class="form-select form-select-sm" style="width: 150px">
-                  <option selected>Status</option>
-                  <option value="1">In Process</option>
-                  <option value="2">Delivered</option>
-                  <option value="3">Cancelled</option>
-                </select>
+                <h6 class="mt-1 mb-1">
+                  {{ listing.product.brand.name }} {{ listing.product.model }}
+                  {{ listing.product.title }}
+                </h6>
+                <!-- <span class="badge" [ngClass]="listing.statusClass">{{ listing.status || "In Process" }}</span> -->
+                <span class="badge">{{
+                  listing?.product.status || "In Process"
+                }}</span>
               </div>
-              <div>
-                <select class="form-select form-select-sm" style="width: 150px">
-                  <option selected>4 Weeks</option>
-                  <option value="1">1 Week</option>
-                  <option value="2">1 Month</option>
-                  <option value="3">6 Months</option>
-                </select>
+              <div class="col-md-6 d-flex justify-content-end">
+                <button
+                  mat-icon-button
+                  [matMenuTriggerFor]="menu"
+                  aria-label="More options"
+                >
+                  <mat-icon>more_vert</mat-icon>
+                </button>
+                <mat-menu #menu="matMenu">
+                  <!-- <button mat-menu-item (click)="editListing(listing)">
+                      <mat-icon>edit</mat-icon>
+                      <span>Edit</span>
+                    </button>
+                    <button mat-menu-item (click)="deleteListing(listing)">
+                      <mat-icon color="warn">delete</mat-icon>
+                      <span>Delete</span>
+                    </button> -->
+
+                  <button mat-menu-item (click)="detailsBuyListing(listing)">
+                    <mat-icon>detail</mat-icon>
+                    <span>Deatails</span>
+                  </button>
+                </mat-menu>
               </div>
             </div>
           </div>
-          <div class="list-cards">
-            <div *ngFor="let listing of listings" class="card mb-3">
+        </div>
+      </div>
+
+      <!-- if "Sell Orders" is Active -->
+      <div *ngIf="activeIndex === 5" class="container">
+        <div
+          *ngIf="!isShowSellOrdersListngDetails"
+          class="d-flex justify-content-between align-items-center mb-3"
+        >
+          <h4 class="">Sell Orders</h4>
+          <div class="d-flex justify-content-between align-items-center gap-2">
+            <div>
+              <select class="form-select form-select-sm" style="width: 150px">
+                <option selected>Status</option>
+                <option value="1">In Process</option>
+                <option value="2">Delivered</option>
+                <option value="3">Cancelled</option>
+              </select>
+            </div>
+            <div>
+              <select class="form-select form-select-sm" style="width: 150px">
+                <option selected>4 Weeks</option>
+                <option value="1">1 Week</option>
+                <option value="2">1 Month</option>
+                <option value="3">6 Months</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="list-cards">
+          <div class="" *ngIf="!isShowSellOrdersListngDetails">
+            <div *ngFor="let listing of sellOrders" class="card mb-3">
               <div class="card-body d-flex align-items-center">
                 <div class="col-md-6">
                   <small class="text-muted">
-                    Listing ID {{ listing.listing_code || "N/A" }} | Created
-                    {{ listing.created_at | date:'yyyy-MM-dd' }}
+                    Listing ID {{ listing.product.listing_code || "N/A" }} |
+                    Created
+                    {{ listing.created_at | date : "yyyy-MM-dd" }}
                   </small>
-                  
+
                   <h6 class="mt-1 mb-1">
-                    {{ listing.brand.name }} {{ listing.model }}
-                    {{ listing.title }}
+                    {{ listing.product.brand.name }} {{ listing.product.model }}
+                    {{ listing.product.title }}
                   </h6>
                   <!-- <span class="badge" [ngClass]="listing.statusClass">{{ listing.status || "In Process" }}</span> -->
-                  <span class="badge">{{ listing?.status || "In Process" }}</span>
+                  <span class="badge">{{
+                    listing.product?.status || "In Process"
+                  }}</span>
                 </div>
                 <div class="col-md-6 d-flex justify-content-end">
                   <button
@@ -340,21 +438,126 @@
                     <mat-icon>more_vert</mat-icon>
                   </button>
                   <mat-menu #menu="matMenu">
-                    <button mat-menu-item (click)="editListing(listing)">
-                      <mat-icon>edit</mat-icon>
-                      <span>Edit</span>
-                    </button>
-                    <button mat-menu-item (click)="deleteListing(listing)">
-                      <mat-icon color="warn">delete</mat-icon>
-                      <span>Delete</span>
+                    <!-- <button mat-menu-item (click)="editListing(listing)">
+                        <mat-icon>edit</mat-icon>
+                        <span>Edit</span>
+                      </button>
+                      <button mat-menu-item (click)="deleteListing(listing)">
+                        <mat-icon color="warn">delete</mat-icon>
+                        <span>Delete</span>
+                      </button> -->
+                    <button mat-menu-item (click)="detailListing(listing)">
+                      <mat-icon>details</mat-icon>
+                      <span>Details</span>
                     </button>
                   </mat-menu>
                 </div>
-                
               </div>
             </div>
           </div>
+          <div
+            class="col-12 d-flex flex-wrap"
+            *ngIf="isShowSellOrdersListngDetails"
+          >
+            <div class="col-md-8">
+              <div class="card shadow-sm">
+                <div class="card-body d-flex flex-column">
+                  <div class="col-md-12 d-flex flex-wrap align-items-center" style=" background:#F9FAFB">
+                    <div class="col-md-11 d-flex flex-wrap align-items-center">
+                      <button class="prev-btn">pev</button>
+                      <img
+                        style="height: 64px; width: 64px; object-fit: contain"
+                        src="../../../../assets/images/apple-logo.png"
+                        alt="img"
+                      />
+                      <div class="d-flex flex-column p-1">
+                        <p class="font-size-24 font-weight-600 color-242424  margin-0">
+                          Rolex Speedmaster in a good condition but in low price
+                        </p>
+                        <p class="font-size-24 font-weight-600 color-909090 margin-0">Price</p>
+                      </div>
+                    </div>
+                    <div class="col-md-1">
+                      <p>...</p>
+                    </div>
+                  </div>
+                  <div class="col-md-12 d-flex justify-content-between">
+                    <div>
+                      <p class="font-size-24 font-weight-600 color-909090 margin-0"> Order ID</p>
+                      <p class="font-size-24 font-weight-600 color-242424  margin-0">3354654654526</p>
+                    </div>
+                    <div class="d-flex flex-wrap gap-2">
+                      <button class="action-btn">Invoice</button>
+                      <button class="action-btn">Open Chat</button>
+                    </div>
+                  </div>
+                  <div class="col-md-12 d-flex flex-column">
+                    <h4>Order Status</h4>
+                    <ul class="list-group">
+                      <li *ngFor="let status of statuses" class="list-group-item d-flex align-items-center" style="border: none;
+  background: transparent;" [class.active]="status.active">
+                        <input type="radio" class="me-2" [checked]="status.active">
+                        <div>
+                          <strong>{{ status.label }}</strong>
+                          <div class="small text-muted">{{ status.description }}</div>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+              <div class="col-md-4">
+                <div class="card shadow-sm">
+                  <div class="card-body d-flex flex-column">
+                    <div class="col-md-12 d-flex flex-wrap align-items-center">
+                      <div class="col-md-11 d-flex flex-wrap align-items-center">
+                        <img
+                          style="height: 100px; width: 100px; object-fit: contain"
+                          src="../../../../assets/images/apple-logo.png"
+                          alt="img"
+                        />
+                        <div class="d-flex flex-column p-1">
+                          <p>
+                            Dealer Name
+                          </p>
+                          <p>Location</p>
+                        </div>
+                      </div>
+                      <div class="col-md-1">
+                        <p>...</p>
+                      </div>
+                    </div>
+                    <div class="col-md-12 d-flex justify-content-between">
+                      <div>
+                        <h6>Order date</h6>
+                        <p class="text-muted">Oct 16, 2024</p>
+                      </div>
+                      <div>
+                        <h6>Estimated Delivery</h6>
+                        <p class="text-muted">Oct 16, 2024</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            
+              <!-- <div class="card mt-3">
+                <div class="card-body d-flex justify-content-between">
+                  <div>
+                    <h6>Dealer Name</h6>
+                    <p class="text-muted">Location</p>
+                  </div>
+                  <div>
+                    <p><strong>Order Date:</strong> Oct 16, 2024</p>
+                    <p><strong>Estimated Delivery:</strong> Oct 30, 2024</p>
+                  </div>
+                </div>
+              </div> -->
+           
+          </div>
         </div>
+      </div>
     </div>
   </div>
 </div>
