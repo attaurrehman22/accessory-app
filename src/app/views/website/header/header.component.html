@@ -128,7 +128,7 @@
           style="cursor: pointer"
         />
         <div class="header-content gap-4" *ngIf="!isSearchForm">
-          <a routerLink="/" class="custom-btn position-relative">
+          <a routerLink="/newArrivals" class="custom-btn position-relative">
             {{ "header.new_arrivals" | translate }}
             <span
               class="notification-dot"
@@ -138,6 +138,7 @@
           <a class="custom-btn" routerLink="/product-list">
             {{ "header.buy_watch" | translate }}
           </a>
+
           <!-- <a class="custom-btn" *ngIf="isUserLogin === 'false' || isUserLogin == null" (click)="routeToNewProduct()">
             {{ "header.sell_watch" | translate }}
           </a>

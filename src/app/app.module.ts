@@ -88,6 +88,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatOptionModule } from '@angular/material/core';
 import { authInterceptorInterceptor } from './auth-interceptor.interceptor';
 import { NgImageSliderModule } from 'ng-image-slider';
+import { NewArrivalsComponent } from './views/website/new-arrivals/new-arrivals.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -132,7 +133,8 @@ import { NgImageSliderModule } from 'ng-image-slider';
     FieldLimitIntoHunderedDirective,
     OnlyCharacterLimitThirtyDirective,
     PriceLimitDirective,
-    AdminUsersComponent
+    AdminUsersComponent,
+    NewArrivalsComponent
   ],
   imports: [
     MatSortModule,

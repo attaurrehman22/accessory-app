@@ -21,6 +21,7 @@ import { ChatComponent } from './views/website/chat/chat/chat.component';
 import { MyListingDetailsComponent } from './views/website/my-listing-details/my-listing-details.component';
 import { ForgotPasswordComponent } from './views/auth/forgot-password/forgot-password.component';
 import { AdminUsersComponent } from './views/adminpages/admin-users/admin-users.component';
+import { NewArrivalsComponent } from './views/website/new-arrivals/new-arrivals.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -32,6 +33,7 @@ const routes: Routes = [
   { path: 'product-list', component:  ProductListComponent},
   { path: 'product-detail', component:  ProductDetailComponentComponent},
   { path: 'popular-brands-list', component:  PopularBrandsListAlphabeticallyComponent},
+  { path: 'newArrivals', component:  NewArrivalsComponent},
   { path: 'admin/dashboard', component:  AdminHomeComponent},
   { path: 'admin/products', component:  AdminProductsComponent},
   { path: 'admin/product/add', component:  AdminAddProductComponent},
