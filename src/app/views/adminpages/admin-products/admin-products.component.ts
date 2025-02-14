@@ -18,6 +18,7 @@ export interface UserData {
   model: any;
   is_active: any;
   top_brand: any;
+  published_date:any;
 }
 
 @Component({
@@ -32,6 +33,7 @@ export class AdminProductsComponent {
     "brand",
     "cover_image",
     "created_by",
+    "published_date",
     "price",
     "model",
     "is_active",

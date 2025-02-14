@@ -7,6 +7,7 @@ import { MatDialog } from "@angular/material/dialog";
 import { CustomOfferComponent } from "src/app/views/modal/custom-offer/custom-offer.component";
 import { AlertsServicesService } from "src/services/alerts-service/alerts-services.service";
 import { AddShippingComponent } from "src/app/views/modal/add-shipping/add-shipping.component";
+import { ConfirmationModelComponent } from "src/app/views/modal/confirmation-model/confirmation-model.component";
 
 interface MessageFormData {
   product_id?: any;
@@ -36,11 +37,10 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     private http: HttpService,
     private router: Router,
     private dialog: MatDialog,
-    private alertService:AlertsServicesService
+    private alertService: AlertsServicesService
   ) {}
 
   ngOnInit(): void {
-
     if (history?.state?.data) {
       this.productDeatils = history.state.data;
       this.noMessageDetails = this.productDeatils.created_by;
@@ -49,7 +49,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
       this.getLatestMessage();
 
       this.getDetailsofProduct(history?.state?.chat.product_id);
-      this.chat_id=history?.state?.chat.chat_id
+      this.chat_id = history?.state?.chat.chat_id;
       this.getChatDetails();
       // this. getMesageDetails(history?.state?.chat)
     }
@@ -74,151 +74,183 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     container.scrollTop = container.scrollHeight;
   }
 
-  unreadFilter(){
-    this.chats=this.chats.filter((item:any)=>item.unread_count>0)
+  unreadFilter() {
+    this.chats = this.chats.filter((item: any) => item.unread_count > 0);
   }
 
   getLatestMessage() {
     this.http.getChatsWithLatestMessage().subscribe((res) => {
-      this.chats = res.chats.map((chat) => {
-        chat.product.main_image = chat.product.main_image.replace(/\\/g, "/");
-        return chat;
-      },(err)=>{
-        if(err && err.error){
-          this.alertService.showAlert('warning',`${err.error.message}`)
-        }else{
-          this.alertService.showAlert('warning','Error in getting message Please try again')
+      this.chats = res.chats.map(
+        (chat) => {
+          chat.product.main_image = chat.product.main_image.replace(/\\/g, "/");
+          return chat;
+        },
+        (err) => {
+          if (err && err.error) {
+            this.alertService.showAlert("warning", `${err.error.message}`);
+          } else {
+            this.alertService.showAlert(
+              "warning",
+              "Error in getting message Please try again"
+            );
+          }
         }
-      });
+      );
     });
   }
 
   reciever_ID: any;
-  isShowBuyNowOffer:boolean=false;
-  isBuyerUser:boolean=false;
+  isShowBuyNowOffer: boolean = false;
+  isBuyerUser: boolean = false;
+
+  sellerProductID: any;
+  sellerID: any;
+
+  user_id: any;
 
   getMesageDetails(param: any) {
+    this.sellerProductID = param.product_id;
+    this.sellerID = param.product.created_by.id;
+    this.user_id = localStorage.getItem("userID");
+
+    if (this.sellerID == this.user_id) {
+      this.isBuyerUser = false;
+    } else {
+      this.isBuyerUser = true;
+    }
+
+    console.log("sellerProductID", this.sellerProductID);
+    console.log("sellerID", this.sellerID);
+    console.log("user_id", this.user_id);
+
     this.chat_id = param.chat_id;
     this.getProductDetails = param.product;
-    this.getChatDetails() 
+    this.getChatDetails();
   }
 
-  isOfferShowToUserandDealer:boolean=false;
-  isShowPaymentMethod:boolean=false;
-  isShowMarkAsSold:boolean=false;
-  isShowCancelOffertoBuyer:boolean=false;
-  offerTypeStatus:boolean=false;
-  isExistMakePayment:boolean=true;
-  isActionTypeMakePaymentToHideCustomOffer:boolean=false;
+  isOfferShowToUserandDealer: boolean = false;
+  isShowPaymentMethod: boolean = false;
+  isShowMarkAsSold: boolean = false;
+  isShowCancelOffertoBuyer: boolean = false;
+  offerTypeStatus: boolean = false;
+  isExistMakePayment: boolean = true;
+  isActionTypeMakePaymentToHideCustomOffer: boolean = false;
 
-  getChatDetails(){
-    let S_T_B='';
-    let B_T_S='';
-    this.http.getChatsDetails(this.chat_id).subscribe((res) => {
-      this.messages = res.messages;
-      if(res.messages.length > 0 && !this.reciever_ID){
-        let useridd=localStorage.getItem('userID')
-       
-        // this.reciever_ID = res.messages[1]?.receiver_id;
-          if(useridd == res.messages[0]?.sender_id){
+  getChatDetails() {
+    let S_T_B = "";
+    let B_T_S = "";
+    this.http.getChatsDetails(this.chat_id).subscribe(
+      (res) => {
+        this.messages = res.messages;
+        if (res.messages.length > 0 && !this.reciever_ID) {
+          let useridd = localStorage.getItem("userID");
 
+          // this.reciever_ID = res.messages[1]?.receiver_id;
+          if (useridd == res.messages[0]?.sender_id) {
             this.reciever_ID = res.messages[0]?.receiver_id;
-          }else if (res.messages[0]?.receiver_id === null){
+          } else if (res.messages[0]?.receiver_id === null) {
             this.reciever_ID = res.messages[1]?.receiver_id;
-          }
-          else{
+          } else {
             this.reciever_ID = res.messages[0]?.sender_id;
           }
-      }
-      this.messages.forEach((message) => {
-        if (message.attachments) {
-          try {
-            message.attachments = JSON.parse(message.attachments);
-          } catch (error) {
-            console.error("Error parsing attachments:", error);
-          }
         }
-
-        if(message.action_type === 'make_payment'){
-          this.isExistMakePayment=false
-        }
-        
-        if(message.valid_until){
-          this.isCancelOfferBuyer=true
-        }
-
-        if(message.direction === 'STB'){
-          S_T_B='yes'
-        }
-        if(message.direction === 'BTS'){
-          B_T_S='yes'
-        }
-        if(message.offer_price >= 1){
-          this.isOfferShowToUserandDealer=true;
-        }
-         let useridd=localStorage.getItem('userID')
-
-        if(useridd == message.receiver_id){
-          if(message.direction == 'STB'){
-            this.isBuyerUser=true
-          }else{
-            this.isBuyerUser=false
-          }
-        }
-        if(this.isBuyerUser == false){
-         
-   
-          if( (message.direction == 'BTB' || message.direction == 'BTS')  && useridd == message.sender_id){
-          
-            this.isBuyerUser=true
-          }else{
-            this.isBuyerUser=false
+        let count_sen_rec = 0;
+        this.messages.forEach((message) => {
+          if (message.attachments) {
+            try {
+              message.attachments = JSON.parse(message.attachments);
+            } catch (error) {
+              console.error("Error parsing attachments:", error);
+            }
           }
 
+          if (message.action_type === "make_payment") {
+            this.isExistMakePayment = false;
+          }
 
+          if (message.valid_until) {
+            this.isCancelOfferBuyer = true;
+          }
+
+          // if(message.direction === 'STB'){
+          //   S_T_B='yes'
+          // }
+          // if(message.direction === 'BTS'){
+          //   B_T_S='yes'
+          // }
+          if (message.offer_price >= 1) {
+            this.isOfferShowToUserandDealer = true;
+          }
+          let useridd = localStorage.getItem("userID");
+
+          if (message.sender_id == useridd) {
+            count_sen_rec++;
+          }
+
+          if (message.sender_id != useridd) {
+            count_sen_rec++;
+          }
+
+          // if(useridd == message.receiver_id){
+          //   if(message.direction == 'STB'){
+          //     this.isBuyerUser=true
+          //   }else{
+          //     this.isBuyerUser=false
+          //   }
+          // }
+          // if(this.isBuyerUser == false){
+
+          //   if( (message.direction == 'BTB' || message.direction == 'BTS')  && useridd == message.sender_id){
+          //     this.isBuyerUser=true
+          //   }else{
+          //     this.isBuyerUser=false
+          //   }
+          // }
+
+          if (message.action_type === "buy_now") {
+            this.isBuyNowFromChatCheck = true;
+          }
+
+          if (message.action_type === "add_shipping") {
+            this.isShowPaymentMethod = true;
+          }
+
+          if (message.action_type === "mark_sold") {
+            this.isShowMarkAsSold = true;
+          }
+
+          if (message.action_type === "update_offer") {
+            this.isShowCancelOffertoBuyer = true;
+          }
+
+          if (message.action_type === "offer") {
+            this.isCustomOffer = true;
+          }
+
+          if (message.action_type === "make_payment") {
+            this.isActionTypeMakePaymentToHideCustomOffer = true;
+          }
+        });
+        if (count_sen_rec >= 2) {
+          this.isShowBuyNowOffer = true;
         }
 
-        if(message.action_type === 'buy_now'){
-          this.isBuyNowFromChatCheck=true;
+        this.getCustomOffer();
+      },
+      (err) => {
+        if (err && err.error) {
+          this.alertService.showAlert("warning", `${err.error.message}`);
+        } else {
+          this.alertService.showAlert(
+            "warning",
+            "Error in getting chat Details Please try again"
+          );
         }
-
-        if(message.action_type === 'add_shipping'){
-          this.isShowPaymentMethod=true;
-        }
-
-        if(message.action_type === 'mark_sold'){
-          this.isShowMarkAsSold=true;
-        }
-
-        if(message.action_type === 'update_offer'){
-          this.isShowCancelOffertoBuyer=true;
-        }
-
-        if(message.action_type === 'offer'){
-          this.isCustomOffer=true;
-        }
-
-        if(message.action_type === 'make_payment'){
-          this.isActionTypeMakePaymentToHideCustomOffer=true;
-        }
-
-      });
-      if(S_T_B === 'yes' && B_T_S === 'yes'){
-        this.isShowBuyNowOffer=true
       }
-      
-      this.getCustomOffer();
-    },(err)=>{
-      if(err && err.error){
-        this.alertService.showAlert('warning',`${err.error.message}`)
-      }else{
-        this.alertService.showAlert('warning','Error in getting chat Details Please try again')
-      }
-    });
+    );
   }
 
-  editOffer(customOfferDetails:any){
-
+  editOffer(customOfferDetails: any) {
     const dialogRef = this.dialog.open(CustomOfferComponent, {
       width: "600px",
       data: { customOfferDetails: customOfferDetails, param: "editComp" },
@@ -226,59 +258,62 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      if(result){
-        const formData ={
-          chat_id:customOfferDetails.chat_id,
-          product_id :this.messages[0].product_id,
-          action_type:'update_offer',
-          receiver_id :this.reciever_ID.toString()
-        }
+      if (result) {
+        const formData = {
+          chat_id: customOfferDetails.chat_id,
+          product_id: this.messages[0].product_id,
+          action_type: "update_offer",
+          receiver_id: this.reciever_ID.toString(),
+        };
         this.http.sendMessage(formData).subscribe(
-          (res)=>{
-            this.getChatDetails()
+          (res) => {
+            this.getChatDetails();
             this.getLatestMessage();
-          },(err)=>{
-            if(err && err.error){
-              this.alertService.showAlert('warning',`${err.error.message}`)
-            }else{
-              this.alertService.showAlert('warning','Error in sending message Please try again')
+          },
+          (err) => {
+            if (err && err.error) {
+              this.alertService.showAlert("warning", `${err.error.message}`);
+            } else {
+              this.alertService.showAlert(
+                "warning",
+                "Error in sending message Please try again"
+              );
             }
           }
-        )   
+        );
       }
     });
   }
 
-  isCustomOffer:boolean=false;
-  customOfferDetails:any;
-  isOfferStatusAccepted:boolean=false;
-  isProductReserved:boolean=false;
-  getCustomOffer(){
-  
-    this.http.offerByFilter(this.getProductDetails.id,this.chat_id).subscribe(
-      (res)=>{
-       
-        this.isCustomOffer=true;
-        this.customOfferDetails=res.offer;
-        if(res.offer.offers_status === 'accepted'){
-          this.isOfferStatusAccepted=true
+  isCustomOffer: boolean = false;
+  customOfferDetails: any;
+  isOfferStatusAccepted: boolean = false;
+  isProductReserved: boolean = false;
+  getCustomOffer() {
+    this.http.offerByFilter(this.getProductDetails.id, this.chat_id).subscribe(
+      (res) => {
+        this.isCustomOffer = true;
+        this.customOfferDetails = res.offer;
+        if (res.offer.offers_status === "accepted") {
+          this.isOfferStatusAccepted = true;
         }
-        if(res.offer.offers_status !== 'accepted' && res.offer.product.sale_status === 'reserved'){
-     
-
-          this.isProductReserved=true
+        if (
+          res.offer.offers_status !== "accepted" &&
+          res.offer.product.sale_status === "reserved"
+        ) {
+          this.isProductReserved = true;
+        } else {
+          this.isProductReserved = false;
         }
-        else{
-          this.isProductReserved=false
-        }
-      },(err)=>{
+      },
+      (err) => {
         // if(err && err.error){
         //   this.alertService.showAlert('warning',`${err.error.message}`)
         // }else{
         //   this.alertService.showAlert('warning','Error in getting Custom offer')
         // }
       }
-    )
+    );
   }
 
   isArray(attachments: any): boolean {
@@ -288,26 +323,30 @@ export class ChatComponent implements OnInit, AfterViewChecked {
   getDetailsofProduct(ID: any) {
     this.http.getProductsByID(ID).subscribe(
       (res) => {
-      if (res.data.main_image) {
-        res.data.main_image = res.data.main_image.replace(/\\/g, "");
+        if (res.data.main_image) {
+          res.data.main_image = res.data.main_image.replace(/\\/g, "");
+        }
+        this.getProductDetails = res.data;
+      },
+      (err) => {
+        if (err && err.error) {
+          this.alertService.showAlert("warning", `${err.error.message}`);
+        } else {
+          this.alertService.showAlert(
+            "warning",
+            "Error in getting product details"
+          );
+        }
       }
-      this.getProductDetails = res.data;
-    },(err)=>{
-      if(err && err.error){
-        this.alertService.showAlert('warning',`${err.error.message}`)
-      }else{
-        this.alertService.showAlert('warning','Error in getting product details')
-      }
-    });
+    );
   }
 
   activeOption(option: any) {
     this.isActive = option;
-    if(option === 'All'){
-      this.getLatestMessage()
+    if (option === "All") {
+      this.getLatestMessage();
     }
   }
-  
 
   formatTime(date: string): string {
     return timeago.format(new Date(date));
@@ -339,11 +378,9 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     }
 
     if (this.reciever_ID) {
-
       formData.append("receiver_id", this.reciever_ID.toString());
-    } 
-    else if (!this.reciever_ID && this.productDeatils) {
-      this.reciever_ID=this.productDeatils.created_by.id
+    } else if (!this.reciever_ID && this.productDeatils) {
+      this.reciever_ID = this.productDeatils.created_by.id;
       formData.append(
         "receiver_id",
         this.productDeatils.created_by.id.toString()
@@ -356,18 +393,21 @@ export class ChatComponent implements OnInit, AfterViewChecked {
 
     this.http.sendMessage(formData).subscribe(
       (res) => {
-      this.chat_id = res.data.chat_id;
+        this.chat_id = res.data.chat_id;
         this.getChatDetails();
         this.getLatestMessage();
-    },(err)=>{
-      if(err && err.error){
-        this.alertService.showAlert('warning',`${err.error.message}`)
-      }else{
-        this.alertService.showAlert('warning','Error in sending message Please try again')
-
+      },
+      (err) => {
+        if (err && err.error) {
+          this.alertService.showAlert("warning", `${err.error.message}`);
+        } else {
+          this.alertService.showAlert(
+            "warning",
+            "Error in sending message Please try again"
+          );
+        }
       }
-    }
-  );
+    );
     this.newMessage = "";
     this.buyNowStatus = false;
     this.selectedImages = [];
@@ -415,13 +455,12 @@ export class ChatComponent implements OnInit, AfterViewChecked {
   }
 
   customOffer() {
-
     const datawithChat_ID = {
       reciever_ID: this.reciever_ID,
       chat_ID: this.chat_id,
       product_ID: this.messages[0].product_id,
     };
-    
+
     const dialogRef = this.dialog.open(CustomOfferComponent, {
       width: "600px",
       data: { datawithChat_ID: datawithChat_ID, param: "chatComp" },
@@ -429,196 +468,216 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      this.getChatDetails()
+      this.getChatDetails();
       this.getLatestMessage();
     });
   }
 
+  cancelOfferStatus() {
+    const formData = {
+      offer_id: this.customOfferDetails.id,
+      offers_status: "canceled",
+      sender_id: localStorage.getItem("userID"),
+      receiver_id: this.reciever_ID,
+      chat_id: this.chat_id,
+    };
+    const dialogRef = this.dialog.open(ConfirmationModelComponent, {
+      width: "600px",
+      data: { message: "Are you sure you want to cancel offer" },
+      disableClose: true,
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result == true) {
+        this.http.editOfferStatus(formData).subscribe(
+          (res) => {
+            this.alertService.showAlert(
+              "success",
+              "Offer Canceled Succesfully"
+            );
+            this.getChatDetails();
+            this.getLatestMessage();
+          },
+          (err) => {
+            if (err && err.error) {
+              this.alertService.showAlert("warning", `${err.error.message}`);
+            } else {
+              this.alertService.showAlert("danger", "Error in Offer Canceling");
+            }
+          }
+        );
+      }
+    });
+  }
 
-  cancelOfferStatus(){
-    const formData={
-      offer_id:this.customOfferDetails.id,
-      offers_status:'canceled',
-      sender_id:localStorage.getItem('userID'),
-      receiver_id:this.reciever_ID,
-      chat_id:this.chat_id
-    }
+  acceptOffer() {
+    const formData = {
+      offer_id: this.customOfferDetails.id,
+      offers_status: "accepted",
+      sender_id: localStorage.getItem("userID"),
+      receiver_id: this.reciever_ID,
+      chat_id: this.chat_id,
+    };
 
     this.http.editOfferStatus(formData).subscribe(
-      (res)=>{
-        this.alertService.showAlert('success','Offer Canceled Succesfully')
-        this.getChatDetails()
-        this.getLatestMessage()
-      },(err)=>{
-        if(err && err.error){
-          this.alertService.showAlert('warning',`${err.error.message}`)
-        }else{
-        this.alertService.showAlert('danger','Error in Offer Canceling')
+      (res) => {
+        this.alertService.showAlert("success", "Product Sold Succesfully");
+        this.getChatDetails();
+        this.getLatestMessage();
+      },
+      (err) => {
+        if (err && err.error) {
+          this.alertService.showAlert("warning", `${err.error.message}`);
+        } else {
+          this.alertService.showAlert("danger", "Error in Product Sold");
         }
       }
     );
   }
 
+  // assign this object true when click buyer 'Buy Now' and dealer get option 'Add Shipping' when this object is true also update this when buyer buy product
+  isBuyNowFromChatCheck: boolean = false;
 
-  acceptOffer(){
-    const formData={
-      offer_id:this.customOfferDetails.id,
-      offers_status:'accepted',
-      sender_id:localStorage.getItem('userID'),
-      receiver_id:this.reciever_ID,
-      chat_id:this.chat_id
-    }
-
-    this.http.editOfferStatus(formData).subscribe(
-      (res)=>{
-        this.alertService.showAlert('success','Product Sold Succesfully')
-        this.getChatDetails()
-        this.getLatestMessage()
-      },(err)=>{
-        if(err && err.error){
-          this.alertService.showAlert('warning',`${err.error.message}`)
-        }else{
-          this.alertService.showAlert('danger','Error in Product Sold')
-        }
-       
+  buyNowFromChat() {
+    const formData = {
+      product_id: this.messages[0].product_id,
+      chat_id: this.chat_id,
+      receiver_id: this.reciever_ID,
+      action_type: "buy_now",
+    };
+    this.http.sendMessage(formData).subscribe((res) => {
+      this.chat_id = res.messages.chat_id;
+      if (res.messages.action_type === "buy_now") {
+        this.isBuyNowFromChatCheck = true;
+        this.getChatDetails();
+        this.getLatestMessage();
+      } else {
+        this.getChatDetails();
+        this.getLatestMessage();
       }
-    );
+    });
   }
 
-// assign this object true when click buyer 'Buy Now' and dealer get option 'Add Shipping' when this object is true also update this when buyer buy product
-  isBuyNowFromChatCheck:boolean=false;
-
-  buyNowFromChat(){
-      const formData ={
-        product_id:this.messages[0].product_id,
-        chat_id:this.chat_id,
-        receiver_id:this.reciever_ID,
-        action_type:'buy_now'
-
-      }
-    this.http.sendMessage(formData).subscribe(
-      (res)=>{
-        this.chat_id = res.messages.chat_id;
-        if(res.messages.action_type === 'buy_now'){
-          this.isBuyNowFromChatCheck=true;
-          this.getChatDetails();
-          this.getLatestMessage();
-        }else{
-          this.getChatDetails();
-          this.getLatestMessage();
-        }
-      }
-    )
+  createOfferFromChat() {
+    this.customOffer();
   }
 
-
-  createOfferFromChat(){
-     this.customOffer()
-  }
-
-
-  MarkAsSoldfromChat(){
-    const formData ={
-      product_id:this.messages[0].product_id,
-      chat_id:this.chat_id,
-      receiver_id:this.reciever_ID,
-      action_type:'mark_sold'
-
-    }
-    this.http.sendMessage(formData).subscribe(
-      (res)=>{
-        this.chat_id = res.messages.chat_id;
-        // if(res.messages.action_type === 'buy_now'){
-        //   this.isBuyNowFromChatCheck=true;
-        // }
-        if(this.chat_id){
-          this.getChatDetails();
-          this.getLatestMessage();
-        }
+  MarkAsSoldfromChat() {
+    const formData = {
+      product_id: this.messages[0].product_id,
+      chat_id: this.chat_id,
+      receiver_id: this.reciever_ID,
+      action_type: "mark_sold",
+    };
+    this.http.sendMessage(formData).subscribe((res) => {
+      this.chat_id = res.messages.chat_id;
+      // if(res.messages.action_type === 'buy_now'){
+      //   this.isBuyNowFromChatCheck=true;
+      // }
+      if (this.chat_id) {
+        this.getChatDetails();
+        this.getLatestMessage();
       }
-    )
+    });
   }
 
-  isCancelOfferBuyer:boolean=false;
+  isCancelOfferBuyer: boolean = false;
 
-  addShippingFromChat(){
+  addShippingFromChat() {
     const dialogRef = this.dialog.open(AddShippingComponent, {
       width: "600px",
       disableClose: true,
     });
 
     dialogRef.afterClosed().subscribe((result) => {
- 
-      if(result){
+      if (result) {
         const formData = {
           chat_id: this.chat_id,
           ship_price: result.formData.ship_price,
           product_id: this.messages[0].product_id,
-          sender_id: localStorage.getItem('userID'),
+          sender_id: localStorage.getItem("userID"),
           receiver_id: this.reciever_ID,
-          validity_days: result.formData.validity_days
-        }
+          validity_days: result.formData.validity_days,
+        };
         this.http.sendShipmenttoBuyer(formData).subscribe(
-          (res)=>{
-            this.isCancelOfferBuyer=true
+          (res) => {
+            this.isCancelOfferBuyer = true;
             this.getChatDetails();
             this.getLatestMessage();
-          },(err)=>{
-            if(err && err.error){
-              this.alertService.showAlert('warning',`${err.error.message}`)
-            }else{
-              this.alertService.showAlert('warning','Error in add Shipment Please try again with correct form data')
+          },
+          (err) => {
+            if (err && err.error) {
+              this.alertService.showAlert("warning", `${err.error.message}`);
+            } else {
+              this.alertService.showAlert(
+                "warning",
+                "Error in add Shipment Please try again with correct form data"
+              );
             }
           }
-        )
+        );
       }
     });
   }
-  cancelOffer(){
-    const formData ={
-      product_id:this.messages[0].product_id,
-      chat_id:this.chat_id,
-      receiver_id:this.reciever_ID,
-      action_type:'cancel_order'
-
+  cancelOffer() {
+    const formData = {
+      product_id: this.messages[0].product_id,
+      chat_id: this.chat_id,
+      receiver_id: this.reciever_ID,
+      action_type: "cancel_order",
+    };
+    const dialogRef = this.dialog.open(ConfirmationModelComponent, {
+      width: "600px",
+      data: { message: "Are you sure you want to cancel offer" },
+      disableClose: true,
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      if(result == true){
+      this.http.sendMessage(formData).subscribe(
+        (res) => {
+          this.chat_id = res.messages.chat_id;
+          if (this.chat_id) {
+            this.getChatDetails();
+            this.getLatestMessage();
+          }
+        },
+        (err) => {
+          if (err && err.error) {
+            this.alertService.showAlert("warning", `${err.error.message}`);
+          } else {
+            this.alertService.showAlert(
+              "warning",
+              "Error in Cancel Order Please try again"
+            );
+          }
+        }
+      );
     }
-    this.http.sendMessage(formData).subscribe(
-      (res)=>{
-        this.chat_id = res.messages.chat_id;
-        if(this.chat_id){
-          this.getChatDetails();
-          this.getLatestMessage();
-        }
-      },(err)=>{
-        if(err && err.error){
-          this.alertService.showAlert('warning',`${err.error.message}`)
-        }else{
-          this.alertService.showAlert('warning','Error in Cancel Order Please try again')
-        }
-      }
-    )
+    });
   }
 
-
-  makePayment(){
-    const formData ={
-      product_id:this.messages[0].product_id,
-      chat_id:this.chat_id,
-      receiver_id:this.reciever_ID,
-      action_type:'make_payment'
-    }
+  makePayment() {
+    const formData = {
+      product_id: this.messages[0].product_id,
+      chat_id: this.chat_id,
+      receiver_id: this.reciever_ID,
+      action_type: "make_payment",
+    };
     this.http.sendMessage(formData).subscribe(
-      (res)=>{
+      (res) => {
         this.chat_id = res.messages.chat_id;
-          this.getChatDetails();
-          this.getLatestMessage();
-      },(err)=>{
-        if(err && err.error){
-          this.alertService.showAlert('warning',`${err.error.message}`)
-        }else{
-          this.alertService.showAlert('warning','Error in Making payment Please try again')
+        this.getChatDetails();
+        this.getLatestMessage();
+      },
+      (err) => {
+        if (err && err.error) {
+          this.alertService.showAlert("warning", `${err.error.message}`);
+        } else {
+          this.alertService.showAlert(
+            "warning",
+            "Error in Making payment Please try again"
+          );
         }
       }
-    )
+    );
   }
 }

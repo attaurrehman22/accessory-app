@@ -1642,12 +1642,12 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
   }
 
   moveToForm(formName) {
-    this.getOnlyDetails();
     if (formName === "listingDetails") {
       if (
         this.selectedOptionsList.includes("listingDetails") &&
         this.selectedSection !== "listingDetails"
       ) {
+            this.getOnlyDetails();
         this.selectSection("listingDetails");
       }
     } else if (formName === "watchDetails") {
@@ -1655,6 +1655,7 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
         this.selectedOptionsList.includes("watchDetails") &&
         this.selectedSection !== "watchDetails"
       ) {
+            this.getOnlyDetails();
         this.selectSection("watchDetails");
       }
     } else if (formName === "uploadImages") {
@@ -1662,6 +1663,7 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
         this.selectedOptionsList.includes("uploadImages") &&
         this.selectedSection !== "uploadImages"
       ) {
+            this.getOnlyDetails();
         this.selectSection("uploadImages");
       }
     } else if (formName === "conditionGrading") {
@@ -1669,6 +1671,7 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
         this.selectedOptionsList.includes("conditionGrading") &&
         this.selectedSection !== "conditionGrading"
       ) {
+            this.getOnlyDetails();
         this.selectSection("conditionGrading");
       }
     } else if (formName === "scopeofdelivery") {
@@ -1676,6 +1679,7 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
         this.selectedOptionsList.includes("scopeofdelivery") &&
         this.selectedSection !== "scopeofdelivery"
       ) {
+            this.getOnlyDetails();
         this.selectSection("scopeofdelivery");
       }
     } else if (formName === "proofofownership") {
@@ -1683,6 +1687,7 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
         this.selectedOptionsList.includes("proofofownership") &&
         this.selectedSection !== "proofofownership"
       ) {
+            this.getOnlyDetails();
         this.selectSection("proofofownership");
       }
     } else if (formName === "priceshipment") {
@@ -1690,6 +1695,7 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
         this.selectedOptionsList.includes("priceshipment") &&
         this.selectedSection !== "priceshipment"
       ) {
+            this.getOnlyDetails();
         this.selectSection("priceshipment");
       }
     } else if (formName === "billinginformation") {
@@ -1697,6 +1703,7 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
         this.selectedOptionsList.includes("billinginformation") &&
         this.selectedSection !== "billinginformation"
       ) {
+            this.getOnlyDetails();
         this.selectSection("billinginformation");
       }
     } else if (formName === "summary") {
@@ -1704,6 +1711,7 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
         this.selectedOptionsList.includes("summary") &&
         this.selectedSection !== "summary"
       ) {
+            this.getOnlyDetails();
         this.selectSection("summary");
       }
     }

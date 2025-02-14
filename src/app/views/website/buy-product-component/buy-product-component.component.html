@@ -179,7 +179,7 @@
         <button class="condition-btn">{{ productDetails.condition }}</button>
       </div>
 
-      <div class="d-flex flex-column mt-3">
+      <div *ngIf="productDetails?.scope_of_delivery" class="d-flex flex-column mt-3">
         <p
           class="header-highligted-color font-wight-400 font-size-16 margin-0"
           style="padding-bottom: 7px"
@@ -193,7 +193,7 @@
         </div>
       </div>
 
-      <div class="d-flex flex-column mt-3">
+      <div *ngIf="productDetails?.estimate_delivery" class="d-flex flex-column mt-3">
         <p
           class="header-highligted-color font-wight-400 font-size-16 margin-0"
           style="padding-bottom: 7px"
@@ -407,18 +407,18 @@
           </div>
 
           <div class="col-12">
-            <div class="col-12 d-flex flex-wrap justify-content-center">
+            <div *ngIf="productDetails?.meta_description" class="col-12 d-flex flex-wrap justify-content-center">
               <p
                 class="font-size-20 font-wight-600 color-242424 margin-0 text-center"
               >
-                {{ productDetails?.meta_description || 'N/A' }}
+                {{ productDetails.meta_description || 'N/A' }}
               </p>
             </div>
-            <div class="col-12">
+            <div *ngIf="productDetails?.description" class="col-12">
               <p
                 class="font-size-16 font-wight-400 color-666666 margin-0 text-center"
               >
-                {{ productDetails?.description || 'N/A' }}
+                {{ productDetails.description || 'N/A' }}
               </p>
             </div>
           </div>

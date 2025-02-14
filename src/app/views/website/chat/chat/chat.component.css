@@ -108,8 +108,9 @@
     font-size: 16px;
     font-weight: 400;
     color: #242424;
-    height: 38px;
-    width: 106px;
+    min-height: 38px;
+    min-width: 106px;
+    padding: 10px 20px 10px 20px;
 }
 
 .card-header {
@@ -154,7 +155,7 @@ input.form-control {
 
 .attachment-stl {
     max-width: 350px;
-    max-height: 300px;
+    max-height: 150px;
 }
 
 .first-action-btn {
@@ -172,4 +173,10 @@ input.form-control {
     font-size: 14px;
     font-weight: 600;
     color: #242424;
+}
+
+.character-count {
+    display: flex;
+    padding: 0 10px 0 10px;
+    align-items: center;
 }

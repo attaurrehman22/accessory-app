@@ -243,7 +243,11 @@
             </div>
           </div>
           <div>
-            <button (click)="viewAdd()" class="view-add-btn">View Add</button>
+            <a class="view-add-btn" [routerLink]="['/buy-product']"
+            [queryParams]="{ id: getProductDetails.id }">
+            View Add
+            </a>
+            <!-- <button (click)="viewAdd()" >View Add</button> -->
           </div>
         </div>
 
@@ -252,14 +256,23 @@
         <div class="card-body" style="height: 480px; overflow-y: scroll">
           <div *ngIf="messages">
             <div *ngFor="let message of reversedMessages">
-              <div
+              <!-- <div
                   class="message"
                   [class.custom-sent]="reversedMessages.length === 1"
                   [class.sent]="(message.direction === 'BTS' && isBuyerUser) || (message.direction === 'STB' && !isBuyerUser)"
                   [class.received]="(message.direction === 'STB' && isBuyerUser) || (message.direction === 'BTS' && !isBuyerUser)"
                   [class.sent]="(message.direction === 'BTB' && isBuyerUser) || (message.direction === 'STS' && !isBuyerUser)"
 
-                >
+                > -->
+
+                <div
+                  class="message"
+                  [ngClass]="{
+                    'received': message.sender_id == user_id,
+                    'sent': message.sender_id != user_id,
+                    'justify-content-center': message.is_system_generated === 1
+                  }">
+             
                 <div class="message-content">
                   <p>{{ message.message }}</p>
                   <p *ngIf="isShowMarkAsSold && isBuyerUser && message.action_type === 'mark_sold'">Seller has change Status of Product as 'Mark as Sold'</p>
@@ -306,8 +319,8 @@
                       </div>
                       <div class="d-flex justify-content-center mt-3 gap-5">
                         <button *ngIf="!isBuyerUser || isBuyerUser  && !isOfferStatusAccepted || isOfferStatusAccepted" (click)="cancelOfferStatus()" class="first-action-btn">Cancel Offer</button>
-                        <button (click)="editOffer(customOfferDetails)" class="first-action-btn">Edit Offer</button>
-                        <button *ngIf="!isOfferStatusAccepted && isBuyerUser" (click)="acceptOffer()" class="second-action-btn">Accept Offer</button>
+                        <button *ngIf="message.action_type == 'offer' && !isBuyerUser" (click)="editOffer(customOfferDetails)" class="first-action-btn">Edit Offer</button>
+                        <button *ngIf="!isOfferStatusAccepted && !isBuyerUser " (click)="acceptOffer()" class="second-action-btn">Accept Offer</button>
     
                         <button *ngIf="isBuyerUser && isOfferStatusAccepted" class="second-action-btn" (click)="makePayment()">Make Payment</button>
     
@@ -467,12 +480,18 @@
             </div>
           <div class="input-group">
             <input
-              type="text"
-              class="form-control"
-              [(ngModel)]="newMessage"
-              (keyup.enter)="sendMessage()"
-              placeholder="Type a message..."
-            />
+            type="text"
+            class="form-control"
+            [(ngModel)]="newMessage"
+            (keyup.enter)="sendMessage()"
+            placeholder="Type a message..."
+            maxlength="500"
+          />
+          
+          <div class="character-count">
+            {{ newMessage.length }} / 500
+          </div>
+          
             <button class="btn btn-dark" (click)="sendMessage()">
               Send
             </button>

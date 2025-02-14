@@ -115,6 +115,15 @@
                       </td>
                     </ng-container>
 
+                    <ng-container class="column" matColumnDef="published_date">
+                      <th mat-header-cell class="column" *matHeaderCellDef>
+                        Published Date
+                      </th>
+                      <td mat-cell class="column" *matCellDef="let row; in">
+                        {{ row.published_date | date: 'dd/MM/yyyy' }}
+                      </td>
+                    </ng-container>
+
                     <!-- <ng-container class="column" matColumnDef="price">
                       <th mat-header-cell class="column" *matHeaderCellDef>
                         Price

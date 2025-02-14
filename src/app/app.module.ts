@@ -89,6 +89,8 @@ import { MatOptionModule } from '@angular/material/core';
 import { authInterceptorInterceptor } from './auth-interceptor.interceptor';
 import { NgImageSliderModule } from 'ng-image-slider';
 import { NewArrivalsComponent } from './views/website/new-arrivals/new-arrivals.component';
+import { ConfirmationModelComponent } from './views/modal/confirmation-model/confirmation-model.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -134,7 +136,8 @@ import { NewArrivalsComponent } from './views/website/new-arrivals/new-arrivals.
     OnlyCharacterLimitThirtyDirective,
     PriceLimitDirective,
     AdminUsersComponent,
-    NewArrivalsComponent
+    NewArrivalsComponent,
+    ConfirmationModelComponent
   ],
   imports: [
     MatSortModule,
