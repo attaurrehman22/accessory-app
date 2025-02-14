@@ -529,12 +529,16 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
   }
 
   isListingCompleted: boolean = false;
+  isPublishedProduct:Boolean=false;
 
   getOnlyDetails() {
     this.http
       .getProductDetailsByID(this.productIDFromResponse)
       .subscribe((res) => {
         this.productDetails = res.product;
+        if(res?.product?.published_date){
+          this.isPublishedProduct=true;
+        }
         this.latestActiveForm = res.step;
         if (res.is_listing_completed === 1) {
           this.isListingCompleted = true;

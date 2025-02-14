@@ -1927,6 +1927,7 @@
                   Back
                 </button>
                 <button
+                *ngIf="!isPublishedProduct"
                   class="save-can-btn save-btn-bg"
                   (click)="onSubmit('summary')"
                 >
@@ -3733,6 +3734,7 @@
               Back
             </button>
             <button
+             *ngIf="!isPublishedProduct"
               class="save-can-btn save-btn-bg"
               (click)="onSubmit('summary')"
             >
