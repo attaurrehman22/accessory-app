@@ -1,10 +1,16 @@
 <div class="confirmation-modal">
-    <div class="modal-content">
-      <h2>{{message}}</h2>
+    <div class="modal-content" style="padding: 20px 10px 20px 10px;">
+      <h3 style="margin: 20px 0 40px 0;text-align: center;">{{message}}</h3>
       
-      <div class="modal-actions">
-        <button class="confirm-btn" (click)="confirm()">Yes</button>
-        <button class="cancel-btn" (click)="cancel()">No</button>
+      <div class="d-flex justify-content-center gap-2">
+        <button class="confirm-btn" style="height: 45px;
+        width: 140px;
+        border-radius: 8px;
+        background: #242424;
+        color: white;" (click)="confirm()">Yes</button>
+        <button style="height: 45px;
+        width: 140px;
+        border-radius: 8px;" (click)="cancel()">No</button>
       </div>
     </div>
   </div>

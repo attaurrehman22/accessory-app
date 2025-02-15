@@ -147,9 +147,33 @@ img {
   opacity: 0.6;
 }
 
+.label-stl{
+  font-size: 16px;
+  font-weight: 700;
+  color: #909090;
+  margin: 0 !important;
+}
+
+.desc-stl{
+  font-size: 14px;
+  font-weight: 400;
+  color: #909090;
+  margin: 0 !important;
+}
+
 .list-group-item.active {
   background-color: #f8f9fa;
-  font-weight: bold;
+  font-weight: 700;
+  color: #242424;
+  font-size: 16px;
+}
+
+.list-group-item.active >.order-details > .label-stl{
+  color: #242424;
+}
+
+.list-group-item.active >.order-details > .desc-stl{
+  color: #242424;
 }
 
 .prev-btn {
@@ -165,4 +189,32 @@ img {
   height: 38px;
   border-radius: 10px;
   border: 1px solid #242424;
+}
+
+/* Change the color of the selected radio button */
+input[type="radio"]:checked {
+  border: 1px solid #242424; /* Border color */
+}
+
+/* Optional: Add a custom appearance to the radio button */
+input[type="radio"] {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 2px solid #ccc;
+  position: relative;
+}
+
+input[type="radio"]:checked::before {
+  content: '';
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #242424; /* The inner part when checked */
 }

@@ -256,15 +256,6 @@
         <div class="card-body" style="height: 480px; overflow-y: scroll">
           <div *ngIf="messages">
             <div *ngFor="let message of reversedMessages">
-              <!-- <div
-                  class="message"
-                  [class.custom-sent]="reversedMessages.length === 1"
-                  [class.sent]="(message.direction === 'BTS' && isBuyerUser) || (message.direction === 'STB' && !isBuyerUser)"
-                  [class.received]="(message.direction === 'STB' && isBuyerUser) || (message.direction === 'BTS' && !isBuyerUser)"
-                  [class.sent]="(message.direction === 'BTB' && isBuyerUser) || (message.direction === 'STS' && !isBuyerUser)"
-
-                > -->
-
                 <div
                   class="message"
                   [ngClass]="{
@@ -320,7 +311,7 @@
                       <div class="d-flex justify-content-center mt-3 gap-5">
                         <button *ngIf="!isBuyerUser || isBuyerUser  && !isOfferStatusAccepted || isOfferStatusAccepted" (click)="cancelOfferStatus()" class="first-action-btn">Cancel Offer</button>
                         <button *ngIf="message.action_type == 'offer' && !isBuyerUser" (click)="editOffer(customOfferDetails)" class="first-action-btn">Edit Offer</button>
-                        <button *ngIf="!isOfferStatusAccepted && !isBuyerUser " (click)="acceptOffer()" class="second-action-btn">Accept Offer</button>
+                        <button (click)="acceptOffer()" class="second-action-btn">Accept Offer</button>
     
                         <button *ngIf="isBuyerUser && isOfferStatusAccepted" class="second-action-btn" (click)="makePayment()">Make Payment</button>
     
@@ -336,7 +327,7 @@
            
 
 
-            <div *ngIf="!isCustomOffer && isShowBuyNowOffer" class="col-md-8">
+            <div *ngIf="!isCustomOffer && isShowBuyNowOffer" class="col-md-12 d-flex justify-content-center">
               <div *ngIf="isBuyerUser && !isBuyNowFromChatCheck" class="d-flex flex-column card p-2">
                 <div style="border-bottom: 1px solid #F2F5F8;" class="d-flex justify-content-between align-items-center">
                   <p>Satisfied with the response? Close your deal now with the seller</p>
@@ -358,7 +349,7 @@
               </div>
             </div>
 
-            <div *ngIf="isShowPaymentMethod && isBuyerUser && isExistMakePayment" class="col-md-8">
+            <div *ngIf="isShowPaymentMethod && isBuyerUser && isExistMakePayment" class="col-md-12 d-flex justify-content-center">
               <!-- // when buyer satisfied with product and dealer and 'Buy Now' and after 'Buy Now' dealer add shipping price then this section show message to buyer 'Add Payment' or 'Cancel Order' -->
 
               <div class="d-flex flex-column card p-2">

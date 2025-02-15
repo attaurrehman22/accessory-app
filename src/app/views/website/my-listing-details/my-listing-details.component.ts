@@ -98,14 +98,33 @@ export class MyListingDetailsComponent implements OnInit{
   isShowBuyOrdersListngDetails: boolean = false;
   sellerDetails: any = null;
   buyerDetails: any = null;
+  productDetails:any;
+  orderID:any;
+  orderDate:any;
+  estimateDelivery:any;
   
   detailListing(listing: any): void {
     this.isShowSellOrdersListngDetails = true;
+    this.orderID=listing?.id;
+    this.orderDate=listing?.status_updated_at;
+    this.estimateDelivery=listing?.status_updated_at;
+    this.productDetails=listing.product;
+    if(this.productDetails?.main_image){
+      this.productDetails.main_image=  this.productDetails.main_image.replace(/\\/g, "");
+    }
+  console.log("Product details of Seller",this.productDetails)
+      
     this.fetchOrderStatus(listing.id, 'seller');
   }
   
   detailsBuyListing(listing: any): void {
     this.isShowBuyOrdersListngDetails = true;
+    this.orderID=listing?.id
+    this.productDetails=listing.product;
+    if(this.productDetails?.main_image){
+      this.productDetails.main_image=  this.productDetails.main_image.replace(/\\/g, "");
+    }
+    console.log("Product details of Buyer",this.productDetails)
     this.fetchOrderStatus(listing.id, 'buyer');
   }
   
@@ -118,11 +137,23 @@ export class MyListingDetailsComponent implements OnInit{
           this.sellerDetails = res;
           if(res?.status_flow){
             if(res?.status_flow?.initiated){
-              this.statuses[0].active = true;
+              this.sellerStatuses[0].active = true;
             }
+          
           }
         } else if (type === 'buyer') {
           this.buyerDetails = res;
+          if(res?.status_flow){
+            if(res?.status_flow?.initiated){
+              this.statuses[0].active = true;
+            }
+            else if(res?.status_flow?.awaiting_confirmation){
+              this.statuses[1].active = true;
+            }
+            else if(res?.status_flow?.make_payment){
+              this.statuses[2].active = true;
+            }
+          }
         }
       },
       (error) => {
@@ -139,6 +170,8 @@ export class MyListingDetailsComponent implements OnInit{
 
   }
 
+  // for buyer
+
   statuses = [
     { label: 'Order Initiated', description: 'Order has been initiated.', active: false },
     { label: 'Awaiting For Confirmation', description: 'Waiting for seller to confirm the order.', active: false },
@@ -148,4 +181,18 @@ export class MyListingDetailsComponent implements OnInit{
     { label: 'Order Delivered', description: 'Authorize payout for your order.', active: false },
     { label: 'Order Completed', description: 'Your order has been completed successfully.', active: false }
   ];
+
+    // for Seller
+
+    sellerStatuses = [
+      { label: 'Order Received', description: 'Buyer has initiated the order.', active: false },
+      { label: 'Confirm Order Availability', description: 'Confirm availability for your listed order.', active: false },
+      { label: 'Awaiting Payment', description: 'Awaiting payment confirmation from buyer.', active: false },
+      { label: 'Prepare Shipment', description: 'Prepare shipment for your order.', active: false },
+      { label: 'Delivery in Progress', description: 'Click to track your order.', active: false },
+      { label: 'Order Delivered', description: 'Awaiting for buyer to authorize payment.', active: false },
+      { label: 'Payout Confirmation', description: 'Your payment has been released.', active: false }
+    ];
+
+
 }

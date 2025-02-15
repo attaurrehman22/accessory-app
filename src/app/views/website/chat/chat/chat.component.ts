@@ -41,6 +41,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
   ) {}
 
   ngOnInit(): void {
+    this.user_id = localStorage.getItem("userID");
     if (history?.state?.data) {
       this.productDeatils = history.state.data;
       this.noMessageDetails = this.productDeatils.created_by;
@@ -231,6 +232,10 @@ export class ChatComponent implements OnInit, AfterViewChecked {
             this.isActionTypeMakePaymentToHideCustomOffer = true;
           }
         });
+
+        if (this.messages[0]?.message == 'Buyer have start the Order Process'){
+          count_sen_rec++;
+        }
         if (count_sen_rec >= 2) {
           this.isShowBuyNowOffer = true;
         }
@@ -393,7 +398,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
 
     this.http.sendMessage(formData).subscribe(
       (res) => {
-        this.chat_id = res.data.chat_id;
+        this.chat_id = res?.data?.chat_id;
         this.getChatDetails();
         this.getLatestMessage();
       },
@@ -482,7 +487,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
       chat_id: this.chat_id,
     };
     const dialogRef = this.dialog.open(ConfirmationModelComponent, {
-      width: "600px",
+      width: "700px",
       data: { message: "Are you sure you want to cancel offer" },
       disableClose: true,
     });
@@ -544,9 +549,10 @@ export class ChatComponent implements OnInit, AfterViewChecked {
       receiver_id: this.reciever_ID,
       action_type: "buy_now",
     };
-    this.http.sendMessage(formData).subscribe((res) => {
-      this.chat_id = res.messages.chat_id;
-      if (res.messages.action_type === "buy_now") {
+    this.http.sendMessage(formData).subscribe(
+      (res) => {
+      this.chat_id = res.data.chat_id;
+      if (res.data.action_type === "buy_now") {
         this.isBuyNowFromChatCheck = true;
         this.getChatDetails();
         this.getLatestMessage();
@@ -569,7 +575,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
       action_type: "mark_sold",
     };
     this.http.sendMessage(formData).subscribe((res) => {
-      this.chat_id = res.messages.chat_id;
+      this.chat_id = res?.data?.chat_id;
       // if(res.messages.action_type === 'buy_now'){
       //   this.isBuyNowFromChatCheck=true;
       // }
@@ -584,7 +590,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
 
   addShippingFromChat() {
     const dialogRef = this.dialog.open(AddShippingComponent, {
-      width: "600px",
+      width: "700px",
       disableClose: true,
     });
 
@@ -626,7 +632,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
       action_type: "cancel_order",
     };
     const dialogRef = this.dialog.open(ConfirmationModelComponent, {
-      width: "600px",
+      width: "700px",
       data: { message: "Are you sure you want to cancel offer" },
       disableClose: true,
     });
@@ -634,7 +640,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
       if(result == true){
       this.http.sendMessage(formData).subscribe(
         (res) => {
-          this.chat_id = res.messages.chat_id;
+          this.chat_id = res?.data?.chat_id;
           if (this.chat_id) {
             this.getChatDetails();
             this.getLatestMessage();
@@ -664,7 +670,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     };
     this.http.sendMessage(formData).subscribe(
       (res) => {
-        this.chat_id = res.messages.chat_id;
+        this.chat_id = res?.data?.chat_id;
         this.getChatDetails();
         this.getLatestMessage();
       },
