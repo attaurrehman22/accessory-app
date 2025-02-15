@@ -138,8 +138,6 @@ export class ChatComponent implements OnInit, AfterViewChecked {
   isActionTypeMakePaymentToHideCustomOffer: boolean = false;
 
   getChatDetails() {
-    let S_T_B = "";
-    let B_T_S = "";
     this.http.getChatsDetails(this.chat_id).subscribe(
       (res) => {
         this.messages = res.messages;
@@ -173,12 +171,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
             this.isCancelOfferBuyer = true;
           }
 
-          // if(message.direction === 'STB'){
-          //   S_T_B='yes'
-          // }
-          // if(message.direction === 'BTS'){
-          //   B_T_S='yes'
-          // }
+
           if (message.offer_price >= 1) {
             this.isOfferShowToUserandDealer = true;
           }
@@ -191,22 +184,6 @@ export class ChatComponent implements OnInit, AfterViewChecked {
           if (message.sender_id != useridd) {
             count_sen_rec++;
           }
-
-          // if(useridd == message.receiver_id){
-          //   if(message.direction == 'STB'){
-          //     this.isBuyerUser=true
-          //   }else{
-          //     this.isBuyerUser=false
-          //   }
-          // }
-          // if(this.isBuyerUser == false){
-
-          //   if( (message.direction == 'BTB' || message.direction == 'BTS')  && useridd == message.sender_id){
-          //     this.isBuyerUser=true
-          //   }else{
-          //     this.isBuyerUser=false
-          //   }
-          // }
 
           if (message.action_type === "buy_now") {
             this.isBuyNowFromChatCheck = true;
@@ -312,11 +289,6 @@ export class ChatComponent implements OnInit, AfterViewChecked {
         }
       },
       (err) => {
-        // if(err && err.error){
-        //   this.alertService.showAlert('warning',`${err.error.message}`)
-        // }else{
-        //   this.alertService.showAlert('warning','Error in getting Custom offer')
-        // }
       }
     );
   }
@@ -526,6 +498,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     this.http.editOfferStatus(formData).subscribe(
       (res) => {
         this.alertService.showAlert("success", "Product Sold Succesfully");
+        this.isOfferStatusAccepted=true;
         this.getChatDetails();
         this.getLatestMessage();
       },
