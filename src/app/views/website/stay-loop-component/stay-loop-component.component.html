@@ -1,103 +1,55 @@
 <div class="col-md-12 d-flex flex-wrap"
-[ngClass]="{ 'reverse-order-top': translateService.currentLang !== 'en' }"
->
-  <div
-    
-    class="col-md-5 bg-left"
-  >
-    <div
-      id="productCarousel"
-      class="carousel slide"
-      data-bs-ride="carousel"
-      (slide.bs.carousel)="onSlide($event.to)"
-    >
+     [ngClass]="{ 'reverse-order-top': translateService.currentLang !== 'en' }">
+  <div class="col-md-5 bg-left">
+    <div id="productCarousel" class="carousel slide" data-bs-ride="carousel" (slide.bs.carousel)="onSlide($event.to)">
       <div class="carousel-inner">
-        <div
-          class="carousel-item"
-          *ngFor="let product of watchDetails; let i = index"
-          [class.active]="i === 0"
-        >
-          <div
-            class="row w-100"
-            [ngClass]="{
-              'reverse-order': translateService.currentLang !== 'en'
-            }"
-          >
-            <div
-              [ngClass]="{
-                'reverse-order-res-img': translateService.currentLang !== 'en'
-              }"
-            >
-              <img
-                [src]="'https://api.chronosouq.com/' + product.banner_img"
-                alt=""
-                style="width: 100%; height: 500px; object-fit: scale-down"
-              />
+        <div class="carousel-item" *ngFor="let product of watchDetails; let i = index" [class.active]="i === 0">
+          <div class="row w-100" [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }">
+            <div [ngClass]="{ 'reverse-order-res-img': translateService.currentLang !== 'en' }">
+              <img [src]="'https://api.chronosouq.com/' + product?.banner_img" alt="" style="width: 100%; height: 500px; object-fit: scale-down" />
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-  <div
-    class="col-md-7 position-relative bg-right"
-   
-  >
+
+  <div class="col-md-7 position-relative bg-right">
     <div class="watch-details-div">
       <div class="d-flex flex-column text-white">
-        <p class="mb-1">{{ activeProductDetails.product.name }}</p>
+        <p class="mb-1">{{ activeProductDetails?.product?.name }}</p>
         <h1 class="display-6 font-size-40 font-wight-600 mt-2 cormorant-styl">
-          {{ activeProductDetails.product?.watch_type || "N/A" }}
+          {{ activeProductDetails?.product?.watch_type || "N/A" }}
         </h1>
         <p class="card-text">
-          {{ activeProductDetails.product.description }}
+          {{ activeProductDetails?.product?.description }}
         </p>
 
         <div class="mb-3">
           <span class="font-wight-400 font-size-16">Type:</span>
-          <span
-            class="badge bg-light text-dark mx-2"
-            style="padding: 10px 10px 10px 10px"
-            >Limited Edition</span
-          >
+          <span class="badge bg-light text-dark mx-2" style="padding: 10px 10px 10px 10px">Limited Edition</span>
         </div>
 
         <h4 class="font-wight-400">
-          {{ activeProductDetails.product.currency }}
-          {{ activeProductDetails.product.price }}
+          {{ activeProductDetails?.product?.currency }}
+          {{ activeProductDetails?.product?.price }}
         </h4>
 
-        <a
-          class="buy-btn"
-          [routerLink]="['/buy-product']"
-          [queryParams]="{
-            id: activeProductDetails.product.id,
-            name: 'featured'
-          }"
-        >
+        <a class="buy-btn" [routerLink]="['/buy-product']" [queryParams]="{ id: activeProductDetails?.product?.id, name: 'featured' }">
           Buy Now
         </a>
       </div>
     </div>
   </div>
 
-  <button
-    class="carousel-control-prev"
-    type="button"
-    data-bs-target="#productCarousel"
-    data-bs-slide="prev"
-  >
+  <button class="carousel-control-prev" type="button" data-bs-target="#productCarousel" data-bs-slide="prev">
     <span class="prev-next-span">
       <span class="carousel-control-prev-icon" aria-hidden="true"></span>
       <span class="visually-hidden">Previous</span>
     </span>
   </button>
-  <button
-    class="carousel-control-next"
-    type="button"
-    data-bs-target="#productCarousel"
-    data-bs-slide="next"
-  >
+  
+  <button class="carousel-control-next" type="button" data-bs-target="#productCarousel" data-bs-slide="next">
     <span class="prev-next-span">
       <span class="carousel-control-next-icon" aria-hidden="true"></span>
       <span class="visually-hidden">Next</span>

@@ -9,7 +9,7 @@
   </div>
   @if(!!testimonials){
 
-  <div class="col-12 carosal-div mt-3">
+  <div *ngIf="testimonials && testimonials.length > 0" class="col-12 carosal-div mt-3">
     <div id="testimonialCarousel" class="carousel slide carousel-fade carousal-div pt-3 pb-3" data-bs-ride="carousel"
       #testimonialCarousel>
       <div class="carousel-inner carosal-inner-custom">
@@ -25,7 +25,7 @@
                     <div class="bg-shadow-layer-active"></div>
                     <img [src]="
                           'https://api.chronosouq.com/' +
-                          testimonial.profile_picture
+                          testimonial?.profile_picture
                         " class="img-fluid main-image act-img" style="border: 2px solid #fff"
                       alt="Testimonial Image {{ i + 1 }}" />
                   </div>
@@ -67,7 +67,7 @@
 
                   <img [src]="
                       'https://api.chronosouq.com/' +
-                      testimonials[getNextIndex(-1)].profile_picture
+                      testimonials[getNextIndex(-1)]?.profile_picture
                     " class="main-image img-fluid back_card" alt="Testimonial Image" />
                 </div>
               </div>
@@ -103,7 +103,7 @@
 
                   <img [src]="
                       'https://api.chronosouq.com/' +
-                      testimonials[getNextIndex(1)].profile_picture
+                      testimonials[getNextIndex(1)]?.profile_picture
                     " class="main-image img-fluid back_card" alt="Testimonial Image" />
                 </div>
               </div>

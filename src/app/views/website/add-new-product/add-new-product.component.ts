@@ -525,7 +525,7 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
   }
 
   nextMoveToScopeOfDelivery() {
-    this.selectSection("scopeofdelivery");
+    this.selectSection("proofofownership");
   }
 
   isListingCompleted: boolean = false;
@@ -1418,6 +1418,8 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
         this.alertService.showAlert("warning", "Select any Option");
       }
     } else if (Param === "scopeofdelivery") {
+      console.log("Scope of delivery")
+      console.log("this.selectedOptions.title",this.selectedOptions.title)
       if (this.selectedOptions) {
         const formData = {
           product_id: this.productIDFromResponse,
@@ -1427,11 +1429,11 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
           (res) => {
             this.alertService.showAlert("success", "Scope Add Successfully");
             this.selectedOptionsList.push("proofofownership");
+            this.selectSection("proofofownership");
             localStorage.setItem(
               "selectedOptionsList",
               this.selectedOptionsList
             );
-            this.selectSection("proofofownership");
           },
           (err) => {
             this.alertService.showAlert("danger", "Error in adding Scope");

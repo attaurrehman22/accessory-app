@@ -8,8 +8,10 @@ import { HttpService } from "src/services/http/http.service";
   styleUrls: ["./stay-loop-component.component.css"],
 })
 export class StayLoopComponentComponent implements OnInit {
-  watchDetails: any;
+  watchDetails: any = [];
   activeProductIndex: number = 0;
+  activeProductDetails: any;
+
   ngOnInit(): void {
     this.getWatchOftheDay();
   }
@@ -17,16 +19,18 @@ export class StayLoopComponentComponent implements OnInit {
   getWatchOftheDay() {
     this.http.getWatchOfTheDay().subscribe(
       (res) => {
-        this.watchDetails=res.data;
-        this.watchDetails.map((item:any)=>{
-            if(item.banner_img){
-              item.banner_img=item.banner_img.replace(/\\/g,"/").replace(/^\/+/,"");
-            }
-            return item;
-        })
-        this.watchDetails = [this.watchDetails[0]];
+        this.watchDetails = res.data;
+        this.watchDetails.map((item: any) => {
+          if (item.banner_img) {
+            item.banner_img = item.banner_img.replace(/\\/g, "/").replace(/^\/+/, "");
+          }
+          return item;
+        });
 
-        this.activeProductDetails=this.watchDetails[0]
+        // Ensure at least one product exists in the watchDetails list
+        if (this.watchDetails.length > 0) {
+          this.activeProductDetails = this.watchDetails[0];
+        }
       },
       (err) => {
         console.error("Error fetching Watch of the Day:", err);
@@ -51,16 +55,13 @@ export class StayLoopComponentComponent implements OnInit {
 
   goToProductDetailPage(product) {
     this.router.navigate(['/buy-product'], {
-      queryParams: { id: product.product.id },
+      queryParams: { id: product?.product?.id },
     });
   }
 
-  activeProductDetails:any;
-
   onSlide(index: number) {
     this.activeProductIndex = index;
-    this.activeProductDetails=this.watchDetails[this.activeProductIndex]
-    console.log("Active Product: ", this.watchDetails[this.activeProductIndex]);
+    this.activeProductDetails = this.watchDetails[this.activeProductIndex];
   }
 }
 

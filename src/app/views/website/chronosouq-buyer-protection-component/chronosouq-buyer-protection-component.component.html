@@ -116,7 +116,7 @@ class="category_btn"
               *ngIf="isUserLogin ==='true'"
               (click)="addWishList(watch)"
               class="fa"
-              [ngClass]="wishList.includes(watch.id) ? 'fa-heart' : 'fa-heart fa-heart-o'"
+              [ngClass]="wishList?.includes(watch.id) ? 'fa-heart' : 'fa-heart fa-heart-o'"
               aria-hidden="true"
             ></i>
           </div>

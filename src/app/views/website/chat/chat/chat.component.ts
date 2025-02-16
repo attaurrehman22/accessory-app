@@ -8,6 +8,7 @@ import { CustomOfferComponent } from "src/app/views/modal/custom-offer/custom-of
 import { AlertsServicesService } from "src/services/alerts-service/alerts-services.service";
 import { AddShippingComponent } from "src/app/views/modal/add-shipping/add-shipping.component";
 import { ConfirmationModelComponent } from "src/app/views/modal/confirmation-model/confirmation-model.component";
+import { ModelLoginComponent } from "src/app/views/auth/model-login/model-login.component";
 
 interface MessageFormData {
   product_id?: any;
@@ -40,8 +41,23 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     private alertService: AlertsServicesService
   ) {}
 
+  loginFirst(){
+      const dialogRef = this.dialog.open(ModelLoginComponent, {
+            width: "600px",
+            data: { message: "dialog-box" },
+            disableClose:true
+          });
+    
+          dialogRef.afterClosed().subscribe((result) => {
+           
+          });
+  }
+
   ngOnInit(): void {
     this.user_id = localStorage.getItem("userID");
+    if(!this.user_id){
+      this.loginFirst()
+    }
     if (history?.state?.data) {
       this.productDeatils = history.state.data;
       this.noMessageDetails = this.productDeatils.created_by;

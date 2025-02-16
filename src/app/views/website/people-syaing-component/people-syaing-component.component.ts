@@ -27,7 +27,9 @@ export class PeopleSyaingComponentComponent implements AfterViewInit, OnInit {
     this.http.getAllStaticstestimonial().subscribe(
       (res) => {
         this.testimonials = res.data.map((testimonial: any) => {
+          if( testimonial?.profile_picture){
           testimonial.profile_picture = testimonial.profile_picture.replace(/\\/g, '');
+        }
           return testimonial;
         });
       },
