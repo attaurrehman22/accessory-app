@@ -4,6 +4,10 @@
     color: #000;
     text-decoration: none;
   }
+
+  .global-main-wraper {
+    padding: 0 135px 0 135px !important;
+  }
   
   .nav-link.active {
     background-color: #000;
@@ -191,12 +195,7 @@ img {
   border: 1px solid #242424;
 }
 
-/* Change the color of the selected radio button */
-input[type="radio"]:checked {
-  border: 1px solid #242424; /* Border color */
-}
-
-/* Optional: Add a custom appearance to the radio button */
+/* Remove default styling and appearance for the radio button */
 input[type="radio"] {
   -webkit-appearance: none;
   -moz-appearance: none;
@@ -206,15 +205,116 @@ input[type="radio"] {
   border-radius: 50%;
   border: 2px solid #ccc;
   position: relative;
+  cursor: pointer; /* To show pointer when hovering over */
+  background-color: #f4f4f4; /* Default background color */
 }
 
-input[type="radio"]:checked::before {
+/* Change the background color when checked */
+input[type="radio"]:checked {
+  background-color: #242424; /* Dark background color when checked */
+  border-color: #242424; /* Border color when checked */
+}
+
+/* Show the check mark when radio button is checked */
+input[type="radio"]:checked::after {
+  content: '✓'; /* Check mark */
+  position: absolute;
+  top: 50%; /* Vertically center the check mark */
+  left: 50%; /* Horizontally center the check mark */
+  transform: translate(-50%, -50%); /* Adjust for perfect centering */
+  color: white; /* White color for the check mark */
+  font-size: 14px; /* Adjust the size of the check mark */
+  font-weight: bold; /* Optional: Make the check mark bold */
+}
+
+/* If you want to show a different effect when disabled */
+input[type="radio"]:disabled {
+  opacity: 1; /* Remove the default disabled opacity */
+  pointer-events: none; /* Disable interactions */
+}
+
+/* Optional: Add a custom hover effect when the radio button is enabled */
+input[type="radio"]:not(:disabled):hover {
+  border-color: #242424; /* Border color on hover */
+  background-color: #ddd; /* Slight background change on hover */
+}
+
+
+
+.card img {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+}
+
+.blur-effect {
+
+}
+
+.blur-effect::after {
   content: '';
   position: absolute;
-  top: 4px;
-  left: 4px;
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background-color: #242424; /* The inner part when checked */
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.3); /* Semi-transparent black overlay */
+  filter: blur(5px); /* Apply blur effect to the overlay */
+  pointer-events: none; /* Ensure the overlay doesn't block interactions */
 }
+
+
+
+
+.upload-box {
+  width: 100px;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px dashed #ccc;
+  border-radius: 10px;
+  cursor: pointer;
+  background: #f8f8f8;
+  position: relative;
+}
+
+.upload-placeholder {
+  font-size: 24px;
+  color: gray;
+}
+
+.image-preview-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.image-preview {
+  position: relative;
+  display: inline-block;
+}
+
+.preview-img {
+  width: 80px;
+  height: 80px;
+  border-radius: 5px;
+  object-fit: cover;
+  border: 1px solid #ddd;
+}
+
+.remove-btn {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background: red;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  font-size: 14px;
+  line-height: 14px;
+}
+

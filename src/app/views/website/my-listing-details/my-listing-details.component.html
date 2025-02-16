@@ -1,8 +1,11 @@
 <div
-[ngClass]="{
-  container: !isShowSellOrdersListngDetails || !isShowBuyOrdersListngDetails,
-  'global-main-wraper': isShowSellOrdersListngDetails || isShowBuyOrdersListngDetails
-}"
+  [ngClass]="{
+    'global-main-wraper':
+      isShowSellOrdersListngDetails || isShowBuyOrdersListngDetails,
+    container: !(isShowSellOrdersListngDetails || isShowBuyOrdersListngDetails),
+    'blur-effect':
+      showSellerConfirmOrderAvailability || showSellerProofofShipping
+  }"
   class="mt-5"
 >
   <div class="col-12 d-flex flex-wrap mb-3">
@@ -59,7 +62,13 @@
                   {{ listing.title }}
                 </h6>
                 <!-- <span class="badge" [ngClass]="listing.statusClass">{{ listing.status || "In Process" }}</span> -->
-                <span class="badge">{{ listing?.status || "In Process" }}</span>
+                <span class="badge">{{
+                  listing?.is_listing_completed == 0
+                    ? "In Process"
+                    : listing?.sale_status == "for_sale"
+                    ? "For Sale"
+                    : "N/A"
+                }}</span>
               </div>
               <div class="col-md-6 d-flex justify-content-end">
                 <button
@@ -313,8 +322,11 @@
       </div>
 
       <!-- if "Buy Orders" is Active -->
-      <div *ngIf="activeIndex === 4" class="container">
-        <div   *ngIf="!isShowBuyOrdersListngDetails" class="d-flex justify-content-between align-items-center mb-3">
+      <div *ngIf="activeIndex === 4" class="container-fluid">
+        <div
+          *ngIf="!isShowBuyOrdersListngDetails"
+          class="d-flex justify-content-between align-items-center mb-3"
+        >
           <h4 class="">Buy Orders</h4>
           <div class="d-flex justify-content-between align-items-center gap-2">
             <div>
@@ -383,58 +395,88 @@
             </div>
           </div>
           <div
-          class="col-12 d-flex flex-wrap"
-          *ngIf="isShowBuyOrdersListngDetails"
-        >
-          <div class="col-md-8">
-            <div class="card shadow-sm">
-              <div class="card-body d-flex flex-column">
-                <div class="col-md-12 d-flex flex-wrap align-items-center" style=" background:#F9FAFB">
-                  <div class="col-md-11 d-flex flex-wrap align-items-center">
-                    <button class="prev-btn">pev</button>
-                    <img
-                      style="height: 64px; width: 64px; object-fit: contain"
-                      [src]="'https://api.chronosouq.com/' + productDetails.main_image"
-                      src="../../../../assets/images/apple-logo.png"
-                      alt="img"
-                    />
-                    <div class="d-flex flex-column p-1">
-                      <p class="font-size-20 font-weight-600 color-242424  margin-0">
-                        {{ productDetails?.brand?.name }} {{ productDetails.model }} {{ productDetails.title }}
-                      </p>
-                      <p class="font-size-24 font-weight-600 color-909090 margin-0">{{ productDetails.currency }} {{ productDetails.price }}</p>
+            class="col-12 d-flex flex-wrap"
+            *ngIf="isShowBuyOrdersListngDetails"
+          >
+            <div class="col-md-8">
+              <div class="card shadow-sm">
+                <div class="card-body d-flex flex-column">
+                  <div
+                    class="col-md-12 d-flex flex-wrap align-items-center"
+                    style="background: #f9fafb"
+                  >
+                    <div class="col-md-11 d-flex flex-wrap align-items-center">
+                      <button (click)="setActive(4)" class="prev-btn"><</button>
+                      <img
+                        style="height: 64px; width: 64px; object-fit: contain"
+                        [src]="
+                          'https://api.chronosouq.com/' +
+                          productDetails.main_image
+                        "
+                        src="../../../../assets/images/apple-logo.png"
+                        alt="img"
+                      />
+                      <div class="d-flex flex-column p-1">
+                        <p
+                          class="font-size-20 font-weight-600 color-242424 margin-0"
+                        >
+                          {{ productDetails?.brand?.name }}
+                          {{ productDetails.model }} {{ productDetails.title }}
+                        </p>
+                        <p
+                          class="font-size-24 font-weight-600 color-909090 margin-0"
+                        >
+                          {{ productDetails.currency }}
+                          {{ productDetails.price }}
+                        </p>
+                      </div>
+                    </div>
+                    <div class="col-md-1">
+                      <p>...</p>
                     </div>
                   </div>
-                  <div class="col-md-1">
-                    <p>...</p>
+                  <div class="col-md-12 d-flex justify-content-between">
+                    <div>
+                      <p
+                        class="font-size-16 font-weight-600 color-909090 margin-0"
+                      >
+                        Order ID
+                      </p>
+                      <p
+                        class="font-size-20 font-weight-700 color-242424 margin-0"
+                      >
+                        {{ orderID }}
+                      </p>
+                    </div>
+                    <div class="d-flex flex-wrap gap-2">
+                      <button class="action-btn">Invoice</button>
+                      <button class="action-btn">Open Chat</button>
+                    </div>
                   </div>
-                </div>
-                <div class="col-md-12 d-flex justify-content-between">
-                  <div>
-                    <p class="font-size-16 font-weight-600 color-909090 margin-0"> Order ID</p>
-                    <p class="font-size-20 font-weight-700 color-242424 margin-0">{{orderID}}</p>
+                  <div class="col-md-12 d-flex flex-column">
+                    <h4>Order Status</h4>
+                    <ul class="list-group">
+                      <li
+                        *ngFor="let status of statuses"
+                        class="list-group-item d-flex align-items-center"
+                        style="border: none; background: transparent"
+                        [class.active]="status.active"
+                      >
+                        <input
+                          type="radio"
+                          class="me-2"
+                          [checked]="status.active"
+                        />
+                        <div class="order-details">
+                          <p class="label-stl">{{ status.label }}</p>
+                          <p class="desc-stl">{{ status.description }}</p>
+                        </div>
+                      </li>
+                    </ul>
                   </div>
-                  <div class="d-flex flex-wrap gap-2">
-                    <button class="action-btn">Invoice</button>
-                    <button class="action-btn">Open Chat</button>
-                  </div>
-                </div>
-                <div class="col-md-12 d-flex flex-column">
-                  <h4>Order Status</h4>
-                  <ul class="list-group">
-                    <li *ngFor="let status of statuses" class="list-group-item d-flex align-items-center" style="border: none;
-background: transparent;" [class.active]="status.active">
-                      <input type="radio" class="me-2" [checked]="status.active">
-                      <div class="order-details">
-                        <p class="label-stl">{{ status.label }}</p>
-                        <p class="desc-stl">{{ status.description }}</p>
-                      </div>
-                    </li> 
-                  </ul>
                 </div>
               </div>
             </div>
-          </div>
             <div class="col-md-4">
               <div class="card shadow-sm">
                 <div class="card-body d-flex flex-column">
@@ -446,11 +488,16 @@ background: transparent;" [class.active]="status.active">
                         alt="img"
                       />
                       <div class="d-flex flex-column p-1">
-                        <p class="font-size-20 font-weight-600 margin-0 color-242424">
+                        <p
+                          class="font-size-20 font-weight-600 margin-0 color-242424"
+                        >
                           {{ productDetails?.created_by?.name }}
-                        
                         </p>
-                        <p class="font-size-16 font-weight-400 margin-0 color-909090"> {{ productDetails?.created_by?.city }}</p>
+                        <p
+                          class="font-size-16 font-weight-400 margin-0 color-909090"
+                        >
+                          {{ productDetails?.created_by?.city }}
+                        </p>
                       </div>
                     </div>
                     <div class="col-md-1">
@@ -459,18 +506,34 @@ background: transparent;" [class.active]="status.active">
                   </div>
                   <div class="col-md-12 d-flex justify-content-between">
                     <div>
-                      <p class="font-size-14 font-weight-400 margin-0 color-909090">Order date</p>
-                      <p class="font-size-14 font-weight-600 margin-0 color-6a6a6a">{{orderDate || 'N/A'}}</p>
+                      <p
+                        class="font-size-14 font-weight-400 margin-0 color-909090"
+                      >
+                        Order date
+                      </p>
+                      <p
+                        class="font-size-14 font-weight-600 margin-0 color-6a6a6a"
+                      >
+                        {{ orderDate | date : "yyyy-MM-dd" }}
+                      </p>
                     </div>
                     <div>
-                      <p class="font-size-14 font-weight-400 margin-0 color-909090">Estimated Delivery</p>
-                      <p class="font-size-14 font-weight-600 margin-0 color-6a6a6a">{{estimateDelivery || 'N/A'}}</p>
+                      <p
+                        class="font-size-14 font-weight-400 margin-0 color-909090"
+                      >
+                        Estimated Delivery
+                      </p>
+                      <p
+                        class="font-size-14 font-weight-600 margin-0 color-6a6a6a"
+                      >
+                        {{ estimateDelivery | date : "yyyy-MM-dd" }}
+                      </p>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-          
+
             <!-- <div class="card mt-3">
               <div class="card-body d-flex justify-content-between">
                 <div>
@@ -483,13 +546,12 @@ background: transparent;" [class.active]="status.active">
                 </div>
               </div>
             </div> -->
-         
-        </div>
+          </div>
         </div>
       </div>
 
       <!-- if "Sell Orders" is Active -->
-      <div *ngIf="activeIndex === 5" class="container">
+      <div *ngIf="activeIndex === 5" class="container-fluid">
         <div
           *ngIf="!isShowSellOrdersListngDetails"
           class="d-flex justify-content-between align-items-center mb-3"
@@ -567,19 +629,33 @@ background: transparent;" [class.active]="status.active">
             <div class="col-md-8">
               <div class="card shadow-sm">
                 <div class="card-body d-flex flex-column">
-                  <div class="col-md-12 d-flex flex-wrap align-items-center" style=" background:#F9FAFB">
+                  <div
+                    class="col-md-12 d-flex flex-wrap align-items-center"
+                    style="background: #f9fafb"
+                  >
                     <div class="col-md-11 d-flex flex-wrap align-items-center">
-                      <button class="prev-btn">pev</button>
+                      <button (click)="setActive(5)" class="prev-btn"><</button>
                       <img
                         style="height: 64px; width: 64px; object-fit: contain"
-                        [src]="'https://api.chronosouq.com/' + productDetails.main_image"
+                        [src]="
+                          'https://api.chronosouq.com/' +
+                          productDetails.main_image
+                        "
                         alt="img"
                       />
                       <div class="d-flex flex-column p-1">
-                        <p class="font-size-20 font-weight-600 color-242424  margin-0">
-                          {{ productDetails?.brand?.name }} {{ productDetails.model }} {{ productDetails.title }}
+                        <p
+                          class="font-size-20 font-weight-600 color-242424 margin-0"
+                        >
+                          {{ productDetails?.brand?.name }}
+                          {{ productDetails.model }} {{ productDetails.title }}
                         </p>
-                        <p class="font-size-24 font-weight-600 color-909090 margin-0">{{ productDetails.currency }} {{ productDetails.price }}</p>
+                        <p
+                          class="font-size-24 font-weight-600 color-909090 margin-0"
+                        >
+                          {{ productDetails.currency }}
+                          {{ productDetails.price }}
+                        </p>
                       </div>
                     </div>
                     <div class="col-md-1">
@@ -588,8 +664,16 @@ background: transparent;" [class.active]="status.active">
                   </div>
                   <div class="col-md-12 d-flex justify-content-between">
                     <div>
-                      <p class="font-size-16 font-weight-600 color-909090 margin-0"> Order ID</p>
-                      <p class="font-size-20 font-weight-700 color-242424  margin-0">{{orderID}}</p>
+                      <p
+                        class="font-size-16 font-weight-600 color-909090 margin-0"
+                      >
+                        Order ID
+                      </p>
+                      <p
+                        class="font-size-20 font-weight-700 color-242424 margin-0"
+                      >
+                        {{ orderID }}
+                      </p>
                     </div>
                     <div class="d-flex flex-wrap gap-2">
                       <button class="action-btn">Invoice</button>
@@ -599,10 +683,23 @@ background: transparent;" [class.active]="status.active">
                   <div class="col-md-12 d-flex flex-column">
                     <h4>Order Status</h4>
                     <ul class="list-group">
-                      <li *ngFor="let status of sellerStatuses" class="list-group-item d-flex align-items-center" style="border: none;
-  background: transparent;" [class.active]="status.active">
-                        <input type="radio" class="me-2" [checked]="status.active">
-                        <div class="order-details">
+                      <li
+                        *ngFor="let status of sellerStatuses"
+                        class="list-group-item d-flex align-items-center"
+                        style="border: none; background: transparent"
+                        [class.active]="status.active"
+                      >
+                        <input
+                          disabled="true"
+                          type="radio"
+                          class="me-2"
+                          [checked]="status.active"
+                        />
+                        <div
+                          (click)="callSellerOption()"
+                          style="cursor: pointer"
+                          class="order-details"
+                        >
                           <p class="label-stl">{{ status.label }}</p>
                           <p class="desc-stl">{{ status.description }}</p>
                         </div>
@@ -612,42 +709,64 @@ background: transparent;" [class.active]="status.active">
                 </div>
               </div>
             </div>
-              <div class="col-md-4">
-                <div class="card shadow-sm">
-                  <div class="card-body d-flex flex-column">
-                    <div class="col-md-12 d-flex flex-wrap align-items-center">
-                      <div class="col-md-11 d-flex flex-wrap align-items-center">
-                        <img
-                          style="height: 100px; width: 100px; object-fit: contain"
-                          src="../../../../assets/images/apple-logo.png"
-                          alt="img"
-                        />
-                        <div class="d-flex flex-column p-1">
-                          <p class="font-size-20 font-weight-600 margin-0 color-242424">
-                            {{ productDetails?.created_by?.name }}
-                          </p>
-                          <p class="font-size-16 font-weight-400 margin-0 color-909090">{{ productDetails?.created_by?.city }}</p>
-                        </div>
-                      </div>
-                      <div class="col-md-1">
-                        <p>...</p>
+            <div class="col-md-4">
+              <div class="card shadow-sm">
+                <div class="card-body d-flex flex-column">
+                  <div class="col-md-12 d-flex flex-wrap align-items-center">
+                    <div class="col-md-11 d-flex flex-wrap align-items-center">
+                      <img
+                        style="height: 100px; width: 100px; object-fit: contain"
+                        src="../../../../assets/images/apple-logo.png"
+                        alt="img"
+                      />
+                      <div class="d-flex flex-column p-1">
+                        <p
+                          class="font-size-20 font-weight-600 margin-0 color-242424"
+                        >
+                          {{ productDetails?.created_by?.name }}
+                        </p>
+                        <p
+                          class="font-size-16 font-weight-400 margin-0 color-909090"
+                        >
+                          {{ productDetails?.created_by?.city }}
+                        </p>
                       </div>
                     </div>
-                    <div class="col-md-12 d-flex justify-content-between">
-                      <div>
-                        <p class="font-size-14 font-weight-400 margin-0 color-909090">Order date</p>
-                        <p class="font-size-14 font-weight-600 margin-0 color-6a6a6a">{{orderDate || 'N/A'}}</p>
-                      </div>
-                      <div>
-                        <p class="font-size-14 font-weight-400 margin-0 color-909090">Estimated Delivery</p>
-                        <p class="font-size-14 font-weight-600 margin-0 color-6a6a6a">{{estimateDelivery || 'N/A'}}</p>
-                      </div>
+                    <div class="col-md-1">
+                      <p>...</p>
+                    </div>
+                  </div>
+                  <div class="col-md-12 d-flex justify-content-between">
+                    <div>
+                      <p
+                        class="font-size-14 font-weight-400 margin-0 color-909090"
+                      >
+                        Order date
+                      </p>
+                      <p
+                        class="font-size-14 font-weight-600 margin-0 color-6a6a6a"
+                      >
+                        {{ orderDate | date : "yyyy-MM-dd" }}
+                      </p>
+                    </div>
+                    <div>
+                      <p
+                        class="font-size-14 font-weight-400 margin-0 color-909090"
+                      >
+                        Estimated Delivery
+                      </p>
+                      <p
+                        class="font-size-14 font-weight-600 margin-0 color-6a6a6a"
+                      >
+                        {{ estimateDelivery | date : "yyyy-MM-dd" }}
+                      </p>
                     </div>
                   </div>
                 </div>
               </div>
-            
-              <!-- <div class="card mt-3">
+            </div>
+
+            <!-- <div class="card mt-3">
                 <div class="card-body d-flex justify-content-between">
                   <div>
                     <h6>Dealer Name</h6>
@@ -659,10 +778,202 @@ background: transparent;" [class.active]="status.active">
                   </div>
                 </div>
               </div> -->
-           
           </div>
         </div>
       </div>
+    </div>
+  </div>
+
+  <div
+    *ngIf="showSellerConfirmOrderAvailability"
+    class="container mt-4"
+    style="
+      position: absolute;
+      z-index: 999;
+      background: white;
+      top: 0;
+      right: 0;
+      width: 43%;
+      padding: 15px;
+      border-top-left-radius: 10px;
+      border-bottom-left-radius: 10px;
+    "
+  >
+    <!-- Header Section -->
+    <div class="d-flex justify-content-between align-items-center">
+      <div>
+        <h5 class="fw-bold">Confirm Order Availability</h5>
+        <p class="text-muted small">Add your shipping charges for this order</p>
+      </div>
+      <button
+        (click)="markAsSold()"
+        style="
+          background: none;
+          border: 1px solid #242424;
+          border-radius: 10px;
+          color: #242424;
+          height: 44px;
+          width: 144px;
+        "
+      >
+        Mark as Sold
+      </button>
+    </div>
+
+    <!-- Order Details Card -->
+    <div class="card p-3 mt-3">
+      <div class="d-flex align-items-center">
+        <img
+          style="height: 64px; width: 64px; object-fit: contain"
+          [src]="
+            'https://api.chronosouq.com/' + orderDetails?.product?.main_image
+          "
+          class="img-fluid rounded"
+          alt="Product Image"
+        />
+        <div class="ms-3">
+          <p class="mb-1 fw-bold">
+            {{ orderDetails?.product?.brand.name }}
+            {{ orderDetails?.product?.title }}
+            {{ orderDetails?.product?.condition }}
+          </p>
+          <p class="text-muted small mb-0">
+            {{ orderDetails?.product?.serial_no }}
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Shipping Cost Input -->
+    <div class="mt-3">
+      <label class="form-label fw-bold">Shipping Cost</label>
+      <input
+        type="text"
+        [(ngModel)]="shippingCharges"
+        class="form-control"
+        placeholder="Enter shipping charges"
+      />
+    </div>
+
+    <!-- Offer Validity Dropdown -->
+    <div class="mt-3">
+      <label class="form-label fw-bold">Offer Validity</label>
+      <select class="form-select" [(ngModel)]="offerValidity">
+        <option value="3">3 Days</option>
+        <option value="5">5 Days</option>
+        <option value="7">7 Days</option>
+      </select>
+    </div>
+
+    <!-- Buttons -->
+    <div class="mt-4">
+      <button (click)="sendSellerOffer()" class="btn btn-dark w-100">
+        Send Offer
+      </button>
+      <button
+        (click)="cancelSellerOffer()"
+        class="btn btn-outline-dark w-100 mt-2"
+      >
+        Cancel
+      </button>
+    </div>
+  </div>
+
+  <div
+    *ngIf="showSellerProofofShipping"
+    class="container mt-4"
+    style="
+      position: absolute;
+      z-index: 999;
+      background: white;
+      top: 0;
+      right: 0;
+      width: 43%;
+      padding: 15px;
+      border-top-left-radius: 10px;
+      border-bottom-left-radius: 10px;
+    "
+  >
+    <div class="d-flex justify-content-between align-items-center">
+      <div>
+        <h5 class="fw-bold">Shipment Details</h5>
+        <p class="text-muted small">
+          Your order logistics details are shown as follows:
+        </p>
+      </div>
+      <!-- <button (click)="markAsSold()" style="background: none;border: 1px solid #242424;border-radius: 10px;color: #242424;height: 44px;width: 144px;">Mark as Sold</button> -->
+    </div>
+    <div class="card p-3 mt-3">
+      <div class="d-flex align-items-center">
+        <img
+          style="height: 64px; width: 64px; object-fit: contain"
+          [src]="
+            'https://api.chronosouq.com/' + orderDetails?.product?.main_image
+          "
+          class="img-fluid rounded"
+          alt="Product Image"
+        />
+        <div class="ms-3">
+          <p class="mb-1 fw-bold">
+            {{ orderDetails?.product?.brand.name }}
+            {{ orderDetails?.product?.title }}
+            {{ orderDetails?.product?.condition }}
+          </p>
+          <p class="text-muted small mb-0">
+            {{ orderDetails?.product?.serial_no }}
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-3">
+      <label class="form-label fw-bold">Tracking ID</label>
+      <input
+        type="text"
+        [(ngModel)]="trackingID"
+        class="form-control"
+        placeholder="Enter Tracking ID"
+      />
+    </div>
+
+    <div class="mt-3">
+      <label class="form-label fw-bold">Logistics Partner</label>
+      <select class="form-select" [(ngModel)]="logisticsPartner">
+        <option value="DHL">DHL</option>
+      </select>
+    </div>
+
+    <div class="mt-3">
+      <label class="form-label fw-bold">Upload Proof of Shipment</label>
+      <div class="upload-box" (click)="fileInput.click()">
+        <input type="file" #fileInput (change)="onFileSelected($event)" multiple hidden accept=".jpg,.jpeg,.png" />
+        
+        <!-- Show "+" icon if no files selected -->
+        <div *ngIf="uploadedFiles.length === 0" class="upload-placeholder">
+          <span class="plus-icon">+</span>
+        </div>
+      </div>
+    
+      <!-- Show selected image previews -->
+      <div class="image-preview-container mt-2" *ngIf="uploadedFiles.length > 0">
+        <div class="image-preview" *ngFor="let imgSrc of imagePreviews; let i = index">
+          <img [src]="imgSrc" class="preview-img" />
+          <button class="remove-btn" (click)="removeImage(i)">×</button>
+        </div>
+      </div>
+    </div>
+    
+
+    <div class="mt-4">
+      <button (click)="sendProofofShipMent()" class="btn btn-dark w-100">
+        Done
+      </button>
+      <button
+        (click)="cancelProofofShipMent()"
+        class="btn btn-outline-dark w-100 mt-2"
+      >
+        Cancel
+      </button>
     </div>
   </div>
 </div>

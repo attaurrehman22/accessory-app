@@ -680,6 +680,25 @@ getOrderStatus(orderID): Observable<any> {
   });
 }
 
+
+getOrderDetails(orderID): Observable<any> {
+  return this.http.get(`${this.apiUrl}/api/order/details/${orderID}`, {
+    headers: {
+      Accept: "application/json",
+      Authorization: `Bearer ${this.token}`,
+    },
+  });
+}
+
+
+createShipment(formData): Observable<any> {
+  return this.http.post(`${this.apiUrl}/api/order/create-shipment`,formData, {
+    headers: {
+      Accept: "application/json",
+      Authorization: `Bearer ${this.token}`,
+    },
+  });
+}
 // -------------------------------------------- My Listing Module APIs end --------------------------
 
 
