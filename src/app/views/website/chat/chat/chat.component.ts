@@ -58,6 +58,13 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     if(!this.user_id){
       this.loginFirst()
     }
+    if(history?.state?.chatID){
+      this.getLatestMessage();
+
+      this.getDetailsofProduct(history?.state?.productID);
+      this.chat_id = history?.state?.chatID;
+      this.getChatDetails();
+    }
     if (history?.state?.data) {
       this.productDeatils = history.state.data;
       this.noMessageDetails = this.productDeatils.created_by;

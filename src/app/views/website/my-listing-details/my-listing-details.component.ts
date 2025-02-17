@@ -153,10 +153,14 @@ export class MyListingDetailsComponent implements OnInit{
   orderID:any;
   orderDate:any;
   estimateDelivery:any;
-  
+  chat_ID:any;
+  forSendingProductID:any;
+
   detailListing(listing: any): void {
     this.isShowSellOrdersListngDetails = true;
     this.orderID=listing?.id;
+    this.forSendingProductID=listing?.product_id
+    this.chat_ID=listing?.chat_id;
     this.orderDate=listing?.status_updated_at;
     this.estimateDelivery=listing?.status_updated_at;
     this.productDetails=listing.product;
@@ -173,8 +177,10 @@ export class MyListingDetailsComponent implements OnInit{
   detailsBuyListing(listing: any): void {
     this.isShowBuyOrdersListngDetails = true;
     this.orderID=listing?.id
+    this.forSendingProductID=listing?.product_id
     this.productDetails=listing.product;
     this.orderDate=listing?.status_updated_at;
+    this.chat_ID=listing?.chat_id;
     this.estimateDelivery=listing?.status_updated_at;
     // this.existingProductUserID=this.productDetails.created_by.id
     if(this.productDetails?.main_image){
@@ -431,5 +437,11 @@ export class MyListingDetailsComponent implements OnInit{
       { label: 'Payout Confirmation', description: 'Your payment has been released.', active: false }
     ];
 
+
+    routeToChat(){
+      this.router.navigate(['/chat'],{
+        state:{chatID:this.chat_ID,productID:this.forSendingProductID}
+      })
+    }
 
 }
