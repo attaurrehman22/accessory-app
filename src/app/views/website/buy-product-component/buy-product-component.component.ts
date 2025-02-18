@@ -43,6 +43,13 @@ export class BuyProductComponentComponent implements OnInit {
     });
   }
 
+  getDealerSince(createdAt: string): string {
+    if (!createdAt) return '';
+    const year = new Date(createdAt).getFullYear();
+    return `Since ${year}`;
+  }
+  
+
   displayedWatches: number = 6;
   currentPage: number = 1;
   totalPages: number = 1;

@@ -386,7 +386,7 @@
                       </button> -->
 
                     <button mat-menu-item (click)="detailsBuyListing(listing)">
-                      <mat-icon>detail</mat-icon>
+                      <mat-icon>info</mat-icon>
                       <span>Deatails</span>
                     </button>
                   </mat-menu>
@@ -614,7 +614,7 @@
                         <span>Delete</span>
                       </button> -->
                     <button mat-menu-item (click)="detailListing(listing)">
-                      <mat-icon>details</mat-icon>
+                      <mat-icon>info</mat-icon>
                       <span>Details</span>
                     </button>
                   </mat-menu>
@@ -781,6 +781,74 @@
           </div>
         </div>
       </div>
+      <div *ngIf="activeIndex === 9" class="container-fluid">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h4 class="">Favorites</h4>
+          <!-- <div class="d-flex justify-content-between align-items-center gap-2">
+            <div>
+              <select class="form-select form-select-sm" style="width: 150px">
+                <option selected>Status</option>
+                <option value="1">In Process</option>
+                <option value="2">Delivered</option>
+                <option value="3">Cancelled</option>
+              </select>
+            </div>
+            <div>
+              <select class="form-select form-select-sm" style="width: 150px">
+                <option selected>4 Weeks</option>
+                <option value="1">1 Week</option>
+                <option value="2">1 Month</option>
+                <option value="3">6 Months</option>
+              </select>
+            </div>
+          </div> -->
+        </div>
+        <div class="list-cards">
+          <div *ngFor="let listing of favoritesProductDetails" class="card mb-3">
+            <div class="card-body d-flex align-items-center">
+              <div class="col-md-6">
+                <small class="text-muted">
+                  Listing ID {{ listing.listing_code || "N/A" }} | Created
+                  {{ listing.created_at | date : "yyyy-MM-dd" }}
+                </small>
+
+                <h6 class="mt-1 mb-1">
+                  {{ listing.brand.name }} {{ listing.model }}
+                  {{ listing.title }}
+                </h6>
+                <!-- <span class="badge" [ngClass]="listing.statusClass">{{ listing.status || "In Process" }}</span> -->
+                <span class="badge">{{
+                  listing?.is_listing_completed == 0
+                    ? "In Process"
+                    : listing?.sale_status == "for_sale"
+                    ? "For Sale"
+                    : "N/A"
+                }}</span>
+              </div>
+              <div class="col-md-6 d-flex justify-content-end">
+                <button
+                  mat-icon-button
+                  [matMenuTriggerFor]="menu"
+                  aria-label="More options"
+                >
+                  <mat-icon>more_vert</mat-icon>
+                </button>
+                <mat-menu #menu="matMenu">
+                  <button mat-menu-item (click)="startChat(listing)">
+                    <!-- <mat-icon>edit</mat-icon> -->
+                    <span>Start Chating</span>
+                  </button>
+                  <!-- <button mat-menu-item (click)="deleteListing(listing)">
+                    <mat-icon color="warn">delete</mat-icon>
+                    <span>Delete</span>
+                  </button> -->
+                </mat-menu>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 

@@ -34,7 +34,48 @@ export class MyListingDetailsComponent implements OnInit{
     this.loginFirst()
   }
     this.fetchListings();  
+
   }
+
+  wishList: any;
+  getWishList() {
+    this.http.getWishList().subscribe((res) => {
+      this.wishList = res?.data;
+      this.fetchProductDetails()
+    });
+  }
+
+  favoritesProductDetails: any[] = []; // Initialize as an empty array
+
+  async fetchProductDetails() {
+    for (const productId of this.wishList) {
+      try {
+        const res = await this.http.getProductsByID(productId).toPromise(); // Call the API with each product ID
+  
+        const productDetail = res.data; // Store the fetched details for this product
+  
+        if (productDetail.additional_images) {
+          productDetail.additional_images = JSON.parse(productDetail.additional_images);
+        }
+  
+        if (productDetail.main_image) {
+          productDetail.main_image = productDetail.main_image.replace(/\\/g, "");
+        }
+  
+        this.favoritesProductDetails.push(productDetail); // Add the product details to the array  
+      } catch (err) {
+        console.error("Error fetching product details for ID " + productId, err);
+      }
+    }
+  }
+
+  startChat(product){
+    console.log("product",product)
+    this.router.navigate(["/chat"], {
+      state: { data:product },
+    });
+  }
+  
 
   orderDetails:any
 
@@ -106,6 +147,8 @@ export class MyListingDetailsComponent implements OnInit{
       this.getBuyOrders()
     } else if(this.activeIndex == 5){
       this.getSellOrders()
+    }else if(this.activeIndex == 9){
+      this.getWishList();
     }
   }
 
@@ -173,7 +216,6 @@ export class MyListingDetailsComponent implements OnInit{
   }
 
   // existingProductUserID:any;
-  
   detailsBuyListing(listing: any): void {
     this.isShowBuyOrdersListngDetails = true;
     this.orderID=listing?.id

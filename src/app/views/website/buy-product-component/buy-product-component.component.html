@@ -264,7 +264,7 @@
               padding-right: 7px;
               padding-left: 7px;
             "
-            >Since 2003</small
+            > {{ getDealerSince(productDetails?.created_by?.created_at) }}</small
           >
           <span class="text-warning mr-1" style="padding-left: 7px">
             <i class="fas fa-star"></i>
@@ -332,7 +332,7 @@
               padding-right: 7px;
               padding-left: 7px;
             "
-            >Since 2003</small
+            >{{ getDealerSince(productDetails?.created_by?.created_at) }}</small
           >
         </div>
         <button
