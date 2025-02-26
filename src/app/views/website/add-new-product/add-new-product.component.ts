@@ -192,8 +192,28 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
   }
 
   Payoutaftershippingcharges() {
-    this.estimatedPayoutwithShipping =
-      this.estimatedPayout - this.shipping_charges;
+    this.estimatedPayoutwithShipping = this.estimatedPayout - this.shipping_charges;
+  }
+
+  countShipping(){
+    console.log("Onshiping Charges Change is call")
+    console.log("this.shipping_type",this.shipping_type)
+    console.log("this.shipping_charges",this.shipping_charges)
+    if(this.shipping_type == 'inclusiveShipping'){
+      console.log("this.shipping_type is inclusiveShipping ")
+      if(this.shipping_charges){
+        console.log("this.shipping_charges",this.shipping_charges)
+        console.log("this.estimatedPayoutwithShipping bwfore",this.estimatedPayoutwithShipping)
+        this.estimatedPayoutwithShipping = Number(this.estimatedPayout) - Number(this.shipping_charges);
+        console.log("this.estimatedPayoutwithShipping after",this.estimatedPayoutwithShipping)
+      }
+    }else{
+      if(this.shipping_charges){
+        console.log("this.estimatedPayoutwithShipping bwfore",this.estimatedPayoutwithShipping)
+        this.estimatedPayoutwithShipping = Number(this.estimatedPayout);
+        console.log("this.estimatedPayoutwithShipping after",this.estimatedPayoutwithShipping)
+      }
+    }
   }
 
   clocks: { hour: number; minute: number }[] = [];

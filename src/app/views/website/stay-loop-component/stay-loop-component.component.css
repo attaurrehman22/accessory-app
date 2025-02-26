@@ -63,7 +63,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #f8f8f8;
+  /* background: #f8f8f8; */
 }
 
 .reverse-order-top .bg-right {

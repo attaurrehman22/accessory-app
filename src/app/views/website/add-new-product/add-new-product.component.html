@@ -1374,7 +1374,7 @@
                     appearance="outline"
                   >
                     <mat-label class="label-header">Select Shipping Type</mat-label>
-                    <mat-select [(ngModel)]="shipping_type">
+                    <mat-select (selectionChange)="countShipping()" [(ngModel)]="shipping_type">
                       <mat-option value="exclusiveShipping">Exclusive Shipping</mat-option>
                       <mat-option value="freeCharge">Free of Charge</mat-option>
                       <mat-option value="inclusiveShipping">Inclusive Shipping</mat-option>
@@ -1461,7 +1461,7 @@
                       </span>
                     </div>
 
-                    <div class="info-row d-flex justify-content-between">
+                    <div *ngIf="shipping_type === 'inclusiveShipping'" class="info-row d-flex justify-content-between">
                       <span class="font-size-16 font-wight-400 color-909090"
                         >Shipping Charges</span
                       >
@@ -3244,7 +3244,7 @@
                   appearance="outline"
                 >
                 <mat-label class="label-header">Select Shipping Type</mat-label>
-                <mat-select [(ngModel)]="shipping_type">
+                <mat-select (selectionChange)="countShipping()" [(ngModel)]="shipping_type">
                   <mat-option value="exclusiveShipping">Exclusive Shipping</mat-option>
                   <mat-option value="freeCharge">Free of Charge</mat-option>
                   <mat-option value="inclusiveShipping">Inclusive Shipping</mat-option>
@@ -3324,14 +3324,14 @@
                     </span>
                   </div>
 
-                  <div class="info-row d-flex justify-content-between">
+                  <div *ngIf="shipping_type === 'inclusiveShipping'" class="info-row d-flex justify-content-between">
                     <span class="font-size-16 font-wight-400 color-909090"
                       >Shipping Charges</span
                     >
                     <span class="font-size-16 font-wight-600 color-0F172A">
                       +
                       {{
-                        shipping_charges | currency : "SR" : "symbol" : "1.2-2"
+                        shipping_charges ? shipping_charges : 0 | currency : "SR" : "symbol" : "1.2-2"
                       }}
                     </span>
                   </div>

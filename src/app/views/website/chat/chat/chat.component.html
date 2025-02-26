@@ -1,4 +1,4 @@
-<div class="container-fluid main-wrapper mt-5">
+<div class="global-main-wraper mt-5">
   <div class="row">
     <!-- Left Sidebar: Contacts list -->
     <div class="col-md-4">
@@ -230,7 +230,7 @@
             </div>
             
             <div class="d-flex flex-column mx-2">
-              <p class="font-size-20 font-wight-600 color-242424 margin-0">
+              <p class="font-size-20 font-wight-600 color-242424 margin-0 d-flex align-items-center">
                 {{getProductDetails.name}}   {{getProductDetails.condition}}
                 <span
                   class="font-size-16 font-wight-400 color-909090 margin-0 mx-2"
@@ -242,7 +242,7 @@
               </p>
             </div>
           </div>
-          <div>
+          <div class="view-add-btn-div">
             <a class="view-add-btn" [routerLink]="['/buy-product']"
             [queryParams]="{ id: getProductDetails.id }">
             View Add

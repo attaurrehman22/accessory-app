@@ -180,3 +180,9 @@ input.form-control {
     padding: 0 10px 0 10px;
     align-items: center;
 }
+
+@media (max-width: 1370px) {
+    .view-add-btn-div {
+        margin-top: 10px;
+    }
+  }

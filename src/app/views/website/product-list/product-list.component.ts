@@ -114,7 +114,7 @@ export class ProductListComponent implements OnInit {
   }
 
   clearFilters(){
-    this.isApplyFiltere=false;
+    this.isFiltereredOptionIsShow=false
     this.categories.forEach(category => (category.selected = false));
     this.watchTypes.forEach(type => (type.selected = false));
     // this.priceRange = { from: 200, to: 50000 };
@@ -135,7 +135,6 @@ export class ProductListComponent implements OnInit {
 
   changePage(page: number) {
     this.currentPage = page;
-
     this.applyFilters(); 
   }
 
@@ -144,9 +143,10 @@ export class ProductListComponent implements OnInit {
     this.applyFilters(); 
   }
 
-  isApplyFiltere:boolean=false;
+
+  isFiltereredOptionIsShow:boolean=false;
   applyFilters() {
-    this.isApplyFiltere=true;
+
     this.isShowFilters=false;
     let queryString = "";
     // // Add categories to the query string
@@ -193,6 +193,10 @@ export class ProductListComponent implements OnInit {
     
     if(this.searchQuery){
       queryString += `&name=${this.searchQuery}`;
+    }
+
+    if(this.selectedCategories.length > 0 || this.selectedWatchTypes.length > 0){
+      this.isFiltereredOptionIsShow=true;
     }
     // // Call the API with the constructed query string
     if (queryString) {
