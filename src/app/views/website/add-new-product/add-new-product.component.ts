@@ -957,17 +957,17 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
       this.calculatePayout();
 
       // Condition
-      if (this.productDetails.condition) {
+      if (this.productDetails?.condition) {
         let selectedCondition;
-        if (this.userType === "dealer") {
+        if (this.userType == "dealer") {
           selectedCondition = this.dealerconditions.find(
-            (condition) => condition.title === this.productDetails.condition
+            (condition) => condition.title == this.productDetails.condition
           );
 
           this.dealerconditions = [selectedCondition];
         } else {
           selectedCondition = this.conditions.find(
-            (condition) => condition.title === this.productDetails.condition
+            (condition) => condition.title == this.productDetails.condition
           );
           // selectedCondition=this.conditions.filter((item:any)=>{item.title === this.productDetails.condition})
           this.conditions = [selectedCondition];

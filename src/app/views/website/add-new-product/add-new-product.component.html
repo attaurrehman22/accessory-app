@@ -643,7 +643,7 @@
               
 
               <div [ngClass]="{ 'reverse-order-listing-details-btn-div': translateService.currentLang !== 'en' }"
-                class=" align-items-center gap-2 mb-3"
+                class="d-flex align-items-center gap-2 mb-3"
                 style="padding: 0 20px 0 20px"
               >
                 <button
@@ -1659,14 +1659,14 @@
                       style="background: #f7f7f8; border-radius: 15px"
                       class="card p-3"
                     >
-                      <h6 class="font-weight-bold">Ad Preview</h6>
-                      <div class="d-flex align-items-center">
+                      <h6 [ngClass]="{ 'reverse-order-upload-images-labels': translateService.currentLang !== 'en' }" class="font-weight-bold">{{ "create_product_listing.Ad_Preview" | translate }}</h6>
+                      <div [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }" class="d-flex align-items-center">
                         <img
                         
                           [src]="coverImage.url"
                           alt="Watch Image"
                           class="img-fluid"
-                          style="max-width: 127px"
+                          style="max-width: 127px;max-height: 150px;"
                         />
                         <div class="ml-3">
                           <h6 class="text-secondary">
@@ -1675,17 +1675,17 @@
                           </h6>
                           <p class="font-weight-bold mb-1">
                             {{ brandnametoDisplay }}
-                            {{ listingForm.get("name").value }}
-                            {{ selectedCondition.title }}
+                            {{ productDetails.name }}
+                            {{ productDetails.title }}
                           </p>
                           <p class="text-primary font-weight-bold mb-0">
                             {{
-                              watchPriceDisplay
+                                productDetails.price
                                 | currency : "SR" : "symbol" : "1.2-2"
                             }}
                           </p>
                           <small class="text-muted"
-                            >Excl. Shipping Charges</small
+                            >{{ productDetails.shipping_type}}</small
                           >
                         </div>
                       </div>
@@ -1694,61 +1694,55 @@
 
                   <!-- Price Info Section -->
                   <div class="col-md-6">
-                    <mat-card class="info-card">
-                      <p class="font-size-18 font-wight-700 color-132138">
-                        Payout Information
+                    <mat-card [ngClass]="{ 'reverse-order-info-row': translateService.currentLang !== 'en' }" class="info-card">
+                      <p [ngClass]="{ 'reverse-order-upload-images-labels': translateService.currentLang !== 'en' }" class="font-size-18 font-wight-700 color-132138">
+                        {{ "create_product_listing.Payout_Information" | translate }}
                       </p>
                       <div class="info-row d-flex justify-content-between">
                         <p class="font-size-16 font-wight-400 color-909090">
-                          Watch Price
+                          {{ "create_product_listing.watch_price" | translate }}
                         </p>
                         <p class="font-size-16 font-wight-600 color-0F172A">
                           {{
-                            watchPriceDisplay
-                              | currency : "SR" : "symbol" : "1.2-2"
+                            watchPriceDisplay | currency : "SR" : "symbol" : "1.2-2"
                           }}
                         </p>
                       </div>
                       <div class="info-row d-flex justify-content-between">
                         <span class="font-size-16 font-wight-400 color-909090"
-                          >Platform Fee (4%)</span
+                          > {{ "create_product_listing.platform_fees" | translate }}</span
                         >
                         <span class="font-size-16 font-wight-600 color-0F172A">
-                          -
-                          {{
-                            platformFee | currency : "SR" : "symbol" : "1.2-2"
-                          }}
+                          - {{ platformFee | currency : "SR" : "symbol" : "1.2-2" }}
                         </span>
                       </div>
                       <mat-divider></mat-divider>
                       <div class="info-row d-flex justify-content-between">
                         <span class="font-size-16 font-wight-400 color-909090"
-                          >Payout</span
+                          > {{ "create_product_listing.payout" | translate }}</span
                         >
                         <span class="font-size-16 font-wight-600 color-0F172A">
                           {{
-                            estimatedPayout
-                              | currency : "SR" : "symbol" : "1.2-2"
+                            estimatedPayout | currency : "SR" : "symbol" : "1.2-2"
                           }}
                         </span>
                       </div>
-
+    
                       <div class="info-row d-flex justify-content-between">
                         <span class="font-size-16 font-wight-400 color-909090"
-                          >Shipping Charges</span
+                          >{{ "create_product_listing.shipping_charges" | translate }}</span
                         >
                         <span class="font-size-16 font-wight-600 color-0F172A">
                           +
                           {{
-                            shipping_charges
-                              | currency : "SR" : "symbol" : "1.2-2"
+                            shipping_charges | currency : "SR" : "symbol" : "1.2-2"
                           }}
                         </span>
                       </div>
                       <mat-divider></mat-divider>
                       <div class="info-row d-flex justify-content-between">
                         <span class="font-size-16 font-wight-400 color-909090"
-                          >Estimated Payout</span
+                          >{{ "create_product_listing.estimated_payout" | translate }}</span
                         >
                         <span class="font-size-16 font-wight-600 color-0F172A">
                           {{
@@ -1765,12 +1759,13 @@
                 <div
                   class="card mt-4 p-3"
                   style="background: #f7f7f8; border-radius: 15px"
+                  [ngClass]="{ 'reverse-order-billing-info-for': translateService.currentLang !== 'en' }"
                 >
-                  <h6 class="font-weight-bold">
-                    Billing Information
+                  <h6 [ngClass]="{ 'reverse-order-upload-images-labels': translateService.currentLang !== 'en' }" class="font-weight-bold">
+                    {{ "create_product_listing.billing_information" | translate }}
                   </h6>
                   <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-6 biilimg-card-data">
                       <div>
                         <p
                           class="mb-1 font-size-16 font-weight-400 color-909090"
@@ -1804,7 +1799,7 @@
                         </p>
                       </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-6 biilimg-card-data-two">
                       <div
                         *ngIf="billingForm.get('street_line_2').value"
                         class="text-lg-end"
@@ -1833,7 +1828,7 @@
                 </div>
               </div>
 
-              <div
+              <div [ngClass]="{ 'reverse-order-listing-details-btn-div': translateService.currentLang !== 'en' }"
                 class="d-flex align-items-center justify-content-end gap-2 mb-3"
                 style="padding: 0 20px 0 20px"
               >
@@ -1841,20 +1836,20 @@
                   class="save-can-btn canc-bg-color"
                   (click)="routeToProductDetail()"
                 >
-                  Preview your Ad
+                {{ 'create_product_listing.Preview_your_Ad' | translate }}
                 </button>
                 <button
                   class="save-can-btn canc-bg-color"
                   (click)="backbtn('billinginformation')"
                 >
-                  Back
+                {{ 'create_product_listing.back_btn' | translate }}
                 </button>
                 <button
                 *ngIf="!isPublishedProduct"
                   class="save-can-btn save-btn-bg"
                   (click)="onSubmit('summary')"
                 >
-                  Publish
+                {{ 'create_product_listing.publish_btn' | translate }}
                 </button>
               </div>
             </div>
@@ -2492,7 +2487,7 @@
                 
   
                 <div [ngClass]="{ 'reverse-order-listing-details-btn-div': translateService.currentLang !== 'en' }"
-                  class=" align-items-center gap-2 mb-3"
+                  class="d-flex align-items-center gap-2 mb-3"
                   style="padding: 0 20px 0 20px"
                 >
                   <button
@@ -3415,7 +3410,7 @@
                       [src]="coverImage.url"
                       alt="Watch Image"
                       class="img-fluid"
-                      style="max-width: 140px"
+                      style="max-width: 140px;max-height: 150px;"
                     />
                     <div *ngIf="productDetails" class="ml-3">
                       <h6 class="text-secondary">
