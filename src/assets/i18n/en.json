@@ -560,6 +560,38 @@
     "publish_btn":"Publish",
     "Preview_your_Ad":" Preview your Ad"
 
+  },
+
+  "chat_com":{
+    "chats":"Chats",
+
+    "Unread_Filter":"Unread Filter",
+    "all":"All",
+    "buy":"Buy",
+    "sell":"Sell",
+    "view_add":"View Add",
+    "seller_mark_sold_status":"Seller has change Status of Product as 'Mark as Sold'",
+    "custom_offer":"Custom offer",
+    "listing_id":"Listing ID",
+    "add_price":"Add Price",
+    "cancel_offer":"Cancel Offer",
+    "create_offer":"Create Offer",
+    "edit_offer":"Edit Offer",
+    "accept_offer":"Accept Offer",
+    "make_payment":"Make Payment",
+    "buy_now":"Buy Now",
+    "mark_as_sold":"Mark as Sold",
+    "add_shipping":"Add Shipping",
+    "cancel_order":"Cancel Order",
+    "already_sold":"Already Sold",
+    "find_more_btn":"Find More",
+    "Upload_Images":"Upload Images",
+    "send":"Send",
+    "satisfy_message_for_confirm":"Satisfied with the response? Close your deal now with the seller",
+    "buyer_initiated_message":"Buyer Initiated the order, please confirm watch availability and add shipping charges",
+    "seller_confirmed_messg":"Seller has confirmed the order. Please make your payment to complete the order",
+    "satisfy_message_close_dealwith_seller":"Satisfied with the response? Close your deal now with the seller",
+    "mark_as_sold_message":"The Seller has marked this ad as sold, you can still chat with the dealer."
   }
 
 

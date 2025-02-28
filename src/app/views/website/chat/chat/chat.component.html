@@ -1,10 +1,10 @@
 <div class="global-main-wraper mt-5">
-  <div class="row">
+  <div class="row" [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }">
     <!-- Left Sidebar: Contacts list -->
-    <div class="col-md-4">
+    <div class="col-md-4 chat-messages">
       <div class="d-flex justify-content-between align-items-center mb-3">
-        <h3>Chats</h3>
-        <button (click)="unreadFilter()" class="unread-btn">Unread Filter</button>
+        <h3> {{ "chat_com.chats" | translate }}</h3>
+        <button (click)="unreadFilter()" class="unread-btn">{{ "chat_com.Unread_Filter" | translate }}</button>
       </div>
       <div class="d-flex justify-content-between align-items-center mb-3">
         <button
@@ -16,7 +16,7 @@
               : 'deactive-bottom-border'
           "
         >
-          All
+        {{ "chat_com.all" | translate }}
         </button>
         <button
           (click)="activeOption('Buy')"
@@ -27,7 +27,7 @@
               : 'deactive-bottom-border'
           "
         >
-          Buy
+        {{ "chat_com.buy" | translate }}
         </button>
         <button
           (click)="activeOption('Sell')"
@@ -38,7 +38,7 @@
               : 'deactive-bottom-border'
           "
         >
-          Sell
+        {{ "chat_com.sell" | translate }}
         </button>
       </div>
       <div class="list-group">
@@ -159,7 +159,7 @@
     </div>
 
     <!-- Right Section: Chat window -->
-    <div class="col-md-8">
+    <div class="col-md-8 chat-Details">
       <div class="card">
 
         <!-- // dealer deatail of top first row -->
@@ -245,7 +245,7 @@
           <div class="view-add-btn-div">
             <a class="view-add-btn" [routerLink]="['/buy-product']"
             [queryParams]="{ id: getProductDetails.id }">
-            View Add
+            {{ "chat_com.view_add" | translate }}
             </a>
             <!-- <button (click)="viewAdd()" >View Add</button> -->
           </div>
@@ -266,7 +266,7 @@
              
                 <div class="message-content">
                   <p>{{ message.message }}</p>
-                  <p *ngIf="isShowMarkAsSold && isBuyerUser && message.action_type === 'mark_sold'">Seller has change Status of Product as 'Mark as Sold'</p>
+                  <p *ngIf="isShowMarkAsSold && isBuyerUser && message.action_type === 'mark_sold'">{{ "chat_com.seller_mark_sold_status" | translate }}</p>
 
                   <div class="d-flex gap-2" *ngIf="message.attachments">
                     <img *ngIf="!isArray(message.attachments)" 
@@ -293,19 +293,19 @@
                             {{ customOfferDetails.sender.name | slice:0:2 }}
                           </div>
                         </ng-template>
-                        <p class="mx-2">Custom Offer</p>
+                        <p class="mx-2">{{ "chat_com.custom_offer" | translate }}</p>
                       </div>
                       
                       <div class="d-flex justify-content-between align-items-center">
-                        <p>Listing ID</p>
+                        <p>{{ "chat_com.listing_id" | translate }}</p>
                         <p>{{customOfferDetails.product.serial_no}}</p>
                       </div>
                       <div style="border-bottom: 1px solid #F2F5F8;" class="d-flex justify-content-between align-items-center">
-                        <p>Add Price</p>
+                        <p>{{ "chat_com.add_price" | translate }}</p>
                         <p>{{customOfferDetails.product.price}}</p>
                       </div>
                       <div style="border-bottom: 1px solid #F2F5F8;" class="d-flex justify-content-between align-items-center">
-                        <p>Custom Offer</p>
+                        <p>{{ "chat_com.custom_offer" | translate }}</p>
                         <p>{{message.offer_price}}</p>
                       </div>
                       <div class="d-flex justify-content-center mt-3 gap-5">
@@ -313,7 +313,7 @@
                             (click)="cancelOfferStatus()" 
                             class="first-action-btn" 
                             [disabled]="reversedMessages.length === 0 || reversedMessages[reversedMessages.length - 1] !== message">
-                          Cancel Offer
+                            {{ "chat_com.cancel_offer" | translate }}
                         </button>
 
                         <!-- Edit Offer button -->
@@ -321,13 +321,13 @@
                                 (click)="editOffer(customOfferDetails)" 
                                 *ngIf="!isOfferStatusAccepted"
                                 class="first-action-btn">
-                          Edit Offer
+                          {{ "chat_com.edit_offer" | translate }}
                         </button>
 
                         <button [disabled]="true" 
                                 *ngIf="isOfferStatusAccepted && !isBuyerUser" 
                                 class="first-action-btn">
-                          Edit Offer
+                                {{ "chat_com.edit_offer" | translate }}
                         </button>
 
                         <!-- Accept Offer button -->
@@ -335,7 +335,7 @@
                                 class="second-action-btn" 
                                 *ngIf="!isOfferStatusAccepted"
                                 [disabled]="reversedMessages.length === 0 || reversedMessages[reversedMessages.length - 1] !== message || reversedMessages.length === 1 && isBuyerUser">
-                          Accept Offer
+                                {{ "chat_com.accept_offer" | translate }}
                         </button>
 
                         <!-- Make Payment button -->
@@ -343,7 +343,7 @@
                                 class="second-action-btn" 
                                 (click)="makePayment()" 
                                 [disabled]="reversedMessages.length === 0 || reversedMessages[reversedMessages.length - 1] !== message">
-                          Make Payment
+                                {{ "chat_com.make_payment" | translate }}
                         </button>
 
     
@@ -362,21 +362,21 @@
             <div *ngIf="!isCustomOffer && isShowBuyNowOffer" class="col-md-12 d-flex justify-content-center">
               <div *ngIf="isBuyerUser && !isBuyNowFromChatCheck" class="d-flex flex-column card p-2">
                 <div style="border-bottom: 1px solid #F2F5F8;" class="d-flex justify-content-between align-items-center">
-                  <p>Satisfied with the response? Close your deal now with the seller</p>
+                  <p>{{ "chat_com.satisfy_message_for_confirm" | translate }}</p>
                 </div>
                 <div class="d-flex justify-content-center mt-3 gap-5">
-                  <button class="first-action-btn " (click)="createOfferFromChat()">Create Offer</button>
-                  <button class="second-action-btn" (click)="buyNowFromChat()">Buy Now</button>
+                  <button class="first-action-btn " (click)="createOfferFromChat()">{{ "chat_com.create_offer" | translate }}</button>
+                  <button class="second-action-btn" (click)="buyNowFromChat()">{{ "chat_com.buy_now" | translate }}</button>
                 </div>
               </div>
 
               <div *ngIf="!isBuyerUser && isBuyNowFromChatCheck"  class="d-flex flex-column card p-2">
                 <div style="border-bottom: 1px solid #F2F5F8;" class="d-flex justify-content-between align-items-center">
-                  <p>Buyer Initiated the order, please confirm watch availability and add shipping charges</p>
+                  <p>{{ "chat_com.buyer_initiated_message" | translate }}</p>
                 </div>
                 <div class="d-flex justify-content-center mt-3 gap-5">
-                  <button class="first-action-btn " (click)="MarkAsSoldfromChat()">Mark as Sold</button>
-                  <button class="second-action-btn" (click)="addShippingFromChat()">Add Shipping</button>
+                  <button class="first-action-btn " (click)="MarkAsSoldfromChat()">{{ "chat_com.mark_as_sold" | translate }}</button>
+                  <button class="second-action-btn" (click)="addShippingFromChat()">{{ "chat_com.add_shipping" | translate }}</button>
                 </div>
               </div>
             </div>
@@ -386,11 +386,11 @@
 
               <div class="d-flex flex-column card p-2">
                 <div style="border-bottom: 1px solid #F2F5F8;" class="d-flex justify-content-between align-items-center">
-                  <p>Seller has confirmed the order. Please make your payment to complete the order</p>
+                  <p>{{ "chat_com.seller_confirmed_messg" | translate }}</p>
                 </div>
                 <div class="d-flex justify-content-center mt-3 gap-5">
-                  <button class="first-action-btn " (click)="cancelOffer()">Cancel Order</button>
-                  <button class="second-action-btn" (click)="makePayment()">Make Payment</button>
+                  <button class="first-action-btn " (click)="cancelOffer()">{{ "chat_com.cancel_order" | translate }}</button>
+                  <button class="second-action-btn" (click)="makePayment()">{{ "chat_com.make_payment" | translate }}</button>
                 </div>
               </div>
             </div>
@@ -402,13 +402,13 @@
                 <div class="text-center">
                   <p class="font-size-14 font-weight-400 color-242424" 
                     style="border-bottom: 1px solid #E6ECF1;margin: 10px 5px 10px 5px;padding-bottom: 10px;">
-                    Satisfied with the response? Close your deal now with the seller
+                    {{ "chat_com.satisfy_message_close_dealwith_seller" | translate }}
                   </p>
                 </div>
                 <div class="d-flex justify-content-center gap-5">
-                  <button (click)="cancelOffer()" *ngIf="isCancelOfferBuyer" class="first-action-btn " >Cancel Offer</button>
-                  <button (click)="customOffer()" *ngIf="!isCancelOfferBuyer" class="first-action-btn ">Create Offer</button>
-                  <button (click)="buyNowProduct()" class="second-action-btn">Buy Now</button>
+                  <button (click)="cancelOffer()" *ngIf="isCancelOfferBuyer" class="first-action-btn " >{{ "chat_com.cancel_offer" | translate }}</button>
+                  <button (click)="customOffer()" *ngIf="!isCancelOfferBuyer" class="first-action-btn ">{{ "chat_com.create_offer" | translate }}</button>
+                  <button (click)="buyNowProduct()" class="second-action-btn">{{ "chat_com.buy_now" | translate }}</button>
                 </div>
               </div>
             </div>
@@ -443,19 +443,19 @@
             
             <div class="d-flex flex-column mx-2">
               <p class="font-size-20 font-wight-600 color-242424 margin-0">
-                Already Sold
+                {{ "chat_com.already_sold" | translate }}
                 <span
                   class="font-size-16 font-wight-400 color-909090 margin-0 mx-2"
                   >{{getProductDetails.serial_no}}</span
                 >
               </p>
               <p class="font-size-16 font-wight-400 color-909090 margin-0">
-                The Seller has marked this ad as sold, you can still chat with the dealer.
+                {{ "chat_com.mark_as_sold_message" | translate }}
               </p>
             </div>
           </div>
           <div>
-            <button routerLink="/product-list" class="view-add-btn">Find More</button>
+            <button routerLink="/product-list" class="view-add-btn">{{ "chat_com.find_more_btn" | translate }}</button>
           </div>
         </div>
         </div>
@@ -489,7 +489,7 @@
                   <span>Buy Now</span>
                 </button> -->
                 <button (click)="uploadImages()" mat-menu-item>
-                    <span>Upload Images</span>
+                    <span>{{ "chat_com.Upload_Images" | translate }}</span>
                 </button>
                 </mat-menu>
                 <input 
@@ -516,7 +516,7 @@
           </div>
           
             <button class="btn btn-dark" (click)="sendMessage()">
-              Send
+              {{ "chat_com.send" | translate }}
             </button>
           </div>
         </div>

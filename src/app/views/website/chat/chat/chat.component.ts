@@ -9,6 +9,8 @@ import { AlertsServicesService } from "src/services/alerts-service/alerts-servic
 import { AddShippingComponent } from "src/app/views/modal/add-shipping/add-shipping.component";
 import { ConfirmationModelComponent } from "src/app/views/modal/confirmation-model/confirmation-model.component";
 import { ModelLoginComponent } from "src/app/views/auth/model-login/model-login.component";
+import { TranslateService } from "@ngx-translate/core";
+import { LanguageService } from "src/services/lang-service/language.service";
 
 interface MessageFormData {
   product_id?: any;
@@ -24,6 +26,8 @@ interface MessageFormData {
   styleUrls: ["./chat.component.css"],
 })
 export class ChatComponent implements OnInit, AfterViewChecked {
+  supportLanguages = ["en", "ar", "fr", "ta", "hi"];
+  currentLanguage: string;
   isActive: any = "All";
   newMessage: string = "";
   productDeatils: any;
@@ -38,8 +42,24 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     private http: HttpService,
     private router: Router,
     private dialog: MatDialog,
-    private alertService: AlertsServicesService
-  ) {}
+    private alertService: AlertsServicesService,
+       public translateService: TranslateService,
+       private languageService:LanguageService
+  ) {
+    this.translateService.addLangs(this.supportLanguages);
+    const savedLang = this.languageService.getCurrentLanguage();
+    if (this.supportLanguages.includes(savedLang)) {
+      this.translateService.use(savedLang);
+    } else {
+      const browserLang = this.translateService.getBrowserLang();
+      this.currentLanguage = browserLang;
+
+      if (this.supportLanguages.includes(browserLang)) {
+        this.translateService.use(browserLang);
+        this.languageService.setLanguage(browserLang);
+      }
+    }
+  }
 
   loginFirst(){
       const dialogRef = this.dialog.open(ModelLoginComponent, {
@@ -143,9 +163,9 @@ export class ChatComponent implements OnInit, AfterViewChecked {
       this.isBuyerUser = true;
     }
 
-    console.log("sellerProductID", this.sellerProductID);
-    console.log("sellerID", this.sellerID);
-    console.log("user_id", this.user_id);
+    // console.log("sellerProductID", this.sellerProductID);
+    // console.log("sellerID", this.sellerID);
+    // console.log("user_id", this.user_id);
 
     this.chat_id = param.chat_id;
     this.getProductDetails = param.product;

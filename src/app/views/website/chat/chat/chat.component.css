@@ -186,3 +186,43 @@ input.form-control {
         margin-top: 10px;
     }
   }
+
+
+
+
+  /* ---- ----------- -------------- localization start ------------------------   -----   ---- */
+
+  .reverse-order {
+    flex-direction: row-reverse;
+  }
+
+  .reverse-order > .chat-messages > .d-flex {
+    flex-direction: row-reverse;
+  }
+
+  .reverse-order > .chat-messages > .list-group > .list-group-item > .d-flex {
+    flex-direction: row-reverse;
+  }
+
+  .reverse-order > .chat-messages > .list-group > .list-group-item > .d-flex > .d-flex > .d-flex {
+    flex-direction: row-reverse;
+  }
+
+  .reverse-order > .chat-Details > .card > .card-header {
+    flex-direction: row-reverse;
+  }
+
+  .reverse-order > .chat-Details > .card > .card-header > .d-flex {
+    justify-content: end;
+    flex-direction: row-reverse;
+  }
+
+  .reverse-order > .chat-Details > .card > .card-footer {
+    flex-direction: row-reverse;
+  }
+
+  .reverse-order > .chat-Details > .card > .card-footer > .input-group{
+    flex-direction: row-reverse;
+  }
+
+    /* ---- ----------- -------------- localization end ------------------------   -----   ---- */

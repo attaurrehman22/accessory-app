@@ -521,6 +521,37 @@
     "publish_btn": "نشر",
     "Preview_your_Ad": "معاينة إعلانك"
 
+  },
+
+  "chat_com":{
+      "chats": "المحادثات",
+      "Unread_Filter": "تصفية غير المقروء",
+      "all": "الكل",
+      "buy": "شراء",
+      "sell": "بيع",
+      "view_add": "عرض الإعلان",
+      "seller_mark_sold_status": "قام البائع بتغيير حالة المنتج إلى 'تم البيع'",
+      "custom_offer": "عرض مخصص",
+      "listing_id": "معرّف القائمة",
+      "add_price": "إضافة سعر",
+      "cancel_offer": "إلغاء العرض",
+      "create_offer": "إنشاء عرض",
+      "edit_offer": "تعديل العرض",
+      "accept_offer": "قبول العرض",
+      "make_payment": "إتمام الدفع",
+      "buy_now": "شراء الآن",
+      "mark_as_sold": "وضع علامة 'تم البيع'",
+      "add_shipping": "إضافة الشحن",
+      "cancel_order": "إلغاء الطلب",
+      "already_sold": "تم البيع بالفعل",
+      "find_more_btn": "البحث عن المزيد",
+      "Upload_Images": "تحميل الصور",
+      "send": "إرسال",
+      "satisfy_message_for_confirm": "هل أنت راضٍ عن الرد؟ أتمم صفقتك الآن مع البائع",
+      "buyer_initiated_message": "قام المشتري ببدء الطلب، يرجى تأكيد توفر الساعة وإضافة رسوم الشحن",
+      "seller_confirmed_messg": "أكد البائع الطلب. يرجى إتمام الدفع لإكمال الطلب",
+      "satisfy_message_close_dealwith_seller": "هل أنت راضٍ عن الرد؟ أتمم صفقتك الآن مع البائع",
+      "mark_as_sold_message": "قام البائع بوضع علامة 'تم البيع' على هذا الإعلان، لا يزال بإمكانك الدردشة مع التاجر."
   }
 
 }
