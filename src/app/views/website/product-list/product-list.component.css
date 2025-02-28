@@ -289,6 +289,38 @@ justify-content: end;
 justify-content: start;
 }
 
+.reverse-order > .range-container > .first-thumb > .first-imggg {
+ display: none;
+}
+
+.reverse-order > .range-container > .first-thumb > .second-imggg {
+  display: block;
+ }
+
+ .reverse-order > .range-container > .first-thumb > .first-img {
+  display: none;
+ }
+ 
+ .reverse-order > .range-container > .first-thumb > .second-img {
+   display: block;
+  }
+
+.first-imggg{
+  display: block;
+}
+
+.second-imggg{
+  display: none;
+}
+
+.first-img{
+  display: block;
+}
+
+.second-img{
+  display: none;
+}
+
 
 .pagination-container {
   display: flex;

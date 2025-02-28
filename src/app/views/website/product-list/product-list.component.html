@@ -93,17 +93,18 @@
         >
           {{ "product_listing.price_range" | translate }}
         </p>
-        <div class="range-container" #range>
+        <div class="range-container mt-3" #range>
           <!-- Track -->
           <div class="range-track"></div>
         
           <!-- Min (Left) Thumb -->
           <span
-            class="range-thumb"
+            class="range-thumb first-thumb"
             [style.left.%]="minPercentage"
             (mousedown)="startDragging($event, 'min')"
           >
-            <img src="../assets/images/price-range-lessthen-icon.png" />
+            <img class="first-imggg" src="../assets/images/price-range-lessthen-icon.png" />
+            <img class="second-imggg" style="margin-top: 5px;" src="../assets/images/price-range-icon.png" />
           </span>
         
           <!-- Max (Right) Thumb -->
@@ -112,7 +113,8 @@
             [style.left.%]="maxPercentage"
             (mousedown)="startDragging($event, 'max')"
           >
-            <img src="../assets/images/price-range-icon.png" />
+            <img class="first-img"  style="margin-top: 5px;" src="../assets/images/price-range-icon.png" />
+            <img class="second-img" src="../assets/images/price-range-lessthen-icon.png" />
           </span>
         </div>
         
