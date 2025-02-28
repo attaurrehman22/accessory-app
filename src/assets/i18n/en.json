@@ -517,9 +517,6 @@
     "estimated_payout":"Estimated Payout",
     "payout":"Payout",
     "shipping_charges":"Shipping Charges",
-
-
-
     "watch_price_place":"Enter watch price",
     "allow_make_offer":"Allow make offers",
     "est_delivery_time":"Est. Delivery Time",
@@ -529,7 +526,40 @@
     "select_shipping_type":"Select Shipping Type",
     "exclusive_shipping":"Exclusive Shipping",
     "free_of_charge":"EFree of Charge",
-    "inclusive_shipping":"Inclusive Shipping"
+    "inclusive_shipping":"Inclusive Shipping",
+    "billing_information_para_two":" Every watch will soon be verified by our team of experts to ensure it’s 100% authentic, giving buyers complete peace of mind.",
+    "Billing_Address":"Billing Address",
+    "Billing_Address_plac":"Enter address here",
+    "Billing_Address_req":"Billing Address is required",
+    "First_Name":"First Name",
+    "First_Name_plac":"Enter First Name",
+    "First_Name_req":"First Name is required",
+    "Last_Name":"Last Name",
+    "Last_Name_plac":"Enter Last Name",
+    "Last_Name_req":"Last Name is required",
+    "Street":"Street",
+    "Street_plac":"Enter street address",
+    "Street_req":"Street is required",
+    "Street_patt":"Street can only contain letters and numbers.",
+    "Street_maxLen":"Street cannot be longer than 30 characters.",
+    "Street_Line_two":"Street Line 2",
+    "Street_Line_two_plac":"Enter street address",
+    "Street_Line_two_patt":"Street can only contain letters and numbers.",
+    "Street_Line_two_maxLen":"Street cannot be longer than 30 characters.",
+    "ZIP_Code":"ZIP Code",
+    "ZIP_Code_plac":"Enter ZIP Code",
+    "ZIP_Code_req":"ZIP Code is required",
+    "ZIP_Code_patt":"Only numeric values are allowed for zip code.",
+    "ZIP_Code_maxLen":"Zip code cannot be longer than 10 digits.",
+    "City_Name":"City",
+    "City_plac":"Enter City",
+    "City_req":"City is required",
+    "Summary_para_two":" Every watch will soon be verified by our team of experts to ensure it’s 100% authentic, giving buyers complete peace of mind.",
+    "Ad_Preview":"Ad Preview",
+    "Payout_Information":"Payout Information",
+    "publish_btn":"Publish",
+    "Preview_your_Ad":" Preview your Ad"
+
   }
 
 

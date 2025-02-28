@@ -725,6 +725,22 @@ background: none;
   .reverse-orderdealer-or-dealer-div > .for-reverse > .info-card > .info-row {
   flex-direction: row-reverse !important;
   }
+
+  .reverse-order-info-row > .info-row {
+    flex-direction: row-reverse;
+  }
+
+  .reverse-order-billing-info-for > .row {
+    flex-direction: row-reverse;
+  }
+
+  .reverse-order-billing-info-for > .row > .biilimg-card-data > div {
+    text-align: end;
+  }
+
+  .reverse-order-billing-info-for > .row > .biilimg-card-data-two > div {
+    text-align: start !important;
+  }
 /* ------------------------- Localization end --------------------------- */
 
 .dealer-or-seller-div {

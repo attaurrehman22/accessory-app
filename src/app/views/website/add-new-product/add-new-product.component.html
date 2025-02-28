@@ -1453,146 +1453,153 @@
             >
               <form [formGroup]="billingForm">
                 <mat-form-field
-                  style="width: 100%; margin-top: 8px"
-                  class="full-width"
-                  appearance="outline"
-                >
-                  <mat-label class="label-header">Billing Address</mat-label>
-                  <input
-                    matInput
-                    formControlName="billing_address"
-                    placeholder="Enter address here"
-                    appFieldLimitIntoHundered
-                    [readonly]="(billingInformationDetails?.billing_address || productDetails?.billing_address) ? true : false"
-                  />
-                  <mat-error *ngIf="billing_address.hasError('required')">
-                    Billing Address is required
-                  </mat-error>
-                </mat-form-field>
-
-                <mat-form-field
-                  style="width: 100%; margin-top: 8px"
-                  class="full-width"
-                  appearance="outline"
-                >
-                  <mat-label class="label-header">First Name</mat-label>
-                  <input
-                    matInput
-                    formControlName="first_name"
-                    appOnlyCharacterLimitThirty
-                    placeholder="Enter first name"
-                    [readonly]="(billingInformationDetails?.first_name || productDetails?.first_name)? true : false"
-                  />
-                  <mat-error *ngIf="first_name.hasError('required')">
-                    First Name is required
-                  </mat-error>
-                </mat-form-field>
-
-                <mat-form-field
-                  style="width: 100%; margin-top: 8px"
-                  class="full-width"
-                  appearance="outline"
-                >
-                  <mat-label class="label-header">Last Name</mat-label>
-                  <input
-                    matInput
-                    appOnlyCharacterLimitThirty
-                    formControlName="last_name"
-                    placeholder="Enter last name"
-                    [readonly]="(billingInformationDetails?.last_name || productDetails?.last_name) ? true : false"
-                  />
-                  <mat-error *ngIf="last_name.hasError('required')">
-                    Last Name is required
-                  </mat-error>
-                </mat-form-field>
-
-                <mat-form-field
-                  style="width: 100%; margin-top: 8px"
-                  class="full-width"
-                  appearance="outline"
-                >
-                  <mat-label class="label-header">Street</mat-label>
-                  <input
-                    matInput
-                    formControlName="street"
-                    placeholder="Enter street address"
-                    [readonly]="(billingInformationDetails?.street || productDetails?.street )? true : false"
-                  />
-                  <mat-error *ngIf="street.hasError('required')">
-                    Street is required
-                  </mat-error>
-                  <mat-error *ngIf="street.hasError('pattern')">
-                    Street can only contain letters and numbers.
-                  </mat-error>
-                  <mat-error *ngIf="street.hasError('maxlength')">
-                    Street cannot be longer than 30 characters.
-                  </mat-error>
-                </mat-form-field>
-
-                <mat-form-field
-                  style="width: 100%; margin-top: 8px"
-                  class="full-width"
-                  appearance="outline"
-                >
-                  <mat-label class="label-header">Street Line 2</mat-label>
-                  <input
-                    matInput
-                    formControlName="street_line_2"
-                    placeholder="Enter street address"
-                    [readonly]="(billingInformationDetails?.street_line_2 || productDetails?.street_line_2)? true : false"
-                  />
-                  <mat-error *ngIf="street_line_2.hasError('pattern')">
-                    Street can only contain letters and numbers.
-                  </mat-error>
-                  <mat-error *ngIf="street_line_2.hasError('maxlength')">
-                    Street cannot be longer than 30 characters.
-                  </mat-error>
-                </mat-form-field>
-
-                <mat-form-field
-                  style="width: 100%; margin-top: 8px"
-                  class="full-width"
-                  appearance="outline"
-                >
-                  <mat-label class="label-header">ZIP Code</mat-label>
-                  <input
-                    matInput
-                    formControlName="zip_code"
-                    appPositiveNumber
-                    placeholder="Enter zip code"
-                    [readonly]="(billingInformationDetails?.zip_code || productDetails?.zip_code) ? true : false"
-                  />
-                  <mat-error *ngIf="zip_code.hasError('required')">
-                    ZIP Code is required
-                  </mat-error>
-                  <mat-error *ngIf="zip_code.hasError('pattern')">
-                    Only numeric values are allowed for zip code.
-                  </mat-error>
-                  <mat-error *ngIf="zip_code.hasError('maxlength')">
-                    Zip code cannot be longer than 10 digits.
-                  </mat-error>
-                </mat-form-field>
-
-                <mat-form-field
-                  style="width: 100%; margin-top: 8px"
-                  class="full-width"
-                  appearance="outline"
-                >
-                  <mat-label class="label-header">City</mat-label>
-                  <input
-                    matInput
-                    formControlName="city"
-                    appOnlyCharacterLimitThirty
-                    placeholder="Enter City"
-                    [readonly]="(billingInformationDetails?.city || productDetails?.city) ? true : false"
-                  />
-                  <mat-error *ngIf="city.hasError('required')">
-                    City is required
-                  </mat-error>
-                </mat-form-field>
+                style="width: 100%; margin-top: 8px"
+                class="full-width"
+                appearance="outline"
+                [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'"
+              >
+                <mat-label class="label-header"> {{ "create_product_listing.Billing_Address" | translate }}</mat-label>
+                <input
+                  matInput
+                  formControlName="billing_address"
+                  placeholder=" {{ 'create_product_listing.Billing_Address_plac' | translate }}"
+                  appFieldLimitIntoHundered
+                  [readonly]="(billingInformationDetails?.billing_address || productDetails?.billing_address) ? true : false"
+                />
+                <mat-error *ngIf="billing_address.hasError('required')">
+                  {{ "create_product_listing.Billing_Address_req" | translate }}
+                </mat-error>
+              </mat-form-field>
+  
+              <mat-form-field
+                style="width: 100%; margin-top: 8px"
+                class="full-width"
+                appearance="outline"
+                [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'"
+              >
+                <mat-label class="label-header"> {{ "create_product_listing.First_Name" | translate }}</mat-label>
+                <input
+                  matInput
+                  formControlName="first_name"
+                  appOnlyCharacterLimitThirty
+                  placeholder=" {{ 'create_product_listing.First_Name_plac' | translate }}"
+                  [readonly]="(billingInformationDetails?.first_name || productDetails?.first_name)? true : false"
+                />
+                <mat-error *ngIf="first_name.hasError('required')">
+                  {{ "create_product_listing.First_Name_req" | translate }}
+                </mat-error>
+              </mat-form-field>
+  
+              <mat-form-field
+                style="width: 100%; margin-top: 8px"
+                class="full-width"
+                appearance="outline"
+                [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'"
+              >
+                <mat-label class="label-header"> {{ "create_product_listing.Last_Name" | translate }}</mat-label>
+                <input
+                  matInput
+                  appOnlyCharacterLimitThirty
+                  formControlName="last_name"
+                  placeholder=" {{ 'create_product_listing.Last_Name_plac' | translate }}"
+                  [readonly]="(billingInformationDetails?.last_name || productDetails?.last_name) ? true : false"
+                />
+                <mat-error *ngIf="last_name.hasError('required')">
+                  {{ "create_product_listing.Last_Name_req" | translate }}
+                </mat-error>
+              </mat-form-field>
+  
+              <mat-form-field
+                style="width: 100%; margin-top: 8px"
+                class="full-width"
+                appearance="outline"
+                [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'"
+              >
+                <mat-label class="label-header"> {{ "create_product_listing.Street" | translate }}</mat-label>
+                <input
+                  matInput
+                  formControlName="street"
+                  placeholder="{{ 'create_product_listing.Street_plac' | translate }}"
+                  [readonly]="(billingInformationDetails?.street || productDetails?.street )? true : false"
+                />
+                <mat-error *ngIf="street.hasError('required')">
+                  {{ "create_product_listing.Street_req" | translate }}
+                </mat-error>
+                <mat-error *ngIf="street.hasError('pattern')">
+                  {{ "create_product_listing.Street_patt" | translate }}
+                </mat-error>
+                <mat-error *ngIf="street.hasError('maxlength')">
+                  {{ "create_product_listing.Street_maxLen" | translate }}
+                </mat-error>
+              </mat-form-field>
+  
+              <mat-form-field
+                style="width: 100%; margin-top: 8px"
+                class="full-width"
+                appearance="outline"
+                [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'"
+              >
+                <mat-label class="label-header"> {{ "create_product_listing.Street_Line_two" | translate }}</mat-label>
+                <input
+                  matInput
+                  formControlName="street_line_2"
+                  placeholder="{{ 'create_product_listing.Street_Line_two_plac' | translate }}"
+                  [readonly]="(billingInformationDetails?.street_line_2 || productDetails?.street_line_2)? true : false"
+                />
+                <mat-error *ngIf="street_line_2.hasError('pattern')">
+                  {{ "create_product_listing.Street_Line_two_patt" | translate }}
+                </mat-error>
+                <mat-error *ngIf="street_line_2.hasError('maxlength')">
+                  {{ "create_product_listing.Street_Line_two_maxLen" | translate }}
+                </mat-error>
+              </mat-form-field>
+  
+              <mat-form-field
+                style="width: 100%; margin-top: 8px"
+                class="full-width"
+                appearance="outline"
+                [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'"
+              >
+                <mat-label class="label-header">   {{ "create_product_listing.ZIP_Code" | translate }}</mat-label>
+                <input
+                  matInput
+                  formControlName="zip_code"
+                  appPositiveNumber
+                  placeholder="   {{ 'create_product_listing.ZIP_Code_plac' | translate }}"
+                  [readonly]="(billingInformationDetails?.zip_code || productDetails?.zip_code) ? true : false"
+                />
+                <mat-error *ngIf="zip_code.hasError('required')">
+                  {{ "create_product_listing.ZIP_Code_req" | translate }}
+                </mat-error>
+                <mat-error *ngIf="zip_code.hasError('pattern')">
+                  {{ "create_product_listing.ZIP_Code_patt" | translate }}
+                </mat-error>
+                <mat-error *ngIf="zip_code.hasError('maxlength')">
+                  {{ "create_product_listing.ZIP_Code_maxLen" | translate }}
+                </mat-error>
+              </mat-form-field>
+  
+              <mat-form-field
+                style="width: 100%; margin-top: 8px"
+                class="full-width"
+                appearance="outline"
+                [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'"
+              >
+                <mat-label class="label-header">   {{ "create_product_listing.City_Name" | translate }}</mat-label>
+                <input
+                  matInput
+                  formControlName="city"
+                  appOnlyCharacterLimitThirty
+                  placeholder="{{ 'create_product_listing.City_plac' | translate }}"
+                  [readonly]="(billingInformationDetails?.city || productDetails?.city) ? true : false"
+                />
+                <mat-error *ngIf="city.hasError('required')">
+                  {{ "create_product_listing.City_req" | translate }}
+                </mat-error>
+              </mat-form-field>
               </form>
 
-              <div
+              <div [ngClass]="{ 'reverse-order-listing-details-btn-div': translateService.currentLang !== 'en' }"
                 class="d-flex align-items-center justify-content-end gap-2 mb-3"
                 style="padding: 0 20px 0 20px"
               >
@@ -1600,21 +1607,21 @@
                   class="save-can-btn canc-bg-color"
                   (click)="backbtn('priceshipment')"
                 >
-                  Back
+                {{ 'create_product_listing.back_btn' | translate }}
                 </button>
                 <button
                 *ngIf="!isNextButtonShowonBillingInformation"
                 class="save-can-btn save-btn-bg"
                 (click)="onSubmit('billinginformation')"
               >
-                Save
+              {{ "create_product_listing.save_btn" | translate }}
               </button>
               <button
                 *ngIf="isNextButtonShowonBillingInformation"
                 class="save-can-btn save-btn-bg"
                 (click)="nextMoveToSummary()"
               >
-                Next
+              {{ "create_product_listing.next_btn" | translate }}
               </button>
               </div>
             </div>
@@ -3203,29 +3210,29 @@
         <!-- <--Billing Information -- > -->
 
         <div class="card-body" *ngIf="selectedSection === 'billinginformation'">
-          <h5 class="font-weight-bold font-size-24 color-242424 margin-0">
-            Billing Information
+          <h5 [ngClass]="{ 'reverse-order-upload-images-labels': translateService.currentLang !== 'en' }" class="font-weight-bold font-size-24 color-242424 margin-0">
+            {{ "create_product_listing.billing_information" | translate }}
           </h5>
-          <p class="font-weight-400 font-size-16 color-909090">
-            Every watch will soon be verified by our team of experts to ensure
-            it’s 100% authentic, giving buyers complete peace of mind.
+          <p [ngClass]="{ 'reverse-order-upload-images-labels': translateService.currentLang !== 'en' }" class="font-weight-400 font-size-16 color-909090">
+            {{ "create_product_listing.billing_information_para_two" | translate }}
           </p>
           <form [formGroup]="billingForm">
             <mat-form-field
               style="width: 100%; margin-top: 8px"
               class="full-width"
               appearance="outline"
+              [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'"
             >
-              <mat-label class="label-header">Billing Address</mat-label>
+              <mat-label class="label-header"> {{ "create_product_listing.Billing_Address" | translate }}</mat-label>
               <input
                 matInput
                 formControlName="billing_address"
-                placeholder="Enter address here"
+                placeholder=" {{ 'create_product_listing.Billing_Address_plac' | translate }}"
                 appFieldLimitIntoHundered
                 [readonly]="(billingInformationDetails?.billing_address || productDetails?.billing_address) ? true : false"
               />
               <mat-error *ngIf="billing_address.hasError('required')">
-                Billing Address is required
+                {{ "create_product_listing.Billing_Address_req" | translate }}
               </mat-error>
             </mat-form-field>
 
@@ -3233,17 +3240,18 @@
               style="width: 100%; margin-top: 8px"
               class="full-width"
               appearance="outline"
+              [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'"
             >
-              <mat-label class="label-header">First Name</mat-label>
+              <mat-label class="label-header"> {{ "create_product_listing.First_Name" | translate }}</mat-label>
               <input
                 matInput
                 formControlName="first_name"
                 appOnlyCharacterLimitThirty
-                placeholder="Enter first name"
+                placeholder=" {{ 'create_product_listing.First_Name_plac' | translate }}"
                 [readonly]="(billingInformationDetails?.first_name || productDetails?.first_name)? true : false"
               />
               <mat-error *ngIf="first_name.hasError('required')">
-                First Name is required
+                {{ "create_product_listing.First_Name_req" | translate }}
               </mat-error>
             </mat-form-field>
 
@@ -3251,17 +3259,18 @@
               style="width: 100%; margin-top: 8px"
               class="full-width"
               appearance="outline"
+              [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'"
             >
-              <mat-label class="label-header">Last Name</mat-label>
+              <mat-label class="label-header"> {{ "create_product_listing.Last_Name" | translate }}</mat-label>
               <input
                 matInput
                 appOnlyCharacterLimitThirty
                 formControlName="last_name"
-                placeholder="Enter last name"
+                placeholder=" {{ 'create_product_listing.Last_Name_plac' | translate }}"
                 [readonly]="(billingInformationDetails?.last_name || productDetails?.last_name) ? true : false"
               />
               <mat-error *ngIf="last_name.hasError('required')">
-                Last Name is required
+                {{ "create_product_listing.Last_Name_req" | translate }}
               </mat-error>
             </mat-form-field>
 
@@ -3269,22 +3278,23 @@
               style="width: 100%; margin-top: 8px"
               class="full-width"
               appearance="outline"
+              [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'"
             >
-              <mat-label class="label-header">Street</mat-label>
+              <mat-label class="label-header"> {{ "create_product_listing.Street" | translate }}</mat-label>
               <input
                 matInput
                 formControlName="street"
-                placeholder="Enter street address"
+                placeholder="{{ 'create_product_listing.Street_plac' | translate }}"
                 [readonly]="(billingInformationDetails?.street || productDetails?.street )? true : false"
               />
               <mat-error *ngIf="street.hasError('required')">
-                Street is required
+                {{ "create_product_listing.Street_req" | translate }}
               </mat-error>
               <mat-error *ngIf="street.hasError('pattern')">
-                Street can only contain letters and numbers.
+                {{ "create_product_listing.Street_patt" | translate }}
               </mat-error>
               <mat-error *ngIf="street.hasError('maxlength')">
-                Street cannot be longer than 30 characters.
+                {{ "create_product_listing.Street_maxLen" | translate }}
               </mat-error>
             </mat-form-field>
 
@@ -3292,19 +3302,20 @@
               style="width: 100%; margin-top: 8px"
               class="full-width"
               appearance="outline"
+              [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'"
             >
-              <mat-label class="label-header">Street Line 2</mat-label>
+              <mat-label class="label-header"> {{ "create_product_listing.Street_Line_two" | translate }}</mat-label>
               <input
                 matInput
                 formControlName="street_line_2"
-                placeholder="Enter street address"
+                placeholder="{{ 'create_product_listing.Street_Line_two_plac' | translate }}"
                 [readonly]="(billingInformationDetails?.street_line_2 || productDetails?.street_line_2)? true : false"
               />
               <mat-error *ngIf="street_line_2.hasError('pattern')">
-                Street can only contain letters and numbers.
+                {{ "create_product_listing.Street_Line_two_patt" | translate }}
               </mat-error>
               <mat-error *ngIf="street_line_2.hasError('maxlength')">
-                Street cannot be longer than 30 characters.
+                {{ "create_product_listing.Street_Line_two_maxLen" | translate }}
               </mat-error>
             </mat-form-field>
 
@@ -3312,23 +3323,24 @@
               style="width: 100%; margin-top: 8px"
               class="full-width"
               appearance="outline"
+              [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'"
             >
-              <mat-label class="label-header">ZIP Code</mat-label>
+              <mat-label class="label-header">   {{ "create_product_listing.ZIP_Code" | translate }}</mat-label>
               <input
                 matInput
                 formControlName="zip_code"
                 appPositiveNumber
-                placeholder="Enter zip code"
+                placeholder="   {{ 'create_product_listing.ZIP_Code_plac' | translate }}"
                 [readonly]="(billingInformationDetails?.zip_code || productDetails?.zip_code) ? true : false"
               />
               <mat-error *ngIf="zip_code.hasError('required')">
-                ZIP Code is required
+                {{ "create_product_listing.ZIP_Code_req" | translate }}
               </mat-error>
               <mat-error *ngIf="zip_code.hasError('pattern')">
-                Only numeric values are allowed for zip code.
+                {{ "create_product_listing.ZIP_Code_patt" | translate }}
               </mat-error>
               <mat-error *ngIf="zip_code.hasError('maxlength')">
-                Zip code cannot be longer than 10 digits.
+                {{ "create_product_listing.ZIP_Code_maxLen" | translate }}
               </mat-error>
             </mat-form-field>
 
@@ -3336,22 +3348,23 @@
               style="width: 100%; margin-top: 8px"
               class="full-width"
               appearance="outline"
+              [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'"
             >
-              <mat-label class="label-header">City</mat-label>
+              <mat-label class="label-header">   {{ "create_product_listing.City_Name" | translate }}</mat-label>
               <input
                 matInput
                 formControlName="city"
                 appOnlyCharacterLimitThirty
-                placeholder="Enter City"
+                placeholder="{{ 'create_product_listing.City_plac' | translate }}"
                 [readonly]="(billingInformationDetails?.city || productDetails?.city) ? true : false"
               />
               <mat-error *ngIf="city.hasError('required')">
-                City is required
+                {{ "create_product_listing.City_req" | translate }}
               </mat-error>
             </mat-form-field>
           </form>
 
-          <div
+          <div [ngClass]="{ 'reverse-order-listing-details-btn-div': translateService.currentLang !== 'en' }"
             class="d-flex align-items-center justify-content-end gap-2 mb-3"
             style="padding: 0 20px 0 20px"
           >
@@ -3359,21 +3372,21 @@
               class="save-can-btn canc-bg-color"
               (click)="backbtn('priceshipment')"
             >
-              Back
+            {{ 'create_product_listing.back_btn' | translate }}
             </button>
             <button
             *ngIf="!isNextButtonShowonBillingInformation"
             class="save-can-btn save-btn-bg"
             (click)="onSubmit('billinginformation')"
           >
-            Save
+          {{ "create_product_listing.save_btn" | translate }}
           </button>
           <button
             *ngIf="isNextButtonShowonBillingInformation"
             class="save-can-btn save-btn-bg"
             (click)="nextMoveToSummary()"
           >
-            Next
+          {{ "create_product_listing.next_btn" | translate }}
           </button>
           </div>
         </div>
@@ -3381,47 +3394,47 @@
         <!-- <--Summary -- > -->
 
         <div class="card-body" *ngIf="selectedSection === 'summary'">
-          <h5 class="font-weight-bold font-size-24 color-242424 margin-0">
-            Summary
+          <h5 [ngClass]="{ 'reverse-order-upload-images-labels': translateService.currentLang !== 'en' }" class="font-weight-bold font-size-24 color-242424 margin-0">
+            {{ "create_product_listing.summary" | translate }}
           </h5>
-          <p class="font-weight-400 font-size-16 color-909090">
-            Every watch will soon be verified by our team of experts to ensure
-            it’s 100% authentic, giving buyers complete peace of mind.
+          <p [ngClass]="{ 'reverse-order-upload-images-labels': translateService.currentLang !== 'en' }" class="font-weight-400 font-size-16 color-909090">
+            {{ "create_product_listing.Summary_para_two" | translate }}
           </p>
 
           <div class="container-fluid mt-4">
             <div class="row">
               <!-- Ad Preview Section -->
               <div class="col-md-6">
-                <h6 class="font-weight-bold">Ad Preview</h6>
+                <h6 [ngClass]="{ 'reverse-order-upload-images-labels': translateService.currentLang !== 'en' }" class="font-weight-bold"> {{ "create_product_listing.Ad_Preview" | translate }}</h6>
                 <div
                   class="card p-3"
                   style="background: #f7f7f8; border-radius: 15px;height: 200px;"
                 >
-                  <div class="d-flex align-items-center">
+                  <div [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }" class="d-flex align-items-center">
                     <img
                       [src]="coverImage.url"
                       alt="Watch Image"
                       class="img-fluid"
                       style="max-width: 140px"
                     />
-                    <div class="ml-3">
+                    <div *ngIf="productDetails" class="ml-3">
                       <h6 class="text-secondary">
-                        {{ brandnametoDisplay }} |
-                        {{ listingForm.get("name").value }}
+                        {{ brandnametoDisplay }} |   
+                        {{ productDetails.name }}
+                        <!-- {{ listingForm.get("name").value }} -->
                       </h6>
                       <p class="font-weight-bold mb-1">
                         {{ brandnametoDisplay }}
-                        {{ listingForm.get("name").value }}
-                        {{ selectedCondition.title }}
+                        {{ productDetails.name }}
+                        {{ productDetails.title }}
                       </p>
                       <p class="text-primary font-weight-bold mb-0">
                         {{
-                          watchPriceDisplay
+                          productDetails.price
                             | currency : "SR" : "symbol" : "1.2-2"
                         }}
                       </p>
-                      <small class="text-muted">Excl. Shipping Charges</small>
+                      <small class="text-muted">{{ productDetails.shipping_type}}</small>
                     </div>
                   </div>
                 </div>
@@ -3429,13 +3442,13 @@
 
               <!-- Price Info Section -->
               <div class="col-md-6">
-                <p class="font-size-18 font-wight-700 color-132138 margin-0">
-                  Payout Information
+                <p [ngClass]="{ 'reverse-order-upload-images-labels': translateService.currentLang !== 'en' }" class="font-size-18 font-wight-700 color-132138 margin-0">
+                  {{ "create_product_listing.Payout_Information" | translate }}
                 </p>
-                <mat-card class="info-card" style="height: 200px;">
+                <mat-card [ngClass]="{ 'reverse-order-info-row': translateService.currentLang !== 'en' }" class="info-card" style="height: 200px;">
                   <div class="info-row d-flex justify-content-between">
                     <p class="font-size-16 font-wight-400 color-909090">
-                      Watch Price
+                      {{ "create_product_listing.watch_price" | translate }}
                     </p>
                     <p class="font-size-16 font-wight-600 color-0F172A">
                       {{
@@ -3445,7 +3458,7 @@
                   </div>
                   <div class="info-row d-flex justify-content-between">
                     <span class="font-size-16 font-wight-400 color-909090"
-                      >Platform Fee (4%)</span
+                      > {{ "create_product_listing.platform_fees" | translate }}</span
                     >
                     <span class="font-size-16 font-wight-600 color-0F172A">
                       - {{ platformFee | currency : "SR" : "symbol" : "1.2-2" }}
@@ -3454,7 +3467,7 @@
                   <mat-divider></mat-divider>
                   <div class="info-row d-flex justify-content-between">
                     <span class="font-size-16 font-wight-400 color-909090"
-                      >Payout</span
+                      > {{ "create_product_listing.payout" | translate }}</span
                     >
                     <span class="font-size-16 font-wight-600 color-0F172A">
                       {{
@@ -3465,7 +3478,7 @@
 
                   <div class="info-row d-flex justify-content-between">
                     <span class="font-size-16 font-wight-400 color-909090"
-                      >Shipping Charges</span
+                      >{{ "create_product_listing.shipping_charges" | translate }}</span
                     >
                     <span class="font-size-16 font-wight-600 color-0F172A">
                       +
@@ -3477,7 +3490,7 @@
                   <mat-divider></mat-divider>
                   <div class="info-row d-flex justify-content-between">
                     <span class="font-size-16 font-wight-400 color-909090"
-                      >Estimated Payout</span
+                      >{{ "create_product_listing.estimated_payout" | translate }}</span
                     >
                     <span class="font-size-16 font-wight-600 color-0F172A">
                       {{
@@ -3491,16 +3504,17 @@
             </div>
 
             <!-- Billing Information Section -->
-            <h6 class="font-weight-bold">Billing Information</h6>
+            <h6 [ngClass]="{ 'reverse-order-upload-images-labels': translateService.currentLang !== 'en' }" class="font-weight-bold">{{ "create_product_listing.billing_information" | translate }}</h6>
             <div
+            [ngClass]="{ 'reverse-order-billing-info-for': translateService.currentLang !== 'en' }"
               class="card mt-4 p-3"
               style="background: #f7f7f8; border-radius: 15px"
             >
               <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-6 biilimg-card-data">
                   <div>
                     <p class="mb-1 font-size-16 font-weight-400 color-909090">
-                      Billing Address
+                      {{ "create_product_listing.Billing_Address" | translate }}
                     </p>
                     <p class="font-size-16 font-wight-600 color-0F172A b-0">
                       {{ billingForm.get("billing_address").value }}
@@ -3508,7 +3522,7 @@
                   </div>
                   <div>
                     <p class="mb-1 font-size-16 font-weight-400 color-909090">
-                      Street
+                      {{ "create_product_listing.Street" | translate }}
                     </p>
                     <p class="font-size-16 font-wight-600 color-0F172A b-0">
                       {{ billingForm.get("street").value }}
@@ -3516,20 +3530,20 @@
                   </div>
                   <div>
                     <p class="mb-1 font-size-16 font-weight-400 color-909090">
-                      City
+                      {{ "create_product_listing.City_Name" | translate }}
                     </p>
                     <p class="font-size-16 font-wight-600 color-0F172A mb-0">
                       {{ billingForm.get("city").value }}
                     </p>
                   </div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-6 biilimg-card-data-two">
                   <div
                     *ngIf="billingForm.get('street_line_2').value"
                     class="text-lg-end"
                   >
                     <p class="mb-1 font-size-16 font-weight-400 color-909090">
-                      Street Line 2
+                      {{ "create_product_listing.Street_Line_two" | translate }}
                     </p>
                     <p class="font-size-16 font-wight-600 color-0F172A b-0">
                       {{ billingForm.get("street_line_2").value }}
@@ -3537,7 +3551,7 @@
                   </div>
                   <div class="text-lg-end">
                     <p class="mb-1 font-size-16 font-weight-400 color-909090">
-                      Zip Code
+                      {{ "create_product_listing.ZIP_Code" | translate }}
                     </p>
                     <p class="font-size-16 font-wight-600 color-0F172A b-0">
                       {{ billingForm.get("zip_code").value }}
@@ -3548,26 +3562,26 @@
             </div>
           </div>
 
-          <div
+          <div [ngClass]="{ 'reverse-order-listing-details-btn-div': translateService.currentLang !== 'en' }"
             class="d-flex align-items-center justify-content-end gap-2 mb-3"
             style="padding: 0 20px 0 20px"
           >
             <button class="save-can-btn canc-bg-color"
              (click)="routeToProductDetail()">
-              Preview your Ad
+             {{ 'create_product_listing.Preview_your_Ad' | translate }}
             </button>
             <button
               class="save-can-btn canc-bg-color"
               (click)="backbtn('billinginformation')"
             >
-              Back
+            {{ 'create_product_listing.back_btn' | translate }}
             </button>
             <button
              *ngIf="!isPublishedProduct"
               class="save-can-btn save-btn-bg"
               (click)="onSubmit('summary')"
             >
-              Publish
+            {{ 'create_product_listing.publish_btn' | translate }}
             </button>
           </div>
         </div>
