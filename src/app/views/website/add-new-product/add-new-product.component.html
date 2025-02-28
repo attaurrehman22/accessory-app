@@ -1,7 +1,7 @@
 <div class="global-main-wraper" style="margin-top: 45px">
-  <div class="row">
-    <div class="col-md-3 col-12" style="border-right: 1px solid #f3f3f3">
-      <h5>Create Product Listing</h5>
+  <div class="row" [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }">
+    <div class="col-md-3 col-12" style="border-right: 1px solid #f3f3f3" [ngClass]="{ 'reverse-order-of-desc-cont': translateService.currentLang !== 'en' }">
+      <h5> {{ "create_product_listing.label" | translate }}</h5>
       <div class="sidebar-list">
         <!-- <-- Listing Details -- > -->
         <div
@@ -15,10 +15,9 @@
             <h5 class="card-title"
             style="cursor: pointer;"
              (click)="moveToForm('listingDetails')"
-            >Listing Details</h5>
+            >{{ "create_product_listing.listing_details" | translate }}</h5>
             <p class="card-text" style="cursor: pointer;" (click)="moveToForm('listingDetails')">
-              Every watch will soon be verified by our team of experts to ensure
-              it’s 100% authentic, giving buyers complete peace of mind.
+              {{ "create_product_listing.listing_details_para" | translate }}
             </p>
             <form
               [formGroup]="listingForm"
@@ -26,21 +25,21 @@
               *ngIf="selectedSection === 'listingDetails' && isSmallScreen"
             >
 
-              <mat-form-field appearance="outline" class="w-100 mt-2">
-                <mat-label class="label-header">Brand</mat-label>
+              <mat-form-field [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'" appearance="outline" class="w-100 mt-2">
+                <mat-label class="label-header"> {{ "create_product_listing.brand" | translate }}</mat-label>
                 <input type="text" matInput [formControl]="myControl" [matAutocomplete]="auto">
                 <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
                   @for (option of filteredOptions | async; track option) {
                     <mat-option [disabled]="productDetails?.brand_id ? true : false" [value]="option">{{option.name}}</mat-option>
                   }
                 </mat-autocomplete>
-                <mat-error *ngIf="brand_id.hasError('required')">
-                  Brand is required
+                <mat-error [ngClass]="{'text-left': translateService.currentLang === 'en', 'text-right': translateService.currentLang !== 'en'}" *ngIf="brand_id.hasError('required')">
+                  {{ "create_product_listing.brand_required" | translate }}
                 </mat-error>
               </mat-form-field>
 
-              <mat-form-field appearance="outline" class="w-100 mt-2">
-                <mat-label class="label-header">Category</mat-label>
+              <mat-form-field [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'" appearance="outline" class="w-100 mt-2">
+                <mat-label class="label-header">{{ "create_product_listing.category" | translate }}</mat-label>
                 <input type="text" matInput [formControl]="myCategoryControl" [matAutocomplete]="autoCategory">
               
                 <mat-autocomplete #autoCategory="matAutocomplete" [displayWith]="displayCategoryFn">
@@ -51,86 +50,87 @@
               
                 <!-- Display selected categories as chips -->
                 <div *ngIf="selectedCategories?.controls?.length > 0" class="selected-categories">
-                  <mat-chip-list #chipList aria-label="Category selection">
+                  <mat-chip-list #chipList aria-label="{{ 'create_product_listing.category_selection' | translate }}">
                     <mat-chip *ngFor="let category of selectedCategories?.controls" [removable]="true" (click)="productDetails?.categories ? null : removeCategory(category.value)">
                       {{ category.value.name }}
                       <mat-icon matChipRemove>cancel</mat-icon>
                     </mat-chip>
                   </mat-chip-list>
                 </div>
-                <mat-hint>Select any Category max limit is 5</mat-hint>
-                <mat-error *ngIf="selectedCategories?.controls?.length >= MAX_CATEGORY_SELECTION">
-                  You can only select up to 5 categories.
+                <mat-hint>{{ "create_product_listing.category_limit_5" | translate }}</mat-hint>
+                <mat-error [ngClass]="{'text-left': translateService.currentLang === 'en', 'text-right': translateService.currentLang !== 'en'}" *ngIf="selectedCategories?.controls?.length >= MAX_CATEGORY_SELECTION">
+  
+                  {{ "create_product_listing.category_limit_up_to_5" | translate }}
                 </mat-error>
-                <mat-error *ngIf="selectedCategories?.controls?.length === 0">
-                  Category is required
+                <mat-error [ngClass]="{'text-left': translateService.currentLang === 'en', 'text-right': translateService.currentLang !== 'en'}" *ngIf="selectedCategories?.controls?.length === 0">
+                  {{ "create_product_listing.category_required" | translate }}
                 </mat-error>
               </mat-form-field>
 
-              <mat-form-field appearance="outline" class="w-100 mt-2">
-                <mat-label class="label-header">Name</mat-label>
+              <mat-form-field [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'" appearance="outline" class="w-100 mt-2">
+                <mat-label class="label-header"> {{ "create_product_listing.name" | translate }}</mat-label>
                 <input
                   matInput
                   [readonly]="productDetails?.name ? true : false"
-                  placeholder="Enter Name"
+                  placeholder="{{ 'create_product_listing.enter_name' | translate }}"
                   formControlName="name"
                   required
                   appFieldLimitIntoHundered
                 />
-                <mat-error *ngIf="name.hasError('required')">
-                  Name is required
+                <mat-error [ngClass]="{'text-left': translateService.currentLang === 'en', 'text-right': translateService.currentLang !== 'en'}" *ngIf="name.hasError('required')">
+                  {{ "create_product_listing.name_required" | translate }}
                 </mat-error>
               </mat-form-field>
 
-              <mat-form-field appearance="outline" class="w-100 mt-2">
-                <mat-label class="label-header">Model</mat-label>
+              <mat-form-field [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'" appearance="outline" class="w-100 mt-2">
+                <mat-label class="label-header"> {{ "create_product_listing.model" | translate }}</mat-label>
                 <input
                   matInput
                   [readonly]="productDetails?.model ? true : false"
-                  placeholder="Enter your model name"
+                  placeholder="{{ 'create_product_listing.enter_model_name' | translate }}"
                   formControlName="model"
                   required
                   appFieldLimitIntoHundered
                 />
-                <mat-error *ngIf="model.hasError('required')">
-                  Model is required
+                <mat-error [ngClass]="{'text-left': translateService.currentLang === 'en', 'text-right': translateService.currentLang !== 'en'}" *ngIf="model.hasError('required')">
+                  {{ "create_product_listing.model_required" | translate }}
                 </mat-error>
               </mat-form-field>
 
-              <mat-form-field appearance="outline" class="w-100 mt-2">
-                <mat-label class="label-header">Title</mat-label>
+              <mat-form-field [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'" appearance="outline" class="w-100 mt-2">
+                <mat-label class="label-header">{{ "create_product_listing.title" | translate }}</mat-label>
                 <input
                   matInput
-                  placeholder="Enter your ad title"
+                  placeholder="{{ 'create_product_listing.enter_title_name' | translate }}"
                   [readonly]="productDetails?.title ? true : false"
                   formControlName="title"
                   required
                   appFieldLimitIntoHundered
                 />
-                <mat-error *ngIf="title.hasError('required')">
-                  Title is required
+                <mat-error [ngClass]="{'text-left': translateService.currentLang === 'en', 'text-right': translateService.currentLang !== 'en'}" *ngIf="title.hasError('required')">
+                  {{ "create_product_listing.title_required" | translate }}
                 </mat-error>
               </mat-form-field>
 
-              <mat-form-field appearance="outline" class="w-100 mt-2">
-                <mat-label class="label-header">Description</mat-label>
+              <mat-form-field [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'" appearance="outline" class="w-100 mt-2">
+                <mat-label class="label-header">{{ "create_product_listing.description" | translate }}</mat-label>
                 <textarea
                   matInput
-                  placeholder="Enter your watch description"
+                  placeholder="{{ 'create_product_listing.enter_description_name' | translate }}"
                   formControlName="description"
                   rows="3"
                 ></textarea>
-                <mat-error *ngIf="description.hasError('minlength')">
-                  Description must be at least 5 characters long.
+                <mat-error [ngClass]="{'text-left': translateService.currentLang === 'en', 'text-right': translateService.currentLang !== 'en'}" *ngIf="description.hasError('minlength')">
+                  {{ "create_product_listing.description_least_required" | translate }}
                 </mat-error>
-                <mat-error *ngIf="description.hasError('maxlength')">
-                  Description cannot be more than 250 characters.
+                <mat-error [ngClass]="{'text-left': translateService.currentLang === 'en', 'text-right': translateService.currentLang !== 'en'}" *ngIf="description.hasError('maxlength')">
+                  {{ "create_product_listing.description_max_required" | translate }}
                 </mat-error>
               </mat-form-field>
 
-              <mat-form-field appearance="outline" class="w-100 mt-2">
-                <mat-label class="label-header">Watch Type</mat-label>
-                <mat-select formControlName="watch_type">
+              <mat-form-field [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'" appearance="outline" class="w-100 mt-2">
+                <mat-label class="label-header">{{ "create_product_listing.watchtype" | translate }}</mat-label>
+                <mat-select formControlName="watch_type" [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'">
                   <mat-option [disabled]="productDetails?.watch_type ? true : false"
                     *ngFor="let data of formdropdownListData.watch_type"
                     [value]="data.key"
@@ -138,51 +138,52 @@
                     {{ data.value }}
                   </mat-option>
                 </mat-select>
-
-                <mat-error *ngIf="watch_type.hasError('required')">
-                  Watch Type is required
+              
+                <mat-error [ngClass]="{'text-left': translateService.currentLang === 'en', 'text-right': translateService.currentLang !== 'en'}" *ngIf="watch_type.hasError('required')">
+                  {{ "create_product_listing.watchtype_required" | translate }}
                 </mat-error>
               </mat-form-field>
+              
 
-              <mat-form-field appearance="outline" class="w-100 mt-2">
-                <mat-label class="label-header">Year of Production</mat-label>
+              <mat-form-field [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'" appearance="outline" class="w-100 mt-2">
+                <mat-label class="label-header"> {{ "create_product_listing.year_of_production" | translate }}</mat-label>
                 <input
                   matInput
                   type="text"
-                  placeholder="e.g. 2024"
+                  placeholder="{{ 'create_product_listing.year_of_production_placeholder' | translate }}"
                   formControlName="year_of_production"
                   [readonly]="productDetails?.year_of_production ? true : false"
                   appPositiveNumber
                   required
                 />
-                <mat-error *ngIf="year_of_production.hasError('required')">
-                  Year of production is required
+                <mat-error [ngClass]="{'text-left': translateService.currentLang === 'en', 'text-right': translateService.currentLang !== 'en'}" *ngIf="year_of_production.hasError('required')">
+                  {{ "create_product_listing.year_of_production_required" | translate }}
                 </mat-error>
-                <mat-error *ngIf="year_of_production.hasError('pattern')">
-                  Year of production must be a 4-digit number.
+                <mat-error [ngClass]="{'text-left': translateService.currentLang === 'en', 'text-right': translateService.currentLang !== 'en'}" *ngIf="year_of_production.hasError('pattern')">
+                  {{ "create_product_listing.year_of_production_validation" | translate }}
                 </mat-error>
               </mat-form-field>
 
-              <mat-checkbox formControlName="approximation">
+              <mat-checkbox [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'" formControlName="approximation">
                 <label class="mdc-label" style="margin-top: 13px; margin-bottom: 5px;">
-                  Approximation
+                  {{ "create_product_listing.Approximation" | translate }}
                 </label>
               </mat-checkbox>
               
-              <mat-checkbox formControlName="unknown">
+              <mat-checkbox [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'" formControlName="unknown">
                 <label class="mdc-label" style="margin-top: 13px; margin-bottom: 5px;">
-                  Unknown
+                  {{ "create_product_listing.Unknown" | translate }}
                 </label>
               </mat-checkbox>
 
-              <div class="d-flex justify-content-end gap-2 mb-3 mt-3">
+              <div [ngClass]="{ 'reverse-order-listing-details-btn-div': translateService.currentLang !== 'en' }" class="listing-details-btn-div gap-2 mb-3 mt-3">
                 <button
                   mat-button
                   type="button"
                   class="save-can-btn canc-bg-color"
                   (click)="cancelbtn()"
                 >
-                  Cancel
+                {{ "create_product_listing.cancel_btn" | translate }}
                 </button>
                 <button
                   mat-button
@@ -190,7 +191,7 @@
                   type="submit"
                   (click)="onSubmit('listingDetails')"
                 >
-                  Save
+                {{ "create_product_listing.save_btn" | translate }}
                 </button>
               </div>
             </form>
@@ -208,280 +209,249 @@
             <strong
             style="cursor: pointer;"
             (click)="moveToForm('watchDetails')"
-            >Watch Details</strong>
+            >{{ "create_product_listing.watch_details" | translate }}</strong>
             <p class="text-muted"     style="cursor: pointer;"
             (click)="moveToForm('watchDetails')">
-              Crypto ipsum bitcoin ethereum dogecoin litecoin. Revain neo gelen
-              amp tecoin EOS chiliz...
+            {{ "create_product_listing.watch_details_para" | translate }}
             </p>
             <form
               [formGroup]="watchDetailsForm"
               *ngIf="selectedSection === 'watchDetails' && isSmallScreen"
             >
-              <mat-form-field appearance="outline" class="w-100 mb-3">
-                <mat-label class="label-header">Reference No.</mat-label>
+              <mat-form-field [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'" appearance="outline" class="w-100 mb-3">
+                <mat-label class="label-header"> {{ "create_product_listing.refrence_number" | translate }}</mat-label>
                 <input
                   matInput
                   [readonly]="productDetails?.reference_number ? true : false"
                   formControlName="reference_number"
-                  placeholder="Enter your Reference Number"
+                  placeholder="{{ 'create_product_listing.refrence_number_placeHolder' | translate }}"
                   required=""
                 />
-                <mat-error *ngIf="reference_number.hasError('required')">
-                  Reference Number is required
+                <mat-error [ngClass]="{'text-left': translateService.currentLang === 'en', 'text-right': translateService.currentLang !== 'en'}" *ngIf="reference_number.hasError('required')">
+                  {{ "create_product_listing.refrence_number_required" | translate }}
                 </mat-error>
               </mat-form-field>
 
               <div class="row">
                 <div class="col-md-4 mb-3">
-                  <mat-form-field appearance="outline" class="w-100">
-                    <mat-label class="label-header"
-                      >Serial No. ( Will not Published )</mat-label
-                    >
+                  <mat-form-field [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'" appearance="outline" class="w-100">
+                    <mat-label class="label-header">
+                      {{ 'create_product_listing.serial_no' | translate }}
+                    </mat-label>
                     <input
                       matInput
                       [readonly]="productDetails?.serial_no ? true : false"
                       formControlName="serial_no"
-                      placeholder="Enter serial number"
+                      placeholder="{{ 'create_product_listing.serial_no_placeHolder' | translate }}"
                       required
                     />
-                    <mat-error *ngIf="serial_no.hasError('required')">
-                      Serial Number is required
+                    <mat-error [ngClass]="{'text-left': translateService.currentLang === 'en', 'text-right': translateService.currentLang !== 'en'}" *ngIf="serial_no.hasError('required')">
+                      {{ 'create_product_listing.serial_no_required' | translate }}
                     </mat-error>
                   </mat-form-field>
                 </div>
+              
                 <div class="col-md-4 mb-3">
-                  <mat-form-field appearance="outline" class="w-100">
-                    <mat-label class="label-header">Gender</mat-label>
+                  <mat-form-field [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'" appearance="outline" class="w-100">
+                    <mat-label class="label-header">
+                      {{ 'create_product_listing.gender' | translate }}
+                    </mat-label>
                     <mat-select formControlName="gender">
-                      <mat-option value="">Please Select</mat-option>
-                      <mat-option
-                        *ngFor="let data of formdropdownListData?.gender"
-                        [value]="data.key"
-                      >
+                      <mat-option value="">{{ 'create_product_listing.gender_placeHolder' | translate }}</mat-option>
+                      <mat-option *ngFor="let data of formdropdownListData?.gender" [value]="data.key">
                         {{ data.value }}
                       </mat-option>
                     </mat-select>
-                    <mat-error *ngIf="gender.hasError('required')">
-                      Gender is required
+                    <mat-error [ngClass]="{'text-left': translateService.currentLang === 'en', 'text-right': translateService.currentLang !== 'en'}" *ngIf="gender.hasError('required')">
+                      {{ 'create_product_listing.gender_required' | translate }}
                     </mat-error>
                   </mat-form-field>
                 </div>
+              
                 <div class="col-md-4 mb-3">
-                  <mat-form-field appearance="outline" class="w-100">
-                    <mat-label class="label-header">Movement</mat-label>
+                  <mat-form-field [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'" appearance="outline" class="w-100">
+                    <mat-label class="label-header">
+                      {{ 'create_product_listing.movement' | translate }}
+                    </mat-label>
                     <mat-select formControlName="movement">
-                      <mat-option value="">Please Select</mat-option>
-                      <mat-option
-                        *ngFor="let data of formdropdownListData?.movement"
-                        [value]="data.key"
-                        >{{ data.value }}</mat-option
-                      >
+                      <mat-option value="">{{ 'create_product_listing.movement_placeHolder' | translate }}</mat-option>
+                      <mat-option *ngFor="let data of formdropdownListData?.movement" [value]="data.key">
+                        {{ data.value }}
+                      </mat-option>
                     </mat-select>
-                    <mat-error *ngIf="movement.hasError('required')">
-                      Movement is required
+                    <mat-error [ngClass]="{'text-left': translateService.currentLang === 'en', 'text-right': translateService.currentLang !== 'en'}" *ngIf="movement.hasError('required')">
+                      {{ 'create_product_listing.movement_required' | translate }}
                     </mat-error>
                   </mat-form-field>
                 </div>
               </div>
+              
 
               <div class="row">
                 <div class="col-md-6 mb-3">
-                  <mat-form-field appearance="outline" class="w-100">
-                    <mat-label class="label-header">Case Diameter</mat-label>
+                  <mat-form-field [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'" appearance="outline" class="w-100">
+                    <mat-label class="label-header">
+                      {{ 'create_product_listing.case_diameter' | translate }}
+                    </mat-label>
                     <input
                       matInput
                       formControlName="case_diameter_value_1"
-                      placeholder="Enter diameter"
-                      
+                      placeholder="{{ 'create_product_listing.case_diameter_placeholder' | translate }}"
                       required
                     />
                     <span
-                      style="
-                        padding: 17px 15px 17px 15px;
-                        background-color: #dbdbdb;
-                      "
+                      style="padding: 17px 15px 17px 15px; background-color: #dbdbdb;"
                       matSuffix
-                      >mm</span
                     >
-                    <mat-error
-                      *ngIf="case_diameter_value_1.hasError('required')"
-                    >
-                      Case Diameter is required
+                      mm
+                    </span>
+                    <mat-error [ngClass]="{'text-left': translateService.currentLang === 'en', 'text-right': translateService.currentLang !== 'en'}" *ngIf="case_diameter_value_1.hasError('required')">
+                      {{ 'create_product_listing.case_diameter_required' | translate }}
                     </mat-error>
-                    <mat-error
-                    *ngIf="case_diameter_value_1.hasError('pattern')"
-                  >
-                  Case diameter 1 must be a valid number with up to 2 decimal places.
-                  </mat-error>
+                    <mat-error [ngClass]="{'text-left': translateService.currentLang === 'en', 'text-right': translateService.currentLang !== 'en'}" *ngIf="case_diameter_value_1.hasError('pattern')">
+                      {{ 'create_product_listing.case_diameter_invalid' | translate }}
+                    </mat-error>
                   </mat-form-field>
                 </div>
+              
                 <div class="col-md-6 mb-3">
-                  <mat-form-field appearance="outline" class="w-100">
-                    <mat-label class="label-header">Other Diameter</mat-label>
+                  <mat-form-field [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'" appearance="outline" class="w-100">
+                    <mat-label class="label-header">
+                      {{ 'create_product_listing.other_diameter' | translate }}
+                    </mat-label>
                     <input
                       matInput
                       formControlName="case_diameter_value_2"
-                      placeholder="Enter diameter"
-                      
+                      placeholder="{{ 'create_product_listing.other_diameter_placeholder' | translate }}"
                       required
                     />
                     <span
-                      style="
-                        padding: 17px 15px 17px 15px;
-                        background-color: #dbdbdb;
-                      "
+                      style="padding: 17px 15px 17px 15px; background-color: #dbdbdb;"
                       matSuffix
-                      >mm</span
                     >
-                    <mat-error
-                      *ngIf="case_diameter_value_2.hasError('required')"
-                    >
-                      Other Diameter is required
+                      mm
+                    </span>
+                    <mat-error [ngClass]="{'text-left': translateService.currentLang === 'en', 'text-right': translateService.currentLang !== 'en'}" *ngIf="case_diameter_value_2.hasError('required')">
+                      {{ 'create_product_listing.other_diameter_required' | translate }}
                     </mat-error>
-                    <mat-error
-                      *ngIf="case_diameter_value_2.hasError('pattern')"
-                    >
-                    Other diameter must be a valid number with up to 2 decimal places.
+                    <mat-error [ngClass]="{'text-left': translateService.currentLang === 'en', 'text-right': translateService.currentLang !== 'en'}" *ngIf="case_diameter_value_2.hasError('pattern')">
+                      {{ 'create_product_listing.other_diameter_invalid' | translate }}
                     </mat-error>
                   </mat-form-field>
                 </div>
               </div>
+              
 
               <div style="padding: 0 0 0 0">
-                <p><strong>Additional Information</strong> (optional)</p>
+                <p><strong>{{ 'create_product_listing.additional_information' | translate }}</strong> ({{ 'create_product_listing.optional' | translate }})</p>
                 <p class="font-weight-400 font-size-16 color-909090">
-                  Every watch will soon be verified by our team of experts to
-                  ensure it’s 100% authentic, giving buyers complete peace of
-                  mind.
+                  {{ 'create_product_listing.watch_verification_text' | translate }}
                 </p>
               </div>
+              
 
               <div style="padding: 0 0 15px 0">
                 <mat-accordion>
-                  <mat-expansion-panel
-                    [(expanded)]="panelDialOpenState"
-                    class="panel"
-                  >
+                  <mat-expansion-panel [(expanded)]="panelDialOpenState" class="panel">
                     <mat-expansion-panel-header>
-                      <mat-panel-title> Dial & Caliber </mat-panel-title>
+                      <mat-panel-title  [ngClass]="{ 'reverse-order-label-alignment': translateService.currentLang !== 'en' }">
+                        {{ 'create_product_listing.dial_and_caliber' | translate }}
+                      </mat-panel-title>
                     </mat-expansion-panel-header>
                     <div class="accordion-body">
                       <div class="row">
                         <div class="col-md-6 mb-3">
-                          <mat-form-field appearance="outline" class="w-100">
-                            <mat-label class="label-header"
-                              >Dial Color</mat-label
-                            >
+                          <mat-form-field [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'" appearance="outline" class="w-100">
+                            <mat-label class="label-header">{{ 'create_product_listing.dial_color' | translate }}</mat-label>
                             <input
                               matInput
                               formControlName="dial_color"
-                              placeholder="Enter Dial Color"
+                              placeholder="{{'create_product_listing.dial_color_placeHolder' | translate}}"
                               appOnlyCharacterLimitThirty
                             />
                           </mat-form-field>
                         </div>
                         <div class="col-md-6 mb-3">
-                          <mat-form-field appearance="outline" class="w-100">
-                            <mat-label class="label-header"
-                              >Caliber / Movement</mat-label
-                            >
+                          <mat-form-field [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'" appearance="outline" class="w-100">
+                            <mat-label class="label-header">{{ 'create_product_listing.caliber_movement' | translate }}</mat-label>
                             <input
                               matInput
                               formControlName="caliber_movement"
-                              placeholder="Enter Caliber / Movement"
+                              placeholder="{{'create_product_listing.caliber_movement_placeHolder' | translate}}"
                               appOnlyCharacterLimitThirty
                             />
                           </mat-form-field>
                         </div>
                       </div>
-
+              
                       <div class="row">
                         <div class="col-md-6 mb-3">
-                          <mat-form-field appearance="outline" class="w-100">
-                            <mat-label class="label-header"
-                              >Base Caliber</mat-label
-                            >
+                          <mat-form-field [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'" appearance="outline" class="w-100">
+                            <mat-label class="label-header">{{ 'create_product_listing.base_caliber' | translate }}</mat-label>
                             <input
                               matInput
                               formControlName="base_caliber"
-                              placeholder="Enter Base Caliber"
+                              placeholder="{{'create_product_listing.base_caliber_placeHolder' | translate}}"
                               appOnlyCharacterLimitThirty
                             />
                           </mat-form-field>
                         </div>
                         <div class="col-md-6 mb-3">
-                          <mat-form-field appearance="outline" class="w-100">
-                            <mat-label class="label-header"
-                              >Power Reserve</mat-label
-                            >
+                          <mat-form-field [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'" appearance="outline" class="w-100">
+                            <mat-label class="label-header">{{ 'create_product_listing.power_reserve' | translate }}</mat-label>
                             <input
                               matInput
                               formControlName="power_reserve"
-                              placeholder="Enter Power Reserve"
+                              placeholder="{{'create_product_listing.power_reserve_placeHolder' | translate}}"
                               appOnlyCharacterLimitThirty
                             />
                           </mat-form-field>
                         </div>
                       </div>
-
+              
                       <div class="row">
                         <div class="col-md-6 mb-3">
-                          <mat-form-field appearance="outline" class="w-100">
-                            <mat-label class="label-header"
-                              >No of Jewels</mat-label
-                            >
-                            <!-- <mat-select formControlName="no_of_jewels">
-                              <mat-option value="">Please Select</mat-option>
-                            </mat-select> -->
-
+                          <mat-form-field [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'" appearance="outline" class="w-100">
+                            <mat-label class="label-header">{{ 'create_product_listing.no_of_jewels' | translate }}</mat-label>
                             <input
                               matInput
                               formControlName="no_of_jewels"
-                              placeholder="Enter No of Jewels"
+                              placeholder="{{'create_product_listing.no_of_jewels_placeHolder' | translate}}"
                               appPositiveNumber
                             />
-                            <mat-error *ngIf="no_of_jewels.hasError('pattern')">
-                              Only numeric values are allowed, and the number must be between 1 and 4 digits.
+                            <mat-error [ngClass]="{'text-left': translateService.currentLang === 'en', 'text-right': translateService.currentLang !== 'en'}" *ngIf="no_of_jewels.hasError('pattern')">
+                              {{ 'create_product_listing.no_of_jewels_error' | translate }}
                             </mat-error>
                           </mat-form-field>
                         </div>
                         <div class="col-md-6 mb-3">
-                          <mat-form-field appearance="outline" class="w-100">
-                            <mat-label class="label-header"
-                              >Frequency</mat-label
-                            >
+                          <mat-form-field [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'" appearance="outline" class="w-100">
+                            <mat-label class="label-header">{{ 'create_product_listing.frequency' | translate }}</mat-label>
                             <input
                               matInput
                               formControlName="frequency"
-                              placeholder="Enter Frequency"
-                              
+                              placeholder="{{'create_product_listing.frequency_placeHolder' | translate}}"
                             />
                             <span
-                              style="
-                                padding: 17px 15px 17px 15px;
-                                background-color: #dbdbdb;
-                              "
+                              style="padding: 17px 15px 17px 15px; background-color: #dbdbdb;"
                               matSuffix
                               >hz</span
                             >
-                            <mat-error *ngIf="frequency.hasError('pattern')">
-                              Frequency must be a valid number with up to 2 decimal places.
+                            <mat-error [ngClass]="{'text-left': translateService.currentLang === 'en', 'text-right': translateService.currentLang !== 'en'}" *ngIf="frequency.hasError('pattern')">
+                              {{ 'create_product_listing.frequency_pattern' | translate }}
                             </mat-error>
                           </mat-form-field>
                         </div>
                       </div>
-
+              
                       <div class="row">
                         <div class="col-md-12 mb-3">
-                          <mat-form-field appearance="outline" class="w-100">
-                            <mat-label class="label-header"
-                              >Other Details</mat-label
-                            >
+                          <mat-form-field [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'" appearance="outline" class="w-100">
+                            <mat-label class="label-header">{{ 'create_product_listing.other_details' | translate }}</mat-label>
                             <input
                               matInput
                               formControlName="additional_details"
-                              placeholder="Enter Other Details"
+                              placeholder="{{'create_product_listing.other_details_placeholder' | translate}}"
                               appFieldLimitIntoHundered
                             />
                           </mat-form-field>
@@ -491,135 +461,105 @@
                   </mat-expansion-panel>
                 </mat-accordion>
               </div>
+              
 
               <div style="padding: 0 0 15px 0">
                 <mat-accordion>
-                  <mat-expansion-panel
-                    [(expanded)]="panelOpenState"
-                    class="panel"
-                  >
+                  <mat-expansion-panel [(expanded)]="panelOpenState" class="panel">
                     <mat-expansion-panel-header>
-                      <mat-panel-title> Case Info </mat-panel-title>
+                      <mat-panel-title [ngClass]="{ 'reverse-order-label-alignment': translateService.currentLang !== 'en' }">
+                        {{ 'create_product_listing.case_info' | translate }}
+                      </mat-panel-title>
                     </mat-expansion-panel-header>
                     <div class="accordion-body">
                       <div class="row">
                         <div class="col-md-6 mb-3">
-                          <mat-form-field appearance="outline" class="w-100">
-                            <mat-label class="label-header"
-                              >Case Material</mat-label
-                            >
+                          <mat-form-field [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'" appearance="outline" class="w-100">
+                            <mat-label class="label-header">{{ 'create_product_listing.case_material' | translate }}</mat-label>
                             <mat-select formControlName="case_material">
-                              <mat-option value="">Please Select</mat-option>
+                              <mat-option value="">{{ 'create_product_listing.case_material_Select' | translate }}</mat-option>
                               <mat-option
-                                *ngFor="
-                                  let data of formdropdownListData.case_material
-                                "
+                                *ngFor="let data of formdropdownListData.case_material"
                                 [value]="data.key"
-                                >{{ data.value }}</mat-option
-                              >
+                              >{{ data.value }}</mat-option>
                             </mat-select>
                           </mat-form-field>
                         </div>
                         <div class="col-md-6 mb-3">
-                          <mat-form-field appearance="outline" class="w-100">
-                            <mat-label class="label-header"
-                              >Bezel Material</mat-label
-                            >
+                          <mat-form-field [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'" appearance="outline" class="w-100">
+                            <mat-label class="label-header">{{ 'create_product_listing.bezel_material' | translate }}</mat-label>
                             <mat-select formControlName="bezel_material">
-                              <mat-option value="">Please Select</mat-option>
+                              <mat-option value="">{{ 'create_product_listing.select_bezel_material' | translate }}</mat-option>
                               <mat-option
-                                *ngFor="
-                                  let data of formdropdownListData.bezel_material
-                                "
+                                *ngFor="let data of formdropdownListData.bezel_material"
                                 [value]="data.key"
-                                >{{ data.value }}</mat-option
-                              >
+                              >{{ data.value }}</mat-option>
                             </mat-select>
                           </mat-form-field>
                         </div>
                       </div>
-
+              
                       <div class="row">
                         <div class="col-md-6 mb-3">
-                          <mat-form-field appearance="outline" class="w-100">
-                            <mat-label class="label-header"
-                              >Thickness</mat-label
-                            >
+                          <mat-form-field [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'" appearance="outline" class="w-100">
+                            <mat-label class="label-header">{{ 'create_product_listing.thickness' | translate }}</mat-label>
                             <input
                               matInput
                               formControlName="thickness"
-                              placeholder="Enter thickness"
-                              
+                              placeholder="{{'create_product_listing.thickness_placeHolder' | translate}}"
                             />
                             <span
-                              style="
-                                padding: 17px 15px 17px 15px;
-                                background-color: #dbdbdb;
-                              "
+                              style="padding: 17px 15px 17px 15px; background-color: #dbdbdb;"
                               matSuffix
                               >mm</span
                             >
-                            <mat-error *ngIf="thickness.hasError('pattern')">
-                              Thickness must be a valid number with up to 2 decimal places.
+                            <mat-error [ngClass]="{'text-left': translateService.currentLang === 'en', 'text-right': translateService.currentLang !== 'en'}" *ngIf="thickness.hasError('pattern')">
+                              {{ 'create_product_listing.thickness_pattern' | translate }}
                             </mat-error>
                           </mat-form-field>
                         </div>
                         <div class="col-md-6 mb-3">
-                          <mat-form-field appearance="outline" class="w-100">
-                            <mat-label class="label-header">Crystal</mat-label>
+                          <mat-form-field [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'" appearance="outline" class="w-100">
+                            <mat-label class="label-header">{{ 'create_product_listing.crystal' | translate }}</mat-label>
                             <mat-select formControlName="crystal">
-                              <mat-option value="">Please Select</mat-option>
+                              <mat-option value="">{{ 'create_product_listing.crystal_placeHolder' | translate }}</mat-option>
                               <mat-option
-                                *ngFor="
-                                  let data of formdropdownListData.crystal
-                                "
+                                *ngFor="let data of formdropdownListData.crystal"
                                 [value]="data.key"
-                                >{{ data.value }}</mat-option
-                              >
+                              >{{ data.value }}</mat-option>
                             </mat-select>
                           </mat-form-field>
                         </div>
                       </div>
-
+              
                       <div class="row">
                         <div class="col-md-6 mb-3">
-                          <mat-form-field appearance="outline" class="w-100">
-                            <mat-label class="label-header"
-                              >Water Resistence</mat-label
-                            >
+                          <mat-form-field [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'" appearance="outline" class="w-100">
+                            <mat-label class="label-header">{{ 'create_product_listing.water_resistance' | translate }}</mat-label>
                             <mat-select formControlName="water_resistance">
-                              <mat-option value="">Please Select</mat-option>
+                              <mat-option value="">{{ 'create_product_listing.water_resistance_placeHolder' | translate }}</mat-option>
                               <mat-option
-                                *ngFor="
-                                  let data of formdropdownListData.water_resistance
-                                "
+                                *ngFor="let data of formdropdownListData.water_resistance"
                                 [value]="data.key"
-                                >{{ data.value }}</mat-option
-                              >
+                              >{{ data.value }}</mat-option>
                             </mat-select>
                           </mat-form-field>
                         </div>
                         <div class="col-md-6 mb-3">
-                          <mat-form-field appearance="outline" class="w-100">
-                            <mat-label class="label-header"
-                              >Dial Numerals</mat-label
-                            >
+                          <mat-form-field [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'" appearance="outline" class="w-100">
+                            <mat-label class="label-header">{{ 'create_product_listing.dial_numerals' | translate }}</mat-label>
                             <input
                               matInput
                               formControlName="dial_numerals"
-                              placeholder="Enter Dial Numerals"
-                              
+                              placeholder="{{'create_product_listing.dial_numerals_placeHolder' | translate}}"
                             />
                             <span
-                              style="
-                                padding: 17px 15px 17px 15px;
-                                background-color: #dbdbdb;
-                              "
+                              style="padding: 17px 15px 17px 15px; background-color: #dbdbdb;"
                               matSuffix
                               >mm</span
                             >
-                            <mat-error *ngIf="dial_numerals.hasError('pattern')">
-                              Dial Numerals must be a valid number with up to 2 decimal places.
+                            <mat-error [ngClass]="{'text-left': translateService.currentLang === 'en', 'text-right': translateService.currentLang !== 'en'}" *ngIf="dial_numerals.hasError('pattern')">
+                              {{ 'create_product_listing.dial_numerals_pattern' | translate }}
                             </mat-error>
                           </mat-form-field>
                         </div>
@@ -628,81 +568,69 @@
                   </mat-expansion-panel>
                 </mat-accordion>
               </div>
+              
 
               <div style="padding: 0 0 15px 0">
                 <mat-accordion>
-                  <mat-expansion-panel
-                    [(expanded)]="panelStrapOpenState"
-                    class="panel"
-                  >
+                  <mat-expansion-panel [(expanded)]="panelStrapOpenState" class="panel">
                     <mat-expansion-panel-header>
-                      <mat-panel-title> Straps / Bracelet </mat-panel-title>
+                      <mat-panel-title [ngClass]="{ 'reverse-order-label-alignment': translateService.currentLang !== 'en' }">
+                        {{ 'create_product_listing.straps_bracelet' | translate }}
+                      </mat-panel-title>
                     </mat-expansion-panel-header>
                     <div class="accordion-body">
                       <div class="row">
                         <div class="col-md-6 mb-3">
-                          <mat-form-field appearance="outline" class="w-100">
-                            <mat-label class="label-header"
-                              >Bracelet Material</mat-label
-                            >
+                          <mat-form-field [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'" appearance="outline" class="w-100">
+                            <mat-label class="label-header">{{ 'create_product_listing.bracelet_material' | translate }}</mat-label>
                             <input
                               matInput
                               formControlName="bracelet_material"
-                              placeholder="Enter Bracelet Material"
+                              placeholder="{{'create_product_listing.bracelet_material_placeHolder' | translate}}"
                               appOnlyCharacterLimitThirty
                             />
                           </mat-form-field>
                         </div>
                         <div class="col-md-6 mb-3">
-                          <mat-form-field appearance="outline" class="w-100">
-                            <mat-label class="label-header"
-                              >Bracelet Color</mat-label
-                            >
+                          <mat-form-field [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'" appearance="outline" class="w-100">
+                            <mat-label class="label-header">{{ 'create_product_listing.bracelet_color' | translate }}</mat-label>
                             <input
                               matInput
                               formControlName="bracelet_color"
-                              placeholder="Enter Bracelet Color"
+                              placeholder="{{'create_product_listing.bracelet_color_placeHolder' | translate}}"
                               appOnlyCharacterLimitThirty
                             />
                           </mat-form-field>
                         </div>
                       </div>
-
+              
                       <div class="row">
                         <div class="col-md-6 mb-3">
-                          <mat-form-field appearance="outline" class="w-100">
-                            <mat-label class="label-header"
-                              >Type of Clasp</mat-label
-                            >
+                          <mat-form-field [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'" appearance="outline" class="w-100">
+                            <mat-label class="label-header">{{ 'create_product_listing.type_of_clasp' | translate }}</mat-label>
                             <input
                               matInput
                               formControlName="type_of_clasp"
-                              placeholder="Enter Type of Clasp"
-                              
+                              placeholder="{{'create_product_listing.type_of_clasp_placeHolder' | translate}}"
                             />
                             <span
-                              style="
-                                padding: 17px 15px 17px 15px;
-                                background-color: #dbdbdb;
-                              "
+                              style="padding: 17px 15px 17px 15px; background-color: #dbdbdb;"
                               matSuffix
                               >mm</span
                             >
-                            <mat-error *ngIf="type_of_clasp.hasError('pattern')">
-                              Type of Clasp must be a valid number with up to 2 decimal places.
+                            <mat-error [ngClass]="{'text-left': translateService.currentLang === 'en', 'text-right': translateService.currentLang !== 'en'}" *ngIf="type_of_clasp.hasError('pattern')">
+                              {{ 'create_product_listing.type_of_clasp_pattern' | translate }}
                             </mat-error>
                           </mat-form-field>
                         </div>
-
+              
                         <div class="col-md-6 mb-3">
-                          <mat-form-field appearance="outline" class="w-100">
-                            <mat-label class="label-header"
-                              >Clasp Material</mat-label
-                            >
+                          <mat-form-field [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'" appearance="outline" class="w-100">
+                            <mat-label class="label-header">{{ 'create_product_listing.clasp_material' | translate }}</mat-label>
                             <input
                               matInput
                               formControlName="clasp_material"
-                              placeholder="Enter Clasp Material"
+                              placeholder="{{'create_product_listing.clasp_material_placeHolder' | translate}}"
                               appOnlyCharacterLimitThirty
                             />
                           </mat-form-field>
@@ -712,22 +640,23 @@
                   </mat-expansion-panel>
                 </mat-accordion>
               </div>
+              
 
-              <div
-                class="d-flex align-items-center justify-content-end gap-2 mb-3"
+              <div [ngClass]="{ 'reverse-order-listing-details-btn-div': translateService.currentLang !== 'en' }"
+                class=" align-items-center gap-2 mb-3"
                 style="padding: 0 20px 0 20px"
               >
                 <button
                   class="save-can-btn canc-bg-color"
                   (click)="backbtn('listingDetails')"
                 >
-                  Back
+                {{ 'create_product_listing.back_btn' | translate }}
                 </button>
                 <button
                   class="save-can-btn save-btn-bg"
                   (click)="onSubmit('watchDetails')"
                 >
-                  Save
+                {{ 'create_product_listing.save_btn' | translate }}
                 </button>
               </div>
             </form>
@@ -746,22 +675,22 @@
             <strong
             style="cursor: pointer;"
             (click)="moveToForm('uploadImages')"
-            >Upload Images</strong>
+            >{{ "create_product_listing.upload_images" | translate }}</strong>
             <p class="text-muted"
             style="cursor: pointer;"
             (click)="moveToForm('uploadImages')"
             >
-              Crypto ipsum bitcoin ethereum dogecoin litecoin. Revain neo gelen
-              amp tecoin EOS chiliz...
+            {{ "create_product_listing.upload_images_para" | translate }}
             </p>
 
             <div
               class="image-upload-container"
               *ngIf="selectedSection === 'uploadImages' && isSmallScreen"
+              [ngClass]="{ 'reverse-order-upload-images-content': translateService.currentLang !== 'en' }"
             >
               <!-- Cover Image -->
-              <div class="">
-                <p>Cover Image</p>
+              <div class="content-one">
+                <p> {{ "create_product_listing.cover_image" | translate }}</p>
                 <div class="d-flex flex-wrap">
                   <div class="upload-box" (click)="selectCoverImage()">
                     <ng-container *ngIf="coverImage?.url && coverImage.url !== 'https://api.chronosouq.com/null'; else uploadPlaceholder">
@@ -797,8 +726,8 @@
               </div>
 
               <!-- Other Images -->
-              <div class="">
-                <p>Other Images</p>
+              <div class="content-two">
+                <p>{{ "create_product_listing.other_images" | translate }}</p>
                 <div class="d-flex flex-wrap gap-3">
                   <div class="upload-box" (click)="selectOtherImages()">
                     <span>+</span>
@@ -836,21 +765,21 @@
                   </div>
                 </div>
               </div>
-              <div
-                class="d-flex align-items-center justify-content-end gap-2 mt-3 mb-3"
-                style="padding: 0 20px 0 20px"
-              >
+              <div [ngClass]="{ 'reverse-order-listing-details-btn-div': translateService.currentLang !== 'en' }"
+                  class="align-items-center justify-content-end d-flex gap-2 mt-3 mb-3"
+                  style="padding: 0 20px 0 20px"
+                >
                 <button
                   class="save-can-btn canc-bg-color"
                   (click)="backbtn('watchDetails')"
                 >
-                  Back
+                {{ 'create_product_listing.back_btn' | translate }}
                 </button>
                 <button
                   class="save-can-btn save-btn-bg"
                   (click)="onSubmit('uploadImages')"
                 >
-                  Save
+                {{ "create_product_listing.save_btn" | translate }}
                 </button>
               </div>
             </div>
@@ -869,23 +798,22 @@
             <strong
             style="cursor: pointer;"
             (click)="moveToForm('conditionGrading')"
-            >Condition Grading</strong>
+            >{{ "create_product_listing.condition_grading" | translate }}</strong>
             <p class="text-muted"  style="cursor: pointer;"
             (click)="moveToForm('conditionGrading')">
-              Crypto ipsum bitcoin ethereum dogecoin litecoin. Revain neo gelen
-              amp tecoin EOS chiliz...
+            {{ "create_product_listing.condition_grading_para" | translate }}
             </p>
 
             <div
               class="image-upload-container"
               *ngIf="selectedSection === 'conditionGrading' && isSmallScreen"
             >
-              <div class="container-fluid my-4">
-                <mat-form-field appearance="outline" *ngIf="isAdminLogin">
-                  <mat-label>Select Type</mat-label>
+              <div  [ngClass]="{ 'reverse-order-condition-gradding': translateService.currentLang !== 'en' }" class="container-fluid my-4">
+                <mat-form-field [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'" appearance="outline" *ngIf="isAdminLogin">
+                  <mat-label>{{ "create_product_listing.select_type" | translate }}</mat-label>
                   <mat-select [(ngModel)]="selectedUserTypeofConditionGradingForAdmin">
-                    <mat-option value="user">User</mat-option>
-                    <mat-option value="dealer">Dealer</mat-option>
+                    <mat-option value="user">{{ "create_product_listing.user_type" | translate }}</mat-option>
+                    <mat-option value="dealer">{{ "create_product_listing.dealer_type" | translate }}</mat-option>
                   </mat-select>
                 </mat-form-field>
 
@@ -900,7 +828,7 @@
                       class="card condition-card h-100"
                       style="border-radius: 16px"
                     >
-                      <div class="card-body">
+                      <div class="card-body" [ngClass]="{ 'reverse-order-condition-gradding-body': translateService.currentLang !== 'en' }">
                         <p
                           class="font-size-16 font-wight-700 color-242424 margin-0"
                         >
@@ -925,7 +853,7 @@
                       class="card condition-card h-100"
                       style="border-radius: 16px"
                     >
-                      <div class="card-body">
+                      <div class="card-body" [ngClass]="{ 'reverse-order-condition-gradding-body': translateService.currentLang !== 'en' }">
                         <p
                           class="font-size-16 font-wight-700 color-242424 margin-0"
                         >
@@ -940,7 +868,7 @@
                 </div>
               </div>
 
-              <div
+              <div [ngClass]="{ 'reverse-order-listing-details-btn-div': translateService.currentLang !== 'en' }"
                 class="d-flex align-items-center justify-content-end gap-2 mb-3"
                 style="padding: 0 20px 0 20px"
               >
@@ -948,21 +876,21 @@
                   class="save-can-btn canc-bg-color"
                   (click)="backbtn('uploadImages')"
                 >
-                  Back
+                {{ 'create_product_listing.back_btn' | translate }}
                 </button>
                 <button
                 *ngIf="!isNextButtonShowonScopeOfdelivery"
                   class="save-can-btn save-btn-bg"
                   (click)="onSubmit('conditionGrading')"
                 >
-                  Save
+                {{ "create_product_listing.save_btn" | translate }}
                 </button>
                 <button
                   *ngIf="isNextButtonShowonScopeOfdelivery"
                   class="save-can-btn save-btn-bg"
                   (click)="nextMoveToScopeOfDelivery()"
                 >
-                  Next
+                {{ "create_product_listing.next_btn" | translate }}
                 </button>
               </div>
             </div>
@@ -981,13 +909,12 @@
             <strong
             style="cursor: pointer;"
             (click)="moveToForm('scopeofdelivery')"
-            >Scope of Delivery</strong>
+            >{{ "create_product_listing.scope_of_delivery" | translate }}</strong>
             <p
             style="cursor: pointer;"
             (click)="moveToForm('scopeofdelivery')" 
             class="text-muted">
-              Crypto ipsum bitcoin ethereum dogecoin litecoin. Revain neo gelen
-              amp tecoin EOS chiliz...
+            {{ "create_product_listing.scope_of_delivery_para" | translate }}
             </p>
 
             <div
@@ -1016,7 +943,7 @@
                 </div>
               </div>
 
-              <div
+              <div [ngClass]="{ 'reverse-order-listing-details-btn-div': translateService.currentLang !== 'en' }"
                 class="d-flex align-items-center justify-content-end gap-2 mb-3"
                 style="padding: 0 20px 0 20px"
               >
@@ -1024,7 +951,7 @@
                   class="save-can-btn canc-bg-color"
                   (click)="backbtn('conditionGrading')"
                 >
-                  Back
+                {{ 'create_product_listing.back_btn' | translate }}
                 </button>
                 <!-- <button
                   
@@ -1038,14 +965,14 @@
                   class="save-can-btn save-btn-bg"
                   (click)="onSubmit('scopeofdelivery')"
                 >
-                  Save
+                {{ "create_product_listing.save_btn" | translate }}
                 </button>
                 <button
                   *ngIf="isNextButtonShowonScopeOfdelivery"
                   class="save-can-btn save-btn-bg"
                   (click)="nextMoveToScopeOfDelivery()"
                 >
-                  Next
+                {{ "create_product_listing.next_btn" | translate }}
                 </button>
                 
               </div>
@@ -1065,16 +992,15 @@
             <strong
             style="cursor: pointer;"
             (click)="moveToForm('proofofownership')"
-            >Proof of Ownership</strong>
+            >{{ "create_product_listing.proof_of_ownership" | translate }}</strong>
             <p class="text-muted"
             style="cursor: pointer;"
             (click)="moveToForm('proofofownership')"
             >
-              Crypto ipsum bitcoin ethereum dogecoin litecoin. Revain neo gelen
-              amp tecoin EOS chiliz...
+            {{ "create_product_listing.proof_of_ownership_para" | translate }}
             </p>
 
-            <div
+            <div [ngClass]="{ 'reverse-order-condition-gradding-body': translateService.currentLang !== 'en' }"
               class="image-upload-container"
               *ngIf="selectedSection === 'proofofownership' && isSmallScreen"
             >
@@ -1217,35 +1143,29 @@
               </div>
             </div>
 
-              <div class="container-fluid mt-3">
-                <div class="help-card p-4">
-                  <div class="icon-placeholder">
-                    <!-- <span>🔄</span> -->
-                    <img
-                      src="../../../../assets/images/help-us.png"
-                      alt="img"
-                    />
-                  </div>
-                  <h5>Having trouble?</h5>
-                  <p>If you cannot set the watch to a specified time:</p>
-                  <ul class="pl-3" style="color: #666">
-                    <li>
-                      Write each time down on a slip of paper and place it next
-                      to the watch
-                    </li>
-                    <li>
-                      Take a photo of the watch with each piece of paper, then
-                      upload the photos
-                    </li>
-                  </ul>
-                  <p>If you still have any questions, please contact us</p>
-                  <div class="mt-3">
-                    <button class="contact-us-btn">Contact us</button>
-                  </div>
+            <div class="container-fluid mt-4" style="padding-left: 0;padding-right: 0;">
+              <div class="help-card">
+                <div class="icon-placeholder">
+                  <img src="../../../../assets/images/help-us.png" alt="img" />
+                </div>
+                <h5> {{ "create_product_listing.having_trouble" | translate }}</h5>
+                <p>{{ "create_product_listing.having_trouble_para_one" | translate }}</p>
+                <ul class="pl-3" style="color: #666">
+                  <li>
+                    {{ "create_product_listing.having_trouble_list_item_one" | translate }}
+                  </li>
+                  <li>
+                    {{ "create_product_listing.having_trouble_list_item_two" | translate }}
+                  </li>
+                </ul>
+                <p>{{ "create_product_listing.having_trouble_para_two" | translate }}</p>
+                <div class="mt-3">
+                  <button class="contact-us-btn">    {{ "create_product_listing.contact_us_btn" | translate }}</button>
                 </div>
               </div>
+            </div>
 
-              <div
+              <div [ngClass]="{ 'reverse-order-listing-details-btn-div': translateService.currentLang !== 'en' }"
                 class="d-flex align-items-center justify-content-end gap-2 mb-3"
                 style="padding: 0 20px 0 20px"
               >
@@ -1253,21 +1173,21 @@
                   class="save-can-btn canc-bg-color"
                   (click)="backbtn('scopeofdelivery')"
                 >
-                  Back
+                {{ 'create_product_listing.back_btn' | translate }}
                 </button>
                 <button
                   *ngIf="!isNextButtonShowonProofofOwnerShip"
                     class="save-can-btn save-btn-bg"
                     (click)="onSubmit('proofofownership')"
                   >
-                    Save
+                  {{ "create_product_listing.save_btn" | translate }}
                   </button>
                   <button
                   *ngIf="isNextButtonShowonProofofOwnerShip"
                     class="save-can-btn save-btn-bg"
                     (click)="nextMoveToBillingInformation()"
                   >
-                    Next
+                  {{ "create_product_listing.next_btn" | translate }}
                   </button>
               </div>
             </div>
@@ -1286,173 +1206,172 @@
             <strong
             style="cursor: pointer;"
             (click)="moveToForm('priceshipment')"
-            >Price & Shipment</strong>
+            >{{ "create_product_listing.price_shipment" | translate }}</strong>
             <p class="text-muted"
             style="cursor: pointer;"
             (click)="moveToForm('priceshipment')"
             >
-              Crypto ipsum bitcoin ethereum dogecoin litecoin. Revain neo golem
-              amp telcoin EOS chiliz...
+            {{ "create_product_listing.price_shipment_para" | translate }}
             </p>
             <div
               class="image-upload-container"
               *ngIf="selectedSection === 'priceshipment' && isSmallScreen"
             >
-            <mat-form-field appearance="outline" *ngIf="isAdminLogin">
-              <mat-label>Select Type</mat-label>
+            <mat-form-field [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'" appearance="outline" *ngIf="isAdminLogin">
+              <mat-label>{{ "create_product_listing.select_type" | translate }}</mat-label>
               <mat-select [(ngModel)]="selectedUserTypeofConditionGradingForAdmin">
-                <mat-option value="user">User</mat-option>
-                <mat-option value="dealer">Dealer</mat-option>
+                <mat-option value="user">{{ "create_product_listing.user_type" | translate }}</mat-option>
+                      <mat-option value="dealer">{{ "create_product_listing.dealer_type" | translate }}</mat-option>
               </mat-select>
             </mat-form-field>
               <!-- this is for Seller -->
               <div *ngIf="userType ==='user' || selectedUserTypeofConditionGradingForAdmin === 'user'" class="container-fluid mt-5">
                 <mat-form-field
-                  style="width: 100%"
-                  class="full-width"
-                  appearance="outline"
-                >
-                  <mat-label class="label-header">Watch Price</mat-label>
-                  <input
-                    matInput
-                    appPriceLimit
-                    [(ngModel)]="watchPrice"
-                    placeholder="Enter watch price"
-                    (input)="calculatePayout()"
-                  />
-                  <mat-hint align="end">4% Commission</mat-hint>
-                </mat-form-field>
+                style="width: 100%"
+                class="full-width"
+                appearance="outline"
+                [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'"
+                
+              >
+                <mat-label class="label-header">{{ "create_product_listing.watch_price" | translate }}</mat-label>
+                <input
+                  matInput
+                  [(ngModel)]="watchPrice"
+                  appPriceLimit
+                  placeholder="Enter watch price"
+                  (input)="calculatePayout()"
+                />
+                <mat-hint align="end">{{ "create_product_listing.watch_price_commission" | translate }}</mat-hint>
+              </mat-form-field>
 
-                <mat-card class="info-card mt-4">
-                  <p class="font-size-18 font-wight-700 color-132138">Payout Information</p >
-                  <div class="info-row d-flex justify-content-between">
-                    <p class="font-size-16 font-wight-400 color-909090">Watch Price</p>
-                    <p class="font-size-16 font-wight-600 color-0F172A">{{
-                      watchPriceDisplay | currency : "SR" : "symbol" : "1.2-2"
-                    }}</p>
-                  </div>
-                  <div class="info-row d-flex justify-content-between">
-                    <span class="font-size-16 font-wight-400 color-909090">Platform Fee (4%)</span>
-                    <span class="font-size-16 font-wight-600 color-0F172A">
-                      - {{ platformFee | currency : "SR" : "symbol" : "1.2-2" }}
-                    </span>
-                  </div>
-                  <mat-divider></mat-divider>
-                  <div class="info-row d-flex justify-content-between">
-                    <span class="font-size-16 font-wight-400 color-909090">Estimated Payout</span>
-                    <span class="font-size-16 font-wight-600 color-0F172A">
-                      {{ estimatedPayout | currency : "SR" : "symbol" : "1.2-2" }}
-                    </span>
-                  </div>
-                </mat-card>
+              <mat-card class="info-card mt-4"  [ngClass]="{ 'reverse-order-info-card': translateService.currentLang !== 'en' }">
+                <p class="font-size-18 font-wight-700 color-132138">{{ "create_product_listing.payout_info" | translate }}</p >
+                <div class="info-row d-flex justify-content-between">
+                  <p class="font-size-16 font-wight-400 color-909090">{{ "create_product_listing.watch_price" | translate }}</p>
+                  <p class="font-size-16 font-wight-600 color-0F172A">{{
+                    watchPriceDisplay | currency : "SR" : "symbol" : "1.2-2"
+                  }}</p>
+                </div>
+                <div class="info-row d-flex justify-content-between">
+                  <span class="font-size-16 font-wight-400 color-909090">{{ "create_product_listing.platform_fees" | translate }}</span>
+                  <span class="font-size-16 font-wight-600 color-0F172A">
+                    - {{ platformFee | currency : "SR" : "symbol" : "1.2-2" }}
+                  </span>
+                </div>
+                <mat-divider></mat-divider>
+                <div class="info-row d-flex justify-content-between">
+                  <span class="font-size-16 font-wight-400 color-909090">{{ "create_product_listing.estimated_payout" | translate }}</span>
+                  <span class="font-size-16 font-wight-600 color-0F172A">
+                    {{ estimatedPayout | currency : "SR" : "symbol" : "1.2-2" }}
+                  </span>
+                </div>
+              </mat-card>
               </div>
 
               <!-- this is for Dealer -->
 
-              <div *ngIf="userType ==='dealer' || selectedUserTypeofConditionGradingForAdmin === 'dealer'" class="container-fluid mt-5 d-flex flex-wrap">
-                <div class="col-md-6">
+              <div *ngIf="userType ==='dealer' || selectedUserTypeofConditionGradingForAdmin === 'dealer'" [ngClass]="{ 'reverse-orderdealer-or-dealer-div': translateService.currentLang !== 'en' }" class="container-fluid mt-5 d-flex flex-wrap">
+                <div class="col-md-6 shipping-changing-cont">
                   <mat-form-field
-                    style="width: 100%"
-                    class="full-width"
-                    appearance="outline"
-                  >
-                    <mat-label class="label-header">Watch Price</mat-label>
-                    <input
-                      matInput
-                      
-                      appPriceLimit
-                      [(ngModel)]="watchPrice"
-                      placeholder="Enter watch price"
-                      (input)="calculatePayout()"
-                    />
-                    <mat-hint align="end">4% Commission</mat-hint>
-                  </mat-form-field>
+                  style="width: 100%"
+                  class="full-width"
+                  appearance="outline"
+                  [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'"
+                >
+                  <mat-label class="label-header">{{ "create_product_listing.watch_price" | translate }}</mat-label>
+                  <input
+                    matInput
+                    [(ngModel)]="watchPrice"
+                    placeholder="{{ 'create_product_listing.watch_price_place' | translate }}"
+                    appPriceLimit
+                    (input)="calculatePayout()"
+                  />
+                  <mat-hint align="end">{{ "create_product_listing.watch_price_commission" | translate }}</mat-hint>
+                </mat-form-field>
 
-                  <mat-form-field
-                    style="width: 100%"
-                    class="full-width"
-                    appearance="outline"
-                  >
-                    <mat-label class="label-header">Select Shipping Type</mat-label>
-                    <mat-select (selectionChange)="countShipping()" [(ngModel)]="shipping_type">
-                      <mat-option value="exclusiveShipping">Exclusive Shipping</mat-option>
-                      <mat-option value="freeCharge">Free of Charge</mat-option>
-                      <mat-option value="inclusiveShipping">Inclusive Shipping</mat-option>
-                    </mat-select>
-                  </mat-form-field>
+                <mat-form-field
+                  style="width: 100%"
+                  class="full-width"
+                  appearance="outline"
+                  [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'"
+                >
+                <mat-label class="label-header">  {{ "create_product_listing.select_shipping_type" | translate }}</mat-label>
+                <mat-select (selectionChange)="countShipping()" [(ngModel)]="shipping_type">
+                  <mat-option value="exclusiveShipping">  {{ "create_product_listing.exclusive_shipping" | translate }}g</mat-option>
+                  <mat-option value="freeCharge">  {{ "create_product_listing.free_of_charge" | translate }}</mat-option>
+                  <mat-option value="inclusiveShipping">  {{ "create_product_listing.inclusive_shipping" | translate }}</mat-option>
+                </mat-select>
+                </mat-form-field>
 
-                  <mat-form-field
-                  *ngIf="shipping_type === 'inclusiveShipping'"
-                    style="width: 100%"
-                    class="full-width"
-                    appearance="outline"
-                  >
-                    <mat-label class="label-header">Shipping Cost</mat-label>
-                    <input
-                      matInput
-                      
-                      [(ngModel)]="shipping_charges"
-                      appPriceLimit
-                      placeholder="Enter Shipping Cost"
-                      (input)="Payoutaftershippingcharges()"
-                    />
-                  </mat-form-field>
+                <mat-form-field
+                *ngIf="shipping_type === 'inclusiveShipping'"
+                  style="width: 100%"
+                  class="full-width"
+                  appearance="outline"
+                  [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'"
+                >
+                  <mat-label class="label-header">{{ "create_product_listing.shipping_cost" | translate }}</mat-label>
+                  <input
+                    matInput
+                    [(ngModel)]="shipping_charges"
+                    appPriceLimit
+                    placeholder="{{ 'create_product_listing.shipping_cost_place' | translate }}"
+                    (input)="Payoutaftershippingcharges()"
+                  />
+                </mat-form-field>
 
-                  <mat-form-field
-                  *ngIf="shipping_type === 'inclusiveShipping'"
-                    style="width: 100%"
-                    class="full-width"
-                    appearance="outline"
-                  >
-                    <mat-label class="label-header"
-                      >Est. Delivery Time</mat-label
-                    >
-                    <input
-                      matInput
-                      type="text"
-                      [(ngModel)]="estimate_delivery"
-                      placeholder="Enter Est. Delivery Time"
-                      appFieldLimitIntoHundered
-                    />
-                  </mat-form-field>
+                <mat-form-field
+                *ngIf="shipping_type === 'inclusiveShipping'"
+                  style="width: 100%"
+                  class="full-width"
+                  appearance="outline"
+                  [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'"
+                >
+                  <mat-label class="label-header">  {{ "create_product_listing.est_delivery_time" | translate }}</mat-label>
+                  <input
+                    matInput
+                    type="text"
+                    [(ngModel)]="estimate_delivery"
+                    placeholder="  {{ 'create_product_listing.est_delivery_time_place' | translate }}"
+                    appFieldLimitIntoHundered
+                  />
+                </mat-form-field>
 
-                  <mat-checkbox [(ngModel)]="allow_to_make_offer">
-                    <label class="mdc-label" style="margin-top: 13px; margin-bottom: 5px;">
-                      Allow make offers
-                    </label>
-                  </mat-checkbox>
+                <mat-checkbox [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'" [(ngModel)]="allow_to_make_offer">
+                  <label class="mdc-label" style="margin-top: 13px; margin-bottom: 5px;">
+                    {{ "create_product_listing.allow_make_offer" | translate }}
+                  </label>
+                </mat-checkbox>
                   
 
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-6 for-reverse">
                   <mat-card class="info-card">
                     <p class="font-size-18 font-wight-700 color-132138">
-                      Payout Information
+                      {{ "create_product_listing.payout_info" | translate }}
                     </p>
                     <div class="info-row d-flex justify-content-between">
                       <p class="font-size-16 font-wight-400 color-909090">
-                        Watch Price
+                        {{ "create_product_listing.watch_price" | translate }}
                       </p>
                       <p class="font-size-16 font-wight-600 color-0F172A">
                         {{
-                          watchPriceDisplay
-                            | currency : "SR" : "symbol" : "1.2-2"
+                          watchPriceDisplay | currency : "SR" : "symbol" : "1.2-2"
                         }}
                       </p>
                     </div>
                     <div class="info-row d-flex justify-content-between">
                       <span class="font-size-16 font-wight-400 color-909090"
-                        >Platform Fee (4%)</span
+                        >{{ "create_product_listing.platform_fees" | translate }}</span
                       >
                       <span class="font-size-16 font-wight-600 color-0F172A">
-                        -
-                        {{ platformFee | currency : "SR" : "symbol" : "1.2-2" }}
+                        - {{ platformFee | currency : "SR" : "symbol" : "1.2-2" }}
                       </span>
                     </div>
                     <mat-divider></mat-divider>
                     <div class="info-row d-flex justify-content-between">
                       <span class="font-size-16 font-wight-400 color-909090"
-                        >Payout</span
+                        >{{ "create_product_listing.payout" | translate }}</span
                       >
                       <span class="font-size-16 font-wight-600 color-0F172A">
                         {{
@@ -1460,23 +1379,22 @@
                         }}
                       </span>
                     </div>
-
+  
                     <div *ngIf="shipping_type === 'inclusiveShipping'" class="info-row d-flex justify-content-between">
                       <span class="font-size-16 font-wight-400 color-909090"
-                        >Shipping Charges</span
+                        >{{ "create_product_listing.shipping_charges" | translate }}</span
                       >
                       <span class="font-size-16 font-wight-600 color-0F172A">
                         +
                         {{
-                          shipping_charges
-                            | currency : "SR" : "symbol" : "1.2-2"
+                          shipping_charges ? shipping_charges : 0 | currency : "SR" : "symbol" : "1.2-2"
                         }}
                       </span>
                     </div>
                     <mat-divider></mat-divider>
                     <div class="info-row d-flex justify-content-between">
                       <span class="font-size-16 font-wight-400 color-909090"
-                        >Estimated Payout</span
+                        >{{ "create_product_listing.estimated_payout" | translate }}</span
                       >
                       <span class="font-size-16 font-wight-600 color-0F172A">
                         {{
@@ -1489,7 +1407,7 @@
                 </div>
               </div>
 
-              <div
+              <div [ngClass]="{ 'reverse-order-listing-details-btn-div': translateService.currentLang !== 'en' }"
                 class="d-flex align-items-center justify-content-end gap-2 mb-3"
                 style="padding: 0 20px 0 20px"
               >
@@ -1497,13 +1415,13 @@
                   class="save-can-btn canc-bg-color"
                   (click)="backbtn('proofofownership')"
                 >
-                  Back
+                {{ 'create_product_listing.back_btn' | translate }}
                 </button>
                 <button
                   class="save-can-btn save-btn-bg"
                   (click)="onSubmit('priceshipment')"
                 >
-                  Save
+                {{ "create_product_listing.save_btn" | translate }}
                 </button>
               </div>
             </div>
@@ -1522,13 +1440,12 @@
             <strong
             style="cursor: pointer;"
             (click)="moveToForm('billinginformation')"
-            >Billing Information</strong>
+            > {{ "create_product_listing.billing_information" | translate }}</strong>
             <p
             style="cursor: pointer;"
             (click)="moveToForm('billinginformation')"
             class="text-muted">
-              Crypto ipsum bitcoin ethereum dogecoin litecoin. Revain neo golem
-              amp telcoin EOS chiliz...
+            {{ "create_product_listing.billing_information_para" | translate }}
             </p>
             <div
               class="image-upload-container"
@@ -1716,13 +1633,12 @@
             <strong
             style="cursor: pointer;"
             (click)="moveToForm('summary')"
-            >Summary</strong>
+            >{{ "create_product_listing.summary" | translate }}</strong>
             <p 
             style="cursor: pointer;"
             (click)="moveToForm('summary')"
             class="text-muted">
-              Crypto ipsum bitcoin ethereum dogecoin litecoin. Revain neo golem
-              amp telcoin EOS chiliz...
+            {{ "create_product_listing.summary_para" | translate }}
             </p>
             <div
               class="image-upload-container"
@@ -1947,30 +1863,30 @@
           class="card-body"
           style="padding: 8px 20px 0 20px !important"
           *ngIf="selectedSection === 'listingDetails'"
+          [ngClass]="{ 'reverse-order-para-one': translateService.currentLang !== 'en' }"
         >
           <p class="font-weight-bold font-size-24 color-242424 margin-0">
-            Listing Details
+            {{ "create_product_listing.listing_details" | translate }}
           </p>
           <p class="font-weight-400 font-size-16 color-909090">
-            Every watch will soon be verified by our team of experts to ensure
-            it’s 100% authentic, giving buyers complete peace of mind.
+            {{ "create_product_listing.listing_details_para_one" | translate }}
           </p>
           <form [formGroup]="listingForm" (ngSubmit)="onSubmit('listing')">
-            <mat-form-field appearance="outline" class="w-100 mt-2">
-              <mat-label class="label-header">Brand</mat-label>
+            <mat-form-field [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'" appearance="outline" class="w-100 mt-2">
+              <mat-label class="label-header"> {{ "create_product_listing.brand" | translate }}</mat-label>
               <input type="text" matInput [formControl]="myControl" [matAutocomplete]="auto">
               <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
                 @for (option of filteredOptions | async; track option) {
                   <mat-option [disabled]="productDetails?.brand_id ? true : false" [value]="option">{{option.name}}</mat-option>
                 }
               </mat-autocomplete>
-              <mat-error *ngIf="brand_id.hasError('required')">
-                Brand is required
+              <mat-error [ngClass]="{'text-left': translateService.currentLang === 'en', 'text-right': translateService.currentLang !== 'en'}" *ngIf="brand_id.hasError('required')">
+                {{ "create_product_listing.brand_required" | translate }}
               </mat-error>
             </mat-form-field>
 
-            <mat-form-field appearance="outline" class="w-100 mt-2">
-              <mat-label class="label-header">Category</mat-label>
+            <mat-form-field [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'" appearance="outline" class="w-100 mt-2">
+              <mat-label class="label-header">{{ "create_product_listing.category" | translate }}</mat-label>
               <input type="text" matInput [formControl]="myCategoryControl" [matAutocomplete]="autoCategory">
             
               <mat-autocomplete #autoCategory="matAutocomplete" [displayWith]="displayCategoryFn">
@@ -1981,89 +1897,87 @@
             
               <!-- Display selected categories as chips -->
               <div *ngIf="selectedCategories?.controls?.length > 0" class="selected-categories">
-                <mat-chip-list #chipList aria-label="Category selection">
-                  <mat-chip *ngFor="let category of selectedCategories?.controls" [removable]="true"  (click)="productDetails?.categories ? null : removeCategory(category.value)">
+                <mat-chip-list #chipList aria-label="{{ 'create_product_listing.category_selection' | translate }}">
+                  <mat-chip *ngFor="let category of selectedCategories?.controls" [removable]="true" (click)="productDetails?.categories ? null : removeCategory(category.value)">
                     {{ category.value.name }}
                     <mat-icon matChipRemove>cancel</mat-icon>
                   </mat-chip>
                 </mat-chip-list>
               </div>
-              <mat-hint>Select any Category max limit is 5</mat-hint>
-              <mat-error *ngIf="selectedCategories?.controls.length >= MAX_CATEGORY_SELECTION">
-                You can only select up to 5 categories.
+              <mat-hint>{{ "create_product_listing.category_limit_5" | translate }}</mat-hint>
+              <mat-error [ngClass]="{'text-left': translateService.currentLang === 'en', 'text-right': translateService.currentLang !== 'en'}" *ngIf="selectedCategories?.controls?.length >= MAX_CATEGORY_SELECTION">
+
+                {{ "create_product_listing.category_limit_up_to_5" | translate }}
               </mat-error>
-              <mat-error *ngIf="selectedCategories?.controls.length === 0">
-                Category is required
+              <mat-error [ngClass]="{'text-left': translateService.currentLang === 'en', 'text-right': translateService.currentLang !== 'en'}" *ngIf="selectedCategories?.controls?.length === 0">
+                {{ "create_product_listing.category_required" | translate }}
               </mat-error>
             </mat-form-field>
-            
-            
-            
 
-            <mat-form-field appearance="outline" class="w-100 mt-2">
-              <mat-label class="label-header">Name</mat-label>
+            <mat-form-field [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'" appearance="outline" class="w-100 mt-2">
+              <mat-label class="label-header"> {{ "create_product_listing.name" | translate }}</mat-label>
               <input
                 matInput
                 [readonly]="productDetails?.name ? true : false"
-                placeholder="Enter Name"
+                placeholder="{{ 'create_product_listing.enter_name' | translate }}"
                 formControlName="name"
                 required
                 appFieldLimitIntoHundered
               />
-              <mat-error *ngIf="name.hasError('required')">
-                Name is required
+              <mat-error [ngClass]="{'text-left': translateService.currentLang === 'en', 'text-right': translateService.currentLang !== 'en'}" *ngIf="name.hasError('required')">
+                {{ "create_product_listing.name_required" | translate }}
               </mat-error>
             </mat-form-field>
 
-            <mat-form-field appearance="outline" class="w-100 mt-2">
-              <mat-label class="label-header">Model</mat-label>
+            <mat-form-field [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'" appearance="outline" class="w-100 mt-2">
+              <mat-label class="label-header"> {{ "create_product_listing.model" | translate }}</mat-label>
               <input
                 matInput
                 [readonly]="productDetails?.model ? true : false"
-                placeholder="Enter your model name"
+                placeholder="{{ 'create_product_listing.enter_model_name' | translate }}"
                 formControlName="model"
                 required
                 appFieldLimitIntoHundered
               />
-              <mat-error *ngIf="model.hasError('required')">
-                Model is required
+              <mat-error [ngClass]="{'text-left': translateService.currentLang === 'en', 'text-right': translateService.currentLang !== 'en'}" *ngIf="model.hasError('required')">
+                {{ "create_product_listing.model_required" | translate }}
               </mat-error>
             </mat-form-field>
 
-            <mat-form-field appearance="outline" class="w-100 mt-2">
-              <mat-label class="label-header">Title</mat-label>
+            <mat-form-field [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'" appearance="outline" class="w-100 mt-2">
+              <mat-label class="label-header">{{ "create_product_listing.title" | translate }}</mat-label>
               <input
                 matInput
+                placeholder="{{ 'create_product_listing.enter_title_name' | translate }}"
                 [readonly]="productDetails?.title ? true : false"
-                placeholder="Enter your ad title"
                 formControlName="title"
                 required
                 appFieldLimitIntoHundered
               />
-              <mat-error *ngIf="title.hasError('required')">
-                Title is required
+              <mat-error [ngClass]="{'text-left': translateService.currentLang === 'en', 'text-right': translateService.currentLang !== 'en'}" *ngIf="title.hasError('required')">
+                {{ "create_product_listing.title_required" | translate }}
               </mat-error>
             </mat-form-field>
 
-            <mat-form-field appearance="outline" class="w-100 mt-2">
-              <mat-label class="label-header">Description</mat-label>
+            <mat-form-field [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'" appearance="outline" class="w-100 mt-2">
+              <mat-label class="label-header">{{ "create_product_listing.description" | translate }}</mat-label>
               <textarea
                 matInput
-                placeholder="Enter your watch description"
+                placeholder="{{ 'create_product_listing.enter_description_name' | translate }}"
                 formControlName="description"
                 rows="3"
               ></textarea>
-              <mat-error *ngIf="description.hasError('minlength')">
-                Description must be at least 5 characters long.
+              <mat-error [ngClass]="{'text-left': translateService.currentLang === 'en', 'text-right': translateService.currentLang !== 'en'}" *ngIf="description.hasError('minlength')">
+                {{ "create_product_listing.description_least_required" | translate }}
               </mat-error>
-              <mat-error *ngIf="description.hasError('maxlength')">
-                Description cannot be more than 250 characters.
+              <mat-error [ngClass]="{'text-left': translateService.currentLang === 'en', 'text-right': translateService.currentLang !== 'en'}" *ngIf="description.hasError('maxlength')">
+                {{ "create_product_listing.description_max_required" | translate }}
               </mat-error>
             </mat-form-field>
 
-            <mat-form-field appearance="outline" class="w-100 mt-2">
-              <mat-label class="label-header">Watch Type</mat-label>
-              <mat-select  formControlName="watch_type">
+            <mat-form-field [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'" appearance="outline" class="w-100 mt-2">
+              <mat-label class="label-header">{{ "create_product_listing.watchtype" | translate }}</mat-label>
+              <mat-select formControlName="watch_type" [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'">
                 <mat-option [disabled]="productDetails?.watch_type ? true : false"
                   *ngFor="let data of formdropdownListData.watch_type"
                   [value]="data.key"
@@ -2071,50 +1985,52 @@
                   {{ data.value }}
                 </mat-option>
               </mat-select>
-              <mat-error *ngIf="watch_type.hasError('required')">
-                Watch Type is required
+            
+              <mat-error [ngClass]="{'text-left': translateService.currentLang === 'en', 'text-right': translateService.currentLang !== 'en'}" *ngIf="watch_type.hasError('required')">
+                {{ "create_product_listing.watchtype_required" | translate }}
               </mat-error>
             </mat-form-field>
+            
 
-            <mat-form-field appearance="outline" class="w-100 mt-2">
-              <mat-label class="label-header">Year of Production</mat-label>
+            <mat-form-field [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'" appearance="outline" class="w-100 mt-2">
+              <mat-label class="label-header"> {{ "create_product_listing.year_of_production" | translate }}</mat-label>
               <input
                 matInput
-                [readonly]="productDetails?.year_of_production ? true : false"
                 type="text"
-                placeholder="e.g. 2024"
+                placeholder="{{ 'create_product_listing.year_of_production_placeholder' | translate }}"
                 formControlName="year_of_production"
+                [readonly]="productDetails?.year_of_production ? true : false"
                 appPositiveNumber
                 required
               />
-              <mat-error *ngIf="year_of_production.hasError('required')">
-                Year of production is required
+              <mat-error [ngClass]="{'text-left': translateService.currentLang === 'en', 'text-right': translateService.currentLang !== 'en'}" *ngIf="year_of_production.hasError('required')">
+                {{ "create_product_listing.year_of_production_required" | translate }}
               </mat-error>
-              <mat-error *ngIf="year_of_production.hasError('pattern')">
-                Year of production must be a 4-digit number.
+              <mat-error [ngClass]="{'text-left': translateService.currentLang === 'en', 'text-right': translateService.currentLang !== 'en'}" *ngIf="year_of_production.hasError('pattern')">
+                {{ "create_product_listing.year_of_production_validation" | translate }}
               </mat-error>
             </mat-form-field>
 
-            <mat-checkbox formControlName="approximation">
+            <mat-checkbox [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'" formControlName="approximation">
               <label class="mdc-label" style="margin-top: 13px; margin-bottom: 5px;">
-                Approximation
+                {{ "create_product_listing.Approximation" | translate }}
               </label>
             </mat-checkbox>
             
-            <mat-checkbox formControlName="unknown">
+            <mat-checkbox [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'" formControlName="unknown">
               <label class="mdc-label" style="margin-top: 13px; margin-bottom: 5px;">
-                Unknown
+                {{ "create_product_listing.Unknown" | translate }}
               </label>
             </mat-checkbox>
 
-            <div class="d-flex justify-content-end gap-2 mb-3 mt-3">
+            <div [ngClass]="{ 'reverse-order-listing-details-btn-div': translateService.currentLang !== 'en' }" class="listing-details-btn-div gap-2 mb-3 mt-3">
               <button
                 mat-button
                 type="button"
                 class="save-can-btn canc-bg-color"
                 (click)="cancelbtn()"
               >
-                Cancel
+              {{ "create_product_listing.cancel_btn" | translate }}
               </button>
               <button
                 mat-button
@@ -2122,7 +2038,7 @@
                 type="submit"
                 (click)="onSubmit('listingDetails')"
               >
-                Save
+              {{ "create_product_listing.save_btn" | translate }}
               </button>
             </div>
           </form>
@@ -2130,303 +2046,254 @@
 
         <!-- <-- Watch Details -- > -->
         <div *ngIf="watchDetailsForm && selectedSection === 'watchDetails'">
-          <div class="card mb-4" style="box-shadow: none !important">
-            <div
-              style="
-                border-bottom: none !important;
-                justify-content: space-between;
-                width: 100%;
-                display: flex;
-                padding: 5px 20px 0 20px;
-              "
-            >
+          <div class="card mb-4" style="box-shadow: none !important" [ngClass]="{ 'reverse-order-watch-details': translateService.currentLang !== 'en' }">
+            <div class="watch-details-label">
               <p class="font-weight-bold font-size-24 color-242424 margin-0">
-                Watch Details
+                {{ "create_product_listing.watch_details" | translate }}
               </p>
             </div>
             <p
               style="padding: 0 20px 0 20px"
               class="font-weight-400 font-size-16 color-909090"
             >
-              Every watch will soon be verified by our team of experts to ensure
-              it’s 100% authentic, giving buyers complete peace of mind.
+            {{ "create_product_listing.watch_details_para_one" | translate }}
             </p>
             <div class="card-body">
               <form [formGroup]="watchDetailsForm">
-                <mat-form-field appearance="outline" class="w-100 mb-3">
-                  <mat-label class="label-header">Reference No.</mat-label>
+                <mat-form-field [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'" appearance="outline" class="w-100 mb-3">
+                  <mat-label class="label-header"> {{ "create_product_listing.refrence_number" | translate }}</mat-label>
                   <input
                     matInput
                     [readonly]="productDetails?.reference_number ? true : false"
                     formControlName="reference_number"
-                    placeholder="Enter your Reference Number"
-                    required
+                    placeholder="{{ 'create_product_listing.refrence_number_placeHolder' | translate }}"
+                    required=""
                   />
-                  <mat-error *ngIf="reference_number.hasError('required')">
-                    Reference Number is required
-                  </mat-error>
-                  <mat-error *ngIf="reference_number.hasError('pattern')">
-                    Only alphanumeric characters are allowed (letters and numbers).
-                  </mat-error>
-                  <mat-error *ngIf="reference_number.hasError('maxlength')">
-                    Reference number cannot exceed 30 characters.
+                  <mat-error [ngClass]="{'text-left': translateService.currentLang === 'en', 'text-right': translateService.currentLang !== 'en'}" *ngIf="reference_number.hasError('required')">
+                    {{ "create_product_listing.refrence_number_required" | translate }}
                   </mat-error>
                 </mat-form-field>
-
+  
                 <div class="row">
                   <div class="col-md-4 mb-3">
-                    <mat-form-field appearance="outline" class="w-100">
-                      <mat-label class="label-header"
-                        >Serial No. ( Will not Published )</mat-label
-                      >
+                    <mat-form-field [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'" appearance="outline" class="w-100">
+                      <mat-label class="label-header">
+                        {{ 'create_product_listing.serial_no' | translate }}
+                      </mat-label>
                       <input
                         matInput
                         [readonly]="productDetails?.serial_no ? true : false"
                         formControlName="serial_no"
-                        placeholder="Enter serial number"
+                        placeholder="{{ 'create_product_listing.serial_no_placeHolder' | translate }}"
                         required
                       />
-
-                      <mat-error *ngIf="serial_no.hasError('required')">
-                        Serial Number is required
-                      </mat-error>
-                      <mat-error *ngIf="serial_no.hasError('pattern')">
-                        Only alphanumeric characters are allowed (letters and numbers).
-                      </mat-error>
-                      <mat-error *ngIf="serial_no.hasError('maxlength')">
-                        Serial number cannot exceed 30 characters.
+                      <mat-error [ngClass]="{'text-left': translateService.currentLang === 'en', 'text-right': translateService.currentLang !== 'en'}" *ngIf="serial_no.hasError('required')">
+                        {{ 'create_product_listing.serial_no_required' | translate }}
                       </mat-error>
                     </mat-form-field>
                   </div>
+                
                   <div class="col-md-4 mb-3">
-                    <mat-form-field appearance="outline" class="w-100">
-                      <mat-label class="label-header">Gender</mat-label>
+                    <mat-form-field [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'" appearance="outline" class="w-100">
+                      <mat-label class="label-header">
+                        {{ 'create_product_listing.gender' | translate }}
+                      </mat-label>
                       <mat-select formControlName="gender">
-                        <mat-option value="">Please Select</mat-option>
-                        <mat-option
-                          *ngFor="let data of formdropdownListData?.gender"
-                          [value]="data.key"
-                        >
+                        <mat-option value="">{{ 'create_product_listing.gender_placeHolder' | translate }}</mat-option>
+                        <mat-option *ngFor="let data of formdropdownListData?.gender" [value]="data.key">
                           {{ data.value }}
                         </mat-option>
                       </mat-select>
-                      <mat-error *ngIf="gender.hasError('required')">
-                        Gender is required
+                      <mat-error [ngClass]="{'text-left': translateService.currentLang === 'en', 'text-right': translateService.currentLang !== 'en'}" *ngIf="gender.hasError('required')">
+                        {{ 'create_product_listing.gender_required' | translate }}
                       </mat-error>
                     </mat-form-field>
                   </div>
+                
                   <div class="col-md-4 mb-3">
-                    <mat-form-field appearance="outline" class="w-100">
-                      <mat-label class="label-header">Movement</mat-label>
+                    <mat-form-field [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'" appearance="outline" class="w-100">
+                      <mat-label class="label-header">
+                        {{ 'create_product_listing.movement' | translate }}
+                      </mat-label>
                       <mat-select formControlName="movement">
-                        <mat-option value="">Please Select</mat-option>
-                        <mat-option
-                          *ngFor="let data of formdropdownListData?.movement"
-                          [value]="data.key"
-                          >{{ data.value }}</mat-option
-                        >
+                        <mat-option value="">{{ 'create_product_listing.movement_placeHolder' | translate }}</mat-option>
+                        <mat-option *ngFor="let data of formdropdownListData?.movement" [value]="data.key">
+                          {{ data.value }}
+                        </mat-option>
                       </mat-select>
-                      <mat-error *ngIf="movement.hasError('required')">
-                        Movement is required
+                      <mat-error [ngClass]="{'text-left': translateService.currentLang === 'en', 'text-right': translateService.currentLang !== 'en'}" *ngIf="movement.hasError('required')">
+                        {{ 'create_product_listing.movement_required' | translate }}
                       </mat-error>
                     </mat-form-field>
                   </div>
                 </div>
-
+                
+  
                 <div class="row">
                   <div class="col-md-6 mb-3">
-                    <mat-form-field appearance="outline" class="w-100">
-                      <mat-label class="label-header">Case Diameter</mat-label>
+                    <mat-form-field [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'" appearance="outline" class="w-100">
+                      <mat-label class="label-header">
+                        {{ 'create_product_listing.case_diameter' | translate }}
+                      </mat-label>
                       <input
                         matInput
                         formControlName="case_diameter_value_1"
-                        placeholder="Enter diameter"
-                        
+                        placeholder="{{ 'create_product_listing.case_diameter_placeholder' | translate }}"
                         required
                       />
                       <span
-                        style="
-                          padding: 17px 15px 17px 15px;
-                          background-color: #dbdbdb;
-                        "
+                        style="padding: 17px 15px 17px 15px; background-color: #dbdbdb;"
                         matSuffix
-                        >mm</span
                       >
-                      <mat-error
-                        *ngIf="case_diameter_value_1.hasError('required')"
-                      >
-                        Case Diameter is required
+                        mm
+                      </span>
+                      <mat-error [ngClass]="{'text-left': translateService.currentLang === 'en', 'text-right': translateService.currentLang !== 'en'}" *ngIf="case_diameter_value_1.hasError('required')">
+                        {{ 'create_product_listing.case_diameter_required' | translate }}
                       </mat-error>
-                      <mat-error
-                        *ngIf="case_diameter_value_1.hasError('pattern')"
-                      >
-                      Case diameter 1 must be a valid number with up to 2 decimal places.
+                      <mat-error [ngClass]="{'text-left': translateService.currentLang === 'en', 'text-right': translateService.currentLang !== 'en'}" *ngIf="case_diameter_value_1.hasError('pattern')">
+                        {{ 'create_product_listing.case_diameter_invalid' | translate }}
                       </mat-error>
                     </mat-form-field>
                   </div>
+                
                   <div class="col-md-6 mb-3">
-                    <mat-form-field appearance="outline" class="w-100">
-                      <mat-label class="label-header">Other Diameter</mat-label>
+                    <mat-form-field [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'" appearance="outline" class="w-100">
+                      <mat-label class="label-header">
+                        {{ 'create_product_listing.other_diameter' | translate }}
+                      </mat-label>
                       <input
                         matInput
                         formControlName="case_diameter_value_2"
-                        placeholder="Enter diameter"
-    
+                        placeholder="{{ 'create_product_listing.other_diameter_placeholder' | translate }}"
                         required
                       />
                       <span
-                        style="
-                          padding: 17px 15px 17px 15px;
-                          background-color: #dbdbdb;
-                        "
+                        style="padding: 17px 15px 17px 15px; background-color: #dbdbdb;"
                         matSuffix
-                        >mm</span
                       >
-
-                      <mat-error
-                        *ngIf="case_diameter_value_2.hasError('required')"
-                      >
-                        Other Diameter is required
+                        mm
+                      </span>
+                      <mat-error [ngClass]="{'text-left': translateService.currentLang === 'en', 'text-right': translateService.currentLang !== 'en'}" *ngIf="case_diameter_value_2.hasError('required')">
+                        {{ 'create_product_listing.other_diameter_required' | translate }}
                       </mat-error>
-                      <mat-error
-                      *ngIf="case_diameter_value_2.hasError('pattern')"
-                    >
-                    Other diameter must be a valid number with up to 2 decimal places.
-                    </mat-error>
+                      <mat-error [ngClass]="{'text-left': translateService.currentLang === 'en', 'text-right': translateService.currentLang !== 'en'}" *ngIf="case_diameter_value_2.hasError('pattern')">
+                        {{ 'create_product_listing.other_diameter_invalid' | translate }}
+                      </mat-error>
                     </mat-form-field>
                   </div>
                 </div>
-
-                <div style="padding: 0 0 0 0">
-                  <p><strong>Additional Information</strong> (optional)</p>
+                
+  
+                <div [ngClass]="{ 'reverse-order-watch-details-of-Optional-alignment': translateService.currentLang !== 'en' }" style="padding: 0 0 0 0">
+                  <p><strong>{{ 'create_product_listing.additional_information' | translate }}</strong> ({{ 'create_product_listing.optional' | translate }})</p>
                   <p class="font-weight-400 font-size-16 color-909090">
-                    Every watch will soon be verified by our team of experts to
-                    ensure it’s 100% authentic, giving buyers complete peace of
-                    mind.
+                    {{ 'create_product_listing.watch_verification_text' | translate }}
                   </p>
                 </div>
-
+                
+  
                 <div style="padding: 0 0 15px 0">
                   <mat-accordion>
-                    <mat-expansion-panel
-                      [(expanded)]="panelDialOpenState"
-                      class="panel"
-                    >
+                    <mat-expansion-panel [(expanded)]="panelDialOpenState" class="panel">
                       <mat-expansion-panel-header>
-                        <mat-panel-title> Dial & Caliber </mat-panel-title>
+                        <mat-panel-title  [ngClass]="{ 'reverse-order-label-alignment': translateService.currentLang !== 'en' }">
+                          {{ 'create_product_listing.dial_and_caliber' | translate }}
+                        </mat-panel-title>
                       </mat-expansion-panel-header>
                       <div class="accordion-body">
                         <div class="row">
                           <div class="col-md-6 mb-3">
-                            <mat-form-field appearance="outline" class="w-100">
-                              <mat-label class="label-header"
-                                >Dial Color</mat-label
-                              >
+                            <mat-form-field [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'" appearance="outline" class="w-100">
+                              <mat-label class="label-header">{{ 'create_product_listing.dial_color' | translate }}</mat-label>
                               <input
                                 matInput
                                 formControlName="dial_color"
-                                placeholder="Enter Dial Color"
+                                placeholder="{{'create_product_listing.dial_color_placeHolder' | translate}}"
                                 appOnlyCharacterLimitThirty
                               />
                             </mat-form-field>
                           </div>
                           <div class="col-md-6 mb-3">
-                            <mat-form-field appearance="outline" class="w-100">
-                              <mat-label class="label-header"
-                                >Caliber / Movement</mat-label
-                              >
+                            <mat-form-field [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'" appearance="outline" class="w-100">
+                              <mat-label class="label-header">{{ 'create_product_listing.caliber_movement' | translate }}</mat-label>
                               <input
                                 matInput
                                 formControlName="caliber_movement"
-                                placeholder="Enter Caliber / Movement"
+                                placeholder="{{'create_product_listing.caliber_movement_placeHolder' | translate}}"
                                 appOnlyCharacterLimitThirty
                               />
                             </mat-form-field>
                           </div>
                         </div>
-
+                
                         <div class="row">
                           <div class="col-md-6 mb-3">
-                            <mat-form-field appearance="outline" class="w-100">
-                              <mat-label class="label-header"
-                                >Base Caliber</mat-label
-                              >
+                            <mat-form-field [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'" appearance="outline" class="w-100">
+                              <mat-label class="label-header">{{ 'create_product_listing.base_caliber' | translate }}</mat-label>
                               <input
                                 matInput
                                 formControlName="base_caliber"
-                                placeholder="Enter Base Caliber"
+                                placeholder="{{'create_product_listing.base_caliber_placeHolder' | translate}}"
                                 appOnlyCharacterLimitThirty
                               />
                             </mat-form-field>
                           </div>
                           <div class="col-md-6 mb-3">
-                            <mat-form-field appearance="outline" class="w-100">
-                              <mat-label class="label-header"
-                                >Power Reserve</mat-label
-                              >
+                            <mat-form-field [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'" appearance="outline" class="w-100">
+                              <mat-label class="label-header">{{ 'create_product_listing.power_reserve' | translate }}</mat-label>
                               <input
                                 matInput
                                 formControlName="power_reserve"
-                                placeholder="Enter Power Reserve"
+                                placeholder="{{'create_product_listing.power_reserve_placeHolder' | translate}}"
                                 appOnlyCharacterLimitThirty
                               />
                             </mat-form-field>
                           </div>
                         </div>
-
+                
                         <div class="row">
                           <div class="col-md-6 mb-3">
-                            <mat-form-field appearance="outline" class="w-100">
-                              <mat-label class="label-header"
-                                >No of Jewels</mat-label
-                              >
+                            <mat-form-field [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'" appearance="outline" class="w-100">
+                              <mat-label class="label-header">{{ 'create_product_listing.no_of_jewels' | translate }}</mat-label>
                               <input
                                 matInput
                                 formControlName="no_of_jewels"
-                                placeholder="Enter No of Jewels"
+                                placeholder="{{'create_product_listing.no_of_jewels_placeHolder' | translate}}"
                                 appPositiveNumber
                               />
-                              <mat-error *ngIf="no_of_jewels.hasError('pattern')">
-                                Only numeric values are allowed, and the number must be between 1 and 4 digits.
+                              <mat-error [ngClass]="{'text-left': translateService.currentLang === 'en', 'text-right': translateService.currentLang !== 'en'}" *ngIf="no_of_jewels.hasError('pattern')">
+                                {{ 'create_product_listing.no_of_jewels_error' | translate }}
                               </mat-error>
                             </mat-form-field>
                           </div>
                           <div class="col-md-6 mb-3">
-                            <mat-form-field appearance="outline" class="w-100">
-                              <mat-label class="label-header"
-                                >Frequency</mat-label
-                              >
+                            <mat-form-field [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'" appearance="outline" class="w-100">
+                              <mat-label class="label-header">{{ 'create_product_listing.frequency' | translate }}</mat-label>
                               <input
                                 matInput
                                 formControlName="frequency"
-                                placeholder="Enter Frequency"
-                                
+                                placeholder="{{'create_product_listing.frequency_placeHolder' | translate}}"
                               />
                               <span
-                                style="
-                                  padding: 17px 15px 17px 15px;
-                                  background-color: #dbdbdb;
-                                "
+                                style="padding: 17px 15px 17px 15px; background-color: #dbdbdb;"
                                 matSuffix
                                 >hz</span
                               >
-                              <mat-error *ngIf="frequency.hasError('pattern')">
-                                Frequency must be a valid number with up to 2 decimal places.
+                              <mat-error [ngClass]="{'text-left': translateService.currentLang === 'en', 'text-right': translateService.currentLang !== 'en'}" *ngIf="frequency.hasError('pattern')">
+                                {{ 'create_product_listing.frequency_pattern' | translate }}
                               </mat-error>
                             </mat-form-field>
                           </div>
                         </div>
-
+                
                         <div class="row">
                           <div class="col-md-12 mb-3">
-                            <mat-form-field appearance="outline" class="w-100">
-                              <mat-label class="label-header"
-                                >Other Details</mat-label
-                              >
+                            <mat-form-field [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'" appearance="outline" class="w-100">
+                              <mat-label class="label-header">{{ 'create_product_listing.other_details' | translate }}</mat-label>
                               <input
                                 matInput
                                 formControlName="additional_details"
-                                placeholder="Enter Other Details"
+                                placeholder="{{'create_product_listing.other_details_placeholder' | translate}}"
                                 appFieldLimitIntoHundered
                               />
                             </mat-form-field>
@@ -2436,137 +2303,105 @@
                     </mat-expansion-panel>
                   </mat-accordion>
                 </div>
-
+                
+  
                 <div style="padding: 0 0 15px 0">
                   <mat-accordion>
-                    <mat-expansion-panel
-                      [(expanded)]="panelOpenState"
-                      class="panel"
-                    >
+                    <mat-expansion-panel [(expanded)]="panelOpenState" class="panel">
                       <mat-expansion-panel-header>
-                        <mat-panel-title> Case Info </mat-panel-title>
+                        <mat-panel-title [ngClass]="{ 'reverse-order-label-alignment': translateService.currentLang !== 'en' }">
+                          {{ 'create_product_listing.case_info' | translate }}
+                        </mat-panel-title>
                       </mat-expansion-panel-header>
                       <div class="accordion-body">
                         <div class="row">
                           <div class="col-md-6 mb-3">
-                            <mat-form-field appearance="outline" class="w-100">
-                              <mat-label class="label-header"
-                                >Case Material</mat-label
-                              >
+                            <mat-form-field [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'" appearance="outline" class="w-100">
+                              <mat-label class="label-header">{{ 'create_product_listing.case_material' | translate }}</mat-label>
                               <mat-select formControlName="case_material">
-                                <mat-option value="">Please Select</mat-option>
+                                <mat-option value="">{{ 'create_product_listing.case_material_Select' | translate }}</mat-option>
                                 <mat-option
-                                  *ngFor="
-                                    let data of formdropdownListData.case_material
-                                  "
+                                  *ngFor="let data of formdropdownListData.case_material"
                                   [value]="data.key"
-                                  >{{ data.value }}</mat-option
-                                >
+                                >{{ data.value }}</mat-option>
                               </mat-select>
                             </mat-form-field>
                           </div>
                           <div class="col-md-6 mb-3">
-                            <mat-form-field appearance="outline" class="w-100">
-                              <mat-label class="label-header"
-                                >Bezel Material</mat-label
-                              >
+                            <mat-form-field [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'" appearance="outline" class="w-100">
+                              <mat-label class="label-header">{{ 'create_product_listing.bezel_material' | translate }}</mat-label>
                               <mat-select formControlName="bezel_material">
-                                <mat-option value="">Please Select</mat-option>
+                                <mat-option value="">{{ 'create_product_listing.select_bezel_material' | translate }}</mat-option>
                                 <mat-option
-                                  *ngFor="
-                                    let data of formdropdownListData.bezel_material
-                                  "
+                                  *ngFor="let data of formdropdownListData.bezel_material"
                                   [value]="data.key"
-                                  >{{ data.value }}</mat-option
-                                >
+                                >{{ data.value }}</mat-option>
                               </mat-select>
                             </mat-form-field>
                           </div>
                         </div>
-
+                
                         <div class="row">
                           <div class="col-md-6 mb-3">
-                            <mat-form-field appearance="outline" class="w-100">
-                              <mat-label class="label-header"
-                                >Thickness</mat-label
-                              >
+                            <mat-form-field [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'" appearance="outline" class="w-100">
+                              <mat-label class="label-header">{{ 'create_product_listing.thickness' | translate }}</mat-label>
                               <input
                                 matInput
                                 formControlName="thickness"
-                                placeholder="Enter thickness"
-                                
+                                placeholder="{{'create_product_listing.thickness_placeHolder' | translate}}"
                               />
                               <span
-                                style="
-                                  padding: 17px 15px 17px 15px;
-                                  background-color: #dbdbdb;
-                                "
+                                style="padding: 17px 15px 17px 15px; background-color: #dbdbdb;"
                                 matSuffix
                                 >mm</span
                               >
-                              <mat-error *ngIf="thickness.hasError('pattern')">
-                                Thickness must be a valid number with up to 2 decimal places.
+                              <mat-error [ngClass]="{'text-left': translateService.currentLang === 'en', 'text-right': translateService.currentLang !== 'en'}" *ngIf="thickness.hasError('pattern')">
+                                {{ 'create_product_listing.thickness_pattern' | translate }}
                               </mat-error>
                             </mat-form-field>
                           </div>
                           <div class="col-md-6 mb-3">
-                            <mat-form-field appearance="outline" class="w-100">
-                              <mat-label class="label-header"
-                                >Crystal</mat-label
-                              >
+                            <mat-form-field [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'" appearance="outline" class="w-100">
+                              <mat-label class="label-header">{{ 'create_product_listing.crystal' | translate }}</mat-label>
                               <mat-select formControlName="crystal">
-                                <mat-option value="">Please Select</mat-option>
+                                <mat-option value="">{{ 'create_product_listing.crystal_placeHolder' | translate }}</mat-option>
                                 <mat-option
-                                  *ngFor="
-                                    let data of formdropdownListData.crystal
-                                  "
+                                  *ngFor="let data of formdropdownListData.crystal"
                                   [value]="data.key"
-                                  >{{ data.value }}</mat-option
-                                >
+                                >{{ data.value }}</mat-option>
                               </mat-select>
                             </mat-form-field>
                           </div>
                         </div>
-
+                
                         <div class="row">
                           <div class="col-md-6 mb-3">
-                            <mat-form-field appearance="outline" class="w-100">
-                              <mat-label class="label-header"
-                                >Water Resistence</mat-label
-                              >
+                            <mat-form-field [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'" appearance="outline" class="w-100">
+                              <mat-label class="label-header">{{ 'create_product_listing.water_resistance' | translate }}</mat-label>
                               <mat-select formControlName="water_resistance">
-                                <mat-option value="">Please Select</mat-option>
+                                <mat-option value="">{{ 'create_product_listing.water_resistance_placeHolder' | translate }}</mat-option>
                                 <mat-option
-                                  *ngFor="
-                                    let data of formdropdownListData.water_resistance
-                                  "
+                                  *ngFor="let data of formdropdownListData.water_resistance"
                                   [value]="data.key"
-                                  >{{ data.value }}</mat-option
-                                >
+                                >{{ data.value }}</mat-option>
                               </mat-select>
                             </mat-form-field>
                           </div>
                           <div class="col-md-6 mb-3">
-                            <mat-form-field appearance="outline" class="w-100">
-                              <mat-label class="label-header"
-                                >Dial Numerals</mat-label
-                              >
+                            <mat-form-field [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'" appearance="outline" class="w-100">
+                              <mat-label class="label-header">{{ 'create_product_listing.dial_numerals' | translate }}</mat-label>
                               <input
                                 matInput
                                 formControlName="dial_numerals"
-                                placeholder="Enter Dial Numerals"
-                                
+                                placeholder="{{'create_product_listing.dial_numerals_placeHolder' | translate}}"
                               />
                               <span
-                                style="
-                                  padding: 17px 15px 17px 15px;
-                                  background-color: #dbdbdb;
-                                "
+                                style="padding: 17px 15px 17px 15px; background-color: #dbdbdb;"
                                 matSuffix
                                 >mm</span
                               >
-                              <mat-error *ngIf="dial_numerals.hasError('pattern')">
-                                Dial Numerals must be a valid number with up to 2 decimal places.
+                              <mat-error [ngClass]="{'text-left': translateService.currentLang === 'en', 'text-right': translateService.currentLang !== 'en'}" *ngIf="dial_numerals.hasError('pattern')">
+                                {{ 'create_product_listing.dial_numerals_pattern' | translate }}
                               </mat-error>
                             </mat-form-field>
                           </div>
@@ -2575,82 +2410,69 @@
                     </mat-expansion-panel>
                   </mat-accordion>
                 </div>
-
+                
+  
                 <div style="padding: 0 0 15px 0">
                   <mat-accordion>
-                    <mat-expansion-panel
-                      [(expanded)]="panelStrapOpenState"
-                      class="panel"
-                    >
+                    <mat-expansion-panel [(expanded)]="panelStrapOpenState" class="panel">
                       <mat-expansion-panel-header>
-                        <mat-panel-title> Straps / Bracelet </mat-panel-title>
+                        <mat-panel-title [ngClass]="{ 'reverse-order-label-alignment': translateService.currentLang !== 'en' }">
+                          {{ 'create_product_listing.straps_bracelet' | translate }}
+                        </mat-panel-title>
                       </mat-expansion-panel-header>
                       <div class="accordion-body">
                         <div class="row">
                           <div class="col-md-6 mb-3">
-                            <mat-form-field appearance="outline" class="w-100">
-                              <mat-label class="label-header"
-                                >Bracelet Material</mat-label
-                              >
-
+                            <mat-form-field [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'" appearance="outline" class="w-100">
+                              <mat-label class="label-header">{{ 'create_product_listing.bracelet_material' | translate }}</mat-label>
                               <input
                                 matInput
                                 formControlName="bracelet_material"
-                                placeholder="Enter Bracelet Material"
+                                placeholder="{{'create_product_listing.bracelet_material_placeHolder' | translate}}"
                                 appOnlyCharacterLimitThirty
                               />
                             </mat-form-field>
                           </div>
                           <div class="col-md-6 mb-3">
-                            <mat-form-field appearance="outline" class="w-100">
-                              <mat-label class="label-header"
-                                >Bracelet Color</mat-label
-                              >
+                            <mat-form-field [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'" appearance="outline" class="w-100">
+                              <mat-label class="label-header">{{ 'create_product_listing.bracelet_color' | translate }}</mat-label>
                               <input
                                 matInput
                                 formControlName="bracelet_color"
-                                placeholder="Enter Bracelet Color"
+                                placeholder="{{'create_product_listing.bracelet_color_placeHolder' | translate}}"
                                 appOnlyCharacterLimitThirty
                               />
                             </mat-form-field>
                           </div>
                         </div>
-
+                
                         <div class="row">
                           <div class="col-md-6 mb-3">
-                            <mat-form-field appearance="outline" class="w-100">
-                              <mat-label class="label-header"
-                                >Type of Clasp</mat-label
-                              >
+                            <mat-form-field [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'" appearance="outline" class="w-100">
+                              <mat-label class="label-header">{{ 'create_product_listing.type_of_clasp' | translate }}</mat-label>
                               <input
                                 matInput
                                 formControlName="type_of_clasp"
-                                placeholder="Enter Type of Clasp"
-                                
+                                placeholder="{{'create_product_listing.type_of_clasp_placeHolder' | translate}}"
                               />
                               <span
-                                style="
-                                  padding: 17px 15px 17px 15px;
-                                  background-color: #dbdbdb;
-                                "
+                                style="padding: 17px 15px 17px 15px; background-color: #dbdbdb;"
                                 matSuffix
                                 >mm</span
                               >
-                              <mat-error *ngIf="type_of_clasp.hasError('pattern')">
-                                Type of Clasp must be a valid number with up to 2 decimal places.
+                              <mat-error [ngClass]="{'text-left': translateService.currentLang === 'en', 'text-right': translateService.currentLang !== 'en'}" *ngIf="type_of_clasp.hasError('pattern')">
+                                {{ 'create_product_listing.type_of_clasp_pattern' | translate }}
                               </mat-error>
                             </mat-form-field>
                           </div>
-
+                
                           <div class="col-md-6 mb-3">
-                            <mat-form-field appearance="outline" class="w-100">
-                              <mat-label class="label-header"
-                                >Clasp Material</mat-label
-                              >
+                            <mat-form-field [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'" appearance="outline" class="w-100">
+                              <mat-label class="label-header">{{ 'create_product_listing.clasp_material' | translate }}</mat-label>
                               <input
                                 matInput
                                 formControlName="clasp_material"
-                                placeholder="Enter Clasp Material"
+                                placeholder="{{'create_product_listing.clasp_material_placeHolder' | translate}}"
                                 appOnlyCharacterLimitThirty
                               />
                             </mat-form-field>
@@ -2660,22 +2482,23 @@
                     </mat-expansion-panel>
                   </mat-accordion>
                 </div>
-
-                <div
-                  class="d-flex align-items-center justify-content-end gap-2 mb-3"
+                
+  
+                <div [ngClass]="{ 'reverse-order-listing-details-btn-div': translateService.currentLang !== 'en' }"
+                  class=" align-items-center gap-2 mb-3"
                   style="padding: 0 20px 0 20px"
                 >
                   <button
                     class="save-can-btn canc-bg-color"
                     (click)="backbtn('listingDetails')"
                   >
-                    Back
+                  {{ 'create_product_listing.back_btn' | translate }}
                   </button>
                   <button
                     class="save-can-btn save-btn-bg"
                     (click)="onSubmit('watchDetails')"
                   >
-                    Save
+                  {{ 'create_product_listing.save_btn' | translate }}
                   </button>
                 </div>
               </form>
@@ -2686,17 +2509,16 @@
         <!-- <-- Upload Images -- > -->
 
         <div class="card-body" *ngIf="selectedSection === 'uploadImages'">
-          <h5 class="font-weight-bold font-size-24 color-242424 margin-0">
-            Upload Images
+          <h5 [ngClass]="{ 'reverse-order-upload-images-labels': translateService.currentLang !== 'en' }" class="font-weight-bold font-size-24 color-242424 margin-0">
+            {{ "create_product_listing.upload_images" | translate }}
           </h5>
-          <p class="font-weight-400 font-size-16 color-909090">
-            Every watch will soon be verified by our team of experts to ensure
-            it’s 100% authentic, giving buyers complete peace of mind.
+          <p [ngClass]="{ 'reverse-order-upload-images-labels': translateService.currentLang !== 'en' }" class="font-weight-400 font-size-16 color-909090">
+            {{ "create_product_listing.upload_images_para_two" | translate }}
           </p>
-          <div class="image-upload-container">
+          <div [ngClass]="{ 'reverse-order-upload-images-content': translateService.currentLang !== 'en' }" class="image-upload-container">
             <!-- Cover Image -->
-            <div class="">
-              <p>Cover Image</p>
+            <div class="content-one">
+              <p> {{ "create_product_listing.cover_image" | translate }}</p>
               <div class="d-flex flex-wrap">
                 <div class="upload-box" (click)="selectCoverImage()">
                   <ng-container *ngIf="coverImage?.url && coverImage.url !== 'https://api.chronosouq.com/null'; else uploadPlaceholder">
@@ -2732,8 +2554,8 @@
             </div>
 
             <!-- Other Images -->
-            <div class="">
-              <p>Other Images</p>
+            <div class="content-two">
+              <p> {{ "create_product_listing.other_images" | translate }}</p>
               <div class="d-flex flex-wrap align-items-center gap-3">
                 <div class="upload-box" (click)="selectOtherImages()">
                   <span>+</span>
@@ -2773,21 +2595,21 @@
             </div>
           </div>
 
-          <div
-            class="d-flex align-items-center justify-content-end gap-2 mt-3 mb-3"
+          <div [ngClass]="{ 'reverse-order-listing-details-btn-div': translateService.currentLang !== 'en' }"
+            class="align-items-center justify-content-end d-flex gap-2 mt-3 mb-3"
             style="padding: 0 20px 0 20px"
           >
             <button
               class="save-can-btn canc-bg-color"
               (click)="backbtn('watchDetails')"
             >
-              Back
+            {{ 'create_product_listing.back_btn' | translate }}
             </button>
             <button
               class="save-can-btn save-btn-bg"
               (click)="onSubmit('uploadImages')"
             >
-              Save
+            {{ "create_product_listing.save_btn" | translate }}
             </button>
           </div>
         </div>
@@ -2796,17 +2618,17 @@
 
         <div class="card-body" *ngIf="selectedSection === 'conditionGrading'">
           <h5 class="font-weight-bold font-size-24 color-242424 margin-0">
-            Indicate the Condition of Your Watch
+            {{ "create_product_listing.condition_gradding_name" | translate }}
           </h5>
           <p class="font-weight-400 font-size-16 color-909090">
-            Please indicate any signs of wear such as scratches or dents.
+            {{ "create_product_listing.condition_gradding_PARA_Two" | translate }}
           </p>
-          <div class="container-fluid my-4" style="padding-left: 0 !important;padding-right: 0 !important;">
-            <mat-form-field appearance="outline" *ngIf="isAdminLogin">
-              <mat-label>Select Type</mat-label>
+          <div [ngClass]="{ 'reverse-order-condition-gradding': translateService.currentLang !== 'en' }" class="container-fluid my-4" style="padding-left: 0 !important;padding-right: 0 !important;">
+            <mat-form-field [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'" appearance="outline" *ngIf="isAdminLogin">
+              <mat-label>{{ "create_product_listing.select_type" | translate }}</mat-label>
               <mat-select [(ngModel)]="selectedUserTypeofConditionGradingForAdmin">
-                <mat-option value="user">User</mat-option>
-                <mat-option value="dealer">Dealer</mat-option>
+                <mat-option value="user">{{ "create_product_listing.user_type" | translate }}</mat-option>
+                <mat-option value="dealer">{{ "create_product_listing.dealer_type" | translate }}</mat-option>
               </mat-select>
             </mat-form-field>
             <div  *ngIf="userType ==='user' || selectedUserTypeofConditionGradingForAdmin === 'user'" class="row">
@@ -2820,7 +2642,7 @@
                   class="card condition-card h-100"
                   style="border-radius: 16px"
                 >
-                  <div class="card-body">
+                  <div class="card-body" [ngClass]="{ 'reverse-order-condition-gradding-body': translateService.currentLang !== 'en' }" >
                     <p
                       class="font-size-16 font-wight-700 color-242424 margin-0"
                     >
@@ -2845,7 +2667,7 @@
                   class="card condition-card h-100"
                   style="border-radius: 16px"
                 >
-                  <div class="card-body">
+                  <div class="card-body" [ngClass]="{ 'reverse-order-condition-gradding-body': translateService.currentLang !== 'en' }">
                     <p
                       class="font-size-16 font-wight-700 color-242424 margin-0"
                     >
@@ -2860,41 +2682,41 @@
             </div>
           </div>
 
-          <div
-            class="d-flex align-items-center justify-content-end gap-2 mb-3"
-            style="padding: 0 20px 0 20px"
-          >
-            <button
-              class="save-can-btn canc-bg-color"
-              (click)="backbtn('uploadImages')"
-            >
-              Back
-            </button>
-            <button
-              *ngIf="!isNextButtonShowonScopeOfdelivery"
-              class="save-can-btn save-btn-bg"
-              (click)="onSubmit('conditionGrading')"
-            >
-              Save
-            </button>
-            <button
-              *ngIf="isNextButtonShowonScopeOfdelivery"
-              class="save-can-btn save-btn-bg"
-              (click)="nextMoveToScopeOfDelivery()"
-            >
-              Next
-            </button>
-          </div>
+          <div [ngClass]="{ 'reverse-order-listing-details-btn-div': translateService.currentLang !== 'en' }"
+                class="d-flex align-items-center justify-content-end gap-2 mb-3"
+                style="padding: 0 20px 0 20px"
+              >
+                <button
+                  class="save-can-btn canc-bg-color"
+                  (click)="backbtn('uploadImages')"
+                >
+                {{ 'create_product_listing.back_btn' | translate }}
+                </button>
+                <button
+                *ngIf="!isNextButtonShowonScopeOfdelivery"
+                  class="save-can-btn save-btn-bg"
+                  (click)="onSubmit('conditionGrading')"
+                >
+                {{ "create_product_listing.save_btn" | translate }}
+                </button>
+                <button
+                  *ngIf="isNextButtonShowonScopeOfdelivery"
+                  class="save-can-btn save-btn-bg"
+                  (click)="nextMoveToScopeOfDelivery()"
+                >
+                {{ "create_product_listing.next_btn" | translate }}
+                </button>
+              </div>
         </div>
 
         <!-- <-- Scope of Delivery -- > -->
 
-        <div class="card-body" *ngIf="selectedSection === 'scopeofdelivery'">
+        <div class="card-body" *ngIf="selectedSection === 'scopeofdelivery'" [ngClass]="{ 'reverse-order-condition-gradding-body': translateService.currentLang !== 'en' }">
           <h5 class="font-weight-bold font-size-24 color-242424 mx-3">
-            Scope of Delivery
+            {{ "create_product_listing.scope_of_delivery" | translate }}
           </h5>
           <p class="font-weight-400 font-size-16 color-909090 mx-3">
-            What comes with your watch ?
+            {{ "create_product_listing.scope_of_delivery_para_two" | translate }}
           </p>
           <div class="container-fluid my-4">
             <div class="col-8 d-flex flex-wrap" style="padding-left: 0 ;padding-right: 0;">
@@ -2918,7 +2740,7 @@
             </div>
           </div>
 
-          <div
+          <div [ngClass]="{ 'reverse-order-listing-details-btn-div': translateService.currentLang !== 'en' }"
             class="d-flex align-items-center justify-content-end gap-2 mb-3"
             style="padding: 0 20px 0 20px"
           >
@@ -2926,7 +2748,7 @@
               class="save-can-btn canc-bg-color"
               (click)="backbtn('conditionGrading')"
             >
-              Back
+            {{ 'create_product_listing.back_btn' | translate }}
             </button>
             <!-- <button
               class="save-can-btn save-btn-bg"
@@ -2939,28 +2761,26 @@
                   class="save-can-btn save-btn-bg"
                   (click)="onSubmit('scopeofdelivery')"
                 >
-                  Save
+                {{ "create_product_listing.save_btn" | translate }}
                 </button>
                 <button
                   *ngIf="isNextButtonShowonScopeOfdelivery"
                   class="save-can-btn save-btn-bg"
                   (click)="nextMoveToScopeOfDelivery()"
                 >
-                  Next
+                {{ "create_product_listing.next_btn" | translate }}
                 </button>
           </div>
         </div>
 
         <!-- <-- Proof of Ownership -- > -->
 
-        <div class="card-body" *ngIf="selectedSection === 'proofofownership'">
+        <div [ngClass]="{ 'reverse-order-condition-gradding-body': translateService.currentLang !== 'en' }" class="card-body" *ngIf="selectedSection === 'proofofownership'">
           <h5 class="font-weight-bold font-size-24 color-242424 margin-0">
-            Proof of Ownership
+            {{ "create_product_listing.proof_of_ownership" | translate }}
           </h5>
           <p class="font-weight-400 font-size-16 color-909090">
-            Please set the watch to the following times & upload a photo of
-            each. This is our way of confirming that you are in possession of
-            the watch. These photos will also be published in your listing.
+            {{ "create_product_listing.proof_of_ownership_para_two" | translate }}
           </p>
 
           <div class="clock-container">
@@ -3107,26 +2927,24 @@
               <div class="icon-placeholder">
                 <img src="../../../../assets/images/help-us.png" alt="img" />
               </div>
-              <h5>Having trouble?</h5>
-              <p>If you cannot set the watch to a specified time:</p>
+              <h5> {{ "create_product_listing.having_trouble" | translate }}</h5>
+              <p>{{ "create_product_listing.having_trouble_para_one" | translate }}</p>
               <ul class="pl-3" style="color: #666">
                 <li>
-                  Write each time down on a slip of paper and place it next to
-                  the watch
+                  {{ "create_product_listing.having_trouble_list_item_one" | translate }}
                 </li>
                 <li>
-                  Take a photo of the watch with each piece of paper, then
-                  upload the photos
+                  {{ "create_product_listing.having_trouble_list_item_two" | translate }}
                 </li>
               </ul>
-              <p>If you still have any questions, please contact us</p>
+              <p>{{ "create_product_listing.having_trouble_para_two" | translate }}</p>
               <div class="mt-3">
-                <button class="contact-us-btn">Contact us</button>
+                <button class="contact-us-btn">    {{ "create_product_listing.contact_us_btn" | translate }}</button>
               </div>
             </div>
           </div>
 
-          <div
+          <div [ngClass]="{ 'reverse-order-listing-details-btn-div': translateService.currentLang !== 'en' }"
             class="d-flex align-items-center justify-content-end gap-2 mb-3"
             style="padding: 0 20px 0 20px"
           >
@@ -3134,21 +2952,21 @@
               class="save-can-btn canc-bg-color"
               (click)="backbtn('scopeofdelivery')"
             >
-              Back
+            {{ 'create_product_listing.back_btn' | translate }}
             </button>
             <button
             *ngIf="!isNextButtonShowonProofofOwnerShip"
               class="save-can-btn save-btn-bg"
               (click)="onSubmit('proofofownership')"
             >
-              Save
+            {{ "create_product_listing.save_btn" | translate }}
             </button>
             <button
             *ngIf="isNextButtonShowonProofofOwnerShip"
               class="save-can-btn save-btn-bg"
               (click)="nextMoveToBillingInformation()"
             >
-              Next
+            {{ "create_product_listing.next_btn" | translate }}
             </button>
           </div>
         </div>
@@ -3156,98 +2974,107 @@
         <!-- <--Price & Shipment -- > -->
 
         <div class="card-body" *ngIf="selectedSection === 'priceshipment'">
-          <h5 class="font-weight-bold font-size-24 color-242424 margin-0">
-            Price & Shipment
+          <h5 [ngClass]="{ 'reverse-order-upload-images-labels': translateService.currentLang !== 'en' }"  class="font-weight-bold font-size-24 color-242424 margin-0">
+            {{ "create_product_listing.price_shipment" | translate }}
           </h5>
-          <p class="font-weight-400 font-size-16 color-909090">
-            Every watch will soon be verified by our team of experts to ensure
-            it’s 100% authentic, giving buyers complete peace of mind.
+          <p [ngClass]="{ 'reverse-order-upload-images-labels': translateService.currentLang !== 'en' }" class="font-weight-400 font-size-16 color-909090">
+            {{ "create_product_listing.price_and_shipment_para_Two" | translate }}
           </p>
 
-          <mat-form-field appearance="outline" *ngIf="isAdminLogin">
-            <mat-label>Select Type</mat-label>
-            <mat-select [(ngModel)]="selectedUserTypeofConditionGradingForAdmin">
-              <mat-option value="user">User</mat-option>
-              <mat-option value="dealer">Dealer</mat-option>
-            </mat-select>
-          </mat-form-field>
-
+          <div [ngClass]="{ 'reverse-orderdealer-or-seller-div': translateService.currentLang !== 'en' }" class="dealer-or-seller-div">
+            <mat-form-field [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'" appearance="outline" *ngIf="isAdminLogin">
+              <mat-label>{{ "create_product_listing.select_type" | translate }}</mat-label>
+              <mat-select [(ngModel)]="selectedUserTypeofConditionGradingForAdmin">
+                <mat-option value="user">{{ "create_product_listing.user_type" | translate }}</mat-option>
+                      <mat-option value="dealer">{{ "create_product_listing.dealer_type" | translate }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
 
           <!-- this is seller -->
-          <div *ngIf="userType ==='user' || selectedUserTypeofConditionGradingForAdmin === 'user'" class="col-md-8" style="padding-left: 0">
-            <div class="container-fluid mt-5" style="padding-left: 0">
-              <mat-form-field
-                style="width: 100%"
-                class="full-width"
-                appearance="outline"
-              >
-                <mat-label class="label-header">Watch Price</mat-label>
-                <input
-                  matInput
-                  [(ngModel)]="watchPrice"
-                  appPriceLimit
-                  placeholder="Enter watch price"
-                  (input)="calculatePayout()"
-                />
-                <mat-hint align="end">4% Commission</mat-hint>
-              </mat-form-field>
+          <div *ngIf="userType ==='user' || selectedUserTypeofConditionGradingForAdmin === 'user'" class="col-md-12 d-flex flex-wrap" style="padding-left: 0" [ngClass]="{ 'reverse-order-price-and-shipment-div': translateService.currentLang !== 'en' }">
+            <div class="col-md-8">
+              <div class="container-fluid mt-5" style="padding-left: 0" >
+                <mat-form-field
+                  style="width: 100%"
+                  class="full-width"
+                  appearance="outline"
+                  [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'"
+                  
+                >
+                  <mat-label class="label-header">{{ "create_product_listing.watch_price" | translate }}</mat-label>
+                  <input
+                    matInput
+                    [(ngModel)]="watchPrice"
+                    appPriceLimit
+                    placeholder="{{ 'create_product_listing.watch_price_place' | translate }}"
+                    (input)="calculatePayout()"
+                  />
+                  <mat-hint align="end">{{ "create_product_listing.watch_price_commission" | translate }}</mat-hint>
+                </mat-form-field>
 
-              <mat-card class="info-card mt-4">
-                <p class="font-size-18 font-wight-700 color-132138">Payout Information</p >
-                <div class="info-row d-flex justify-content-between">
-                  <p class="font-size-16 font-wight-400 color-909090">Watch Price</p>
-                  <p class="font-size-16 font-wight-600 color-0F172A">{{
-                    watchPriceDisplay | currency : "SR" : "symbol" : "1.2-2"
-                  }}</p>
-                </div>
-                <div class="info-row d-flex justify-content-between">
-                  <span class="font-size-16 font-wight-400 color-909090">Platform Fee (4%)</span>
-                  <span class="font-size-16 font-wight-600 color-0F172A">
-                    - {{ platformFee | currency : "SR" : "symbol" : "1.2-2" }}
-                  </span>
-                </div>
-                <mat-divider></mat-divider>
-                <div class="info-row d-flex justify-content-between">
-                  <span class="font-size-16 font-wight-400 color-909090">Estimated Payout</span>
-                  <span class="font-size-16 font-wight-600 color-0F172A">
-                    {{ estimatedPayout | currency : "SR" : "symbol" : "1.2-2" }}
-                  </span>
-                </div>
-              </mat-card>
+                <mat-card class="info-card mt-4" [ngClass]="{ 'reverse-order-info-card': translateService.currentLang !== 'en' }">
+                  <p class="font-size-18 font-wight-700 color-132138">{{ "create_product_listing.payout_info" | translate }}</p >
+                  <div class="info-row d-flex justify-content-between">
+                    <p class="font-size-16 font-wight-400 color-909090">{{ "create_product_listing.watch_price" | translate }}</p>
+                    <p class="font-size-16 font-wight-600 color-0F172A">{{
+                      watchPriceDisplay | currency : "SR" : "symbol" : "1.2-2"
+                    }}</p>
+                  </div>
+                  <div class="info-row d-flex justify-content-between">
+                    <span class="font-size-16 font-wight-400 color-909090">{{ "create_product_listing.platform_fees" | translate }}</span>
+                    <span class="font-size-16 font-wight-600 color-0F172A">
+                      - {{ platformFee | currency : "SR" : "symbol" : "1.2-2" }}
+                    </span>
+                  </div>
+                  <mat-divider></mat-divider>
+                  <div class="info-row d-flex justify-content-between">
+                    <span class="font-size-16 font-wight-400 color-909090">{{ "create_product_listing.estimated_payout" | translate }}</span>
+                    <span class="font-size-16 font-wight-600 color-0F172A">
+                      {{ estimatedPayout | currency : "SR" : "symbol" : "1.2-2" }}
+                    </span>
+                  </div>
+                </mat-card>
+              </div>
+            </div>
+            <div class="col-md-4">
+              
             </div>
           </div>
 
           <!-- this is Dealer -->
 
           <div *ngIf="userType ==='dealer' || selectedUserTypeofConditionGradingForAdmin === 'dealer'" class="col-md-12" style="padding-left: 0">
-            <div class="container-fluid mt-5 d-flex flex-wrap" style="padding-left: 0">
-              <div class="col-md-6" style="padding-left: 0">
+            <div [ngClass]="{ 'reverse-orderdealer-or-dealer-div': translateService.currentLang !== 'en' }" class="container-fluid mt-5 d-flex flex-wrap" style="padding-left: 0">
+              <div class="col-md-6 shipping-changing-cont" style="padding-left: 0">
                 <mat-form-field
                   style="width: 100%"
                   class="full-width"
                   appearance="outline"
+                  [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'"
                 >
-                  <mat-label class="label-header">Watch Price</mat-label>
+                  <mat-label class="label-header">{{ "create_product_listing.watch_price" | translate }}</mat-label>
                   <input
                     matInput
                     [(ngModel)]="watchPrice"
-                    placeholder="Enter watch price"
+                    placeholder="{{ 'create_product_listing.watch_price_place' | translate }}"
                     appPriceLimit
                     (input)="calculatePayout()"
                   />
-                  <mat-hint align="end">4% Commission</mat-hint>
+                  <mat-hint align="end">{{ "create_product_listing.watch_price_commission" | translate }}</mat-hint>
                 </mat-form-field>
 
                 <mat-form-field
                   style="width: 100%"
                   class="full-width"
                   appearance="outline"
+                  [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'"
                 >
-                <mat-label class="label-header">Select Shipping Type</mat-label>
+                <mat-label class="label-header">  {{ "create_product_listing.select_shipping_type" | translate }}</mat-label>
                 <mat-select (selectionChange)="countShipping()" [(ngModel)]="shipping_type">
-                  <mat-option value="exclusiveShipping">Exclusive Shipping</mat-option>
-                  <mat-option value="freeCharge">Free of Charge</mat-option>
-                  <mat-option value="inclusiveShipping">Inclusive Shipping</mat-option>
+                  <mat-option value="exclusiveShipping">  {{ "create_product_listing.exclusive_shipping" | translate }}g</mat-option>
+                  <mat-option value="freeCharge">  {{ "create_product_listing.free_of_charge" | translate }}</mat-option>
+                  <mat-option value="inclusiveShipping">  {{ "create_product_listing.inclusive_shipping" | translate }}</mat-option>
                 </mat-select>
                 </mat-form-field>
 
@@ -3256,13 +3083,14 @@
                   style="width: 100%"
                   class="full-width"
                   appearance="outline"
+                  [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'"
                 >
-                  <mat-label class="label-header">Shipping Cost</mat-label>
+                  <mat-label class="label-header">{{ "create_product_listing.shipping_cost" | translate }}</mat-label>
                   <input
                     matInput
                     [(ngModel)]="shipping_charges"
                     appPriceLimit
-                    placeholder="Enter Shipping Cost"
+                    placeholder="{{ 'create_product_listing.shipping_cost_place' | translate }}"
                     (input)="Payoutaftershippingcharges()"
                   />
                 </mat-form-field>
@@ -3272,31 +3100,32 @@
                   style="width: 100%"
                   class="full-width"
                   appearance="outline"
+                  [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'"
                 >
-                  <mat-label class="label-header">Est. Delivery Time</mat-label>
+                  <mat-label class="label-header">  {{ "create_product_listing.est_delivery_time" | translate }}</mat-label>
                   <input
                     matInput
                     type="text"
                     [(ngModel)]="estimate_delivery"
-                    placeholder="Enter Est. Delivery Time"
+                    placeholder="  {{ 'create_product_listing.est_delivery_time_place' | translate }}"
                     appFieldLimitIntoHundered
                   />
                 </mat-form-field>
 
-                <mat-checkbox [(ngModel)]="allow_to_make_offer">
+                <mat-checkbox [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'" [(ngModel)]="allow_to_make_offer">
                   <label class="mdc-label" style="margin-top: 13px; margin-bottom: 5px;">
-                    Allow make offers
+                    {{ "create_product_listing.allow_make_offer" | translate }}
                   </label>
                 </mat-checkbox>
               </div>
-              <div class="col-md-6" style="padding-left: 0">
-                <mat-card class="info-card">
+              <div class="col-md-6 for-reverse" style="padding-left: 0">
+                <mat-card class="info-card" >
                   <p class="font-size-18 font-wight-700 color-132138">
-                    Payout Information
+                    {{ "create_product_listing.payout_info" | translate }}
                   </p>
                   <div class="info-row d-flex justify-content-between">
                     <p class="font-size-16 font-wight-400 color-909090">
-                      Watch Price
+                      {{ "create_product_listing.watch_price" | translate }}
                     </p>
                     <p class="font-size-16 font-wight-600 color-0F172A">
                       {{
@@ -3306,7 +3135,7 @@
                   </div>
                   <div class="info-row d-flex justify-content-between">
                     <span class="font-size-16 font-wight-400 color-909090"
-                      >Platform Fee (4%)</span
+                      >{{ "create_product_listing.platform_fees" | translate }}</span
                     >
                     <span class="font-size-16 font-wight-600 color-0F172A">
                       - {{ platformFee | currency : "SR" : "symbol" : "1.2-2" }}
@@ -3315,7 +3144,7 @@
                   <mat-divider></mat-divider>
                   <div class="info-row d-flex justify-content-between">
                     <span class="font-size-16 font-wight-400 color-909090"
-                      >Payout</span
+                      >{{ "create_product_listing.payout" | translate }}</span
                     >
                     <span class="font-size-16 font-wight-600 color-0F172A">
                       {{
@@ -3326,7 +3155,7 @@
 
                   <div *ngIf="shipping_type === 'inclusiveShipping'" class="info-row d-flex justify-content-between">
                     <span class="font-size-16 font-wight-400 color-909090"
-                      >Shipping Charges</span
+                      >{{ "create_product_listing.shipping_charges" | translate }}</span
                     >
                     <span class="font-size-16 font-wight-600 color-0F172A">
                       +
@@ -3338,7 +3167,7 @@
                   <mat-divider></mat-divider>
                   <div class="info-row d-flex justify-content-between">
                     <span class="font-size-16 font-wight-400 color-909090"
-                      >Estimated Payout</span
+                      >{{ "create_product_listing.estimated_payout" | translate }}</span
                     >
                     <span class="font-size-16 font-wight-600 color-0F172A">
                       {{
@@ -3352,7 +3181,7 @@
             </div>
           </div>
 
-          <div
+          <div [ngClass]="{ 'reverse-order-listing-details-btn-div': translateService.currentLang !== 'en' }"
             class="d-flex align-items-center justify-content-end gap-2 mb-3 mt-3"
             style="padding: 0 20px 0 20px"
           >
@@ -3360,13 +3189,13 @@
               class="save-can-btn canc-bg-color"
               (click)="backbtn('proofofownership')"
             >
-              Back
+            {{ 'create_product_listing.back_btn' | translate }}
             </button>
             <button
               class="save-can-btn save-btn-bg"
               (click)="onSubmit('priceshipment')"
             >
-              Save
+            {{ "create_product_listing.save_btn" | translate }}
             </button>
           </div>
         </div>

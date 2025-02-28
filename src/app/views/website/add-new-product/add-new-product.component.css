@@ -490,4 +490,244 @@ background: none;
   background-color: #e0e0e0;
 }
 
+.listing-details-btn-div{
+  display: flex;
+  justify-content: end;
+}
+
+.watch-details-label{
+  border-bottom: none !important;
+  justify-content: space-between;
+  width: 100%;
+  display: flex;
+  padding: 5px 20px 0 20px;
+}
+
+  /* ------------------------- Localization Start --------------------------- */
+
+  .reverse-order {
+    flex-direction: row-reverse;
+  }
+  .reverse-order-of-desc-cont {
+    text-align: end;
+  }
+
+  .reverse-order-of-desc-cont > h5 {
+    margin: 0 20px 10px 0;
+  }
+
+  .reverse-order-of-desc-cont > .sidebar-list > .list-item {
+    flex-direction: row-reverse;
+  }
+
+  .reverse-order-of-desc-cont > .sidebar-list > .list-item > .step-content  {
+    padding: 0 5px 0 0;
+  }
+
+  .reverse-order-of-desc-cont > .sidebar-list > .list-item > .step-content > .card-title {
+    text-align: end;
+    width: 100%;
+  }
+
+  .reverse-order .list-item:not(:last-child)::after {
+    right: 25px !important;
+    left: auto;
+  }
+
+  .text-left {
+    text-align: left;
+  }
   
+  .text-right {
+    text-align: right;
+  }
+
+  .icon-rtl {
+  transform: rotate(180deg); /* Rotate icon for RTL */
+  }
+
+  .icon-ltr {
+    transform: rotate(0deg); /* Normal icon for LTR */
+  }
+
+  ::ng-deep .reverse-order .mat-mdc-select-value {
+    text-align: right;
+  }
+
+  /* ::ng-deep .reverse-order .mat-mdc-select-trigger {
+    flex-direction: row-reverse;
+  } */
+
+  .reverse-order-para-one {
+    flex-direction: row-reverse;
+  }
+
+  .reverse-order-para-one > p {
+    text-align: end;
+  }
+
+  .reverse-order-para-one > p {
+    text-align: end;
+  }
+
+  .reverse-order-listing-details-btn-div {
+    display: flex;
+    justify-content: start !important;
+  }
+
+  .reverse-order-watch-details > .watch-details-label > p {
+    text-align: end;
+    width: 100%;
+  }
+
+  .reverse-order-watch-details > p {
+    text-align: end;
+  }
+
+  .reverse-order-label-alignment  {
+    display: flex;
+    justify-content: end;
+  }
+
+  .reverse-order-watch-details-of-Optional-alignment > p {
+    text-align: end;
+  }
+
+  .reverse-order-margin-padding {
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  /* ::ng-dep .reverse-order .mat-mdc-form-field > .mdc-text-field {
+    padding-left: 0 !important;
+}
+
+.reverse-order .mat-mdc-form-field > .mdc-text-field {
+  padding-left: 0 !important;
+} */
+
+::ng-dep .mat-mdc-text-field-wrapper {
+  padding: 0 !important;
+}
+
+.mat-mdc-text-field-wrapper {
+  padding: 0 !important;
+}
+
+.reverse-order-upload-images-labels {
+  text-align: end;
+}
+
+.reverse-order-upload-images-content > .content-one > p {
+  text-align: end;
+}
+
+.reverse-order-upload-images-content > .content-one > .d-flex {
+  display: flex;
+  justify-content: end;
+}
+
+.reverse-order-upload-images-content > .content-two > p {
+  text-align: end;
+}
+
+.reverse-order-upload-images-content > .content-two > .d-flex {
+  display: flex;
+  justify-content: end;
+  flex-direction: row-reverse;
+}
+
+.reverse-order-condition-gradding {
+  width: 100%;
+  text-align: end;
+}
+
+.reverse-order-condition-gradding > .row {
+ justify-content: end;
+}
+.reverse-order-condition-gradding-body > p {
+  text-align: end;
+}
+
+.reverse-order-condition-gradding-body > h5 {
+  text-align: end;
+}
+
+.reverse-order-condition-gradding-body > .container-fluid {
+ display: flex;justify-content: end;
+}
+
+.reverse-order-condition-gradding-body > .container-fluid > .d-flex > .mb-3 > .delivery-card > h6 {
+  text-align: end;
+} 
+
+.reverse-order-condition-gradding-body > .clock-container {
+  justify-content: end;
+}
+
+.reverse-order-condition-gradding-body > .clock-container > .clock {
+ flex-direction: row-reverse !important;
+}
+
+.reverse-order-condition-gradding-body > .container-fluid > .help-card > .icon-placeholder {
+  text-align: end;
+}
+
+.reverse-order-condition-gradding-body > .container-fluid > .help-card > h5 {
+  text-align: end;
+}
+
+.reverse-order-condition-gradding-body > .container-fluid > .help-card > p {
+  text-align: end;
+}
+.reverse-order-condition-gradding-body > .container-fluid > .help-card > .mt-3 {
+  text-align: end;
+}
+
+.reverse-order-condition-gradding-body > .container-fluid > .help-card > ul > li {
+ display: flex;
+ flex-direction: row-reverse;
+}
+
+.reverse-order-price-and-shipment-div {
+ display: flex;
+ flex-wrap: wrap;
+ flex-direction: row-reverse;
+}
+
+.reverse-orderdealer-or-seller-div {
+  display: flex;
+  justify-content: end !important;
+  }
+
+  .reverse-order-info-card > p{
+    text-align: end;
+  }
+
+  .reverse-order-info-card > .justify-content-between{
+    flex-direction: row-reverse;
+  }
+
+  .reverse-orderdealer-or-dealer-div {
+    display: flex;
+    flex-direction: row-reverse;
+  }
+
+   .reverse-orderdealer-or-dealer-div > .shipping-changing-cont > mat-checkbox {
+   display: flex;
+   flex-direction: column-reverse;
+   }
+
+  .reverse-orderdealer-or-dealer-div > .for-reverse > .info-card > p {
+    text-align: end;
+  }
+
+  .reverse-orderdealer-or-dealer-div > .for-reverse > .info-card > .info-row {
+  flex-direction: row-reverse !important;
+  }
+/* ------------------------- Localization end --------------------------- */
+
+.dealer-or-seller-div {
+  display: flex;
+  justify-content: flex-start;
+}

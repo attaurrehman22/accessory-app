@@ -279,5 +279,216 @@
     "model": "النموذج *",
     "model_description": "يمكنك أن تكون أكثر تحديدًا بشأن اسم النموذج وتحديد النموذج الدقيق.",
     "reference_number": "رقم المرجع"
+  },
+  "create_product_listing":{
+    "label": "إنشاء قائمة المنتج",
+    "listing_details": "تفاصيل القائمة",
+    "listing_details_para": "سيتم قريبًا التحقق من كل ساعة بواسطة فريقنا من الخبراء لضمان أنها 100% أصلية، مما يوفر للمشترين راحة البال التامة.",
+    "watch_details": "تفاصيل الساعة",
+      "listing_details_para_one": "سيتم قريباً التحقق من كل ساعة بواسطة فريق خبرائنا لضمان أنها 100% أصلية، مما يمنح المشترين راحة البال الكاملة.",
+      "watch_details_para_one": "سيتم قريباً التحقق من كل ساعة بواسطة فريق خبرائنا لضمان أنها 100% أصلية، مما يمنح المشترين راحة البال الكاملة.",
+    "watch_details_para": "كريبتو إيبسوم بيتكوين إيثريوم دوجيكوين لايتكوين. ريفين نيو جيلين أمب تيكوين إيوس تشيليز...",
+    "upload_images": "تحميل الصور",
+    "upload_images_para": "كريبتو إيبسوم بيتكوين إيثريوم دوجيكوين لايتكوين. ريفين نيو جيلين أمب تيكوين إيوس تشيليز...",
+    "condition_grading": "تصنيف الحالة",
+    "condition_grading_para": "كريبتو إيبسوم بيتكوين إيثريوم دوجيكوين لايتكوين. ريفين نيو جيلين أمب تيكوين إيوس تشيليز...",
+    "scope_of_delivery": "نطاق التسليم",
+    "scope_of_delivery_para": "كريبتو إيبسوم بيتكوين إيثريوم دوجيكوين لايتكوين. ريفين نيو جيلين أمب تيكوين إيوس تشيليز...",
+    "proof_of_ownership": "إثبات الملكية",
+    "proof_of_ownership_para": "كريبتو إيبسوم بيتكوين إيثريوم دوجيكوين لايتكوين. ريفين نيو جيلين أمب تيكوين إيوس تشيليز...",
+    "price_shipment": "السعر والشحن",
+    "price_shipment_para": "كريبتو إيبسوم بيتكوين إيثريوم دوجيكوين لايتكوين. ريفين نيو جيلين أمب تيكوين إيوس تشيليز...",
+    "billing_information": "معلومات الفوترة",
+    "billing_information_para": "كريبتو إيبسوم بيتكوين إيثريوم دوجيكوين لايتكوين. ريفين نيو جيلين أمب تيكوين إيوس تشيليز...",
+    "summary": "الملخص",
+    "summary_para": "كريبتو إيبسوم بيتكوين إيثريوم دوجيكوين لايتكوين. ريفين نيو جيلين أمب تيكوين إيوس تشيليز...",
+    "brand": "العلامة التجارية",
+    "brand_required": "العلامة التجارية مطلوبة",
+    "category": "الفئة",
+    "category_selection": "اختيار الفئة",
+    "category_required": "الفئة مطلوبة",
+    "category_limit_5": "حدد أي فئة بحد أقصى 5",
+    "category_limit_up_to_5": "يمكنك اختيار ما يصل إلى 5 فئات فقط.",
+    "name": "الاسم",
+    "enter_name": "أدخل الاسم",
+    "name_required": "الاسم مطلوب",
+    "model": "الموديل",
+    "enter_model_name": "أدخل اسم الموديل",
+    "model_required": "الموديل مطلوب",
+    "title": "العنوان",
+    "enter_title_name": "أدخل عنوان الإعلان",
+    "title_required": "العنوان مطلوب",
+    "description": "الوصف",
+    "enter_description_name": "أدخل وصف الساعة",
+    "description_least_required": "يجب أن يكون الوصف مكونًا من 5 أحرف على الأقل.",
+    "description_max_required": "الوصف لا يمكن أن يتجاوز 250 حرفًا.",
+    "watchtype": "نوع الساعة",
+    "watchtype_required": "نوع الساعة مطلوب",
+    "year_of_production": "سنة الإنتاج",
+    "year_of_production_placeholder": "على سبيل المثال: 2024",
+    "year_of_production_required": "سنة الإنتاج مطلوبة",
+    "year_of_production_validation": "يجب أن تكون سنة الإنتاج رقمًا مكونًا من 4 أرقام.",
+    "Approximation": "تقريب",
+    "Unknown": "غير معروف",
+    "cancel_btn": "إلغاء",
+    "save_btn": "حفظ",
+    "refrence_number": "رقم المرجع",
+    "refrence_number_placeHolder": "أدخل رقم المرجع",
+    "refrence_number_required": "رقم المرجع مطلوب",
+
+    "serial_no": "الرقم التسلسلي (لن يتم نشره)",
+    "serial_no_placeHolder": "أدخل الرقم التسلسلي",
+    "serial_no_required": "الرقم التسلسلي مطلوب",
+
+    "gender": "الجنس",
+    "gender_placeHolder": "يرجى الاختيار",
+    "gender_required": "الجنس مطلوب",
+
+    "movement": "الحركة",
+    "movement_placeHolder": "يرجى الاختيار",
+    "movement_required": "الحركة مطلوبة",
+
+    "case_diameter_value_1": "قطر العلبة",
+    "case_diameter_value_1_placeHolder": "أدخل القطر",
+    "case_diameter_value_1_required": "قطر العلبة مطلوب",
+    "case_diameter_value_1_pattern": "يجب أن يكون قطر العلبة 1 رقمًا صحيحًا أو عشريًا صالحًا يصل إلى خانتين عشريتين.",
+
+    "case_diameter_value_2": "القطر الآخر",
+    "case_diameter_value_2_placeHolder": "أدخل القطر",
+    "case_diameter_value_2_required": "القطر الآخر مطلوب",
+    "case_diameter_value_2_pattern": "يجب أن يكون القطر الآخر رقمًا صحيحًا أو عشريًا صالحًا يصل إلى خانتين عشريتين.",
+
+    "additional_info_title": "معلومات إضافية",
+    "additional_info_description": "سيتم التحقق من كل ساعة قريبًا من قبل فريق الخبراء لدينا لضمان أنها أصلية 100%، مما يوفر للمشترين راحة البال.",
+
+    "dial_color": "لون الميناء",
+    "dial_color_placeHolder": "أدخل لون الميناء",
+
+    "caliber_movement": "العيار / الحركة",
+    "caliber_movement_placeHolder": "أدخل العيار / الحركة",
+
+    "base_caliber": "العيار الأساسي",
+    "base_caliber_placeHolder": "أدخل العيار الأساسي",
+
+    "power_reserve": "احتياطي الطاقة",
+    "power_reserve_placeHolder": "أدخل احتياطي الطاقة",
+
+    "no_of_jewels": "عدد الأحجار الكريمة",
+    "no_of_jewels_placeHolder": "أدخل عدد الأحجار الكريمة",
+    "no_of_jewels_pattern": "يجب أن تكون القيم رقمية فقط، ويجب أن يكون الرقم بين 1 و 4 أرقام.",
+
+    "frequency": "التردد",
+    "frequency_placeHolder": "أدخل التردد",
+    "frequency_suffix": "هيرتز",
+    "frequency_pattern": "يجب أن يكون التردد رقمًا صالحًا يصل إلى خانتين عشريتين.",
+
+    "additional_details": "تفاصيل أخرى",
+    "additional_details_placeHolder": "أدخل تفاصيل أخرى",
+
+    "case_material": "مادة العلبة",
+    "case_material_placeHolder": "يرجى الاختيار",
+
+    "bezel_material": "مادة الإطار",
+    "bezel_material_placeHolder": "يرجى الاختيار",
+
+    "thickness": "السماكة",
+    "thickness_placeHolder": "أدخل السماكة",
+    "thickness_suffix": "مم",
+    "thickness_pattern": "يجب أن تكون السماكة رقمًا صالحًا يصل إلى خانتين عشريتين.",
+
+    "crystal": "الكريستال",
+    "crystal_placeHolder": "يرجى الاختيار",
+
+    "water_resistance": "مقاومة الماء",
+    "water_resistance_placeHolder": "يرجى الاختيار",
+
+    "dial_numerals": "أرقام الميناء",
+    "dial_numerals_placeHolder": "أدخل أرقام الميناء",
+    "dial_numerals_suffix": "مم",
+    "dial_numerals_pattern": "يجب أن تكون أرقام الميناء رقمًا صالحًا يصل إلى خانتين عشريتين.",
+
+    "bracelet_material": "مادة السوار",
+    "bracelet_material_placeHolder": "أدخل مادة السوار",
+
+    "bracelet_color": "لون السوار",
+    "bracelet_color_placeHolder": "أدخل لون السوار",
+
+    "type_of_clasp": "نوع الإغلاق",
+    "type_of_clasp_placeHolder": "أدخل نوع الإغلاق",
+    "type_of_clasp_suffix": "مم",
+    "type_of_clasp_pattern": "يجب أن يكون نوع الإغلاق رقمًا صالحًا يصل إلى خانتين عشريتين.",
+
+    "clasp_material": "مادة الإغلاق",
+    "clasp_material_placeHolder": "أدخل مادة الإغلاق",
+
+    "back_btn": "رجوع",
+
+
+    "case_diameter": "قطر العلبة",
+    "case_diameter_placeholder": "أدخل القطر",
+    "case_diameter_required": "القطر مطلوب",
+    "case_diameter_invalid": "يجب أن يكون قطر العلبة 1 رقمًا صالحًا مع خانتين عشريتين.",
+    
+    "other_diameter": "القطر الآخر",
+    "other_diameter_placeholder": "أدخل القطر الآخر",
+    "other_diameter_required": "القطر الآخر مطلوب",
+    "other_diameter_invalid": "يجب أن يكون القطر الآخر رقمًا صالحًا مع خانتين عشريتين.",
+    
+    "additional_information": "معلومات إضافية ",
+    "optional":"(اختياري)",
+    
+    "watch_verification_text": "سيتم التحقق من كل ساعة قريبًا من قبل فريق الخبراء لدينا لضمان أنها أصلية 100%، مما يوفر للمشترين راحة البال.",
+    
+    "dial_and_caliber": "الميناء والعيار",
+    
+    "other_details": "تفاصيل أخرى",
+    "other_details_placeholder": "أدخل تفاصيل أخرى",
+    
+    "case_info": "معلومات العلبة",
+    
+    "case_material_Select": "يرجى اختيار مادة العلبة",
+    
+    "select_bezel_material": "يرجى اختيار مادة الإطار",
+    
+    "straps_bracelet": "أساور / سوار",
+    "upload_images_para_two": "سيتم قريبًا التحقق من كل ساعة من قبل فريق الخبراء لدينا لضمان أنها أصلية 100٪، مما يمنح المشترين راحة البال التامة.",
+    "cover_image": "صورة الغلاف",
+    "other_images": "صور أخرى",
+
+    "select_type": "اختر النوع",
+    "user_type": "مستخدم",
+    "dealer_type": "تاجر",
+    "condition_gradding_name": "حدد حالة ساعتك",
+    "condition_gradding_PARA_Two": "يرجى الإشارة إلى أي علامات تآكل مثل الخدوش أو الانبعاجات.",
+    "scope_of_delivery_para_two": "ماذا يأتي مع ساعتك؟",
+    "next_btn": "التالي",
+
+    "proof_of_ownership_para_two": "يرجى ضبط الساعة على الأوقات التالية وتحميل صورة لكل منها. هذه طريقتنا لتأكيد أنك تمتلك الساعة. سيتم أيضًا نشر هذه الصور في قائمتك.",
+    "having_trouble": "هل تواجه مشكلة؟",
+    "having_trouble_para_one": "إذا لم تتمكن من ضبط الساعة على الوقت المحدد:",
+    "having_trouble_list_item_one": "اكتب كل وقت على ورقة وضعها بجانب الساعة",
+    "having_trouble_list_item_two": "التقط صورة للساعة مع كل ورقة، ثم قم بتحميل الصور",
+    "having_trouble_para_two": "إذا كان لديك أي أسئلة أخرى، يرجى الاتصال بنا",
+    "contact_us_btn": "اتصل بنا",
+    "price_and_shipment_para_Two": "سيتم قريبًا التحقق من كل ساعة من قبل فريق الخبراء لدينا لضمان أنها أصلية 100٪، مما يمنح المشترين راحة البال التامة.",
+    "watch_price": "سعر الساعة",
+    "watch_price_commission": "عمولة 4٪",
+    "payout_info": "معلومات الدفع",
+    "platform_fees": "رسوم المنصة (4٪)",
+    "estimated_payout": "الدفع المقدر",
+    "payout": "الدفع",
+     "shipping_charges": "رسوم الشحن",
+     "watch_price_place": "أدخل سعر الساعة",
+     "allow_make_offer": "السماح بتقديم العروض",
+     "est_delivery_time": "الوقت المتوقع للتسليم",
+     "est_delivery_time_place": "أدخل الوقت المتوقع للتسليم",
+     "shipping_cost": "تكلفة الشحن",
+     "shipping_cost_place": "أدخل تكلفة الشحن",
+     "select_shipping_type": "اختر نوع الشحن",
+     "exclusive_shipping": "شحن حصري",
+     "free_of_charge": "مجاني",
+     "inclusive_shipping": "شحن شامل"
+
   }
+
 }

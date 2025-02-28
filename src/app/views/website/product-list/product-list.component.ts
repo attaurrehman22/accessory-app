@@ -1,4 +1,4 @@
-import { Component, ElementRef, HostListener, OnInit } from "@angular/core";
+import { Component, ElementRef, HostListener, OnInit, ViewChild } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { TranslateService } from "@ngx-translate/core";
 import { HttpService } from "src/services/http/http.service";
@@ -24,18 +24,23 @@ export class ProductListComponent implements OnInit {
   categories:any[]=[];
   searchQuery: string = "";
 
+  beminprice:number=0
+  bemaxprice:number=0
+
   getFilteredData(){
     this.http.getFilteredData().subscribe(
       (res)=>{
         this.categories=res.top_categories;
         if(res?.min_price){
           this.min=Math.round(res.min_price);
-         this.currentValue = this.min; 
+          this.currentValue = this.min; 
+          this.beminprice=this.min
         }else{
           this.min = 1000;
         }
         if(res?.max_price){
           this.max=Math.round(res.max_price);
+          this.bemaxprice=this.max
         }else{
           this.max = 3000;
         }
@@ -120,7 +125,9 @@ export class ProductListComponent implements OnInit {
     // this.priceRange = { from: 200, to: 50000 };
       // Optionally, update slider UI if used
     this.currentValue = 200; // Update the "From" value on the slider
-    this.currentPercentage = 0
+    // this.currentPercentage = 0
+    this.minPercentage = 0; // Left thumb position (percentage)
+    this.maxPercentage = 100; // Right thumb position (percentage)
     this.applyFilters();
   }
 
@@ -301,48 +308,44 @@ export class ProductListComponent implements OnInit {
   min = 200; 
   max = 50000;
   currentValue = this.min; 
-  currentPercentage = 0; 
+  minPercentage = 0; // Left thumb position (percentage)
+  maxPercentage = 100; // Right thumb position (percentage)
 
-  dragging = false; // State to track dragging
+  draggingThumb: 'min' | 'max' | null = null; // Track which thumb is being dragged
 
-  // Handle mousedown to start dragging
-  startDragging(event: MouseEvent, range: HTMLElement): void {
-    this.dragging = true;
-    this.updateValue(event, range);
+  @ViewChild('range', { static: false }) range!: ElementRef; // Reference to the slider
+
+  // Handle mousedown to start dragging a thumb
+  startDragging(event: MouseEvent, type: 'min' | 'max'): void {
+    event.preventDefault(); // Fix dragging issue
+    this.draggingThumb = type;
   }
 
-  // Listen for mousemove to update the slider thumb and value
+  // Listen for mousemove to update the slider thumbs
   @HostListener('window:mousemove', ['$event'])
   onDragging(event: MouseEvent): void {
-    if (this.dragging) {
-      const range = document.querySelector('.range') as HTMLElement;
-      if (range) {
-        this.updateValue(event, range);
-      }
+    if (!this.draggingThumb || !this.range) return;
+
+    const rangeRect = this.range.nativeElement.getBoundingClientRect();
+    let newLeft = ((event.clientX - rangeRect.left) / rangeRect.width) * 100;
+    console.log("newLeft",newLeft)
+    // Constrain within bounds (0% to 100%)
+    newLeft = Math.max(0, Math.min(100, newLeft));
+
+    if (this.draggingThumb == 'min' && newLeft < this.maxPercentage) {
+      this.minPercentage = newLeft;
+      this.min = Math.round(this.beminprice + (newLeft / 100) * (this.bemaxprice - this.beminprice));
+      this.currentValue=this.min;
+    } else if (this.draggingThumb == 'max' && newLeft > this.minPercentage) {
+      this.maxPercentage = newLeft;
+      this.max = Math.round(this.beminprice + (newLeft / 100) * (this.bemaxprice - this.beminprice));
     }
   }
 
   // Stop dragging on mouseup
   @HostListener('window:mouseup')
   stopDragging(): void {
-    this.dragging = false;
-
-  }
-
-  // Update the value and position of the thumb
-  updateValue(event: MouseEvent, range: HTMLElement): void {
-    const rangeRect = range.getBoundingClientRect();
-    let newLeft = event.clientX - rangeRect.left;
-
-    // Constrain within the slider bounds
-    if (newLeft < 0) newLeft = 0;
-    if (newLeft > rangeRect.width) newLeft = rangeRect.width;
-
-    // Calculate percentage and value
-    this.currentPercentage = (newLeft / rangeRect.width) * 100;
-    this.currentValue = Math.round(
-      this.min + (this.currentPercentage / 100) * (this.max - this.min)
-    );
+    this.draggingThumb = null;
   }
 
 }

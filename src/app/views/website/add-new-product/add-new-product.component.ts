@@ -166,15 +166,33 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
   ]);
   city = new FormControl("", [Validators.required]);
 
-  cities = ["City 1", "City 2", "City 3"];
+  cities = ["City 1", "City 2", "City 3"]; 
+  supportLanguages = ["en", "ar", "fr", "ta", "hi"];
+  currentLanguage: string;
 
   constructor(
     private http: HttpService,
     private alertService: AlertsServicesService,
     private router: Router,
     private loginStateService: LoginStateService,
-    private dialog: MatDialog
-  ) {}
+    private dialog: MatDialog,
+    public translateService: TranslateService,
+    private languageService:LanguageService
+  ) {
+    this.translateService.addLangs(this.supportLanguages);
+    const savedLang = this.languageService.getCurrentLanguage();
+    if (this.supportLanguages.includes(savedLang)) {
+      this.translateService.use(savedLang);
+    } else {
+      const browserLang = this.translateService.getBrowserLang();
+      this.currentLanguage = browserLang;
+
+      if (this.supportLanguages.includes(browserLang)) {
+        this.translateService.use(browserLang);
+        this.languageService.setLanguage(browserLang);
+      }
+    }
+  }
 
   watchPrice: number = 0;
   shipping_type: any;
@@ -692,7 +710,7 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
             "conditionGrading",
             "scopeofdelivery",
           ]);
-          this.isNextButtonShowonScopeOfdelivery = true;
+          // this.isNextButtonShowonScopeOfdelivery = true;
           this.selectSection("scopeofdelivery");
         }
 
