@@ -289,18 +289,22 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
     {
       title: "Original Box & Original Papers",
       icon: "../assets/images/original-box-papers.png",
+      arabictitle: "الصندوق الأصلي والأوراق الأصلية"
     },
     {
       title: "Original Box",
       icon: "../assets/images/original-box.png",
+      arabictitle: "الصندوق الأصلي"
     },
     {
       title: "Original Papers",
       icon: "/assets/images/original-papers.png",
+      arabictitle: "الأوراق الأصلية"
     },
     {
       title: "Watch Only",
       icon: "/assets/images/watch-only.png",
+      arabictitle: "الساعة فقط"
     },
   ];
 
@@ -323,30 +327,42 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
       title: "New",
       description:
         "The item has no signs of wear such as scratches or dents and is unworn. The item has not been polished.",
+        arabictitle: "جديد",
+        arabicdescription: "العنصر ليس به أي علامات تآكل مثل الخدوش أو الانبعاجات ولم يُستخدم. لم يتم تلميع العنصر."
     },
     {
       title: "Like new and unworn",
       description:
         "The item shows minor signs of wear, such as small but physically imperceptible scratches.",
+         arabictitle: "كالجديد وغير مُستخدم",
+         arabicdescription: "يظهر العنصر علامات تآكل طفيفة، مثل خدوش صغيرة لكنها غير محسوسة جسديًا."
     },
     {
       title: "Used",
       description:
         "The item shows visible and physically perceptible signs of wear such as scratches, scuffs or small dents.",
+        arabictitle: "مُستخدم",
+        arabicdescription: "يظهر العنصر علامات تآكل مرئية ومحسوسة جسديًا مثل الخدوش أو الحكات أو الانبعاجات الصغيرة."
     },
     {
       title: "Very good (minor signs of wear)",
       description:
         "The item shows major, visible signs of wear like scratches and dents.",
+         arabictitle: "جيد جدًا (علامات تآكل طفيفة)",
+         arabicdescription: "يظهر العنصر علامات تآكل كبيرة ومرئية مثل الخدوش والانبعاجات."
     },
     {
       title: "Good (moderate signs of wear)",
       description:
         "The item shows major, visible signs of wear like scratches and dents.",
+        arabictitle: "جيد (علامات تآكل متوسطة)",
+        arabicdescription: "يظهر العنصر علامات تآكل كبيرة ومرئية مثل الخدوش والانبعاجات."
     },
     {
       title: "Incomplete",
       description: "The item is missing some parts and is not functional.",
+      arabictitle: "غير مكتمل",
+      arabicdescription: "العنصر يفتقد بعض الأجزاء وغير قابل للاستخدام."
     },
   ];
 
@@ -355,25 +371,35 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
       title: "Like New & Unworn",
       description:
         "The item has no signs of wear such as scraches or dents and is unworn. The item has not been polished.",
+          arabictitle: "كالجديد وغير مُستخدم",
+  arabicdescription: "العنصر ليس به أي علامات تآكل مثل الخدوش أو الانبعاجات ولم يُستخدم. لم يتم تلميع العنصر."
     },
     {
       title: "Very Good",
       description:
         "The item shows minor signs of wear, such as small but physically imperceptible scratches.",
+          arabictitle: "جيد جدًا",
+  arabicdescription: "يظهر العنصر علامات تآكل طفيفة، مثل خدوش صغيرة لكنها غير محسوسة جسديًا."
     },
     {
       title: "Good",
       description:
         "The item shows visible and physically perceptible signs of wear such as scratches, scuffs or small dents.",
+        arabictitle: "جيد",
+  arabicdescription: "يظهر العنصر علامات تآكل مرئية ومحسوسة جسديًا مثل الخدوش أو الحكات أو الانبعاجات الصغيرة."
     },
     {
       title: "Fair",
       description:
         "The item shows major, visible signs of wear like scratches and dents.",
+         arabictitle: "مقبول",
+  arabicdescription: "يظهر العنصر علامات تآكل كبيرة ومرئية مثل الخدوش والانبعاجات."
     },
     {
       title: "Incomplete",
       description: "The item is missing some parts and is not functional.",
+        arabictitle: "غير مكتمل",
+  arabicdescription: "العنصر يفتقد بعض الأجزاء وغير قابل للاستخدام."
     },
   ];
 
