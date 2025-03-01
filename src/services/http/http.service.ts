@@ -348,6 +348,28 @@ export class HttpService implements OnInit {
     });
   }
 
+  getAdminProductsofQuery(queryString): Observable<any> {
+    const queryParams = new URLSearchParams(queryString).toString();
+    return this.http.get(`${this.apiUrl}/api/admin/products/?${queryParams}`, {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+  }
+
+
+  watchOfTheDay(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/api/admin/watch-of-the-day/list/get`, {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+  }
+
+
+
   deleteAdminProducts(ID): Observable<any> {
     return this.http.delete(`${this.apiUrl}/api/admin/products/${ID}`, {
       headers: {

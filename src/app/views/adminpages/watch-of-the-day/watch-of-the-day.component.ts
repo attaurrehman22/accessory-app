@@ -35,9 +35,9 @@ export class WatchOfTheDayComponent {
     "created_by",
     "published_date",
     "price",
-    "model",
-    "is_active",
-    "top_brand",
+    // "model",
+    // "is_active",
+    // "top_brand",
     "edit",
   ];
   dataSource: MatTableDataSource<UserData>;
@@ -50,6 +50,9 @@ export class WatchOfTheDayComponent {
   ];
 
   currentStatus: any = "All";
+  currentPage = 1;
+  totalItems = 0;
+  pageSize = 10;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -66,6 +69,12 @@ export class WatchOfTheDayComponent {
     this.allUser();
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+  }
+
+  onPageChange(event: any) {
+    this.currentPage = event.pageIndex + 1; // Update current page (Angular uses zero-indexing)
+    this.pageSize = event.pageSize; // Update page size
+    // this.loadWatchOfTheDayData(this.currentPage, this.pageSize); // Reload data
   }
 
   ngAfterViewInit() {
@@ -85,9 +94,9 @@ export class WatchOfTheDayComponent {
         (data.brand && data.brand.name.toLowerCase().includes(filter)) ||
         (data.created_by && data.created_by.name.toLowerCase().includes(filter)) ||
         (data.price && data.price.toString().includes(filter)) ||
-        (data.model && data.model.toLowerCase().includes(filter)) ||
-        (data.is_active && data.is_active.toString().includes(filter)) ||
-        (data.top_brand && data.top_brand.toString().includes(filter)) ||
+        // (data.model && data.model.toLowerCase().includes(filter)) ||
+        // (data.is_active && data.is_active.toString().includes(filter)) ||
+        // (data.top_brand && data.top_brand.toString().includes(filter)) ||
         (data.categories && data.categories.some((category: any) => category.name.toLowerCase().includes(filter))) || // Categories
         (data.description && data.description.toLowerCase().includes(filter)) // Description
       );
@@ -118,13 +127,13 @@ export class WatchOfTheDayComponent {
   }
 
   allUser() {
-    this.http.getAdminProducts().subscribe(
+    this.http.watchOfTheDay().subscribe(
       (res) => {
-        this.allData = res.data;
-
+        this.allData = res.data.data;
+        this.totalItems = res.data.total;
         this.allData = this.allData.map((product: any) => {
-          if (product.main_image) {
-            product.main_image = product.main_image
+          if (product.banner_img) {
+            product.banner_img = product.banner_img
               .replace(/\\/g, "/")
               .replace(/^\/+/, "");
           }
@@ -132,6 +141,9 @@ export class WatchOfTheDayComponent {
         });
         this.dataSource = new MatTableDataSource(this.allData);
         this.dataSource.paginator = this.paginator;
+        this.paginator.pageIndex = this.currentPage - 1; // Set the paginator's current page index
+
+        this.paginator.length = this.totalItems; // Set total item count
       },
       (err) => {}
     );
@@ -236,22 +248,19 @@ export class WatchOfTheDayComponent {
     }
   }
 
-  // editProduct(data){
-  //     const dialogRef = this.dialog.open(AdminAddProductComponent, {
-  //         width: '1000px',
-  //         height: 'auto',
-  //         disableClose: true,
-  //         data: { param: 'Edit',data:data },
-  //       });
-     
-  //       dialogRef.afterClosed().subscribe((param) => {
-  //         if (param) {
-  //           if(param === 'approved' || param === 'reject'){
-  //              this.activateProduct(data)
-  //           }else{
-  //             this.allUser()
-  //           }
-  //         } 
-  //       });
-  // }
+  editProduct(data){
+    const dialogRef = this.dialog.open(AddProductWatchOfTheDayComponent, {
+      width: '1000px',
+      height: 'auto',
+      disableClose: true,
+      data:{ProductDetails:data,param:'Edit'}
+    });
+ 
+    dialogRef.afterClosed().subscribe(
+      (param) => {
+      if (param) {
+       this.allUser()
+      } 
+    });
+  }
 }

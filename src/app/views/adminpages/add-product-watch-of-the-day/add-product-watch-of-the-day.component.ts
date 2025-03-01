@@ -1,4 +1,4 @@
-import { Component,ElementRef,
+import { Component,ElementRef,Inject,
   ViewChild,
   computed, } from '@angular/core';
 import { HttpService } from "src/services/http/http.service";
@@ -24,10 +24,17 @@ export class AddProductWatchOfTheDayComponent {
   background_color: FormControl = new FormControl("", [Validators.required,]);
   type: FormControl = new FormControl("", [Validators.required,]);
   coverImage: { file: File; url: string } | null = null;
+  detailsofProduct:any;
+  param:any;
 
   constructor(private http: HttpService,private fb: FormBuilder,private alertService:AlertsServicesService,
       public dialogRef: MatDialogRef<AddProductWatchOfTheDayComponent>,
-  ){}
+       @Inject(MAT_DIALOG_DATA) data: any
+  ){
+    console.log("data",data)
+    this.detailsofProduct=data.ProductDetails;
+    this.param=data.param
+  }
 
   ngOnInit(): void {
     this.allProducts();
@@ -36,6 +43,16 @@ export class AddProductWatchOfTheDayComponent {
       background_color: this.background_color,
       type: this.type,
     });
+
+    if(this.param == 'Edit'){
+      this.watchDayForm.get('product_id').setValue(this.detailsofProduct.product_id)
+      this.watchDayForm.get('background_color').setValue(this.detailsofProduct.background_color)
+      this.watchDayForm.get('type').setValue(this.detailsofProduct.type)
+      this.coverImage={
+        file:null,
+        url: 'https://api.chronosouq.com/' + this.detailsofProduct.banner_img
+      }
+    }
   }
 
   @ViewChild("coverImageInput") coverImageInput!: ElementRef<HTMLInputElement>;
@@ -48,7 +65,7 @@ export class AddProductWatchOfTheDayComponent {
     const file = (event.target as HTMLInputElement).files?.[0];
 
     if (file) {
-      const maxSize = 5 * 1024 * 1024; // 5MB in bytes
+      const maxSize = 5 * 1024 * 1024;
       if (file.size > maxSize) {
         this.alertService.showAlert(
           "warning",
@@ -82,9 +99,13 @@ export class AddProductWatchOfTheDayComponent {
   }
 
   allProducts() {
-      this.http.getAdminProducts().subscribe(
+    const queryString = {
+      page: 1, // Set the page number
+      per_page: 100 // Set the number of items per page
+    };
+      this.http.getAdminProductsofQuery(queryString).subscribe(
         (res) => {
-          this.allData = res.data;
+          this.allData = res.data.data;
           this.allData = this.allData.map((product: any) => {
             if (product.main_image) {
               product.main_image = product.main_image

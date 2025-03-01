@@ -1,5 +1,6 @@
 <div class="container" style="height: 500px; padding: 10px 20px 10px 20px">
-    <h2 class="text-center"> Watch of The Day </h2>
+    <h2 *ngIf="param" class="text-center">Edit Watch of The Day </h2>
+    <h2 *ngIf="!param" class="text-center">Add Watch of The Day </h2>
   <form [formGroup]="watchDayForm" class="mt-3" (ngSubmit)="saveData()">
     <div>
       <mat-form-field appearance="outline" style="width: 100%">
@@ -84,11 +85,21 @@
     <!-- Save Button -->
     <div class="col-12 d-flex flex-wrap mt-3 gap-2 justify-content-center">
       <button
+      *ngIf="!param"
       class="save-btn"
         type="submit"
         [disabled]="!watchDayForm.valid"
       >
         Save
+      </button>
+
+      <button
+      *ngIf="param"
+      class="save-btn"
+        type="submit"
+        [disabled]="!watchDayForm.valid"
+      >
+        Edit
       </button>
       
       <button
