@@ -22,6 +22,7 @@ import { MyListingDetailsComponent } from './views/website/my-listing-details/my
 import { ForgotPasswordComponent } from './views/auth/forgot-password/forgot-password.component';
 import { AdminUsersComponent } from './views/adminpages/admin-users/admin-users.component';
 import { NewArrivalsComponent } from './views/website/new-arrivals/new-arrivals.component';
+import { WatchOfTheDayComponent } from './views/adminpages/watch-of-the-day/watch-of-the-day.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -42,6 +43,7 @@ const routes: Routes = [
   { path: 'admin/category', component:  AdminCategoryComponent},
   { path: 'admin/category/product', component:  AdminCategoryProductComponent},
   { path: 'admin/users', component:  AdminUsersComponent},
+  { path: 'admin/watchOfDay', component:  WatchOfTheDayComponent},
   { path: 'buy-now', component:  BuyNowComponent},
   { path: 'myListing', component:  MyListingDetailsComponent},
   { path: 'forgotPassword', component:  ForgotPasswordComponent},

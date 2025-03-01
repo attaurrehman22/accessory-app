@@ -90,6 +90,8 @@ import { authInterceptorInterceptor } from './auth-interceptor.interceptor';
 import { NgImageSliderModule } from 'ng-image-slider';
 import { NewArrivalsComponent } from './views/website/new-arrivals/new-arrivals.component';
 import { ConfirmationModelComponent } from './views/modal/confirmation-model/confirmation-model.component';
+import { WatchOfTheDayComponent } from './views/adminpages/watch-of-the-day/watch-of-the-day.component';
+import { AddProductWatchOfTheDayComponent } from './views/adminpages/add-product-watch-of-the-day/add-product-watch-of-the-day.component';
 
 @NgModule({
   declarations: [
@@ -137,7 +139,9 @@ import { ConfirmationModelComponent } from './views/modal/confirmation-model/con
     PriceLimitDirective,
     AdminUsersComponent,
     NewArrivalsComponent,
-    ConfirmationModelComponent
+    ConfirmationModelComponent,
+    WatchOfTheDayComponent,
+    AddProductWatchOfTheDayComponent
   ],
   imports: [
     MatSortModule,

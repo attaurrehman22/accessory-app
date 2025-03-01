@@ -1,0 +1,57 @@
+::ng-deep .mat-mdc-dialog-container {
+    min-width: 970px !important;
+    min-height: 735px;
+  }
+
+  .cancel-btn {
+    border-radius: 10px;
+    border: none;
+    height: 5vh;
+    color: #03181c;
+    padding: 10px 40px;
+  }
+  .save-btn {
+    border-radius: 10px;
+    border: none;
+    height: 5vh;
+    color: white;
+    padding: 10px 40px;
+    background: #03181c;
+  }
+
+  .upload-box {
+    height: 330px;
+    border: 1px solid #242424;
+    border-radius: 6px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    }
+  
+
+    .delete-btn {
+        position: absolute;
+        bottom: 220px;
+        right: 470px;
+        background: #fff;
+        border-radius: 50%;
+        width: 35px;
+        height: 35px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: red;
+        cursor: pointer;
+        border: none;
+        outline: none;
+        opacity: 0; 
+        transition: opacity 0.3s ease;
+      }
+
+      .upload-box:hover .delete-btn {
+        opacity: 1; 
+      }
+      
+      .image-preview:hover .delete-btn {
+        opacity: 1; 
+      }

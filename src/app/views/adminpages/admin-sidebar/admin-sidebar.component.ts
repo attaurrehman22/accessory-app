@@ -58,6 +58,14 @@ export class AdminSidebarComponent {
       iconWidth: 20,
       iconHeight: 20,
     },
+    WatchOfDay: {
+      label: 'WatchOfDay',
+      router: '/admin/watchOfDay',
+      routerActive: 'navbar-button-active',
+      icon: 'assets/images/dashboard-2-svgrepo-com (1).svg',
+      iconWidth: 20,
+      iconHeight: 20,
+    },
     // FeeManagement: {
     //   label: 'FeeManagement',
     //   router: '/Fee-Management',

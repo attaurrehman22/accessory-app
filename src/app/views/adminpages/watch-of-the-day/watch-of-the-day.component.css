@@ -1,0 +1,57 @@
+.tab {
+    background: whitesmoke;
+    /* width: 100%; */
+    max-width: 100%;
+  
+    /* min-height: 844px;
+    max-height: 100vh; */
+  }
+  .table {
+    /* overflow-x: scroll; */
+    min-width: 100% !important;
+    max-width: 100% !important;
+  
+    /* max-height: 100vh !important; */
+  }
+  
+  @media only screen and (max-width: 660px) {
+    .column {
+      padding: 0 !important;
+    }
+  }
+  @media only screen and (max-width: 550px) {
+    .mt {
+      min-width: 623px;
+    }
+  }
+  @media only screen and (min-width: 1500px) {
+    .table {
+      overflow-x: hidden;
+      overflow-y: hidden;
+    }
+  }
+  @media only screen and (min-width: 2000px) {
+    .table {
+      overflow-x: hidden;
+      overflow-y: hidden;
+    }
+  }
+  .row {
+    --bs-gutter-x: -0.5rem !important;
+  }
+  .iconColor {
+    color: blue;
+  }
+  .iconColor1 {
+    color: red;
+  }
+  td {
+    vertical-align: initial !important;
+  }
+  @media screen and (min-width: 1800px) {
+    .table {
+      max-width: 50%; /* Limit the table width to 100% of the container */
+      overflow-x: auto; /* Add horizontal scrolling for wide screens */
+    }
+  }
+  
