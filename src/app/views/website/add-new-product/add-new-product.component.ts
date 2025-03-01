@@ -61,8 +61,60 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
   otherImages: ImageFile[] = [];
   isCoverImageUploading = false;
   productIDFromResponse: any;
+  selectedVideo: File | null = null;
+  videoUrl: string | null = null; 
   isAdminUser = computed(() => this.loginStateService.isAdminUser());
+
+
+  onVideoSelected(event: any): void {
+    const file = event.target.files[0];
+    if (file && file.type.startsWith('video/')) {
+      this.selectedVideo = file;
+      this.videoUrl = URL.createObjectURL(file);  // Create a URL for video preview
+    } else {
+      alert('Please select a valid video file');
+      this.videoUrl = null; // Clear the video URL if invalid file
+    }
+  }
+
+  removeVideo(){
+    this.selectedVideo = null;
+    this.videoUrl = null;
+  }
+
+  selectVideoFile() {
+    this.videoInput.nativeElement.click();
+  }
+
+  uploadVideo(): void {
+    if (!this.selectedVideo) {
+      alert('Please select a video file first');
+      return;
+    }
+
+  
+
+    const formData = new FormData();
+    formData.append('video', this.selectedVideo, this.selectedVideo.name);
+
+    // const headers = new HttpHeaders();
+    // // You can set custom headers here if needed (e.g., Authorization)
+    
+    // this.http.post('YOUR_SERVER_API_ENDPOINT_HERE', formData, { headers })
+    //   .subscribe(
+    //     (response) => {
+    //       console.log('Video uploaded successfully', response);
+    //     },
+    //     (error) => {
+    //       console.error('Error uploading video', error);
+    //     }
+    //   );
+  }
+
+
+
   @ViewChild("coverImageInput") coverImageInput!: ElementRef<HTMLInputElement>;
+  @ViewChild("videoInput") videoInput!: ElementRef<HTMLInputElement>;
   @ViewChild("otherImagesInput")
   otherImagesInput!: ElementRef<HTMLInputElement>;
 
@@ -612,6 +664,11 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
             this.productDetails?.main_image.replace(/\\/g, "");
         }
 
+        if (this.productDetails?.video) {
+          this.productDetails.video =
+            this.productDetails.video.replace(/\\/g, "");
+        }
+
         if (this.productDetails?.additional_images) {
           try {
             this.productDetails.additional_images = JSON.parse(
@@ -647,6 +704,11 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
         if (this.productDetails.main_image) {
           this.productDetails.main_image =
             this.productDetails.main_image.replace(/\\/g, "");
+        }
+
+        if (this.productDetails?.video) {
+          this.productDetails.video =
+            this.productDetails.video.replace(/\\/g, "");
         }
 
         if (this.productDetails.additional_images) {
@@ -1007,6 +1069,10 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
       );
 
       this.selectedOptions = scopeofDelivery;
+
+      if(this.productDetails?.video){
+        this.videoUrl="https://api.chronosouq.com/" + this.productDetails.video
+      }
 
       this.coverImage = {
         file: null,
@@ -1427,6 +1493,13 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
           this.coverImage.file.name || "main_image.jpg"
         );
       }
+
+      if (this.selectedVideo) {
+        formData.append(
+          "video",this.selectedVideo || "main_image.jpg"
+        );
+      }
+
       this.otherImages.forEach((image, index) => {
         if (image.file) {
           formData.append(

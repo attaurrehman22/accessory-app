@@ -747,3 +747,35 @@ background: none;
   display: flex;
   justify-content: flex-start;
 }
+
+.upload-container {
+  text-align: center;
+  margin-top: 20px;
+}
+
+input[type="file"] {
+  margin-bottom: 10px;
+}
+
+button {
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+.video-preview {
+  margin-top: 20px;
+}
+
+video {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}

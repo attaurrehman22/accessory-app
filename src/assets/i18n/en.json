@@ -341,7 +341,6 @@
     "watch_details": "Watch Details",
     "watch_details_para_one": "Every watch will soon be verified by our team of experts to ensure it’s 100% authentic, giving buyers complete peace of mind.",
     "watch_details_para": "Crypto ipsum bitcoin ethereum dogecoin litecoin. Revain neo gelen amp tecoin EOS chiliz...",
-    "upload_images": "Upload Images",
     "upload_images_para": "Crypto ipsum bitcoin ethereum dogecoin litecoin. Revain neo gelen amp tecoin EOS chiliz...",
     "condition_grading": "Condition Grading",
     "condition_grading_para": "Crypto ipsum bitcoin ethereum dogecoin litecoin. Revain neo gelen amp tecoin EOS chiliz...",
@@ -558,7 +557,11 @@
     "Ad_Preview":"Ad Preview",
     "Payout_Information":"Payout Information",
     "publish_btn":"Publish",
-    "Preview_your_Ad":" Preview your Ad"
+    "Preview_your_Ad":" Preview your Ad",
+
+
+    "upload_video":"Upload Video",
+    "upload_images": "Upload Media"
 
   },
 
