@@ -1,4 +1,4 @@
-import { Component, ViewChild } from "@angular/core";
+import { Component, ViewChild, OnInit, OnDestroy } from "@angular/core";
 import { MatTableDataSource } from "@angular/material/table";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatSort } from "@angular/material/sort";
@@ -6,6 +6,9 @@ import { Router } from "@angular/router";
 import { MatDialog } from "@angular/material/dialog";
 import { HttpService } from "src/services/http/http.service";
 import { AlertsServicesService } from "src/services/alerts-service/alerts-services.service";
+import { Subscription } from 'rxjs';
+import { SidebarService } from "src/services/sidebar.service";
+
 export interface UserData {
   userName: string;
   name: string;
@@ -19,8 +22,8 @@ export interface UserData {
   templateUrl: './admin-users.component.html',
   styleUrls: ['./admin-users.component.css']
 })
-export class AdminUsersComponent {
- displayedColumns: string[] = [
+ export class AdminUsersComponent implements OnInit, OnDestroy {
+  displayedColumns: string[] = [
     "name",
     "email",
     "country",
@@ -41,12 +44,15 @@ export class AdminUsersComponent {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
+  sidebarClickSubscription: Subscription;
+
   constructor(
     private router: Router,
     private dialog: MatDialog,
-    private http:HttpService,
+    private http: HttpService,
     private toast: AlertsServicesService,
     private alertService: AlertsServicesService,
+    private sidebarService: SidebarService
   ) {
     this.dataSource = new MatTableDataSource([]);
   }
@@ -55,11 +61,20 @@ export class AdminUsersComponent {
     this.allUser();
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+    this.sidebarClickSubscription = this.sidebarService.sidebarClick$.subscribe(() => {
+      this.dialog.closeAll();
+    });
   }
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+  }
+
+  ngOnDestroy() {
+    if (this.sidebarClickSubscription) {
+      this.sidebarClickSubscription.unsubscribe();
+    }
   }
 
   applyFilter(event: Event) {
@@ -93,7 +108,7 @@ export class AdminUsersComponent {
       (res) => {
         // Filter out users with type 'admin'
         this.allData = res.data.filter((user: any) => user.type !== 'admin');
-        
+
         // Set the filtered data to the data source
         this.dataSource = new MatTableDataSource(this.allData);
         this.dataSource.paginator = this.paginator;
@@ -104,7 +119,7 @@ export class AdminUsersComponent {
       }
     );
   }
-  
+
 
   isMeOrAdminOrDeveloper(id: any): boolean {
     return true;

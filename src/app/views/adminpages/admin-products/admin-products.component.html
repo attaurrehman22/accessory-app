@@ -8,7 +8,6 @@
         </div>
         <div class="col-md-1"></div>
       </div>
-      <!-- <div class="col-10"></div> -->
     </div>
     <div class="row g-0">
       <div class="col-lg-12 col-md-12 col-sm-12">
@@ -19,45 +18,15 @@
                 <div class="col-8 col-lg-8 col-md-8 col-sm-6">
                   <mat-form-field appearance="outline">
                     <mat-label>Search</mat-label>
-
-                    <input
-                      matInput
-                      (keyup)="applyFilter($event)"
-                      placeholder="Ex. Admin"
-                      #input
-                    />
+                    <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Admin" #input />
                   </mat-form-field>
-                  <!-- &nbsp; -->
-                  <!-- <mat-form-field appearance="outline">
-                    <mat-label>Player status</mat-label>
-                    <mat-select [(ngModel)]="selectedValue" name="userStatu">
-                      <mat-option
-                        *ngFor="let i of userStatu"
-                        (click)="changingStatus(i.value)"
-                        [value]="i.value"
-                      >
-                        {{ i.viewValue }}
-                      </mat-option>
-                    </mat-select>
-                  </mat-form-field> -->
                 </div>
-
-                <div
-                  class="col-4 col-lg-4 col-md-4 col-sm-6 d-flex justify-content-end align-items-center"
-                >
-                  <!-- <button
-                    [hidden]="!isAdmin()"
-                    mat-raised-button
-                    color="primary"
-                    (click)="openModal()"
-                  >
-                    <mat-icon>add_circle_outline</mat-icon>Add Brand
-                  </button> -->
+                <div class="col-4 col-lg-4 col-md-4 col-sm-6 d-flex justify-content-end align-items-center">
                 </div>
               </div>
               <mat-card>
                 <div class="mat-elevation-z8">
-                  <table class="table" mat-table [dataSource]="dataSource">
+                  <table mat-table [dataSource]="dataSource" matSort (matSortChange)="sortData($event)">
                     <!-- ID Column -->
                     <ng-container class="column" matColumnDef="name">
                       <th mat-header-cell class="column" *matHeaderCellDef>
@@ -68,184 +37,98 @@
                       </td>
                     </ng-container>
 
-                    <!-- First Name Column -->
-                    <ng-container class="column" matColumnDef="slug">
-                      <th mat-header-cell class="column" *matHeaderCellDef>
-                        Watch Type
-                      </th>
-                      <td mat-cell class="column" *matCellDef="let row; in">
-                        {{ row.watch_type }}
+                    <!-- Watch Type Column -->
+                    <ng-container matColumnDef="watch_type">
+                      <th mat-header-cell *matHeaderCellDef mat-sort-header>Watch Type</th>
+                      <td mat-cell *matCellDef="let row">{{ row?.watch_type }}</td>
+                    </ng-container>
+
+                    <!-- Brand Name Column -->
+                    <ng-container matColumnDef="brand">
+                      <th mat-header-cell *matHeaderCellDef mat-sort-header>Brand Name</th>
+                      <td mat-cell *matCellDef="let row">{{ row?.brand?.name }}</td>
+                    </ng-container>
+
+                    <!-- Cover Image Column -->
+                    <ng-container matColumnDef="cover_image">
+                      <th mat-header-cell *matHeaderCellDef>Cover Image</th>
+                      <td mat-cell *matCellDef="let row">
+                        <img style="height: 60px; width: 70px; border-radius: 10px; object-fit: cover;" [src]="'https://api.chronosouq.com/' + row?.main_image" />
                       </td>
                     </ng-container>
 
-                    <!-- Last Name Column -->
-                    <ng-container class="column" matColumnDef="brand">
-                      <th mat-header-cell class="column" *matHeaderCellDef>
-                        Brand Name
-                      </th>
-                      <td mat-cell class="column" *matCellDef="let row; in">
-                        {{ row.brand.name }}
-
-                      </td>
+                    <!-- Created By Column -->
+                    <ng-container matColumnDef="created_by">
+                      <th mat-header-cell *matHeaderCellDef mat-sort-header>Created By</th>
+                      <td mat-cell *matCellDef="let row">{{ row?.created_by?.name }}</td>
                     </ng-container>
 
-                    <ng-container class="column" matColumnDef="cover_image">
-                      <th mat-header-cell class="column" *matHeaderCellDef>
-                        Cover Image
-                      </th>
-                      <td mat-cell class="column" *matCellDef="let row; in">
-                        <!-- {{ row.cover_image }} -->
-                        <img
-                          style="height: 60px;
-                          width: 70px;
-                          border-radius: 10px;object-fit: cover;"
-                          [src]="
-                            'https://api.chronosouq.com/' + row.main_image
-                          "
-                        />
-                      </td>
+                    <!-- Published Date Column -->
+                    <ng-container matColumnDef="published_date">
+                      <th mat-header-cell *matHeaderCellDef mat-sort-header>Published Date</th>
+                      <td mat-cell *matCellDef="let row">{{ row?.published_date | date: 'dd/MM/yyyy' }}</td>
                     </ng-container>
 
-                    <ng-container class="column" matColumnDef="created_by">
-                      <th mat-header-cell class="column" *matHeaderCellDef>
-                        Created By
-                      </th>
-                      <td mat-cell class="column" *matCellDef="let row; in">
-                        {{ row.created_by.name }}
-                      </td>
+                    <!-- Sale Status Column -->
+                    <ng-container matColumnDef="sale_status">
+                      <th mat-header-cell *matHeaderCellDef mat-sort-header>Sale Status</th>
+                      <td mat-cell *matCellDef="let row">{{ row?.sale_status === 'reserved' ? 'Reserved' : row?.sale_status === 'for_sale' ? 'For Sale' : 'Sold' }}</td>
                     </ng-container>
 
-                    <ng-container class="column" matColumnDef="published_date">
-                      <th mat-header-cell class="column" *matHeaderCellDef>
-                        Published Date
-                      </th>
-                      <td mat-cell class="column" *matCellDef="let row; in">
-                        {{ row.published_date | date: 'dd/MM/yyyy' }}
-                      </td>
+                    <!-- Model Column -->
+                    <ng-container matColumnDef="model">
+                      <th mat-header-cell *matHeaderCellDef mat-sort-header>Model</th>
+                      <td mat-cell *matCellDef="let row">{{ row?.model }}</td>
                     </ng-container>
 
-                    <!-- <ng-container class="column" matColumnDef="price">
-                      <th mat-header-cell class="column" *matHeaderCellDef>
-                        Price
-                      </th>
-                      <td mat-cell class="column" *matCellDef="let row">
-                        {{ row.price }}
-                      </td>
-                    </ng-container> -->
-
-                    <ng-container class="column" matColumnDef="price">
-                      <th mat-header-cell class="column" *matHeaderCellDef>
-                        Sale Status
-                      </th>
-                      <td mat-cell class="column" *matCellDef="let row">
-                        {{ row.sale_status === 'reserved' ? 'Reserved' : row.sale_status === 'for_sale' ? 'For Sale' : 'Soled' }}
-                      </td>
+                    <!-- Is Active Column -->
+                    <ng-container matColumnDef="is_active">
+                      <th mat-header-cell *matHeaderCellDef mat-sort-header>Is Active</th>
+                      <td mat-cell *matCellDef="let row">{{ row?.is_active === 0 ? 'No' : 'Yes' }}</td>
                     </ng-container>
 
-
-                    <ng-container class="column" matColumnDef="model">
-                      <th mat-header-cell class="column" *matHeaderCellDef>
-                        Model
-                      </th>
-                      <td mat-cell class="column" *matCellDef="let row; in">
-                        {{ row.model }}
-                      </td>
+                    <!-- Is Popular Column -->
+                    <ng-container matColumnDef="popular_item">
+                      <th mat-header-cell *matHeaderCellDef mat-sort-header>Is Popular</th>
+                      <td mat-cell *matCellDef="let row">{{ row?.popular_item }}</td>
                     </ng-container>
 
-                    <ng-container class="column" matColumnDef="is_active">
-                      <th mat-header-cell class="column" *matHeaderCellDef>
-                        Is Active
-                      </th>
-                      <td mat-cell class="column" *matCellDef="let row; in">
-                        {{ row.is_active === 0 ? 'No' : 'Yes' }}
-                      </td>
-                    </ng-container>
-
-                    <ng-container class="column" matColumnDef="top_brand">
-                      <th mat-header-cell class="column" *matHeaderCellDef>
-                        is Popular
-                      </th>
-                      <td mat-cell class="column" *matCellDef="let row; in">
-                        {{ row.popular_item }}
-                      </td>
-                    </ng-container>
-
-                    <!-- Status Column -->
-                    <ng-container class="column" matColumnDef="edit">
-                      <th mat-header-cell class="column" *matHeaderCellDef>
-                        Action
-                      </th>
-                      <td mat-cell class="column" *matCellDef="let row; in">
-
-                        <button
-                        style="width: 0; height: 0; padding: 0"
-                        mat-icon-button
-                        [matMenuTriggerFor]="menu"
-                        (click)="$event.stopPropagation()"
-                      >
-                        <mat-icon>more_vert</mat-icon>
-                      </button>
-                      <mat-menu #menu="matMenu">
-                        <!-- <button mat-menu-item (click)="editBrand(row)">
-                          <mat-icon>edit</mat-icon>
-                          <span>Edit</span>
-                        </button> -->
-                        <button mat-menu-item (click)="deleteProduct(row)">
-                          <mat-icon>delete</mat-icon>
-                          <span>Delete</span>
+                    <!-- Action Column -->
+                    <ng-container matColumnDef="action">
+                      <th mat-header-cell *matHeaderCellDef>Action</th>
+                      <td mat-cell *matCellDef="let row">
+                        <button mat-icon-button [matMenuTriggerFor]="menu" (click)="$event.stopPropagation()">
+                          <mat-icon>more_vert</mat-icon>
                         </button>
-                        <!-- <button mat-menu-item (click)="activateProduct(row)">
-                          <mat-icon>refresh</mat-icon>
-                          <span *ngIf="row.is_active === 1">Deactivate</span>
-                          <span *ngIf="row.is_active === 0">Activate</span>
-                        </button> -->
-
-                        <button mat-menu-item (click)="editProduct(row)">
-                          <mat-icon>edit</mat-icon>
-                          <span>Edit</span>
-                          <!-- <span *ngIf="row.is_active === 1">Deactivate</span>
-                          <span *ngIf="row.is_active === 0">Activate</span> -->
-                        </button>
-
-
-
-                        <button mat-menu-item (click)="addPopularProduct(row)">
-                          <mat-icon>refresh</mat-icon>
-                          <span>Add To Popular</span>
-                        </button>
-                      </mat-menu>
+                        <mat-menu #menu="matMenu">
+                          <button mat-menu-item (click)="deleteProduct(row)">
+                            <mat-icon>delete</mat-icon>
+                            <span>Delete</span>
+                          </button>
+                          <button mat-menu-item (click)="editProduct(row)">
+                            <mat-icon>edit</mat-icon>
+                            <span>Edit</span>
+                          </button>
+                          <button mat-menu-item (click)="addPopularProduct(row)">
+                            <mat-icon>refresh</mat-icon>
+                            <span>Add To Popular</span>
+                          </button>
+                        </mat-menu>
                       </td>
                     </ng-container>
 
-                    <tr
-                      mat-header-row
-                      *matHeaderRowDef="displayedColumns; sticky: true"
-                    ></tr>
-                    <tr
-                      mat-row
-                      *matRowDef="let row; columns: displayedColumns"
-                    ></tr>
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
 
                     <!-- Row shown when there is no matching data. -->
                     <tr class="mat-row" *matNoDataRow>
-                      <td class="mat-cell" colspan="4">
-                        No data matching the filter "{{ input.value }}"
-                      </td>
+                      <td class="mat-cell" colspan="4">No data matching the filter "{{ input.value }}"</td>
                     </tr>
                   </table>
 
-                  <mat-paginator
-                    #paginator
-                    [pageSizeOptions]="[5, 10, 20]"
-                    showFirstLastButtons
-                  ></mat-paginator>
+                  <mat-paginator [length]="resultsLength" [pageSize]="pageSize" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons (page)="pageEvent = $event; loadData()"></mat-paginator>
                 </div>
               </mat-card>
-              <!-- <div class="d-flex justify-content-end">
-                <button mat-raised-button color="primary" (click)="download()">
-                  <mat-icon>cloud_download</mat-icon>Download Users
-                </button>
-              </div> -->
             </mat-card-content>
           </mat-card>
         </div>

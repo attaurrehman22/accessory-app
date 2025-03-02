@@ -8,7 +8,7 @@ import { environment } from "src/environments/environment";
 })
 export class HttpService implements OnInit {
   private apiUrl = environment.apipath;
-  token: any=localStorage.getItem("user_token");
+  token: any = localStorage.getItem("user_token");
   constructor(private http: HttpClient) {
     this.token = localStorage.getItem("user_token");
   }
@@ -32,11 +32,11 @@ export class HttpService implements OnInit {
 
   register(FormControl: any): Observable<any> {
     let formdate = new FormData();
-  
-      formdate.append("name", FormControl.get("username").value);
-      formdate.append("email", FormControl.get("email").value);
-      formdate.append("password", FormControl.get("password").value);
-  
+
+    formdate.append("name", FormControl.get("username").value);
+    formdate.append("email", FormControl.get("email").value);
+    formdate.append("password", FormControl.get("password").value);
+
     return this.http.post(`${this.apiUrl}/api/register`, formdate);
   }
 
@@ -98,7 +98,7 @@ export class HttpService implements OnInit {
     return this.http.get(`${this.apiUrl}/api/most-popular-models`);
   }
 
-  getDealerDetails(ID:any): Observable<any> {
+  getDealerDetails(ID: any): Observable<any> {
     return this.http.get(`${this.apiUrl}/api/dealer/${ID}/details`);
   }
 
@@ -268,7 +268,7 @@ export class HttpService implements OnInit {
   }
 
   getAdminUsers(pageIndex: number = 0, pageSize: number = 100): Observable<any> {
-    let pageSize2=100;
+    let pageSize2 = 100;
     return this.http.get(`${this.apiUrl}/api/admin/user/list?page=${pageIndex + 1}&per_page=${pageSize2}`, {
       headers: {
         Accept: "application/json",
@@ -339,13 +339,26 @@ export class HttpService implements OnInit {
     );
   }
 
-  getAdminProducts(): Observable<any> {
+  // getAdminProducts(): Observable<any> {
+  getAdminProducts(pageIndex: number, pageSize: number, sortField: string, sortDirection: string): Observable<any> {
+    let params = new HttpParams()
+    .set('pageIndex', pageIndex.toString())
+    .set('pageSize', pageSize.toString())
+    .set('sortField', sortField)
+    .set('sortDirection', sortDirection);
     return this.http.get(`${this.apiUrl}/api/admin/products`, {
       headers: {
         Accept: "application/json",
         Authorization: `Bearer ${this.token}`,
       },
+      params: params
     });
+    // return this.http.get(`${this.apiUrl}/api/admin/products`, {
+    //   headers: {
+    //     Accept: "application/json",
+    //     Authorization: `Bearer ${this.token}`,
+    //   },
+    // });
   }
 
   getAdminProductsofQuery(queryString): Observable<any> {
@@ -571,15 +584,15 @@ export class HttpService implements OnInit {
 
   // -------------------------------------------- chat Section start --------------------------
 
-  buyNowFromDetailsProduct(ID:any,bodyData:any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/api/buy-product/${ID}`, bodyData,{
+  buyNowFromDetailsProduct(ID: any, bodyData: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/api/buy-product/${ID}`, bodyData, {
       headers: {
         Accept: "application/json",
         Authorization: `Bearer ${this.token}`,
       },
     });
   }
-  
+
   getChatsWithLatestMessage(): Observable<any> {
     return this.http.get(`${this.apiUrl}/api/chat/list`, {
       headers: {
@@ -601,7 +614,7 @@ export class HttpService implements OnInit {
   }
 
   sendMessage(formData): Observable<any> {
-    return this.http.post(`${this.apiUrl}/api/chat/send`, formData,{
+    return this.http.post(`${this.apiUrl}/api/chat/send`, formData, {
       headers: {
         Accept: "application/json",
         Authorization: `Bearer ${this.token}`,
@@ -611,126 +624,126 @@ export class HttpService implements OnInit {
 
   // -------------------------------------------- chat Section end --------------------------
 
-// -------------------------------------------- Make Offer start --------------------------
+  // -------------------------------------------- Make Offer start --------------------------
 
-sendOffer(formData): Observable<any> {
-  return this.http.post(`${this.apiUrl}/api/offers`, formData,{
-    headers: {
-      Accept: "application/json",
-      Authorization: `Bearer ${this.token}`,
-    },
-  });
-}
+  sendOffer(formData): Observable<any> {
+    return this.http.post(`${this.apiUrl}/api/offers`, formData, {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+  }
 
-offerByFilter(productID:any,chatID:any): Observable<any> {
-  return this.http.get(`${this.apiUrl}/api/offer-by-filter?product_id=${productID}&chat_id=${chatID}`,{
-    headers: {
-      Accept: "application/json",
-      Authorization: `Bearer ${this.token}`,
-    },
-  });
-}
+  offerByFilter(productID: any, chatID: any): Observable<any> {
+    return this.http.get(`${this.apiUrl}/api/offer-by-filter?product_id=${productID}&chat_id=${chatID}`, {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+  }
 
-editOffer(formData): Observable<any> {
-  return this.http.post(`${this.apiUrl}/api/update-offers`, formData,{
-    headers: {
-      Accept: "application/json",
-      Authorization: `Bearer ${this.token}`,
-    },
-  });
-}
+  editOffer(formData): Observable<any> {
+    return this.http.post(`${this.apiUrl}/api/update-offers`, formData, {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+  }
 
-editOfferStatus(formData): Observable<any> {
-  return this.http.post(`${this.apiUrl}/api/offers/status`, formData,{
-    headers: {
-      Accept: "application/json",
-      Authorization: `Bearer ${this.token}`,
-    },
-  });
-}
-
-
-sendShipmenttoBuyer(formData): Observable<any> {
-  return this.http.post(`${this.apiUrl}/api/offers/shipment-offer/store`, formData,{
-    headers: {
-      Accept: "application/json",
-      Authorization: `Bearer ${this.token}`,
-    },
-  });
-}
+  editOfferStatus(formData): Observable<any> {
+    return this.http.post(`${this.apiUrl}/api/offers/status`, formData, {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+  }
 
 
-// -------------------------------------------- Make Offer End --------------------------
+  sendShipmenttoBuyer(formData): Observable<any> {
+    return this.http.post(`${this.apiUrl}/api/offers/shipment-offer/store`, formData, {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+  }
 
 
-// -------------------------------------------- My Listing Module APIs Start --------------------------
+  // -------------------------------------------- Make Offer End --------------------------
 
 
-getMyProductsListing(): Observable<any> {
-  return this.http.get(`${this.apiUrl}/api/listing/user-listings`, {
-    headers: {
-      Accept: "application/json",
-      Authorization: `Bearer ${this.token}`,
-    },
-  });
-}
-
-getProductDetailsByID(ProductID): Observable<any> {
-  return this.http.get(`${this.apiUrl}/api/listing/getStep?product_id=${ProductID}`, {
-    headers: {
-      Accept: "application/json",
-      Authorization: `Bearer ${this.token}`,
-    },
-  });
-}
-
-getBuyOrders(): Observable<any> {
-  return this.http.get(`${this.apiUrl}/api/order/buyList`, {
-    headers: {
-      Accept: "application/json",
-      Authorization: `Bearer ${this.token}`,
-    },
-  });
-}
-
-getSellOrders(): Observable<any> {
-  return this.http.get(`${this.apiUrl}/api/order/sold-orders`, {
-    headers: {
-      Accept: "application/json",
-      Authorization: `Bearer ${this.token}`,
-    },
-  });
-}
-
-getOrderStatus(orderID): Observable<any> {
-  return this.http.get(`${this.apiUrl}/api/order/status/${orderID}`, {
-    headers: {
-      Accept: "application/json",
-      Authorization: `Bearer ${this.token}`,
-    },
-  });
-}
+  // -------------------------------------------- My Listing Module APIs Start --------------------------
 
 
-getOrderDetails(orderID): Observable<any> {
-  return this.http.get(`${this.apiUrl}/api/order/details/${orderID}`, {
-    headers: {
-      Accept: "application/json",
-      Authorization: `Bearer ${this.token}`,
-    },
-  });
-}
+  getMyProductsListing(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/api/listing/user-listings`, {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+  }
+
+  getProductDetailsByID(ProductID): Observable<any> {
+    return this.http.get(`${this.apiUrl}/api/listing/getStep?product_id=${ProductID}`, {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+  }
+
+  getBuyOrders(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/api/order/buyList`, {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+  }
+
+  getSellOrders(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/api/order/sold-orders`, {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+  }
+
+  getOrderStatus(orderID): Observable<any> {
+    return this.http.get(`${this.apiUrl}/api/order/status/${orderID}`, {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+  }
 
 
-createShipment(formData): Observable<any> {
-  return this.http.post(`${this.apiUrl}/api/order/create-shipment`,formData, {
-    headers: {
-      Accept: "application/json",
-      Authorization: `Bearer ${this.token}`,
-    },
-  });
-}
-// -------------------------------------------- My Listing Module APIs end --------------------------
+  getOrderDetails(orderID): Observable<any> {
+    return this.http.get(`${this.apiUrl}/api/order/details/${orderID}`, {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+  }
+
+
+  createShipment(formData): Observable<any> {
+    return this.http.post(`${this.apiUrl}/api/order/create-shipment`, formData, {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+  }
+  // -------------------------------------------- My Listing Module APIs end --------------------------
 
 
 }

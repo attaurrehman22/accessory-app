@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, OnInit, OnDestroy } from '@angular/core';
 import { MatDialog } from "@angular/material/dialog";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatSort } from "@angular/material/sort";
@@ -7,6 +7,8 @@ import { Router } from "@angular/router";
 import { AlertsServicesService } from "src/services/alerts-service/alerts-services.service";
 import { HttpService } from "src/services/http/http.service";
 import { AddProductWatchOfTheDayComponent } from '../add-product-watch-of-the-day/add-product-watch-of-the-day.component';
+import { Subscription } from 'rxjs';
+import { SidebarService } from 'src/services/sidebar.service';
 
 export interface UserData {
   name: any;
@@ -26,7 +28,7 @@ export interface UserData {
   templateUrl: './watch-of-the-day.component.html',
   styleUrls: ['./watch-of-the-day.component.css']
 })
-export class WatchOfTheDayComponent {
+export class WatchOfTheDayComponent implements OnInit, OnDestroy {
  displayedColumns: string[] = [
     "name",
     "slug",
@@ -43,6 +45,7 @@ export class WatchOfTheDayComponent {
   dataSource: MatTableDataSource<UserData>;
   selectedValue: string;
   allData: any;
+  sidebarClickSubscription: Subscription;
 
   userStatu: any = [
     { value: "All", viewValue: "All" },
@@ -60,6 +63,7 @@ export class WatchOfTheDayComponent {
     private dialog: MatDialog,
     private http: HttpService,
     private toast: AlertsServicesService,
+    private sidebarService: SidebarService
     // private router: Router
   ) {
     this.dataSource = new MatTableDataSource([]);
@@ -69,6 +73,15 @@ export class WatchOfTheDayComponent {
     this.allUser();
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+    this.sidebarClickSubscription = this.sidebarService.sidebarClick$.subscribe(() => {
+      this.dialog.closeAll();
+    });
+  }
+
+  ngOnDestroy() {
+    if (this.sidebarClickSubscription) {
+      this.sidebarClickSubscription.unsubscribe();
+    }
   }
 
   onPageChange(event: any) {
@@ -84,7 +97,7 @@ export class WatchOfTheDayComponent {
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value.trim().toLowerCase();
-  
+
     // Custom filter to check every field
     this.dataSource.filterPredicate = (data: any, filter: string) => {
       // You can specify which fields you want to filter on here
@@ -101,15 +114,15 @@ export class WatchOfTheDayComponent {
         (data.description && data.description.toLowerCase().includes(filter)) // Description
       );
     };
-  
+
     // Apply the filter to the dataSource
     this.dataSource.filter = filterValue;
-  
+
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
   }
-  
+
 
   openModal() {
          const dialogRef = this.dialog.open(AddProductWatchOfTheDayComponent, {
@@ -117,12 +130,12 @@ export class WatchOfTheDayComponent {
           height: 'auto',
           disableClose: true,
         });
-     
+
         dialogRef.afterClosed().subscribe(
           (param) => {
           if (param) {
            this.allUser()
-          } 
+          }
         });
   }
 
@@ -255,12 +268,12 @@ export class WatchOfTheDayComponent {
       disableClose: true,
       data:{ProductDetails:data,param:'Edit'}
     });
- 
+
     dialogRef.afterClosed().subscribe(
       (param) => {
       if (param) {
        this.allUser()
-      } 
+      }
     });
   }
 }

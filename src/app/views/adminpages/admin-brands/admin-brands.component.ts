@@ -1,4 +1,4 @@
-import { Component, ViewChild } from "@angular/core";
+import { Component, ViewChild, OnInit, AfterViewInit, OnDestroy } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatSort } from "@angular/material/sort";
@@ -7,15 +7,15 @@ import { Router } from "@angular/router";
 import { AlertsServicesService } from "src/services/alerts-service/alerts-services.service";
 import { HttpService } from "src/services/http/http.service";
 import { AdminBrandsProductComponent } from "../admin-brands-product/admin-brands-product.component";
+import { Subscription } from 'rxjs';
+import { SidebarService } from "src/services/sidebar.service";
 
 export interface UserData {
   name: any;
   slug: any;
   description: any;
-  // cover_image: any;
   meta_title: any;
   meta_description: any;
-  // meta_keywords: any;
   is_active: any;
   top_brand: any;
 }
@@ -25,15 +25,13 @@ export interface UserData {
   templateUrl: "./admin-brands.component.html",
   styleUrls: ["./admin-brands.component.css"],
 })
-export class AdminBrandsComponent {
+export class AdminBrandsComponent implements OnInit, AfterViewInit, OnDestroy {
   displayedColumns: string[] = [
     "name",
     "slug",
     "description",
-    // "cover_image",
     "meta_title",
     "meta_description",
-    // "meta_keywords",
     "is_active",
     "top_brand",
     "edit",
@@ -41,6 +39,7 @@ export class AdminBrandsComponent {
   dataSource: MatTableDataSource<UserData>;
   selectedValue: string;
   allData: any;
+  sidebarClickSubscription: Subscription;
 
   userStatu: any = [
     { value: "All", viewValue: "All" },
@@ -56,7 +55,8 @@ export class AdminBrandsComponent {
     private dialog: MatDialog,
     private http: HttpService,
     private toast: AlertsServicesService,
-    private route: Router
+    private route: Router,
+    private sidebarService: SidebarService
   ) {
     this.dataSource = new MatTableDataSource([]);
   }
@@ -65,11 +65,21 @@ export class AdminBrandsComponent {
     this.allUser();
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+
+    this.sidebarClickSubscription = this.sidebarService.sidebarClick$.subscribe(() => {
+      this.dialog.closeAll();
+    });
   }
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+  }
+
+  ngOnDestroy() {
+    if (this.sidebarClickSubscription) {
+      this.sidebarClickSubscription.unsubscribe();
+    }
   }
 
   applyFilter(event: Event) {
@@ -85,16 +95,15 @@ export class AdminBrandsComponent {
     const dialogRef = this.dialog.open(AdminBrandsProductComponent, {
       width: '1000px',
       height: 'auto',
-      disableClose: true,
+      disableClose: false, // Allow closing by clicking outside
       data: { param: 'Create' },
     });
- 
+
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-         this.allUser()
-      } 
+        this.allUser();
+      }
     });
-
   }
 
   allUser() {
@@ -126,20 +135,18 @@ export class AdminBrandsComponent {
   }
 
   editBrand(data: any) {
-
     const dialogRef = this.dialog.open(AdminBrandsProductComponent, {
       width: '1000px',
       height: 'auto',
-      disableClose: true,
-      data: { param: 'Edit',data:data },
+      disableClose: false, // Allow closing by clicking outside
+      data: { param: 'Edit', data: data },
     });
- 
+
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-         this.allUser()
-      } 
+        this.allUser();
+      }
     });
-    
   }
 
   deleteBrand(data) {
@@ -149,18 +156,17 @@ export class AdminBrandsComponent {
         this.allUser();
       },
       (err) => {
-        this.toast.showAlert("danger", "Error in removing Barnd");
+        this.toast.showAlert("danger", "Error in removing Brand");
       }
     );
   }
 
-
   activateDeactivateBrand(data) {
     this.http.activateDeactivateAdminBrand(data.id).subscribe(
       (res) => {
-        if(res.data.is_active===true){
+        if (res.data.is_active === true) {
           this.toast.showAlert("success", "Brand Activate Susseccfully");
-        }else{
+        } else {
           this.toast.showAlert("success", "Brand De-activate Susseccfully");
         }
         this.allUser();
@@ -171,13 +177,12 @@ export class AdminBrandsComponent {
     );
   }
 
-
   topBrand(data) {
     this.http.topAdminBrand(data.id).subscribe(
       (res) => {
-        if(res.data.top_brand===true){
+        if (res.data.top_brand === true) {
           this.toast.showAlert("success", "Brand move on top Susseccfully");
-        }else{
+        } else {
           this.toast.showAlert("success", "Brand remove from Top");
         }
         this.allUser();

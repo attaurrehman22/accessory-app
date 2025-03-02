@@ -1,7 +1,8 @@
-import { Component,HostListener } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { AlertsServicesService } from 'src/services/alerts-service/alerts-services.service';
+import { SidebarService } from 'src/services/sidebar.service';
 
 @Component({
   selector: 'app-admin-sidebar',
@@ -66,32 +67,6 @@ export class AdminSidebarComponent {
       iconWidth: 20,
       iconHeight: 20,
     },
-    // FeeManagement: {
-    //   label: 'FeeManagement',
-    //   router: '/Fee-Management',
-    //   routerActive: 'navbar-button-active',
-    // },
-    // AcadmeyBooking: {
-    //   label: 'AcadmeyBooking',
-    //   router: '/booking-Page',
-    //   routerActive: 'navbar-button-active',
-    //   icon: 'assets/images/add-plus-square-svgrepo-com.svg',
-    //   iconWidth: 20,
-    //   iconHeight: 20,
-    // },
-    // ProductInventory: {
-    //   label: 'Product-Inventory',
-    //   router: '/inventory-Page',
-    //   routerActive: 'navbar-button-active',
-    //   icon: 'assets/images/cart-plus-svgrepo-com.svg',
-    //   iconWidth: 20,
-    //   iconHeight: 20,
-    // },
-    // SaleProduct: {
-    //   label: 'sale-product',
-    //   router: '/salesProduct-Page',
-    //   routerActive: 'navbar-button-active',
-    // },
   };
 
   isActive(route: string): boolean {
@@ -102,7 +77,8 @@ export class AdminSidebarComponent {
     public route: Router,
     private translateService: TranslateService,
     private router: Router,
-    public alertService: AlertsServicesService
+    public alertService: AlertsServicesService,
+    private sidebarService: SidebarService
   ) {}
 
   ngOnInit(): void {
@@ -132,5 +108,9 @@ export class AdminSidebarComponent {
 
   onToogleHandler(): void {
     this.toogle = !this.toogle;
+  }
+
+  onMenuItemClick() {
+    this.sidebarService.emitSidebarClick();
   }
 }
