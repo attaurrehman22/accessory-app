@@ -1,8 +1,8 @@
-import { Component, OnInit, ViewChild } from "@angular/core";
+import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { MatDialog } from "@angular/material/dialog";
-import { MatPaginator } from "@angular/material/paginator";
-import { MatSort } from "@angular/material/sort";
-import { MatTableDataSource } from "@angular/material/table";
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
+import { MatSort, Sort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 import { Router } from "@angular/router";
 import { AlertsServicesService } from "src/services/alerts-service/alerts-services.service";
 import { HttpService } from "src/services/http/http.service";
@@ -18,7 +18,7 @@ export interface UserData {
   model: any;
   is_active: any;
   top_brand: any;
-  published_date:any;
+  published_date: any;
 }
 
 @Component({
@@ -26,21 +26,24 @@ export interface UserData {
   templateUrl: "./admin-products.component.html",
   styleUrls: ["./admin-products.component.css"],
 })
-export class AdminProductsComponent {
+export class AdminProductsComponent implements OnInit, AfterViewInit {
   displayedColumns: string[] = [
     "name",
-    "slug",
+    "watch_type",
     "brand",
     "cover_image",
     "created_by",
     "published_date",
-    "price",
+    "sale_status",
     "model",
     "is_active",
-    "top_brand",
-    "edit",
+    "popular_item",
+    "action",
   ];
-  dataSource: MatTableDataSource<UserData>;
+  dataSource = new MatTableDataSource<any>();
+  resultsLength = 0;
+  pageSize = 5;
+  pageEvent: PageEvent;
   selectedValue: string;
   allData: any;
 
@@ -58,25 +61,47 @@ export class AdminProductsComponent {
     private dialog: MatDialog,
     private http: HttpService,
     private toast: AlertsServicesService,
-    private route: Router
-  ) {
-    this.dataSource = new MatTableDataSource([]);
-  }
+    private route: Router,
+  ) {}
 
   ngOnInit(): void {
-    this.allUser();
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+    // Removed loadData from here
   }
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+    this.loadData(); // Moved loadData here
+  }
+
+  loadData() {
+    const pageIndex = this.pageEvent ? this.pageEvent.pageIndex : 0;
+    const pageSize = this.pageEvent ? this.pageEvent.pageSize : this.pageSize;
+    const sortField = this.sort.active;
+    const sortDirection = this.sort.direction;
+
+    this.http.getAdminProducts(pageIndex, pageSize, sortField, sortDirection).subscribe(data => {
+      this.dataSource.data = data.data.data.map((product: any) => {
+        this.allData = data.data.data;
+
+        this.allData = this.allData.map((product: any) => {
+          if (product.main_image) {
+            product.main_image = product.main_image
+              .replace(/\\/g, "/")
+              .replace(/^\/+/, "");
+            return product;
+          }
+        });
+        this.dataSource = new MatTableDataSource(this.allData);
+        this.dataSource.paginator = this.paginator;
+      });
+      this.resultsLength = data.data.total;
+    });
   }
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value.trim().toLowerCase();
-  
+
     // Custom filter to check every field
     this.dataSource.filterPredicate = (data: any, filter: string) => {
       // You can specify which fields you want to filter on here
@@ -93,15 +118,18 @@ export class AdminProductsComponent {
         (data.description && data.description.toLowerCase().includes(filter)) // Description
       );
     };
-  
+
     // Apply the filter to the dataSource
     this.dataSource.filter = filterValue;
-  
+
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
   }
-  
+
+  sortData(sort: Sort) {
+    this.loadData();
+  }
 
   openModal() {
     this.router.navigate(["/admin-brands-product"], {
@@ -109,25 +137,25 @@ export class AdminProductsComponent {
     });
   }
 
-  allUser() {
-    this.http.getAdminProducts().subscribe(
-      (res) => {
-        this.allData = res.data;
+  // loadData() {
+  //   this.http.getAdminProducts().subscribe(
+  //     (res) => {
+  //       this.allData = res.data.data;
 
-        this.allData = this.allData.map((product: any) => {
-          if (product.main_image) {
-            product.main_image = product.main_image
-              .replace(/\\/g, "/")
-              .replace(/^\/+/, "");
-          }
-          return product;
-        });
-        this.dataSource = new MatTableDataSource(this.allData);
-        this.dataSource.paginator = this.paginator;
-      },
-      (err) => {}
-    );
-  }
+  //       this.allData = this.allData.map((product: any) => {
+  //         if (product.main_image) {
+  //           product.main_image = product.main_image
+  //             .replace(/\\/g, "/")
+  //             .replace(/^\/+/, "");
+  //         }
+  //         return product;
+  //       });
+  //       this.dataSource = new MatTableDataSource(this.allData);
+  //       this.dataSource.paginator = this.paginator;
+  //     },
+  //     (err) => {}
+  //   );
+  // }
 
   isMeOrAdminOrDeveloper(id: any): boolean {
     return true;
@@ -141,7 +169,7 @@ export class AdminProductsComponent {
     this.http.deleteAdminProducts(data.id).subscribe(
       (res) => {
         this.toast.showAlert("success", "Product Delete Susseccfully");
-        this.allUser();
+        this.loadData();
       },
       (err) => {
         this.toast.showAlert("danger", "Error in removing Product");
@@ -149,16 +177,15 @@ export class AdminProductsComponent {
     );
   }
 
-
   activateProduct(data) {
     this.http.activateAdminProducts(data.id).subscribe(
       (res) => {
-        if(res.data.is_active===true){
+        if (res.data.is_active === true) {
           this.toast.showAlert("success", "Product add to Susseccfully");
-        }else{
+        } else {
           this.toast.showAlert("success", "Product De-activate Susseccfully");
         }
-        this.allUser();
+        this.loadData();
       },
       (err) => {
         this.toast.showAlert("danger", "Error in Updating Active Status");
@@ -166,13 +193,12 @@ export class AdminProductsComponent {
     );
   }
 
-
   addPopularProduct(data) {
     this.http.topAdminPopularProducts(data.id).subscribe(
       (res) => {
-          this.toast.showAlert("success", "Product move on top Susseccfully");
+        this.toast.showAlert("success", "Product move on top Susseccfully");
 
-        this.allUser();
+        this.loadData();
       },
       (err) => {
         this.toast.showAlert("danger", "Error in updating top status");
@@ -180,7 +206,7 @@ export class AdminProductsComponent {
     );
   }
 
-  deleteUser(data: any) {}
+  deleteUser(data: any) { }
 
   changingStatus(value: any) {
     if (value == "All") {
@@ -228,22 +254,22 @@ export class AdminProductsComponent {
     }
   }
 
-  editProduct(data){
-      const dialogRef = this.dialog.open(AdminAddProductComponent, {
-          width: '1000px',
-          height: 'auto',
-          disableClose: true,
-          data: { param: 'Edit',data:data },
-        });
-     
-        dialogRef.afterClosed().subscribe((param) => {
-          if (param) {
-            if(param === 'approved' || param === 'reject'){
-               this.activateProduct(data)
-            }else{
-              this.allUser()
-            }
-          } 
-        });
+  editProduct(data) {
+    const dialogRef = this.dialog.open(AdminAddProductComponent, {
+      width: '1000px',
+      height: 'auto',
+      disableClose: true,
+      data: { param: 'Edit', data: data },
+    });
+
+    dialogRef.afterClosed().subscribe((param) => {
+      if (param) {
+        if (param === 'approved' || param === 'reject') {
+          this.activateProduct(data)
+        } else {
+          this.loadData()
+        }
+      }
+    });
   }
 }
