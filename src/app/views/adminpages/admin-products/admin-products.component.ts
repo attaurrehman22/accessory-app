@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit, OnDestroy } from '@angular/core';
 import { MatDialog } from "@angular/material/dialog";
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSort, Sort } from '@angular/material/sort';
@@ -7,6 +7,8 @@ import { Router } from "@angular/router";
 import { AlertsServicesService } from "src/services/alerts-service/alerts-services.service";
 import { HttpService } from "src/services/http/http.service";
 import { AdminAddProductComponent } from "../admin-add-product/admin-add-product.component";
+import { Subscription } from 'rxjs';
+import { SidebarService } from 'src/services/sidebar.service';
 
 export interface UserData {
   name: any;
@@ -26,7 +28,7 @@ export interface UserData {
   templateUrl: "./admin-products.component.html",
   styleUrls: ["./admin-products.component.css"],
 })
-export class AdminProductsComponent implements OnInit, AfterViewInit {
+export class AdminProductsComponent implements OnInit, AfterViewInit, OnDestroy {
   displayedColumns: string[] = [
     "name",
     "watch_type",
@@ -46,6 +48,7 @@ export class AdminProductsComponent implements OnInit, AfterViewInit {
   pageEvent: PageEvent;
   selectedValue: string;
   allData: any;
+  sidebarClickSubscription: Subscription;
 
   userStatu: any = [
     { value: "All", viewValue: "All" },
@@ -62,16 +65,25 @@ export class AdminProductsComponent implements OnInit, AfterViewInit {
     private http: HttpService,
     private toast: AlertsServicesService,
     private route: Router,
+    private sidebarService: SidebarService,
   ) {}
 
   ngOnInit(): void {
-    // Removed loadData from here
+    this.sidebarClickSubscription = this.sidebarService.sidebarClick$.subscribe(() => {
+      this.dialog.closeAll();
+    });
   }
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
     this.loadData(); // Moved loadData here
+  }
+
+  ngOnDestroy() {
+    if (this.sidebarClickSubscription) {
+      this.sidebarClickSubscription.unsubscribe();
+    }
   }
 
   loadData() {

@@ -109,14 +109,14 @@ export class AdminCategoryComponent {
     const dialogRef = this.dialog.open(AdminCategoryProductComponent, {
       width: '1000px',
       height: 'auto',
-      disableClose: true,
+      disableClose: false,
       data: { param: 'Create' },
     });
-  
+
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
           this.allUser()
-      } 
+      }
     });
   }
 
@@ -147,14 +147,14 @@ export class AdminCategoryComponent {
     const dialogRef = this.dialog.open(AdminCategoryProductComponent, {
       width: '1000px',
       height: 'auto',
-      disableClose: true,
+      disableClose: false, // Allow closing by clicking outside
       data: { param: 'Edit',data: data },
     });
-  
+
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
           this.allUser()
-      } 
+      }
     });
   }
 

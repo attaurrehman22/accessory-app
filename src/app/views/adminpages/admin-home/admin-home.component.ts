@@ -1,16 +1,19 @@
-import { Component } from "@angular/core";
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { Subscription } from 'rxjs';
 import { AlertsServicesService } from "src/services/alerts-service/alerts-services.service";
 import * as Highcharts from "highcharts";
 import { HighchartsServiceService } from "src/services/highcharts-service/highcharts-service.service";
 import { ChangeDetectorRef } from "@angular/core"; // Import ChangeDetectorRef
 import { HttpService } from "src/services/http/http.service";
+import { SidebarService } from 'src/services/sidebar.service';
 
 @Component({
   selector: "app-admin-home",
   templateUrl: "./admin-home.component.html",
   styleUrls: ["./admin-home.component.css"],
 })
-export class AdminHomeComponent {
+export class AdminHomeComponent implements OnInit, OnDestroy{
   cardData = {
     totalUsers: 0,
     totalPlayers: 0,
@@ -39,7 +42,11 @@ export class AdminHomeComponent {
     , totalNumberOfProducts: 0
   };
 
+  sidebarClickSubscription: Subscription;
+
   constructor(
+    private dialog: MatDialog,
+    private sidebarService: SidebarService,
     private toast: AlertsServicesService,
     private highchartsService: HighchartsServiceService,
     private cd: ChangeDetectorRef,
@@ -49,6 +56,15 @@ export class AdminHomeComponent {
     this.getDashboardDetails();
     this.getDashBoardCardInfo();
     this.loadHighcharts();
+    this.sidebarClickSubscription = this.sidebarService.sidebarClick$.subscribe(() => {
+      this.dialog.closeAll();
+    });
+  }
+
+  ngOnDestroy() {
+    if (this.sidebarClickSubscription) {
+      this.sidebarClickSubscription.unsubscribe();
+    }
   }
 
   getDashboardDetails() {
