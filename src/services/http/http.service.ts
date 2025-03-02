@@ -259,7 +259,7 @@ export class HttpService implements OnInit {
   }
 
   saveWatchOfTheDay(formData): Observable<any> {
-    return this.http.post(`${this.apiUrl}/api/admin/products/watch-of-the-day`, formData, {
+    return this.http.post(`${this.apiUrl}/api/admin/watch-of-the-day/set`, formData, {
       headers: {
         Accept: "application/json",
         Authorization: `Bearer ${this.token}`,

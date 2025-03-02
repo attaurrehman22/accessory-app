@@ -16,10 +16,22 @@
       </mat-form-field>
     </div>
 
-    <div>
+    <div class="mt-2">
       <mat-form-field appearance="outline" style="width: 100%">
         <mat-label>Select Background Color</mat-label>
-        <input required matInput formControlName="background_color" />
+        
+        <!-- Color Picker Integration -->
+        <input
+          matInput
+          formControlName="background_color"
+          (colorPicker)="watchDayForm.get('background_color')?.value"
+          
+          [cpOutputFormat]="'hex'"
+          [cpPosition]="'bottom'"
+          required
+        />
+        
+        <!-- Error Handling -->
         <mat-error
           *ngIf="watchDayForm.get('background_color')?.hasError('required')"
         >

@@ -92,7 +92,7 @@ import { NewArrivalsComponent } from './views/website/new-arrivals/new-arrivals.
 import { ConfirmationModelComponent } from './views/modal/confirmation-model/confirmation-model.component';
 import { WatchOfTheDayComponent } from './views/adminpages/watch-of-the-day/watch-of-the-day.component';
 import { AddProductWatchOfTheDayComponent } from './views/adminpages/add-product-watch-of-the-day/add-product-watch-of-the-day.component';
-
+import { ColorPickerModule } from 'ngx-color-picker';
 @NgModule({
   declarations: [
     AppComponent,
@@ -175,7 +175,7 @@ import { AddProductWatchOfTheDayComponent } from './views/adminpages/add-product
     ButtonModule,
     TagModule,MatRadioModule,
     NgImageSliderModule,
-    MatExpansionModule,
+    MatExpansionModule,ColorPickerModule,
     BidiModule,HighchartsChartModule,
     BidiModule, HighchartsChartModule,MatOptionModule,MatAutocompleteModule,
     // MatExpansionModule,

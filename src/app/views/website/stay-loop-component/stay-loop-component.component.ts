@@ -19,17 +19,19 @@ export class StayLoopComponentComponent implements OnInit {
   getWatchOftheDay() {
     this.http.getWatchOfTheDay().subscribe(
       (res) => {
-        this.watchDetails = res.data;
-        this.watchDetails.map((item: any) => {
-          if (item.banner_img) {
-            item.banner_img = item.banner_img.replace(/\\/g, "/").replace(/^\/+/, "");
-          }
-          return item;
-        });
+        if(res?.data){
+          this.watchDetails = res.data;
+          this.watchDetails.map((item: any) => {
+            if (item.banner_img) {
+              item.banner_img = item.banner_img.replace(/\\/g, "/").replace(/^\/+/, "");
+            }
+            return item;
+          });
 
-        // Ensure at least one product exists in the watchDetails list
-        if (this.watchDetails.length > 0) {
-          this.activeProductDetails = this.watchDetails[0];
+          // Ensure at least one product exists in the watchDetails list
+          if (this.watchDetails.length > 0) {
+            this.activeProductDetails = this.watchDetails[0];
+          }
         }
       },
       (err) => {

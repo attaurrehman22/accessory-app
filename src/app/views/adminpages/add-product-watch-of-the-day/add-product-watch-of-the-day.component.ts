@@ -21,7 +21,7 @@ export class AddProductWatchOfTheDayComponent {
   allData:any;
   watchDayForm: FormGroup;
   product_id: FormControl = new FormControl("", [Validators.required,]);
-  background_color: FormControl = new FormControl("", [Validators.required,]);
+  background_color: FormControl = new FormControl("#000000", [Validators.required,]);
   type: FormControl = new FormControl("", [Validators.required,]);
   coverImage: { file: File; url: string } | null = null;
   detailsofProduct:any;
@@ -31,9 +31,11 @@ export class AddProductWatchOfTheDayComponent {
       public dialogRef: MatDialogRef<AddProductWatchOfTheDayComponent>,
        @Inject(MAT_DIALOG_DATA) data: any
   ){
-    console.log("data",data)
+    // console.log("data",data)
+    if(data){
     this.detailsofProduct=data.ProductDetails;
-    this.param=data.param
+    this.param=data.param;
+  }
   }
 
   ngOnInit(): void {
@@ -126,10 +128,8 @@ export class AddProductWatchOfTheDayComponent {
 
      // Save data
   saveData() {
-    console.log("form fields",this.watchDayForm.value)
-    console.log("coverImage",this.coverImage)
-    console.log("form fields valid",this.watchDayForm)
-    if (this.watchDayForm.valid) {
+   
+    if (this.watchDayForm.valid && this.coverImage.file) {
       const formData = new FormData();
       formData.append('product_id', this.watchDayForm.get('product_id')?.value);
       formData.append('background_color', this.watchDayForm.get('background_color')?.value);
@@ -146,6 +146,7 @@ export class AddProductWatchOfTheDayComponent {
         }
       );
     } else {
+      this.alertService.showAlert('warning','Add Form Values')
       console.log('Form is invalid');
     }
   }

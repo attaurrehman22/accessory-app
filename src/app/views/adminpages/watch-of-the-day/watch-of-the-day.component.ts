@@ -38,7 +38,7 @@ export class WatchOfTheDayComponent {
     // "model",
     // "is_active",
     // "top_brand",
-    "edit",
+    // "edit",
   ];
   dataSource: MatTableDataSource<UserData>;
   selectedValue: string;
