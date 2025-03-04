@@ -218,6 +218,22 @@ export class AdminProductsComponent implements OnInit, AfterViewInit, OnDestroy 
     );
   }
 
+
+  addFeatureProduct(data) {
+    this.http.topFeatureProducts(data.id).subscribe(
+      (res) => {
+        this.toast.showAlert("success", "Product Add Features Susseccfully");
+
+        this.loadData();
+      },
+      (err) => {
+        this.toast.showAlert("danger", "Error in Featuring");
+      }
+    );
+  }
+
+
+
   deleteUser(data: any) { }
 
   changingStatus(value: any) {

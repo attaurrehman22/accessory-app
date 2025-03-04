@@ -124,7 +124,7 @@
                       </ng-container>
   
                       <!-- Status Column -->
-                      <!-- <ng-container class="column" matColumnDef="edit">
+                      <ng-container class="column" matColumnDef="edit">
                         <th mat-header-cell class="column" *matHeaderCellDef>
                           Action
                         </th>
@@ -145,13 +145,18 @@
                             <span>Edit</span>
                           </button>
 
-                          <button mat-menu-item (click)="addPopularProduct(row)">
+                          <button mat-menu-item (click)="deleteProduct(row)">
+                            <mat-icon>delete</mat-icon>
+                            <span>Remove</span>
+                          </button>
+
+                          <!-- <button mat-menu-item (click)="addPopularProduct(row)">
                             <mat-icon>refresh</mat-icon>
                             <span>Add To Popular</span>
-                          </button>
+                          </button> -->
                         </mat-menu>
                         </td>
-                      </ng-container> -->
+                      </ng-container>
   
                       <tr
                         mat-header-row

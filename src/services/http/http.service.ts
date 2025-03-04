@@ -267,6 +267,24 @@ export class HttpService implements OnInit {
     });
   }
 
+  updateWatchOfTheDay(formData): Observable<any> {
+    return this.http.post(`${this.apiUrl}/api/admin/watch-of-the-day/update`, formData, {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+  }
+
+  removeWatchOfTheDay(ID:any): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/api/admin/watch-of-the-day/delete/${ID}`, {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+  }
+
   getAdminUsers(pageIndex: number = 0, pageSize: number = 100): Observable<any> {
     let pageSize2 = 100;
     return this.http.get(`${this.apiUrl}/api/admin/user/list?page=${pageIndex + 1}&per_page=${pageSize2}`, {
@@ -403,6 +421,21 @@ export class HttpService implements OnInit {
         },
       }
     );
+    
+  }
+
+  topFeatureProducts(ID): Observable<any> {
+    return this.http.patch(
+      `${this.apiUrl}/api/admin/products/${ID}/toggle-feature`,
+      {},
+      {
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${this.token}`,
+        },
+      }
+    );
+    
   }
 
   activateAdminProducts(ID): Observable<any> {

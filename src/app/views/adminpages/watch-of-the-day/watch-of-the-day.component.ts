@@ -9,6 +9,7 @@ import { HttpService } from "src/services/http/http.service";
 import { AddProductWatchOfTheDayComponent } from '../add-product-watch-of-the-day/add-product-watch-of-the-day.component';
 import { Subscription } from 'rxjs';
 import { SidebarService } from 'src/services/sidebar.service';
+import { ConfirmationModelComponent } from '../../modal/confirmation-model/confirmation-model.component';
 
 export interface UserData {
   name: any;
@@ -40,7 +41,7 @@ export class WatchOfTheDayComponent implements OnInit, OnDestroy {
     // "model",
     // "is_active",
     // "top_brand",
-    // "edit",
+    "edit",
   ];
   dataSource: MatTableDataSource<UserData>;
   selectedValue: string;
@@ -132,10 +133,8 @@ export class WatchOfTheDayComponent implements OnInit, OnDestroy {
         });
 
         dialogRef.afterClosed().subscribe(
-          (param) => {
-          if (param) {
+          (param) => {   
            this.allUser()
-          }
         });
   }
 
@@ -144,13 +143,19 @@ export class WatchOfTheDayComponent implements OnInit, OnDestroy {
       (res) => {
         this.allData = res.data.data;
         this.totalItems = res.data.total;
-        this.allData = this.allData.map((product: any) => {
-          if (product.banner_img) {
-            product.banner_img = product.banner_img
-              .replace(/\\/g, "/")
-              .replace(/^\/+/, "");
-          }
-          return product;
+        this.allData = this.allData.map(
+          (product: any) => {
+            if (product.banner_img) {
+              product.banner_img = product.banner_img
+                .replace(/\\/g, "/")
+                .replace(/^\/+/, "");
+            }
+            if (product.with_out_attribute) {
+              product.with_out_attribute = product.with_out_attribute
+                .replace(/\\/g, "/")
+                .replace(/^\/+/, "");
+            }
+            return product;
         });
         this.dataSource = new MatTableDataSource(this.allData);
         this.dataSource.paginator = this.paginator;
@@ -170,17 +175,29 @@ export class WatchOfTheDayComponent implements OnInit, OnDestroy {
     return true;
   }
 
-  // deleteProduct(data) {
-  //   this.http.deleteAdminProducts(data.id).subscribe(
-  //     (res) => {
-  //       this.toast.showAlert("success", "Product Delete Susseccfully");
-  //       this.allUser();
-  //     },
-  //     (err) => {
-  //       this.toast.showAlert("danger", "Error in removing Product");
-  //     }
-  //   );
-  // }
+  deleteProduct(data) {
+
+     const dialogRef = this.dialog.open(ConfirmationModelComponent, {
+          width: "700px",
+          data: { message: "Are you sure you want to remove from Watch of the day" },
+          disableClose: true,
+        });
+        dialogRef.afterClosed().subscribe((result) => {
+          if (result == true) {
+            this.http.removeWatchOfTheDay(data.id).subscribe(
+              (res) => {
+                this.toast.showAlert("success", "Product Remove Susseccfully");
+                this.allUser();
+              },
+              (err) => {
+                this.toast.showAlert("danger", "Error in removing Product");
+              }
+            );
+          }
+        });
+        
+   
+  }
 
 
   activateProduct(data) {
@@ -271,9 +288,9 @@ export class WatchOfTheDayComponent implements OnInit, OnDestroy {
 
     dialogRef.afterClosed().subscribe(
       (param) => {
-      if (param) {
+      
        this.allUser()
-      }
+     
     });
   }
 }

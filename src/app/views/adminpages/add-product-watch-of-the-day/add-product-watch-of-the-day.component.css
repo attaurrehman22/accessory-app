@@ -31,8 +31,8 @@
 
     .delete-btn {
         position: absolute;
-        bottom: 220px;
-        right: 470px;
+        bottom: 150px;
+        right: 690px;
         background: #fff;
         border-radius: 50%;
         width: 35px;
@@ -53,5 +53,33 @@
       }
       
       .image-preview:hover .delete-btn {
+        opacity: 1; 
+      }
+
+
+      .delete-btn-two {
+        position: absolute;
+        bottom: 150px;
+        right: 200px;
+        background: #fff;
+        border-radius: 50%;
+        width: 35px;
+        height: 35px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: red;
+        cursor: pointer;
+        border: none;
+        outline: none;
+        opacity: 0; 
+        transition: opacity 0.3s ease;
+      }
+
+      .upload-box:hover .delete-btn-two {
+        opacity: 1; 
+      }
+      
+      .image-preview:hover .delete-btn-two {
         opacity: 1; 
       }
