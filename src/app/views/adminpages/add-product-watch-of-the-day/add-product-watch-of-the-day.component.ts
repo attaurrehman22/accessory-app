@@ -29,7 +29,7 @@ export class AddProductWatchOfTheDayComponent {
   allData: any;
   watchDayForm: FormGroup;
   product_id: FormControl = new FormControl("", [Validators.required]);
-  selectedLangtype: FormControl = new FormControl("eng", [Validators.required]);
+  // selectedLangtype: FormControl = new FormControl("eng", [Validators.required]);
   background_color: FormControl = new FormControl("#000000", [
     Validators.required,
   ]);
@@ -41,6 +41,11 @@ export class AddProductWatchOfTheDayComponent {
     Validators.required,
     Validators.maxLength(500),
   ]);
+  arabic_text: FormControl = new FormControl("", [
+    Validators.required,
+    Validators.maxLength(500),
+  ]);
+ 
   coverImage: { file: File; url: string } | null = null;
   with_out_attribute: { file: File; url: string } | null = null;
   detailsofProduct: any;
@@ -68,7 +73,8 @@ export class AddProductWatchOfTheDayComponent {
       background_color: this.background_color,
       type: this.type,
       english_text: this.english_text,
-      selectedLangtype: this.selectedLangtype,
+      arabic_text: this.arabic_text,
+      // selectedLangtype: this.selectedLangtype,
     });
 
     // this.changeLang();
@@ -82,14 +88,14 @@ export class AddProductWatchOfTheDayComponent {
         .setValue(this.detailsofProduct.background_color);
       this.watchDayForm.get("type").setValue(this.detailsofProduct.type);
       if (this.detailsofProduct.english_text) {
-        this.watchDayForm.get("selectedLangtype").setValue("eng");
-        this.changeLang('eng');
+        // this.watchDayForm.get("selectedLangtype").setValue("eng");
+        // this.changeLang('eng');
         this.watchDayForm
           .get("english_text")
           .setValue(this.detailsofProduct.english_text);
       } else {
-        this.watchDayForm.get("selectedLangtype").setValue("ar");
-        this.changeLang('ar');
+        // this.watchDayForm.get("selectedLangtype").setValue("ar");
+        // this.changeLang('ar');
         this.watchDayForm
           .get("arabic_text")
           .setValue(this.detailsofProduct.arabic_text);
@@ -218,44 +224,6 @@ export class AddProductWatchOfTheDayComponent {
     this.dialogRef.close();
   }
 
-  changeLang(param) {
-    const selectedLang = param;
-    console.log("selectedLangtype", selectedLang);
-
-    // Handle the dynamic form control change based on language selection
-    if (selectedLang == "eng") {
-      // Ensure arabic_text control is removed
-      if (this.watchDayForm.contains("arabic_text")) {
-        this.watchDayForm.removeControl("arabic_text");
-      }
-
-      // Add english_text control if not present
-      if (!this.watchDayForm.contains("english_text")) {
-        this.watchDayForm.addControl(
-          "english_text",
-          new FormControl("", [Validators.required, Validators.maxLength(500)])
-        );
-      }
-    } else if (selectedLang == "ar") {
-      console.log("selectedLang === ar calling")
-      // Ensure english_text control is removed
-      if (this.watchDayForm.contains("english_text")) {
-        this.watchDayForm.removeControl("english_text");
-      }
-      console.log("after removing calling")
-      // Add arabic_text control if not present
-      if (!this.watchDayForm.contains("arabic_text")) {
-        this.watchDayForm.addControl(
-          "arabic_text",
-          new FormControl("", [Validators.required, Validators.maxLength(500)])
-        );
-      }
-    }
-
-    // Trigger change detection to make sure the form is updated after the changes
-    this.cdRef.detectChanges();
-  }
-
   // Save data
   saveData() {
     console.log("watchForm", this.watchDayForm);
@@ -276,24 +244,24 @@ export class AddProductWatchOfTheDayComponent {
           this.watchDayForm.get("background_color")?.value
         );
         formData.append("type", this.watchDayForm.get("type")?.value);
+
         if (!this.param) {
           formData.append("banner_img", this.coverImage.file);
           formData.append("with_out_attribute", this.with_out_attribute.file);
         }
 
-        if (this.watchDayForm.value.selectedLangtype == "eng") {
+       
           formData.append(
             "english_text",
             this.watchDayForm.get("english_text")?.value
           );
-        } 
-        if (this.watchDayForm.value.selectedLangtype == "ar")  {
+
           console.log("arabic calling");
           formData.append(
             "arabic_text",
             this.watchDayForm.get("arabic_text")?.value
           );
-        }
+      
 
         this.http.saveWatchOfTheDay(formData).subscribe(
           (response) => {
@@ -341,17 +309,17 @@ export class AddProductWatchOfTheDayComponent {
         if (this.with_out_attribute.file) {
           formData.append("with_out_attribute", this.with_out_attribute.file);
         }
-        if (this.watchDayForm.value.selectedLangtype == "eng") {
+       
           formData.append(
             "english_text",
             this.watchDayForm.get("english_text")?.value
           );
-        } else {
+ 
           formData.append(
             "arabic_text",
             this.watchDayForm.get("arabic_text")?.value
           );
-        }
+ 
 
         formData.append("id", this.detailsofProduct.id);
         this.http.updateWatchOfTheDay(formData).subscribe(

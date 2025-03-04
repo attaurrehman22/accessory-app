@@ -19,10 +19,17 @@
       <div class="d-flex flex-column text-white">
         <p class="mb-1">{{ activeProductDetails?.product?.name }}</p>
         <h1 class="display-6 font-size-40 font-wight-600 mt-2 cormorant-styl">
-          {{ activeProductDetails?.product?.watch_type || "N/A" }}
+          {{ activeProductDetails?.type || "N/A" }}
         </h1>
-        <p class="card-text">
-          {{ activeProductDetails?.product?.description }}
+
+        <p *ngIf="translateService.currentLang != 'en'" class="card-text">
+          <!-- {{ activeProductDetails?.arabic_text || 'N/A' }} -->
+          {{ activeProductDetails?.arabic_text.length > 300 ? (activeProductDetails?.arabic_text | slice:0:300) + '...' : activeProductDetails?.arabic_text }}
+        </p>
+
+        <p *ngIf="translateService.currentLang == 'en'" class="card-text">
+          <!-- {{ activeProductDetails?.english_text || 'N/A' }} -->
+          {{ activeProductDetails?.english_text.length > 300 ? (activeProductDetails?.english_text | slice:0:300) + '...' : activeProductDetails?.english_text }}
         </p>
 
         <div class="mb-3">
