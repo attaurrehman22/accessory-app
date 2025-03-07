@@ -149,6 +149,7 @@
   width: 132px;
   font-size: 16px;
   font-weight: 400;
+  color: black;
 }
 
 .canc-bg-color {
@@ -158,6 +159,16 @@
 .save-btn-bg {
   background: #000000;
   color: #FFFFFF !important;
+}
+
+.save-btn-bg:hover {
+  background: #000000;
+  color: #FFF
+}
+
+.canc-bg-color:hover {
+  background: none;
+  /* color: #FFFFFF !important;  */
 }
 
 .route-product-btn{
@@ -258,6 +269,7 @@ background: none;
   outline: none;
   opacity: 0; 
   transition: opacity 0.3s ease;
+  padding: 0 !important;
 }
 .upload-progress mat-progress-bar {
   width: 80%;

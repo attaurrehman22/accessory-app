@@ -24,12 +24,12 @@
 
         <p *ngIf="translateService.currentLang != 'en'" class="card-text">
           <!-- {{ activeProductDetails?.arabic_text || 'N/A' }} -->
-          {{ activeProductDetails?.arabic_text.length > 300 ? (activeProductDetails?.arabic_text | slice:0:300) + '...' : activeProductDetails?.arabic_text }}
+          {{ activeProductDetails?.arabic_text?.length > 300 ? (activeProductDetails?.arabic_text | slice:0:300) + '...' : activeProductDetails?.arabic_text }}
         </p>
 
         <p *ngIf="translateService.currentLang == 'en'" class="card-text">
           <!-- {{ activeProductDetails?.english_text || 'N/A' }} -->
-          {{ activeProductDetails?.english_text.length > 300 ? (activeProductDetails?.english_text | slice:0:300) + '...' : activeProductDetails?.english_text }}
+          {{ activeProductDetails?.english_text?.length > 300 ? (activeProductDetails?.english_text | slice:0:300) + '...' : activeProductDetails?.english_text }}
         </p>
 
         <div class="mb-3">

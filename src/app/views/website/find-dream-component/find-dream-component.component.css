@@ -19,10 +19,10 @@
 }
 
 .heading-tag {
-  font-size: 70px;
+  font-size: 55px;
   font-weight: 700;
   color: #242424;
-  line-height: 90px;
+  line-height: 75px;
 }
 
 @media (max-width: 670px) {

@@ -1377,7 +1377,7 @@
                   'reverse-order-listing-details-btn-div':
                     translateService.currentLang !== 'en'
                 }"
-                class="d-flex align-items-center gap-2 mb-3"
+                class="d-flex align-items-center justify-content-end mb-3"
                 style="padding: 0 20px 0 20px"
               >
                 <button
@@ -1909,19 +1909,19 @@
                   Save
                 </button> -->
                 <button
-                  *ngIf="!isNextButtonShowonScopeOfdelivery"
+                  
                   class="save-can-btn save-btn-bg"
                   (click)="onSubmit('scopeofdelivery')"
                 >
                   {{ "create_product_listing.save_btn" | translate }}
                 </button>
-                <button
+                <!-- <button
                   *ngIf="isNextButtonShowonScopeOfdelivery"
                   class="save-can-btn save-btn-bg"
                   (click)="nextMoveToScopeOfDelivery()"
                 >
                   {{ "create_product_listing.next_btn" | translate }}
-                </button>
+                </button> -->
               </div>
             </div>
           </div>
@@ -3217,6 +3217,7 @@
               >
                 <button
                   class="save-can-btn canc-bg-color"
+                  style="width: 170px;"
                   (click)="routeToProductDetail()"
                 >
                   {{ "create_product_listing.Preview_your_Ad" | translate }}
@@ -4579,7 +4580,7 @@
                     'reverse-order-listing-details-btn-div':
                       translateService.currentLang !== 'en'
                   }"
-                  class="d-flex align-items-center gap-2 mb-3"
+                  class="d-flex align-items-center justify-content-end gap-2 mb-3"
                   style="padding: 0 20px 0 20px"
                 >
                   <button
@@ -5029,19 +5030,19 @@
               Save
             </button> -->
             <button
-              *ngIf="!isNextButtonShowonScopeOfdelivery"
+           
               class="save-can-btn save-btn-bg"
               (click)="onSubmit('scopeofdelivery')"
             >
               {{ "create_product_listing.save_btn" | translate }}
             </button>
-            <button
+            <!-- <button
               *ngIf="isNextButtonShowonScopeOfdelivery"
               class="save-can-btn save-btn-bg"
               (click)="nextMoveToScopeOfDelivery()"
             >
               {{ "create_product_listing.next_btn" | translate }}
-            </button>
+            </button> -->
           </div>
         </div>
 
@@ -6183,6 +6184,7 @@
           >
             <button
               class="save-can-btn canc-bg-color"
+              style="width: 170px;"
               (click)="routeToProductDetail()"
             >
               {{ "create_product_listing.Preview_your_Ad" | translate }}

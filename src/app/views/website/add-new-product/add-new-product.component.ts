@@ -641,7 +641,7 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
   }
 
   nextMoveToScopeOfDelivery() {
-    this.selectSection("proofofownership");
+    this.selectSection("scopeofdelivery");
   }
 
   isListingCompleted: boolean = false;
