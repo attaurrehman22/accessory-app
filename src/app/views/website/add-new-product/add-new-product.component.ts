@@ -91,24 +91,8 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
       alert('Please select a video file first');
       return;
     }
-
-  
-
     const formData = new FormData();
     formData.append('video', this.selectedVideo, this.selectedVideo.name);
-
-    // const headers = new HttpHeaders();
-    // // You can set custom headers here if needed (e.g., Authorization)
-    
-    // this.http.post('YOUR_SERVER_API_ENDPOINT_HERE', formData, { headers })
-    //   .subscribe(
-    //     (response) => {
-    //       console.log('Video uploaded successfully', response);
-    //     },
-    //     (error) => {
-    //       console.error('Error uploading video', error);
-    //     }
-    //   );
   }
 
 
@@ -1446,9 +1430,11 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
       }
     } else if (Param === "watchDetails") {
       if (this.watchDetailsForm.valid) {
+        const isUpdate = this.selectedOptionsList.includes("watchDetails") ? 1 : 0;
         const formDataWithProductID = {
           ...this.watchDetailsForm.value,
           product_id: this.productIDFromResponse,
+          isUpdate: isUpdate,
         };
 
         this.http.addWatchDetails(formDataWithProductID).subscribe(
@@ -1495,10 +1481,12 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
       }
 
       if (this.selectedVideo) {
-        formData.append(
-          "video",this.selectedVideo || "main_image.jpg"
-        );
-      }
+        formData.append("video",this.selectedVideo || "main_image.jpg");
+     }
+     const isUpdate = this.selectedOptionsList.includes("uploadImages") ? "1" : "0";
+     formData.append("isUpdate", isUpdate);
+
+
 
       this.otherImages.forEach((image, index) => {
         if (image.file) {
@@ -1529,9 +1517,11 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
       );
     } else if (Param === "conditionGrading") {
       if (this.selectedCondition) {
+        const isUpdate = this.selectedOptionsList.includes("conditionGrading") ? "1" : "0";
         const formData = {
           product_id: this.productIDFromResponse,
           condition: this.selectedCondition.title,
+          isUpdate: isUpdate,
         };
 
         this.http.addCondition(formData).subscribe(
@@ -1555,12 +1545,12 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
         this.alertService.showAlert("warning", "Select any Option");
       }
     } else if (Param === "scopeofdelivery") {
-      console.log("Scope of delivery")
-      console.log("this.selectedOptions.title",this.selectedOptions.title)
       if (this.selectedOptions) {
+        const isUpdate = this.selectedOptionsList.includes("scopeofdelivery") ? "1" : "0";
         const formData = {
           product_id: this.productIDFromResponse,
           scope_of_delivery: this.selectedOptions.title,
+          isUpdate: isUpdate,
         };
         this.http.addScopeOfDelivery(formData).subscribe(
           (res) => {
@@ -1607,6 +1597,8 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
           "generted_time_text_2",
           this.formatTime(this.clocks[1].hour, this.clocks[1].minute)
         );
+        const isUpdate = this.selectedOptionsList.includes("proofofownership") ? "1" : "0";
+        formData.append("isUpdate", isUpdate)
         this.http.addProffofOwnerShip(formData).subscribe(
           (res) => {
             this.alertService.showAlert("success", "Images Added Successfully");
@@ -1628,10 +1620,13 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
         this.userType === "user" ||
         this.selectedUserTypeofConditionGradingForAdmin === "user"
       ) {
+        const isUpdate = this.selectedOptionsList.includes("priceshipment") ? "1" : "0";
+
         formData = {
           product_id: this.productIDFromResponse,
           price: this.watchPrice,
           estimate_payout: this.estimatedPayout,
+          isUpdate: isUpdate,
         };
       } else {
         if (!this.watchPrice || !this.shipping_type) {
@@ -1645,6 +1640,8 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
             this.alertService.showAlert("info", "Enter Form Values");
             return;
           } else {
+            const isUpdate = this.selectedOptionsList.includes("priceshipment") ? "1" : "0";
+
             formData = {
               product_id: this.productIDFromResponse,
               price: this.watchPrice,
@@ -1653,6 +1650,7 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
               estimate_delivery: this.estimate_delivery,
               allow_to_make_offer: this.allow_to_make_offer,
               estimate_payout: this.estimatedPayoutwithShipping,
+              isUpdate: isUpdate,
             };
           }
         }
@@ -1665,7 +1663,7 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
               "success",
               "Price and Shipment Add Successfully"
             );
-
+            const isUpdate = this.selectedOptionsList.includes("priceshipment") ? "1" : "0";
             const priceandShipment = {
               price: this.watchPrice,
               shipping_type: this.shipping_type,
@@ -1673,6 +1671,7 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
               estimate_delivery: this.estimate_delivery,
               allow_to_make_offer: this.allow_to_make_offer,
               estimate_payout: this.estimatedPayoutwithShipping,
+              isUpdate: isUpdate,
             };
 
             this.selectedOptionsList.push("billinginformation");
@@ -1692,9 +1691,11 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
       }
     } else if (Param === "billinginformation") {
       if (this.billingForm.valid) {
+        const isUpdate = this.selectedOptionsList.includes("billinginformation") ? "1" : "0";
         const formDataWithProductID = {
           ...this.billingForm.value,
           product_id: this.productIDFromResponse,
+          isUpdate: isUpdate,
         };
 
         this.http.addbillingInformation(formDataWithProductID).subscribe(

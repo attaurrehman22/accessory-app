@@ -24,9 +24,9 @@
         alt="Selected Watch"
       />
 
-      <div class="featured-card">
-        <div class="featured-card-featred">
-          <p *ngIf="productDetails?.feature_item === 1" style="margin: 0">
+      <div [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }" class="featured-card">
+        <div *ngIf="productDetails?.feature_item === 1" class="featured-card-featred">
+          <p  style="margin: 0">
             Featured
           </p>
         </div>
@@ -82,19 +82,19 @@
         </div>
       </div>
     </div>
-    <div *ngIf="productDetails" class="col-md-6">
+    <div *ngIf="productDetails" class="col-md-6" [ngClass]="{ 'reverse-order-prod-price-des': translateService.currentLang !== 'en' }">
       <div class="routes-div">
         <p class="routes-styl" style="cursor: pointer" routerLink="/">
-          Homepage
+          Homepage /
         </p>
         <p *ngIf="productDetails.category" class="routes-styl-active">
-          / {{ productDetails.category?.name }}
+           {{ productDetails.category?.name }} /
         </p>
         <p *ngIf="productDetails?.brand?.name" class="routes-styl-active">
-          / {{ productDetails?.brand?.name }}
+           {{ productDetails?.brand?.name }} /
         </p>
         <p *ngIf="productDetails.listing_code" class="routes-styl-active">
-          / {{ productDetails.listing_code }}
+           {{ productDetails.listing_code }}
         </p>
       </div>
 
@@ -165,7 +165,7 @@
           {{ productDetails.currency }} {{ productDetails.price }}
         </p>
         <p class="color-666666 font-wight-400 font-size-14">
-          Exclu. Shipping Charges
+         {{productDetails?.shipping_type}}
         </p>
       </div>
 
@@ -174,7 +174,7 @@
           class="header-highligted-color font-wight-400 font-size-16 margin-0"
           style="padding-bottom: 7px"
         >
-          Condition:
+          Condition
         </p>
         <button class="condition-btn">{{ productDetails.condition }}</button>
       </div>
@@ -184,7 +184,7 @@
           class="header-highligted-color font-wight-400 font-size-16 margin-0"
           style="padding-bottom: 7px"
         >
-          Scope of Delivery:
+          Scope of Delivery
         </p>
         <div class="d-flex flex-wrap gap-2">
           <button class="watch-btn">

@@ -752,3 +752,28 @@ mat-grid-list {
   width: fit-content;
   border-radius: 4px;
 }
+
+.reverse-order-prod-price-des > .routes-div {
+  flex-direction: row-reverse;
+}
+
+.reverse-order-prod-price-des > .d-flex {
+  flex-direction: row-reverse;
+}
+
+.reverse-order-prod-price-des > .watch-brand-details-div {
+  flex-direction: row-reverse;
+}
+
+.reverse-order-prod-price-des > .d-flex > .header-highligted-color {
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+.reverse-order-prod-price-des > .d-flex > .condition-btn {
+  align-self: end;
+}
+
+.reverse-order-prod-price-des > .d-flex > .d-flex  {
+  flex-direction: row-reverse;
+}
