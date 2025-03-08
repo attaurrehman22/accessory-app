@@ -1,7 +1,8 @@
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
-import { TranslateService } from "@ngx-translate/core";
 import { HttpService } from "src/services/http/http.service";
+import { LanguageService } from "src/services/lang-service/language.service";
+import { TranslateService } from "@ngx-translate/core";
 
 @Component({
   selector: "app-chronosouq-buyer-protection-component",
@@ -9,6 +10,8 @@ import { HttpService } from "src/services/http/http.service";
   styleUrls: ["./chronosouq-buyer-protection-component.component.css"],
 })
 export class ChronosouqBuyerProtectionComponentComponent implements OnInit {
+  supportLanguages = ["en", "ar", "fr", "ta", "hi"];
+  currentLanguage: string;
   selectedCategory: any;
   showList: any[] = [];
   categoryNames: any[] = [];
@@ -91,15 +94,30 @@ export class ChronosouqBuyerProtectionComponentComponent implements OnInit {
   constructor(
     public translateService: TranslateService,
     private http: HttpService,
-    private router: Router
+    private router: Router,
+    private languageService:LanguageService
   ) {
     const supportedLanguages = ["en", "ar"];
     this.translateService.addLangs(supportedLanguages);
     this.translateService.setDefaultLang("en");
 
     const browserLang = this.translateService.getBrowserLang();
-    if (supportedLanguages.includes(browserLang)) {
+    if (supportedLanguages?.includes(browserLang)) {
       this.translateService.use(browserLang);
+    }
+
+    this.translateService.addLangs(this.supportLanguages);
+    const savedLang = this.languageService.getCurrentLanguage();
+    if (this.supportLanguages?.includes(savedLang)) {
+      this.translateService.use(savedLang);
+    } else {
+      const browserLang = this.translateService.getBrowserLang();
+      this.currentLanguage = browserLang;
+
+      if (this.supportLanguages?.includes(browserLang)) {
+        this.translateService.use(browserLang);
+        this.languageService.setLanguage(browserLang);
+      }
     }
   }
 

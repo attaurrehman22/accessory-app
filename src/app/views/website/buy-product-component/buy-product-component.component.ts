@@ -14,6 +14,7 @@ import { CustomOfferComponent } from "../../modal/custom-offer/custom-offer.comp
   styleUrls: ["./buy-product-component.component.css"],
 })
 export class BuyProductComponentComponent implements OnInit {
+  supportLanguages = ["en", "ar", "fr", "ta", "hi"];
   cosmeticCondition: number;
   satisfaction: number;
   experience: number = 4;
@@ -94,7 +95,21 @@ export class BuyProductComponentComponent implements OnInit {
     public translateService: TranslateService,
     private languageService: LanguageService,
     private route: ActivatedRoute,
-  ) {}
+  ) {
+    this.translateService.addLangs(this.supportLanguages);
+    const savedLang = this.languageService.getCurrentLanguage();
+    if (this.supportLanguages.includes(savedLang)) {
+      this.translateService.use(savedLang);
+    } else {
+      const browserLang = this.translateService.getBrowserLang();
+      this.currentLanguage = browserLang;
+
+      if (this.supportLanguages.includes(browserLang)) {
+        this.translateService.use(browserLang);
+        this.languageService.setLanguage(browserLang);
+      }
+    }
+  }
 
   swapImages(clickedImage: string): void {
     this.selectedImage = clickedImage;

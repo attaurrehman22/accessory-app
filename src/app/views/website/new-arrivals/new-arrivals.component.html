@@ -16,7 +16,7 @@ class="global-main-wraper d-flex flex-wrap justify-content-between mt-5 mb-5"
         >
             No record exist
         </div>
-        <div class="col-md-3 col-sm-6 mb-4" *ngFor="let watch of showList">
+        <div [ngClass]="{ 'reverse-order-products': translateService.currentLang !== 'en' }" class="col-md-3 col-sm-6 mb-4" *ngFor="let watch of showList">
             <div class="card h-100 shadow-sm">
             <a
                 [routerLink]="['/buy-product']"
@@ -58,14 +58,14 @@ class="global-main-wraper d-flex flex-wrap justify-content-between mt-5 mb-5"
                   <p class="card-title-two">{{ watch.price }}</p>
                   <p class="card-title-two">{{ watch.created_by.city }}</p>
                 </div>
-                <div *ngIf="watch.created_by.type === 'user'" class="d-flex mt-2 seller-chip">
-                  Private Seller
+                <div *ngIf="watch.created_by.type === 'user'" class="d-flex mt-2">
+                  <p class="seller-chip"> Private Seller </p>
                 </div>
-                <div *ngIf="watch.created_by.type === 'dealer'" class="d-flex mt-2 seller-chip">
-                  Dealer
+                <div *ngIf="watch.created_by.type === 'dealer'" class="d-flex mt-2">
+                  <p class="seller-chip">  Dealer </p>
                 </div>
                 <!-- Relative Time -->
-                <div>
+                <div class="d-flex">
                   <p class="card-title">{{ getTimeAgo(watch.created_at) }}</p>
                 </div>
               </div>

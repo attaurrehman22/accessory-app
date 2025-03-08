@@ -70,3 +70,11 @@
     color: #484848;
     margin: 0 !important;
   }
+
+  .reverse-order-products > .card > .card-body > .d-flex {
+    flex-direction: row-reverse;
+  }
+
+  .reverse-order-products > .heart-icon  {
+    flex-direction: row-reverse;
+  }

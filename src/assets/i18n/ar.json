@@ -552,6 +552,20 @@
       "seller_confirmed_messg": "أكد البائع الطلب. يرجى إتمام الدفع لإكمال الطلب",
       "satisfy_message_close_dealwith_seller": "هل أنت راضٍ عن الرد؟ أتمم صفقتك الآن مع البائع",
       "mark_as_sold_message": "قام البائع بوضع علامة 'تم البيع' على هذا الإعلان، لا يزال بإمكانك الدردشة مع التاجر."
-  }
+  },
+  "buy_product": {
+    "condition": "الحالة",
+    "Scope_of_Delivery": "نطاق التسليم",
+    "Est_Delivery": "التسليم المتوقع",
+    "chat_with_dealer": "الدردشة مع الموزع",
+    "buy": "شراء",
+    "make_an_offer": "قدم عرض",
+    "Published_At": "تم النشر في",
+    "Brand": "العلامة التجارية",
+    "model": "النموذج",
+    "year_of_production": "سنة الإنتاج",
+    "chat_with_seller": "الدردشة مع البائع"
+}
+
 
 }

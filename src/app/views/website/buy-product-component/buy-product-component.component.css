@@ -777,3 +777,39 @@ mat-grid-list {
 .reverse-order-prod-price-des > .d-flex > .d-flex  {
   flex-direction: row-reverse;
 }
+
+.reverse-order-dealer-div {
+  display: flex;
+  justify-content: end;
+}
+
+.reverse-order-dealer-div  > .d-flex{
+  flex-direction: row-reverse !important;
+}
+.reverse-order-dealer-div  > .d-flex > .align-items-center{
+  flex-direction: row-reverse !important;
+}
+
+.reverse-order-dealer-div  > .d-flex > .align-items-center > .flex-column > .d-flex{
+  flex-direction: row-reverse !important;
+  gap: 5px;
+}
+
+.reverse-order-dealer-div  > .d-flex > .align-items-center > .flex-column > button{
+ align-self: flex-end;
+}
+
+.reverse-order > .featured-card-heart-sec {
+  right: auto;
+  left: 10px;
+}
+
+.reverse-order > .featured-card-featred {
+  right: 35px;
+  left: auto;
+}
+
+.reverse-order > .featured-bottom {
+  right: auto;
+  left: 20px;
+}

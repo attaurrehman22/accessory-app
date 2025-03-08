@@ -593,9 +593,21 @@
     "seller_confirmed_messg":"Seller has confirmed the order. Please make your payment to complete the order",
     "satisfy_message_close_dealwith_seller":"Satisfied with the response? Close your deal now with the seller",
     "mark_as_sold_message":"The Seller has marked this ad as sold, you can still chat with the dealer."
+  },
+
+
+  "buy_product":{
+    "condition":"Condition",
+    "Scope_of_Delivery":"Scope of Delivery",
+    "Est_Delivery":"Est. Delivery",
+    "chat_with_dealer":"Chat with Dealer",
+    "chat_with_seller":"Chat with Seller",
+    "buy":"Buy",
+    "make_an_offer":"Make an Offer",
+    "Published_At":"Published At",
+    "Brand":"Brand",
+    "model":"Model",
+    "year_of_production":"Year of Production"
   }
-
-
-   
   
 }

@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpService } from 'src/services/http/http.service';
+import { LanguageService } from "src/services/lang-service/language.service";
+import { TranslateService } from "@ngx-translate/core";
 
 @Component({
   selector: 'app-new-arrivals',
@@ -8,9 +10,36 @@ import { HttpService } from 'src/services/http/http.service';
   styleUrls: ['./new-arrivals.component.css']
 })
 export class NewArrivalsComponent {
+  supportLanguages = ["en", "ar", "fr", "ta", "hi"];
+  currentLanguage: string;
   showList: any;
   isUserLogin: any;
-  constructor(private http: HttpService, private router: Router) {}
+  constructor(private http: HttpService, private router: Router,
+     public translateService: TranslateService,  private languageService:LanguageService,
+  ) {
+    const supportedLanguages = ["en", "ar"];
+    this.translateService.addLangs(supportedLanguages);
+    this.translateService.setDefaultLang("en");
+
+    const browserLang = this.translateService.getBrowserLang();
+    if (supportedLanguages?.includes(browserLang)) {
+      this.translateService.use(browserLang);
+    }
+
+    this.translateService.addLangs(this.supportLanguages);
+    const savedLang = this.languageService.getCurrentLanguage();
+    if (this.supportLanguages?.includes(savedLang)) {
+      this.translateService.use(savedLang);
+    } else {
+      const browserLang = this.translateService.getBrowserLang();
+      this.currentLanguage = browserLang;
+
+      if (this.supportLanguages?.includes(browserLang)) {
+        this.translateService.use(browserLang);
+        this.languageService.setLanguage(browserLang);
+      }
+    }
+  }
 
   ngOnInit(): void {
     this.isUserLogin = localStorage.getItem("isLoggedIn");

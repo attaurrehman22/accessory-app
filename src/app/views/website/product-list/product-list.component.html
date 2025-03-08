@@ -150,7 +150,8 @@
       </button>
     </div>
 
-    <div *ngIf="(selectedCategories?.length > 0 || selectedWatchTypes?.length > 0) && isFiltereredOptionIsShow" class="container-fluid mt-3">
+    <div
+    *ngIf="(selectedCategories?.length > 0 || selectedWatchTypes?.length > 0) && isFiltereredOptionIsShow" class="container-fluid mt-3">
       <div  class="col-md-12 d-flex flex-wrap align-items-center">
         <div class="col-md-10 d-flex flex-wrap">
           <!-- Display selected categories -->
@@ -208,7 +209,7 @@
         >
           No record exist
         </div>
-        <div class="col-md-3 col-sm-6 mb-4" *ngFor="let watch of showList">
+        <div [ngClass]="{ 'reverse-order-products': translateService.currentLang !== 'en' }" class="col-md-3 col-sm-6 mb-4" *ngFor="let watch of showList">
           <div class="card h-100 shadow-sm">
             <a
               [routerLink]="['/buy-product']"
@@ -261,15 +262,15 @@
               </div>
               <div
                 *ngIf="watch.created_by.type === 'user'"
-                class="d-flex mt-2 seller-chip"
+                class="d-flex mt-2"
               >
-                Private Seller
+                <p class="seller-chip"> Private Seller </p>
               </div>
               <div
                 *ngIf="watch.created_by.type === 'dealer'"
-                class="d-flex mt-2 seller-chip"
+                class="d-flex mt-2"
               >
-                Dealer
+              <p class="seller-chip">  Dealer </p>
               </div>
             </div>
           </div>

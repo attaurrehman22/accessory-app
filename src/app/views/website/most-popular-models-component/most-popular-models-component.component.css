@@ -27,3 +27,12 @@
     transform: translateX(-100%);
   }
 }
+
+.img-div {
+  object-fit: scale-down;
+  height: 485px;
+  width: 100%;
+  border: none !important;
+  border-radius: 16px;
+  background: none !important;
+}
