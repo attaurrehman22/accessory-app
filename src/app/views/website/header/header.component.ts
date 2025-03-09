@@ -81,16 +81,16 @@ export class HeaderComponent {
   @ViewChild('search3MenuTrigger') search3MenuTrigger: MatMenuTrigger;
   @HostListener("window:resize", ["$event"])
   onResize(event: any) {
-    this.isSmallScreen = window.innerWidth <= 768;
+    this.isSmallScreen = window?.innerWidth <= 768;
 
-    if (this.search3MenuTrigger && this.search3MenuTrigger.menuOpen) {
+    if (this.search3MenuTrigger && this.search3MenuTrigger?.menuOpen) {
       this.search3MenuTrigger.closeMenu();
     }
     
-    if (this.search2MenuTrigger && this.search2MenuTrigger.menuOpen) {
+    if (this.search2MenuTrigger && this.search2MenuTrigger?.menuOpen) {
       this.search2MenuTrigger.closeMenu();
     }
-    if (!this.isSmallScreen && this.drawer.opened) {
+    if (!this.isSmallScreen && this.drawer?.opened) {
       this.drawer.close();
     }
   }

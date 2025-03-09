@@ -60,6 +60,7 @@
 img.image {
   background: white !important;
   border: none !important;
+  object-fit: contain;
 }
 
 ng-image-slider img {

@@ -286,7 +286,7 @@ export class HttpService implements OnInit {
   }
 
   actandDeacWatchOfTheDay(ID:any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/api/admin/watch-of-the-day/set-active/${ID}`, {
+    return this.http.post(`${this.apiUrl}/api/admin/watch-of-the-day/set-active/${ID}`,{}, {
       headers: {
         Accept: "application/json",
         Authorization: `Bearer ${this.token}`,
