@@ -36,3 +36,33 @@
   border-radius: 16px;
   background: none !important;
 }
+
+::ng-dep .image {
+  background: white !important;
+  border: none !important;
+}
+
+::ng-dep .img-div {
+  background: white !important;
+  box-shadow: none !important;
+}
+
+::ng-dep .ng-image-slider {
+  background: white !important;
+  box-shadow: none !important;
+}
+
+.ng-image-slider {
+  background: white !important;
+  box-shadow: none !important;
+}
+
+img.image {
+  background: white !important;
+  border: none !important;
+}
+
+ng-image-slider img {
+  background: white !important;
+  border: none !important;
+}

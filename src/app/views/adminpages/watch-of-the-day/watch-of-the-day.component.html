@@ -122,6 +122,15 @@
                           {{ row.product_price }}
                         </td>
                       </ng-container>
+
+                      <ng-container class="column" matColumnDef="activate">
+                        <th mat-header-cell class="column" *matHeaderCellDef>
+                         Is Activate
+                        </th>
+                        <td mat-cell class="column" *matCellDef="let row">
+                          {{ row.is_active == 1 ? 'Yes' : 'No' }}
+                        </td>
+                      </ng-container>
   
                       <!-- Status Column -->
                       <ng-container class="column" matColumnDef="edit">
@@ -150,10 +159,14 @@
                             <span>Remove</span>
                           </button>
 
-                          <!-- <button mat-menu-item (click)="addPopularProduct(row)">
+                          <button *ngIf="row.is_active == 0" mat-menu-item (click)="activateProductofWatchDay(row)">
                             <mat-icon>refresh</mat-icon>
-                            <span>Add To Popular</span>
-                          </button> -->
+                            <span>Activate</span>
+                          </button>
+                          <button *ngIf="row.is_active == 1" mat-menu-item (click)="deActivateProductofWatchDay(row)">
+                            <mat-icon>refresh</mat-icon>
+                            <span>De-activate</span>
+                          </button>
                         </mat-menu>
                         </td>
                       </ng-container>

@@ -285,6 +285,15 @@ export class HttpService implements OnInit {
     });
   }
 
+  actandDeacWatchOfTheDay(ID:any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/api/admin/watch-of-the-day/set-active/${ID}`, {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+  }
+
   getAdminUsers(pageIndex: number = 0, pageSize: number = 100): Observable<any> {
     let pageSize2 = 100;
     return this.http.get(`${this.apiUrl}/api/admin/user/list?page=${pageIndex + 1}&per_page=${pageSize2}`, {

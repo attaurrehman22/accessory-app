@@ -38,7 +38,7 @@ export class WatchOfTheDayComponent implements OnInit, OnDestroy {
     "created_by",
     "published_date",
     "price",
-    // "model",
+    "activate",
     // "is_active",
     // "top_brand",
     "edit",
@@ -134,7 +134,9 @@ export class WatchOfTheDayComponent implements OnInit, OnDestroy {
 
         dialogRef.afterClosed().subscribe(
           (param) => {   
+            if(param){
            this.allUser()
+            }
         });
   }
 
@@ -291,6 +293,48 @@ export class WatchOfTheDayComponent implements OnInit, OnDestroy {
       
        this.allUser()
      
+    });
+  }
+
+  activateProductofWatchDay(data){
+    const dialogRef = this.dialog.open(ConfirmationModelComponent, {
+      width: "700px",
+      data: { message: "Are you sure you want to activate this product for Watch of the day" },
+      disableClose: true,
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result == true) {
+        this.http.actandDeacWatchOfTheDay(data.id).subscribe(
+          (res) => {
+            this.toast.showAlert("success", "Product activate Susseccfully");
+            this.allUser();
+          },
+          (err) => {
+            this.toast.showAlert("danger", "Error in activating Product");
+          }
+        );
+      }
+    });
+  }
+
+  deActivateProductofWatchDay(data){
+    const dialogRef = this.dialog.open(ConfirmationModelComponent, {
+      width: "700px",
+      data: { message: "Are you sure you want to De-activate this product for Watch of the day" },
+      disableClose: true,
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result == true) {
+        this.http.actandDeacWatchOfTheDay(data.id).subscribe(
+          (res) => {
+            this.toast.showAlert("success", "Product De-activate Susseccfully");
+            this.allUser();
+          },
+          (err) => {
+            this.toast.showAlert("danger", "Error in De-activating Product");
+          }
+        );
+      }
     });
   }
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit,ViewEncapsulation } from "@angular/core";
 import { TranslateService } from "@ngx-translate/core";
 import { HttpService } from "src/services/http/http.service";
 
@@ -6,6 +6,7 @@ import { HttpService } from "src/services/http/http.service";
   selector: "app-most-popular-models-component",
   templateUrl: "./most-popular-models-component.component.html",
   styleUrls: ["./most-popular-models-component.component.css"],
+  encapsulation: ViewEncapsulation.None 
 })
 export class MostPopularModelsComponentComponent implements OnInit {
   popularModels: any[] = [];

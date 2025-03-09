@@ -269,7 +269,7 @@ export class AddProductWatchOfTheDayComponent {
               "success",
               "watch of the day update successfully"
             );
-            this.dialogRef.close();
+            this.dialogRef.close('closed');
           },
           (error) => {
             if(error && error.error){
@@ -328,7 +328,7 @@ export class AddProductWatchOfTheDayComponent {
               "success",
               "Add product into watch of the day"
             );
-            this.dialogRef.close();
+            this.dialogRef.close('closed');
           },
           (error) => {
             if(error && error.error){
