@@ -11,7 +11,7 @@
   </div>
 </div>
 
-<div style="position: absolute; right: 15px; top: 80px; width: auto" class="container mt-4"
+<div style="position: absolute; right: 15px; top: 80px; width: auto;z-index: 99999;" class="container mt-4"
   *ngIf="alertService.alert$ | async as alert">
   <div [ngClass]="'alert alert-' + alert.type + ' alert-dismissible fade show'" role="alert">
     <strong>{{ alert.type | titlecase }}!</strong> {{ alert.message }}

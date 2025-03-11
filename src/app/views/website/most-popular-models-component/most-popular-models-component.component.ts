@@ -22,18 +22,18 @@ export class MostPopularModelsComponentComponent implements OnInit {
   
     images: string[] = []; // Store image URLs here
     Dumyimages= [
-      "./assets/images/Screenshots/201803221img04png.png",
-      "./assets/images/Screenshots/1659783521rolex-logo-black.png",
-      "../assets/images/Screenshots/Bell_and_Ross.svg.png",
-      "./assets/images/Screenshots/breitling-2.png",
-      "./assets/images/Screenshots/Cartier_logo.png",
-      "./assets/images/Screenshots/getsupercustomizedimage.png",
-      "./assets/images/Screenshots/Hublot_logo.png",
-      "./assets/images/Screenshots/IWC.png",
-      "./assets/images/Screenshots/Jaeger-LeCoultre_Logo.png",
-      "./assets/images/Screenshots/logo-tudor.png",
-      "./assets/images/Screenshots/OMEGA.png",
-      "./assets/images/Screenshots/patek-philippe-logo-black-and-white.png"
+      "./assets/images/Screenshots/bell-ross.svg",
+      "./assets/images/Screenshots/Frame 1261153457.svg",
+      "../assets/images/Screenshots/hublot-logo.svg",
+      "./assets/images/Screenshots/jaeger-le-coultre.svg",
+      "./assets/images/Screenshots/tudor-1.svg",
+      // "./assets/images/Screenshots/getsupercustomizedimage.png",
+      // "./assets/images/Screenshots/Hublot_logo.png",
+      // "./assets/images/Screenshots/IWC.png",
+      // "./assets/images/Screenshots/Jaeger-LeCoultre_Logo.png",
+      // "./assets/images/Screenshots/logo-tudor.png",
+      // "./assets/images/Screenshots/OMEGA.png",
+      // "./assets/images/Screenshots/patek-philippe-logo-black-and-white.png"
     ];
     duplicatedImages: string[] = [];
   

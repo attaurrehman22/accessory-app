@@ -524,6 +524,7 @@
   },
 
   "chat_com":{
+      "type_message":"اكتب رسالة",
       "chats": "المحادثات",
       "Unread_Filter": "تصفية غير المقروء",
       "all": "الكل",

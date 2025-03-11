@@ -181,12 +181,12 @@ export class ChatComponent implements OnInit, AfterViewChecked {
   isActionTypeMakePaymentToHideCustomOffer: boolean = false;
 
   getChatDetails() {
+    let actionTypeforCallingCustomOffer=false;
     this.http.getChatsDetails(this.chat_id).subscribe(
       (res) => {
         this.messages = res.messages;
         if (res.messages.length > 0 && !this.reciever_ID) {
           let useridd = localStorage.getItem("userID");
-
           // this.reciever_ID = res.messages[1]?.receiver_id;
           if (useridd == res.messages[0]?.sender_id) {
             this.reciever_ID = res.messages[0]?.receiver_id;
@@ -204,6 +204,10 @@ export class ChatComponent implements OnInit, AfterViewChecked {
             } catch (error) {
               console.error("Error parsing attachments:", error);
             }
+          }
+
+          if(message.action_type == 'offer'){
+            actionTypeforCallingCustomOffer = true;
           }
 
           if (message.action_type === "make_payment") {
@@ -260,7 +264,10 @@ export class ChatComponent implements OnInit, AfterViewChecked {
           this.isShowBuyNowOffer = true;
         }
 
-        this.getCustomOffer();
+        if(actionTypeforCallingCustomOffer == true){
+          this.getCustomOffer();
+        }
+
       },
       (err) => {
         if (err && err.error) {

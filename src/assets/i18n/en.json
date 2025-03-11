@@ -560,17 +560,16 @@
     "Preview_your_Ad":" Preview your Ad",
     "upload_video":"Upload Video",
     "upload_images": "Upload Media"
-
   },
 
   "chat_com":{
+    "type_message":"Type a message",
     "chats":"Chats",
-
     "Unread_Filter":"Unread Filter",
     "all":"All",
     "buy":"Buy",
     "sell":"Sell",
-    "view_add":"View Add",
+    "view_add":"View Ad",
     "seller_mark_sold_status":"Seller has change Status of Product as 'Mark as Sold'",
     "custom_offer":"Custom offer",
     "listing_id":"Listing ID",

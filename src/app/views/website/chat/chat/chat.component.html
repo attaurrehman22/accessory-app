@@ -199,7 +199,7 @@
             </div>
           </div>
           <div>
-            <p>...</p>
+            <p style="cursor: pointer;">...</p>
           </div>
         </div>
 
@@ -255,7 +255,7 @@
         <!-- // Message deatail -->
         <div class="card-body" style="height: 480px; overflow-y: scroll">
           <div *ngIf="messages">
-            <div *ngFor="let message of reversedMessages">
+            <div *ngFor="let message of reversedMessages" [ngClass]="{ 'reverse-order-message': translateService.currentLang !== 'en' }">
                 <div
                   class="message"
                   [ngClass]="{
@@ -501,13 +501,13 @@
                   multiple
                 >
             </div>
-          <div class="input-group">
+          <div [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'" class="input-group">
             <input
             type="text"
             class="form-control"
             [(ngModel)]="newMessage"
             (keyup.enter)="sendMessage()"
-            placeholder="Type a message..."
+            placeholder="{{ 'chat_com.type_message' | translate }}"
             maxlength="500"
           />
           

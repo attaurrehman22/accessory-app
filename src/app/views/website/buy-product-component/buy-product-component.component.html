@@ -38,7 +38,7 @@
             <i
               class="fa"
               [ngClass]="
-                wishList.includes(productDetails.id)
+                wishList?.includes(productDetails.id)
                   ? 'fa-heart'
                   : 'fa-heart fa-heart-o'
               "
@@ -52,12 +52,12 @@
       </div>
 
       <div [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }"
-        *ngIf="productDetails && productDetails.views_count"
+        *ngIf="productDetails && productDetails?.views_count"
         class="featured-bottom"
       >
         <i class="fas fa-eye"></i>
         <p style="margin: 0">
-          {{ productDetails.views_count }}
+          {{ productDetails?.views_count }}
         </p>
       </div>
 
@@ -86,14 +86,14 @@
         <p class="routes-styl" style="cursor: pointer" routerLink="/">
           Homepage /
         </p>
-        <p *ngIf="productDetails.category" class="routes-styl-active">
-           {{ productDetails.category?.name }} /
+        <p *ngIf="productDetails?.category" class="routes-styl-active">
+           {{ productDetails?.category?.name }} /
         </p>
         <p *ngIf="productDetails?.brand?.name" class="routes-styl-active">
            {{ productDetails?.brand?.name }} /
         </p>
-        <p *ngIf="productDetails.listing_code" class="routes-styl-active">
-           {{ productDetails.listing_code }}
+        <p *ngIf="productDetails?.listing_code" class="routes-styl-active">
+           {{ productDetails?.listing_code }}
         </p>
       </div>
 
@@ -103,13 +103,13 @@
       >
         <i class="fas fa-map-marker-alt"></i>
         <p class="routes-styl">{{ productDetails?.created_by?.city }}</p>
-        <p *ngIf="productDetails?.published_date" class="routes-styl"> {{ "buy_product.Published_At" | translate }} : {{ productDetails.published_date | date: 'yyyy-MM-dd' }}</p>
+        <p *ngIf="productDetails?.published_date" class="routes-styl"> {{ "buy_product.Published_At" | translate }} : {{ productDetails?.published_date | date: 'yyyy-MM-dd' }}</p>
       </div>
 
       <div class="d-flex flex-wrap">
         <p class="brand-name-title">
-          {{ productDetails?.brand?.name }} {{ productDetails.model }}
-          {{ productDetails.title }}
+          {{ productDetails?.brand?.name }} {{ productDetails?.model }}
+          {{ productDetails?.title }}
         </p>
       </div>
 
@@ -138,7 +138,7 @@
           </div>
           <div style="display: flex; flex-direction: column">
             <p class="margin-0">{{ "buy_product.model" | translate }}</p>
-            <p class="margin-0">{{ productDetails.model }}</p>
+            <p class="margin-0">{{ productDetails?.model }}</p>
           </div>
         </div>
 
@@ -153,7 +153,7 @@
           <div style="display: flex; flex-direction: column">
             <p class="margin-0">{{ "buy_product.year_of_production" | translate }}</p>
             <p class="margin-0">
-              {{ productDetails.year_of_production }}
+              {{ productDetails?.year_of_production }}
             </p>
           </div>
         </div>
@@ -161,7 +161,7 @@
 
       <div class="d-flex mt-4 gap-3">
         <p class="header-highligted-color brand-name-title">
-          {{ productDetails.currency }} {{ productDetails.price }}
+          {{ productDetails?.currency }} {{ productDetails?.price }}
         </p>
         <p class="color-666666 font-wight-400 font-size-14">
          {{productDetails?.shipping_type}}
@@ -175,7 +175,7 @@
         >
         {{ "buy_product.condition" | translate }}
         </p>
-        <button class="condition-btn">{{ productDetails.condition }}</button>
+        <button class="condition-btn">{{ productDetails?.condition }}</button>
       </div>
 
       <div *ngIf="productDetails?.scope_of_delivery" class="d-flex flex-column mt-3">
@@ -187,7 +187,7 @@
         </p>
         <div class="d-flex flex-wrap gap-2">
           <button class="watch-btn">
-            {{ productDetails.scope_of_delivery }}
+            {{ productDetails?.scope_of_delivery }}
           </button>
         </div>
       </div>
@@ -200,7 +200,7 @@
         {{ "buy_product.Est_Delivery" | translate }}
         </p>
         <button class="condition-btn">
-          {{ productDetails.estimate_delivery }}
+          {{ productDetails?.estimate_delivery }}
         </button>
       </div>
       <div class="mt-4">
@@ -213,7 +213,7 @@
           {{ "buy_product.buy" | translate }}
         </button>
         <button
-          *ngIf="productDetails.allow_to_make_offer === 1"
+          *ngIf="productDetails?.allow_to_make_offer === 1"
           [disabled]="routeFrom === 'listing-to-product'"
           (click)="makeanOffer()"
           class="make-offer-btn mt-2"
@@ -274,11 +274,11 @@
           <small
             *ngIf="
               dealerUserDetails?.overall_rating &&
-              dealerUserDetails.total_reviews
+              dealerUserDetails?.total_reviews
             "
             class="text-muted color-666666"
-            >{{ dealerUserDetails.overall_rating }} ({{
-              dealerUserDetails.total_reviews
+            >{{ dealerUserDetails?.overall_rating }} ({{
+              dealerUserDetails?.total_reviews
             }}
             reviews)</small
           >
@@ -303,7 +303,7 @@
   </div>
 </div>
 
-<div  [ngClass]="{ 'reverse-order-dealer-div': translateService.currentLang !== 'en' }" *ngIf="!isDealer" class="container mt-2">
+<div  [ngClass]="{ 'reverse-order-dealer-div': translateService.currentLang !== 'en' }" *ngIf="isDealer == 'user'" class="container mt-2">
   <div
     class="col-md-6 p-3 d-flex flex-wrap align-items-center justify-content-between flex-row"
     style="border-radius: 16px; border: 1px solid #f3f3f3"
@@ -348,6 +348,7 @@
             margin-top: 8px;
             background: none;
           "
+           (click)="gotToChat()"
         >
         {{ "buy_product.chat_with_seller" | translate }}
           <!-- Chat with Seller -->
@@ -415,14 +416,14 @@
               <p
                 class="font-size-20 font-wight-600 color-242424 margin-0 text-center"
               >
-                {{ productDetails.meta_description || 'N/A' }}
+                {{ productDetails?.meta_description || 'N/A' }}
               </p>
             </div>
             <div *ngIf="productDetails?.description" class="col-12">
               <p
                 class="font-size-16 font-wight-400 color-666666 margin-0 text-center"
               >
-                {{ productDetails.description || 'N/A' }}
+                {{ productDetails?.description || 'N/A' }}
               </p>
             </div>
           </div>
@@ -492,83 +493,83 @@
                   [ngClass]="{
                     'reverse-order-tr': translateService.currentLang !== 'en'
                   }"
-                  *ngIf="productDetails.model"
+                  *ngIf="productDetails?.model"
                 >
                   <th class="tbl-head" scope="row">
                     {{ "product_details.model" | translate }}
                   </th>
                   <td class="tbl-td">
-                    {{ productDetails.model }}
+                    {{ productDetails?.model }}
                   </td>
                 </tr>
                 <tr
                   [ngClass]="{
                     'reverse-order-tr': translateService.currentLang !== 'en'
                   }"
-                  *ngIf="productDetails.reference_number"
+                  *ngIf="productDetails?.reference_number"
                 >
                   <th class="tbl-head" scope="row">
-                    {{ "product_details.reference_number" | translate }}
+                    {{ "product_details?.reference_number" | translate }}
                   </th>
-                  <td class="tbl-td">{{ productDetails.reference_number }}</td>
+                  <td class="tbl-td">{{ productDetails?.reference_number }}</td>
                 </tr>
                 <tr
                   [ngClass]="{
                     'reverse-order-tr': translateService.currentLang !== 'en'
                   }"
-                  *ngIf="productDetails.movement"
+                  *ngIf="productDetails?.movement"
                 >
                   <th class="tbl-head" scope="row">
                     {{ "product_details.movement" | translate }}
                   </th>
-                  <td class="tbl-td">{{ productDetails.movement }}</td>
+                  <td class="tbl-td">{{ productDetails?.movement }}</td>
                 </tr>
                 <tr
                   [ngClass]="{
                     'reverse-order-tr': translateService.currentLang !== 'en'
                   }"
-                  *ngIf="productDetails.case_material"
+                  *ngIf="productDetails?.case_material"
                 >
                   <th class="tbl-head" scope="row">
                     {{ "product_details.case_material" | translate }}
                   </th>
-                  <td class="tbl-td">{{ productDetails.case_material }}</td>
+                  <td class="tbl-td">{{ productDetails?.case_material }}</td>
                 </tr>
                 <tr
                   [ngClass]="{
                     'reverse-order-tr': translateService.currentLang !== 'en'
                   }"
-                  *ngIf="productDetails.bracelet_material"
+                  *ngIf="productDetails?.bracelet_material"
                 >
                   <th class="tbl-head" scope="row">
                     {{ "product_details.bracelet_material" | translate }}
                   </th>
-                  <td class="tbl-td">{{ productDetails.bracelet_material }}</td>
+                  <td class="tbl-td">{{ productDetails?.bracelet_material }}</td>
                 </tr>
                 <tr
                   [ngClass]="{
                     'reverse-order-tr': translateService.currentLang !== 'en'
                   }"
-                  *ngIf="productDetails.year_of_production"
+                  *ngIf="productDetails?.year_of_production"
                 >
                   <th class="tbl-head" scope="row">
                     {{ "product_details.year_of_production" | translate }}
                   </th>
                   <td class="tbl-td">
-                    {{ productDetails.year_of_production }}
+                    {{ productDetails?.year_of_production }}
                   </td>
                 </tr>
                 <tr
                   [ngClass]="{
                     'reverse-order-tr': translateService.currentLang !== 'en'
                   }"
-                  *ngIf="productDetails.condition"
+                  *ngIf="productDetails?.condition"
                 >
                   <th class="tbl-head" scope="row">
                     {{ "product_details.condition" | translate }}
                   </th>
                   <td class="tbl-td">
-                    {{ productDetails.condition }}
+                    {{ productDetails?.condition }}
                   </td>
                 </tr>
 
@@ -576,13 +577,13 @@
                   [ngClass]="{
                     'reverse-order-tr': translateService.currentLang !== 'en'
                   }"
-                  *ngIf="productDetails.scope_of_delivery"
+                  *ngIf="productDetails?.scope_of_delivery"
                 >
                   <th class="tbl-head" scope="row">
                     {{ "product_details.scope_of_delivery" | translate }}
                   </th>
                   <td class="tbl-td">
-                    {{ productDetails.scope_of_delivery }}
+                    {{ productDetails?.scope_of_delivery }}
                   </td>
                 </tr>
 
@@ -590,13 +591,13 @@
                   [ngClass]="{
                     'reverse-order-tr': translateService.currentLang !== 'en'
                   }"
-                  *ngIf="productDetails.gender"
+                  *ngIf="productDetails?.gender"
                 >
                   <th class="tbl-head" scope="row">
                     {{ "product_details.gender" | translate }}
                   </th>
                   <td class="tbl-td">
-                    {{ productDetails.gender }}
+                    {{ productDetails?.gender }}
                   </td>
                 </tr>
 
@@ -604,26 +605,26 @@
                   [ngClass]="{
                     'reverse-order-tr': translateService.currentLang !== 'en'
                   }"
-                  *ngIf="productDetails.location"
+                  *ngIf="productDetails?.location"
                 >
                   <th class="tbl-head" scope="row">
                     {{ "product_details.location" | translate }}
                   </th>
                   <td class="tbl-td">
-                    {{ productDetails.location }}
+                    {{ productDetails?.location }}
                   </td>
                 </tr>
                 <tr
                   [ngClass]="{
                     'reverse-order-tr': translateService.currentLang !== 'en'
                   }"
-                  *ngIf="productDetails.price"
+                  *ngIf="productDetails?.price"
                 >
                   <th class="tbl-head" scope="row">
                     {{ "product_details.price" | translate }}
                   </th>
                   <td class="tbl-td">
-                    {{ productDetails.currency }} {{ productDetails.price }}
+                    {{ productDetails?.currency }} {{ productDetails?.price }}
                   </td>
                 </tr>
 
@@ -631,13 +632,13 @@
                   [ngClass]="{
                     'reverse-order-tr': translateService.currentLang !== 'en'
                   }"
-                  *ngIf="productDetails.available"
+                  *ngIf="productDetails?.available"
                 >
                   <th class="tbl-head" scope="row">
                     {{ "product_details.availability" | translate }}
                   </th>
                   <td class="tbl-td">
-                    {{ productDetails.available }}
+                    {{ productDetails?.available }}
                   </td>
                 </tr>
 
@@ -645,14 +646,14 @@
                   [ngClass]="{
                     'reverse-order-tr': translateService.currentLang !== 'en'
                   }"
-                  *ngIf="productDetails.description"
+                  *ngIf="productDetails?.description"
                 >
                   <th class="tbl-head" scope="row">
                     {{ "product_details.description" | translate }}
                   </th>
                   <td class="tbl-td">
                     <small style="font-size: 14px !important; font-weight: 500">
-                      {{ productDetails.description }}
+                      {{ productDetails?.description }}
                     </small>
                   </td>
                 </tr>
@@ -660,23 +661,23 @@
                   [ngClass]="{
                     'reverse-order-tr': translateService.currentLang !== 'en'
                   }"
-                  *ngIf="productDetails.bezel_material"
+                  *ngIf="productDetails?.bezel_material"
                 >
                   <th class="tbl-head" scope="row">
                     {{ "product_details.bazel_material" | translate }}
                   </th>
-                  <td class="tbl-td">{{ productDetails.bezel_material }}</td>
+                  <td class="tbl-td">{{ productDetails?.bezel_material }}</td>
                 </tr>
                 <tr
                   [ngClass]="{
                     'reverse-order-tr': translateService.currentLang !== 'en'
                   }"
-                  *ngIf="productDetails.dial"
+                  *ngIf="productDetails?.dial"
                 >
                   <th class="tbl-head" scope="row">
                     {{ "product_details.dial" | translate }}
                   </th>
-                  <td class="tbl-td">{{ productDetails.dial }}</td>
+                  <td class="tbl-td">{{ productDetails?.dial }}</td>
                 </tr>
               </tbody>
             </table>
@@ -1230,7 +1231,7 @@
   </div>
 </div>
 
-<div *ngIf="similarWatchesList.length > 0 &&  this.routeFrom !== 'listing-to-product'" class="container mt-3">
+<div *ngIf="similarWatchesList?.length > 0 &&  this.routeFrom !== 'listing-to-product'" class="container mt-3">
   <p class="font-wight-700 font-size-64 color-484848 text-center cormorant-styl">
     {{ "product_details.similar_prod" | translate }}
   </p>
@@ -1310,7 +1311,7 @@
           (click)="addWishList(watch.id)"
           class="fa"
           [ngClass]="
-            wishList.includes(watch.id) ? 'fa-heart' : 'fa-heart fa-heart-o'
+            wishList?.includes(watch.id) ? 'fa-heart' : 'fa-heart fa-heart-o'
           "
           aria-hidden="true"
         ></i>

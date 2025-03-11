@@ -7,6 +7,7 @@ import { ModelLoginComponent } from "../../auth/model-login/model-login.componen
 import { TranslateService } from "@ngx-translate/core";
 import { LanguageService } from "src/services/lang-service/language.service";
 import { CustomOfferComponent } from "../../modal/custom-offer/custom-offer.component";
+import { ConfirmationModelComponent } from "../../modal/confirmation-model/confirmation-model.component";
 
 @Component({
   selector: "app-buy-product-component",
@@ -370,18 +371,26 @@ export class BuyProductComponentComponent implements OnInit {
     }
     const isUserLogin = localStorage.getItem("isLoggedIn");
     if (isUserLogin) {
-      this.http.buyNowFromDetailsProduct(this.productDetails.id,bodyData).subscribe(
-        (res)=>{
-          this.alertService.showAlert('success','Message send to Seller.')
-          this.router.navigate(['/chat'],{
-            state:{chatID:res.data.chat_id}
-          }
-        )
-        },(err)=>{
-  
-          this.alertService.showAlert('warning',`${err.error.message}`)
+
+
+      const dialogRef = this.dialog.open(ConfirmationModelComponent, {
+        width: "600px",
+        data: { message: "Are you sure you want to buy this product" },
+      });
+
+      dialogRef.afterClosed().subscribe((result) => {
+        if (result == true) {
+          this.http.buyNowFromDetailsProduct(this.productDetails.id,bodyData).subscribe(
+            (res)=>{
+              this.alertService.showAlert('success','Message send to Seller.')
+            },(err)=>{
+      
+              this.alertService.showAlert('warning',`${err.error.message}`)
+            }
+          )
         }
-      )
+      });
+          
       // this.router.navigate(["/buy-now"]);
     } else {
       const dialogRef = this.dialog.open(ModelLoginComponent, {
@@ -391,16 +400,16 @@ export class BuyProductComponentComponent implements OnInit {
 
       dialogRef.afterClosed().subscribe((result) => {
         if (result) {
-          this.http.buyNowFromDetailsProduct(this.productDetails.id,bodyData).subscribe(
-            (res)=>{
-              this.alertService.showAlert('success','Message send to Seller.')
-              this.router.navigate(['/chat'],{
-                state:{chat:res.data}
-              })
-            },(err)=>{
-              this.alertService.showAlert('warning',`${err.error.message}`)
-            }
-          )
+          // this.http.buyNowFromDetailsProduct(this.productDetails.id,bodyData).subscribe(
+          //   (res)=>{
+          //     this.alertService.showAlert('success','Message send to Seller.')
+          //     // this.router.navigate(['/chat'],{
+          //     //   state:{chat:res.data}
+          //     // })
+          //   },(err)=>{
+          //     this.alertService.showAlert('warning',`${err.error.message}`)
+          //   }
+          // )
         }
       });
     }

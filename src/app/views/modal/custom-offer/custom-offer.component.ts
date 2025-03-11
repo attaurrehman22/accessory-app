@@ -113,7 +113,12 @@ export class CustomOfferComponent {
             this.dialogRef.close(this.offerForm.value);
           },
           (err) => {
+            console.log("err message",err.error);
+            if(err && err.error && err.error.error){
+              this.alertService.showAlert("warning", err.error.error);
+            }else{
             this.alertService.showAlert("danger", "Error in Updating offer");
+            }
           }
         );
       } else {
@@ -130,11 +135,16 @@ export class CustomOfferComponent {
             this.dialogRef.close(this.offerForm.value);
           },
           (err) => {
+            console.log("err message",err.error);
+            if(err && err.error && err.error.error){
+              this.alertService.showAlert("warning", err.error.error);
+            }else{
             const errorMessage = err.error?.message || "Something went wrong!";
             this.alertService.showAlert(
-              "danger",
+              "warning",
               errorMessage
             );
+          }
           }
         );
       } else {
