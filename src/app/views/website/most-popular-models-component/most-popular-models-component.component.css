@@ -1,69 +1,23 @@
-.img-stl {
-  height: 40px;
-}
-
-.logo-container {
+.marquee-container {
   overflow: hidden;
-  position: relative;
   width: 100%;
 }
 
-.logo-wrapper {
+.marquee-track {
   display: flex;
-  justify-content: space-between;
-  gap: 40px;
-  animation: scroll-logos 20s linear infinite;
+  width: max-content;
+  will-change: transform;
+
 }
 
-.logo-item {
-  flex-shrink: 0;
+.slide {
+  width: 110px !important;
+  margin: 20px !important;
+  flex: 0 0 auto;
+  transition: transform 0.3s ease;
 }
 
-@keyframes scroll-logos {
-  0% {
-    transform: translateX(100%);
-  }
-  100% {
-    transform: translateX(-100%);
-  }
-}
-
-.img-div {
-  object-fit: scale-down;
-  height: 485px;
+.slide img {
   width: 100%;
-  border: none !important;
-  border-radius: 16px;
-  background: none !important;
-}
-
-::ng-dep .image {
-  background: white !important;
-  border: none !important;
-}
-
-::ng-dep .img-div {
-  background: white !important;
-  box-shadow: none !important;
-}
-
-::ng-dep .ng-image-slider {
-  background: white !important;
-  box-shadow: none !important;
-}
-
-.ng-image-slider {
-  background: white !important;
-  box-shadow: none !important;
-}
-
-img.image {
-  background: white !important;
-  border: none !important;
-  object-fit: contain;
-}
-
-ng-image-slider img {
-  background: white !important;
-  border: none !important;
+  height: auto;
 }

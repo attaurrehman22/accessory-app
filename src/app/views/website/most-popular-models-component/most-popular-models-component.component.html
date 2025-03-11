@@ -1,13 +1,12 @@
-<div class="col-12">
-  <div class="global-main-wraper" >
-    <ng-image-slider
-    [infinite]="true"
-    [autoSlide]="1"
-    #nav
-    [images]="imageObject"
-    [showArrow]="false"
-    [manageImageRatio]="false"
-    [imageSize]="{ height: 40, space: 5}"
-  ></ng-image-slider>
+<div class="global-main-wraper">
+<div class="marquee-container" #container>
+    <div class="marquee-track" #slider>
+      <div 
+        *ngFor="let img of duplicatedImages;let index=index" 
+        class="slide" [style.width.px]="imageWidth"
+        [style.margin.px]="slideMargin">
+        <img [src]="img" alt="Slider image"  />
+      </div>
+    </div>
   </div>
 </div>
