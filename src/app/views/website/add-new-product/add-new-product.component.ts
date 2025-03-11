@@ -108,8 +108,8 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
 
   // Listing Form Details
 
-  brand_id = new FormControl(null, [Validators.required]);
-  category_ids = new FormControl([], [Validators.required]);
+  brand_id = new FormControl(null, Validators.required);
+  category_ids = new FormControl([], Validators.required);
   name = new FormControl("", [Validators.required]);
   model = new FormControl("", [Validators.required]);
   title = new FormControl("", [Validators.required]);
@@ -533,6 +533,7 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
     }
 
     this.selectedCategories.push(new FormControl(category));
+    this.myCategoryControl.setValue("");
   }
 
   // Remove selected category from the FormArray
@@ -1354,13 +1355,7 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
     }
     if (Param === "listingDetails") {
       if (this.myControl.value) {
-        this.listingForm
-          .get("brand_id")
-          .setValue(
-            this.myControl.value && typeof this.myControl.value !== "string"
-              ? this.myControl.value.id
-              : null
-          );
+        this.listingForm.get("brand_id").setValue(this.myControl.value && typeof this.myControl.value !== "string" ? this.myControl.value.id : null);
       }
       if (this.selectedCategories.value.length > 0) {
         this.listingForm
@@ -1369,7 +1364,8 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
             this.selectedCategories.value.map((category) => category.id)
           );
       }
-
+      this.listingForm.markAllAsTouched();
+      
       if (this.listingForm.valid) {
         if (this.isFromMyListingComponent) {
           const formData = {
@@ -1426,7 +1422,26 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
           );
         }
       } else {
-        this.alertService.showAlert("warning", "Enter Form Values");
+        const firstInvalidControl = Object.keys(this.listingForm.controls).find(key => {
+          const control = this.listingForm.get(key);
+          return control && control.invalid;
+        });
+      
+        if (firstInvalidControl) {
+        
+          const control = this.listingForm.get(firstInvalidControl);
+          
+          if(firstInvalidControl == "brand_id"){
+            this.alertService.showAlert('warning',  `Please select a brand.`);
+          }else if(firstInvalidControl == "category_ids"){
+            this.alertService.showAlert('warning',  `Please select a category.`);
+          }else{
+            this.alertService.showAlert('warning',  `${firstInvalidControl}" is invalid.`);
+          }
+        } else {
+          // console.log("Form is valid, proceed with submission.");
+          this.alertService.showAlert("warning", "Enter Form Values");  
+        }
       }
     } else if (Param === "watchDetails") {
       if (this.watchDetailsForm.valid) {
