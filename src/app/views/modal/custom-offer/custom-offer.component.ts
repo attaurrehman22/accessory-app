@@ -17,6 +17,9 @@ export class CustomOfferComponent {
   isSeller: boolean = false;
   offerID: any;
   offerDetails:any;
+  validDays: any;
+  isUserBuyer:boolean=false;
+
   constructor(
     private fb: FormBuilder,
     private alertService: AlertsServicesService,
@@ -25,11 +28,14 @@ export class CustomOfferComponent {
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
     this.compoName = this.data.param;
+    // this.isUserBuyer=data?.userCategory;
     if(this.data?.productDetail){
       this.productPrice=this.data.productDetail.price
     }
     if(this.data?.customOfferDetails?.product){
-      this.offerDetails=data?.customOfferDetails
+      this.offerDetails=data?.customOfferDetails;
+      console.log("offerDetails days",this.offerDetails?.days);
+      this.validDays=data?.customOfferDetails?.days.toString();
       this.productPrice=this.data?.customOfferDetails?.product.price
     }
     if(this.data?.productDetail?.price){
@@ -69,7 +75,7 @@ export class CustomOfferComponent {
           offer_price: Number(productDetail.offer_price) || 0,
           ship_price: productDetail.ship_price || 0,
           chat_id: productDetail.chat_id.toString() || 0,
-          // validity_days: productDetail.offer_price || 0,
+          validity_days: this.validDays || 0,
         });
       }
       if (productDetail !== null) {

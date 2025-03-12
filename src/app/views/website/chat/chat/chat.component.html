@@ -147,7 +147,7 @@
                     {{ chat.latest_message_preview.length > 45 ? (chat.latest_message_preview | slice:0:45) + '...' : chat.latest_message_preview }}
                   </p>
                 </div>
-                <span *ngIf="chat.unread_count > 0" class="badge-styl">
+                <span *ngIf="chat.unread_count > 0 && chat.chat_id != chat_id_for_remove_unread_count" class="badge-styl">
                   {{ chat.unread_count }}
                 </span>
               </div>
@@ -462,7 +462,7 @@
         
         
         
-        <div class="card-footer">
+        <div *ngIf="chat_id_for_remove_unread_count" class="card-footer">
             <div style="width: 4%;" class="d-flex">
                 <button
                 style="width: 0; height: 0; padding: 0"

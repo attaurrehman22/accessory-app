@@ -151,8 +151,10 @@ export class ChatComponent implements OnInit, AfterViewChecked {
   sellerID: any;
 
   user_id: any;
+  chat_id_for_remove_unread_count: any;
 
   getMesageDetails(param: any) {
+    this.chat_id_for_remove_unread_count = param.chat_id;
     this.sellerProductID = param.product_id;
     this.sellerID = param.product.created_by.id;
     this.user_id = localStorage.getItem("userID");
@@ -283,9 +285,10 @@ export class ChatComponent implements OnInit, AfterViewChecked {
   }
 
   editOffer(customOfferDetails: any) {
+    console.log("Offer Details", customOfferDetails);
     const dialogRef = this.dialog.open(CustomOfferComponent, {
       width: "600px",
-      data: { customOfferDetails: customOfferDetails, param: "editComp" },
+      data: { customOfferDetails: customOfferDetails, param: "editComp" ,userCategory: this.isBuyerUser },
       disableClose: true,
     });
 
