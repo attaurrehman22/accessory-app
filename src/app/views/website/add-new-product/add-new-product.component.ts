@@ -521,6 +521,16 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
     if (
       this.selectedCategories.controls.length >= this.MAX_CATEGORY_SELECTION
     ) {
+      this.myCategoryControl.setValue('')
+      this.filteredCategoryOptions = this.myCategoryControl.valueChanges.pipe(
+        startWith(""),
+        map((value) => {
+          const name = typeof value === "string" ? value : value?.name;
+          return name
+            ? this._filterCategories(name as string)
+            : this.categoryList;
+        })
+      );
       return; // Do not add more than MAX_CATEGORY_SELECTION
     }
 
