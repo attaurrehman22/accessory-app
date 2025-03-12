@@ -116,6 +116,9 @@ export class HeaderComponent {
   }
 
   onSearch(query: string) {
+    if (this.search3MenuTrigger && this.search3MenuTrigger.menuOpen) {
+      this.search3MenuTrigger.closeMenu();
+    }
     this.searchService.changeSearchQuery(query);  
     this.router.navigate(['/product-list'], { queryParams: { query } }); 
   }
