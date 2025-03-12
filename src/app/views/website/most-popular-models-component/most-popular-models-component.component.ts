@@ -81,8 +81,8 @@ export class MostPopularModelsComponentComponent implements OnInit {
             }).filter(img => img); // Ensure we don't include empty strings if there's no cover_image
   
             // Duplicate the images for the continuous scroll effect
-            // this.duplicatedImages = [...this.images, ...this.images, ...this.images];
-            this.duplicatedImages = [...this.Dumyimages, ...this.Dumyimages, ...this.Dumyimages,...this.Dumyimages, ...this.Dumyimages, ...this.Dumyimages,...this.Dumyimages, ...this.Dumyimages, ...this.Dumyimages,...this.Dumyimages, ...this.Dumyimages, ...this.Dumyimages,...this.Dumyimages, ...this.Dumyimages, ...this.Dumyimages,...this.Dumyimages, ...this.Dumyimages, ...this.Dumyimages];
+            this.duplicatedImages = [...this.images, ...this.images, ...this.images,...this.images, ...this.images, ...this.images,...this.images, ...this.images, ...this.images,...this.images, ...this.images, ...this.images,...this.images, ...this.images, ...this.images,...this.images, ...this.images, ...this.images,...this.images, ...this.images, ...this.images,...this.images, ...this.images, ...this.images];
+            // this.duplicatedImages = [...this.Dumyimages, ...this.Dumyimages, ...this.Dumyimages,...this.Dumyimages, ...this.Dumyimages, ...this.Dumyimages,...this.Dumyimages, ...this.Dumyimages, ...this.Dumyimages,...this.Dumyimages, ...this.Dumyimages, ...this.Dumyimages,...this.Dumyimages, ...this.Dumyimages, ...this.Dumyimages,...this.Dumyimages, ...this.Dumyimages, ...this.Dumyimages];
             this.animate(); // Start the animation after images are fetched
           }
         },
@@ -124,8 +124,8 @@ export class MostPopularModelsComponentComponent implements OnInit {
       const slideWidth = this.imageWidth + this.slideMargin * 2;
       this.position -= this.speed / 60;
   
-      if (-this.position >= slideWidth * this.Dumyimages.length) {
-        this.position += slideWidth * this.Dumyimages.length;
+      if (-this.position >= slideWidth * this.images.length) {
+        this.position += slideWidth * this.images.length;
       }
   
       this.sliderRef.nativeElement.style.transform = `translateX(${this.position}px)`;

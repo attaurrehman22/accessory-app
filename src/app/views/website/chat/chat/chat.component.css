@@ -233,4 +233,12 @@ input.form-control {
     flex-direction: row-reverse;
   }
 
+  .reverse-order-custom-offer > .d-flex {
+    flex-direction: row-reverse;
+  }
+
+  .reverse-order-time-message {
+    display: flex;
+    justify-content: end;
+  }
     /* ---- ----------- -------------- localization end ------------------------   -----   ---- */

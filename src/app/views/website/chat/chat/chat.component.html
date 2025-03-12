@@ -283,7 +283,7 @@
                   </div>
 
                   <div *ngIf="isCustomOffer && isOfferShowToUserandDealer && message.action_type && message.action_type !== 'make_payment'" class="col-md-12">
-                    <div class="d-flex flex-column card p-2">
+                    <div [ngClass]="{ 'reverse-order-custom-offer': translateService.currentLang !== 'en' }" class="d-flex flex-column card p-2">
                       <div style="background: #F9FAFB;" class="d-flex align-items-baseline">
                         <ng-container *ngIf="customOfferDetails.sender.img; else showInitials">
                           <img [src]="'https://api.chronosouq.com/' + customOfferDetails.sender.img" alt="IMG"/>
@@ -351,7 +351,7 @@
                     </div>
                 </div>
                   
-                  <small>{{ message.created_at | date : "shortTime" }}</small>
+                  <small [ngClass]="{ 'reverse-order-time-message': translateService.currentLang !== 'en' }">{{ message.created_at | date : "shortTime" }}</small>
                 </div>
               </div>
             </div>
