@@ -529,11 +529,37 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
         (ctrl) => ctrl.value.id === category.id
       )
     ) {
+
+      this.myCategoryControl.setValue('')
+      this.filteredCategoryOptions = this.myCategoryControl.valueChanges.pipe(
+        startWith(""),
+        map((value) => {
+          const name = typeof value === "string" ? value : value?.name;
+          return name
+            ? this._filterCategories(name as string)
+            : this.categoryList;
+        })
+      );
       return; // If already selected, do not add again
     }
 
     this.selectedCategories.push(new FormControl(category));
-    this.myCategoryControl.setValue("");
+    // this.myCategoryControl = new FormControl<string | Category>("");
+    // this.filteredCategoryOptions=this.categoryList;
+    this.myCategoryControl.setValue('')
+    // this.filteredCategoryOptions = this.myCategoryControl.valueChanges.pipe(
+    //   startWith(''),
+    //   map(value => this._filterCategories(value)) // Reapply the filter
+    // );
+    this.filteredCategoryOptions = this.myCategoryControl.valueChanges.pipe(
+      startWith(""),
+      map((value) => {
+        const name = typeof value === "string" ? value : value?.name;
+        return name
+          ? this._filterCategories(name as string)
+          : this.categoryList;
+      })
+    );
   }
 
   // Remove selected category from the FormArray
