@@ -117,10 +117,7 @@
             <img class="second-img" src="../assets/images/price-range-lessthen-icon.png" />
           </span>
         </div>
-        
-        
-
-        
+    
         <div class="d-flex align-items-center justify-content-between mt-4">
           <div style="display: flex; flex-direction: column">
             <p class="font-size-14 font-wight-400 color-969696 margin-0">
@@ -190,12 +187,12 @@
         </div>
       </div>
     </div>
-    
-    
-    
 
     <div class="container-fluid mt-3">
       <div class="row">
+        <div *ngIf="isLoading">
+          <app-skeleton-loader [isLoading]="isLoading"></app-skeleton-loader>
+        </div>
         <div
           class="col-12"
           *ngIf="showList?.length == 0"
@@ -209,96 +206,99 @@
         >
           No record exist
         </div>
-        <div [ngClass]="{ 'reverse-order-products': translateService.currentLang !== 'en' }" class="col-md-3 col-sm-6 mb-4" *ngFor="let watch of showList">
-          <div class="card h-100 shadow-sm">
-            <a
-              [routerLink]="['/buy-product']"
-              [queryParams]="{ id: watch.id }"
-              class="card-img-link"
-            >
-              <img
-                style="cursor: pointer"
-                [src]="'https://api.chronosouq.com/' + watch.main_image"
-                class="card-img-top"
-                alt="watch image"
-              />
-            </a>
-            <div class="card-body">
-              <div
-                class="d-flex justify-content-between align-items-center mb-2"
+        <div class="d-flex flex-wrap" *ngIf="!isLoading">
+
+          <div [ngClass]="{ 'reverse-order-products': translateService.currentLang !== 'en' }" class="col-md-3 col-sm-6 mb-4" *ngFor="let watch of showList">
+            <div class="card h-100 shadow-sm">
+              <a
+                [routerLink]="['/buy-product']"
+                [queryParams]="{ id: watch.id }"
+                class="card-img-link"
               >
-                <div>
-                  <p
-                    class="font-size-16 font-wight-400 color-6a6a6a"
-                    style="margin: 0 !important"
-                  >
-                    {{ watch.brand.name }} | {{ watch.model || "N/A" }}
+                <img
+                  style="cursor: pointer"
+                  [src]="'https://api.chronosouq.com/' + watch.main_image"
+                  class="card-img-top"
+                  alt="watch image"
+                />
+              </a>
+              <div class="card-body">
+                <div
+                  class="d-flex justify-content-between align-items-center mb-2"
+                >
+                  <div>
+                    <p
+                      class="font-size-16 font-wight-400 color-6a6a6a"
+                      style="margin: 0 !important"
+                    >
+                      {{ watch.brand.name }} | {{ watch.model || "N/A" }}
+                    </p>
+                  </div>
+                  <div>
+                    <i class="fa fa-heart-o" aria-hidden="true"></i>
+                  </div>
+                </div>
+                <div
+                  class="d-flex justify-content-between align-items-center mt-2"
+                >
+                  <p class="card-title d-flex flex-wrap">
+                    {{ watch.title }}
                   </p>
                 </div>
-                <div>
-                  <i class="fa fa-heart-o" aria-hidden="true"></i>
+                <div
+                  class="d-flex justify-content-between align-items-center mt-3"
+                >
+                  <p class="price">
+                    +{{ watch.shipping_charges }} {{ watch.currency }} Shipping
+                  </p>
+                  <div>
+                    <p class="price">Location</p>
+                  </div>
                 </div>
-              </div>
-              <div
-                class="d-flex justify-content-between align-items-center mt-2"
-              >
-                <p class="card-title d-flex flex-wrap">
-                  {{ watch.title }}
-                </p>
-              </div>
-              <div
-                class="d-flex justify-content-between align-items-center mt-3"
-              >
-                <p class="price">
-                  +{{ watch.shipping_charges }} {{ watch.currency }} Shipping
-                </p>
-                <div>
-                  <p class="price">Location</p>
+                <div class="d-flex justify-content-between align-items-center">
+                  <p class="card-title-two">{{ watch.price }}</p>
+                  <p class="card-title-two">{{ watch.created_by.city }}</p>
                 </div>
-              </div>
-              <div class="d-flex justify-content-between align-items-center">
-                <p class="card-title-two">{{ watch.price }}</p>
-                <p class="card-title-two">{{ watch.created_by.city }}</p>
-              </div>
-              <div
-                *ngIf="watch.created_by.type === 'user'"
-                class="d-flex mt-2"
-              >
-                <p class="seller-chip"> Private Seller </p>
-              </div>
-              <div
-                *ngIf="watch.created_by.type === 'dealer'"
-                class="d-flex mt-2"
-              >
-              <p class="seller-chip">  Dealer </p>
+                <div
+                  *ngIf="watch.created_by.type === 'user'"
+                  class="d-flex mt-2"
+                >
+                  <p class="seller-chip"> Private Seller </p>
+                </div>
+                <div
+                  *ngIf="watch.created_by.type === 'dealer'"
+                  class="d-flex mt-2"
+                >
+                <p class="seller-chip">  Dealer </p>
+                </div>
               </div>
             </div>
-          </div>
-          <div class="heart-icon">
-            <div class="featured-icon">
-              <div
-                *ngIf="watch.feature_item === 1"
-                class="featured-promoted-class-badge"
-              >
-                Featured
-              </div>
+            <div class="heart-icon">
+              <div class="featured-icon">
+                <div
+                  *ngIf="watch.feature_item === 1"
+                  class="featured-promoted-class-badge"
+                >
+                  Featured
+                </div>
 
-              <div
-                *ngIf="watch.feature_item !== 1 && watch.is_promoted === 1"
-                class="featured-promoted-class-badge"
-              >
-                Promoted
+                <div
+                  *ngIf="watch.feature_item !== 1 && watch.is_promoted === 1"
+                  class="featured-promoted-class-badge"
+                >
+                  Promoted
+                </div>
               </div>
+              <i
+                *ngIf="isUserLogin === 'true'"
+                (click)="addWishList(watch)"
+                class="fa"
+                [ngClass]="
+                  wishList?.includes(watch.id) ? 'fa-heart' : 'fa-heart fa-heart-o'
+                "
+                aria-hidden="true"
+              ></i>
             </div>
-            <i
-              *ngIf="isUserLogin === 'true'"
-              (click)="addWishList(watch)"
-              class="fa"
-              [ngClass]="
-                wishList?.includes(watch.id) ? 'fa-heart' : 'fa-heart fa-heart-o'
-              "
-              aria-hidden="true"
-            ></i>
           </div>
         </div>
       </div>
@@ -349,8 +349,6 @@
         </button>
       </div>
     </div>
-
-
   </div>
 </div>
 

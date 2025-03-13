@@ -15,6 +15,7 @@ export class ProductListComponent implements OnInit {
   currentLanguage: string;
   showList: any;
   isUserLogin: any;
+  isLoading = true;
   featured: boolean = false;
   watchTypes:any[]=[
     {id:1,name:'Promoted'},
@@ -212,12 +213,13 @@ export class ProductListComponent implements OnInit {
   }
 
   getProductsByCategory(queryString: any) {
-    this.http.getProductsByCategory(queryString).subscribe((res) => {
+    this.http.getProductsByCategory(queryString).subscribe(
+      (res) => {
       this.showList = res;
       this.totalItems=this.showList?.data?.total;
       this.fromItem=this.showList?.data?.from;
       this.toItem=this.showList?.data?.to;
-
+      this.isLoading = false;
      
       if(this.showList?.data?.next_page_url === null){
         this.isnextPage=false

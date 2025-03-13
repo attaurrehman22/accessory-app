@@ -69,7 +69,7 @@ export class AppComponent implements OnInit {
     private translateService: TranslateService,
     private router: Router,
     public alertService: AlertsServicesService,
-    private loaderService: LoaderService
+    public loaderService: LoaderService
   ) {
     this.translateService.addLangs(this.supportLanguages);
     this.translateService.setDefaultLang("en");

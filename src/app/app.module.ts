@@ -93,6 +93,7 @@ import { ConfirmationModelComponent } from './views/modal/confirmation-model/con
 import { WatchOfTheDayComponent } from './views/adminpages/watch-of-the-day/watch-of-the-day.component';
 import { AddProductWatchOfTheDayComponent } from './views/adminpages/add-product-watch-of-the-day/add-product-watch-of-the-day.component';
 import { ColorPickerModule } from 'ngx-color-picker';
+import { SkeletonLoaderComponent } from './views/modal/skeleton-loader/skeleton-loader.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -141,7 +142,8 @@ import { ColorPickerModule } from 'ngx-color-picker';
     NewArrivalsComponent,
     ConfirmationModelComponent,
     WatchOfTheDayComponent,
-    AddProductWatchOfTheDayComponent
+    AddProductWatchOfTheDayComponent,
+    SkeletonLoaderComponent
   ],
   imports: [
     MatSortModule,
@@ -173,7 +175,8 @@ import { ColorPickerModule } from 'ngx-color-picker';
     MatSidenav, 
     CarouselModule,
     ButtonModule,
-    TagModule,MatRadioModule,
+    TagModule,
+    MatRadioModule,
     NgImageSliderModule,
     MatExpansionModule,ColorPickerModule,
     BidiModule,HighchartsChartModule,
