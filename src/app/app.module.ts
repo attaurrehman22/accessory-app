@@ -86,13 +86,13 @@ import { PriceLimitDirective } from './views/directives/price-limit/price-limit.
 import { AdminUsersComponent } from './views/adminpages/admin-users/admin-users.component';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatOptionModule } from '@angular/material/core';
+import { ColorPickerModule } from 'ngx-color-picker';
 import { authInterceptorInterceptor } from './auth-interceptor.interceptor';
 import { NgImageSliderModule } from 'ng-image-slider';
 import { NewArrivalsComponent } from './views/website/new-arrivals/new-arrivals.component';
 import { ConfirmationModelComponent } from './views/modal/confirmation-model/confirmation-model.component';
 import { WatchOfTheDayComponent } from './views/adminpages/watch-of-the-day/watch-of-the-day.component';
 import { AddProductWatchOfTheDayComponent } from './views/adminpages/add-product-watch-of-the-day/add-product-watch-of-the-day.component';
-import { ColorPickerModule } from 'ngx-color-picker';
 import { SkeletonLoaderComponent } from './views/modal/skeleton-loader/skeleton-loader.component';
 import { SafeHtmlPipe } from './views/pipes/safe-html.pipe';
 @NgModule({
@@ -174,13 +174,14 @@ import { SafeHtmlPipe } from './views/pipes/safe-html.pipe';
     RouterModule,
     MatDialogModule,
     MatMenuModule,
-    MatSidenav, 
+    MatSidenav,
     CarouselModule,
     ButtonModule,
     TagModule,
     MatRadioModule,
     NgImageSliderModule,
-    MatExpansionModule,ColorPickerModule,
+    MatExpansionModule,
+    ColorPickerModule,
     BidiModule,HighchartsChartModule,
     BidiModule, HighchartsChartModule,MatOptionModule,MatAutocompleteModule,
     // MatExpansionModule,
@@ -195,7 +196,7 @@ import { SafeHtmlPipe } from './views/pipes/safe-html.pipe';
 providers: [
   TranslateService,
   provideAnimationsAsync(),
-  provideHttpClient(withInterceptors([authInterceptorInterceptor])) 
+  provideHttpClient(withInterceptors([authInterceptorInterceptor]))
 ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
