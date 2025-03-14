@@ -22,11 +22,11 @@ export class MostPopularModelsComponentComponent implements OnInit {
   
     images: string[] = []; // Store image URLs here
     Dumyimages= [
-      "./assets/images/Screenshots/bell-ross.svg",
+      "./assets/images/Screenshots/tudor.svg",
       "./assets/images/Screenshots/Frame 1261153457.svg",
-      "../assets/images/Screenshots/hublot-logo.svg",
+      "../assets/images/Screenshots/hublot-logo-1.svg",
       "./assets/images/Screenshots/jaeger-le-coultre.svg",
-      "./assets/images/Screenshots/tudor-1.svg",
+      // "./assets/images/Screenshots/tudor-1.svg",
       // "./assets/images/Screenshots/getsupercustomizedimage.png",
       // "./assets/images/Screenshots/Hublot_logo.png",
       // "./assets/images/Screenshots/IWC.png",
@@ -72,15 +72,14 @@ export class MostPopularModelsComponentComponent implements OnInit {
           if (res && res.top_brands) {
             // Process the response to extract cover_image URLs
             this.images = res.top_brands.map((product: any) => {
-              if (product.cover_image) {
-                return 'https://api.chronosouq.com/' + product.cover_image.replace(/\\/g, '/').replace(/^\/+/, '');
-              } else {
-                console.warn('Product missing cover image:', product);
-                return '';
-              }
+                if(product?.svg){
+                  return product.svg;
+                }
+             
             }).filter(img => img); // Ensure we don't include empty strings if there's no cover_image
-  
-            // Duplicate the images for the continuous scroll effect
+       
+     
+
             this.duplicatedImages = [...this.images, ...this.images, ...this.images,...this.images, ...this.images, ...this.images,...this.images, ...this.images, ...this.images,...this.images, ...this.images, ...this.images,...this.images, ...this.images, ...this.images,...this.images, ...this.images, ...this.images,...this.images, ...this.images, ...this.images,...this.images, ...this.images, ...this.images];
             // this.duplicatedImages = [...this.Dumyimages, ...this.Dumyimages, ...this.Dumyimages,...this.Dumyimages, ...this.Dumyimages, ...this.Dumyimages,...this.Dumyimages, ...this.Dumyimages, ...this.Dumyimages,...this.Dumyimages, ...this.Dumyimages, ...this.Dumyimages,...this.Dumyimages, ...this.Dumyimages, ...this.Dumyimages,...this.Dumyimages, ...this.Dumyimages, ...this.Dumyimages];
             this.animate(); // Start the animation after images are fetched

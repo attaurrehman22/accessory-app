@@ -12,8 +12,8 @@
 }
 
 .slide {
-  width: 110px !important;
-  margin: 20px !important;
+  width: auto !important;
+  margin: 10px 35px 10px 35px !important;
   flex: 0 0 auto;
   transition: transform 0.3s ease;
 }

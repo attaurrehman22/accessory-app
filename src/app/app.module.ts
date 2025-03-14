@@ -94,6 +94,7 @@ import { WatchOfTheDayComponent } from './views/adminpages/watch-of-the-day/watc
 import { AddProductWatchOfTheDayComponent } from './views/adminpages/add-product-watch-of-the-day/add-product-watch-of-the-day.component';
 import { ColorPickerModule } from 'ngx-color-picker';
 import { SkeletonLoaderComponent } from './views/modal/skeleton-loader/skeleton-loader.component';
+import { SafeHtmlPipe } from './views/pipes/safe-html.pipe';
 @NgModule({
   declarations: [
     AppComponent,
@@ -143,7 +144,8 @@ import { SkeletonLoaderComponent } from './views/modal/skeleton-loader/skeleton-
     ConfirmationModelComponent,
     WatchOfTheDayComponent,
     AddProductWatchOfTheDayComponent,
-    SkeletonLoaderComponent
+    SkeletonLoaderComponent,
+    SafeHtmlPipe
   ],
   imports: [
     MatSortModule,

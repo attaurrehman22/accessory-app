@@ -306,8 +306,8 @@
 
 
 
-    <div [ngClass]="{ 'reverse-pagination-order': translateService.currentLang !== 'en' }"
-     *ngIf="showList?.length !== 0" class="col-md-12 d-flex justify-content-between align-items-center mt-3 mb-3">
+    <div  [ngClass]="{ 'reverse-pagination-order': translateService.currentLang !== 'en' }"
+     *ngIf="showList?.length !== 0 && !isLoading" class="col-md-12 d-flex justify-content-between align-items-center mt-3 mb-3">
       <div class="col-md-6 d-flex align-items-center gap-2 revere-pagination-one">
         <label for="itemsPerPage" class="form-label">Showing {{fromItem}} to {{toItem}} of {{totalItems}}:</label>
         <select
