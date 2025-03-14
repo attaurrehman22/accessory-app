@@ -123,8 +123,8 @@ export class MostPopularModelsComponentComponent implements OnInit {
       const slideWidth = this.imageWidth + this.slideMargin * 2;
       this.position -= this.speed / 60;
   
-      if (-this.position >= slideWidth * this.images.length) {
-        this.position += slideWidth * this.images.length;
+      if (-this.position >= slideWidth * this.duplicatedImages.length) {
+        this.position += slideWidth * this.duplicatedImages.length;
       }
   
       this.sliderRef.nativeElement.style.transform = `translateX(${this.position}px)`;
