@@ -667,11 +667,13 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
 
   isListingCompleted: boolean = false;
   isPublishedProduct:Boolean=false;
+currentStepper:any='';
 
   getOnlyDetails() {
     this.http
       .getProductDetailsByID(this.productIDFromResponse)
       .subscribe((res) => {
+        this.currentStepper=res.step;
         this.productDetails = res.product;
         if(res?.product?.published_date){
           this.isPublishedProduct=true;
@@ -1124,9 +1126,9 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
 
   getBillingInformation() {
     let userID: any = localStorage.getItem("userID");
-    this.http.getDealerDetails(userID).subscribe((res) => {
+    this.http.getBillingInformation().subscribe((res) => {
       // billingForm
-      this.billingInformationDetails = res?.data?.user_details;
+      this.billingInformationDetails = res?.data;
       this.billingForm
         .get("billing_address")
         .setValue(this.billingInformationDetails.billing_address || "");
@@ -1182,9 +1184,9 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
     }
 
     let userID: any = localStorage.getItem("userID");
-    if (userID) {
+    // if (userID) {
       this.getBillingInformation();
-    }
+    // }
 
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationStart) {
@@ -1483,7 +1485,14 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
       }
     } else if (Param === "watchDetails") {
       if (this.watchDetailsForm.valid) {
-        const isUpdate = this.selectedOptionsList.includes("watchDetails") ? 1 : 0;
+        // const isUpdate = this.selectedOptionsList.includes("watchDetails") ? 1 : 0;
+        // const isUpdate = this.selectedOptionsList.includes("watchDetails") ? 1 : 0;
+        let isUpdate;
+        if(this.currentStepper == 'listingDetails'){
+          isUpdate=0
+        }else{
+          isUpdate=1
+        }
         const formDataWithProductID = {
           ...this.watchDetailsForm.value,
           product_id: this.productIDFromResponse,
@@ -1536,9 +1545,16 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
       if (this.selectedVideo) {
         formData.append("video",this.selectedVideo || "main_image.jpg");
      }
-     const isUpdate = this.selectedOptionsList.includes("uploadImages") ? "1" : "0";
-     formData.append("isUpdate", isUpdate);
+    //  const isUpdate = this.selectedOptionsList.includes("uploadImages") ? "1" : "0";
+    //  formData.append("isUpdate", isUpdate);
 
+    let isUpdate;
+    if(this.currentStepper == 'uploadImages'){
+      isUpdate=0
+    }else{
+      isUpdate=1
+    }
+    formData.append("isUpdate", isUpdate);
 
 
       this.otherImages.forEach((image, index) => {
@@ -1570,7 +1586,13 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
       );
     } else if (Param === "conditionGrading") {
       if (this.selectedCondition) {
-        const isUpdate = this.selectedOptionsList.includes("conditionGrading") ? "1" : "0";
+        // const isUpdate = this.selectedOptionsList.includes("conditionGrading") ? "1" : "0";
+        let isUpdate;
+        if(this.currentStepper == 'conditionGrading'){
+          isUpdate=0
+        }else{
+          isUpdate=1
+        }
         const formData = {
           product_id: this.productIDFromResponse,
           condition: this.selectedCondition.title,
@@ -1599,7 +1621,13 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
       }
     } else if (Param === "scopeofdelivery") {
       if (this.selectedOptions) {
-        const isUpdate = this.selectedOptionsList.includes("scopeofdelivery") ? "1" : "0";
+        // const isUpdate = this.selectedOptionsList.includes("scopeofdelivery") ? "1" : "0";
+        let isUpdate;
+        if(this.currentStepper == 'scopeOfDelivery'){
+          isUpdate=0
+        }else{
+          isUpdate=1
+        }
         const formData = {
           product_id: this.productIDFromResponse,
           scope_of_delivery: this.selectedOptions.title,
@@ -1650,7 +1678,13 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
           "generted_time_text_2",
           this.formatTime(this.clocks[1].hour, this.clocks[1].minute)
         );
-        const isUpdate = this.selectedOptionsList.includes("proofofownership") ? "1" : "0";
+        // const isUpdate = this.selectedOptionsList.includes("proofofownership") ? "1" : "0";
+        let isUpdate;
+        if(this.currentStepper == 'proofOfOwnership'){
+          isUpdate=0
+        }else{
+          isUpdate=1
+        }
         formData.append("isUpdate", isUpdate)
         this.http.addProffofOwnerShip(formData).subscribe(
           (res) => {
@@ -1673,8 +1707,13 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
         this.userType === "user" ||
         this.selectedUserTypeofConditionGradingForAdmin === "user"
       ) {
-        const isUpdate = this.selectedOptionsList.includes("priceshipment") ? "1" : "0";
-
+        // const isUpdate = this.selectedOptionsList.includes("priceshipment") ? "1" : "0";
+        let isUpdate;
+        if(this.currentStepper == 'priceAndShipment'){
+          isUpdate=0
+        }else{
+          isUpdate=1
+        }
         formData = {
           product_id: this.productIDFromResponse,
           price: this.watchPrice,
@@ -1693,8 +1732,13 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
             this.alertService.showAlert("info", "Enter Form Values");
             return;
           } else {
-            const isUpdate = this.selectedOptionsList.includes("priceshipment") ? "1" : "0";
-
+            // const isUpdate = this.selectedOptionsList.includes("priceshipment") ? "1" : "0";
+            let isUpdate;
+            if(this.currentStepper == 'priceAndShipment'){
+              isUpdate=0
+            }else{
+              isUpdate=1
+            }
             formData = {
               product_id: this.productIDFromResponse,
               price: this.watchPrice,
@@ -1716,7 +1760,13 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
               "success",
               "Price and Shipment Add Successfully"
             );
-            const isUpdate = this.selectedOptionsList.includes("priceshipment") ? "1" : "0";
+            // const isUpdate = this.selectedOptionsList.includes("priceshipment") ? "1" : "0";
+            let isUpdate;
+            if(this.currentStepper == 'priceAndShipment'){
+              isUpdate=0
+            }else{
+              isUpdate=1
+            }
             const priceandShipment = {
               price: this.watchPrice,
               shipping_type: this.shipping_type,
@@ -1744,7 +1794,13 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
       }
     } else if (Param === "billinginformation") {
       if (this.billingForm.valid) {
-        const isUpdate = this.selectedOptionsList.includes("billinginformation") ? "1" : "0";
+        // const isUpdate = this.selectedOptionsList.includes("billinginformation") ? "1" : "0";
+        let isUpdate;
+        if(this.currentStepper == 'billingInformation'){
+          isUpdate=0
+        }else{
+          isUpdate=1
+        }
         const formDataWithProductID = {
           ...this.billingForm.value,
           product_id: this.productIDFromResponse,
