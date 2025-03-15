@@ -222,8 +222,13 @@ export class BuyProductComponentComponent implements OnInit {
         );
       }
 
-      this.thumbnails.push(this.productDetails?.proof_image_1);
-      this.thumbnails.push(this.productDetails?.proof_image_2);
+      if(this.productDetails?.proof_image_1){
+        this.thumbnails.push(this.productDetails?.proof_image_1);
+      }
+      if(this.productDetails?.proof_image_2){
+        this.thumbnails.push(this.productDetails?.proof_image_2);
+      }
+
       if (this.thumbnails.length > 0) {
         this.selectedImage = this.thumbnails[0];
       }

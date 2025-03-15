@@ -268,7 +268,10 @@
             "
             > {{ getDealerSince(productDetails?.created_by?.created_at) }}</small
           >
-          <span class="text-warning mr-1" style="padding-left: 7px">
+          <span  *ngIf="
+          dealerUserDetails?.overall_rating &&
+          dealerUserDetails?.total_reviews
+        " class="text-warning mr-1" style="padding-left: 7px">
             <i class="fas fa-star"></i>
           </span>
           <small

@@ -12,7 +12,8 @@
     "Login": "تسجيل الدخول",
     "Logout": "تسجيل الخروج",
     "Chat":"الدردشة",
-    "settings": "الإعدادات"
+    "settings": "الإعدادات",
+    "wellCome":"أهلاً وسهلاً"
   },
   "product_listing":{
     "Watch_Listing": "قائمة المشاهدة",

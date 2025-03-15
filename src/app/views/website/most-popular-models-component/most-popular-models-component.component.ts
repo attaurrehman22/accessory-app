@@ -21,20 +21,12 @@ export class MostPopularModelsComponentComponent implements OnInit {
     slideMargin: number = 20;
   
     images: string[] = []; // Store image URLs here
-    Dumyimages= [
-      "./assets/images/Screenshots/tudor.svg",
-      "./assets/images/Screenshots/Frame 1261153457.svg",
-      "../assets/images/Screenshots/hublot-logo-1.svg",
-      "./assets/images/Screenshots/jaeger-le-coultre.svg",
-      // "./assets/images/Screenshots/tudor-1.svg",
-      // "./assets/images/Screenshots/getsupercustomizedimage.png",
-      // "./assets/images/Screenshots/Hublot_logo.png",
-      // "./assets/images/Screenshots/IWC.png",
-      // "./assets/images/Screenshots/Jaeger-LeCoultre_Logo.png",
-      // "./assets/images/Screenshots/logo-tudor.png",
-      // "./assets/images/Screenshots/OMEGA.png",
-      // "./assets/images/Screenshots/patek-philippe-logo-black-and-white.png"
-    ];
+    // Dumyimages= [
+    //   "./assets/images/Screenshots/tudor.svg",
+    //   "./assets/images/Screenshots/Frame 1261153457.svg",
+    //   "../assets/images/Screenshots/hublot-logo-1.svg",
+    //   "./assets/images/Screenshots/jaeger-le-coultre.svg",
+    // ];
     duplicatedImages: string[] = [];
   
     private animationFrame: any;
@@ -80,8 +72,7 @@ export class MostPopularModelsComponentComponent implements OnInit {
        
      
 
-            this.duplicatedImages = [...this.images, ...this.images, ...this.images,...this.images, ...this.images, ...this.images,...this.images, ...this.images, ...this.images,...this.images, ...this.images, ...this.images,...this.images, ...this.images, ...this.images,...this.images, ...this.images, ...this.images,...this.images, ...this.images, ...this.images,...this.images, ...this.images, ...this.images];
-            // this.duplicatedImages = [...this.Dumyimages, ...this.Dumyimages, ...this.Dumyimages,...this.Dumyimages, ...this.Dumyimages, ...this.Dumyimages,...this.Dumyimages, ...this.Dumyimages, ...this.Dumyimages,...this.Dumyimages, ...this.Dumyimages, ...this.Dumyimages,...this.Dumyimages, ...this.Dumyimages, ...this.Dumyimages,...this.Dumyimages, ...this.Dumyimages, ...this.Dumyimages];
+            this.duplicatedImages = [...this.images, ...this.images, ...this.images,...this.images,...this.images, ...this.images, ...this.images,...this.images,...this.images, ...this.images, ...this.images,...this.images,...this.images, ...this.images, ...this.images,...this.images, ...this.images, ...this.images,...this.images, ...this.images, ...this.images,...this.images, ...this.images, ...this.images,...this.images, ...this.images, ...this.images,...this.images, ...this.images, ...this.images,...this.images, ...this.images, ...this.images,...this.images, ...this.images, ...this.images];
             this.animate(); // Start the animation after images are fetched
           }
         },

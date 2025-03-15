@@ -12,7 +12,8 @@
     "Login":"Login",
     "Logout":"Logout",
     "Chat":"My Chat",
-    "settings":"Settings"
+    "settings":"Settings",
+    "wellCome":"Wellcome"
   },
   "product_listing":{
     "Watch_Listing": "Watch Listing",
@@ -482,7 +483,7 @@
     "other_diameter_placeholder":"Enter Other Diameter",
     "other_diameter_required":"Other Diameter is required",
     "other_diameter_invalid":"Other diameter must be a valid number with up to 2 decimal places.",
-    "additional_information":"Additional information (optional)",
+    "additional_information":"Additional information",
     "watch_verification_text":"Every watch will soon be verified by our team of experts to ensure it’s 100% authentic, giving buyers complete peace of mind.",
     "dial_and_caliber":"Dial & Caliber",
     "other_details":"Other Details",
@@ -524,7 +525,7 @@
     "shipping_cost_place":"Enter Shipping Cost",
     "select_shipping_type":"Select Shipping Type",
     "exclusive_shipping":"Exclusive Shipping",
-    "free_of_charge":"EFree of Charge",
+    "free_of_charge":"Free of Charge",
     "inclusive_shipping":"Inclusive Shipping",
     "billing_information_para_two":" Every watch will soon be verified by our team of experts to ensure it’s 100% authentic, giving buyers complete peace of mind.",
     "Billing_Address":"Billing Address",

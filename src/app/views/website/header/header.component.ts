@@ -15,6 +15,12 @@ import { ChangeDetectorRef } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 import { ModelLoginComponent } from "../../auth/model-login/model-login.component";
 import { MatMenuTrigger } from "@angular/material/menu";
+// import * as jwt_decode from 'jwt-decode';
+// import { jwt_decode } from 'jwt-decode';
+import { jwtDecode } from 'jwt-decode';
+import { HttpService } from "src/services/http/http.service";
+
+
 
 @Component({
   selector: "app-header",
@@ -54,12 +60,19 @@ export class HeaderComponent {
     private searchService: SearchServiceService,
     private loginStateService: LoginStateService,
     private cdRef: ChangeDetectorRef,
-     private dialog: MatDialog
+     private dialog: MatDialog,private http:HttpService
   ) {
     const languagevalues = this.supportLanguages.map((lang) => lang.value);
     this.translateService.addLangs(languagevalues);
     this.translateService.setDefaultLang("en");
     const browserlang = this.translateService.getBrowserLang();
+
+    // this.userToken = localStorage.getItem('user_token');
+
+    // // If the token exists, decode it
+    // if (this.userToken) {
+    //   this.decodeToken();
+    // }
 
     if (languagevalues.includes(browserlang)) {
       this.translateService.use(browserlang);
@@ -77,6 +90,18 @@ export class HeaderComponent {
       this.selectedLang = lang;
     });
   }
+
+  // decodedToken: any;
+  // private decodeToken() {
+  //   try {
+  //     this.decodedToken = jwtDecode(this.userToken); // Using the correct function name
+  //     console.log('Decoded Token:', this.decodedToken);
+  //   } catch (error) {
+  //     console.error('Token decoding failed', error);
+  //   }
+  // }
+
+
   @ViewChild('search2MenuTrigger') search2MenuTrigger: MatMenuTrigger;
   @ViewChild('search3MenuTrigger') search3MenuTrigger: MatMenuTrigger;
   @HostListener("window:resize", ["$event"])
@@ -95,9 +120,16 @@ export class HeaderComponent {
     }
   }
 
+  userToken:any;
+
   ngOnInit() {
     this.isSmallScreen = window.innerWidth <= 1500;
     this.isUserLogin = localStorage.getItem("isLoggedIn");
+   
+    this.userToken = localStorage.getItem("user_token");
+    if(this.userToken){
+      this.getUserDetails()
+    }
     console.log("isUser Login",this.isUserLoggedIn)
     if (this.isUserLoggedIn()) {
       this.showHideUser = this.isUserLoggedIn();
@@ -109,6 +141,16 @@ export class HeaderComponent {
     } else {
 
     }
+  }
+
+  userDetails:any
+
+  getUserDetails(){
+    this.http.gtUserDetails().subscribe(
+      (res)=>{
+      this.userDetails = res.user
+      console.log("user details",res)
+    })
   }
 
   routeToAdminPannel() {
