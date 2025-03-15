@@ -282,7 +282,7 @@
                     </div>
                   </div>
 
-                  <div *ngIf="isCustomOffer && isOfferShowToUserandDealer && message.action_type && message.action_type !== 'make_payment'" class="col-md-12">
+                  <div *ngIf="!isCancelOffer && isCustomOffer && isOfferShowToUserandDealer && message.action_type && message.action_type !== 'make_payment'" class="col-md-12">
                     <div [ngClass]="{ 'reverse-order-custom-offer': translateService.currentLang !== 'en' }" class="d-flex flex-column card p-2">
                       <div style="background: #F9FAFB;" class="d-flex align-items-baseline">
                         <ng-container *ngIf="customOfferDetails.sender.img; else showInitials">
@@ -349,7 +349,7 @@
     
                       </div>
                     </div>
-                </div>
+                  </div>
                   
                   <small [ngClass]="{ 'reverse-order-time-message': translateService.currentLang !== 'en' }">{{ message.created_at | date : "shortTime" }}</small>
                 </div>
@@ -359,7 +359,7 @@
            
 
 
-            <div *ngIf="!isCustomOffer && isShowBuyNowOffer" class="col-md-12 d-flex justify-content-center">
+            <div *ngIf="(!isCustomOffer && isShowBuyNowOffer) && !isShowMarkAsSold" class="col-md-12 d-flex justify-content-center">
               <div *ngIf="isBuyerUser && !isBuyNowFromChatCheck" class="d-flex flex-column card p-2">
                 <div style="border-bottom: 1px solid #F2F5F8;" class="d-flex justify-content-between align-items-center">
                   <p>{{ "chat_com.satisfy_message_for_confirm" | translate }}</p>

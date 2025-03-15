@@ -324,11 +324,16 @@ export class ChatComponent implements OnInit, AfterViewChecked {
   customOfferDetails: any;
   isOfferStatusAccepted: boolean = false;
   isProductReserved: boolean = false;
+  isCancelOffer: boolean = false;
+
   getCustomOffer() {
     this.http.offerByFilter(this.getProductDetails.id, this.chat_id).subscribe(
       (res) => {
         this.isCustomOffer = true;
         this.customOfferDetails = res.offer;
+        if (res.offer.offers_status == "canceled") {
+          this.isCancelOffer = true;
+        }
         if (res.offer.offers_status === "accepted") {
           this.isOfferStatusAccepted = true;
         }

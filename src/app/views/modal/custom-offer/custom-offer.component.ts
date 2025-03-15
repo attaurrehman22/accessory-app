@@ -28,18 +28,18 @@ export class CustomOfferComponent {
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
     this.compoName = this.data.param;
-    // this.isUserBuyer=data?.userCategory;
+    this.isUserBuyer=data?.userCategory;
     if(this.data?.productDetail){
-      this.productPrice=this.data.productDetail.price
+      this.productPrice=this.data?.productDetail?.price
     }
     if(this.data?.customOfferDetails?.product){
       this.offerDetails=data?.customOfferDetails;
       console.log("offerDetails days",this.offerDetails?.days);
-      this.validDays=data?.customOfferDetails?.days.toString();
-      this.productPrice=this.data?.customOfferDetails?.product.price
+      this.validDays=data?.customOfferDetails?.days?.toString();
+      this.productPrice=this.data?.customOfferDetails?.product?.price
     }
     if(this.data?.productDetail?.price){
-      this.productPrice=this.data.productDetail.price
+      this.productPrice=this.data?.productDetail?.price
     }
 
 
@@ -71,10 +71,10 @@ export class CustomOfferComponent {
         this.offerForm.patchValue({
           product_id: productDetail.product_id || 0,
           sender_id: localStorage.getItem("userID").toString() || 0,
-          offer_id: Number(productDetail.id) || 0,
-          offer_price: Number(productDetail.offer_price) || 0,
-          ship_price: productDetail.ship_price || 0,
-          chat_id: productDetail.chat_id.toString() || 0,
+          offer_id: Number(productDetail?.id) || 0,
+          offer_price: Number(productDetail?.offer_price) || 0,
+          ship_price: productDetail?.ship_price || 0,
+          chat_id: productDetail?.chat_id?.toString() || 0,
           validity_days: this.validDays || 0,
         });
       }
@@ -88,22 +88,22 @@ export class CustomOfferComponent {
         }
       }
     } else {
-      if (this.data.param === "buyComp") {
+      if (this.data?.param === "buyComp") {
         const productDetail = this.data?.productDetail || {};
-        this.productPrice=productDetail.price
+        this.productPrice=productDetail?.price
         if (productDetail) {
           this.offerForm.patchValue({
-            product_id: productDetail.id || 0,
-            sender_id: localStorage.getItem("userID") || 0,
+            product_id: productDetail?.id || 0,
+            sender_id: localStorage?.getItem("userID") || 0,
           });
         }
       } else {
         const productDetail1 = this.data?.datawithChat_ID || {};
         if (productDetail1 !== null) {
           this.offerForm.patchValue({
-            product_id: productDetail1.product_ID || 0,
-            sender_id: localStorage.getItem("userID") || 0,
-            chat_id: productDetail1.chat_ID || null,
+            product_id: productDetail1?.product_ID || 0,
+            sender_id: localStorage?.getItem("userID") || 0,
+            chat_id: productDetail1?.chat_ID || null,
           });
         }
       }

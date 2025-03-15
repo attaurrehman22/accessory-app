@@ -26,15 +26,15 @@
   
       <mat-form-field *ngIf="compoName === 'editComp'" appearance="outline" class="full-width">
         <mat-label>Shipping</mat-label>
-        <input matInput type="number" appPositiveNumber formControlName="ship_price" placeholder="Enter shipping cost" />
+        <input [readonly]="isUserBuyer" matInput type="number" appPositiveNumber formControlName="ship_price" placeholder="Enter shipping cost" />
       </mat-form-field>
   
       <mat-form-field *ngIf="compoName === 'editComp'" appearance="outline" class="full-width">
         <mat-label>Offer Validity</mat-label>
-        <mat-select formControlName="validity_days">
-          <mat-option value="3">3 Days</mat-option>
-          <mat-option value="5">5 Days</mat-option>
-          <mat-option value="7">7 Days</mat-option>
+        <mat-select formControlName="validity_days" [disabled]="isUserBuyer">
+          <mat-option [disabled]="isUserBuyer" value="3">3 Days</mat-option>
+          <mat-option [disabled]="isUserBuyer" value="5">5 Days</mat-option>
+          <mat-option [disabled]="isUserBuyer" value="7">7 Days</mat-option>
         </mat-select>
         <!-- <input matInput type="number" appPositiveNumber formControlName="validity_days" placeholder="Enter validity days" /> -->
       </mat-form-field>
