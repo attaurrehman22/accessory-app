@@ -386,6 +386,27 @@
             </div>
           </div>
 
+          <div class="row">
+
+            <div class="col-md-6 mb-3">
+              <label for="state" class="form-label">State</label>
+              <input
+                type="text"
+                id="state"
+                class="form-control"
+                placeholder="Enter your state..."
+                formControlName="state"
+              />
+              <div class="" *ngIf="billingForm.get('state').hasError('required') && billingForm.get('state').touched">
+                <small class="text-danger">State is required</small>
+              </div>
+
+              <div class="" *ngIf="billingForm.get('state').hasError('maxlength')">
+                <small class="text-danger">Cannot exceed the limit of 50 character</small>
+              </div>
+            </div>
+          </div>
+
           <div class="text-end">
             <button (click)="submitBillingForm()" class="submit-btn">Save Changes</button>
           </div>

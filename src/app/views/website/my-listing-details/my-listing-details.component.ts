@@ -22,6 +22,8 @@ export class MyListingDetailsComponent implements OnInit{
   zip_code = new FormControl("", [Validators.required,Validators.pattern("^[0-9]*$"),Validators.maxLength(9)]);
   city = new FormControl("", [Validators.required,Validators.maxLength(50)]);
   country = new FormControl("", [Validators.required,Validators.maxLength(50)]);
+  state = new FormControl("", [Validators.required,Validators.maxLength(50)]);
+
 
     billingForm: FormGroup;
 
@@ -55,7 +57,8 @@ export class MyListingDetailsComponent implements OnInit{
           street_line_2: this.street_line_2,
           zip_code: this.zip_code,
           city: this.city,
-          country: this.country
+          country: this.country,
+          state:this.state
         }); 
 
   }
@@ -72,6 +75,7 @@ export class MyListingDetailsComponent implements OnInit{
           city: res.data.city,
           billing_address: res.data.billing_address,
           country: res?.data?.country,
+          state: res?.data?.state,
         })
       },
       (err)=>{              
