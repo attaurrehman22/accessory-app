@@ -1159,6 +1159,12 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
   isEnableProofofOwnerShip: boolean = false;
   billingInformationDetails: any;
   ngOnInit() {
+    let isUserLogin = localStorage.getItem("isLoggedIn");
+    let userToken = localStorage.getItem("user_token");
+    this.userType = localStorage.getItem("userType");
+    if (!userToken) {
+      this.loginFirst();
+    }
     if (!this.productIDFromResponse) {
       this.productIDFromResponse = localStorage.getItem("productID");
       const selectedOptionsListString = localStorage.getItem(
@@ -1187,14 +1193,10 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
       }
     });
 
-    if (this.isAdminUser() === true) {
+    if (this.isAdminUser() == true) {
       this.isAdminLogin = true;
     }
-    let isUserLogin = localStorage.getItem("isLoggedIn");
-    this.userType = localStorage.getItem("userType");
-    if (!isUserLogin) {
-      this.loginFirst();
-    }
+    
     if (history?.state) {
       if (history?.state?.ID) {
         this.productIDFromResponse = history.state.ID;

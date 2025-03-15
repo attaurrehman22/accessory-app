@@ -46,10 +46,10 @@
               <input
                 type="checkbox"
                 class="form-check-input"
-                [id]="category.id"
+                [id]="'category-' + category.id"
                 [(ngModel)]="category.selected"
               />
-              <label class="form-check-label" [for]="category.id">
+              <label class="form-check-label" [for]="'category-' + category.id">
                 {{ category.name }}
               </label>
             </div>
@@ -74,10 +74,10 @@
               <input
                 type="checkbox"
                 class="form-check-input"
-                [id]="type.id"
+                [id]="'watch-type-' + type.id"
                 [(ngModel)]="type.selected"
               />
-              <label class="form-check-label" [for]="type.id">
+              <label class="form-check-label" [for]="'watch-type-' + type.id">
                 {{ type.name }}
               </label>
             </div>
