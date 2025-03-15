@@ -229,7 +229,7 @@
       </div>
       <!-- if "Shipping Address" is Active -->
       <div *ngIf="activeIndex === 1" class="container">
-        <form>
+        <form [formGroup]="billingForm">
           <h3>Shipping Address</h3>
           <div class="row">
             <div class="col-md-6 mb-3">
@@ -239,7 +239,15 @@
                 id="firstName"
                 class="form-control"
                 placeholder="Enter your first name..."
+                formControlName="first_name"
               />
+              <div class="" *ngIf="billingForm.get('first_name').hasError('required') && billingForm.get('first_name').touched">
+                <small class="text-danger">First Name is required</small>
+              </div>
+
+              <div class="" *ngIf="billingForm.get('first_name').hasError('maxlength')">
+                <small class="text-danger">Cannot exceed the limit of 50 character</small>
+              </div>
             </div>
             <div class="col-md-6 mb-3">
               <label for="lastName" class="form-label">Last Name</label>
@@ -248,7 +256,15 @@
                 id="lastName"
                 class="form-control"
                 placeholder="Enter your last name..."
+                formControlName="last_name"
               />
+              <div class="" *ngIf="billingForm.get('last_name').hasError('required') && billingForm.get('last_name').touched">
+                <small class="text-danger">Last Name is required</small>
+              </div>
+
+              <div class="" *ngIf="billingForm.get('last_name').hasError('maxlength')">
+                <small class="text-danger">Cannot exceed the limit of 50 character</small>
+              </div>
             </div>
           </div>
 
@@ -260,7 +276,15 @@
                 id="street"
                 class="form-control"
                 placeholder="Enter street address..."
+                formControlName="street"
               />
+              <div class="" *ngIf="billingForm.get('street').hasError('required') && billingForm.get('street').touched">
+                <small class="text-danger">Strreet is required</small>
+              </div>
+
+              <div class="" *ngIf="billingForm.get('street').hasError('maxlength')">
+                <small class="text-danger">Cannot exceed the limit of 60 character</small>
+              </div>
             </div>
             <div class="col-md-6 mb-3">
               <label for="street2" class="form-label">Street Line 2</label>
@@ -269,7 +293,15 @@
                 id="street2"
                 class="form-control"
                 placeholder="Enter street line address..."
+                formControlName="street_line_2"
               />
+              <!-- <div class="" *ngIf="billingForm.get('street_line_2').hasError('required') && billingForm.get('street_line_2').touched">
+                <small class="text-danger">street line 2 is required</small>
+              </div> -->
+
+              <div class="" *ngIf="billingForm.get('street_line_2').hasError('maxlength')">
+                <small class="text-danger">Cannot exceed the limit of 60 character</small>
+              </div>
             </div>
           </div>
 
@@ -281,7 +313,20 @@
                 id="zipCode"
                 class="form-control"
                 placeholder="Enter zip code..."
+                formControlName="zip_code"
+                appPositiveNumber
               />
+              <div class="" *ngIf="billingForm.get('zip_code').hasError('required') && billingForm.get('zip_code').touched">
+                <small class="text-danger">Zip code is required</small>
+              </div>
+
+              <div class="" *ngIf="billingForm.get('zip_code').hasError('maxlength')">
+                <small class="text-danger">Cannot exceed the limit of 9 character</small>
+              </div>
+
+              <div class="" *ngIf="billingForm.get('zip_code').hasError('pattern')">
+                <small class="text-danger">Only numeric values are allowed for zip code.</small>
+              </div>
             </div>
             <div class="col-md-6 mb-3">
               <label for="city" class="form-label">City</label>
@@ -290,11 +335,38 @@
                 id="city"
                 class="form-control"
                 placeholder="Enter city..."
+                formControlName="city"
               />
+              <div class="" *ngIf="billingForm.get('city').hasError('required') && billingForm.get('city').touched">
+                <small class="text-danger">City is required</small>
+              </div>
+
+              <div class="" *ngIf="billingForm.get('city').hasError('maxlength')">
+                <small class="text-danger">Cannot exceed the limit of 50 character</small>
+              </div>
             </div>
           </div>
 
           <div class="row">
+            
+            <div class="col-md-6 mb-3">
+              <label for="billing_address" class="form-label">Billing Address</label>
+              <input
+                type="text"
+                id="billing_address"
+                class="form-control"
+                placeholder="Enter your Billing address..."
+                formControlName="billing_address"
+              />
+              <div class="" *ngIf="billingForm.get('billing_address').hasError('required') && billingForm.get('billing_address').touched">
+                <small class="text-danger">Billing address is required</small>
+              </div>
+
+              <div class="" *ngIf="billingForm.get('billing_address').hasError('maxlength')">
+                <small class="text-danger">Cannot exceed the limit of 120 character</small>
+              </div>
+            </div>
+
             <div class="col-md-6 mb-3">
               <label for="country" class="form-label">Country</label>
               <input
@@ -302,21 +374,20 @@
                 id="country"
                 class="form-control"
                 placeholder="Enter your country..."
+                formControlName="country"
               />
-            </div>
-            <div class="col-md-6 mb-3">
-              <label for="state" class="form-label">State</label>
-              <input
-                type="text"
-                id="state"
-                class="form-control"
-                placeholder="Enter your state..."
-              />
+              <div class="" *ngIf="billingForm.get('country').hasError('required') && billingForm.get('country').touched">
+                <small class="text-danger">Country is required</small>
+              </div>
+
+              <div class="" *ngIf="billingForm.get('country').hasError('maxlength')">
+                <small class="text-danger">Cannot exceed the limit of 50 character</small>
+              </div>
             </div>
           </div>
 
           <div class="text-end">
-            <button type="submit" class="submit-btn">Save Changes</button>
+            <button (click)="submitBillingForm()" class="submit-btn">Save Changes</button>
           </div>
         </form>
       </div>

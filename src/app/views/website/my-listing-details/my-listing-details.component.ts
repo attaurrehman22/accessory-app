@@ -5,6 +5,7 @@ import { HttpService } from 'src/services/http/http.service';
 import { ModelLoginComponent } from '../../auth/model-login/model-login.component';
 import { MatDialog } from '@angular/material/dialog';
 import { AlertsServicesService } from 'src/services/alerts-service/alerts-services.service';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-my-listing-details',
@@ -12,6 +13,18 @@ import { AlertsServicesService } from 'src/services/alerts-service/alerts-servic
   styleUrls: ['./my-listing-details.component.css']
 })
 export class MyListingDetailsComponent implements OnInit{
+
+  billing_address = new FormControl(null, [Validators.required,Validators.maxLength(120)]);
+  first_name = new FormControl([], [Validators.required,Validators.maxLength(50)]);
+  last_name = new FormControl("", [Validators.required,Validators.maxLength(50)]);
+  street = new FormControl("", [Validators.required,Validators.maxLength(60)]);
+  street_line_2 = new FormControl("", [Validators.maxLength(60)]);
+  zip_code = new FormControl("", [Validators.required,Validators.pattern("^[0-9]*$"),Validators.maxLength(9)]);
+  city = new FormControl("", [Validators.required,Validators.maxLength(50)]);
+  country = new FormControl("", [Validators.required,Validators.maxLength(50)]);
+
+    billingForm: FormGroup;
+
   menuItems = [
     { label: 'Personal Info', icon: 'bi bi-person' },
     { label: 'Shipping Address', icon: 'bi bi-credit-card' },
@@ -33,8 +46,55 @@ export class MyListingDetailsComponent implements OnInit{
   if(!this.userID){
     this.loginFirst()
   }
-    this.fetchListings();  
+    this.fetchListings(); 
+     this.billingForm = new FormGroup({
+          billing_address: this.billing_address,
+          first_name: this.first_name,
+          last_name: this.last_name,
+          street: this.street,
+          street_line_2: this.street_line_2,
+          zip_code: this.zip_code,
+          city: this.city,
+          country: this.country
+        }); 
 
+  }
+
+  getBillingInformation(){
+    this.http.getBillingInformation().subscribe(
+      (res)=>{  
+        this.billingForm.patchValue({
+          first_name: res.data.first_name,
+          last_name: res.data.last_name,
+          street: res.data.street,
+          street_line_2: res.data.street_line_2,
+          zip_code: res.data.zip_code,
+          city: res.data.city,
+          billing_address: res.data.billing_address,
+          country: res?.data?.country,
+        })
+      },
+      (err)=>{              
+        this.alertService.showAlert("warning","Error in Fetching Billing Information")
+      } 
+    )
+  }
+
+
+  submitBillingForm(){
+    console.log("this.billingForm",this.billingForm.value)
+    if(this.billingForm.invalid){
+      this.alertService.showAlert("warning","Please fill all the fields")
+    }else{
+      this.http.saveBillingInformation(this.billingForm.value).subscribe(
+        (res)=>{  
+          this.alertService.showAlert("success","Billing Information Saved Successfully")
+        },
+        (err)=>{              
+          this.alertService.showAlert("warning","Error in Saving Billing Information")
+        } 
+      )
+    }
   }
 
   wishList: any;
@@ -149,6 +209,8 @@ export class MyListingDetailsComponent implements OnInit{
       this.getSellOrders()
     }else if(this.activeIndex == 9){
       this.getWishList();
+    }else if(this.activeIndex == 1){
+      this.getBillingInformation();
     }
   }
 

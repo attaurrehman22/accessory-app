@@ -785,6 +785,25 @@ export class HttpService implements OnInit {
       },
     });
   }
+
+
+  getBillingInformation(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/api/billing-information`, {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+  }
+
+  saveBillingInformation(formData): Observable<any> {
+    return this.http.post(`${this.apiUrl}/api/save-billing-information`, formData, {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+  }
   // -------------------------------------------- My Listing Module APIs end --------------------------
 
 
