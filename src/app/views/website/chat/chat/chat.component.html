@@ -359,7 +359,7 @@
            
 
 
-            <div *ngIf="(!isCustomOffer && isShowBuyNowOffer) && !isShowMarkAsSold" class="col-md-12 d-flex justify-content-center">
+            <div *ngIf="((!isCustomOffer && isShowBuyNowOffer) && !isShowMarkAsSold ) &&  ( !isShowPaymentMethod  )" class="col-md-12 d-flex justify-content-center">
               <div *ngIf="isBuyerUser && !isBuyNowFromChatCheck" class="d-flex flex-column card p-2">
                 <div style="border-bottom: 1px solid #F2F5F8;" class="d-flex justify-content-between align-items-center">
                   <p>{{ "chat_com.satisfy_message_for_confirm" | translate }}</p>
