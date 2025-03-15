@@ -364,15 +364,14 @@ export class BuyProductComponentComponent implements OnInit {
   }
 
   buyNow() {
+    const userLogin = localStorage.getItem("user_token");
     const bodyData={
       product_id:this.productDetails.id,
       receiver_id:this.productDetails.created_by.id,
       message:'I want to buy this product.'
     }
-    const isUserLogin = localStorage.getItem("isLoggedIn");
-    if (isUserLogin) {
-
-
+    // const isUserLogin = localStorage.getItem("isLoggedIn");
+    if (userLogin) {
       const dialogRef = this.dialog.open(ConfirmationModelComponent, {
         width: "600px",
         data: { message: "Are you sure you want to buy this product" },
@@ -393,25 +392,7 @@ export class BuyProductComponentComponent implements OnInit {
           
       // this.router.navigate(["/buy-now"]);
     } else {
-      const dialogRef = this.dialog.open(ModelLoginComponent, {
-        width: "600px",
-        data: { message: "dialog-box" },
-      });
-
-      dialogRef.afterClosed().subscribe((result) => {
-        if (result) {
-          // this.http.buyNowFromDetailsProduct(this.productDetails.id,bodyData).subscribe(
-          //   (res)=>{
-          //     this.alertService.showAlert('success','Message send to Seller.')
-          //     // this.router.navigate(['/chat'],{
-          //     //   state:{chat:res.data}
-          //     // })
-          //   },(err)=>{
-          //     this.alertService.showAlert('warning',`${err.error.message}`)
-          //   }
-          // )
-        }
-      });
+      this.loginFirst();
     }
   }
 
@@ -422,43 +403,22 @@ export class BuyProductComponentComponent implements OnInit {
   }
 
   gotToChat() {
-    const isUserLogin = localStorage.getItem("isLoggedIn");
-    if (isUserLogin) {
+    const userLogin = localStorage.getItem("user_token");
+    if (userLogin) {
       this.router.navigate(["/chat"], {
         state: { data: this.productDetails },
       });
     } else {
-      const dialogRef = this.dialog.open(ModelLoginComponent, {
-        width: "600px",
-        data: { message: "dialog-box" },
-        disableClose:true
-      });
-
-      dialogRef.afterClosed().subscribe((result) => {
-        if (result) {
-          this.router.navigate(["/chat"], {
-            state: { data: this.productDetails},
-          });
-        }
-      });
+      this.loginFirst();
     }
   }
 
 
 
   makeanOffer(){
-    const isUserLogin = localStorage.getItem("isLoggedIn");
-    if(!isUserLogin) {
-      const dialogRef = this.dialog.open(ModelLoginComponent, {
-        width: "600px",
-        data: { message: "dialog-box" },
-      });
-
-      dialogRef.afterClosed().subscribe((result) => {
-        if (result) {
-         this.openDialogForCustomOffer()
-        }
-      });
+    const userLogin = localStorage.getItem("user_token");
+    if(!userLogin) {
+      this.loginFirst();
     }else{
       this.openDialogForCustomOffer()
     }
