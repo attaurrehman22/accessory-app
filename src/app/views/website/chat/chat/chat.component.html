@@ -375,7 +375,7 @@
                   <p>{{ "chat_com.buyer_initiated_message" | translate }}</p>
                 </div>
                 <div class="d-flex justify-content-center mt-3 gap-5">
-                  <button class="first-action-btn " (click)="MarkAsSoldfromChat()">{{ "chat_com.mark_as_sold" | translate }}</button>
+                  <button [disabled]="isShowMarkAsSold" class="first-action-btn " (click)="MarkAsSoldfromChat()">{{ "chat_com.mark_as_sold" | translate }}</button>
                   <button class="second-action-btn" (click)="addShippingFromChat()">{{ "chat_com.add_shipping" | translate }}</button>
                 </div>
               </div>
@@ -482,12 +482,6 @@
                 </svg>
                 </button>
                 <mat-menu #menu="matMenu">
-                <!-- <button *ngIf="!isBuyerUser" (click)="customOffer()" mat-menu-item>
-                    <span>Custom offer</span>
-                </button> -->
-                <!-- <button *ngIf="isBuyerUser" (click)="buyNow()" mat-menu-item>
-                  <span>Buy Now</span>
-                </button> -->
                 <button (click)="uploadImages()" mat-menu-item>
                     <span>{{ "chat_com.Upload_Images" | translate }}</span>
                 </button>

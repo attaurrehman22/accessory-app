@@ -165,10 +165,6 @@ export class ChatComponent implements OnInit, AfterViewChecked {
       this.isBuyerUser = true;
     }
 
-    // console.log("sellerProductID", this.sellerProductID);
-    // console.log("sellerID", this.sellerID);
-    // console.log("user_id", this.user_id);
-
     this.chat_id = param.chat_id;
     this.getProductDetails = param.product;
     this.getChatDetails();
@@ -182,8 +178,12 @@ export class ChatComponent implements OnInit, AfterViewChecked {
   isExistMakePayment: boolean = true;
   isActionTypeMakePaymentToHideCustomOffer: boolean = false;
 
+
   getChatDetails() {
     let actionTypeforCallingCustomOffer=false;
+    if (history?.state?.data) {
+      history.replaceState({ data: null }, document.title);
+    }
     this.http.getChatsDetails(this.chat_id).subscribe(
       (res) => {
         this.messages = res.messages;
@@ -602,9 +602,6 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     };
     this.http.sendMessage(formData).subscribe((res) => {
       this.chat_id = res?.data?.chat_id;
-      // if(res.messages.action_type === 'buy_now'){
-      //   this.isBuyNowFromChatCheck=true;
-      // }
       if (this.chat_id) {
         this.getChatDetails();
         this.getLatestMessage();
@@ -618,6 +615,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     const dialogRef = this.dialog.open(AddShippingComponent, {
       width: "700px",
       disableClose: true,
+      data: { isShowMarkAsSold: this.isShowMarkAsSold },
     });
 
     dialogRef.afterClosed().subscribe((result) => {
@@ -632,9 +630,10 @@ export class ChatComponent implements OnInit, AfterViewChecked {
         };
         this.http.sendShipmenttoBuyer(formData).subscribe(
           (res) => {
+       
+            
+
             this.isCancelOfferBuyer = true;
-            this.getChatDetails();
-            this.getLatestMessage();
           },
           (err) => {
             if (err && err.error) {
@@ -647,6 +646,23 @@ export class ChatComponent implements OnInit, AfterViewChecked {
             }
           }
         );
+        console.log("result?.soldMark",result?.soldMark)
+        if(result?.soldMark == true){ 
+          const formData = {
+            product_id: this.messages[0].product_id,
+            chat_id: this.chat_id,
+            receiver_id: this.reciever_ID,
+            action_type: "mark_sold",
+          };
+          this.http.sendMessage(formData).subscribe((res) => {
+            this.chat_id = res?.data?.chat_id;
+            this.getChatDetails();
+            this.getLatestMessage();
+          });
+        }else{
+          this.getChatDetails();
+          this.getLatestMessage();
+        }
       }
     });
   }

@@ -5,7 +5,7 @@
           <p>Add your shipping charges for this order</p>
       </div>
       <div class="col-md-6 d-flex align-items-center justify-content-end">
-        <button (click)="markAsSold()" style="background: none;border: 1px solid #242424;border-radius: 10px;color: #242424;height: 50px;width: 150px;">Mark as Sold</button>
+        <button [disabled]="isAlreadyMarkedSold" (click)="markAsSold()" style="background: none;border: 1px solid #242424;border-radius: 10px;color: #242424;height: 50px;width: 150px;">Mark as Sold</button>
         
       </div>
     </div>
@@ -25,7 +25,7 @@
         </mat-form-field>
     
         <div class="action-buttons">
-          <button (click)="onCancel()"  type="button" class="cancel-btn">Cancel</button>
+          <button (click)="onCancel()" type="button" class="cancel-btn">Cancel</button>
           <button class="send-btn" type="submit">Send Offer</button>
         </div>
         </form>
