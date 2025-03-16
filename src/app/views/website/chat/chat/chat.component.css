@@ -195,7 +195,20 @@ input.form-control {
     }
   }
 
+  .received > .message-content {
+    background-color: #242424 ;
+    color: #FFFFFF ;
+  }
 
+  .received > .justify-content-center {
+    background-color: #f9fafb;
+    color: black;
+  }
+
+  .justify-content-center > .message-content {
+    background-color: #f9fafb;
+    color: black;
+  }
 
 
   /* ---- ----------- -------------- localization start ------------------------   -----   ---- */
@@ -230,7 +243,7 @@ input.form-control {
   }
 
   .reverse-order > .chat-Details > .card > .card-footer > .input-group{
-    flex-direction: row-reverse;
+    /* flex-direction: row-reverse; */
   }
 
   .reverse-order-custom-offer > .d-flex {

@@ -134,7 +134,7 @@ export class NewArrivalsComponent {
     this.http.addWishList(formData).subscribe((res) => {
       this.wishList = res?.data;
       this.getWishList();
-      this.getProductsofnewArrivals();
+      // this.getProductsofnewArrivals();
     });
   }
 }

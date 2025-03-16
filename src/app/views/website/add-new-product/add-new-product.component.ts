@@ -188,12 +188,12 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
   street = new FormControl("", [
     Validators.required, // Ensures the field is not empty
     Validators.pattern("^[a-zA-Z0-9 ]*$"), // Allows only alphanumeric characters and spaces (A-Z, a-z, 0-9, space)
-    Validators.maxLength(30), // Limits the input to 30 characters
+    Validators.maxLength(80), // Limits the input to 30 characters
   ]);
 
   street_line_2 = new FormControl("", [
     Validators.pattern("^[a-zA-Z0-9 ]*$"), // Allows only alphanumeric characters and spaces (A-Z, a-z, 0-9, space)
-    Validators.maxLength(30), // Limits the input to 30 characters
+    Validators.maxLength(80), // Limits the input to 30 characters
   ]);
   zip_code = new FormControl("", [
     Validators.required, // Ensures the field is not empty

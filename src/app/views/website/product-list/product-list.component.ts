@@ -106,7 +106,7 @@ export class ProductListComponent implements OnInit {
     this.http.addWishList(formData).subscribe((res) => {
       this.wishList = res?.data;
       this.getWishList();
-      this.applyFilters();
+      // this.applyFilters();
     });
   }
 

@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, HostListener, OnInit } from "@angular/core";
 import { TranslateService } from "@ngx-translate/core";
 import { marker as TRANSLATE_ME } from "@biesbjerg/ngx-translate-extract-marker";
 import { NavigationEnd, Router } from "@angular/router";
@@ -13,6 +13,48 @@ import { LoaderService } from "./loader.service";
 export class AppComponent implements OnInit {
 
   routeToCom:any='dashboard';
+
+  alertPositionStyle: any = {};
+
+  @HostListener('window:scroll', [])
+  onWindowScroll() {
+    this.updateAlertPosition();
+  }
+
+  // Update alert position dynamically based on screen visibility
+  updateAlertPosition() {
+    const screenHeight = window.innerHeight; // Height of the visible screen area
+    const scrollPosition = window.scrollY;  // Current scroll position
+    const documentHeight = document.documentElement.scrollHeight; // Total document height
+
+    // Calculate available space at the top and bottom
+    const topSpace = scrollPosition;
+    const bottomSpace = documentHeight - (scrollPosition + screenHeight);
+
+    // Adjust the alert position based on where the user is currently on the page
+    if (bottomSpace > screenHeight / 2) {
+      this.setAlertPosition('fixed', '15px', 'auto', 'top');
+    } else if (topSpace > screenHeight / 2) {
+      this.setAlertPosition('fixed', '15px', 'auto', 'bottom');
+    } else {
+      // If screen space is insufficient, keep the alert in the center of the screen
+      this.setAlertPosition('fixed', '50%', 'auto', 'center');
+    }
+  }
+
+  // Method to dynamically set alert position
+  setAlertPosition(position: string, top: string, left: string, bottom: string) {
+    this.alertPositionStyle = {
+      position: position,
+      top: top,
+      left: left,
+      bottom: bottom,
+      right: '15px',
+      transform: position === 'fixed' ? 'translateY(-50%)' : 'none',
+      zIndex: '99999',  // Ensure alert is visible on top of other content
+    };
+  }
+
 
   routeToSection(routeName){
     this.routeToCom=routeName

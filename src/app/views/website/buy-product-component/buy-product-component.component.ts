@@ -41,7 +41,7 @@ export class BuyProductComponentComponent implements OnInit {
     this.http.addWishList(formData).subscribe((res) => {
       this.wishList = res.data;
       this.getWishList();
-      this.initializeComponent();
+      // this.initializeComponent();
     });
   }
 
@@ -409,10 +409,15 @@ export class BuyProductComponentComponent implements OnInit {
 
   gotToChat() {
     const userLogin = localStorage.getItem("user_token");
-    if (userLogin) {
-      this.router.navigate(["/chat"], {
-        state: { data: this.productDetails },
-      });
+    const userID = localStorage.getItem("userID");
+    if (userLogin && userID) {
+      if (userID != this.productDetails.created_by.id) {
+          this.router.navigate(["/chat"], {
+            state: { data: this.productDetails },
+          });
+        } else {
+          this.alertService.showAlert("warning", "You can't chat with yourself");
+        }
     } else {
       this.loginFirst();
     }

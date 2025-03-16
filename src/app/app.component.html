@@ -12,12 +12,25 @@
   
 </div>
 
-<div style="position: absolute; right: 15px; top: 80px; width: auto;z-index: 99999;" class="container mt-4"
+<!-- <div style="position: absolute; right: 15px; top: 80px; width: auto;z-index: 99999;" class="container mt-4"
   *ngIf="alertService.alert$ | async as alert">
   <div [ngClass]="'alert alert-' + alert.type + ' alert-dismissible fade show'" role="alert">
     <strong>{{ alert.type | titlecase }}!</strong> {{ alert.message }}
     <button type="button" class="btn-close" (click)="closeAlert()" aria-label="Close"></button>
   </div>
+</div> -->
+
+<div
+  *ngIf="alertService.alert$ | async as alert"
+  class="container mt-4 alert-cont-style"
+  [ngStyle]="alertPositionStyle"
+  style="width: auto;">
+  <div [ngClass]="'alert alert-' + alert.type + ' alert-dismissible fade show'" role="alert">
+    <strong>{{ alert.type | titlecase }}!</strong> {{ alert.message }}
+    <button type="button" class="btn-close" (click)="closeAlert()" aria-label="Close"></button>
+  </div>
 </div>
+
+
 
 <router-outlet></router-outlet>

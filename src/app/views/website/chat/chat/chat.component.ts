@@ -119,7 +119,13 @@ export class ChatComponent implements OnInit, AfterViewChecked {
   }
 
   unreadFilter() {
-    this.chats = this.chats.filter((item: any) => item.unread_count > 0);
+    // this.chats = this.chats.filter((item: any) => item.unread_count > 0);
+    const filteredChats = this.chats.filter((item: any) => item.unread_count > 0);
+
+// Only update this.chats if filteredChats has at least one item
+if (filteredChats.length > 0) {
+  this.chats = [...this.chats, ...filteredChats];
+}
   }
 
   getLatestMessage() {

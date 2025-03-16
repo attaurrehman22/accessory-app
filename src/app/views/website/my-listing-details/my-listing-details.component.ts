@@ -17,8 +17,8 @@ export class MyListingDetailsComponent implements OnInit{
   billing_address = new FormControl(null, [Validators.required,Validators.maxLength(120)]);
   first_name = new FormControl([], [Validators.required,Validators.maxLength(50)]);
   last_name = new FormControl("", [Validators.required,Validators.maxLength(50)]);
-  street = new FormControl("", [Validators.required,Validators.maxLength(60)]);
-  street_line_2 = new FormControl("", [Validators.maxLength(60)]);
+  street = new FormControl("", [Validators.required,Validators.maxLength(80)]);
+  street_line_2 = new FormControl("", [Validators.maxLength(80)]);
   zip_code = new FormControl("", [Validators.required,Validators.pattern("^[0-9]*$"),Validators.maxLength(9)]);
   city = new FormControl("", [Validators.required,Validators.maxLength(50)]);
   country = new FormControl("", [Validators.required,Validators.maxLength(50)]);
