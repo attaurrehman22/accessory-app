@@ -564,6 +564,11 @@
   },
 
   "chat_com":{
+
+    "ship_price":"Ship Price",
+    "offer_valid":"Offer Validity",
+    "days":"days",
+
     "type_message":"Type a message",
     "chats":"Chats",
     "Unread_Filter":"Unread Filter",

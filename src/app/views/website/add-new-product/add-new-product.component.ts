@@ -243,6 +243,9 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
     this.watchPriceDisplay = this.watchPrice;
     this.platformFee = this.watchPrice * 0.04;
     this.estimatedPayout = this.watchPrice - this.platformFee;
+    if(this.shipping_charges){
+      this.estimatedPayoutwithShipping = this.estimatedPayout - this.shipping_charges
+    }
   }
 
   Payoutaftershippingcharges() {

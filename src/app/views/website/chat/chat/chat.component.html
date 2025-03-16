@@ -244,7 +244,7 @@
           </div>
           <div class="view-add-btn-div">
             <a class="view-add-btn" [routerLink]="['/buy-product']"
-            [queryParams]="{ id: getProductDetails.id }">
+            [queryParams]="{ id: getProductDetails.id, fromChat: true }">
             {{ "chat_com.view_add" | translate }}
             </a>
             <!-- <button (click)="viewAdd()" >View Add</button> -->
@@ -264,94 +264,116 @@
                     'justify-content-center': message.is_system_generated === 1
                   }">
              
-                <div class="message-content">
-                  <p>{{ message.message }}</p>
-                  <p *ngIf="isShowMarkAsSold && isBuyerUser && message.action_type === 'mark_sold'">{{ "chat_com.seller_mark_sold_status" | translate }}</p>
+                <div class="message-content-main">
+                  <div class="message-content">
+                    <p>{{ message.message }}</p>
+                    <p *ngIf="isShowMarkAsSold && isBuyerUser && message.action_type === 'mark_sold'">{{ "chat_com.seller_mark_sold_status" | translate }}</p>
 
-                  <div class="d-flex gap-2" *ngIf="message.attachments">
-                    <img *ngIf="!isArray(message.attachments)" 
-                         [src]="'https://api.chronosouq.com/' + message.attachments" 
-                         class="attachment-stl"
-                         alt="Attachment">
-                
-                    <div *ngIf="isArray(message.attachments)">
-                      <img *ngFor="let attachment of message.attachments" 
-                           [src]="'https://api.chronosouq.com/' + attachment" 
-                           class="attachment-stl"
-                           alt="Attachment">
-                    </div>
-                  </div>
-
-                  <div *ngIf="!isCancelOffer && isCustomOffer && isOfferShowToUserandDealer && message.action_type && message.action_type !== 'make_payment'" class="col-md-12">
-                    <div [ngClass]="{ 'reverse-order-custom-offer': translateService.currentLang !== 'en' }" class="d-flex flex-column card p-2">
-                      <div style="background: #F9FAFB;" class="d-flex align-items-baseline">
-                        <ng-container *ngIf="customOfferDetails.sender.img; else showInitials">
-                          <img [src]="'https://api.chronosouq.com/' + customOfferDetails.sender.img" alt="IMG"/>
-                        </ng-container>
-                        <ng-template #showInitials>
-                          <div class="initials">
-                            {{ customOfferDetails.sender.name | slice:0:2 }}
-                          </div>
-                        </ng-template>
-                        <p class="mx-2">{{ "chat_com.custom_offer" | translate }}</p>
-                      </div>
-                      
-                      <div class="d-flex justify-content-between align-items-center">
-                        <p>{{ "chat_com.listing_id" | translate }}</p>
-                        <p>{{customOfferDetails.product.serial_no}}</p>
-                      </div>
-                      <div style="border-bottom: 1px solid #F2F5F8;" class="d-flex justify-content-between align-items-center">
-                        <p>{{ "chat_com.add_price" | translate }}</p>
-                        <p>{{customOfferDetails.product.price}}</p>
-                      </div>
-                      <div style="border-bottom: 1px solid #F2F5F8;" class="d-flex justify-content-between align-items-center">
-                        <p>{{ "chat_com.custom_offer" | translate }}</p>
-                        <p>{{message.offer_price}}</p>
-                      </div>
-                      <div class="d-flex justify-content-center mt-3 gap-5">
-                        <button *ngIf="!isBuyerUser || (isBuyerUser && !isOfferStatusAccepted) || isOfferStatusAccepted" 
-                            (click)="cancelOfferStatus()" 
-                            class="first-action-btn" 
-                            [disabled]="reversedMessages.length === 0 || reversedMessages[reversedMessages.length - 1] !== message">
-                            {{ "chat_com.cancel_offer" | translate }}
-                        </button>
-
-                        <!-- Edit Offer button -->
-                        <button [disabled]="reversedMessages.length === 0 || reversedMessages[reversedMessages.length - 1] !== message || reversedMessages.length === 1 && isBuyerUser" 
-                                (click)="editOffer(customOfferDetails)" 
-                                *ngIf="!isOfferStatusAccepted"
-                                class="first-action-btn">
-                          {{ "chat_com.edit_offer" | translate }}
-                        </button>
-
-                        <button [disabled]="true" 
-                                *ngIf="isOfferStatusAccepted && !isBuyerUser" 
-                                class="first-action-btn">
-                                {{ "chat_com.edit_offer" | translate }}
-                        </button>
-
-                        <!-- Accept Offer button -->
-                        <button (click)="acceptOffer()" 
-                                class="second-action-btn" 
-                                *ngIf="!isOfferStatusAccepted"
-                                [disabled]="reversedMessages.length === 0 || reversedMessages[reversedMessages.length - 1] !== message || reversedMessages.length === 1 && isBuyerUser">
-                                {{ "chat_com.accept_offer" | translate }}
-                        </button>
-
-                        <!-- Make Payment button -->
-                        <button *ngIf="isBuyerUser && isOfferStatusAccepted" 
-                                class="second-action-btn" 
-                                (click)="makePayment()" 
-                                [disabled]="reversedMessages.length === 0 || reversedMessages[reversedMessages.length - 1] !== message">
-                                {{ "chat_com.make_payment" | translate }}
-                        </button>
-
-    
-                      </div>
-                    </div>
-                  </div>
+                    <div class="d-flex gap-2" *ngIf="message.attachments">
+                      <img *ngIf="!isArray(message.attachments)" 
+                          [src]="'https://api.chronosouq.com/' + message.attachments" 
+                          class="attachment-stl"
+                          alt="Attachment">
                   
-                  <small [ngClass]="{ 'reverse-order-time-message': translateService.currentLang !== 'en' }"> {{ message.created_at | date : "MMMM d, yyyy, h:mm a" }}</small>
+                      <div *ngIf="isArray(message.attachments)">
+                        <img *ngFor="let attachment of message.attachments" 
+                            [src]="'https://api.chronosouq.com/' + attachment" 
+                            class="attachment-stl"
+                            alt="Attachment">
+                      </div>
+                    </div>
+
+                    <div *ngIf="!isCancelOffer && isCustomOffer && isOfferShowToUserandDealer && message.action_type && message.action_type !== 'make_payment'" class="col-md-12">
+                      <div [ngClass]="{ 'reverse-order-custom-offer': translateService.currentLang !== 'en' }" class="d-flex flex-column card p-2">
+                        <div style="background: #F9FAFB;" class="d-flex align-items-baseline">
+                          <ng-container *ngIf="customOfferDetails.sender.img; else showInitials">
+                            <img [src]="'https://api.chronosouq.com/' + customOfferDetails.sender.img" alt="IMG"/>
+                          </ng-container>
+                          <ng-template #showInitials>
+                            <div class="initials">
+                              {{ customOfferDetails.sender.name | slice:0:2 }}
+                            </div>
+                          </ng-template>
+                          <p class="mx-2">{{ "chat_com.custom_offer" | translate }}</p>
+                        </div>
+                        
+                        <div class="d-flex justify-content-between align-items-center">
+                          <p>{{ "chat_com.listing_id" | translate }}</p>
+                          <p>{{customOfferDetails.product.serial_no}}</p>
+                        </div>
+                        <div style="border-bottom: 1px solid #F2F5F8;" class="d-flex justify-content-between align-items-center">
+                          <p>{{ "chat_com.add_price" | translate }}</p>
+                          <p>{{customOfferDetails.product.price}}</p>
+                        </div>
+                        <div style="border-bottom: 1px solid #F2F5F8;" class="d-flex justify-content-between align-items-center">
+                          <p>{{ "chat_com.custom_offer" | translate }}</p>
+                          <p>{{message.offer_price}}</p>
+                        </div>
+
+                        <div *ngIf="message?.ship_price" style="border-bottom: 1px solid #F2F5F8;" class="d-flex justify-content-between align-items-center">
+                          <p>{{ "chat_com.ship_price" | translate }}</p>
+                          <p>{{message.ship_price}}</p>
+                        </div>
+
+                        <div *ngIf="message?.days" style="border-bottom: 1px solid #F2F5F8;" class="d-flex justify-content-between align-items-center">
+                          <p>{{ "chat_com.offer_valid" | translate }}</p>
+                          <p>{{message.days}} {{ "chat_com.days" | translate }}</p>
+                        </div>
+
+                        <div class="d-flex justify-content-center mt-3 gap-5">
+                          <button *ngIf="!isBuyerUser || (isBuyerUser && !isOfferStatusAccepted) || isOfferStatusAccepted" 
+                              (click)="cancelOfferStatus()" 
+                              class="first-action-btn" 
+                              [disabled]="reversedMessages.length === 0 || reversedMessages[reversedMessages.length - 1] !== message">
+                              {{ "chat_com.cancel_offer" | translate }}
+                          </button>
+
+                          <!-- Edit Offer button -->
+                          <button [disabled]="(reversedMessages.length == 1 && isBuyerUser)" 
+                                  (click)="editOffer(customOfferDetails)" 
+                                  *ngIf="!isOfferStatusAccepted"
+                                  class="first-action-btn border-left">
+                            {{ "chat_com.edit_offer" | translate }}
+                          </button>
+
+                          <!-- <button [disabled]="true" 
+                                  *ngIf="isOfferStatusAccepted && !isBuyerUser" 
+                                  class="first-action-btn border-left">
+                                  {{ "chat_com.edit_offer" | translate }}
+                          </button> -->
+
+                          <!-- Accept Offer button -->
+                          <!-- <button (click)="acceptOffer()" 
+                                  class="second-action-btn border-left " 
+                                  *ngIf="(!isOfferStatusAccepted) && (reversedMessages.length === 0 || (reversedMessages.length === 1 && !isBuyerUser))"
+                                >
+                                {{ reversedMessages.length }} : length
+                                  {{ "chat_com.accept_offer" | translate }}
+                          </button> -->
+                          <button (click)="acceptOffer()" 
+                                  class="second-action-btn border-left " 
+                                  *ngIf="!isOfferStatusAccepted && (reversedMessages.length >= 2 || !isBuyerUser)"
+                                  [disabled]="user_id == message.sender_id && (message.message == 'You have sent an offer' || message.message == 'You have update the offer')"
+                                >
+                                  {{ "chat_com.accept_offer" | translate }}
+                          </button>
+
+                          <!-- Make Payment button -->
+                          <button *ngIf="isBuyerUser && isOfferStatusAccepted" 
+                                  class="second-action-btn border-left " 
+                                  (click)="makePayment()" 
+                                  [disabled]="reversedMessages.length === 0 || reversedMessages[reversedMessages.length - 1] !== message">
+                                  {{ "chat_com.make_payment" | translate }}
+                          </button>
+
+      
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="time-text-styl">
+                    <small [ngClass]="{ 'reverse-order-time-message': translateService.currentLang !== 'en' }"> {{ message.created_at | date : "MMMM d, yyyy, h:mm a" }}</small>
+                  </div>
                 </div>
               </div>
             </div>

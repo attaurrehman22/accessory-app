@@ -641,10 +641,9 @@ if (filteredChats.length > 0) {
         };
         this.http.sendShipmenttoBuyer(formData).subscribe(
           (res) => {
-       
-            
-
             this.isCancelOfferBuyer = true;
+            this.getChatDetails();
+            this.getLatestMessage();
           },
           (err) => {
             if (err && err.error) {

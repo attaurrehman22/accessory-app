@@ -525,6 +525,9 @@
   },
 
   "chat_com":{
+    "ship_price": "سعر الشحن",
+  "offer_valid": "صلاحية العرض",
+  "days": "أيام",
       "type_message":"اكتب رسالة",
       "chats": "المحادثات",
       "Unread_Filter": "تصفية غير المقروء",

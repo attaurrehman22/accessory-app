@@ -138,6 +138,8 @@ export class BuyProductComponentComponent implements OnInit {
     });
   }
 
+  fromChat: any;
+
   ngOnInit(): void {
     window.scrollTo(0, 0);
     this.isUserLogin = localStorage.getItem("isLoggedIn");
@@ -163,10 +165,20 @@ export class BuyProductComponentComponent implements OnInit {
       }else{
         this.ProductID = history.state.data.id;
       }
+
+      const fromChat = this.route.snapshot.queryParamMap.get('fromChat');
+      if (fromChat === 'true') {
+         this.fromChat = true;
+        //  this.openDialog();
+      }
       
     }
     // if(this.routeFrom !== "listing-to-product"){
+    // if(this.fromChat == true ){
+    //   this.initializeStatusReservedComponent();
+    // }else{
       this.initializeComponent();
+    // }
     // }
   }
 
@@ -198,7 +210,7 @@ export class BuyProductComponentComponent implements OnInit {
 
   async initializeComponent() {
     try {
-      if(this.routeFrom !== "listing-to-product"){
+      if(this.routeFrom != "listing-to-product" && this.fromChat != true){
         await this.fetchProductDetails();
       }else{
         await this.getDetailsofUnVerfiedProduct()
