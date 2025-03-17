@@ -352,11 +352,21 @@
                                                 {{ reversedMessages.length }} : length
                                                   {{ "chat_com.accept_offer" | translate }}
                                           </button> -->
-                                          <button (click)="acceptOffer()" 
+                                          <!-- <button (click)="acceptOffer()" 
                                                   class="second-action-btn border-left " 
                                                   *ngIf="!isOfferStatusAccepted && (reversedMessages.length >= 2 || !isBuyerUser)"
                                                   [disabled]="user_id == message.sender_id && (message.message == 'You have sent an offer' || message.message == 'You have update the offer')"
                                                 >
+                                                  {{ "chat_com.accept_offer" | translate }}
+                                          </button> -->
+
+                                          <button (click)="acceptOffer()" 
+                                                  class="second-action-btn border-left " 
+                                                  *ngIf="!isOfferStatusAccepted && (reversedMessages.length >= 2 || !isBuyerUser)"
+                                                  [disabled]="message.message == 'You have sent an offer' || message.message == 'You have update the offer' || message.message == 'You have Updated the offer' ||  message.message ==  'I have Updated the offer'"
+                                                  [ngClass]="{
+                                                    'display-none': message.message == 'You have sent an offer' || message.message == 'You have update the offer' || message.message == 'You have Updated the offer' || message.message ==  'I have Updated the offer'}"
+                                                  >
                                                   {{ "chat_com.accept_offer" | translate }}
                                           </button>
                 
@@ -741,7 +751,9 @@
                           <button (click)="acceptOffer()" 
                                   class="second-action-btn border-left " 
                                   *ngIf="!isOfferStatusAccepted && (reversedMessages.length >= 2 || !isBuyerUser)"
-                                  [disabled]="user_id == message.sender_id && (message.message == 'You have sent an offer' || message.message == 'You have update the offer')"
+                                  [disabled]="message.message == 'You have sent an offer' || message.message == 'You have update the offer' || message.message == 'You have Updated the offer' ||  message.message ==  'I have Updated the offer'"
+                                  [ngClass]="{
+                                    'display-none': message.message == 'You have sent an offer' || message.message == 'You have update the offer' || message.message == 'You have Updated the offer' || message.message ==  'I have Updated the offer'}"
                                 >
                                   {{ "chat_com.accept_offer" | translate }}
                           </button>

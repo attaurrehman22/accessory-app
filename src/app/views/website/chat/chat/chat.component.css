@@ -107,6 +107,7 @@
     background-color: #e1f7d5;
     border-radius: 10px;
     padding: 10px;
+    min-width: 375px;
 }
 
 .message-content {
@@ -318,7 +319,7 @@ input.form-control {
       .smaall-screen-text {
         font-size: 10px !important;
       }
-      
+
       .small-scren-view-add-btn{
         min-width: 52px !important;
         padding: 10px 3px !important;
@@ -331,4 +332,8 @@ input.form-control {
    }
    .small-screen-show {
      display: none;
+   }
+
+   .display-none {
+    display: none;
    }
