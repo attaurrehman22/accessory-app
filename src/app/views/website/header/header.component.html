@@ -157,13 +157,6 @@
           <a class="custom-btn" routerLink="/product-list">
             {{ "header.buy_watch" | translate }}
           </a>
-
-          <!-- <a class="custom-btn" *ngIf="isUserLogin === 'false' || isUserLogin == null" (click)="routeToNewProduct()">
-            {{ "header.sell_watch" | translate }}
-          </a>
-          <a routerLink="/new-product" class="custom-btn" *ngIf="isUserLogin === 'true'">
-            {{ "header.sell_watch" | translate }}
-          </a> -->
           <a
             class="custom-btn" 
             routerLink="/new-product"
@@ -178,9 +171,6 @@
           >
             {{ "header.admin_pannel" | translate }}
           </a>
-          <!-- <button style="background: none; border: none; font-size: 16px" *ngIf="isUserLogin === 'false' || isUserLogin === null && isSmallScreen" (click)="goToRegister()">
-            {{ "header.Login" | translate }}
-          </button> -->
           <a class="custom-btn" *ngIf="isUserLogin === 'true'" routerLink="/chat">
             {{ "header.Chat" | translate }}
           </a>
@@ -201,18 +191,6 @@
             style="cursor: pointer"
           />
           <div *ngIf="isShowSearchField" class="large-screen-search-Box">
-
-          <!-- <mat-menu #search2Menu="matMenu"> -->
-            <!-- <form class="d-flex flex-grow-1 ms-3" (ngSubmit)="onSearch(searchQuery)" (click)="$event.stopPropagation()">
-              <input
-                [(ngModel)]="searchQuery"
-                (ngModelChange)="onSearchChange()"
-                class="form-control me-2"
-                type="search"
-                placeholder="Search"
-                aria-label="Search"
-              />
-            </form> -->
             <form class="d-flex flex-grow-1 ms-3" (ngSubmit)="onSearch(searchQuery)">
               <div class="input-group">
               <input
@@ -225,8 +203,6 @@
               <button class="search-btn" type="submit">Search</button>
               </div>
             </form>
-            
-          <!-- </mat-menu> -->
            </div>
           <mat-menu #profileMenu="matMenu">
             <button

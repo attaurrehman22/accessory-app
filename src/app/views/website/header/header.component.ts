@@ -5,7 +5,7 @@ import {
   ElementRef,
   computed,
 } from "@angular/core";
-import { Router } from "@angular/router";
+import { NavigationEnd, Router } from "@angular/router";
 import { TranslateService } from "@ngx-translate/core";
 import { LanguageService } from "src/services/lang-service/language.service";
 import { MatSidenav } from "@angular/material/sidenav";
@@ -19,6 +19,7 @@ import { MatMenuTrigger } from "@angular/material/menu";
 // import { jwt_decode } from 'jwt-decode';
 import { jwtDecode } from 'jwt-decode';
 import { HttpService } from "src/services/http/http.service";
+import { filter } from "rxjs/operators";
 
 
 
@@ -137,6 +138,15 @@ export class HeaderComponent {
       this.getUserDetails()
     }
     console.log("isUser Login",this.isUserLoggedIn)
+
+    this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd)
+    ).subscribe(() => {
+      // Close the sidebar when a route change occurs
+      this.isNavbarOpen = false;
+    });
+
+    
     if (this.isUserLoggedIn()) {
       this.showHideUser = this.isUserLoggedIn();
       if (this.isAdminUser()) {
