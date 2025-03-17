@@ -289,8 +289,40 @@ input.form-control {
     flex-direction: row-reverse;
   }
 
+  .reverse-order-small-screen-show > .card-header {
+    flex-direction: row-reverse;
+  }
+
+  .reverse-order-small-screen-show > .card-header > .d-flex {
+   justify-content: end;
+   flex-direction: row-reverse;
+  }
+
+  .reverse-order-view-add-btn{
+    min-width: 52px !important;
+    padding: 10px 3px !important;
+    font-size: 10px !important;
+  }
+
   /* .reverse-order-time-message {
     display: flex;
     justify-content: end;
   } */
     /* ---- ----------- -------------- localization end ------------------------   -----   ---- */
+
+
+    @media (max-width: 768px) {
+      .large-screen-show {
+         display: none !important;
+      }
+      .small-screen-show {
+        display: block !important;
+      }
+    }
+
+    .large-screen-show {
+      display: block;
+   }
+   .small-screen-show {
+     display: none;
+   }
