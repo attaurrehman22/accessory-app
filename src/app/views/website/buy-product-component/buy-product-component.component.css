@@ -813,3 +813,19 @@ mat-grid-list {
   right: auto;
   left: 20px;
 }
+
+
+@media (max-width: 768px) {
+  .small-screen-text {
+    font-size: 10px;
+  }
+
+  .time-sec {
+    gap: 5px;
+   }
+
+   .brand-sec {
+    gap: 5px;
+   }
+
+}

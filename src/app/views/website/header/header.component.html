@@ -49,13 +49,13 @@
         <div class="header-contact header-contact-lg gap-4 mat-menu-nav">
            <img
             src="./assets/images/search-icon.png"
-            [matMenuTriggerFor]="search3Menu"
-            #search3MenuTrigger="matMenuTrigger"
+           
+            (click)="isShowSearchForm()"
             style="cursor: pointer"
           />
-          
-          <mat-menu #search3Menu="matMenu"  class="notificationsMenu">
-            <form class="d-flex flex-grow-1 ms-3 mat-menu-nav" (ngSubmit)="onSearch(searchQuery)" (click)="$event.stopPropagation()">
+          <div *ngIf="isShowSearchField" class="small-screen-search-Box">
+          <!-- <mat-menu #search3Menu="matMenu"  class="notificationsMenu"> -->
+            <!-- <form class="d-flex flex-grow-1 ms-3 mat-menu-nav" (ngSubmit)="onSearch(searchQuery)" (click)="$event.stopPropagation()">
               <input
                 [(ngModel)]="searchQuery"
                 (ngModelChange)="onSearchChange()"
@@ -64,8 +64,22 @@
                 placeholder="Search"
                 aria-label="Search"
               />
+            </form> -->
+            <form  class="d-flex flex-grow-1 ms-3" (ngSubmit)="onSearch(searchQuery)">
+              <div class="input-group">
+                <input
+                  [(ngModel)]="searchQuery"
+                  class="form-control me-2"
+                  type="search"
+                  placeholder="Search"
+                  aria-label="Search"
+                />
+                <button class="search-btn" type="submit">Search</button>
+              </div>
             </form>
-          </mat-menu>
+            
+          <!-- </mat-menu> -->
+        </div>
           <mat-menu #profileMenu="matMenu">
             <button
               mat-menu-item
@@ -183,13 +197,13 @@
         <div class="header-contact sidebar-acions gap-4">
           <img
             src="./assets/images/search-icon.png"
-            [matMenuTriggerFor]="search2Menu"
-            #search2MenuTrigger="matMenuTrigger"
+           (click)="isShowSearchForm()"
             style="cursor: pointer"
           />
+          <div *ngIf="isShowSearchField" class="large-screen-search-Box">
 
-          <mat-menu #search2Menu="matMenu">
-            <form class="d-flex flex-grow-1 ms-3" (ngSubmit)="onSearch(searchQuery)" (click)="$event.stopPropagation()">
+          <!-- <mat-menu #search2Menu="matMenu"> -->
+            <!-- <form class="d-flex flex-grow-1 ms-3" (ngSubmit)="onSearch(searchQuery)" (click)="$event.stopPropagation()">
               <input
                 [(ngModel)]="searchQuery"
                 (ngModelChange)="onSearchChange()"
@@ -198,8 +212,22 @@
                 placeholder="Search"
                 aria-label="Search"
               />
+            </form> -->
+            <form class="d-flex flex-grow-1 ms-3" (ngSubmit)="onSearch(searchQuery)">
+              <div class="input-group">
+              <input
+                [(ngModel)]="searchQuery"
+                class="form-control me-2"
+                type="search"
+                placeholder="Search"
+                aria-label="Search"
+              />
+              <button class="search-btn" type="submit">Search</button>
+              </div>
             </form>
-          </mat-menu>
+            
+          <!-- </mat-menu> -->
+           </div>
           <mat-menu #profileMenu="matMenu">
             <button
               mat-menu-item

@@ -120,6 +120,12 @@ export class HeaderComponent {
     }
   }
 
+  isShowSearchField:boolean=false;
+
+  isShowSearchForm(){
+   this.isShowSearchField=!this.isShowSearchField
+  }
+
   userToken:any;
 
   ngOnInit() {
@@ -163,6 +169,9 @@ export class HeaderComponent {
     }
     this.searchService.changeSearchQuery(query);  
     this.router.navigate(['/product-list'], { queryParams: { query } }); 
+
+    this.isShowSearchField=false;
+    this.searchQuery="";
   }
 
   onSearchChange() {

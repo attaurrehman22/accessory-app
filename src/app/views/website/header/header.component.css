@@ -312,3 +312,36 @@
     display: none !important;
   }
 }
+
+
+
+.small-screen-search-Box {
+  position: absolute;
+  margin-top: 13vh;
+  width: 94%;
+}
+
+.input-group {
+  border: 1px solid #6a6a6a;
+  border-radius: 25px;
+}
+
+.form-control {
+  border: 0px !important;
+}
+
+
+.search-btn {
+  background: #242424;
+  color: #FFFFFF;
+  border: 0;
+  border-top-right-radius: 25px;
+  border-bottom-right-radius: 25px;
+  padding: 0 25px 0 25px;
+}
+
+.large-screen-search-Box {
+  position: absolute;
+  padding: 13vh 0vh 0 33vh;
+  width: 100%;
+}
