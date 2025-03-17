@@ -325,6 +325,10 @@ input.form-control {
         padding: 10px 3px !important;
         font-size: 10px !important;
       }
+
+      .small-screen-message-content > .message-content {
+        min-width: 100% !important;
+      }
     }
 
     .large-screen-show {
@@ -337,3 +341,14 @@ input.form-control {
    .display-none {
     display: none;
    }
+
+   .card-footer-small {
+    padding: 0 !important;
+    gap: 12px;
+   }
+
+   .small-screen-message-content {
+    min-width: 70%;
+   }
+
+ 

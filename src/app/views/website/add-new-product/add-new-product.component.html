@@ -462,7 +462,7 @@
           >
             ✓
           </div>
-          <div class="step-content">
+          <div class="step-content" style="width: 90%;">
             <strong
               style="cursor: pointer"
               (click)="moveToForm('watchDetails')"
@@ -1377,7 +1377,7 @@
                   'reverse-order-listing-details-btn-div':
                     translateService.currentLang !== 'en'
                 }"
-                class="d-flex align-items-center justify-content-end mb-3"
+                class="d-flex gap-2 align-items-center justify-content-end mb-3"
                 style="padding: 0 20px 0 20px"
               >
                 <button
@@ -1868,16 +1868,19 @@
                           [src]="option.icon"
                           alt="{{ option.title }}"
                           class="icon mb-3"
+                          style="align-self: center;"
                         />
                         <h6
                           *ngIf="translateService.currentLang === 'en'"
                           class="card-title"
+                          style="align-self: center;"
                         >
                           {{ option.title }}
                         </h6>
                         <h6
                           *ngIf="translateService.currentLang != 'en'"
                           class="card-title"
+                          style="align-self: center;"
                         >
                           {{ option.arabictitle }}
                         </h6>
@@ -1979,7 +1982,7 @@
               class="image-upload-container"
               *ngIf="selectedSection === 'proofofownership' && isSmallScreen"
             >
-              <div class="clock-container">
+              <div class="clock-container flex-wrap">
                 <div
                   class="clock"
                   style="
@@ -2174,44 +2177,49 @@
                 class="container-fluid mt-4"
                 style="padding-left: 0; padding-right: 0"
               >
-                <div class="help-card">
+                <div class="help-card d-flex flex-wrap align-items-center" 
+                [ngClass]="{
+                  'reverse-order-helpp-card':
+                    translateService.currentLang !== 'en'
+                }"
+                >
                   <div class="icon-placeholder">
                     <img
                       src="../../../../assets/images/help-us.png"
                       alt="img"
                     />
                   </div>
-                  <h5>
+                  <h5 class="mx-2 small-screent-heading-text">
                     {{ "create_product_listing.having_trouble" | translate }}
                   </h5>
-                  <p>
+                  <p class="small-screent-paragrap-text">
                     {{
                       "create_product_listing.having_trouble_para_one"
                         | translate
                     }}
                   </p>
                   <ul class="pl-3" style="color: #666">
-                    <li>
+                    <li class="small-screent-paragrap-text">
                       {{
                         "create_product_listing.having_trouble_list_item_one"
                           | translate
                       }}
                     </li>
-                    <li>
+                    <li class="small-screent-paragrap-text">
                       {{
                         "create_product_listing.having_trouble_list_item_two"
                           | translate
                       }}
                     </li>
                   </ul>
-                  <p>
+                  <p class="small-screent-paragrap-text">
                     {{
                       "create_product_listing.having_trouble_para_two"
                         | translate
                     }}
                   </p>
                   <div class="mt-3">
-                    <button class="contact-us-btn">
+                    <button class="contact-us-btn small-screent-paragrap-text">
                       {{ "create_product_listing.contact_us_btn" | translate }}
                     </button>
                   </div>
@@ -2349,14 +2357,15 @@
                       translateService.currentLang !== 'en'
                   }"
                 >
-                  <p class="font-size-18 font-wight-700 color-132138">
+                  <p style="font-size: 18px !important;font-weight:700 !important;color:#132138 !important" class="font-size-18 font-wight-700 color-132138">
                     {{ "create_product_listing.payout_info" | translate }}
                   </p>
                   <div class="info-row d-flex justify-content-between">
-                    <p class="font-size-16 font-wight-400 color-909090">
+                    <p style="font-size: 16px !important;font-weight:400 !important;color:#909090 !important" 
+                     class="font-size-16 font-wight-400 color-909090">
                       {{ "create_product_listing.watch_price" | translate }}
                     </p>
-                    <p class="font-size-16 font-wight-600 color-0F172A">
+                    <p style="font-size: 16px !important;font-weight:600 !important;color:#0F172A !important"  class="font-size-16 font-wight-600 color-0F172A">
                       {{
                         watchPriceDisplay | currency : "SR" : "symbol" : "1.2-2"
                       }}
@@ -2529,14 +2538,16 @@
                 </div>
                 <div class="col-md-6 for-reverse">
                   <mat-card class="info-card">
-                    <p class="font-size-18 font-wight-700 color-132138">
+                    <p style="font-size: 18px !important;font-weight:700 !important;color:#132138 !important"
+                     class="font-size-18 font-wight-700 color-132138">
                       {{ "create_product_listing.payout_info" | translate }}
                     </p>
                     <div class="info-row d-flex justify-content-between">
-                      <p class="font-size-16 font-wight-400 color-909090">
+                      <p style="font-size: 16px !important;font-weight:400 !important;color:#909090 !important" class="font-size-16 font-wight-400 color-909090">
                         {{ "create_product_listing.watch_price" | translate }}
                       </p>
-                      <p class="font-size-16 font-wight-600 color-0F172A">
+                      <p style="font-size: 16px !important;font-weight:600 !important;color:#0F172A !important"
+                       class="font-size-16 font-wight-600 color-0F172A">
                         {{
                           watchPriceDisplay
                             | currency : "SR" : "symbol" : "1.2-2"
@@ -2959,7 +2970,7 @@
             ✓
           </div>
           <!-- <div class="step-circle">9</div> -->
-          <div class="step-content">
+          <div class="step-content" style="width: 90%;">
             <strong style="cursor: pointer" (click)="moveToForm('summary')">{{
               "create_product_listing.summary" | translate
             }}</strong>
@@ -3041,6 +3052,7 @@
                           'reverse-order-upload-images-labels':
                             translateService.currentLang !== 'en'
                         }"
+                        style="font-size: 18px !important;font-weight:700 !important;color:#132138 !important"
                         class="font-size-18 font-wight-700 color-132138"
                       >
                         {{
@@ -3049,10 +3061,11 @@
                         }}
                       </p>
                       <div class="info-row d-flex justify-content-between">
-                        <p class="font-size-16 font-wight-400 color-909090">
+                        <p style="font-size: 16px !important;font-weight:600 !important;color:#909090 !important"  class="font-size-16 font-wight-400 color-909090">
                           {{ "create_product_listing.watch_price" | translate }}
                         </p>
-                        <p class="font-size-16 font-wight-600 color-0F172A">
+                        <p style="font-size: 16px !important;font-weight:600 !important;color:#0F172A !important" 
+                         class="font-size-16 font-wight-600 color-0F172A">
                           {{
                             watchPriceDisplay
                               | currency : "SR" : "symbol" : "1.2-2"
@@ -3212,12 +3225,12 @@
                   'reverse-order-listing-details-btn-div':
                     translateService.currentLang !== 'en'
                 }"
-                class="d-flex align-items-center justify-content-end gap-2 mb-3"
+                class="d-flex align-items-center justify-content-end gap-2 mb-3 small-screen-btn-wrap"
                 style="padding: 0 20px 0 20px"
               >
                 <button
                   class="save-can-btn canc-bg-color"
-                  style="width: 170px;"
+                  style="width: 170px !important;"
                   (click)="routeToProductDetail()"
                 >
                   {{ "create_product_listing.Preview_your_Ad" | translate }}
@@ -5413,14 +5426,14 @@
                       translateService.currentLang !== 'en'
                   }"
                 >
-                  <p class="font-size-18 font-wight-700 color-132138">
+                  <p style="font-size: 18px !important;font-weight:700 !important;color:#132138 !important" class="font-size-18 font-wight-700 color-132138">
                     {{ "create_product_listing.payout_info" | translate }}
                   </p>
                   <div class="info-row d-flex justify-content-between">
-                    <p class="font-size-16 font-wight-400 color-909090">
+                    <p style="font-size: 16px !important;font-weight:600 !important;color:#909090 !important"  class="font-size-16 font-wight-400 color-909090">
                       {{ "create_product_listing.watch_price" | translate }}
                     </p>
-                    <p class="font-size-16 font-wight-600 color-0F172A">
+                    <p style="font-size: 16px !important;font-weight:600 !important;color:#0F172A !important"  class="font-size-16 font-wight-600 color-0F172A">
                       {{
                         watchPriceDisplay | currency : "SR" : "symbol" : "1.2-2"
                       }}
@@ -5588,14 +5601,14 @@
               </div>
               <div class="col-md-6 for-reverse" style="padding-left: 0">
                 <mat-card class="info-card">
-                  <p class="font-size-18 font-wight-700 color-132138">
+                  <p style="font-size: 18px !important;font-weight:700 !important;color:#132138 !important" class="font-size-18 font-wight-700 color-132138">
                     {{ "create_product_listing.payout_info" | translate }}
                   </p>
                   <div class="info-row d-flex justify-content-between">
-                    <p class="font-size-16 font-wight-400 color-909090">
+                    <p style="font-size: 16px !important;font-weight:600 !important;color:#909090 !important"  class="font-size-16 font-wight-400 color-909090">
                       {{ "create_product_listing.watch_price" | translate }}
                     </p>
-                    <p class="font-size-16 font-wight-600 color-0F172A">
+                    <p style="font-size: 16px !important;font-weight:600 !important;color:#0F172A !important"  class="font-size-16 font-wight-600 color-0F172A">
                       {{
                         watchPriceDisplay | currency : "SR" : "symbol" : "1.2-2"
                       }}
@@ -5993,7 +6006,7 @@
                     [ngClass]="{
                       'reverse-order': translateService.currentLang !== 'en'
                     }"
-                    class="d-flex align-items-center"
+                    class="d-flex "
                   >
                     <img
                       [src]="coverImage.url"
@@ -6033,6 +6046,7 @@
                     'reverse-order-upload-images-labels':
                       translateService.currentLang !== 'en'
                   }"
+                  style="font-size: 18px !important;font-weight:700 !important;color:#132138 !important"
                   class="font-size-18 font-wight-700 color-132138 margin-0"
                 >
                   {{ "create_product_listing.Payout_Information" | translate }}
@@ -6049,7 +6063,8 @@
                     <p class="font-size-16 font-wight-400 color-909090">
                       {{ "create_product_listing.watch_price" | translate }}
                     </p>
-                    <p class="font-size-16 font-wight-600 color-0F172A">
+                    <p style="font-size: 16px !important;font-weight:600 !important;color:#0F172A !important" 
+                    class="font-size-16 font-wight-600 color-0F172A">
                       {{
                         watchPriceDisplay | currency : "SR" : "symbol" : "1.2-2"
                       }}

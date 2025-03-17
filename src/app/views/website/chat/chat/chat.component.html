@@ -101,7 +101,7 @@
 
         <div
           *ngFor="let chat of chats"
-          class="list-group-item d-flex justify-content-between align-items-start"
+          class="list-group-item"
         >
           <div (click)="getMesageDetails(chat)" style="cursor: pointer;width: 100%;" class="d-flex">
             <div *ngIf="chat.product.main_image; else noImage">
@@ -155,7 +155,6 @@
               </div>
               
             </div>
-
 
           </div>
 
@@ -266,10 +265,10 @@
                                     'justify-content-center': message.is_system_generated === 1
                                   }">
                              
-                                <div class="message-content-main">
+                                <div class="message-content-main small-screen-message-content">
                                   <div class="message-content">
-                                    <p>{{ message.message }}</p>
-                                    <p *ngIf="isShowMarkAsSold && isBuyerUser && message.action_type === 'mark_sold'">{{ "chat_com.seller_mark_sold_status" | translate }}</p>
+                                    <p class="smaall-screen-text">{{ message.message }}</p>
+                                    <p class="smaall-screen-text" *ngIf="isShowMarkAsSold && isBuyerUser && message.action_type === 'mark_sold'">{{ "chat_com.seller_mark_sold_status" | translate }}</p>
                 
                                     <div class="d-flex gap-2" *ngIf="message.attachments">
                                       <img *ngIf="!isArray(message.attachments)" 
@@ -300,32 +299,32 @@
                                         </div>
                                         
                                         <div class="d-flex justify-content-between align-items-center">
-                                          <p>{{ "chat_com.listing_id" | translate }}</p>
-                                          <p>{{customOfferDetails.product.serial_no}}</p>
+                                          <p class="smaall-screen-text">{{ "chat_com.listing_id" | translate }}</p>
+                                          <p class="smaall-screen-text">{{customOfferDetails.product.serial_no}}</p>
                                         </div>
                                         <div style="border-bottom: 1px solid #F2F5F8;" class="d-flex justify-content-between align-items-center">
-                                          <p>{{ "chat_com.add_price" | translate }}</p>
-                                          <p>{{customOfferDetails.product.price}}</p>
+                                          <p class="smaall-screen-text">{{ "chat_com.add_price" | translate }}</p>
+                                          <p class="smaall-screen-text">{{customOfferDetails.product.price}}</p>
                                         </div>
                                         <div style="border-bottom: 1px solid #F2F5F8;" class="d-flex justify-content-between align-items-center">
-                                          <p>{{ "chat_com.custom_offer" | translate }}</p>
-                                          <p>{{message.offer_price}}</p>
+                                          <p class="smaall-screen-text">{{ "chat_com.custom_offer" | translate }}</p>
+                                          <p class="smaall-screen-text">{{message.offer_price}}</p>
                                         </div>
                 
                                         <div *ngIf="message?.ship_price" style="border-bottom: 1px solid #F2F5F8;" class="d-flex justify-content-between align-items-center">
-                                          <p>{{ "chat_com.ship_price" | translate }}</p>
-                                          <p>{{message.ship_price}}</p>
+                                          <p class="smaall-screen-text">{{ "chat_com.ship_price" | translate }}</p>
+                                          <p class="smaall-screen-text">{{message.ship_price}}</p>
                                         </div>
                 
                                         <div *ngIf="message?.days" style="border-bottom: 1px solid #F2F5F8;" class="d-flex justify-content-between align-items-center">
-                                          <p>{{ "chat_com.offer_valid" | translate }}</p>
-                                          <p>{{message.days}} {{ "chat_com.days" | translate }}</p>
+                                          <p class="smaall-screen-text">{{ "chat_com.offer_valid" | translate }}</p>
+                                          <p class="smaall-screen-text">{{message.days}} {{ "chat_com.days" | translate }}</p>
                                         </div>
                 
                                         <div class="d-flex justify-content-center mt-3 gap-5">
                                           <button *ngIf="!isBuyerUser || (isBuyerUser && !isOfferStatusAccepted) || isOfferStatusAccepted" 
                                               (click)="cancelOfferStatus()" 
-                                              class="first-action-btn" 
+                                              class="first-action-btn smaall-screen-text" 
                                               [disabled]="reversedMessages.length === 0 || reversedMessages[reversedMessages.length - 1] !== message">
                                               {{ "chat_com.cancel_offer" | translate }}
                                           </button>
@@ -334,7 +333,7 @@
                                           <button [disabled]="(reversedMessages.length == 1 && isBuyerUser)" 
                                                   (click)="editOffer(customOfferDetails)" 
                                                   *ngIf="!isOfferStatusAccepted"
-                                                  class="first-action-btn border-left">
+                                                  class="first-action-btn border-left smaall-screen-text">
                                             {{ "chat_com.edit_offer" | translate }}
                                           </button>
                 
@@ -361,7 +360,7 @@
                                           </button> -->
 
                                           <button (click)="acceptOffer()" 
-                                                  class="second-action-btn border-left " 
+                                                  class="second-action-btn border-left smaall-screen-text" 
                                                   *ngIf="!isOfferStatusAccepted && (reversedMessages.length >= 2 || !isBuyerUser)"
                                                   [disabled]="message.message == 'You have sent an offer' || message.message == 'You have update the offer' || message.message == 'You have Updated the offer' ||  message.message ==  'I have Updated the offer'"
                                                   [ngClass]="{
@@ -372,7 +371,7 @@
                 
                                           <!-- Make Payment button -->
                                           <button *ngIf="isBuyerUser && isOfferStatusAccepted" 
-                                                  class="second-action-btn border-left " 
+                                                  class="second-action-btn border-left smaall-screen-text" 
                                                   (click)="makePayment()" 
                                                   [disabled]="reversedMessages.length === 0 || reversedMessages[reversedMessages.length - 1] !== message">
                                                   {{ "chat_com.make_payment" | translate }}
@@ -384,7 +383,7 @@
                                     </div>
                                   </div>
                                   <div class="time-text-styl">
-                                    <small [ngClass]="{ 'reverse-order-time-message': translateService.currentLang !== 'en' }"> {{ message.created_at | date : "MMMM d, yyyy, h:mm a" }}</small>
+                                    <small class="smaall-screen-text" [ngClass]="{ 'reverse-order-time-message': translateService.currentLang !== 'en' }"> {{ message.created_at | date : "MMMM d, yyyy, h:mm a" }}</small>
                                   </div>
                                 </div>
                               </div>
@@ -396,21 +395,21 @@
                             <div *ngIf="((!isCustomOffer && isShowBuyNowOffer) && !isShowMarkAsSold ) &&  ( !isShowPaymentMethod  )" class="col-md-12 d-flex justify-content-center">
                               <div *ngIf="isBuyerUser && !isBuyNowFromChatCheck" class="d-flex flex-column card p-2">
                                 <div style="border-bottom: 1px solid #F2F5F8;" class="d-flex justify-content-between align-items-center">
-                                  <p>{{ "chat_com.satisfy_message_for_confirm" | translate }}</p>
+                                  <p class="smaall-screen-text">{{ "chat_com.satisfy_message_for_confirm" | translate }}</p>
                                 </div>
                                 <div class="d-flex justify-content-center mt-3 gap-5">
-                                  <button class="first-action-btn " (click)="createOfferFromChat()">{{ "chat_com.create_offer" | translate }}</button>
-                                  <button class="second-action-btn" (click)="buyNowFromChat()">{{ "chat_com.buy_now" | translate }}</button>
+                                  <button class="first-action-btn smaall-screen-text" (click)="createOfferFromChat()">{{ "chat_com.create_offer" | translate }}</button>
+                                  <button class="second-action-btn smaall-screen-text" (click)="buyNowFromChat()">{{ "chat_com.buy_now" | translate }}</button>
                                 </div>
                               </div>
                 
                               <div *ngIf="!isBuyerUser && isBuyNowFromChatCheck"  class="d-flex flex-column card p-2">
                                 <div style="border-bottom: 1px solid #F2F5F8;" class="d-flex justify-content-between align-items-center">
-                                  <p>{{ "chat_com.buyer_initiated_message" | translate }}</p>
+                                  <p class="smaall-screen-text">{{ "chat_com.buyer_initiated_message" | translate }}</p>
                                 </div>
                                 <div class="d-flex justify-content-center mt-3 gap-5">
-                                  <button [disabled]="isShowMarkAsSold" class="first-action-btn " (click)="MarkAsSoldfromChat()">{{ "chat_com.mark_as_sold" | translate }}</button>
-                                  <button class="second-action-btn" (click)="addShippingFromChat()">{{ "chat_com.add_shipping" | translate }}</button>
+                                  <button [disabled]="isShowMarkAsSold" class="first-action-btn smaall-screen-text" (click)="MarkAsSoldfromChat()">{{ "chat_com.mark_as_sold" | translate }}</button>
+                                  <button class="second-action-btn smaall-screen-text" (click)="addShippingFromChat()">{{ "chat_com.add_shipping" | translate }}</button>
                                 </div>
                               </div>
                             </div>
@@ -420,11 +419,11 @@
                 
                               <div class="d-flex flex-column card p-2">
                                 <div style="border-bottom: 1px solid #F2F5F8;" class="d-flex justify-content-between align-items-center">
-                                  <p>{{ "chat_com.seller_confirmed_messg" | translate }}</p>
+                                  <p class="smaall-screen-text">{{ "chat_com.seller_confirmed_messg" | translate }}</p>
                                 </div>
                                 <div class="d-flex justify-content-center mt-3 gap-5">
-                                  <button class="first-action-btn " (click)="cancelOffer()">{{ "chat_com.cancel_order" | translate }}</button>
-                                  <button class="second-action-btn" (click)="makePayment()">{{ "chat_com.make_payment" | translate }}</button>
+                                  <button class="first-action-btn smaall-screen-text" (click)="cancelOffer()">{{ "chat_com.cancel_order" | translate }}</button>
+                                  <button class="second-action-btn smaall-screen-text" (click)="makePayment()">{{ "chat_com.make_payment" | translate }}</button>
                                 </div>
                               </div>
                             </div>
@@ -434,15 +433,15 @@
                             <div *ngIf="isBuyNow" class="d-flex justify-content-center">
                               <div class="card" style="width: 60%;background: #F9FAFB;">
                                 <div class="text-center">
-                                  <p class="font-size-14 font-weight-400 color-242424" 
+                                  <p class="font-size-14 font-weight-400 color-242424 smaall-screen-text" 
                                     style="border-bottom: 1px solid #E6ECF1;margin: 10px 5px 10px 5px;padding-bottom: 10px;">
                                     {{ "chat_com.satisfy_message_close_dealwith_seller" | translate }}
                                   </p>
                                 </div>
                                 <div class="d-flex justify-content-center gap-5">
-                                  <button (click)="cancelOffer()" *ngIf="isCancelOfferBuyer" class="first-action-btn " >{{ "chat_com.cancel_offer" | translate }}</button>
-                                  <button (click)="customOffer()" *ngIf="!isCancelOfferBuyer" class="first-action-btn ">{{ "chat_com.create_offer" | translate }}</button>
-                                  <button (click)="buyNowProduct()" class="second-action-btn">{{ "chat_com.buy_now" | translate }}</button>
+                                  <button (click)="cancelOffer()" *ngIf="isCancelOfferBuyer" class="first-action-btn smaall-screen-text" >{{ "chat_com.cancel_offer" | translate }}</button>
+                                  <button (click)="customOffer()" *ngIf="!isCancelOfferBuyer" class="first-action-btn smaall-screen-text">{{ "chat_com.create_offer" | translate }}</button>
+                                  <button (click)="buyNowProduct()" class="second-action-btn smaall-screen-text">{{ "chat_com.buy_now" | translate }}</button>
                                 </div>
                               </div>
                             </div>
@@ -489,14 +488,14 @@
                             </div>
                           </div>
                           <div>
-                            <button routerLink="/product-list" class="view-add-btn">{{ "chat_com.find_more_btn" | translate }}</button>
+                            <button routerLink="/product-list" class="view-add-btn smaall-screen-text">{{ "chat_com.find_more_btn" | translate }}</button>
                           </div>
                         </div>
                         </div>
                         
                         
                         
-                        <div *ngIf="chat_id_for_remove_unread_count || productDeatils" class="card-footer">
+                        <div *ngIf="chat_id_for_remove_unread_count || productDeatils" class="card-footer card-footer-small">
                             <div style="width: 4%;" class="d-flex">
                                 <button
                                 style="width: 0; height: 0; padding: 0"
@@ -516,7 +515,7 @@
                                 </svg>
                                 </button>
                                 <mat-menu #menu="matMenu">
-                                <button (click)="uploadImages()" mat-menu-item>
+                                <button class="smaall-screen-text" (click)="uploadImages()" mat-menu-item>
                                     <span>{{ "chat_com.Upload_Images" | translate }}</span>
                                 </button>
                                 </mat-menu>
@@ -543,7 +542,7 @@
                             {{ newMessage.length }} / 500
                           </div>
                           
-                            <button class="btn btn-dark" (click)="sendMessage()">
+                            <button class="btn btn-dark smaall-screen-text" (click)="sendMessage()">
                               {{ "chat_com.send" | translate }}
                             </button>
                           </div>

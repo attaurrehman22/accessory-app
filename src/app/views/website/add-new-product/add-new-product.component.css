@@ -182,7 +182,18 @@ background: none;
   .step-content {
     max-width: none !important;
   }
+
+  .save-can-btn {
+ width: 110px !important;
+ height: 45px !important;
+  }
 }
+
+/* @media (max-width: 768px) {
+  .step-content {
+    max-width: none !important;
+  }
+} */
 
 
 /* ------------------------- image form start--------------------------- */
@@ -791,4 +802,19 @@ button:hover {
 video {
   border: 1px solid #ccc;
   border-radius: 5px;
+}
+
+.small-screent-heading-text {
+  font-size: 14px !important;
+}
+.small-screent-paragrap-text {
+  font-size: 10px !important;
+}
+
+.reverse-order-helpp-card {
+  flex-direction: row-reverse;
+}
+
+.small-screen-btn-wrap {
+  flex-wrap: wrap;
 }
