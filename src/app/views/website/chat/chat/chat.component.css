@@ -298,11 +298,7 @@ input.form-control {
    flex-direction: row-reverse;
   }
 
-  .reverse-order-view-add-btn{
-    min-width: 52px !important;
-    padding: 10px 3px !important;
-    font-size: 10px !important;
-  }
+ 
 
   /* .reverse-order-time-message {
     display: flex;
@@ -317,6 +313,16 @@ input.form-control {
       }
       .small-screen-show {
         display: block !important;
+      }
+
+      .smaall-screen-text {
+        font-size: 10px !important;
+      }
+      
+      .small-scren-view-add-btn{
+        min-width: 52px !important;
+        padding: 10px 3px !important;
+        font-size: 10px !important;
       }
     }
 
