@@ -164,7 +164,7 @@
           {{ productDetails?.currency }} {{ productDetails?.price }}
         </p>
         <p class="color-666666 font-wight-400 font-size-14">
-         {{productDetails?.shipping_type}}
+         {{productDetails?.shipping_type == 'inclusiveShipping' ? 'Inclusive Shipping' : productDetails?.shipping_type == 'exclusiveShipping' ? 'Exclusive Shipping' : productDetails?.shipping_type == 'freeCharge' ? 'Free Charge' : productDetails?.shipping_type }}
         </p>
       </div>
 

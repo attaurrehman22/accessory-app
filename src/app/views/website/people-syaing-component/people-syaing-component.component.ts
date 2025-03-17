@@ -7,6 +7,7 @@ import {
 } from "@angular/core";
 import { TranslateService } from "@ngx-translate/core";
 import { HttpService } from "src/services/http/http.service";
+import { LanguageService } from "src/services/lang-service/language.service";
 
 @Component({
   selector: "app-people-syaing-component",
@@ -15,6 +16,8 @@ import { HttpService } from "src/services/http/http.service";
 })
 export class PeopleSyaingComponentComponent implements AfterViewInit, OnInit {
   @ViewChild("testimonialCarousel", { static: false }) carousel!: ElementRef;
+  supportLanguages = ["en", "ar", "fr", "ta", "hi"];
+  currentLanguage: string;
   activeIndex = 0;
   testimonials:any;
 
@@ -40,16 +43,22 @@ export class PeopleSyaingComponentComponent implements AfterViewInit, OnInit {
   }
 
   constructor(
-    private translateService: TranslateService,
-    private http: HttpService
+    public translateService: TranslateService,
+    private http: HttpService,
+      private languageService:LanguageService,
   ) {
-    const supportedLanguages = ["en", "ar"];
-    this.translateService.addLangs(supportedLanguages);
-    this.translateService.setDefaultLang("en");
+    this.translateService.addLangs(this.supportLanguages);
+    const savedLang = this.languageService.getCurrentLanguage();
+    if (this.supportLanguages.includes(savedLang)) {
+      this.translateService.use(savedLang);
+    } else {
+      const browserLang = this.translateService.getBrowserLang();
+      this.currentLanguage = browserLang;
 
-    const browserLang = this.translateService.getBrowserLang();
-    if (supportedLanguages.includes(browserLang)) {
-      this.translateService.use(browserLang);
+      if (this.supportLanguages.includes(browserLang)) {
+        this.translateService.use(browserLang);
+        this.languageService.setLanguage(browserLang);
+      }
     }
   }
 

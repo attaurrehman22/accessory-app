@@ -143,9 +143,9 @@ export class BuyProductComponentComponent implements OnInit {
   ngOnInit(): void {
     window.scrollTo(0, 0);
     this.isUserLogin = localStorage.getItem("isLoggedIn");
-    if (this.isUserLogin == 'false') {
-      this.loginFirst();
-    }
+    // if (this.isUserLogin == 'false') {
+    //   this.loginFirst();
+    // }
     if (this.isUserLogin === "true") {
       this.getWishList();
     }

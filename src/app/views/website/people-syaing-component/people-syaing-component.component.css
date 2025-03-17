@@ -260,3 +260,24 @@
   border-bottom: 1px solid #484848;
   width: 60%; 
 }
+
+.reverse-order {
+  flex-direction: row-reverse;
+}
+
+.reverse-order > .reverse-text > .card-body > p {
+  text-align: end;
+}
+
+.reverse-order > .reverse-text > .card-body > .reverse-star {
+  display: flex;
+  justify-content: end;
+}
+
+.reverse-order > .reverse-text > .card-body > .horizontal-line {
+ width: 100%;
+}
+
+.reverse-order > .reverse-text > .card-body > .d-flex > p {
+  text-align: end;
+}

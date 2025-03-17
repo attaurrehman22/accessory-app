@@ -91,9 +91,10 @@ export class ModelLoginComponent implements OnInit {
           
               this.dialogRef.close(true);
             } else {
-              this.router.navigateByUrl("").then(() => {
-                window.location.reload();
-              });
+              // this.router.navigateByUrl("").then(() => {
+              //   window.location.reload();
+              // });
+              window.location.reload();
               // this.router.navigateByUrl("");
             }
           }
