@@ -61,6 +61,11 @@ export class ModelLoginComponent implements OnInit {
     }
   }
 
+  hidepass: boolean = true;
+  togglePasswordVisibilityofFirstLogin() {
+    this.hidepass = !this.hidepass;
+  }
+
   routeTo: any;
   ngOnInit(): void {
     this.loginForm = this.fb.group({

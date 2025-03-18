@@ -51,6 +51,16 @@ export class ModelRegisterComponent implements OnInit {
     validators: [Validators.required, notsame1()],
   });
 
+  hidepass: boolean = true;
+  togglePasswordVisibilityofFirstLogin() {
+    this.hidepass = !this.hidepass;
+  }
+
+  hideconfirmpass: boolean = true;
+  toggleConfirmPasswordVisibilityofFirstLogin() {
+    this.hideconfirmpass = !this.hideconfirmpass;
+  }
+
   constructor(
     private alertService: AlertsServicesService,
     private userService: UserService,

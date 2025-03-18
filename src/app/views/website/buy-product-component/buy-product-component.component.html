@@ -882,13 +882,13 @@
             <i class="bi bi-star-fill"></i>
           </div>
           <h4 class="mb-0 ml-2">{{ dealerUserDetails.overall_rating }}</h4>
-          <p class="mb-0 ml-2 color-676986">
+          <p class="mb-0 ml-2 color-676986 small-screen-size-text">
             Based on {{ dealerUserDetails.total_reviews }} reviews
           </p>
         </div>
 
         <div class="row align-items-center mb-1" *ngIf="dealerReviewsRatings">
-          <div class="col-2 color-2c3e50">
+          <div class="col-2 color-2c3e50 d-flex">
             5<i class="bi bi-star-fill mx-2"></i>
           </div>
           <div class="col-8">
@@ -907,7 +907,7 @@
         </div>
 
         <div class="row align-items-center mb-1">
-          <div class="col-2 color-2c3e50">
+          <div class="col-2 color-2c3e50 d-flex">
             4<i class="bi bi-star-fill mx-2"></i>
           </div>
           <div class="col-8">
@@ -926,7 +926,7 @@
         </div>
 
         <div class="row align-items-center mb-1">
-          <div class="col-2 color-2c3e50">
+          <div class="col-2 color-2c3e50 d-flex">
             3<i class="bi bi-star-fill mx-2"></i>
           </div>
           <div class="col-8">
@@ -945,7 +945,7 @@
         </div>
 
         <div class="row align-items-center mb-1">
-          <div class="col-2 color-2c3e50">
+          <div class="col-2 color-2c3e50 d-flex">
             2<i class="bi bi-star-fill mx-2"></i>
           </div>
           <div class="col-8">
@@ -964,7 +964,7 @@
         </div>
 
         <div class="row align-items-center">
-          <div class="col-2 color-2c3e50">
+          <div class="col-2 color-2c3e50 d-flex">
             1<i class="bi bi-star-fill mx-2"></i>
           </div>
           <div class="col-8">
@@ -1309,6 +1309,12 @@
             Promoted
           </div>
         </div>
+        <div class="" style="background-color: #FFF;
+        padding: 5px 5px 5px 5px;
+        border-radius: 25px;
+        display: flex;
+        align-items: center;
+        justify-content: center;">
         <i
           *ngIf="isUserLogin === 'true'"
           (click)="addWishList(watch.id)"
@@ -1318,6 +1324,7 @@
           "
           aria-hidden="true"
         ></i>
+        </div>
       </div>
     </div>
   </div>

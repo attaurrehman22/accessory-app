@@ -827,5 +827,9 @@ mat-grid-list {
    .brand-sec {
     gap: 5px;
    }
+.small-screen-size-text{
+  font-size: 12px;
+}
+
 
 }

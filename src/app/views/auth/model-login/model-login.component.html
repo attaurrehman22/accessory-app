@@ -27,10 +27,21 @@
           <input
             formControlName="password"
             matInput
-            type="password"
+            [type]="hidepass ? 'password' : 'text'"
             placeholder="{{ 'login.password' | translate }}"
             required
           />
+
+          <button
+          mat-icon-button
+          matSuffix
+          type="button"
+          (click)="togglePasswordVisibilityofFirstLogin()"
+        >
+          <!-- <mat-icon>{{ hidepass ? "visibility_off" : "visibility" }}</mat-icon> -->
+          <i [class]="hidepass ?  'fas fa-eye-slash': 'fas fa-eye'"></i>
+        </button>
+
           <mat-error *ngIf="loginForm.get('password')?.hasError('required')">
             {{ "login.password_error_req" | translate }}
           </mat-error>

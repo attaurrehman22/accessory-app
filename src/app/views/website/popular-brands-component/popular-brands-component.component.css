@@ -11,9 +11,15 @@
   background-color: #f8f9fa;
   border-radius: 8px;
   padding: 10px 20px 10px 20px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: auto;
   text-align: center;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  /* box-shadow: 0 2px 4px #0000001a, 0 -2px 4px #0000001a, 2px 0 4px #0000001a, -2px 0 4px #0000001a; */
+  box-shadow: rgba(17, 17, 26, 0.1) 0px 1px 0px, rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 48px;
+
 }
 .timer-box p {
   font-weight: 500;

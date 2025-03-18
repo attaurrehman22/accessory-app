@@ -112,13 +112,20 @@ class="category_btn"
                 Promoted
               </div>
             </div>
-            <i
-              *ngIf="isUserLogin ==='true'"
-              (click)="addWishList(watch)"
-              class="fa"
-              [ngClass]="wishList?.includes(watch.id) ? 'fa-heart' : 'fa-heart fa-heart-o'"
-              aria-hidden="true"
-            ></i>
+            <div class="" style="background-color: #FFF;
+            padding: 5px 5px 5px 5px;
+            border-radius: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;">
+              <i
+                *ngIf="isUserLogin ==='true'"
+                (click)="addWishList(watch)"
+                class="fa"
+                [ngClass]="wishList?.includes(watch.id) ? 'fa-heart' : 'fa-heart fa-heart-o'"
+                aria-hidden="true"
+              ></i>
+            </div>
           </div>
         </div>
       </div>
