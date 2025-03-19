@@ -4,9 +4,8 @@
 >
   <!-- Steps Section -->
   <div class="col-lg-6 col-md-6 col-sm-12">
-    <div class="my-5">
+    <div class="">
       <p 
-      style="font-size: 5vh;"
        class="mb-4 font-wight-700 color-484848 cormorant-styl">
         {{ "explore_chrono.label" | translate }}
       </p>
@@ -36,14 +35,14 @@
                 1
               </div>
               <div class="text-start">
-                <h5 style="font-size: 2.5vh;" class="mb-1">{{ "explore_chrono.browse" | translate }}</h5>
+                <h5 class="mb-1 label-style">{{ "explore_chrono.browse" | translate }}</h5>
                 <p
-                  class="mb-0"
+                  class="mb-0 desc-style"
                   [ngClass]="{
                     '': selectedStep === 1,
                     'text-muted': selectedStep !== 1
                   }"
-                  style="font-size: 1.7vh"
+                  
                   *ngIf="selectedStep === 1"
                 >
                   {{ "explore_chrono.browse_para" | translate }}
@@ -84,14 +83,14 @@
                 2
               </div>
               <div class="text-start">
-                <h5 style="font-size: 2.5vh;" class="mb-1">{{ "explore_chrono.secure" | translate }}</h5>
+                <h5 class="mb-1 label-style">{{ "explore_chrono.secure" | translate }}</h5>
                 <p
-                  class="mb-0"
+                  class="mb-0 desc-style"
                   [ngClass]="{
                     '': selectedStep === 2,
                     'text-muted': selectedStep !== 2
                   }"
-                  style="font-size: 1.7vh"
+                  
                   *ngIf="selectedStep === 2"
                 >
                   {{ "explore_chrono.secure_para" | translate }}
@@ -132,14 +131,14 @@
                 3
               </div>
               <div class="text-start">
-                <h5 style="font-size: 2.5vh;" class="mb-1">{{ "explore_chrono.get_it" | translate }}</h5>
+                <h5 class="mb-1 label-style">{{ "explore_chrono.get_it" | translate }}</h5>
                 <p
-                  class="mb-0"
+                  class="mb-0 desc-style"
                   [ngClass]="{
                     '': selectedStep === 3,
                     'text-muted': selectedStep !== 3
                   }"
-                  style="font-size: 1.7vh"
+                  
                   *ngIf="selectedStep === 3"
                 >
                   {{ "explore_chrono.get_it_para" | translate }}
@@ -179,14 +178,14 @@
                 4
               </div>
               <div class="text-start">
-                <h5 style="font-size: 2.5vh;" class="mb-1">{{ "explore_chrono.sell" | translate }}</h5>
+                <h5 class="mb-1 label-style">{{ "explore_chrono.sell" | translate }}</h5>
                 <p
-                  class="mb-0"
+                  class="mb-0 desc-style"
                   [ngClass]="{
                     '': selectedStep === 4,
                     'text-muted': selectedStep !== 4
                   }"
-                  style="font-size: 1.7vh"
+                  
                   *ngIf="selectedStep === 4"
                 >
                   {{ "explore_chrono.sell_para" | translate }}
@@ -208,11 +207,11 @@
 
   <!-- Images for larger screens, outside of the steps -->
   <div
-    class="col-lg-6 col-md-6 col-sm-12 d-flex"
+    class="col-lg-6 col-md-6 col-sm-12 d-flex images-div"
     *ngIf="!isSmallScreen"
     [ngClass]="{ 'reverse-res-img': translateService.currentLang !== 'en' }"
   >
-    <div class="back-styl">
+    <!-- <div class="back-styl">
       <div class="mt-4" *ngIf="selectedStep === 1">
         <img
           class="res-img"
@@ -241,6 +240,41 @@
           alt="Sell Image"
         />
       </div>
+    </div> -->
+
+    <div class="product-grid">
+      <div class="product-card" *ngIf="selectedStep === 1">
+        <img
+          class="img-style"
+          src="../../../../assets/images/browse-discover.png"
+          alt="Browse Image"
+        />
+      </div>
+
+      <div class="product-card" *ngIf="selectedStep === 2">
+        <img
+          class="img-style"
+          src="../../../../assets/images/deal-purchase.png"
+          alt="Browse Image"
+        />
+      </div>
+
+      <div class="product-card" *ngIf="selectedStep === 3">
+        <img
+          class="img-style"
+          src="../../../../assets/images/get-delivered-safely.png"
+          alt="Browse Image"
+        />
+      </div>
+
+      <div class="product-card" *ngIf="selectedStep === 4">
+        <img
+          class="img-style"
+          src="../../../../assets/images/sell-with-ease.png"
+          alt="Browse Image"
+        />
+      </div>
+     
     </div>
   </div>
 </div>

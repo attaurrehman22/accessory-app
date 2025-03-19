@@ -7,6 +7,18 @@
   background-color: #F8F8F8;
 }
 
+.product-card {
+  background-image: url('/assets/images/how-back-img.png');
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.img-style {
+  width: 98%;
+  margin-top: 10px;
+
+}
+
 .back-styl {
   background-image: url('/assets/images/how-back-img.png');
   background-size: cover;
@@ -16,21 +28,45 @@
   width: 100%;
 }
 
+
 .res-img {
   max-height: 60vh;
   min-height: 60vh;
   width: 98%;
 }
 
-@media (max-width: 424px) {
-  .back-styl {
-    height: 42vh !important;
+.cormorant-styl {
+  font-size: 5vh;
+}
+
+.label-style {
+  font-size: 2.5vh;
+}
+
+.desc-style {
+  font-size: 1.7vh;
+}
+
+@media (max-width: 1565px) {
+  .cormorant-styl {
+    font-size: 3vh;
   }
 
-  .res-img {
-    height: 40vh !important;
+  .label-style {
+    font-size: 1.5vh;
+  }
+
+  .desc-style {
+    font-size: 1.2vh;
   }
 }
+
+/* @media (max-width: 2000px) {
+  .images-div {
+    margin-top: 75px;
+  }
+} */
+
 
 @media (max-width: 1000px) {
   .reverse-res-img .back-styl .mt-4 img {
