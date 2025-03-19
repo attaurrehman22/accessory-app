@@ -129,5 +129,6 @@
 @media (max-width: 768px) {
   .carousel-control-next, .carousel-control-prev {
     width: 15% !important;
+    top: -42vh;
   }
 }

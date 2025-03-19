@@ -553,7 +553,7 @@ mat-grid-list {
 }
 
 .custom-card {
-  height: 445px !important;
+  min-height: 445px !important;
 }
 
 .custom-range-slider {
@@ -833,3 +833,158 @@ mat-grid-list {
 
 
 }
+
+.dealer-name-style {
+  border-right: 1px solid #666666;
+              color: #404040;
+              padding-right: 7px;
+              text-decoration: underline;
+              text-decoration-color: #404040;
+              cursor: pointer;
+}
+
+.dealer-since-year-style {
+  border-right: 1px solid #666666;
+              color: #666666;
+              padding-right: 7px;
+              padding-left: 7px;
+}
+
+.reverse-order-dealer-div > .d-flex > .d-flex > .d-flex > .d-flex > .dealer-name-style {
+  border-right: 0;
+  border-left: 1px solid #666666;
+  padding-left: 7px;
+}
+
+.reverse-order-dealer-div > .d-flex > .d-flex > .d-flex > .d-flex > .dealer-since-year-style {
+  border-right: 0;
+  border-left: 1px solid #666666;
+}
+
+.dealer-reviews-points-style {
+  border-radius: 16px; border: 1px solid #f3f3f3
+}
+
+.reverse-order-dealer-reviews > .container > .d-flex {
+  flex-direction: row-reverse;
+}
+.reverse-order-dealer-reviews > .container > .row {
+  flex-direction: row-reverse;
+}
+
+.reverse-order-dealer-reviews > .container > .row > .d-flex{
+  flex-direction: row-reverse;
+}
+
+.reverse-order-dealer-reviews > .container > .row > .for-reverse-style > .progress{
+  flex-direction: row-reverse;
+}
+
+.text-right-style {
+  text-align: right;
+}
+
+.reverse-order-dealer-reviews > .container > .row > .text-right-style{
+  text-align: left;
+}
+
+.dealer-delivery-and-location-div {
+  border-radius: 16px; border: 1px solid #f3f3f3; padding: 5px
+}
+
+
+.reverse-order-dealer-delivery-and-location > .dealer-delivery-and-location-div > .d-flex {
+  flex-direction: row-reverse;
+}
+
+.dealer-deliver-and-location-name {
+  border-right: 1px solid #666666;
+  color: #404040;
+  padding-right: 7px;
+  font-weight: bold;
+}
+
+.reverse-order-dealer-delivery-and-location {
+  flex-direction: row-reverse;
+}
+
+.reverse-order-dealer-delivery-and-location > .dealer-delivery-and-location-div > .d-flex > .d-flex > .d-flex {
+  flex-direction: row-reverse;
+}
+
+.reverse-order-dealer-delivery-and-location > .dealer-delivery-and-location-div > .d-flex > .d-flex > .d-flex > .dealer-deliver-and-location-name {
+  border-right: 0;
+  border-left: 1px solid #666666 ;
+  padding-left: 5px;
+}
+
+.reverse-order-dealer-delivery-and-location > .dealer-delivery-and-location-div > .container > .row {
+  flex-direction: row-reverse;
+}
+
+.reverse-order-dealer-delivery-and-location > .dealer-delivery-and-location-div > .container > .row > .col > .d-flex {
+  flex-direction: row-reverse;
+}
+
+.reverse-order-dealer-delivery-and-location > .dealer-delivery-and-location-div > .container > .row > .col > .d-flex > .d-flex > p {
+  width: -webkit-fill-available;
+  text-align: end;
+}
+
+.reverse-order-dealer-experience {
+  flex-direction: row-reverse;
+}
+
+.reverse-order-dealer-experience > .flex-wrap > .container > .p-3 > .d-flex  {
+  flex-direction: row-reverse;
+  /* width: 72%; */
+}
+
+.reverse-order-dealer-experience > .flex-wrap > .container > .p-3 > .margin-0  {
+  text-align: end;
+}
+
+.reverse-order-dealer-experience > .flex-wrap > .container > .p-3 > .d-flex {
+  flex-direction: row-reverse;
+}
+
+.reverse-order-dealer-experience > .flex-wrap > .container > .p-3 > .d-flex > .reviewing-style > p {
+  text-align: end;
+  width: 100%;
+}
+
+.text-left-style {
+  text-align: left;
+}
+
+.reverse-order-dealer-experience > .flex-wrap > .container > .p-3 > p {
+  text-align: end;
+}
+
+.reverse-order-dealer-experience > .flex-wrap > .container > .p-3 > .reversed-style-ofRating {
+ gap: 5px;
+}
+
+.reverse-order-dealer-experience > .poor-excelent-style > .container > .row {
+  flex-direction: row-reverse;
+}
+
+.reverse-order-dealer-experience > .poor-excelent-style > .container > .row > .remark-style-of-review > p {
+  text-align: end;
+}
+
+.reverse-order-dealer-experience > .poor-excelent-style > .container > .row > .poor-excelent-style-label > .d-flex {
+flex-direction: row-reverse;
+}
+
+
+.reverse-order-dealer-experience > .poor-excelent-style > .container > .row > .poor-excelent-style-label > p {
+  text-align: right;
+}
+
+/* @media (max-width: 768px) {
+  .reverse-order-dealer-experience > .flex-wrap > .container > .p-3 > .d-flex  {
+    flex-direction: row-reverse;
+    width: 100%;
+  }
+} */

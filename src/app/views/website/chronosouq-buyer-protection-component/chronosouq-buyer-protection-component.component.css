@@ -6,7 +6,7 @@
 }
 
 .card {
-  height: 465px !important;
+  min-height: 465px !important;
 }
 
 .text-section h2 {

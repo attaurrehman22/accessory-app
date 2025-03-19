@@ -1,12 +1,13 @@
 <div
-  class="global-main-wraper mt-5 mb-5 d-flex flex-wrap container"
+  class="global-main-wraper mt-5 mb-5 d-flex flex-wrap"
   [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }"
 >
   <!-- Steps Section -->
   <div class="col-lg-6 col-md-6 col-sm-12">
     <div class="my-5">
       <p 
-       class="mb-4 font-size-50 font-wight-700 color-484848 cormorant-styl">
+      style="font-size: 5vh;"
+       class="mb-4 font-wight-700 color-484848 cormorant-styl">
         {{ "explore_chrono.label" | translate }}
       </p>
       <div class="row justify-content-center">
@@ -30,12 +31,12 @@
                   'bg-dark text-white': selectedStep === 1,
                   'bg-active-color ': selectedStep !== 1
                 }"
-                style="width: 2.3rem; height: 2.2rem"
+                style="min-width: 2.3rem !important; height: 2.2rem"
               >
                 1
               </div>
               <div class="text-start">
-                <h5 class="mb-1">{{ "explore_chrono.browse" | translate }}</h5>
+                <h5 style="font-size: 2.5vh;" class="mb-1">{{ "explore_chrono.browse" | translate }}</h5>
                 <p
                   class="mb-0"
                   [ngClass]="{
@@ -78,12 +79,12 @@
                   'bg-dark text-white': selectedStep === 2,
                   'bg-active-color ': selectedStep !== 2
                 }"
-                style="width: 2.3rem; height: 2.2rem"
+                style="min-width: 2.3rem !important; height: 2.2rem"
               >
                 2
               </div>
               <div class="text-start">
-                <h5 class="mb-1">{{ "explore_chrono.secure" | translate }}</h5>
+                <h5 style="font-size: 2.5vh;" class="mb-1">{{ "explore_chrono.secure" | translate }}</h5>
                 <p
                   class="mb-0"
                   [ngClass]="{
@@ -126,12 +127,12 @@
                   'bg-dark text-white': selectedStep === 3,
                   'bg-active-color ': selectedStep !== 3
                 }"
-                style="width: 2.3rem; height: 2.2rem"
+                style="min-width: 2.3rem !important; height: 2.2rem"
               >
                 3
               </div>
               <div class="text-start">
-                <h5 class="mb-1">{{ "explore_chrono.get_it" | translate }}</h5>
+                <h5 style="font-size: 2.5vh;" class="mb-1">{{ "explore_chrono.get_it" | translate }}</h5>
                 <p
                   class="mb-0"
                   [ngClass]="{
@@ -173,12 +174,12 @@
                   'bg-dark text-white': selectedStep === 4,
                   'bg-active-color ': selectedStep !== 4
                 }"
-                style="width: 2.3rem; height: 2.2rem"
+                style="min-width: 2.3rem !important; height: 2.2rem"
               >
                 4
               </div>
               <div class="text-start">
-                <h5 class="mb-1">{{ "explore_chrono.sell" | translate }}</h5>
+                <h5 style="font-size: 2.5vh;" class="mb-1">{{ "explore_chrono.sell" | translate }}</h5>
                 <p
                   class="mb-0"
                   [ngClass]="{

@@ -612,7 +612,28 @@
     "Published_At":"Published At",
     "Brand":"Brand",
     "model":"Model",
-    "year_of_production":"Year of Production"
+    "year_of_production":"Year of Production",
+    "total_listing":"Total Listing",
+    "active_listing":"Active Listing",
+    "Watches_Sold":"Watches Sold",
+    "store_location":"Store Location",
+    "Delivery_Record":"Delivery Record",
+    "Visit_Dealer_Profile":"Visit Dealer Profile",
+    "rated":"Rated",
+    "Reviewing":"Reviewing",
+
+    "Cosmetic_Condition":"Cosmetic Condition",
+    "Poor":"Poor",
+    "Excellent":"Excellent",
+    "Satisfaction":"Satisfaction",
+    "Low":"Low",
+    "High":"High",
+    "Experience":"Experience",
+    "Bad":"Bad",
+    "Great":"Great",
+    "Remarkable_Product":"Remarkable Product"
+
+
   }
   
 }

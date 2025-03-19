@@ -23,11 +23,15 @@
         class="img-fluid"
         alt="Selected Watch"
       />
-      <div [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }" class="featured-card">
-        <div *ngIf="productDetails?.feature_item === 1" class="featured-card-featred">
-          <p  style="margin: 0">
-            Featured
-          </p>
+      <div
+        [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }"
+        class="featured-card"
+      >
+        <div
+          *ngIf="productDetails?.feature_item === 1"
+          class="featured-card-featred"
+        >
+          <p style="margin: 0">Featured</p>
         </div>
         <div class="featured-card-heart-sec">
           <div
@@ -51,7 +55,8 @@
         </div>
       </div>
 
-      <div [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }"
+      <div
+        [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }"
         *ngIf="productDetails && productDetails?.views_count"
         class="featured-bottom"
       >
@@ -81,19 +86,25 @@
         </div>
       </div>
     </div>
-    <div *ngIf="productDetails" class="col-md-6" [ngClass]="{ 'reverse-order-prod-price-des': translateService.currentLang !== 'en' }">
+    <div
+      *ngIf="productDetails"
+      class="col-md-6"
+      [ngClass]="{
+        'reverse-order-prod-price-des': translateService.currentLang !== 'en'
+      }"
+    >
       <div class="routes-div">
         <p class="routes-styl" style="cursor: pointer" routerLink="/">
           Homepage /
         </p>
         <p *ngIf="productDetails?.category" class="routes-styl-active">
-           {{ productDetails?.category?.name }} /
+          {{ productDetails?.category?.name }} /
         </p>
         <p *ngIf="productDetails?.brand?.name" class="routes-styl-active">
-           {{ productDetails?.brand?.name }} /
+          {{ productDetails?.brand?.name }} /
         </p>
         <p *ngIf="productDetails?.listing_code" class="routes-styl-active">
-           {{ productDetails?.listing_code }}
+          {{ productDetails?.listing_code }}
         </p>
       </div>
 
@@ -103,7 +114,10 @@
       >
         <i class="fas fa-map-marker-alt"></i>
         <p class="routes-styl">{{ productDetails?.created_by?.city }}</p>
-        <p *ngIf="productDetails?.published_date" class="routes-styl"> {{ "buy_product.Published_At" | translate }} : {{ productDetails?.published_date | date: 'yyyy-MM-dd' }}</p>
+        <p *ngIf="productDetails?.published_date" class="routes-styl">
+          {{ "buy_product.Published_At" | translate }} :
+          {{ productDetails?.published_date | date : "yyyy-MM-dd" }}
+        </p>
       </div>
 
       <div class="d-flex flex-wrap">
@@ -123,8 +137,12 @@
             />
           </div>
           <div style="display: flex; flex-direction: column">
-            <p class="margin-0 small-screen-text"> {{ "buy_product.Brand" | translate }}</p>
-            <p class="margin-0 small-screen-text">{{ productDetails?.brand?.name }}</p>
+            <p class="margin-0 small-screen-text">
+              {{ "buy_product.Brand" | translate }}
+            </p>
+            <p class="margin-0 small-screen-text">
+              {{ productDetails?.brand?.name }}
+            </p>
           </div>
         </div>
 
@@ -137,8 +155,12 @@
             />
           </div>
           <div style="display: flex; flex-direction: column">
-            <p class="margin-0 small-screen-text">{{ "buy_product.model" | translate }}</p>
-            <p class="margin-0 small-screen-text">{{ productDetails?.model }}</p>
+            <p class="margin-0 small-screen-text">
+              {{ "buy_product.model" | translate }}
+            </p>
+            <p class="margin-0 small-screen-text">
+              {{ productDetails?.model }}
+            </p>
           </div>
         </div>
 
@@ -151,7 +173,9 @@
             />
           </div>
           <div style="display: flex; flex-direction: column">
-            <p class="margin-0 small-screen-text">{{ "buy_product.year_of_production" | translate }}</p>
+            <p class="margin-0 small-screen-text">
+              {{ "buy_product.year_of_production" | translate }}
+            </p>
             <p class="margin-0 small-screen-text">
               {{ productDetails?.year_of_production }}
             </p>
@@ -164,7 +188,15 @@
           {{ productDetails?.currency }} {{ productDetails?.price }}
         </p>
         <p class="color-666666 font-wight-400 font-size-14">
-         {{productDetails?.shipping_type == 'inclusiveShipping' ? 'Inclusive Shipping' : productDetails?.shipping_type == 'exclusiveShipping' ? 'Exclusive Shipping' : productDetails?.shipping_type == 'freeCharge' ? 'Free Charge' : productDetails?.shipping_type }}
+          {{
+            productDetails?.shipping_type == "inclusiveShipping"
+              ? "Inclusive Shipping"
+              : productDetails?.shipping_type == "exclusiveShipping"
+              ? "Exclusive Shipping"
+              : productDetails?.shipping_type == "freeCharge"
+              ? "Free Charge"
+              : productDetails?.shipping_type
+          }}
         </p>
       </div>
 
@@ -173,17 +205,20 @@
           class="header-highligted-color font-wight-400 font-size-16 margin-0"
           style="padding-bottom: 7px"
         >
-        {{ "buy_product.condition" | translate }}
+          {{ "buy_product.condition" | translate }}
         </p>
         <button class="condition-btn">{{ productDetails?.condition }}</button>
       </div>
 
-      <div *ngIf="productDetails?.scope_of_delivery" class="d-flex flex-column mt-3">
+      <div
+        *ngIf="productDetails?.scope_of_delivery"
+        class="d-flex flex-column mt-3"
+      >
         <p
           class="header-highligted-color font-wight-400 font-size-16 margin-0"
           style="padding-bottom: 7px"
         >
-        {{ "buy_product.Scope_of_Delivery" | translate }}
+          {{ "buy_product.Scope_of_Delivery" | translate }}
         </p>
         <div class="d-flex flex-wrap gap-2">
           <button class="watch-btn">
@@ -192,12 +227,15 @@
         </div>
       </div>
 
-      <div *ngIf="productDetails?.estimate_delivery" class="d-flex flex-column mt-3">
+      <div
+        *ngIf="productDetails?.estimate_delivery"
+        class="d-flex flex-column mt-3"
+      >
         <p
           class="header-highligted-color font-wight-400 font-size-16 margin-0"
           style="padding-bottom: 7px"
         >
-        {{ "buy_product.Est_Delivery" | translate }}
+          {{ "buy_product.Est_Delivery" | translate }}
         </p>
         <button class="condition-btn">
           {{ productDetails?.estimate_delivery }}
@@ -229,7 +267,9 @@
 <div
   *ngIf="productDetails?.created_by && isDealer === 'dealer'"
   class="container mt-2"
-  [ngClass]="{ 'reverse-order-dealer-div': translateService.currentLang !== 'en' }"
+  [ngClass]="{
+    'reverse-order-dealer-div': translateService.currentLang !== 'en'
+  }"
 >
   <div
     class="col-md-6 p-3 d-flex flex-wrap align-items-center justify-content-between flex-row"
@@ -245,46 +285,49 @@
       <div class="d-flex flex-column">
         <div class="d-flex align-items-center">
           <h5
-            class="mb-0 font-weight-bold"
-            style="
-              border-right: 1px solid #666666;
-              color: #404040;
-              padding-right: 7px;
-              text-decoration: underline;
-              text-decoration-color: #404040;
-              cursor: pointer;
-            "
+            class="mb-0 font-weight-bold dealer-name-style"
             (click)="scrollToTarget()"
           >
             {{ productDetails?.created_by?.name }}
           </h5>
-          <small
-            class="text-muted"
-            style="
-              border-right: 1px solid #666666;
-              color: #666666;
-              padding-right: 7px;
-              padding-left: 7px;
-            "
-            > {{ getDealerSince(productDetails?.created_by?.created_at) }}</small
+          <small class="text-muted dealer-since-year-style">
+            {{ getDealerSince(productDetails?.created_by?.created_at) }}</small
           >
-          <span  *ngIf="
-          dealerUserDetails?.overall_rating &&
-          dealerUserDetails?.total_reviews
-        " class="text-warning mr-1" style="padding-left: 7px">
+          <span
+            *ngIf="
+              dealerUserDetails?.overall_rating &&
+              dealerUserDetails?.total_reviews
+            "
+            class="text-warning mr-1"
+            style="padding-left: 7px"
+          >
             <i class="fas fa-star"></i>
           </span>
           <small
             *ngIf="
               dealerUserDetails?.overall_rating &&
-              dealerUserDetails?.total_reviews
+              dealerUserDetails?.total_reviews &&
+              translateService.currentLang == 'en'
             "
             class="text-muted color-666666"
-            >{{ dealerUserDetails?.overall_rating }} ({{
+          >
+            {{ dealerUserDetails?.overall_rating }} ({{
               dealerUserDetails?.total_reviews
             }}
-            reviews)</small
+            reviews)
+          </small>
+
+          <small
+            *ngIf="
+              dealerUserDetails?.overall_rating &&
+              dealerUserDetails?.total_reviews &&
+              translateService.currentLang !== 'en'
+            "
+            class="text-muted color-666666"
           >
+            {{ dealerUserDetails?.overall_rating }} (مراجعات
+            {{ dealerUserDetails?.total_reviews }})
+          </small>
         </div>
         <button
           style="
@@ -298,7 +341,7 @@
           "
           (click)="gotToChat()"
         >
-        {{ "buy_product.chat_with_dealer" | translate }}
+          {{ "buy_product.chat_with_dealer" | translate }}
           <!-- Chat with Dealer -->
         </button>
       </div>
@@ -306,7 +349,13 @@
   </div>
 </div>
 
-<div  [ngClass]="{ 'reverse-order-dealer-div': translateService.currentLang !== 'en' }" *ngIf="isDealer == 'user'" class="container mt-2">
+<div
+  [ngClass]="{
+    'reverse-order-dealer-div': translateService.currentLang !== 'en'
+  }"
+  *ngIf="isDealer == 'user'"
+  class="container mt-2"
+>
   <div
     class="col-md-6 p-3 d-flex flex-wrap align-items-center justify-content-between flex-row"
     style="border-radius: 16px; border: 1px solid #f3f3f3"
@@ -351,9 +400,9 @@
             margin-top: 8px;
             background: none;
           "
-           (click)="gotToChat()"
+          (click)="gotToChat()"
         >
-        {{ "buy_product.chat_with_seller" | translate }}
+          {{ "buy_product.chat_with_seller" | translate }}
           <!-- Chat with Seller -->
         </button>
       </div>
@@ -415,18 +464,21 @@
           </div>
 
           <div class="col-12">
-            <div *ngIf="productDetails?.meta_description" class="col-12 d-flex flex-wrap justify-content-center">
+            <div
+              *ngIf="productDetails?.meta_description"
+              class="col-12 d-flex flex-wrap justify-content-center"
+            >
               <p
                 class="font-size-20 font-wight-600 color-242424 margin-0 text-center"
               >
-                {{ productDetails?.meta_description || 'N/A' }}
+                {{ productDetails?.meta_description || "N/A" }}
               </p>
             </div>
             <div *ngIf="productDetails?.description" class="col-12">
               <p
                 class="font-size-16 font-wight-400 color-666666 margin-0 text-center"
               >
-                {{ productDetails?.description || 'N/A' }}
+                {{ productDetails?.description || "N/A" }}
               </p>
             </div>
           </div>
@@ -476,7 +528,7 @@
                     {{ "product_details.listing_code" | translate }}
                   </th>
                   <td class="tbl-td">
-                    {{ productDetails?.listing_Code || 'N/A' }}
+                    {{ productDetails?.listing_Code || "N/A" }}
                   </td>
                 </tr>
                 <tr
@@ -547,7 +599,9 @@
                   <th class="tbl-head" scope="row">
                     {{ "product_details.bracelet_material" | translate }}
                   </th>
-                  <td class="tbl-td">{{ productDetails?.bracelet_material }}</td>
+                  <td class="tbl-td">
+                    {{ productDetails?.bracelet_material }}
+                  </td>
                 </tr>
                 <tr
                   [ngClass]="{
@@ -718,12 +772,9 @@
 
   <div
     class="col-12 d-flex flex-wrap"
-    [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }"
+    [ngClass]="{ 'reverse-order-dealer-delivery-and-location': translateService.currentLang !== 'en' }"
   >
-    <div
-      class="col-md-6"
-      style="border-radius: 16px; border: 1px solid #f3f3f3; padding: 5px"
-    >
+    <div class="col-md-6 dealer-delivery-and-location-div">
       <div
         class="d-flex align-items-center"
         style="border-bottom: 1px solid #f3f3f3"
@@ -736,21 +787,16 @@
         </div>
         <div class="d-flex flex-column">
           <div class="d-flex align-items-center">
-            <h5
-              class="mb-0 font-weight-bold"
-              style="
-                border-right: 1px solid #666666;
-                color: #404040;
-                padding-right: 7px;
-              "
-            >
+            <h5 class="mb-0 dealer-deliver-and-location-name" >
               {{ dealerUserDetails?.user_details?.name }}
             </h5>
             <small
               class="text-muted"
               style="color: #666666; padding-right: 7px; padding-left: 7px"
-              >Since 2003</small
             >
+              <!-- Since 2003 -->
+              {{ getDealerSince(dealerUserDetails?.user_details?.since_year) }}
+            </small>
           </div>
           <p
             class="color-565656 font-size-16 font-wight-400"
@@ -760,7 +806,7 @@
               text-decoration-color: #404040;
             "
           >
-            Visit Dealer Profile
+          {{ "buy_product.Visit_Dealer_Profile" | translate }}
           </p>
         </div>
       </div>
@@ -774,7 +820,8 @@
         </div>
         <div class="d-flex flex-column">
           <p class="margin-0 font-wight-400 font-size-16 color-242424">
-            Delivery Record
+            <!-- Delivery Record -->
+            {{ "buy_product.Delivery_Record" | translate }}
           </p>
           <p class="margin-0 font-wight-400 font-size-16 color-666666">
             {{ dealerUserDetails.user_details.delivery_time }}
@@ -791,7 +838,8 @@
         </div>
         <div class="d-flex flex-column">
           <p class="margin-0 font-wight-400 font-size-16 color-242424">
-            Store Location
+            <!-- Store Location -->
+            {{ "buy_product.store_location" | translate }}
           </p>
           <p class="margin-0 font-wight-400 font-size-16 color-666666">
             {{ dealerUserDetails.user_details.city }}
@@ -814,7 +862,8 @@
                 <p
                   class="mb-0 margin-0 font-wight-400 font-size-14 color-303a42"
                 >
-                  Total Listing
+                  <!-- Total Listing -->
+                  {{ "buy_product.total_listing" | translate }}
                 </p>
                 <p class="margin-0 font-wight-700 font-size-16 color-303a42">
                   {{ dealerUserDetails.total_listing }}
@@ -835,7 +884,8 @@
                 <p
                   class="mb-0 margin-0 font-wight-400 font-size-14 color-303a42"
                 >
-                  Active Listing
+                  <!-- Active Listing -->
+                  {{ "buy_product.active_listing" | translate }}
                 </p>
                 <p class="margin-0 font-wight-700 font-size-16 color-303a42">
                   {{ dealerUserDetails.active_listings_count }}
@@ -856,7 +906,8 @@
                 <p
                   class="mb-0 margin-0 font-wight-400 font-size-14 color-303a42"
                 >
-                  Watches Sold
+                  <!-- Watches Sold -->
+                  {{ "buy_product.Watches_Sold" | translate }}
                 </p>
                 <p class="margin-0 font-wight-700 font-size-16 color-303a42">
                   {{ dealerUserDetails.sold_products_count }}
@@ -869,8 +920,10 @@
     </div>
 
     <div
-      class="col-md-6"
-      style="border-radius: 16px; border: 1px solid #f3f3f3"
+      [ngClass]="{
+        'reverse-order-dealer-reviews': translateService.currentLang !== 'en'
+      }"
+      class="col-md-6 dealer-reviews-points-style"
     >
       <div class="container my-4">
         <div class="d-flex align-items-center mb-2">
@@ -882,8 +935,12 @@
             <i class="bi bi-star-fill"></i>
           </div>
           <h4 class="mb-0 ml-2">{{ dealerUserDetails.overall_rating }}</h4>
-          <p class="mb-0 ml-2 color-676986 small-screen-size-text">
+          <p *ngIf="translateService.currentLang == 'en'" class="mb-0 ml-2 color-676986 small-screen-size-text">
             Based on {{ dealerUserDetails.total_reviews }} reviews
+          </p>
+
+          <p *ngIf="translateService.currentLang !== 'en'" class="mb-0 ml-2 color-676986 small-screen-size-text">
+             مراجعات {{ dealerUserDetails.total_reviews }} استنادًا إلى
           </p>
         </div>
 
@@ -891,7 +948,7 @@
           <div class="col-2 color-2c3e50 d-flex">
             5<i class="bi bi-star-fill mx-2"></i>
           </div>
-          <div class="col-8">
+          <div class="col-8 for-reverse-style">
             <div class="progress">
               <div
                 class="progress-bar bg-prog-bar"
@@ -901,7 +958,7 @@
               ></div>
             </div>
           </div>
-          <div class="col-2 text-right">
+          <div class="col-2 text-right-style">
             {{ dealerReviewsRatings["5.00_star"] }}
           </div>
         </div>
@@ -910,7 +967,7 @@
           <div class="col-2 color-2c3e50 d-flex">
             4<i class="bi bi-star-fill mx-2"></i>
           </div>
-          <div class="col-8">
+          <div class="col-8 for-reverse-style">
             <div class="progress">
               <div
                 class="progress-bar bg-prog-bar"
@@ -920,7 +977,7 @@
               ></div>
             </div>
           </div>
-          <div class="col-2 text-right">
+          <div class="col-2 text-right-style">
             {{ dealerReviewsRatings["4.00_star"] }}
           </div>
         </div>
@@ -929,7 +986,7 @@
           <div class="col-2 color-2c3e50 d-flex">
             3<i class="bi bi-star-fill mx-2"></i>
           </div>
-          <div class="col-8">
+          <div class="col-8 for-reverse-style">
             <div class="progress">
               <div
                 class="progress-bar bg-prog-bar"
@@ -939,7 +996,7 @@
               ></div>
             </div>
           </div>
-          <div class="col-2 text-right">
+          <div class="col-2 text-right-style">
             {{ dealerReviewsRatings["3.00_star"] }}
           </div>
         </div>
@@ -948,7 +1005,7 @@
           <div class="col-2 color-2c3e50 d-flex">
             2<i class="bi bi-star-fill mx-2"></i>
           </div>
-          <div class="col-8">
+          <div class="col-8 for-reverse-style">
             <div class="progress">
               <div
                 class="progress-bar bg-prog-bar"
@@ -958,7 +1015,7 @@
               ></div>
             </div>
           </div>
-          <div class="col-2 text-right">
+          <div class="col-2 text-right-style">
             {{ dealerReviewsRatings["2.00_star"] }}
           </div>
         </div>
@@ -967,7 +1024,7 @@
           <div class="col-2 color-2c3e50 d-flex">
             1<i class="bi bi-star-fill mx-2"></i>
           </div>
-          <div class="col-8">
+          <div class="col-8 for-reverse-style">
             <div class="progress">
               <div
                 class="progress-bar bg-prog-bar"
@@ -977,7 +1034,7 @@
               ></div>
             </div>
           </div>
-          <div class="col-2 text-right">
+          <div class="col-2 text-right-style">
             {{ dealerReviewsRatings["1.00_star"] }}
           </div>
         </div>
@@ -989,11 +1046,11 @@
     <div
       class="col-12 d-flex flex-wrap"
       *ngFor="let review of dealerDetails.slice(0, reviewsListIndex)"
-      [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }"
+      [ngClass]="{ 'reverse-order-dealer-experience': translateService.currentLang !== 'en' }"
     >
       <div class="col-lg-3 col-md-12 col-sm-12 d-flex flex-wrap">
         <div class="container my-4" style="background-color: #f7f7f8">
-          <div class="p-3" style="width: 18rem; border-radius: 0 !important">
+          <div class="p-3" style="border-radius: 0 !important">
             <div class="d-flex gap-2">
               <p class="margin-0 font-wight-700 font-size-16 color-2c3e50">
                 {{ review?.reviewer_name }}
@@ -1015,9 +1072,10 @@
                 class="img-thumbnail mr-2"
                 style="width: 50px; border: none"
               />
-              <div>
+              <div class="reviewing-style">
                 <p class="margin-0 font-wight-700 font-size-14 color-2c3e50">
-                  Reviewing
+                  <!-- Reviewing -->
+                  {{ "buy_product.Reviewing" | translate }}
                 </p>
                 <p
                   class="margin-0 font-wight-400 font-size-14 color-2c3e50"
@@ -1029,9 +1087,10 @@
             </div>
 
             <p class="margin-0 font-wight-700 font-size-14 color-2c3e50">
-              Rated
+              <!-- Rated -->
+              {{ "buy_product.rated" | translate }}
             </p>
-            <div class="d-flex align-items-center">
+            <div class="d-flex align-items-center reversed-style-ofRating">
               <div class="text-warning">
                 <i class="bi bi-star-fill"></i>
                 <i class="bi bi-star-fill"></i>
@@ -1047,17 +1106,15 @@
         </div>
       </div>
 
-      <div class="col-lg-9 col-md-12 col-sm-12 d-flex flex-wrap">
+      <div class="col-lg-9 col-md-12 col-sm-12 d-flex flex-wrap poor-excelent-style">
         <div class="container mt-4">
           <div class="row text-center">
-            <div class="col-md-4" style="padding: 0 5px 0 5px">
-              <p
-                class="font-wight-600 font-size-14 color-2c3e50"
-                style="text-align: left"
-              >
-                Cosmetic Condition
+            <div class="col-md-4 poor-excelent-style-label" style="padding: 0 5px 0 5px">
+              <p class="font-wight-600 font-size-14 color-2c3e50 text-left-style">
+               
+                {{ "buy_product.Cosmetic_Condition" | translate }}
               </p>
-              <div class="progress">
+              <div *ngIf="translateService.currentLang == 'en'" class="progress">
                 <div
                   [ngClass]="{
                     'active-progress-bar': review.cosmetic_condition === 1
@@ -1090,30 +1147,67 @@
                 ></div>
                 <div class="progress-bar" style="width: 100%"></div>
               </div>
+
+              <div *ngIf="translateService.currentLang !== 'en'" class="progress">
+                <div
+                  [ngClass]="{
+                    'active-progress-bar': review.cosmetic_condition === 5
+                  }"
+                  class="start bg-bar-color"
+                ></div>
+                <div
+                  [ngClass]="{
+                    'active-progress-bar': review.cosmetic_condition === 4
+                  }"
+                  class="one bg-bar-color"
+                ></div>
+                <div
+                  [ngClass]="{
+                    'active-progress-bar': review.cosmetic_condition === 3
+                  }"
+                  class="two bg-bar-color"
+                ></div>
+                <div
+                  [ngClass]="{
+                    'active-progress-bar': review.cosmetic_condition === 2
+                  }"
+                  class="three bg-bar-color"
+                ></div>
+                <div
+                  [ngClass]="{
+                    'active-progress-bar': review.cosmetic_condition === 1
+                  }"
+                  class="end bg-bar-color"
+                ></div>
+                <div class="progress-bar" style="width: 100%"></div>
+              </div>
               <div class="d-flex justify-content-between">
                 <p
                   class="font-wight-400 font-size-14 color-2c3e50"
                   style="margin-top: 7px"
                 >
-                  Poor
+                  
+                  {{ "buy_product.Poor" | translate }}
                 </p>
                 <p
                   class="font-wight-400 font-size-14 color-2c3e50"
                   style="margin-top: 7px"
                 >
-                  Excellent
+                  
+                  {{ "buy_product.Excellent" | translate }}
                 </p>
               </div>
             </div>
 
-            <div class="col-md-4" style="padding: 0 5px 0 5px">
+            <div class="col-md-4 poor-excelent-style-label" style="padding: 0 5px 0 5px">
               <p
-                class="font-wight-600 font-size-14 color-2c3e50"
-                style="text-align: left"
+                class="font-wight-600 font-size-14 color-2c3e50 text-left-style"
+               
               >
-                Satisfaction
+                
+                {{ "buy_product.Satisfaction" | translate }}
               </p>
-              <div class="progress">
+              <div *ngIf="translateService.currentLang == 'en'" class="progress">
                 <div
                   [ngClass]="{
                     'active-progress-bar': review.satisfaction === 1
@@ -1146,30 +1240,65 @@
                 ></div>
                 <div class="progress-bar" style="width: 100%"></div>
               </div>
+
+              <div *ngIf="translateService.currentLang !== 'en'" class="progress">
+                <div
+                  [ngClass]="{
+                    'active-progress-bar': review.satisfaction === 5
+                  }"
+                  class="start bg-bar-color"
+                ></div>
+                <div
+                  [ngClass]="{
+                    'active-progress-bar': review.satisfaction === 4
+                  }"
+                  class="one bg-bar-color"
+                ></div>
+                <div
+                  [ngClass]="{
+                    'active-progress-bar': review.satisfaction === 3
+                  }"
+                  class="two bg-bar-color"
+                ></div>
+                <div
+                  [ngClass]="{
+                    'active-progress-bar': review.satisfaction === 2
+                  }"
+                  class="three bg-bar-color"
+                ></div>
+                <div
+                  [ngClass]="{
+                    'active-progress-bar': review.satisfaction === 1
+                  }"
+                  class="end bg-bar-color"
+                ></div>
+                <div class="progress-bar" style="width: 100%"></div>
+              </div>
               <div class="d-flex justify-content-between">
                 <p
                   class="font-wight-400 font-size-14 color-2c3e50"
                   style="margin-top: 7px"
                 >
-                  Low
+                  {{ "buy_product.Low" | translate }}
                 </p>
                 <p
                   class="font-wight-400 font-size-14 color-2c3e50"
                   style="margin-top: 7px"
                 >
-                  High
+                  <!-- High -->
+                  {{ "buy_product.High" | translate }}
                 </p>
               </div>
             </div>
 
-            <div class="col-md-4" style="padding: 0 5px 0 5px">
+            <div class="col-md-4 poor-excelent-style-label" style="padding: 0 5px 0 5px">
               <p
-                class="font-wight-600 font-size-14 color-2c3e50"
-                style="text-align: left"
+                class="font-wight-600 font-size-14 color-2c3e50 text-left-style"
+           
               >
-                Experience
+              {{ "buy_product.Experience" | translate }}
               </p>
-              <div class="progress">
+              <div *ngIf="translateService.currentLang == 'en'" class="progress">
                 <div
                   [ngClass]="{ 'active-progress-bar': review.experience === 1 }"
                   class="start bg-bar-color"
@@ -1192,27 +1321,54 @@
                 ></div>
                 <div class="progress-bar" style="width: 100%"></div>
               </div>
+
+              <div *ngIf="translateService.currentLang !== 'en'" class="progress">
+                <div
+                  [ngClass]="{ 'active-progress-bar': review.experience === 5 }"
+                  class="start bg-bar-color"
+                ></div>
+                <div
+                  [ngClass]="{ 'active-progress-bar': review.experience === 4 }"
+                  class="one bg-bar-color"
+                ></div>
+                <div
+                  [ngClass]="{ 'active-progress-bar': review.experience === 3 }"
+                  class="two bg-bar-color"
+                ></div>
+                <div
+                  [ngClass]="{ 'active-progress-bar': review.experience === 2 }"
+                  class="three bg-bar-color"
+                ></div>
+                <div
+                  [ngClass]="{ 'active-progress-bar': review.experience === 1 }"
+                  class="end bg-bar-color"
+                ></div>
+                <div class="progress-bar" style="width: 100%"></div>
+              </div>
               <div class="d-flex justify-content-between">
                 <p
                   class="font-wight-400 font-size-14 color-2c3e50"
                   style="margin-top: 7px"
                 >
-                  Bad
+                  <!-- Bad -->
+                  {{ "buy_product.Bad" | translate }}
                 </p>
                 <p
                   class="font-wight-400 font-size-14 color-2c3e50"
                   style="margin-top: 7px"
                 >
-                  Great
+                  <!-- Great -->
+                  {{ "buy_product.Great" | translate }}
                 </p>
               </div>
             </div>
           </div>
 
           <div class="row">
-            <div class="col-12">
+            <div class="col-12 remark-style-of-review">
               <p class="font-wight-700 font-size-16 color-2c3e50">
-                Remarkable Product
+                <!-- Remarkable Product -->
+                {{ "buy_product.Remarkable_Product" | translate }}
               </p>
               <p class="font-wight-400 font-size-14 color-2c3e50">
                 {{ review.remarks }}
@@ -1234,8 +1390,15 @@
   </div>
 </div>
 
-<div *ngIf="similarWatchesList?.length > 0 &&  this.routeFrom !== 'listing-to-product'" class="container mt-3">
-  <p class="font-wight-700 font-size-64 color-484848 text-center cormorant-styl">
+<div
+  *ngIf="
+    similarWatchesList?.length > 0 && this.routeFrom !== 'listing-to-product'
+  "
+  class="container mt-3"
+>
+  <p
+    class="font-wight-700 font-size-64 color-484848 text-center cormorant-styl"
+  >
     {{ "product_details.similar_prod" | translate }}
   </p>
   <div class="row">
@@ -1243,10 +1406,10 @@
       class="col-md-4 col-sm-6 mb-4"
       *ngFor="let watch of similarWatchesList; let i = index"
     >
-      <div class="card custom-card h-100 shadow-sm" >
+      <div class="card custom-card h-100 shadow-sm">
         <a
-        [routerLink]="['/buy-product']"
-        [queryParams]="{ id: watch.id }"
+          [routerLink]="['/buy-product']"
+          [queryParams]="{ id: watch.id }"
           class="card-img-link"
           (click)="viewProduct(watch.id)"
         >
@@ -1281,7 +1444,10 @@
             <div *ngIf="watch.city" class="card-title color-6a6a6a">
               {{ watch.city }}
             </div>
-            <div *ngIf="watch?.created_by?.city" class="card-title color-6a6a6a">
+            <div
+              *ngIf="watch?.created_by?.city"
+              class="card-title color-6a6a6a"
+            >
               {{ watch?.created_by?.city }}
             </div>
           </div>
@@ -1301,29 +1467,40 @@
       </div>
       <div class="heart-icon">
         <div class="featured-icon">
-          <div *ngIf="watch?.feature_item === 1" class="featured-promoted-class-badge">
+          <div
+            *ngIf="watch?.feature_item === 1"
+            class="featured-promoted-class-badge"
+          >
             Featured
           </div>
-      
-          <div *ngIf="watch?.feature_item !== 1 && watch.is_promoted === 1" class="featured-promoted-class-badge">
+
+          <div
+            *ngIf="watch?.feature_item !== 1 && watch.is_promoted === 1"
+            class="featured-promoted-class-badge"
+          >
             Promoted
           </div>
         </div>
-        <div class="" style="background-color: #FFF;
-        padding: 5px 5px 5px 5px;
-        border-radius: 25px;
-        display: flex;
-        align-items: center;
-        justify-content: center;">
-        <i
-          *ngIf="isUserLogin === 'true'"
-          (click)="addWishList(watch.id)"
-          class="fa"
-          [ngClass]="
-            wishList?.includes(watch.id) ? 'fa-heart' : 'fa-heart fa-heart-o'
+        <div
+          class=""
+          style="
+            background-color: #fff;
+            padding: 5px 5px 5px 5px;
+            border-radius: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
           "
-          aria-hidden="true"
-        ></i>
+        >
+          <i
+            *ngIf="isUserLogin === 'true'"
+            (click)="addWishList(watch.id)"
+            class="fa"
+            [ngClass]="
+              wishList?.includes(watch.id) ? 'fa-heart' : 'fa-heart fa-heart-o'
+            "
+            aria-hidden="true"
+          ></i>
         </div>
       </div>
     </div>

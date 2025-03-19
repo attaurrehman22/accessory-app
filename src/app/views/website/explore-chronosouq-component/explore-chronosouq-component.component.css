@@ -10,15 +10,16 @@
 .back-styl {
   background-image: url('/assets/images/how-back-img.png');
   background-size: cover;
-  height: 55vh;
+  min-height: 55vh;
+  max-height: 55vh;
   background-position: center;
   width: 100%;
 }
 
 .res-img {
-  height: 60vh;
+  max-height: 60vh;
+  min-height: 60vh;
   width: 98%;
-  object-fit:scale-down;
 }
 
 @media (max-width: 424px) {

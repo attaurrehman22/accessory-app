@@ -48,7 +48,13 @@ export class BuyProductComponentComponent implements OnInit {
   getDealerSince(createdAt: string): string {
     if (!createdAt) return '';
     const year = new Date(createdAt).getFullYear();
-    return `Since ${year}`;
+    // const browserLang = this.translateService.getBrowserLang();
+    // console.log("Current lang",browserLang)
+    if(this.translateService.currentLang == 'en'){
+      return `Since ${year}`;
+    }else{
+      return `${year} منذ`;
+    }
   }
   
 

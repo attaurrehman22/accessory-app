@@ -569,7 +569,28 @@
     "Brand": "العلامة التجارية",
     "model": "النموذج",
     "year_of_production": "سنة الإنتاج",
-    "chat_with_seller": "الدردشة مع البائع"
+    "chat_with_seller": "الدردشة مع البائع",
+    "total_listing": "إجمالي الإعلانات",
+"active_listing": "الإعلانات النشطة",
+"Watches_Sold": "الساعات المباعة",
+"store_location": "موقع المتجر",
+"Delivery_Record": "سجل التوصيل",
+"Visit_Dealer_Profile": "زيارة ملف التاجر",
+"rated": "مُصنف",
+"Reviewing": "مراجعة",
+"Cosmetic_Condition": "الحالة التجميلية",
+"Poor": "سيء",
+"Excellent": "ممتاز",
+"Satisfaction": "الرضا",
+"Low": "منخفض",
+"High": "عالي",
+"Experience": "التجربة",
+"Bad": "سيء",
+"Great": "رائع",
+"Remarkable_Product": "منتج مميز"
+
+
+
 }
 
 
