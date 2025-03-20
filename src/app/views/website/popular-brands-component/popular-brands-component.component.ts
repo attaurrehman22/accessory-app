@@ -37,8 +37,13 @@ export class PopularBrandsComponentComponent implements OnInit {
 
     this.responsiveOptions = [
       {
-        breakpoint: "1024px", // large screens
+        breakpoint: "1460px", // large screens
         numVisible: 3,
+        numScroll: 1,
+      },
+      {
+        breakpoint: "1320px", // large screens
+        numVisible: 2,
         numScroll: 1,
       },
       {
