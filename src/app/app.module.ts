@@ -96,6 +96,9 @@ import { AddProductWatchOfTheDayComponent } from './views/adminpages/add-product
 import { SkeletonLoaderComponent } from './views/modal/skeleton-loader/skeleton-loader.component';
 import { SafeHtmlPipe } from './views/pipes/safe-html.pipe';
 import {MatTabsModule} from '@angular/material/tabs';
+import { AccessoriesProductsComponent } from './views/adminpages/accessories-products/accessories-products.component';
+import { CreateAccessoriesProductComponent } from './views/adminpages/create-accessories-product/create-accessories-product.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -146,7 +149,9 @@ import {MatTabsModule} from '@angular/material/tabs';
     WatchOfTheDayComponent,
     AddProductWatchOfTheDayComponent,
     SkeletonLoaderComponent,
-    SafeHtmlPipe
+    SafeHtmlPipe,
+    AccessoriesProductsComponent,
+    CreateAccessoriesProductComponent
   ],
   imports: [
     MatSortModule,

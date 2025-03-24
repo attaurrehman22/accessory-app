@@ -67,6 +67,14 @@ export class AdminSidebarComponent {
       iconWidth: 20,
       iconHeight: 20,
     },
+    Accessories: {
+      label: 'Accessories',
+      router: '/admin/accessories',
+      routerActive: 'navbar-button-active',
+      icon: 'assets/images/dashboard-2-svgrepo-com (1).svg',
+      iconWidth: 20,
+      iconHeight: 20,
+    },
   };
 
   isActive(route: string): boolean {

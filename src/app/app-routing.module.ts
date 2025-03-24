@@ -23,6 +23,8 @@ import { ForgotPasswordComponent } from './views/auth/forgot-password/forgot-pas
 import { AdminUsersComponent } from './views/adminpages/admin-users/admin-users.component';
 import { NewArrivalsComponent } from './views/website/new-arrivals/new-arrivals.component';
 import { WatchOfTheDayComponent } from './views/adminpages/watch-of-the-day/watch-of-the-day.component';
+import { AccessoriesProductsComponent } from './views/adminpages/accessories-products/accessories-products.component';
+import { CreateAccessoriesProductComponent } from './views/adminpages/create-accessories-product/create-accessories-product.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -44,6 +46,8 @@ const routes: Routes = [
   { path: 'admin/category/product', component:  AdminCategoryProductComponent},
   { path: 'admin/users', component:  AdminUsersComponent},
   { path: 'admin/watchOfDay', component:  WatchOfTheDayComponent},
+  { path: 'admin/accessories', component:  AccessoriesProductsComponent},
+  { path: 'admin/accessories/add', component:  CreateAccessoriesProductComponent},
   { path: 'buy-now', component:  BuyNowComponent},
   { path: 'myListing', component:  MyListingDetailsComponent},
   { path: 'forgotPassword', component:  ForgotPasswordComponent},

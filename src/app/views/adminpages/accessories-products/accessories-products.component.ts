@@ -1,14 +1,14 @@
-import { Component, OnInit, ViewChild, AfterViewInit, OnDestroy } from '@angular/core';
-import { MatDialog } from "@angular/material/dialog";
+import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { Router } from "@angular/router";
-import { AlertsServicesService } from "src/services/alerts-service/alerts-services.service";
-import { HttpService } from "src/services/http/http.service";
-import { AdminAddProductComponent } from "../admin-add-product/admin-add-product.component";
+import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { AlertsServicesService } from 'src/services/alerts-service/alerts-services.service';
+import { HttpService } from 'src/services/http/http.service';
 import { SidebarService } from 'src/services/sidebar.service';
+import { AdminAddProductComponent } from '../admin-add-product/admin-add-product.component';
 
 export interface UserData {
   name: any;
@@ -17,19 +17,19 @@ export interface UserData {
   cover_image: any;
   created_by: any;
   price: any;
-  model: any;a
+  model: any;
   is_active: any;
   top_brand: any;
   published_date: any;
 }
 
 @Component({
-  selector: "app-admin-products",
-  templateUrl: "./admin-products.component.html",
-  styleUrls: ["./admin-products.component.css"],
+  selector: 'app-accessories-products',
+  templateUrl: './accessories-products.component.html',
+  styleUrls: ['./accessories-products.component.css']
 })
-export class AdminProductsComponent implements OnInit, AfterViewInit, OnDestroy {
-  displayedColumns: string[] = [
+export class AccessoriesProductsComponent implements OnInit, AfterViewInit, OnDestroy{
+displayedColumns: string[] = [
     "name",
     "watch_type",
     "brand",
@@ -199,7 +199,7 @@ export class AdminProductsComponent implements OnInit, AfterViewInit, OnDestroy 
   }
 
   openModal() {
-    this.router.navigate(["/admin-brands-product"], {
+    this.router.navigate(["/admin/accessories/add"], {
       state: { param: "Create" },
     });
   }

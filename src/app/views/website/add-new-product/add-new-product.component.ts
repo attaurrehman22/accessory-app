@@ -1488,8 +1488,6 @@ currentStepper:any='';
       }
     } else if (Param === "watchDetails") {
       if (this.watchDetailsForm.valid) {
-        // const isUpdate = this.selectedOptionsList.includes("watchDetails") ? 1 : 0;
-        // const isUpdate = this.selectedOptionsList.includes("watchDetails") ? 1 : 0;
         let isUpdate;
         if(this.currentStepper == 'listingDetails'){
           isUpdate=0
