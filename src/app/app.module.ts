@@ -95,6 +95,7 @@ import { WatchOfTheDayComponent } from './views/adminpages/watch-of-the-day/watc
 import { AddProductWatchOfTheDayComponent } from './views/adminpages/add-product-watch-of-the-day/add-product-watch-of-the-day.component';
 import { SkeletonLoaderComponent } from './views/modal/skeleton-loader/skeleton-loader.component';
 import { SafeHtmlPipe } from './views/pipes/safe-html.pipe';
+import {MatTabsModule} from '@angular/material/tabs';
 @NgModule({
   declarations: [
     AppComponent,
@@ -183,6 +184,7 @@ import { SafeHtmlPipe } from './views/pipes/safe-html.pipe';
     MatExpansionModule,
     ColorPickerModule,
     BidiModule,HighchartsChartModule,
+    MatTabsModule,
     BidiModule, HighchartsChartModule,MatOptionModule,MatAutocompleteModule,
     // MatExpansionModule,
     TranslateModule.forRoot({

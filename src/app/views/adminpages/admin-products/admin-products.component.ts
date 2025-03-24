@@ -50,6 +50,8 @@ export class AdminProductsComponent implements OnInit, AfterViewInit, OnDestroy 
   allData: any;
   sidebarClickSubscription: Subscription;
 
+ 
+
   userStatu: any = [
     { value: "All", viewValue: "All" },
     { value: false, viewValue: "Blocked user" },
@@ -72,12 +74,47 @@ export class AdminProductsComponent implements OnInit, AfterViewInit, OnDestroy 
     this.sidebarClickSubscription = this.sidebarService.sidebarClick$.subscribe(() => {
       this.dialog.closeAll();
     });
+
+    this.getAllCategory()
+    this.getAllBrands()
+  }
+
+
+  category_ids:any[]=[];
+  brand_ids:any[]=[];
+  watch_gender:any;
+  sort_by:any;
+  sort_order:any='desc';
+  name:any;
+
+  brandsList:any;
+  categoryList:any;
+
+ async getAllCategory(){
+ try {
+      // Await the promise returned by the HTTP request
+      const res = await this.http.getCategoryDropDown().toPromise();
+      this.categoryList = res.data;
+    } catch (error) {
+      console.error("Error fetching categories:", error);
+    }
+  }
+
+  async getAllBrands(){
+    try {
+          // Wait for the API response
+          const res = await this.http.getAllBrandsDropdDown().toPromise();
+          this.brandsList = res.data;
+        } catch (error) {
+          // Log error if something goes wrong with the API request
+          console.error("Error fetching brands:", error);
+        }
   }
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
-    this.loadData(); // Moved loadData here
+    this.loadData();
   }
 
   ngOnDestroy() {
@@ -86,58 +123,76 @@ export class AdminProductsComponent implements OnInit, AfterViewInit, OnDestroy 
     }
   }
 
-  loadData() {
-    const pageIndex = this.pageEvent ? this.pageEvent.pageIndex : 0;
-    const pageSize = this.pageEvent ? this.pageEvent.pageSize : this.pageSize;
-    const sortField = this.sort.active;
-    const sortDirection = this.sort.direction;
+  ClearFilter(){
+    this.category_ids=[];
+    this.brand_ids=[];
+    this.watch_gender='';
+    this.sort_by='';
+    this.sort_order='desc';
+    this.name='';
 
-    this.http.getAdminProducts(pageIndex, pageSize, sortField, sortDirection).subscribe(data => {
-      this.dataSource.data = data.data.data.map((product: any) => {
-        this.allData = data.data.data;
+    this.loadData()
+  }
 
-        this.allData = this.allData.map((product: any) => {
+  async loadData() {
+    const page = this.pageEvent ? this.pageEvent.pageIndex + 1 : 1;
+    const per_page = this.pageEvent ? this.pageEvent.pageSize : this.pageSize;
+    const category_ids = this.category_ids;
+    const brand_ids = this.brand_ids;
+    const watch_gender = this.watch_gender;
+    const sortField = this.sort?.active || '';
+    const sortDirection = this.sort?.direction || '';
+
+    try {
+      const data: any = await this.http
+        .getAdminProducts(
+          this.name,
+          page,
+          per_page,
+          sortField,
+          sortDirection,
+          category_ids,
+          brand_ids,
+          watch_gender,
+          this.sort_by,
+          this.sort_order
+        )
+        .toPromise();
+
+      if (data && data.data) {
+        // ✅ Format data if needed
+        const formattedData = data.data.data.map((product: any) => {
           if (product.main_image) {
             product.main_image = product.main_image
-              .replace(/\\/g, "/")
-              .replace(/^\/+/, "");
-            return product;
+              .replace(/\\/g, '/')
+              .replace(/^\/+/, '');
           }
+          return product;
         });
-        this.dataSource = new MatTableDataSource(this.allData);
+
+        // ✅ Set DataSource
+        this.dataSource.data = formattedData;
+        this.resultsLength = data.data.total;
+
+        // ✅ Bind paginator and sort explicitly after setting the data source
         this.dataSource.paginator = this.paginator;
-      });
-      this.resultsLength = data.data.total;
-    });
-  }
-
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value.trim().toLowerCase();
-
-    // Custom filter to check every field
-    this.dataSource.filterPredicate = (data: any, filter: string) => {
-      // You can specify which fields you want to filter on here
-      return (
-        data.name.toLowerCase().includes(filter) ||
-        data.watch_type.toLowerCase().includes(filter) ||
-        (data.brand && data.brand.name.toLowerCase().includes(filter)) ||
-        (data.created_by && data.created_by.name.toLowerCase().includes(filter)) ||
-        (data.price && data.price.toString().includes(filter)) ||
-        (data.model && data.model.toLowerCase().includes(filter)) ||
-        (data.is_active && data.is_active.toString().includes(filter)) ||
-        (data.top_brand && data.top_brand.toString().includes(filter)) ||
-        (data.categories && data.categories.some((category: any) => category.name.toLowerCase().includes(filter))) || // Categories
-        (data.description && data.description.toLowerCase().includes(filter)) // Description
-      );
-    };
-
-    // Apply the filter to the dataSource
-    this.dataSource.filter = filterValue;
-
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
+        this.dataSource.sort = this.sort;
+      
+      }
+    } catch (error) {
+      console.error('Error loading data:', error);
     }
   }
+  
+
+  // ✅ Handle Page Change
+  onPageChange(event: PageEvent) {
+    this.pageSize = event.pageSize;
+    this.pageEvent = event;
+    this.loadData(); // Reload data on page change
+  }
+  
+  
 
   sortData(sort: Sort) {
     this.loadData();
@@ -148,26 +203,6 @@ export class AdminProductsComponent implements OnInit, AfterViewInit, OnDestroy 
       state: { param: "Create" },
     });
   }
-
-  // loadData() {
-  //   this.http.getAdminProducts().subscribe(
-  //     (res) => {
-  //       this.allData = res.data.data;
-
-  //       this.allData = this.allData.map((product: any) => {
-  //         if (product.main_image) {
-  //           product.main_image = product.main_image
-  //             .replace(/\\/g, "/")
-  //             .replace(/^\/+/, "");
-  //         }
-  //         return product;
-  //       });
-  //       this.dataSource = new MatTableDataSource(this.allData);
-  //       this.dataSource.paginator = this.paginator;
-  //     },
-  //     (err) => {}
-  //   );
-  // }
 
   isMeOrAdminOrDeveloper(id: any): boolean {
     return true;

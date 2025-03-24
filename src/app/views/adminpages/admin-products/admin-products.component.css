@@ -55,3 +55,23 @@
     }
   }
   
+
+  .apply-filter-btn {
+    background: black;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    height: 40px;
+    padding: 0 20px 0 20px;
+    margin-bottom: 20px;
+
+  }
+
+  .clear-filter-btn{
+    border: 1px solid grey;
+    border-radius: 5px;
+    height: 40px;
+    padding: 0 20px 0 20px;
+    margin-bottom: 20px;
+
+  }

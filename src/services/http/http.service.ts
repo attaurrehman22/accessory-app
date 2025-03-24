@@ -377,12 +377,47 @@ export class HttpService implements OnInit {
   }
 
   // getAdminProducts(): Observable<any> {
-  getAdminProducts(pageIndex: number, pageSize: number, sortField: string, sortDirection: string): Observable<any> {
-    let params = new HttpParams()
-    .set('pageIndex', pageIndex.toString())
-    .set('pageSize', pageSize.toString())
-    .set('sortField', sortField)
-    .set('sortDirection', sortDirection);
+  getAdminProducts( name,pageIndex: number, pageSize: number, sortField: string, sortDirection: string,category_ids:any[] ,brand_ids:any[] , watch_gender ,sort_by?: string,
+    sort_order?: string): Observable<any> {
+      let params = new HttpParams()
+      .set('page', pageIndex.toString())
+      .set('per_page', pageSize.toString())
+      .set('sortField', sortField)
+    
+      
+      .set('sortDirection', sortDirection);
+  
+    if (name) {
+      params = params.set('name', name);
+    }
+
+    if (sort_by) {
+      params = params.set('sort_by', sort_by);
+    }
+
+    if (sort_order) {
+      params = params.set('sort_order', sort_order);
+    }
+
+    if(watch_gender){
+      params = params.set('watch_gender', watch_gender)
+    }
+
+    if(watch_gender){
+      params = params.set('watch_gender', watch_gender)
+    }
+  
+  if (category_ids && category_ids.length) {
+    category_ids.forEach(category => {
+      params = params.append('category_ids[]', category);
+    });
+  }
+
+  if (brand_ids && brand_ids.length) {
+    brand_ids.forEach(brand => {
+      params = params.append('brand_ids[]', brand);
+    });
+  }
     return this.http.get(`${this.apiUrl}/api/admin/products`, {
       headers: {
         Accept: "application/json",
@@ -390,12 +425,7 @@ export class HttpService implements OnInit {
       },
       params: params
     });
-    // return this.http.get(`${this.apiUrl}/api/admin/products`, {
-    //   headers: {
-    //     Accept: "application/json",
-    //     Authorization: `Bearer ${this.token}`,
-    //   },
-    // });
+   
   }
 
   getAdminProductsofQuery(queryString): Observable<any> {

@@ -15,11 +15,54 @@
           <mat-card class="mt">
             <mat-card-content>
               <div class="row">
-                <div class="col-8 col-lg-8 col-md-8 col-sm-6">
+                <div class="col-12 d-flex flex-wrap gap-2 align-items-center">
                   <mat-form-field appearance="outline">
                     <mat-label>Search</mat-label>
-                    <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Admin" #input />
+                    <input matInput [(ngModel)]="name" placeholder="" #input />
                   </mat-form-field>
+
+                  <mat-form-field appearance="outline">
+                    <mat-label>Category</mat-label>
+                    <mat-select [(ngModel)]="category_ids" multiple>
+                      <mat-option *ngFor="let cat of categoryList" [value]="cat.id">{{cat.name}}</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+
+                  <mat-form-field appearance="outline">
+                    <mat-label>Brand</mat-label>
+                    <mat-select [(ngModel)]="brand_ids" multiple>
+                      <mat-option *ngFor="let brand of brandsList" [value]="brand.id">{{brand.name}}</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+
+                  <mat-form-field appearance="outline">
+                    <mat-label>Gender</mat-label>
+                    <mat-select [(ngModel)]="watch_gender">
+                      <mat-option value="Mens watch">Mens Watch</mat-option>
+                      <mat-option value="Unisex">Unisex</mat-option>
+                      <mat-option value="Womens watch">Womens Watch</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+
+                  <mat-form-field appearance="outline">
+                    <mat-label>Sort By</mat-label>
+                    <mat-select [(ngModel)]="sort_by">
+                      <mat-option value="name">Name</mat-option>
+                      <mat-option value="created_at">Created At</mat-option>
+                      <mat-option value="price">Price</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+
+                  <mat-form-field appearance="outline">
+                    <mat-label>Order By</mat-label>
+                    <mat-select [(ngModel)]="sort_order">
+                      <mat-option value="asc">Ascending</mat-option>
+                      <mat-option value="desc">Descending</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+
+                  <button class="apply-filter-btn" (click)="loadData()">Apply Filter</button>
+                  <button class="clear-filter-btn" (click)="ClearFilter()">Clear Filter</button>
                 </div>
                 <div class="col-4 col-lg-4 col-md-4 col-sm-6 d-flex justify-content-end align-items-center">
                 </div>
@@ -33,7 +76,7 @@
                         Name
                       </th>
                       <td mat-cell class="column" *matCellDef="let row">
-                        {{ row.name }}
+                        {{ row?.name }}
                       </td>
                     </ng-container>
 
@@ -131,8 +174,15 @@
                     </tr>
                   </table>
 
-                  <mat-paginator [length]="resultsLength" [pageSize]="pageSize" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons (page)="pageEvent = $event; loadData()"></mat-paginator>
-                </div>
+                  <mat-paginator
+                  [length]="resultsLength"
+                  [pageSize]="pageSize"
+                  [pageSizeOptions]="[5, 10, 25, 100]"
+                  showFirstLastButtons
+                  (page)="onPageChange($event)"
+                >
+                </mat-paginator>
+                                </div>
               </mat-card>
             </mat-card-content>
           </mat-card>
