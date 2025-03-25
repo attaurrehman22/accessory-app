@@ -140,4 +140,10 @@ export class ModelRegisterComponent implements OnInit {
       this.alertService.showAlert("warning", "Enter Form Values");
     }
   }
+
+  closeAndMoveToLoginComp(){
+    // this.router.navigate['/login']
+    this.router.navigateByUrl("/login");
+    this.dialogRef.close();
+  }
 }

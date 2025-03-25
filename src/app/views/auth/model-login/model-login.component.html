@@ -1,5 +1,6 @@
 
   <div  [ngClass]="{'rtl': translateService.currentLang !== 'en', 'ltr': translateService.currentLang === 'en'}" style="margin: 0 !important;max-width: -webkit-fill-available !important;"  class="login-card">
+    <button class="cross-btn" (click)="closeAndMoveToLoginComp()"><mat-icon>close</mat-icon></button>
     <p class="font-size-14 font-wight-400 margin-0 color-242424 text-center">{{ "login.hy_there" | translate }}</p>
     <p class="font-size-28 font-wight-600 margin-0 color-242424 text-center">{{ "login.well_come" | translate }}</p>
     <form [formGroup]="loginForm" class="mt-3" >

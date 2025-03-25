@@ -131,4 +131,10 @@ export class ModelLoginComponent implements OnInit {
       }
     });
   }
+
+  closeAndMoveToLoginComp(){
+    // this.router.navigate['/login']
+    this.router.navigateByUrl("/login");
+    this.dialogRef.close();
+  }
 }
