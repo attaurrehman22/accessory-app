@@ -14,6 +14,7 @@
           placeholder="{{ 'register.enter_username' | translate }}"
           required
           formControlName="username"
+          appUsernameValidation
         />
         <mat-error *ngIf="registerForm.get('username')?.hasError('required')">
           {{ 'register.username_required' | translate }}

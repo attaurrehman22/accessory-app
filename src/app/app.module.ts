@@ -98,6 +98,7 @@ import { SafeHtmlPipe } from './views/pipes/safe-html.pipe';
 import {MatTabsModule} from '@angular/material/tabs';
 import { AccessoriesProductsComponent } from './views/adminpages/accessories-products/accessories-products.component';
 import { CreateAccessoriesProductComponent } from './views/adminpages/create-accessories-product/create-accessories-product.component';
+import { UsernameValidationDirective } from './views/directives/username-validation/username-validation.directive';
 
 @NgModule({
   declarations: [
@@ -151,7 +152,8 @@ import { CreateAccessoriesProductComponent } from './views/adminpages/create-acc
     SkeletonLoaderComponent,
     SafeHtmlPipe,
     AccessoriesProductsComponent,
-    CreateAccessoriesProductComponent
+    CreateAccessoriesProductComponent,
+    UsernameValidationDirective
   ],
   imports: [
     MatSortModule,
