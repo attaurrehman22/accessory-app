@@ -29,6 +29,7 @@
       </button>
       <div class="query w-100" [ngClass]="{ 'rtl-layout-reverse': isRtl }">
         <div [ngClass]="{ 'lag-logo-stl': isRtl }" class="logo">
+          <a href="/">
           <img
             class="logo-img"
             routerLink="/"
@@ -36,6 +37,7 @@
             alt="Cronosuq"
             style="cursor: pointer"
           />
+        </a>
         </div>
         <div
           class="header-content gap-4"
@@ -139,6 +141,7 @@
         [ngClass]="{ 'rtl-layout-reverse': isRtl }"
         [class.show]="isNavbarOpen"
       >
+      <a href="/">
         <img
           class="logo-img sidebar-logo"
           routerLink="/"
@@ -146,6 +149,7 @@
           alt="Cronosuq"
           style="cursor: pointer"
         />
+      </a>
         <div class="header-content gap-4" *ngIf="!isSearchForm">
           <a routerLink="/newArrivals" class="custom-btn position-relative">
             {{ "header.new_arrivals" | translate }}
