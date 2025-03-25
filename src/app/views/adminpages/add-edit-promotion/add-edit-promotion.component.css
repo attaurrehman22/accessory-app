@@ -1,0 +1,32 @@
+.main-div {
+    padding: 40px 30px 40px 30px;
+}
+
+.submit-btn {
+    border-radius: 10px;
+    border: none;
+    height: 5vh;
+    color: #fff;
+    padding: 10px 40px;
+    background: #03181c;
+}
+
+.cancel-btn {
+    border-radius: 10px;
+    border: none;
+    height: 5vh;
+    color: #03181c;
+    padding: 10px 40px;
+}
+
+.image-preview {
+    margin-top: 10px;
+  }
+  
+  .image-preview img {
+    width: 100%;
+    max-width: 300px;
+    height: auto;
+    border-radius: 5px;
+  }
+  

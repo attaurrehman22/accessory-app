@@ -1,14 +1,22 @@
-import { Component, OnInit, ViewChild, AfterViewInit, OnDestroy } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  AfterViewInit,
+  OnDestroy,
+} from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
-import { MatPaginator, PageEvent } from '@angular/material/paginator';
-import { MatSort, Sort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator, PageEvent } from "@angular/material/paginator";
+import { MatSort, Sort } from "@angular/material/sort";
+import { MatTableDataSource } from "@angular/material/table";
 import { Router } from "@angular/router";
 import { AlertsServicesService } from "src/services/alerts-service/alerts-services.service";
 import { HttpService } from "src/services/http/http.service";
 import { AdminAddProductComponent } from "../admin-add-product/admin-add-product.component";
-import { Subscription } from 'rxjs';
-import { SidebarService } from 'src/services/sidebar.service';
+import { Subscription } from "rxjs";
+import { SidebarService } from "src/services/sidebar.service";
+import { AddEditPromotionComponent } from "../add-edit-promotion/add-edit-promotion.component";
+import { ConfirmationModelComponent } from "../../modal/confirmation-model/confirmation-model.component";
 
 export interface UserData {
   name: any;
@@ -17,7 +25,8 @@ export interface UserData {
   cover_image: any;
   created_by: any;
   price: any;
-  model: any;a
+  model: any;
+  a;
   is_active: any;
   top_brand: any;
   published_date: any;
@@ -28,7 +37,9 @@ export interface UserData {
   templateUrl: "./admin-products.component.html",
   styleUrls: ["./admin-products.component.css"],
 })
-export class AdminProductsComponent implements OnInit, AfterViewInit, OnDestroy {
+export class AdminProductsComponent
+  implements OnInit, AfterViewInit, OnDestroy
+{
   displayedColumns: string[] = [
     "name",
     "watch_type",
@@ -40,6 +51,9 @@ export class AdminProductsComponent implements OnInit, AfterViewInit, OnDestroy 
     "model",
     "is_active",
     "popular_item",
+
+    "isPromoted",
+    "isPromoteActive",
     "action",
   ];
   dataSource = new MatTableDataSource<any>();
@@ -49,8 +63,6 @@ export class AdminProductsComponent implements OnInit, AfterViewInit, OnDestroy 
   selectedValue: string;
   allData: any;
   sidebarClickSubscription: Subscription;
-
- 
 
   userStatu: any = [
     { value: "All", viewValue: "All" },
@@ -67,31 +79,54 @@ export class AdminProductsComponent implements OnInit, AfterViewInit, OnDestroy 
     private http: HttpService,
     private toast: AlertsServicesService,
     private route: Router,
-    private sidebarService: SidebarService,
+    private sidebarService: SidebarService
   ) {}
 
   ngOnInit(): void {
-    this.sidebarClickSubscription = this.sidebarService.sidebarClick$.subscribe(() => {
-      this.dialog.closeAll();
-    });
+    this.sidebarClickSubscription = this.sidebarService.sidebarClick$.subscribe(
+      () => {
+        this.dialog.closeAll();
+      }
+    );
 
-    this.getAllCategory()
-    this.getAllBrands()
+    this.getAllCategory();
+    this.getPromotionProducts();
+    this.getAllBrands();
   }
 
+  productPromotionsList: any[] = [];
 
-  category_ids:any[]=[];
-  brand_ids:any[]=[];
-  watch_gender:any;
-  sort_by:any;
-  sort_order:any='desc';
-  name:any;
+  async getPromotionProducts() {
+    try {
+      const res: any = await this.http.getPromotionProducts().toPromise();
+      this.productPromotionsList = res.data.map((prod: any) => ({
+        product_id: prod.product_id,
+        promotion_type: prod.promotion_type,
+        is_active: prod.is_active,
+        promotion_banner: prod.promotion_banner?.replace(/\\/g, ""), // Remove backslashes
+        start_date: prod.start_date,
+        end_date: prod.end_date,
+        discount: prod.discount,
+      }));
 
-  brandsList:any;
-  categoryList:any;
+      console.log("productPromotionsList", this.productPromotionsList);
+    } catch (err) {
+      console.error("Error fetching promotion products:", err);
+    }
+  }
 
- async getAllCategory(){
- try {
+  category_ids: any[] = [];
+  brand_ids: any[] = [];
+  watch_gender: any;
+  sort_by: any;
+  sort_order: any = "desc";
+  name: any;
+
+  brandsList: any;
+  categoryList: any;
+
+  async getAllCategory() {
+    try {
       // Await the promise returned by the HTTP request
       const res = await this.http.getCategoryDropDown().toPromise();
       this.categoryList = res.data;
@@ -100,15 +135,15 @@ export class AdminProductsComponent implements OnInit, AfterViewInit, OnDestroy 
     }
   }
 
-  async getAllBrands(){
+  async getAllBrands() {
     try {
-          // Wait for the API response
-          const res = await this.http.getAllBrandsDropdDown().toPromise();
-          this.brandsList = res.data;
-        } catch (error) {
-          // Log error if something goes wrong with the API request
-          console.error("Error fetching brands:", error);
-        }
+      // Wait for the API response
+      const res = await this.http.getAllBrandsDropdDown().toPromise();
+      this.brandsList = res.data;
+    } catch (error) {
+      // Log error if something goes wrong with the API request
+      console.error("Error fetching brands:", error);
+    }
   }
 
   ngAfterViewInit() {
@@ -123,15 +158,15 @@ export class AdminProductsComponent implements OnInit, AfterViewInit, OnDestroy 
     }
   }
 
-  ClearFilter(){
-    this.category_ids=[];
-    this.brand_ids=[];
-    this.watch_gender='';
-    this.sort_by='';
-    this.sort_order='desc';
-    this.name='';
+  ClearFilter() {
+    this.category_ids = [];
+    this.brand_ids = [];
+    this.watch_gender = "";
+    this.sort_by = "";
+    this.sort_order = "desc";
+    this.name = "";
 
-    this.loadData()
+    this.loadData();
   }
 
   async loadData() {
@@ -140,8 +175,8 @@ export class AdminProductsComponent implements OnInit, AfterViewInit, OnDestroy 
     const category_ids = this.category_ids;
     const brand_ids = this.brand_ids;
     const watch_gender = this.watch_gender;
-    const sortField = this.sort?.active || '';
-    const sortDirection = this.sort?.direction || '';
+    const sortField = this.sort?.active || "";
+    const sortDirection = this.sort?.direction || "";
 
     try {
       const data: any = await this.http
@@ -164,26 +199,43 @@ export class AdminProductsComponent implements OnInit, AfterViewInit, OnDestroy 
         const formattedData = data.data.data.map((product: any) => {
           if (product.main_image) {
             product.main_image = product.main_image
-              .replace(/\\/g, '/')
-              .replace(/^\/+/, '');
+              .replace(/\\/g, "/")
+              .replace(/^\/+/, "");
           }
+
+          // ✅ Find matching promotion by product_id
+          const matchedPromotion = this.productPromotionsList.find(
+            (promo: any) => promo.product_id == product.id
+          );
+
+          if (matchedPromotion) {
+
+            console.log("matchedPromotion",matchedPromotion)
+            // ✅ Merge matched promotion details into product
+            product.promotion_type = matchedPromotion.promotion_type;
+            product.is_active = matchedPromotion.is_active;
+            product.promotion_banner = matchedPromotion.promotion_banner;
+            product.start_date = matchedPromotion.start_date;
+            product.end_date = matchedPromotion.end_date;
+            product.discount = matchedPromotion.discount;
+          }
+
           return product;
         });
 
         // ✅ Set DataSource
         this.dataSource.data = formattedData;
+        console.log("formattedData", formattedData);
         this.resultsLength = data.data.total;
 
         // ✅ Bind paginator and sort explicitly after setting the data source
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
-      
       }
     } catch (error) {
-      console.error('Error loading data:', error);
+      console.error("Error loading data:", error);
     }
   }
-  
 
   // ✅ Handle Page Change
   onPageChange(event: PageEvent) {
@@ -191,8 +243,6 @@ export class AdminProductsComponent implements OnInit, AfterViewInit, OnDestroy 
     this.pageEvent = event;
     this.loadData(); // Reload data on page change
   }
-  
-  
 
   sortData(sort: Sort) {
     this.loadData();
@@ -216,6 +266,7 @@ export class AdminProductsComponent implements OnInit, AfterViewInit, OnDestroy 
     this.http.deleteAdminProducts(data.id).subscribe(
       (res) => {
         this.toast.showAlert("success", "Product Delete Susseccfully");
+        this.getPromotionProducts();
         this.loadData();
       },
       (err) => {
@@ -232,6 +283,7 @@ export class AdminProductsComponent implements OnInit, AfterViewInit, OnDestroy 
         } else {
           this.toast.showAlert("success", "Product De-activate Susseccfully");
         }
+        this.getPromotionProducts();
         this.loadData();
       },
       (err) => {
@@ -244,7 +296,7 @@ export class AdminProductsComponent implements OnInit, AfterViewInit, OnDestroy 
     this.http.topAdminPopularProducts(data.id).subscribe(
       (res) => {
         this.toast.showAlert("success", "Product move on top Susseccfully");
-
+        this.getPromotionProducts();
         this.loadData();
       },
       (err) => {
@@ -253,12 +305,11 @@ export class AdminProductsComponent implements OnInit, AfterViewInit, OnDestroy 
     );
   }
 
-
   addFeatureProduct(data) {
     this.http.topFeatureProducts(data.id).subscribe(
       (res) => {
         this.toast.showAlert("success", "Product Add Features Susseccfully");
-
+        this.getPromotionProducts();
         this.loadData();
       },
       (err) => {
@@ -267,9 +318,56 @@ export class AdminProductsComponent implements OnInit, AfterViewInit, OnDestroy 
     );
   }
 
+  addToPromoteProduct(data) {
+    let pro_param = "Create";
+    if (data?.promotion_type) {
+      // pro_param = "Create";
+      pro_param = "Edit";
+    } else {
+      pro_param = "Create";
+    }
+    const dialogRef = this.dialog.open(AddEditPromotionComponent, {
+      width: "1000px",
+      height: "auto",
+      disableClose: true,
+      data: { param: pro_param, data: data },
+    });
 
+    dialogRef.afterClosed().subscribe((param) => {
+      if (param) {
+        this.getPromotionProducts()
+        this.loadData()
+          // this.activateProduct(data)
+       
+      }
+    });
+  }
 
-  deleteUser(data: any) { }
+  deletePromoteProduct(row){
+
+    const dialogRef = this.dialog.open(ConfirmationModelComponent, {
+            width: "600px",
+            data: { message: "Are you sure you want to delete this product from Promotion" },
+          });
+    
+          dialogRef.afterClosed().subscribe((result) => {
+            if (result == true) {
+              this.http.DeletePromotionProducts(row.id).subscribe(
+                (res)=>{
+                  this.toast.showAlert('success','Product removed successfully')
+                  this.getPromotionProducts();
+                  this.loadData()
+                },(err)=>{
+          
+                  this.toast.showAlert('warning',`${err.error.message}`)
+                }
+              )
+            }
+          });
+    
+  }
+
+  deleteUser(data: any) {}
 
   changingStatus(value: any) {
     if (value == "All") {
@@ -319,18 +417,19 @@ export class AdminProductsComponent implements OnInit, AfterViewInit, OnDestroy 
 
   editProduct(data) {
     const dialogRef = this.dialog.open(AdminAddProductComponent, {
-      width: '1000px',
-      height: 'auto',
+      width: "1000px",
+      height: "auto",
       disableClose: true,
-      data: { param: 'Edit', data: data },
+      data: { param: "Edit", data: data },
     });
 
     dialogRef.afterClosed().subscribe((param) => {
       if (param) {
-        if (param === 'approved' || param === 'reject') {
-          this.activateProduct(data)
+        if (param === "approved" || param === "reject") {
+          this.activateProduct(data);
         } else {
-          this.loadData()
+          this.getPromotionProducts();
+          this.loadData();
         }
       }
     });

@@ -99,6 +99,16 @@ import {MatTabsModule} from '@angular/material/tabs';
 import { AccessoriesProductsComponent } from './views/adminpages/accessories-products/accessories-products.component';
 import { CreateAccessoriesProductComponent } from './views/adminpages/create-accessories-product/create-accessories-product.component';
 import { UsernameValidationDirective } from './views/directives/username-validation/username-validation.directive';
+import { AddEditPromotionComponent } from './views/adminpages/add-edit-promotion/add-edit-promotion.component';
+
+
+
+
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+
+
+
 
 @NgModule({
   declarations: [
@@ -153,7 +163,8 @@ import { UsernameValidationDirective } from './views/directives/username-validat
     SafeHtmlPipe,
     AccessoriesProductsComponent,
     CreateAccessoriesProductComponent,
-    UsernameValidationDirective
+    UsernameValidationDirective,
+    AddEditPromotionComponent
   ],
   imports: [
     MatSortModule,
@@ -169,6 +180,8 @@ import { UsernameValidationDirective } from './views/directives/username-validat
     MatButtonModule,
     HttpClientModule,
     NgxMasonryModule,
+    MatNativeDateModule,
+    MatDatepickerModule,
     MatSelectModule,
     MatInputModule,
     MatFormFieldModule,

@@ -428,6 +428,48 @@ export class HttpService implements OnInit {
    
   }
 
+  getPromotionProducts(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/api/admin/promotions`, {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+  }
+
+  AddPromotionProducts(formData): Observable<any> {
+    return this.http.post(
+      `${this.apiUrl}/api/admin/promotions`,formData,
+      {
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${this.token}`,
+        },
+      }
+    );
+  }
+
+  EditPromotionProducts(formData,ID): Observable<any> {
+    return this.http.put(
+      `${this.apiUrl}/api/admin/promotions/${ID}`,formData,
+      {
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${this.token}`,
+        },
+      }
+    );
+  }
+
+  DeletePromotionProducts(ID): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/api/admin/promotions/${ID}`, {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+  }
+
   getAdminProductsofQuery(queryString): Observable<any> {
     const queryParams = new URLSearchParams(queryString).toString();
     return this.http.get(`${this.apiUrl}/api/admin/products/?${queryParams}`, {
