@@ -25,6 +25,7 @@ import { NewArrivalsComponent } from './views/website/new-arrivals/new-arrivals.
 import { WatchOfTheDayComponent } from './views/adminpages/watch-of-the-day/watch-of-the-day.component';
 import { AccessoriesProductsComponent } from './views/adminpages/accessories-products/accessories-products.component';
 import { CreateAccessoriesProductComponent } from './views/adminpages/create-accessories-product/create-accessories-product.component';
+import { adminGuard } from './guards/admin.guard';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -37,17 +38,19 @@ const routes: Routes = [
   { path: 'product-detail', component:  ProductDetailComponentComponent},
   { path: 'popular-brands-list', component:  PopularBrandsListAlphabeticallyComponent},
   { path: 'newArrivals', component:  NewArrivalsComponent},
-  { path: 'admin/dashboard', component:  AdminHomeComponent},
-  { path: 'admin/products', component:  AdminProductsComponent},
-  { path: 'admin/product/add', component:  AdminAddProductComponent},
-  { path: 'admin/brands', component:  AdminBrandsComponent},
-  { path: 'admin/brands/product', component:  AdminBrandsProductComponent},
-  { path: 'admin/category', component:  AdminCategoryComponent},
-  { path: 'admin/category/product', component:  AdminCategoryProductComponent},
-  { path: 'admin/users', component:  AdminUsersComponent},
-  { path: 'admin/watchOfDay', component:  WatchOfTheDayComponent},
-  { path: 'admin/accessories', component:  AccessoriesProductsComponent},
-  { path: 'admin/accessories/add', component:  CreateAccessoriesProductComponent},
+  
+  {  canActivate: [adminGuard],path: 'admin/dashboard', component:  AdminHomeComponent},
+  {  canActivate: [adminGuard],path: 'admin/products', component:  AdminProductsComponent},
+  {  canActivate: [adminGuard],path: 'admin/product/add', component:  AdminAddProductComponent},
+  {  canActivate: [adminGuard],path: 'admin/brands', component:  AdminBrandsComponent},
+  {  canActivate: [adminGuard],path: 'admin/brands/product', component:  AdminBrandsProductComponent},
+  {  canActivate: [adminGuard],path: 'admin/category', component:  AdminCategoryComponent},
+  {  canActivate: [adminGuard],path: 'admin/category/product', component:  AdminCategoryProductComponent},
+  {  canActivate: [adminGuard],path: 'admin/users', component:  AdminUsersComponent},
+  {  canActivate: [adminGuard],path: 'admin/watchOfDay', component:  WatchOfTheDayComponent},
+  {  canActivate: [adminGuard],path: 'admin/accessories', component:  AccessoriesProductsComponent},
+  {  canActivate: [adminGuard],path: 'admin/accessories/add', component:  CreateAccessoriesProductComponent},
+ 
   { path: 'buy-now', component:  BuyNowComponent},
   { path: 'myListing', component:  MyListingDetailsComponent},
   { path: 'forgotPassword', component:  ForgotPasswordComponent},
