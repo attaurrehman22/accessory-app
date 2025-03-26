@@ -100,6 +100,7 @@ export class AdminProductsComponent
     try {
       const res: any = await this.http.getPromotionProducts().toPromise();
       this.productPromotionsList = res.data.map((prod: any) => ({
+        promotion_id:prod.id,
         product_id: prod.product_id,
         promotion_type: prod.promotion_type,
         is_active: prod.is_active,
@@ -212,6 +213,7 @@ export class AdminProductsComponent
 
             console.log("matchedPromotion",matchedPromotion)
             // ✅ Merge matched promotion details into product
+            product.promotion_id=matchedPromotion.promotion_id
             product.promotion_type = matchedPromotion.promotion_type;
             product.is_active = matchedPromotion.is_active;
             product.promotion_banner = matchedPromotion.promotion_banner;
@@ -344,7 +346,7 @@ export class AdminProductsComponent
   }
 
   deletePromoteProduct(row){
-
+ console.log("promotion_id",row.promotion_id)
     const dialogRef = this.dialog.open(ConfirmationModelComponent, {
             width: "600px",
             data: { message: "Are you sure you want to delete this product from Promotion" },
@@ -352,7 +354,7 @@ export class AdminProductsComponent
     
           dialogRef.afterClosed().subscribe((result) => {
             if (result == true) {
-              this.http.DeletePromotionProducts(row.id).subscribe(
+              this.http.DeletePromotionProducts(row.promotion_id).subscribe(
                 (res)=>{
                   this.toast.showAlert('success','Product removed successfully')
                   this.getPromotionProducts();

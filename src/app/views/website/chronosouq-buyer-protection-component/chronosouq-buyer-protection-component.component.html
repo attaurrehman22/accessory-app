@@ -84,15 +84,31 @@ class="category_btn"
                 class="d-flex justify-content-between align-items-center mt-3"
               >
                 <p *ngIf="watch?.shipping_charges" class="price">
-                  +{{ watch?.shipping_charges }} {{ watch?.currency }} Shipping
+                  <img src="../../../../assets/images/Saudi_Riyal_Symbol-2.svg" class="sar-icon-style" alt="SAR"/>
+                  +{{ watch?.shipping_charges || 'Without' }} 
+              
+                   <!-- {{ watch?.currency }} -->
+                    Shipping
                 </p>
+
+                <p *ngIf="!watch.shipping_charges" class="price">
+                  <!-- <img src="../../../../assets/images/Saudi_Riyal_Symbol-2.svg" class="sar-icon-style" alt="SAR"/> -->
+                  {{ watch?.shipping_charges || 'Without' }} 
+              
+                   <!-- {{ watch?.currency }} -->
+                    Shipping
+                </p>
+
                 <div>
                   <p class="price">Location</p>
                 </div>
               </div>
               <div class="d-flex justify-content-between align-items-center">
-                <p class="card-title-two">{{ watch.price }}</p>
-                <p *ngIf="watch?.created_by?.city" class="card-title-two">{{ watch.created_by.city }}</p>
+                <p class="card-title-two">                 
+                   <img *ngIf="watch?.price" src="../../../../assets/images/Saudi_Riyal_Symbol-2.svg" class="sar-icon-style" alt="SAR"/>
+
+                  {{ watch.price }}</p>
+                <p class="card-title-two">{{ watch.created_by.city || 'N/A' }}</p>
               </div>
               <div *ngIf="watch?.created_by?.type === 'user'" class="d-flex mt-2">
                 <p class="seller-chip"> Private Seller </p>

@@ -28,6 +28,10 @@ p, h1, h2, h3, h4, h5, h6, span, a {
   font-family: 'Open Sans',unset;
 }
 
+.sar-icon-style {
+  height: 18px;
+}
+
 .cormorant-styl {
   font-family: 'Cormorant', serif;
 }

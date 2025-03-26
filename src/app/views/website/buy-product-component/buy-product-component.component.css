@@ -988,3 +988,13 @@ flex-direction: row-reverse;
     width: 100%;
   }
 } */
+
+
+.sar-icon-style {
+  height: 18px !important;
+  padding: 0 !important;
+  border: none !important;
+  border-radius: 0 !important;
+  object-fit: fill;
+  width: auto !important;
+}

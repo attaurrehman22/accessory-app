@@ -2366,8 +2366,9 @@
                       {{ "create_product_listing.watch_price" | translate }}
                     </p>
                     <p style="font-size: 16px !important;font-weight:600 !important;color:#0F172A !important"  class="font-size-16 font-wight-600 color-0F172A">
+                      <img src="../../../../assets/images/Saudi_Riyal_Symbol-2.svg" class="sar-icon-style" alt="SAR"/>
                       {{
-                        watchPriceDisplay | currency : "SAR" : "symbol" : "1.2-2"
+                        watchPriceDisplay 
                       }}
                     </p>
                   </div>
@@ -2376,7 +2377,8 @@
                       "create_product_listing.platform_fees" | translate
                     }}</span>
                     <span class="font-size-16 font-wight-600 color-0F172A">
-                      - {{ platformFee | currency : "SAR" : "symbol" : "1.2-2" }}
+                      <img src="../../../../assets/images/Saudi_Riyal_Symbol-2.svg" class="sar-icon-style" alt="SAR"/>
+                      - {{ platformFee  }}
                     </span>
                   </div>
                   <mat-divider></mat-divider>
@@ -2385,8 +2387,10 @@
                       "create_product_listing.estimated_payout" | translate
                     }}</span>
                     <span class="font-size-16 font-wight-600 color-0F172A">
+                      <img src="../../../../assets/images/Saudi_Riyal_Symbol-2.svg" class="sar-icon-style" alt="SAR"/>
+
                       {{
-                        estimatedPayout | currency : "SAR" : "symbol" : "1.2-2"
+                        estimatedPayout 
                       }}
                     </span>
                   </div>
@@ -2548,9 +2552,11 @@
                       </p>
                       <p style="font-size: 16px !important;font-weight:600 !important;color:#0F172A !important"
                        class="font-size-16 font-wight-600 color-0F172A">
+                       <img src="../../../../assets/images/Saudi_Riyal_Symbol-2.svg" class="sar-icon-style" alt="SAR"/>
+
                         {{
                           watchPriceDisplay
-                            | currency : "SAR" : "symbol" : "1.2-2"
+                            
                         }}
                       </p>
                     </div>
@@ -2560,7 +2566,9 @@
                       }}</span>
                       <span class="font-size-16 font-wight-600 color-0F172A">
                         -
-                        {{ platformFee | currency : "SAR" : "symbol" : "1.2-2" }}
+                        <img src="../../../../assets/images/Saudi_Riyal_Symbol-2.svg" class="sar-icon-style" alt="SAR"/>
+
+                        {{ platformFee  }}
                       </span>
                     </div>
                     <mat-divider></mat-divider>
@@ -2569,8 +2577,10 @@
                         "create_product_listing.payout" | translate
                       }}</span>
                       <span class="font-size-16 font-wight-600 color-0F172A">
+                        <img src="../../../../assets/images/Saudi_Riyal_Symbol-2.svg" class="sar-icon-style" alt="SAR"/>
+
                         {{
-                          estimatedPayout | currency : "SAR" : "symbol" : "1.2-2"
+                          estimatedPayout 
                         }}
                       </span>
                     </div>
@@ -2584,10 +2594,12 @@
                       }}</span>
                       <span class="font-size-16 font-wight-600 color-0F172A">
                         -
+                        <img src="../../../../assets/images/Saudi_Riyal_Symbol-2.svg" class="sar-icon-style" alt="SAR"/>
+
                         {{
                           shipping_charges
                             ? shipping_charges
-                            : (0 | currency : "SAR" : "symbol" : "1.2-2")
+                            : (0 )
                         }}
                       </span>
                     </div>
@@ -2597,9 +2609,11 @@
                         "create_product_listing.estimated_payout" | translate
                       }}</span>
                       <span class="font-size-16 font-wight-600 color-0F172A">
+                        <img src="../../../../assets/images/Saudi_Riyal_Symbol-2.svg" class="sar-icon-style" alt="SAR"/>
+
                         {{
                           estimatedPayoutwithShipping
-                            | currency : "SAR" : "symbol" : "1.2-2"
+                            
                         }}
                       </span>
                     </div>
@@ -3025,13 +3039,16 @@
                             {{ productDetails.title }}
                           </p>
                           <p class="text-primary font-weight-bold mb-0">
+                            <img src="../../../../assets/images/Saudi_Riyal_Symbol-2.svg" class="sar-icon-style" alt="SAR"/>
+
                             {{
                               productDetails.price
-                                | currency : "SAR" : "symbol" : "1.2-2"
+                                
                             }}
                           </p>
                           <small class="text-muted">{{
-                            productDetails.shipping_type
+                                                       productDetails.shipping_type == 'inclusiveShipping' ? 'Inclusive Shipping' : productDetails.shipping_type == 'exclusiveShipping' ? 'Exclusive Shipping' : productDetails.shipping_type == 'freeCharge' ? 'Free Charge' : productDetails.shipping_type
+
                           }}</small>
                         </div>
                       </div>
@@ -3066,9 +3083,10 @@
                         </p>
                         <p style="font-size: 16px !important;font-weight:600 !important;color:#0F172A !important" 
                          class="font-size-16 font-wight-600 color-0F172A">
+                         <img src="../../../../assets/images/Saudi_Riyal_Symbol-2.svg" class="sar-icon-style" alt="SAR"/>
                           {{
                             watchPriceDisplay
-                              | currency : "SAR" : "symbol" : "1.2-2"
+                              
                           }}
                         </p>
                       </div>
@@ -3080,8 +3098,10 @@
                         >
                         <span class="font-size-16 font-wight-600 color-0F172A">
                           -
+                          <img src="../../../../assets/images/Saudi_Riyal_Symbol-2.svg" class="sar-icon-style" alt="SAR"/>
+
                           {{
-                            platformFee | currency : "SAR" : "symbol" : "1.2-2"
+                            platformFee 
                           }}
                         </span>
                       </div>
@@ -3093,9 +3113,11 @@
                           }}</span
                         >
                         <span class="font-size-16 font-wight-600 color-0F172A">
+                          <img src="../../../../assets/images/Saudi_Riyal_Symbol-2.svg" class="sar-icon-style" alt="SAR"/>
+
                           {{
                             estimatedPayout
-                              | currency : "SAR" : "symbol" : "1.2-2"
+                              
                           }}
                         </span>
                       </div>
@@ -3110,9 +3132,11 @@
                         >
                         <span class="font-size-16 font-wight-600 color-0F172A">
                           +
+                          <img src="../../../../assets/images/Saudi_Riyal_Symbol-2.svg" class="sar-icon-style" alt="SAR"/>
+
                           {{
                             shipping_charges
-                              | currency : "SAR" : "symbol" : "1.2-2"
+                              
                           }}
                         </span>
                       </div>
@@ -3126,9 +3150,11 @@
                           }}</span
                         >
                         <span class="font-size-16 font-wight-600 color-0F172A">
+                          <img src="../../../../assets/images/Saudi_Riyal_Symbol-2.svg" class="sar-icon-style" alt="SAR"/>
+
                           {{
                             estimatedPayoutwithShipping
-                              | currency : "SAR" : "symbol" : "1.2-2"
+                              
                           }}
                         </span>
                       </div>
@@ -5434,8 +5460,10 @@
                       {{ "create_product_listing.watch_price" | translate }}
                     </p>
                     <p style="font-size: 16px !important;font-weight:600 !important;color:#0F172A !important"  class="font-size-16 font-wight-600 color-0F172A">
+                      <img src="../../../../assets/images/Saudi_Riyal_Symbol-2.svg" class="sar-icon-style" alt="SAR"/>
+
                       {{
-                        watchPriceDisplay | currency : "SAR" : "symbol" : "1.2-2"
+                        watchPriceDisplay 
                       }}
                     </p>
                   </div>
@@ -5444,7 +5472,9 @@
                       "create_product_listing.platform_fees" | translate
                     }}</span>
                     <span class="font-size-16 font-wight-600 color-0F172A">
-                      - {{ platformFee | currency : "SAR" : "symbol" : "1.2-2" }}
+                      -                    <img src="../../../../assets/images/Saudi_Riyal_Symbol-2.svg" class="sar-icon-style" alt="SAR"/>
+
+                      {{ platformFee  }}
                     </span>
                   </div>
                   <mat-divider></mat-divider>
@@ -5453,8 +5483,10 @@
                       "create_product_listing.estimated_payout" | translate
                     }}</span>
                     <span class="font-size-16 font-wight-600 color-0F172A">
+                      <img src="../../../../assets/images/Saudi_Riyal_Symbol-2.svg" class="sar-icon-style" alt="SAR"/>
+
                       {{
-                        estimatedPayout | currency : "SAR" : "symbol" : "1.2-2"
+                        estimatedPayout 
                       }}
                     </span>
                   </div>
@@ -5609,8 +5641,10 @@
                       {{ "create_product_listing.watch_price" | translate }}
                     </p>
                     <p style="font-size: 16px !important;font-weight:600 !important;color:#0F172A !important"  class="font-size-16 font-wight-600 color-0F172A">
+                      <img src="../../../../assets/images/Saudi_Riyal_Symbol-2.svg" class="sar-icon-style" alt="SAR"/>
+
                       {{
-                        watchPriceDisplay | currency : "SAR" : "symbol" : "1.2-2"
+                        watchPriceDisplay 
                       }}
                     </p>
                   </div>
@@ -5619,7 +5653,8 @@
                       "create_product_listing.platform_fees" | translate
                     }}</span>
                     <span class="font-size-16 font-wight-600 color-0F172A">
-                      - {{ platformFee | currency : "SAR" : "symbol" : "1.2-2" }}
+                      -                   <img src="../../../../assets/images/Saudi_Riyal_Symbol-2.svg" class="sar-icon-style" alt="SAR"/>
+                      {{ platformFee  }}
                     </span>
                   </div>
                   <mat-divider></mat-divider>
@@ -5628,8 +5663,10 @@
                       "create_product_listing.payout" | translate
                     }}</span>
                     <span class="font-size-16 font-wight-600 color-0F172A">
+                      <img src="../../../../assets/images/Saudi_Riyal_Symbol-2.svg" class="sar-icon-style" alt="SAR"/>
+
                       {{
-                        estimatedPayout | currency : "SAR" : "symbol" : "1.2-2"
+                        estimatedPayout 
                       }}
                     </span>
                   </div>
@@ -5642,11 +5679,12 @@
                       "create_product_listing.shipping_charges" | translate
                     }}</span>
                     <span class="font-size-16 font-wight-600 color-0F172A">
-                      -
+                      -                   <img src="../../../../assets/images/Saudi_Riyal_Symbol-2.svg" class="sar-icon-style" alt="SAR"/>
+
                       {{
                         shipping_charges
           ? shipping_charges
-                          : (0 | currency : "SAR" : "symbol" : "1.2-2")
+                          : (0 )
                       }}
                     </span>
                   </div>
@@ -5656,9 +5694,11 @@
                       "create_product_listing.estimated_payout" | translate
                     }}</span>
                     <span class="font-size-16 font-wight-600 color-0F172A">
+                      <img src="../../../../assets/images/Saudi_Riyal_Symbol-2.svg" class="sar-icon-style" alt="SAR"/>
+
                       {{
                         estimatedPayoutwithShipping
-                          | currency : "SAR" : "symbol" : "1.2-2"
+                          
                       }}
                     </span>
                   </div>
@@ -6026,13 +6066,16 @@
                         {{ productDetails.title }}
                       </p>
                       <p class="text-primary font-weight-bold mb-0">
+                        <img src="../../../../assets/images/Saudi_Riyal_Symbol-2.svg" class="sar-icon-style" alt="SAR"/>
+
                         {{
                           productDetails.price
-                            | currency : "SAR" : "symbol" : "1.2-2"
+                            
                         }}
                       </p>
                       <small class="text-muted">{{
-                        productDetails.shipping_type
+                                                   productDetails.shipping_type == 'inclusiveShipping' ? 'Inclusive Shipping' : productDetails.shipping_type == 'exclusiveShipping' ? 'Exclusive Shipping' : productDetails.shipping_type == 'freeCharge' ? 'Free Charge' : productDetails.shipping_type
+
                       }}</small>
                     </div>
                   </div>
@@ -6065,8 +6108,9 @@
                     </p>
                     <p style="font-size: 16px !important;font-weight:600 !important;color:#0F172A !important" 
                     class="font-size-16 font-wight-600 color-0F172A">
-                      {{
-                        watchPriceDisplay | currency : "SAR" : "symbol" : "1.2-2"
+                    <img src="../../../../assets/images/Saudi_Riyal_Symbol-2.svg" class="sar-icon-style" alt="SAR"/>
+                    {{
+                        watchPriceDisplay 
                       }}
                     </p>
                   </div>
@@ -6077,7 +6121,8 @@
                       }}</span
                     >
                     <span class="font-size-16 font-wight-600 color-0F172A">
-                      - {{ platformFee | currency : "SAR" : "symbol" : "1.2-2" }}
+                      -                   <img src="../../../../assets/images/Saudi_Riyal_Symbol-2.svg" class="sar-icon-style" alt="SAR"/>
+                      {{ platformFee  }}
                     </span>
                   </div>
                   <mat-divider></mat-divider>
@@ -6086,8 +6131,10 @@
                       {{ "create_product_listing.payout" | translate }}</span
                     >
                     <span class="font-size-16 font-wight-600 color-0F172A">
+                      <img src="../../../../assets/images/Saudi_Riyal_Symbol-2.svg" class="sar-icon-style" alt="SAR"/>
+
                       {{
-                        estimatedPayout | currency : "SAR" : "symbol" : "1.2-2"
+                        estimatedPayout 
                       }}
                     </span>
                   </div>
@@ -6098,8 +6145,9 @@
                     }}</span>
                     <span class="font-size-16 font-wight-600 color-0F172A">
                       -
+                      <img src="../../../../assets/images/Saudi_Riyal_Symbol-2.svg" class="sar-icon-style" alt="SAR"/>
                       {{
-                        shipping_charges | currency : "SAR" : "symbol" : "1.2-2"
+                        shipping_charges 
                       }}
                     </span>
                   </div>
@@ -6109,9 +6157,10 @@
                       "create_product_listing.estimated_payout" | translate
                     }}</span>
                     <span class="font-size-16 font-wight-600 color-0F172A">
+                      <img src="../../../../assets/images/Saudi_Riyal_Symbol-2.svg" class="sar-icon-style" alt="SAR"/>
                       {{
                         estimatedPayoutwithShipping
-                          | currency : "SAR" : "symbol" : "1.2-2"
+                         
                       }}
                     </span>
                   </div>
