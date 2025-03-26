@@ -2,13 +2,16 @@
   <h2 class="text-center">{{ labelMessage }}</h2>
   <form
     [formGroup]="promotionForm"
-    (ngSubmit)="onSave()"
     class="form-container d-flex flex-column mt-2"
   >
     <!-- Promotion Type -->
     <mat-form-field appearance="outline" style="width: 100%">
       <mat-label>Promotion Type</mat-label>
-      <input matInput formControlName="promotion_type" appOnlyCharacterLimitThirty/>
+      <input
+        matInput
+        formControlName="promotion_type"
+        appOnlyCharacterLimitThirty
+      />
       <mat-error *ngIf="promotionForm.get('promotion_type')?.invalid">
         Promotion Type is required
       </mat-error>
@@ -17,7 +20,12 @@
     <!-- Discount -->
     <mat-form-field appearance="outline" style="width: 100%">
       <mat-label>Discount</mat-label>
-      <input matInput type="number" appPositiveNumber formControlName="discount" />
+      <input
+        matInput
+        type="number"
+        appPositiveNumber
+        formControlName="discount"
+      />
       <mat-error *ngIf="promotionForm.get('discount')?.invalid">
         Discount is required
       </mat-error>
@@ -56,18 +64,38 @@
     </mat-form-field>
 
     <!-- Promotion Banner -->
-    <div style="width: 100%">
-        <label>Promotion Banner</label>
-        <input type="file" (change)="onFileSelected($event)" />
-        <mat-error *ngIf="promotionForm.get('promotion_banner')?.invalid">
-          Promotion Banner is required
-        </mat-error>
-      </div>
-  
-      <!-- Image Preview -->
+    <!-- <div style="width: 100%; display: flex; gap: 5px">
+      <label>Promotion Banner</label>
+      <input type="file" (change)="onFileSelected($event)" />
+      <mat-error *ngIf="promotionForm.get('promotion_banner')?.invalid">
+        Promotion Banner is required
+      </mat-error>
       <div *ngIf="previewImage" class="image-preview">
         <img [src]="previewImage" alt="Preview" />
       </div>
+    </div> -->
+
+    <div style="width: 100%; display: flex; flex-direction: column; gap: 5px">
+      <label>Promotion Banner</label>
+      <div class="upload-box" (click)="fileInput.click()">
+        <input 
+          #fileInput 
+          type="file" 
+          style="display: none" 
+          (change)="onFileSelected($event)" 
+        />
+        <ng-container *ngIf="!previewImage">
+          <div class="plus-icon">+</div>
+        </ng-container>
+        <ng-container *ngIf="previewImage">
+          <img [src]="previewImage" alt="Preview" class="preview-image" />
+        </ng-container>
+      </div>
+      <mat-error *ngIf="promotionForm.get('promotion_banner')?.invalid">
+        Promotion Banner is required
+      </mat-error>
+    </div>
+    
 
     <!-- Is Active -->
     <mat-checkbox formControlName="is_active">Is Active</mat-checkbox>
@@ -76,10 +104,18 @@
     <div class="d-flex align-items-center justify-content-center gap-2">
       <button
         class="submit-btn"
-        type="submit"
-        [disabled]="promotionForm.invalid"
+        (click)="onSave()"
+        *ngIf="labelMessage == 'Add New Promotion'"
       >
         Save
+      </button>
+
+      <button
+        class="submit-btn"
+        (click)="onSave()"
+        *ngIf="labelMessage != 'Add New Promotion'"
+      >
+        Update
       </button>
 
       <button class="cancel-btn" (click)="cancel()">Cancel</button>
