@@ -26,6 +26,7 @@ import { WatchOfTheDayComponent } from './views/adminpages/watch-of-the-day/watc
 import { AccessoriesProductsComponent } from './views/adminpages/accessories-products/accessories-products.component';
 import { CreateAccessoriesProductComponent } from './views/adminpages/create-accessories-product/create-accessories-product.component';
 import { adminGuard } from './guards/admin.guard';
+import { TopBrandsLogosComponent } from './views/adminpages/top-brands-logos/top-brands-logos.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -50,6 +51,7 @@ const routes: Routes = [
   {  canActivate: [adminGuard],path: 'admin/watchOfDay', component:  WatchOfTheDayComponent},
   {  canActivate: [adminGuard],path: 'admin/accessories', component:  AccessoriesProductsComponent},
   {  canActivate: [adminGuard],path: 'admin/accessories/add', component:  CreateAccessoriesProductComponent},
+  {  canActivate: [adminGuard],path: 'admin/top/brands', component:  TopBrandsLogosComponent},
  
   { path: 'buy-now', component:  BuyNowComponent},
   { path: 'myListing', component:  MyListingDetailsComponent},

@@ -1,0 +1,231 @@
+<div class="">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="row">
+          <div class="col-md-2">
+            <br />
+            <h1>Top Brands</h1>
+          </div>
+          <div class="col-md-1"></div>
+        </div>
+        <!-- <div class="col-10"></div> -->
+      </div>
+      <div class="row g-0">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+          <div class="table">
+            <mat-card class="mt card-class">
+              <mat-card-content>
+                <div class="row">
+                  <div class="col-8 col-lg-8 col-md-8 col-sm-6">
+                    <mat-form-field appearance="outline">
+                      <mat-label>Search</mat-label>
+  
+                      <input
+                        matInput
+                        (keyup)="applyFilter($event)"
+                        placeholder="Ex. Admin"
+                        #input
+                      />
+                    </mat-form-field>
+                    <!-- &nbsp; -->
+                    <!-- <mat-form-field appearance="outline">
+                      <mat-label>Player status</mat-label>
+                      <mat-select [(ngModel)]="selectedValue" name="userStatu">
+                        <mat-option
+                          *ngFor="let i of userStatu"
+                          (click)="changingStatus(i.value)"
+                          [value]="i.value"
+                        >
+                          {{ i.viewValue }}
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field> -->
+                  </div>
+  
+                  <div
+                    class="col-4 col-lg-4 col-md-4 col-sm-6 d-flex justify-content-end align-items-center"
+                  >
+                    <button
+                      [hidden]="!isAdmin()"
+                      mat-raised-button
+                      color="primary"
+                      (click)="openModal()"
+                    >
+                      <mat-icon>add_circle_outline</mat-icon>Add Brand
+                    </button>
+                  </div>
+                </div>
+                <mat-card class="card-class">
+                  <div class="mat-elevation-z8">
+                    <table class="table" mat-table [dataSource]="dataSource">
+                      <!-- ID Column -->
+                      <ng-container class="column" matColumnDef="name">
+                        <th mat-header-cell class="column" *matHeaderCellDef>
+                          Name
+                        </th>
+                        <td mat-cell class="column" *matCellDef="let row">
+                          {{ row.name }}
+                        </td>
+                      </ng-container>
+  
+                      <!-- First Name Column -->
+                      <ng-container class="column" matColumnDef="slug">
+                        <th mat-header-cell class="column" *matHeaderCellDef>
+                          Slug
+                        </th>
+                        <td mat-cell class="column" *matCellDef="let row; in">
+                          {{ row.slug }}
+                        </td>
+                      </ng-container>
+  
+                      <!-- Last Name Column -->
+                      <ng-container class="column" matColumnDef="description">
+                        <th mat-header-cell class="column" *matHeaderCellDef>
+                          Description
+                        </th>
+                        <td mat-cell class="column" *matCellDef="let row; in">
+                          {{ row.description }}
+                        </td>
+                      </ng-container>
+  
+                      <!-- <ng-container class="column" matColumnDef="cover_image">
+                        <th mat-header-cell class="column" *matHeaderCellDef>
+                          Cover Image
+                        </th>
+                        <td mat-cell class="column" *matCellDef="let row; in">
+                          <img
+                            style="height: 60px;
+                            width: 70px;
+                            border-radius: 10px;"
+                            [src]="
+                              'https://api.chronosouq.com/' + row.cover_image
+                            "
+                          />
+                        </td>
+                      </ng-container> -->
+  
+                      <ng-container class="column" matColumnDef="meta_title">
+                        <th mat-header-cell class="column" *matHeaderCellDef>
+                          Meta Title
+                        </th>
+                        <td mat-cell class="column" *matCellDef="let row; in">
+                          {{ row.meta_title }}
+                        </td>
+                      </ng-container>
+  
+                      <ng-container
+                        class="column"
+                        matColumnDef="meta_description"
+                      >
+                        <th mat-header-cell class="column" *matHeaderCellDef>
+                          Meta Description
+                        </th>
+                        <td mat-cell class="column" *matCellDef="let row; in">
+                          {{ row.meta_description }}
+                        </td>
+                      </ng-container>
+  
+                      <!-- <ng-container class="column" matColumnDef="meta_keywords">
+                        <th mat-header-cell class="column" *matHeaderCellDef>
+                          Meta Keywords
+                        </th>
+                        <td mat-cell class="column" *matCellDef="let row; in">
+                          {{ row.meta_keywords }}
+                        </td>
+                      </ng-container> -->
+  
+                      <ng-container class="column" matColumnDef="is_active">
+                        <th mat-header-cell class="column" *matHeaderCellDef>
+                          Is Active
+                        </th>
+                        <td mat-cell class="column" *matCellDef="let row; in">
+                          {{ row.is_active === 0 ? 'No' : 'Yes'}}
+                        </td>
+                      </ng-container>
+  
+                      <ng-container class="column" matColumnDef="top_brand">
+                        <th mat-header-cell class="column" *matHeaderCellDef>
+                          Top Brand
+                        </th>
+                        <td mat-cell class="column" *matCellDef="let row; in">
+                          {{ row.top_brand === 0 ? 'No' : 'Yes'}}
+                        </td>
+                      </ng-container>
+  
+                      <!-- Status Column -->
+                      <ng-container class="column" matColumnDef="edit">
+                        <th mat-header-cell class="column" *matHeaderCellDef>
+                          Action
+                        </th>
+                        <td mat-cell class="column" *matCellDef="let row; in">
+  
+                          <button
+                          style="width: 0; height: 0; padding: 0"
+                          mat-icon-button
+                          [matMenuTriggerFor]="menu"
+                          (click)="$event.stopPropagation()"
+                        >
+                          <mat-icon>info</mat-icon>
+                        </button>
+                        <mat-menu #menu="matMenu">
+                          <button mat-menu-item (click)="editBrand(row)">
+                            <mat-icon>edit</mat-icon>
+                            <span>Edit</span>
+                          </button>
+                          <button mat-menu-item (click)="deleteBrand(row)">
+                            <mat-icon>delete</mat-icon>
+                            <span>Delete</span>
+                          </button>
+                          <button mat-menu-item (click)="activateDeactivateBrand(row)">
+                            <mat-icon>refresh</mat-icon>
+                            <span *ngIf="row.is_active === 1">Deactivate</span>
+                            <span *ngIf="row.is_active === 0">Activate</span>
+                          </button>
+  
+  
+  
+                          <button mat-menu-item (click)="topBrand(row)">
+                            <mat-icon>refresh</mat-icon>
+                            <span *ngIf="row.top_brand === 1">Remove from Top</span>
+                            <span *ngIf="row.top_brand === 0">Move to Top</span>
+                          </button>
+                        </mat-menu>
+                        </td>
+                      </ng-container>
+  
+                      <tr
+                        mat-header-row
+                        *matHeaderRowDef="displayedColumns; sticky: true"
+                      ></tr>
+                      <tr
+                        mat-row
+                        *matRowDef="let row; columns: displayedColumns"
+                      ></tr>
+  
+                      <!-- Row shown when there is no matching data. -->
+                      <tr class="mat-row" *matNoDataRow>
+                        <td class="mat-cell" colspan="4">
+                          No data matching the filter "{{ input.value }}"
+                        </td>
+                      </tr>
+                    </table>
+  
+                    <mat-paginator
+                      #paginator
+                      [pageSizeOptions]="[5, 10, 20]"
+                      showFirstLastButtons
+                    ></mat-paginator>
+                  </div>
+                </mat-card>
+                <!-- <div class="d-flex justify-content-end">
+                  <button mat-raised-button color="primary" (click)="download()">
+                    <mat-icon>cloud_download</mat-icon>Download Users
+                  </button>
+                </div> -->
+              </mat-card-content>
+            </mat-card>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

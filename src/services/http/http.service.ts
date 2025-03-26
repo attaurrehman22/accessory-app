@@ -225,7 +225,7 @@ export class HttpService implements OnInit {
   }
 
   editAdminBrand(formData, ID): Observable<any> {
-    return this.http.put(`${this.apiUrl}/api/admin/brands/${ID}`, formData, {
+    return this.http.post(`${this.apiUrl}/api/admin/brands/${ID}`, formData, {
       headers: {
         Accept: "application/json",
         Authorization: `Bearer ${this.token}`,

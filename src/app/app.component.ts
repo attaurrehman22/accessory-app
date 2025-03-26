@@ -75,7 +75,8 @@ export class AppComponent implements OnInit {
     "/admin/category-product",
     "/admin/watchOfDay",
     "/admin/accessories",
-    "/admin/accessories/add"
+    "/admin/accessories/add",
+    "/admin/top/brands"
   ];
   routesToHideforAdmin = [
     "/login",

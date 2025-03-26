@@ -21,12 +21,6 @@ export class MostPopularModelsComponentComponent implements OnInit {
     slideMargin: number = 20;
   
     images: string[] = []; // Store image URLs here
-    // Dumyimages= [
-    //   "./assets/images/Screenshots/tudor.svg",
-    //   "./assets/images/Screenshots/Frame 1261153457.svg",
-    //   "../assets/images/Screenshots/hublot-logo-1.svg",
-    //   "./assets/images/Screenshots/jaeger-le-coultre.svg",
-    // ];
     duplicatedImages: string[] = [];
   
     private animationFrame: any;

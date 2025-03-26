@@ -106,6 +106,7 @@ import { AddEditPromotionComponent } from './views/adminpages/add-edit-promotion
 
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import { TopBrandsLogosComponent } from './views/adminpages/top-brands-logos/top-brands-logos.component';
 
 
 
@@ -164,7 +165,8 @@ import { MatNativeDateModule } from '@angular/material/core';
     AccessoriesProductsComponent,
     CreateAccessoriesProductComponent,
     UsernameValidationDirective,
-    AddEditPromotionComponent
+    AddEditPromotionComponent,
+    TopBrandsLogosComponent
   ],
   imports: [
     MatSortModule,

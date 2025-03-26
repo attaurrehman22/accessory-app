@@ -21,11 +21,11 @@ export interface UserData {
 }
 
 @Component({
-  selector: "app-admin-brands",
-  templateUrl: "./admin-brands.component.html",
-  styleUrls: ["./admin-brands.component.css"],
+  selector: 'app-top-brands-logos',
+  templateUrl: './top-brands-logos.component.html',
+  styleUrls: ['./top-brands-logos.component.css']
 })
-export class AdminBrandsComponent implements OnInit, AfterViewInit, OnDestroy {
+export class TopBrandsLogosComponent implements OnInit, AfterViewInit, OnDestroy {
   displayedColumns: string[] = [
     "name",
     "slug",
@@ -110,21 +110,28 @@ export class AdminBrandsComponent implements OnInit, AfterViewInit, OnDestroy {
     this.http.getAdminBrands().subscribe(
       (res) => {
         this.allData = res.data;
-
-        this.allData = this.allData.map((product: any) => {
-          if (product.cover_image) {
-            product.cover_image = product.cover_image
-              .replace(/\\/g, "/")
-              .replace(/^\/+/, "");
-          }
-          return product;
-        });
+  
+        // Filter products where 'top_brand' is 1 and clean up 'cover_image' path
+        this.allData = this.allData
+          .filter((product: any) => product.top_brand == 1)
+          .map((product: any) => {
+            if (product.cover_image) {
+              product.cover_image = product.cover_image
+                .replace(/\\/g, "/")
+                .replace(/^\/+/, "");
+            }
+            return product;
+          });
+  
+        console.log("allData", this.allData);
+  
         this.dataSource = new MatTableDataSource(this.allData);
         this.dataSource.paginator = this.paginator;
       },
       (err) => {}
     );
   }
+  
 
   isMeOrAdminOrDeveloper(id: any): boolean {
     return true;
@@ -136,7 +143,7 @@ export class AdminBrandsComponent implements OnInit, AfterViewInit, OnDestroy {
 
   editBrand(data: any) {
     const dialogRef = this.dialog.open(AdminBrandsProductComponent, {
-      width: '1700px',
+      width: '1000px',
       height: 'auto',
       disableClose: false, // Allow closing by clicking outside
       data: { param: 'Edit', data: data },
