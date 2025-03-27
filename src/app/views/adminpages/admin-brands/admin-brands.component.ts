@@ -133,6 +133,8 @@ export class AdminBrandsComponent implements OnInit, AfterViewInit, OnDestroy {
     console.log("selectedValue", this.selectedValue);
     if (this.selectedValue == 'allBrands') {
       this.allData = this.allBrands;
+      this.dataSource = new MatTableDataSource(this.allData);
+      this.dataSource.paginator = this.paginator;
     } else if (this.selectedValue == 'topBrands') {
       this.allData = this.allBrands.filter(
         (brand: any) => brand.top_brand == 1
