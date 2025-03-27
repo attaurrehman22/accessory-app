@@ -16,10 +16,9 @@
           <mat-card class="mt card-class">
             <mat-card-content>
               <div class="row">
-                <div class="col-8 col-lg-8 col-md-8 col-sm-6">
+                <div class="col-8 col-lg-8 col-md-8 col-sm-6 d-flex gap-2">
                   <mat-form-field appearance="outline">
                     <mat-label>Search</mat-label>
-
                     <input
                       matInput
                       (keyup)="applyFilter($event)"
@@ -28,18 +27,20 @@
                     />
                   </mat-form-field>
                   <!-- &nbsp; -->
-                  <!-- <mat-form-field appearance="outline">
-                    <mat-label>Player status</mat-label>
-                    <mat-select [(ngModel)]="selectedValue" name="userStatu">
-                      <mat-option
-                        *ngFor="let i of userStatu"
-                        (click)="changingStatus(i.value)"
-                        [value]="i.value"
-                      >
-                        {{ i.viewValue }}
+                  <mat-form-field appearance="outline">
+                    <mat-label>Filtered By</mat-label>
+                    <mat-select [(ngModel)]="selectedValue" (selectionChange)="filterBrands()" >
+                      <mat-option value="allBrands">
+                        All Brands
+                      </mat-option>
+                      <mat-option value="topBrands">
+                        Top Brands
+                      </mat-option>
+                      <mat-option value="activeBrands">
+                        Active Brands
                       </mat-option>
                     </mat-select>
-                  </mat-form-field> -->
+                  </mat-form-field>
                 </div>
 
                 <div

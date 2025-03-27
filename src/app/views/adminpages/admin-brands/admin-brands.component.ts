@@ -119,12 +119,35 @@ export class AdminBrandsComponent implements OnInit, AfterViewInit, OnDestroy {
           }
           return product;
         });
+         this.allBrands=this.allData
         this.dataSource = new MatTableDataSource(this.allData);
         this.dataSource.paginator = this.paginator;
       },
       (err) => {}
     );
   }
+
+  allBrands:any;
+
+  filterBrands(){
+    console.log("selectedValue", this.selectedValue);
+    if (this.selectedValue == 'allBrands') {
+      this.allData = this.allBrands;
+    } else if (this.selectedValue == 'topBrands') {
+      this.allData = this.allBrands.filter(
+        (brand: any) => brand.top_brand == 1
+      );
+      this.dataSource = new MatTableDataSource(this.allData);
+        this.dataSource.paginator = this.paginator;
+    } else {
+      this.allData = this.allBrands.filter(
+        (brand: any) => brand.is_active == 1
+      );
+      this.dataSource = new MatTableDataSource(this.allData);
+        this.dataSource.paginator = this.paginator;
+    }
+  }
+  
 
   isMeOrAdminOrDeveloper(id: any): boolean {
     return true;
