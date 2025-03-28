@@ -92,7 +92,7 @@
               <div class="plus-icon">+</div>
             </ng-container>
             <ng-container *ngIf="previewImage">
-              <img [src]="previewImage" alt="Preview" class="preview-image" />
+              <img [src]="previewImage" alt="Preview" class="preview-image" style="object-fit: contain !important;"/>
             </ng-container>
           </div>
           <mat-error *ngIf="form.get('cover_image')?.invalid">
