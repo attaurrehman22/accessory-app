@@ -20,7 +20,7 @@ export class AddEditPromotionComponent implements OnInit {
   labelMessage: any;
   selectedFile: File | null = null;
   previewImage: string | ArrayBuffer | null = null;
-
+promotionID:any;
   constructor(
     private fb: FormBuilder,
     private http: HttpService,
@@ -59,8 +59,10 @@ export class AddEditPromotionComponent implements OnInit {
         end_date: data?.data?.end_date
           ? moment(data?.data?.end_date).format("YYYY-MM-DD")
           : null,
-        is_active: data?.data?.is_active,
+        is_active: data?.data?.promotio_is_active,
       });
+
+      this.promotionID=data?.data?.promotion_id
 
       if (data?.data?.promotion_banner) {
         this.previewImage =
@@ -156,7 +158,7 @@ export class AddEditPromotionComponent implements OnInit {
 
       if (isFormValid) {
         this.http
-          .EditPromotionProducts(formData, this.promotionForm.value.product_id)
+          .EditPromotionProducts(formData, this.promotionID)
           .subscribe(
             (res) => {
               this.alertService.showAlert(

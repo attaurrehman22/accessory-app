@@ -140,13 +140,13 @@
                       <!-- Is isPromoted Column -->
                       <ng-container matColumnDef="isPromoted">
                         <th mat-header-cell *matHeaderCellDef mat-sort-header>Is Promoted</th>
-                        <td mat-cell *matCellDef="let row">{{ row?.promotion_type != '' ? 'Yes' : 'No' }}</td>
+                        <td mat-cell *matCellDef="let row">{{ row?.is_promoted == 1 ? 'Yes' : 'No' }}</td>
                       </ng-container>
 
                         <!-- Is isPromoteActive Column -->
                         <ng-container matColumnDef="isPromoteActive">
                           <th mat-header-cell *matHeaderCellDef mat-sort-header>Is Promotion Active</th>
-                          <td mat-cell *matCellDef="let row">{{ row?.is_active == 1 ? 'Yes' : 'No' }}</td>
+                          <td mat-cell *matCellDef="let row">{{ row?.promotio_is_active == 1 ? 'Yes' : 'No' }}</td>
                         </ng-container>
   
 
@@ -181,7 +181,7 @@
                             <span>Add To Promotion</span>
                           </button>
 
-                          <button mat-menu-item *ngIf="row?.is_active == 1 || row?.is_active == 0" (click)="deletePromoteProduct(row)">
+                          <button mat-menu-item *ngIf="row?.is_active == 1 || row?.promotio_is_active == 0" (click)="deletePromoteProduct(row)">
                             <mat-icon>delete</mat-icon>
                             <span>Delete Promotion</span>
                           </button>

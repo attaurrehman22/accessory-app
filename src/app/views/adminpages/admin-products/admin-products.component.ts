@@ -100,7 +100,7 @@ export class AdminProductsComponent
     try {
       const res: any = await this.http.getPromotionProducts().toPromise();
       this.productPromotionsList = res.data.map((prod: any) => ({
-        promotion_id:prod.id,
+        promotion_id: prod.id,
         product_id: prod.product_id,
         promotion_type: prod.promotion_type,
         is_active: prod.is_active,
@@ -210,16 +210,17 @@ export class AdminProductsComponent
           );
 
           if (matchedPromotion) {
-
-            console.log("matchedPromotion",matchedPromotion)
+            console.log("matchedPromotion", matchedPromotion);
             // ✅ Merge matched promotion details into product
-            product.promotion_id=matchedPromotion.promotion_id
+            product.promotion_id = matchedPromotion.promotion_id;
             product.promotion_type = matchedPromotion.promotion_type;
-            product.is_active = matchedPromotion.is_active;
+            product.promotio_is_active = matchedPromotion.is_active;
             product.promotion_banner = matchedPromotion.promotion_banner;
             product.start_date = matchedPromotion.start_date;
             product.end_date = matchedPromotion.end_date;
             product.discount = matchedPromotion.discount;
+
+            product.is_promoted =  1;
           }
 
           return product;
@@ -229,7 +230,6 @@ export class AdminProductsComponent
         this.dataSource.data = formattedData;
         console.log("formattedData", formattedData);
         this.resultsLength = data.data.total;
-
         // ✅ Bind paginator and sort explicitly after setting the data source
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
@@ -322,7 +322,7 @@ export class AdminProductsComponent
 
   addToPromoteProduct(data) {
     let pro_param = "Create";
-    if (data?.promotion_type) {
+    if (data?.is_promoted == 1) {
       // pro_param = "Create";
       pro_param = "Edit";
     } else {
@@ -337,36 +337,36 @@ export class AdminProductsComponent
 
     dialogRef.afterClosed().subscribe((param) => {
       if (param) {
-        this.getPromotionProducts()
-        this.loadData()
-          // this.activateProduct(data)
-       
+        this.getPromotionProducts();
+        this.loadData();
+        // this.activateProduct(data)
       }
     });
   }
 
-  deletePromoteProduct(row){
- console.log("promotion_id",row.promotion_id)
+  deletePromoteProduct(row) {
+    console.log("promotion_id", row.promotion_id);
     const dialogRef = this.dialog.open(ConfirmationModelComponent, {
-            width: "600px",
-            data: { message: "Are you sure you want to delete this product from Promotion" },
-          });
-    
-          dialogRef.afterClosed().subscribe((result) => {
-            if (result == true) {
-              this.http.DeletePromotionProducts(row.promotion_id).subscribe(
-                (res)=>{
-                  this.toast.showAlert('success','Product removed successfully')
-                  this.getPromotionProducts();
-                  this.loadData()
-                },(err)=>{
-          
-                  this.toast.showAlert('warning',`${err.error.message}`)
-                }
-              )
-            }
-          });
-    
+      width: "600px",
+      data: {
+        message: "Are you sure you want to delete this product from Promotion",
+      },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result == true) {
+        this.http.DeletePromotionProducts(row.promotion_id).subscribe(
+          (res) => {
+            this.toast.showAlert("success", "Product removed successfully");
+            this.getPromotionProducts();
+            this.loadData();
+          },
+          (err) => {
+            this.toast.showAlert("warning", `${err.error.message}`);
+          }
+        );
+      }
+    });
   }
 
   deleteUser(data: any) {}

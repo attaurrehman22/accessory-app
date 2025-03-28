@@ -91,7 +91,7 @@
           <img [src]="previewImage" alt="Preview" class="preview-image" />
         </ng-container>
       </div>
-      <mat-error *ngIf="promotionForm.get('promotion_banner')?.invalid">
+      <mat-error *ngIf="(promotionForm.get('promotion_banner')?.invalid) && ( !selectedFile && !previewImage )">
         Promotion Banner is required
       </mat-error>
     </div>

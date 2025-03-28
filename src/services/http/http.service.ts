@@ -450,7 +450,7 @@ export class HttpService implements OnInit {
   }
 
   EditPromotionProducts(formData,ID): Observable<any> {
-    return this.http.put(
+    return this.http.post(
       `${this.apiUrl}/api/admin/promotions/${ID}`,formData,
       {
         headers: {
