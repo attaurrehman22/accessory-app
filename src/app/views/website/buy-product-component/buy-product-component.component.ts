@@ -457,7 +457,6 @@ export class BuyProductComponentComponent implements OnInit {
     const dialogRef = this.dialog.open(CustomOfferComponent, {
       width: "600px",
       data: { productDetail: this.productDetails,param:'buyComp' },
-      disableClose:true
     });
 
     dialogRef.afterClosed().subscribe((result) => {

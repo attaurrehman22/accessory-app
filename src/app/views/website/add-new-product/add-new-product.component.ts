@@ -636,7 +636,7 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
     const dialogRef = this.dialog.open(ModelLoginComponent, {
       width: "600px",
       data: { message: "dialog-box" },
-      disableClose: true,
+
     });
 
     dialogRef.afterClosed().subscribe((result) => {

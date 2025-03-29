@@ -65,7 +65,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
       const dialogRef = this.dialog.open(ModelLoginComponent, {
             width: "600px",
             data: { message: "dialog-box" },
-            disableClose:true
+          
           });
     
           dialogRef.afterClosed().subscribe((result) => {
@@ -295,7 +295,7 @@ if (filteredChats.length > 0) {
     const dialogRef = this.dialog.open(CustomOfferComponent, {
       width: "600px",
       data: { customOfferDetails: customOfferDetails, param: "editComp" ,userCategory: this.isBuyerUser },
-      disableClose: true,
+      
     });
 
     dialogRef.afterClosed().subscribe((result) => {
@@ -505,7 +505,7 @@ if (filteredChats.length > 0) {
     const dialogRef = this.dialog.open(CustomOfferComponent, {
       width: "600px",
       data: { datawithChat_ID: datawithChat_ID, param: "chatComp" },
-      disableClose: true,
+      
     });
 
     dialogRef.afterClosed().subscribe((result) => {
@@ -525,7 +525,7 @@ if (filteredChats.length > 0) {
     const dialogRef = this.dialog.open(ConfirmationModelComponent, {
       width: "700px",
       data: { message: "Are you sure you want to cancel offer" },
-      disableClose: true,
+      
     });
     dialogRef.afterClosed().subscribe((result) => {
       if (result == true) {
@@ -625,7 +625,7 @@ if (filteredChats.length > 0) {
   addShippingFromChat() {
     const dialogRef = this.dialog.open(AddShippingComponent, {
       width: "700px",
-      disableClose: true,
+      
       data: { isShowMarkAsSold: this.isShowMarkAsSold },
     });
 
@@ -686,7 +686,7 @@ if (filteredChats.length > 0) {
     const dialogRef = this.dialog.open(ConfirmationModelComponent, {
       width: "700px",
       data: { message: "Are you sure you want to cancel offer" },
-      disableClose: true,
+      
     });
     dialogRef.afterClosed().subscribe((result) => {
       if(result == true){

@@ -331,7 +331,6 @@ export class AdminProductsComponent
     const dialogRef = this.dialog.open(AddEditPromotionComponent, {
       width: "1000px",
       height: "auto",
-      disableClose: true,
       data: { param: pro_param, data: data },
     });
 
@@ -421,7 +420,6 @@ export class AdminProductsComponent
     const dialogRef = this.dialog.open(AdminAddProductComponent, {
       width: "1000px",
       height: "auto",
-      disableClose: true,
       data: { param: "Edit", data: data },
     });
 

@@ -129,7 +129,6 @@ export class WatchOfTheDayComponent implements OnInit, OnDestroy {
          const dialogRef = this.dialog.open(AddProductWatchOfTheDayComponent, {
           width: '1000px',
           height: 'auto',
-          disableClose: true,
         });
 
         dialogRef.afterClosed().subscribe(
@@ -182,7 +181,6 @@ export class WatchOfTheDayComponent implements OnInit, OnDestroy {
      const dialogRef = this.dialog.open(ConfirmationModelComponent, {
           width: "700px",
           data: { message: "Are you sure you want to remove from Watch of the day" },
-          disableClose: true,
         });
         dialogRef.afterClosed().subscribe((result) => {
           if (result == true) {
@@ -284,7 +282,7 @@ export class WatchOfTheDayComponent implements OnInit, OnDestroy {
     const dialogRef = this.dialog.open(AddProductWatchOfTheDayComponent, {
       width: '1000px',
       height: 'auto',
-      disableClose: true,
+  
       data:{ProductDetails:data,param:'Edit'}
     });
 
@@ -300,7 +298,7 @@ export class WatchOfTheDayComponent implements OnInit, OnDestroy {
     const dialogRef = this.dialog.open(ConfirmationModelComponent, {
       width: "700px",
       data: { message: "Are you sure you want to activate this product for Watch of the day" },
-      disableClose: true,
+  
     });
     dialogRef.afterClosed().subscribe((result) => {
       if (result == true) {
@@ -321,7 +319,7 @@ export class WatchOfTheDayComponent implements OnInit, OnDestroy {
     const dialogRef = this.dialog.open(ConfirmationModelComponent, {
       width: "700px",
       data: { message: "Are you sure you want to De-activate this product for Watch of the day" },
-      disableClose: true,
+  
     });
     dialogRef.afterClosed().subscribe((result) => {
       if (result == true) {

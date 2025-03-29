@@ -321,7 +321,6 @@ displayedColumns: string[] = [
     const dialogRef = this.dialog.open(AdminAddProductComponent, {
       width: '1000px',
       height: 'auto',
-      disableClose: true,
       data: { param: 'Edit', data: data },
     });
 

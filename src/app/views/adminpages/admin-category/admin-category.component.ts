@@ -109,7 +109,6 @@ export class AdminCategoryComponent {
     const dialogRef = this.dialog.open(AdminCategoryProductComponent, {
       width: '1000px',
       height: 'auto',
-      disableClose: false,
       data: { param: 'Create' },
     });
 
@@ -147,7 +146,7 @@ export class AdminCategoryComponent {
     const dialogRef = this.dialog.open(AdminCategoryProductComponent, {
       width: '1000px',
       height: 'auto',
-      disableClose: false, // Allow closing by clicking outside
+
       data: { param: 'Edit',data: data },
     });
 

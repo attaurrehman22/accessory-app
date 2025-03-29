@@ -95,7 +95,7 @@ export class AdminBrandsComponent implements OnInit, AfterViewInit, OnDestroy {
     const dialogRef = this.dialog.open(AdminBrandsProductComponent, {
       width: '1000px',
       height: 'auto',
-      disableClose: false, // Allow closing by clicking outside
+ 
       data: { param: 'Create' },
     });
 
@@ -163,7 +163,6 @@ export class AdminBrandsComponent implements OnInit, AfterViewInit, OnDestroy {
     const dialogRef = this.dialog.open(AdminBrandsProductComponent, {
       width: '1700px',
       height: 'auto',
-      disableClose: false, // Allow closing by clicking outside
       data: { param: 'Edit', data: data },
     });
 
