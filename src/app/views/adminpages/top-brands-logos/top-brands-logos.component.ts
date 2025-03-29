@@ -94,8 +94,7 @@ export class TopBrandsLogosComponent implements OnInit, AfterViewInit, OnDestroy
   openModal() {
     const dialogRef = this.dialog.open(AdminBrandsProductComponent, {
       width: '1000px',
-      height: 'auto',
-      disableClose: false, // Allow closing by clicking outside
+      height: 'auto', 
       data: { param: 'Create' },
     });
 

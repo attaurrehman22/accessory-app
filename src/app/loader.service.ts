@@ -19,7 +19,7 @@ export class LoaderService {
       const currentRoute = this.router.url;
       console.log('Current Route:', currentRoute);
       // Skip loader for specific routes
-      if (currentRoute.includes('/product-list') || currentRoute.includes('/login')) {
+      if (currentRoute.includes('/product-list') || currentRoute.includes('/login') || currentRoute.includes('/register')) {
         console.log('Skipping loader for /product-list');
         this.isLoadingSubject.next(false); // Set loader to false for /product-list
       } else {
