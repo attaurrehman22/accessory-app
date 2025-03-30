@@ -1,1124 +1,1439 @@
-<mat-accordion class="mt-3">
-  <mat-expansion-panel [expanded]="true">
-    <mat-expansion-panel-header>
-      {{ "create_product_listing.label" | translate }}
-    </mat-expansion-panel-header>
-    <form [formGroup]="listingForm" (ngSubmit)="onSubmit('listing')">
-      <mat-form-field
-        [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'"
-        appearance="outline"
-        class="w-100 mt-2"
-      >
-        <mat-label class="label-header">
-          {{ "create_product_listing.brand" | translate }}</mat-label
-        >
-        <input
-          type="text"
-          matInput
-          [formControl]="myControl"
-          [matAutocomplete]="auto"
-        />
-        <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
-          @for (option of filteredOptions | async; track option) {
-          <mat-option [value]="option">{{ option.name }}</mat-option>
-          }
-        </mat-autocomplete>
-        <mat-error
-          [ngClass]="{
-            'text-left': translateService.currentLang === 'en',
-            'text-right': translateService.currentLang !== 'en'
-          }"
-          *ngIf="brand_id.hasError('required')"
-        >
-          {{ "create_product_listing.brand_required" | translate }}
-        </mat-error>
-      </mat-form-field>
-
-      <mat-form-field
-        [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'"
-        appearance="outline"
-        class="w-100 mt-2"
-      >
-        <mat-label class="label-header">{{
-          "create_product_listing.category" | translate
-        }}</mat-label>
-        <input
-          type="text"
-          matInput
-          [formControl]="myCategoryControl"
-          [matAutocomplete]="autoCategory"
-        />
-
-        <mat-autocomplete
-          #autoCategory="matAutocomplete"
-          [displayWith]="displayCategoryFn"
-        >
-          <mat-option
-            *ngFor="let option of filteredCategoryOptions | async"
-            [value]="option"
-            (onSelectionChange)="addCategory(option)"
-          >
-            {{ option.name }}
-          </mat-option>
-        </mat-autocomplete>
-
-        <!-- Display selected categories as chips -->
-        <div
-          *ngIf="selectedCategories?.controls?.length > 0"
-          class="selected-categories"
-        >
-          <mat-chip-list
-            #chipList
-            aria-label="{{
-              'create_product_listing.category_selection' | translate
-            }}"
-          >
-            <mat-chip
-              *ngFor="let category of selectedCategories?.controls"
-              [removable]="true"
-              (click)="removeCategory(category.value)"
-            >
-              {{ category.value.name }}
-              <mat-icon matChipRemove>cancel</mat-icon>
-            </mat-chip>
-          </mat-chip-list>
-        </div>
-        <mat-hint>{{
-          "create_product_listing.category_limit_5" | translate
-        }}</mat-hint>
-        <mat-error
-          [ngClass]="{
-            'text-left': translateService.currentLang === 'en',
-            'text-right': translateService.currentLang !== 'en'
-          }"
-          *ngIf="selectedCategories?.controls?.length >= MAX_CATEGORY_SELECTION"
-        >
-          {{ "create_product_listing.category_limit_up_to_5" | translate }}
-        </mat-error>
-        <mat-error
-          [ngClass]="{
-            'text-left': translateService.currentLang === 'en',
-            'text-right': translateService.currentLang !== 'en'
-          }"
-          *ngIf="selectedCategories?.controls?.length === 0"
-        >
-          {{ "create_product_listing.category_required" | translate }}
-        </mat-error>
-      </mat-form-field>
-
-      <mat-form-field
-        [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'"
-        appearance="outline"
-        class="w-100 mt-2"
-      >
-        <mat-label class="label-header">
-          {{ "create_product_listing.name" | translate }}</mat-label
-        >
-        <input
-          matInput
-          placeholder="{{ 'create_product_listing.enter_name' | translate }}"
-          formControlName="name"
-          required
-          appFieldLimitIntoHundered
-        />
-        <mat-error
-          [ngClass]="{
-            'text-left': translateService.currentLang === 'en',
-            'text-right': translateService.currentLang !== 'en'
-          }"
-          *ngIf="name.hasError('required')"
-        >
-          {{ "create_product_listing.name_required" | translate }}
-        </mat-error>
-      </mat-form-field>
-
-      <mat-form-field
-        [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'"
-        appearance="outline"
-        class="w-100 mt-2"
-      >
-        <mat-label class="label-header">
-          {{ "create_product_listing.model" | translate }}</mat-label
-        >
-        <input
-          matInput
-          placeholder="{{
-            'create_product_listing.enter_model_name' | translate
-          }}"
-          formControlName="model"
-          required
-          appFieldLimitIntoHundered
-        />
-        <mat-error
-          [ngClass]="{
-            'text-left': translateService.currentLang === 'en',
-            'text-right': translateService.currentLang !== 'en'
-          }"
-          *ngIf="model.hasError('required')"
-        >
-          {{ "create_product_listing.model_required" | translate }}
-        </mat-error>
-      </mat-form-field>
-
-      <mat-form-field
-        [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'"
-        appearance="outline"
-        class="w-100 mt-2"
-      >
-        <mat-label class="label-header">{{
-          "create_product_listing.title" | translate
-        }}</mat-label>
-        <input
-          matInput
-          placeholder="{{
-            'create_product_listing.enter_title_name' | translate
-          }}"
-          formControlName="title"
-          required
-          appFieldLimitIntoHundered
-        />
-        <mat-error
-          [ngClass]="{
-            'text-left': translateService.currentLang === 'en',
-            'text-right': translateService.currentLang !== 'en'
-          }"
-          *ngIf="title.hasError('required')"
-        >
-          {{ "create_product_listing.title_required" | translate }}
-        </mat-error>
-      </mat-form-field>
-
-      <mat-form-field
-        [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'"
-        appearance="outline"
-        class="w-100 mt-2"
-      >
-        <mat-label class="label-header">{{
-          "create_product_listing.description" | translate
-        }}</mat-label>
-        <textarea
-          matInput
-          placeholder="{{
-            'create_product_listing.enter_description_name' | translate
-          }}"
-          formControlName="description"
-          rows="3"
-        ></textarea>
-        <mat-error
-          [ngClass]="{
-            'text-left': translateService.currentLang === 'en',
-            'text-right': translateService.currentLang !== 'en'
-          }"
-          *ngIf="description.hasError('minlength')"
-        >
-          {{ "create_product_listing.description_least_required" | translate }}
-        </mat-error>
-        <mat-error
-          [ngClass]="{
-            'text-left': translateService.currentLang === 'en',
-            'text-right': translateService.currentLang !== 'en'
-          }"
-          *ngIf="description.hasError('maxlength')"
-        >
-          {{ "create_product_listing.description_max_required" | translate }}
-        </mat-error>
-      </mat-form-field>
-
-      <mat-form-field
-        [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'"
-        appearance="outline"
-        class="w-100 mt-2"
-      >
-        <mat-label class="label-header">{{
-          "create_product_listing.watchtype" | translate
-        }}</mat-label>
-        <mat-select
-          formControlName="watch_type"
+<div class="p-3">
+  <h2>Add New Accessory</h2>
+  <mat-accordion class="mt-3">
+    <mat-expansion-panel [expanded]="true">
+      <mat-expansion-panel-header>
+        {{ "create_product_listing.label" | translate }}
+      </mat-expansion-panel-header>
+      <form [formGroup]="listingForm" (ngSubmit)="onSubmit('listing')">
+        <mat-form-field
           [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'"
+          appearance="outline"
+          class="w-100 mt-2"
         >
-          <mat-option
-            *ngFor="let data of formdropdownListData.watch_type"
-            [value]="data.key"
+          <mat-label class="label-header">
+            {{ "create_product_listing.brand" | translate }}</mat-label
           >
-            {{ data.value }}
-          </mat-option>
-        </mat-select>
-
-        <mat-error
-          [ngClass]="{
-            'text-left': translateService.currentLang === 'en',
-            'text-right': translateService.currentLang !== 'en'
-          }"
-          *ngIf="watch_type.hasError('required')"
-        >
-          {{ "create_product_listing.watchtype_required" | translate }}
-        </mat-error>
-      </mat-form-field>
-
-      <mat-form-field
-        [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'"
-        appearance="outline"
-        class="w-100 mt-2"
-      >
-        <mat-label class="label-header">
-          {{
-            "create_product_listing.year_of_production" | translate
-          }}</mat-label
-        >
-        <input
-          matInput
-          type="text"
-          placeholder="{{
-            'create_product_listing.year_of_production_placeholder' | translate
-          }}"
-          formControlName="year_of_production"
-          appPositiveNumber
-          required
-        />
-        <mat-error
-          [ngClass]="{
-            'text-left': translateService.currentLang === 'en',
-            'text-right': translateService.currentLang !== 'en'
-          }"
-          *ngIf="year_of_production.hasError('required')"
-        >
-          {{ "create_product_listing.year_of_production_required" | translate }}
-        </mat-error>
-        <mat-error
-          [ngClass]="{
-            'text-left': translateService.currentLang === 'en',
-            'text-right': translateService.currentLang !== 'en'
-          }"
-          *ngIf="year_of_production.hasError('pattern')"
-        >
-          {{
-            "create_product_listing.year_of_production_validation" | translate
-          }}
-        </mat-error>
-      </mat-form-field>
-
-      <mat-checkbox
-        [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'"
-        formControlName="approximation"
-      >
-        <label class="mdc-label" style="margin-top: 13px; margin-bottom: 5px">
-          {{ "create_product_listing.Approximation" | translate }}
-        </label>
-      </mat-checkbox>
-
-      <mat-checkbox
-        [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'"
-        formControlName="unknown"
-      >
-        <label class="mdc-label" style="margin-top: 13px; margin-bottom: 5px">
-          {{ "create_product_listing.Unknown" | translate }}
-        </label>
-      </mat-checkbox>
-
-      <div
-        [ngClass]="{
-          'reverse-order-listing-details-btn-div':
-            translateService.currentLang !== 'en'
-        }"
-        class="listing-details-btn-div gap-2 mb-3 mt-3"
-      >
-        <!-- <button
-          mat-button
-          type="button"
-          class="save-can-btn canc-bg-color"
-          (click)="cancelbtn()"
-        >
-          {{ "create_product_listing.cancel_btn" | translate }}
-        </button> -->
-        <button
-          mat-button
-          class="save-can-btn save-btn-bg"
-          type="submit"
-          (click)="onSubmit('listingDetails')"
-        >
-          {{ "create_product_listing.save_btn" | translate }}
-        </button>
-      </div>
-    </form>
-  </mat-expansion-panel>
-
-  <mat-expansion-panel>
-    <mat-expansion-panel-header>
-      {{ "create_product_listing.watch_details" | translate }}
-    </mat-expansion-panel-header>
-    <form [formGroup]="watchDetailsForm">
-      <mat-form-field
-        [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'"
-        appearance="outline"
-        class="w-100 mb-3"
-      >
-        <mat-label class="label-header">
-          {{ "create_product_listing.refrence_number" | translate }}</mat-label
-        >
-        <input
-          matInput
-          formControlName="reference_number"
-          placeholder="{{
-            'create_product_listing.refrence_number_placeHolder' | translate
-          }}"
-          required=""
-        />
-        <mat-error
-          [ngClass]="{
-            'text-left': translateService.currentLang === 'en',
-            'text-right': translateService.currentLang !== 'en'
-          }"
-          *ngIf="reference_number.hasError('required')"
-        >
-          {{ "create_product_listing.refrence_number_required" | translate }}
-        </mat-error>
-      </mat-form-field>
-
-      <div class="row">
-        <div class="col-md-4 mb-3">
-          <mat-form-field
-            [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'"
-            appearance="outline"
-            class="w-100"
+          <input
+            type="text"
+            matInput
+            [formControl]="myControl"
+            [matAutocomplete]="auto"
+          />
+          <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+            @for (option of filteredOptions | async; track option) {
+            <mat-option [value]="option">{{ option.name }}</mat-option>
+            }
+          </mat-autocomplete>
+          <mat-error
+            [ngClass]="{
+              'text-left': translateService.currentLang === 'en',
+              'text-right': translateService.currentLang !== 'en'
+            }"
+            *ngIf="brand_id.hasError('required')"
           >
-            <mat-label class="label-header">
-              {{ "create_product_listing.serial_no" | translate }}
-            </mat-label>
-            <input
-              matInput
-              formControlName="serial_no"
-              placeholder="{{
-                'create_product_listing.serial_no_placeHolder' | translate
-              }}"
-              required
-            />
-            <mat-error
-              [ngClass]="{
-                'text-left': translateService.currentLang === 'en',
-                'text-right': translateService.currentLang !== 'en'
-              }"
-              *ngIf="serial_no.hasError('required')"
+            {{ "create_product_listing.brand_required" | translate }}
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field
+          [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'"
+          appearance="outline"
+          class="w-100 mt-2"
+        >
+          <mat-label class="label-header">{{
+            "create_product_listing.category" | translate
+          }}</mat-label>
+          <input
+            type="text"
+            matInput
+            [formControl]="myCategoryControl"
+            [matAutocomplete]="autoCategory"
+          />
+
+          <mat-autocomplete
+            #autoCategory="matAutocomplete"
+            [displayWith]="displayCategoryFn"
+          >
+            <mat-option
+              *ngFor="let option of filteredCategoryOptions | async"
+              [value]="option"
+              (onSelectionChange)="addCategory(option)"
             >
-              {{ "create_product_listing.serial_no_required" | translate }}
-            </mat-error>
-          </mat-form-field>
-        </div>
+              {{ option.name }}
+            </mat-option>
+          </mat-autocomplete>
 
-        <div class="col-md-4 mb-3">
-          <mat-form-field
-            [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'"
-            appearance="outline"
-            class="w-100"
+          <!-- Display selected categories as chips -->
+          <div
+            *ngIf="selectedCategories?.controls?.length > 0"
+            class="selected-categories"
           >
-            <mat-label class="label-header">
-              {{ "create_product_listing.gender" | translate }}
-            </mat-label>
-            <mat-select formControlName="gender">
-              <mat-option value="">{{
-                "create_product_listing.gender_placeHolder" | translate
-              }}</mat-option>
-              <mat-option
-                *ngFor="let data of formdropdownListData?.gender"
-                [value]="data.key"
+            <mat-chip-list
+              #chipList
+              aria-label="{{
+                'create_product_listing.category_selection' | translate
+              }}"
+            >
+              <mat-chip
+                *ngFor="let category of selectedCategories?.controls"
+                [removable]="true"
+                (click)="removeCategory(category.value)"
               >
-                {{ data.value }}
-              </mat-option>
-            </mat-select>
-            <mat-error
-              [ngClass]="{
-                'text-left': translateService.currentLang === 'en',
-                'text-right': translateService.currentLang !== 'en'
-              }"
-              *ngIf="gender.hasError('required')"
-            >
-              {{ "create_product_listing.gender_required" | translate }}
-            </mat-error>
-          </mat-form-field>
-        </div>
-
-        <div class="col-md-4 mb-3">
-          <mat-form-field
-            [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'"
-            appearance="outline"
-            class="w-100"
+                {{ category.value.name }}
+                <mat-icon matChipRemove>cancel</mat-icon>
+              </mat-chip>
+            </mat-chip-list>
+          </div>
+          <mat-hint>{{
+            "create_product_listing.category_limit_5" | translate
+          }}</mat-hint>
+          <mat-error
+            [ngClass]="{
+              'text-left': translateService.currentLang === 'en',
+              'text-right': translateService.currentLang !== 'en'
+            }"
+            *ngIf="selectedCategories?.controls?.length >= MAX_CATEGORY_SELECTION"
           >
-            <mat-label class="label-header">
-              {{ "create_product_listing.movement" | translate }}
-            </mat-label>
-            <mat-select formControlName="movement">
-              <mat-option value="">{{
-                "create_product_listing.movement_placeHolder" | translate
-              }}</mat-option>
-              <mat-option
-                *ngFor="let data of formdropdownListData?.movement"
-                [value]="data.key"
-              >
-                {{ data.value }}
-              </mat-option>
-            </mat-select>
-            <mat-error
-              [ngClass]="{
-                'text-left': translateService.currentLang === 'en',
-                'text-right': translateService.currentLang !== 'en'
-              }"
-              *ngIf="movement.hasError('required')"
-            >
-              {{ "create_product_listing.movement_required" | translate }}
-            </mat-error>
-          </mat-form-field>
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="col-md-6 mb-3">
-          <mat-form-field
-            [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'"
-            appearance="outline"
-            class="w-100"
+            {{ "create_product_listing.category_limit_up_to_5" | translate }}
+          </mat-error>
+          <mat-error
+            [ngClass]="{
+              'text-left': translateService.currentLang === 'en',
+              'text-right': translateService.currentLang !== 'en'
+            }"
+            *ngIf="selectedCategories?.controls?.length === 0"
           >
-            <mat-label class="label-header">
-              {{ "create_product_listing.case_diameter" | translate }}
-            </mat-label>
-            <input
-              matInput
-              formControlName="case_diameter_value_1"
-              placeholder="{{
-                'create_product_listing.case_diameter_placeholder' | translate
-              }}"
-              required
-            />
-            <span
-              style="padding: 17px 15px 17px 15px; background-color: #dbdbdb"
-              matSuffix
-            >
-              mm
-            </span>
-            <mat-error
-              [ngClass]="{
-                'text-left': translateService.currentLang === 'en',
-                'text-right': translateService.currentLang !== 'en'
-              }"
-              *ngIf="case_diameter_value_1.hasError('required')"
-            >
-              {{ "create_product_listing.case_diameter_required" | translate }}
-            </mat-error>
-            <mat-error
-              [ngClass]="{
-                'text-left': translateService.currentLang === 'en',
-                'text-right': translateService.currentLang !== 'en'
-              }"
-              *ngIf="case_diameter_value_1.hasError('pattern')"
-            >
-              {{ "create_product_listing.case_diameter_invalid" | translate }}
-            </mat-error>
-          </mat-form-field>
-        </div>
+            {{ "create_product_listing.category_required" | translate }}
+          </mat-error>
+        </mat-form-field>
 
-        <div class="col-md-6 mb-3">
-          <mat-form-field
-            [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'"
-            appearance="outline"
-            class="w-100"
+        <mat-form-field
+          [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'"
+          appearance="outline"
+          class="w-100 mt-2"
+        >
+          <mat-label class="label-header">
+            {{ "create_product_listing.name" | translate }}</mat-label
           >
-            <mat-label class="label-header">
-              {{ "create_product_listing.other_diameter" | translate }}
-            </mat-label>
-            <input
-              matInput
-              formControlName="case_diameter_value_2"
-              placeholder="{{
-                'create_product_listing.other_diameter_placeholder' | translate
-              }}"
-              required
-            />
-            <span
-              style="padding: 17px 15px 17px 15px; background-color: #dbdbdb"
-              matSuffix
+          <input
+            matInput
+            placeholder="{{ 'create_product_listing.enter_name' | translate }}"
+            formControlName="name"
+            required
+            appFieldLimitIntoHundered
+          />
+          <mat-error
+            [ngClass]="{
+              'text-left': translateService.currentLang === 'en',
+              'text-right': translateService.currentLang !== 'en'
+            }"
+            *ngIf="name.hasError('required')"
+          >
+            {{ "create_product_listing.name_required" | translate }}
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field
+          [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'"
+          appearance="outline"
+          class="w-100 mt-2"
+        >
+          <mat-label class="label-header">
+            {{ "create_product_listing.model" | translate }}</mat-label
+          >
+          <input
+            matInput
+            placeholder="{{
+              'create_product_listing.enter_model_name' | translate
+            }}"
+            formControlName="model"
+            required
+            appFieldLimitIntoHundered
+          />
+          <mat-error
+            [ngClass]="{
+              'text-left': translateService.currentLang === 'en',
+              'text-right': translateService.currentLang !== 'en'
+            }"
+            *ngIf="model.hasError('required')"
+          >
+            {{ "create_product_listing.model_required" | translate }}
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field
+          [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'"
+          appearance="outline"
+          class="w-100 mt-2"
+        >
+          <mat-label class="label-header">{{
+            "create_product_listing.title" | translate
+          }}</mat-label>
+          <input
+            matInput
+            placeholder="{{
+              'create_product_listing.enter_title_name' | translate
+            }}"
+            formControlName="title"
+            required
+            appFieldLimitIntoHundered
+          />
+          <mat-error
+            [ngClass]="{
+              'text-left': translateService.currentLang === 'en',
+              'text-right': translateService.currentLang !== 'en'
+            }"
+            *ngIf="title.hasError('required')"
+          >
+            {{ "create_product_listing.title_required" | translate }}
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field
+          [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'"
+          appearance="outline"
+          class="w-100 mt-2"
+        >
+          <mat-label class="label-header">{{
+            "create_product_listing.description" | translate
+          }}</mat-label>
+          <textarea
+            matInput
+            placeholder="{{
+              'create_product_listing.enter_description_name' | translate
+            }}"
+            formControlName="description"
+            rows="3"
+          ></textarea>
+          <mat-error
+            [ngClass]="{
+              'text-left': translateService.currentLang === 'en',
+              'text-right': translateService.currentLang !== 'en'
+            }"
+            *ngIf="description.hasError('minlength')"
+          >
+            {{ "create_product_listing.description_least_required" | translate }}
+          </mat-error>
+          <mat-error
+            [ngClass]="{
+              'text-left': translateService.currentLang === 'en',
+              'text-right': translateService.currentLang !== 'en'
+            }"
+            *ngIf="description.hasError('maxlength')"
+          >
+            {{ "create_product_listing.description_max_required" | translate }}
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field
+          [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'"
+          appearance="outline"
+          class="w-100 mt-2"
+        >
+          <mat-label class="label-header">{{
+            "create_product_listing.watchtype" | translate
+          }}</mat-label>
+          <mat-select
+            formControlName="watch_type"
+            [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'"
+          >
+            <mat-option
+              *ngFor="let data of formdropdownListData.watch_type"
+              [value]="data.key"
             >
-              mm
-            </span>
-            <mat-error
-              [ngClass]="{
-                'text-left': translateService.currentLang === 'en',
-                'text-right': translateService.currentLang !== 'en'
-              }"
-              *ngIf="case_diameter_value_2.hasError('required')"
-            >
-              {{ "create_product_listing.other_diameter_required" | translate }}
-            </mat-error>
-            <mat-error
-              [ngClass]="{
-                'text-left': translateService.currentLang === 'en',
-                'text-right': translateService.currentLang !== 'en'
-              }"
-              *ngIf="case_diameter_value_2.hasError('pattern')"
-            >
-              {{ "create_product_listing.other_diameter_invalid" | translate }}
-            </mat-error>
-          </mat-form-field>
+              {{ data.value }}
+            </mat-option>
+          </mat-select>
+
+          <mat-error
+            [ngClass]="{
+              'text-left': translateService.currentLang === 'en',
+              'text-right': translateService.currentLang !== 'en'
+            }"
+            *ngIf="watch_type.hasError('required')"
+          >
+            {{ "create_product_listing.watchtype_required" | translate }}
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field
+          [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'"
+          appearance="outline"
+          class="w-100 mt-2"
+        >
+          <mat-label class="label-header">
+            {{
+              "create_product_listing.year_of_production" | translate
+            }}</mat-label
+          >
+          <input
+            matInput
+            type="text"
+            placeholder="{{
+              'create_product_listing.year_of_production_placeholder' | translate
+            }}"
+            formControlName="year_of_production"
+            appPositiveNumber
+            required
+          />
+          <mat-error
+            [ngClass]="{
+              'text-left': translateService.currentLang === 'en',
+              'text-right': translateService.currentLang !== 'en'
+            }"
+            *ngIf="year_of_production.hasError('required')"
+          >
+            {{ "create_product_listing.year_of_production_required" | translate }}
+          </mat-error>
+          <mat-error
+            [ngClass]="{
+              'text-left': translateService.currentLang === 'en',
+              'text-right': translateService.currentLang !== 'en'
+            }"
+            *ngIf="year_of_production.hasError('pattern')"
+          >
+            {{
+              "create_product_listing.year_of_production_validation" | translate
+            }}
+          </mat-error>
+        </mat-form-field>
+
+        <mat-checkbox
+          [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'"
+          formControlName="approximation"
+        >
+          <label class="mdc-label" style="margin-top: 13px; margin-bottom: 5px">
+            {{ "create_product_listing.Approximation" | translate }}
+          </label>
+        </mat-checkbox>
+
+        <mat-checkbox
+          [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'"
+          formControlName="unknown"
+        >
+          <label class="mdc-label" style="margin-top: 13px; margin-bottom: 5px">
+            {{ "create_product_listing.Unknown" | translate }}
+          </label>
+        </mat-checkbox>
+
+        <div
+          [ngClass]="{
+            'reverse-order-listing-details-btn-div':
+              translateService.currentLang !== 'en'
+          }"
+          class="listing-details-btn-div gap-2 mb-3 mt-3"
+        >
+          <!-- <button
+            mat-button
+            type="button"
+            class="save-can-btn canc-bg-color"
+            (click)="cancelbtn()"
+          >
+            {{ "create_product_listing.cancel_btn" | translate }}
+          </button> -->
+          <button
+            mat-button
+            class="save-can-btn save-btn-bg"
+            type="submit"
+            (click)="onSubmit('listingDetails')"
+          >
+            {{ "create_product_listing.save_btn" | translate }}
+          </button>
         </div>
-      </div>
+      </form>
+    </mat-expansion-panel>
 
-      <div style="padding: 0 0 0 0">
-        <p>
-          <strong>{{
-            "create_product_listing.additional_information" | translate
-          }}</strong>
-          ({{ "create_product_listing.optional" | translate }})
-        </p>
-        <p class="font-weight-400 font-size-16 color-909090">
-          {{ "create_product_listing.watch_verification_text" | translate }}
-        </p>
-      </div>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        {{ "create_product_listing.watch_details" | translate }}
+      </mat-expansion-panel-header>
+      <form [formGroup]="watchDetailsForm">
+        <mat-form-field
+          [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'"
+          appearance="outline"
+          class="w-100 mb-3"
+        >
+          <mat-label class="label-header">
+            {{ "create_product_listing.refrence_number" | translate }}</mat-label
+          >
+          <input
+            matInput
+            formControlName="reference_number"
+            placeholder="{{
+              'create_product_listing.refrence_number_placeHolder' | translate
+            }}"
+            required=""
+          />
+          <mat-error
+            [ngClass]="{
+              'text-left': translateService.currentLang === 'en',
+              'text-right': translateService.currentLang !== 'en'
+            }"
+            *ngIf="reference_number.hasError('required')"
+          >
+            {{ "create_product_listing.refrence_number_required" | translate }}
+          </mat-error>
+        </mat-form-field>
 
-      <div style="padding: 0 0 15px 0">
-        <mat-accordion>
-          <mat-expansion-panel [(expanded)]="panelDialOpenState" class="panel">
-            <mat-expansion-panel-header>
-              <mat-panel-title
+        <div class="row">
+          <div class="col-md-4 mb-3">
+            <mat-form-field
+              [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'"
+              appearance="outline"
+              class="w-100"
+            >
+              <mat-label class="label-header">
+                {{ "create_product_listing.serial_no" | translate }}
+              </mat-label>
+              <input
+                matInput
+                formControlName="serial_no"
+                placeholder="{{
+                  'create_product_listing.serial_no_placeHolder' | translate
+                }}"
+                required
+              />
+              <mat-error
                 [ngClass]="{
-                  'reverse-order-label-alignment':
-                    translateService.currentLang !== 'en'
+                  'text-left': translateService.currentLang === 'en',
+                  'text-right': translateService.currentLang !== 'en'
                 }"
+                *ngIf="serial_no.hasError('required')"
               >
-                {{ "create_product_listing.dial_and_caliber" | translate }}
-              </mat-panel-title>
-            </mat-expansion-panel-header>
-            <div class="accordion-body">
-              <div class="row">
-                <div class="col-md-6 mb-3">
-                  <mat-form-field
-                    [dir]="
-                      translateService.currentLang === 'en' ? 'ltr' : 'rtl'
-                    "
-                    appearance="outline"
-                    class="w-100"
-                  >
-                    <mat-label class="label-header">{{
-                      "create_product_listing.dial_color" | translate
-                    }}</mat-label>
-                    <input
-                      matInput
-                      formControlName="dial_color"
-                      placeholder="{{
-                        'create_product_listing.dial_color_placeHolder'
-                          | translate
-                      }}"
-                      appOnlyCharacterLimitThirty
-                    />
-                  </mat-form-field>
-                </div>
-                <div class="col-md-6 mb-3">
-                  <mat-form-field
-                    [dir]="
-                      translateService.currentLang === 'en' ? 'ltr' : 'rtl'
-                    "
-                    appearance="outline"
-                    class="w-100"
-                  >
-                    <mat-label class="label-header">{{
-                      "create_product_listing.caliber_movement" | translate
-                    }}</mat-label>
-                    <input
-                      matInput
-                      formControlName="caliber_movement"
-                      placeholder="{{
-                        'create_product_listing.caliber_movement_placeHolder'
-                          | translate
-                      }}"
-                      appOnlyCharacterLimitThirty
-                    />
-                  </mat-form-field>
-                </div>
-              </div>
+                {{ "create_product_listing.serial_no_required" | translate }}
+              </mat-error>
+            </mat-form-field>
+          </div>
 
-              <div class="row">
-                <div class="col-md-6 mb-3">
-                  <mat-form-field
-                    [dir]="
-                      translateService.currentLang === 'en' ? 'ltr' : 'rtl'
-                    "
-                    appearance="outline"
-                    class="w-100"
-                  >
-                    <mat-label class="label-header">{{
-                      "create_product_listing.base_caliber" | translate
-                    }}</mat-label>
-                    <input
-                      matInput
-                      formControlName="base_caliber"
-                      placeholder="{{
-                        'create_product_listing.base_caliber_placeHolder'
-                          | translate
-                      }}"
-                      appOnlyCharacterLimitThirty
-                    />
-                  </mat-form-field>
-                </div>
-                <div class="col-md-6 mb-3">
-                  <mat-form-field
-                    [dir]="
-                      translateService.currentLang === 'en' ? 'ltr' : 'rtl'
-                    "
-                    appearance="outline"
-                    class="w-100"
-                  >
-                    <mat-label class="label-header">{{
-                      "create_product_listing.power_reserve" | translate
-                    }}</mat-label>
-                    <input
-                      matInput
-                      formControlName="power_reserve"
-                      placeholder="{{
-                        'create_product_listing.power_reserve_placeHolder'
-                          | translate
-                      }}"
-                      appOnlyCharacterLimitThirty
-                    />
-                  </mat-form-field>
-                </div>
-              </div>
-
-              <div class="row">
-                <div class="col-md-6 mb-3">
-                  <mat-form-field
-                    [dir]="
-                      translateService.currentLang === 'en' ? 'ltr' : 'rtl'
-                    "
-                    appearance="outline"
-                    class="w-100"
-                  >
-                    <mat-label class="label-header">{{
-                      "create_product_listing.no_of_jewels" | translate
-                    }}</mat-label>
-                    <input
-                      matInput
-                      formControlName="no_of_jewels"
-                      placeholder="{{
-                        'create_product_listing.no_of_jewels_placeHolder'
-                          | translate
-                      }}"
-                      appPositiveNumber
-                    />
-                    <mat-error
-                      [ngClass]="{
-                        'text-left': translateService.currentLang === 'en',
-                        'text-right': translateService.currentLang !== 'en'
-                      }"
-                      *ngIf="no_of_jewels.hasError('pattern')"
-                    >
-                      {{
-                        "create_product_listing.no_of_jewels_error" | translate
-                      }}
-                    </mat-error>
-                  </mat-form-field>
-                </div>
-                <div class="col-md-6 mb-3">
-                  <mat-form-field
-                    [dir]="
-                      translateService.currentLang === 'en' ? 'ltr' : 'rtl'
-                    "
-                    appearance="outline"
-                    class="w-100"
-                  >
-                    <mat-label class="label-header">{{
-                      "create_product_listing.frequency" | translate
-                    }}</mat-label>
-                    <input
-                      matInput
-                      formControlName="frequency"
-                      placeholder="{{
-                        'create_product_listing.frequency_placeHolder'
-                          | translate
-                      }}"
-                    />
-                    <span
-                      style="
-                        padding: 17px 15px 17px 15px;
-                        background-color: #dbdbdb;
-                      "
-                      matSuffix
-                      >hz</span
-                    >
-                    <mat-error
-                      [ngClass]="{
-                        'text-left': translateService.currentLang === 'en',
-                        'text-right': translateService.currentLang !== 'en'
-                      }"
-                      *ngIf="frequency.hasError('pattern')"
-                    >
-                      {{
-                        "create_product_listing.frequency_pattern" | translate
-                      }}
-                    </mat-error>
-                  </mat-form-field>
-                </div>
-              </div>
-
-              <div class="row">
-                <div class="col-md-12 mb-3">
-                  <mat-form-field
-                    [dir]="
-                      translateService.currentLang === 'en' ? 'ltr' : 'rtl'
-                    "
-                    appearance="outline"
-                    class="w-100"
-                  >
-                    <mat-label class="label-header">{{
-                      "create_product_listing.other_details" | translate
-                    }}</mat-label>
-                    <input
-                      matInput
-                      formControlName="additional_details"
-                      placeholder="{{
-                        'create_product_listing.other_details_placeholder'
-                          | translate
-                      }}"
-                      appFieldLimitIntoHundered
-                    />
-                  </mat-form-field>
-                </div>
-              </div>
-            </div>
-          </mat-expansion-panel>
-        </mat-accordion>
-      </div>
-
-      <div style="padding: 0 0 15px 0">
-        <mat-accordion>
-          <mat-expansion-panel [(expanded)]="panelOpenState" class="panel">
-            <mat-expansion-panel-header>
-              <mat-panel-title
+          <div class="col-md-4 mb-3">
+            <mat-form-field
+              [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'"
+              appearance="outline"
+              class="w-100"
+            >
+              <mat-label class="label-header">
+                {{ "create_product_listing.gender" | translate }}
+              </mat-label>
+              <mat-select formControlName="gender">
+                <mat-option value="">{{
+                  "create_product_listing.gender_placeHolder" | translate
+                }}</mat-option>
+                <mat-option
+                  *ngFor="let data of formdropdownListData?.gender"
+                  [value]="data.key"
+                >
+                  {{ data.value }}
+                </mat-option>
+              </mat-select>
+              <mat-error
                 [ngClass]="{
-                  'reverse-order-label-alignment':
-                    translateService.currentLang !== 'en'
+                  'text-left': translateService.currentLang === 'en',
+                  'text-right': translateService.currentLang !== 'en'
                 }"
+                *ngIf="gender.hasError('required')"
               >
-                {{ "create_product_listing.case_info" | translate }}
-              </mat-panel-title>
-            </mat-expansion-panel-header>
-            <div class="accordion-body">
-              <div class="row">
-                <div class="col-md-6 mb-3">
-                  <mat-form-field
-                    [dir]="
-                      translateService.currentLang === 'en' ? 'ltr' : 'rtl'
-                    "
-                    appearance="outline"
-                    class="w-100"
-                  >
-                    <mat-label class="label-header">{{
-                      "create_product_listing.case_material" | translate
-                    }}</mat-label>
-                    <mat-select formControlName="case_material">
-                      <mat-option value="">{{
-                        "create_product_listing.case_material_Select"
-                          | translate
-                      }}</mat-option>
-                      <mat-option
-                        *ngFor="let data of formdropdownListData.case_material"
-                        [value]="data.key"
-                        >{{ data.value }}</mat-option
-                      >
-                    </mat-select>
-                  </mat-form-field>
-                </div>
-                <div class="col-md-6 mb-3">
-                  <mat-form-field
-                    [dir]="
-                      translateService.currentLang === 'en' ? 'ltr' : 'rtl'
-                    "
-                    appearance="outline"
-                    class="w-100"
-                  >
-                    <mat-label class="label-header">{{
-                      "create_product_listing.bezel_material" | translate
-                    }}</mat-label>
-                    <mat-select formControlName="bezel_material">
-                      <mat-option value="">{{
-                        "create_product_listing.select_bezel_material"
-                          | translate
-                      }}</mat-option>
-                      <mat-option
-                        *ngFor="let data of formdropdownListData.bezel_material"
-                        [value]="data.key"
-                        >{{ data.value }}</mat-option
-                      >
-                    </mat-select>
-                  </mat-form-field>
-                </div>
-              </div>
+                {{ "create_product_listing.gender_required" | translate }}
+              </mat-error>
+            </mat-form-field>
+          </div>
 
-              <div class="row">
-                <div class="col-md-6 mb-3">
-                  <mat-form-field
-                    [dir]="
-                      translateService.currentLang === 'en' ? 'ltr' : 'rtl'
-                    "
-                    appearance="outline"
-                    class="w-100"
-                  >
-                    <mat-label class="label-header">{{
-                      "create_product_listing.thickness" | translate
-                    }}</mat-label>
-                    <input
-                      matInput
-                      formControlName="thickness"
-                      placeholder="{{
-                        'create_product_listing.thickness_placeHolder'
-                          | translate
-                      }}"
-                    />
-                    <span
-                      style="
-                        padding: 17px 15px 17px 15px;
-                        background-color: #dbdbdb;
+          <div class="col-md-4 mb-3">
+            <mat-form-field
+              [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'"
+              appearance="outline"
+              class="w-100"
+            >
+              <mat-label class="label-header">
+                {{ "create_product_listing.movement" | translate }}
+              </mat-label>
+              <mat-select formControlName="movement">
+                <mat-option value="">{{
+                  "create_product_listing.movement_placeHolder" | translate
+                }}</mat-option>
+                <mat-option
+                  *ngFor="let data of formdropdownListData?.movement"
+                  [value]="data.key"
+                >
+                  {{ data.value }}
+                </mat-option>
+              </mat-select>
+              <mat-error
+                [ngClass]="{
+                  'text-left': translateService.currentLang === 'en',
+                  'text-right': translateService.currentLang !== 'en'
+                }"
+                *ngIf="movement.hasError('required')"
+              >
+                {{ "create_product_listing.movement_required" | translate }}
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <mat-form-field
+              [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'"
+              appearance="outline"
+              class="w-100"
+            >
+              <mat-label class="label-header">
+                {{ "create_product_listing.case_diameter" | translate }}
+              </mat-label>
+              <input
+                matInput
+                formControlName="case_diameter_value_1"
+                placeholder="{{
+                  'create_product_listing.case_diameter_placeholder' | translate
+                }}"
+                required
+              />
+              <span
+                style="padding: 17px 15px 17px 15px; background-color: #dbdbdb"
+                matSuffix
+              >
+                mm
+              </span>
+              <mat-error
+                [ngClass]="{
+                  'text-left': translateService.currentLang === 'en',
+                  'text-right': translateService.currentLang !== 'en'
+                }"
+                *ngIf="case_diameter_value_1.hasError('required')"
+              >
+                {{ "create_product_listing.case_diameter_required" | translate }}
+              </mat-error>
+              <mat-error
+                [ngClass]="{
+                  'text-left': translateService.currentLang === 'en',
+                  'text-right': translateService.currentLang !== 'en'
+                }"
+                *ngIf="case_diameter_value_1.hasError('pattern')"
+              >
+                {{ "create_product_listing.case_diameter_invalid" | translate }}
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="col-md-6 mb-3">
+            <mat-form-field
+              [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'"
+              appearance="outline"
+              class="w-100"
+            >
+              <mat-label class="label-header">
+                {{ "create_product_listing.other_diameter" | translate }}
+              </mat-label>
+              <input
+                matInput
+                formControlName="case_diameter_value_2"
+                placeholder="{{
+                  'create_product_listing.other_diameter_placeholder' | translate
+                }}"
+                required
+              />
+              <span
+                style="padding: 17px 15px 17px 15px; background-color: #dbdbdb"
+                matSuffix
+              >
+                mm
+              </span>
+              <mat-error
+                [ngClass]="{
+                  'text-left': translateService.currentLang === 'en',
+                  'text-right': translateService.currentLang !== 'en'
+                }"
+                *ngIf="case_diameter_value_2.hasError('required')"
+              >
+                {{ "create_product_listing.other_diameter_required" | translate }}
+              </mat-error>
+              <mat-error
+                [ngClass]="{
+                  'text-left': translateService.currentLang === 'en',
+                  'text-right': translateService.currentLang !== 'en'
+                }"
+                *ngIf="case_diameter_value_2.hasError('pattern')"
+              >
+                {{ "create_product_listing.other_diameter_invalid" | translate }}
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div style="padding: 0 0 0 0">
+          <p>
+            <strong>{{
+              "create_product_listing.additional_information" | translate
+            }}</strong>
+            ({{ "create_product_listing.optional" | translate }})
+          </p>
+          <p class="font-weight-400 font-size-16 color-909090">
+            {{ "create_product_listing.watch_verification_text" | translate }}
+          </p>
+        </div>
+
+        <div style="padding: 0 0 15px 0">
+          <mat-accordion>
+            <mat-expansion-panel [(expanded)]="panelDialOpenState" class="panel">
+              <mat-expansion-panel-header>
+                <mat-panel-title
+                  [ngClass]="{
+                    'reverse-order-label-alignment':
+                      translateService.currentLang !== 'en'
+                  }"
+                >
+                  {{ "create_product_listing.dial_and_caliber" | translate }}
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+              <div class="accordion-body">
+                <div class="row">
+                  <div class="col-md-6 mb-3">
+                    <mat-form-field
+                      [dir]="
+                        translateService.currentLang === 'en' ? 'ltr' : 'rtl'
                       "
-                      matSuffix
-                      >mm</span
+                      appearance="outline"
+                      class="w-100"
                     >
-                    <mat-error
-                      [ngClass]="{
-                        'text-left': translateService.currentLang === 'en',
-                        'text-right': translateService.currentLang !== 'en'
-                      }"
-                      *ngIf="thickness.hasError('pattern')"
+                      <mat-label class="label-header">{{
+                        "create_product_listing.dial_color" | translate
+                      }}</mat-label>
+                      <input
+                        matInput
+                        formControlName="dial_color"
+                        placeholder="{{
+                          'create_product_listing.dial_color_placeHolder'
+                            | translate
+                        }}"
+                        appOnlyCharacterLimitThirty
+                      />
+                    </mat-form-field>
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <mat-form-field
+                      [dir]="
+                        translateService.currentLang === 'en' ? 'ltr' : 'rtl'
+                      "
+                      appearance="outline"
+                      class="w-100"
                     >
-                      {{
-                        "create_product_listing.thickness_pattern" | translate
-                      }}
-                    </mat-error>
-                  </mat-form-field>
+                      <mat-label class="label-header">{{
+                        "create_product_listing.caliber_movement" | translate
+                      }}</mat-label>
+                      <input
+                        matInput
+                        formControlName="caliber_movement"
+                        placeholder="{{
+                          'create_product_listing.caliber_movement_placeHolder'
+                            | translate
+                        }}"
+                        appOnlyCharacterLimitThirty
+                      />
+                    </mat-form-field>
+                  </div>
                 </div>
-                <div class="col-md-6 mb-3">
-                  <mat-form-field
-                    [dir]="
-                      translateService.currentLang === 'en' ? 'ltr' : 'rtl'
-                    "
-                    appearance="outline"
-                    class="w-100"
-                  >
-                    <mat-label class="label-header">{{
-                      "create_product_listing.crystal" | translate
-                    }}</mat-label>
-                    <mat-select formControlName="crystal">
-                      <mat-option value="">{{
-                        "create_product_listing.crystal_placeHolder" | translate
-                      }}</mat-option>
-                      <mat-option
-                        *ngFor="let data of formdropdownListData.crystal"
-                        [value]="data.key"
-                        >{{ data.value }}</mat-option
-                      >
-                    </mat-select>
-                  </mat-form-field>
-                </div>
-              </div>
 
-              <div class="row">
-                <div class="col-md-6 mb-3">
-                  <mat-form-field
-                    [dir]="
-                      translateService.currentLang === 'en' ? 'ltr' : 'rtl'
-                    "
-                    appearance="outline"
-                    class="w-100"
-                  >
-                    <mat-label class="label-header">{{
-                      "create_product_listing.water_resistance" | translate
-                    }}</mat-label>
-                    <mat-select formControlName="water_resistance">
-                      <mat-option value="">{{
-                        "create_product_listing.water_resistance_placeHolder"
-                          | translate
-                      }}</mat-option>
-                      <mat-option
-                        *ngFor="
-                          let data of formdropdownListData.water_resistance
+                <div class="row">
+                  <div class="col-md-6 mb-3">
+                    <mat-form-field
+                      [dir]="
+                        translateService.currentLang === 'en' ? 'ltr' : 'rtl'
+                      "
+                      appearance="outline"
+                      class="w-100"
+                    >
+                      <mat-label class="label-header">{{
+                        "create_product_listing.base_caliber" | translate
+                      }}</mat-label>
+                      <input
+                        matInput
+                        formControlName="base_caliber"
+                        placeholder="{{
+                          'create_product_listing.base_caliber_placeHolder'
+                            | translate
+                        }}"
+                        appOnlyCharacterLimitThirty
+                      />
+                    </mat-form-field>
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <mat-form-field
+                      [dir]="
+                        translateService.currentLang === 'en' ? 'ltr' : 'rtl'
+                      "
+                      appearance="outline"
+                      class="w-100"
+                    >
+                      <mat-label class="label-header">{{
+                        "create_product_listing.power_reserve" | translate
+                      }}</mat-label>
+                      <input
+                        matInput
+                        formControlName="power_reserve"
+                        placeholder="{{
+                          'create_product_listing.power_reserve_placeHolder'
+                            | translate
+                        }}"
+                        appOnlyCharacterLimitThirty
+                      />
+                    </mat-form-field>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-6 mb-3">
+                    <mat-form-field
+                      [dir]="
+                        translateService.currentLang === 'en' ? 'ltr' : 'rtl'
+                      "
+                      appearance="outline"
+                      class="w-100"
+                    >
+                      <mat-label class="label-header">{{
+                        "create_product_listing.no_of_jewels" | translate
+                      }}</mat-label>
+                      <input
+                        matInput
+                        formControlName="no_of_jewels"
+                        placeholder="{{
+                          'create_product_listing.no_of_jewels_placeHolder'
+                            | translate
+                        }}"
+                        appPositiveNumber
+                      />
+                      <mat-error
+                        [ngClass]="{
+                          'text-left': translateService.currentLang === 'en',
+                          'text-right': translateService.currentLang !== 'en'
+                        }"
+                        *ngIf="no_of_jewels.hasError('pattern')"
+                      >
+                        {{
+                          "create_product_listing.no_of_jewels_error" | translate
+                        }}
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <mat-form-field
+                      [dir]="
+                        translateService.currentLang === 'en' ? 'ltr' : 'rtl'
+                      "
+                      appearance="outline"
+                      class="w-100"
+                    >
+                      <mat-label class="label-header">{{
+                        "create_product_listing.frequency" | translate
+                      }}</mat-label>
+                      <input
+                        matInput
+                        formControlName="frequency"
+                        placeholder="{{
+                          'create_product_listing.frequency_placeHolder'
+                            | translate
+                        }}"
+                      />
+                      <span
+                        style="
+                          padding: 17px 15px 17px 15px;
+                          background-color: #dbdbdb;
                         "
-                        [value]="data.key"
-                        >{{ data.value }}</mat-option
+                        matSuffix
+                        >hz</span
                       >
-                    </mat-select>
-                  </mat-form-field>
+                      <mat-error
+                        [ngClass]="{
+                          'text-left': translateService.currentLang === 'en',
+                          'text-right': translateService.currentLang !== 'en'
+                        }"
+                        *ngIf="frequency.hasError('pattern')"
+                      >
+                        {{
+                          "create_product_listing.frequency_pattern" | translate
+                        }}
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
                 </div>
-                <div class="col-md-6 mb-3">
-                  <mat-form-field
-                    [dir]="
-                      translateService.currentLang === 'en' ? 'ltr' : 'rtl'
-                    "
-                    appearance="outline"
-                    class="w-100"
-                  >
-                    <mat-label class="label-header">{{
-                      "create_product_listing.dial_numerals" | translate
-                    }}</mat-label>
-                    <input
-                      matInput
-                      formControlName="dial_numerals"
-                      placeholder="{{
-                        'create_product_listing.dial_numerals_placeHolder'
-                          | translate
-                      }}"
-                    />
-                    <span
-                      style="
-                        padding: 17px 15px 17px 15px;
-                        background-color: #dbdbdb;
+
+                <div class="row">
+                  <div class="col-md-12 mb-3">
+                    <mat-form-field
+                      [dir]="
+                        translateService.currentLang === 'en' ? 'ltr' : 'rtl'
                       "
-                      matSuffix
-                      >mm</span
+                      appearance="outline"
+                      class="w-100"
                     >
-                    <mat-error
-                      [ngClass]="{
-                        'text-left': translateService.currentLang === 'en',
-                        'text-right': translateService.currentLang !== 'en'
-                      }"
-                      *ngIf="dial_numerals.hasError('pattern')"
-                    >
-                      {{
-                        "create_product_listing.dial_numerals_pattern"
-                          | translate
-                      }}
-                    </mat-error>
-                  </mat-form-field>
+                      <mat-label class="label-header">{{
+                        "create_product_listing.other_details" | translate
+                      }}</mat-label>
+                      <input
+                        matInput
+                        formControlName="additional_details"
+                        placeholder="{{
+                          'create_product_listing.other_details_placeholder'
+                            | translate
+                        }}"
+                        appFieldLimitIntoHundered
+                      />
+                    </mat-form-field>
+                  </div>
                 </div>
               </div>
-            </div>
-          </mat-expansion-panel>
-        </mat-accordion>
-      </div>
+            </mat-expansion-panel>
+          </mat-accordion>
+        </div>
 
-      <div style="padding: 0 0 15px 0">
-        <mat-accordion>
-          <mat-expansion-panel [(expanded)]="panelStrapOpenState" class="panel">
-            <mat-expansion-panel-header>
-              <mat-panel-title
-                [ngClass]="{
-                  'reverse-order-label-alignment':
-                    translateService.currentLang !== 'en'
-                }"
+        <div style="padding: 0 0 15px 0">
+          <mat-accordion>
+            <mat-expansion-panel [(expanded)]="panelOpenState" class="panel">
+              <mat-expansion-panel-header>
+                <mat-panel-title
+                  [ngClass]="{
+                    'reverse-order-label-alignment':
+                      translateService.currentLang !== 'en'
+                  }"
+                >
+                  {{ "create_product_listing.case_info" | translate }}
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+              <div class="accordion-body">
+                <div class="row">
+                  <div class="col-md-6 mb-3">
+                    <mat-form-field
+                      [dir]="
+                        translateService.currentLang === 'en' ? 'ltr' : 'rtl'
+                      "
+                      appearance="outline"
+                      class="w-100"
+                    >
+                      <mat-label class="label-header">{{
+                        "create_product_listing.case_material" | translate
+                      }}</mat-label>
+                      <mat-select formControlName="case_material">
+                        <mat-option value="">{{
+                          "create_product_listing.case_material_Select"
+                            | translate
+                        }}</mat-option>
+                        <mat-option
+                          *ngFor="let data of formdropdownListData.case_material"
+                          [value]="data.key"
+                          >{{ data.value }}</mat-option
+                        >
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <mat-form-field
+                      [dir]="
+                        translateService.currentLang === 'en' ? 'ltr' : 'rtl'
+                      "
+                      appearance="outline"
+                      class="w-100"
+                    >
+                      <mat-label class="label-header">{{
+                        "create_product_listing.bezel_material" | translate
+                      }}</mat-label>
+                      <mat-select formControlName="bezel_material">
+                        <mat-option value="">{{
+                          "create_product_listing.select_bezel_material"
+                            | translate
+                        }}</mat-option>
+                        <mat-option
+                          *ngFor="let data of formdropdownListData.bezel_material"
+                          [value]="data.key"
+                          >{{ data.value }}</mat-option
+                        >
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-6 mb-3">
+                    <mat-form-field
+                      [dir]="
+                        translateService.currentLang === 'en' ? 'ltr' : 'rtl'
+                      "
+                      appearance="outline"
+                      class="w-100"
+                    >
+                      <mat-label class="label-header">{{
+                        "create_product_listing.thickness" | translate
+                      }}</mat-label>
+                      <input
+                        matInput
+                        formControlName="thickness"
+                        placeholder="{{
+                          'create_product_listing.thickness_placeHolder'
+                            | translate
+                        }}"
+                      />
+                      <span
+                        style="
+                          padding: 17px 15px 17px 15px;
+                          background-color: #dbdbdb;
+                        "
+                        matSuffix
+                        >mm</span
+                      >
+                      <mat-error
+                        [ngClass]="{
+                          'text-left': translateService.currentLang === 'en',
+                          'text-right': translateService.currentLang !== 'en'
+                        }"
+                        *ngIf="thickness.hasError('pattern')"
+                      >
+                        {{
+                          "create_product_listing.thickness_pattern" | translate
+                        }}
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <mat-form-field
+                      [dir]="
+                        translateService.currentLang === 'en' ? 'ltr' : 'rtl'
+                      "
+                      appearance="outline"
+                      class="w-100"
+                    >
+                      <mat-label class="label-header">{{
+                        "create_product_listing.crystal" | translate
+                      }}</mat-label>
+                      <mat-select formControlName="crystal">
+                        <mat-option value="">{{
+                          "create_product_listing.crystal_placeHolder" | translate
+                        }}</mat-option>
+                        <mat-option
+                          *ngFor="let data of formdropdownListData.crystal"
+                          [value]="data.key"
+                          >{{ data.value }}</mat-option
+                        >
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-6 mb-3">
+                    <mat-form-field
+                      [dir]="
+                        translateService.currentLang === 'en' ? 'ltr' : 'rtl'
+                      "
+                      appearance="outline"
+                      class="w-100"
+                    >
+                      <mat-label class="label-header">{{
+                        "create_product_listing.water_resistance" | translate
+                      }}</mat-label>
+                      <mat-select formControlName="water_resistance">
+                        <mat-option value="">{{
+                          "create_product_listing.water_resistance_placeHolder"
+                            | translate
+                        }}</mat-option>
+                        <mat-option
+                          *ngFor="
+                            let data of formdropdownListData.water_resistance
+                          "
+                          [value]="data.key"
+                          >{{ data.value }}</mat-option
+                        >
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <mat-form-field
+                      [dir]="
+                        translateService.currentLang === 'en' ? 'ltr' : 'rtl'
+                      "
+                      appearance="outline"
+                      class="w-100"
+                    >
+                      <mat-label class="label-header">{{
+                        "create_product_listing.dial_numerals" | translate
+                      }}</mat-label>
+                      <input
+                        matInput
+                        formControlName="dial_numerals"
+                        placeholder="{{
+                          'create_product_listing.dial_numerals_placeHolder'
+                            | translate
+                        }}"
+                      />
+                      <span
+                        style="
+                          padding: 17px 15px 17px 15px;
+                          background-color: #dbdbdb;
+                        "
+                        matSuffix
+                        >mm</span
+                      >
+                      <mat-error
+                        [ngClass]="{
+                          'text-left': translateService.currentLang === 'en',
+                          'text-right': translateService.currentLang !== 'en'
+                        }"
+                        *ngIf="dial_numerals.hasError('pattern')"
+                      >
+                        {{
+                          "create_product_listing.dial_numerals_pattern"
+                            | translate
+                        }}
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+                </div>
+              </div>
+            </mat-expansion-panel>
+          </mat-accordion>
+        </div>
+
+        <div style="padding: 0 0 15px 0">
+          <mat-accordion>
+            <mat-expansion-panel [(expanded)]="panelStrapOpenState" class="panel">
+              <mat-expansion-panel-header>
+                <mat-panel-title
+                  [ngClass]="{
+                    'reverse-order-label-alignment':
+                      translateService.currentLang !== 'en'
+                  }"
+                >
+                  {{ "create_product_listing.straps_bracelet" | translate }}
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+              <div class="accordion-body">
+                <div class="row">
+                  <div class="col-md-6 mb-3">
+                    <mat-form-field
+                      [dir]="
+                        translateService.currentLang === 'en' ? 'ltr' : 'rtl'
+                      "
+                      appearance="outline"
+                      class="w-100"
+                    >
+                      <mat-label class="label-header">{{
+                        "create_product_listing.bracelet_material" | translate
+                      }}</mat-label>
+                      <input
+                        matInput
+                        formControlName="bracelet_material"
+                        placeholder="{{
+                          'create_product_listing.bracelet_material_placeHolder'
+                            | translate
+                        }}"
+                        appOnlyCharacterLimitThirty
+                      />
+                    </mat-form-field>
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <mat-form-field
+                      [dir]="
+                        translateService.currentLang === 'en' ? 'ltr' : 'rtl'
+                      "
+                      appearance="outline"
+                      class="w-100"
+                    >
+                      <mat-label class="label-header">{{
+                        "create_product_listing.bracelet_color" | translate
+                      }}</mat-label>
+                      <input
+                        matInput
+                        formControlName="bracelet_color"
+                        placeholder="{{
+                          'create_product_listing.bracelet_color_placeHolder'
+                            | translate
+                        }}"
+                        appOnlyCharacterLimitThirty
+                      />
+                    </mat-form-field>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-6 mb-3">
+                    <mat-form-field
+                      [dir]="
+                        translateService.currentLang === 'en' ? 'ltr' : 'rtl'
+                      "
+                      appearance="outline"
+                      class="w-100"
+                    >
+                      <mat-label class="label-header">{{
+                        "create_product_listing.type_of_clasp" | translate
+                      }}</mat-label>
+                      <input
+                        matInput
+                        formControlName="type_of_clasp"
+                        placeholder="{{
+                          'create_product_listing.type_of_clasp_placeHolder'
+                            | translate
+                        }}"
+                      />
+                      <span
+                        style="
+                          padding: 17px 15px 17px 15px;
+                          background-color: #dbdbdb;
+                        "
+                        matSuffix
+                        >mm</span
+                      >
+                      <mat-error
+                        [ngClass]="{
+                          'text-left': translateService.currentLang === 'en',
+                          'text-right': translateService.currentLang !== 'en'
+                        }"
+                        *ngIf="type_of_clasp.hasError('pattern')"
+                      >
+                        {{
+                          "create_product_listing.type_of_clasp_pattern"
+                            | translate
+                        }}
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+
+                  <div class="col-md-6 mb-3">
+                    <mat-form-field
+                      [dir]="
+                        translateService.currentLang === 'en' ? 'ltr' : 'rtl'
+                      "
+                      appearance="outline"
+                      class="w-100"
+                    >
+                      <mat-label class="label-header">{{
+                        "create_product_listing.clasp_material" | translate
+                      }}</mat-label>
+                      <input
+                        matInput
+                        formControlName="clasp_material"
+                        placeholder="{{
+                          'create_product_listing.clasp_material_placeHolder'
+                            | translate
+                        }}"
+                        appOnlyCharacterLimitThirty
+                      />
+                    </mat-form-field>
+                  </div>
+                </div>
+              </div>
+            </mat-expansion-panel>
+          </mat-accordion>
+        </div>
+
+        <div
+          [ngClass]="{
+            'reverse-order-listing-details-btn-div':
+              translateService.currentLang !== 'en'
+          }"
+          class="d-flex gap-2 align-items-center justify-content-end mb-3"
+          style="padding: 0 20px 0 20px"
+        >
+          <!-- <button
+                    class="save-can-btn canc-bg-color"
+                    (click)="backbtn('listingDetails')"
+                  >
+                    {{ "create_product_listing.back_btn" | translate }}
+                  </button> -->
+          <button
+            class="save-can-btn save-btn-bg"
+            (click)="onSubmit('watchDetails')"
+          >
+            {{ "create_product_listing.save_btn" | translate }}
+          </button>
+        </div>
+      </form>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        {{ "create_product_listing.upload_images" | translate }}
+      </mat-expansion-panel-header>
+      <div
+        class="image-upload-container"
+        [ngClass]="{
+          'reverse-order-upload-images-content':
+            translateService.currentLang !== 'en'
+        }"
+      >
+        <!-- Cover Image -->
+        <div class="content-one">
+          <p>{{ "create_product_listing.cover_image" | translate }}</p>
+          <div class="d-flex flex-wrap">
+            <div class="upload-box" (click)="selectCoverImage()">
+              <ng-container
+                *ngIf="
+                  coverImage?.url &&
+                    coverImage.url !== 'https://api.chronosouq.com/null';
+                  else uploadPlaceholder
+                "
               >
-                {{ "create_product_listing.straps_bracelet" | translate }}
-              </mat-panel-title>
-            </mat-expansion-panel-header>
-            <div class="accordion-body">
-              <div class="row">
-                <div class="col-md-6 mb-3">
-                  <mat-form-field
-                    [dir]="
-                      translateService.currentLang === 'en' ? 'ltr' : 'rtl'
-                    "
-                    appearance="outline"
-                    class="w-100"
-                  >
-                    <mat-label class="label-header">{{
-                      "create_product_listing.bracelet_material" | translate
-                    }}</mat-label>
-                    <input
-                      matInput
-                      formControlName="bracelet_material"
-                      placeholder="{{
-                        'create_product_listing.bracelet_material_placeHolder'
-                          | translate
-                      }}"
-                      appOnlyCharacterLimitThirty
-                    />
-                  </mat-form-field>
-                </div>
-                <div class="col-md-6 mb-3">
-                  <mat-form-field
-                    [dir]="
-                      translateService.currentLang === 'en' ? 'ltr' : 'rtl'
-                    "
-                    appearance="outline"
-                    class="w-100"
-                  >
-                    <mat-label class="label-header">{{
-                      "create_product_listing.bracelet_color" | translate
-                    }}</mat-label>
-                    <input
-                      matInput
-                      formControlName="bracelet_color"
-                      placeholder="{{
-                        'create_product_listing.bracelet_color_placeHolder'
-                          | translate
-                      }}"
-                      appOnlyCharacterLimitThirty
-                    />
-                  </mat-form-field>
-                </div>
+                <img
+                  *ngIf="
+                    coverImage?.url &&
+                    coverImage.url !== 'https://api.chronosouq.com/null'
+                  "
+                  style="height: 100%; width: 100%; object-fit: cover"
+                  [src]="coverImage.url"
+                  alt="Cover Image"
+                />
+                <!-- Show delete button when cover image is present -->
+                <button
+                  *ngIf="
+                    coverImage?.url &&
+                    coverImage.url !== 'https://api.chronosouq.com/null'
+                  "
+                  class="delete-btn"
+                  (click)="removeCoverImage()"
+                >
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </ng-container>
+              <ng-template #uploadPlaceholder>
+                <span>+</span>
+              </ng-template>
+              <!-- Show the upload progress if cover image is uploading -->
+              <div *ngIf="isCoverImageUploading" class="upload-progress">
+                <p>Uploading</p>
+                <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+              </div>
+            </div>
+            <input
+              type="file"
+              #coverImageInput
+              (change)="onCoverImageSelected($event)"
+              accept="image/*"
+              hidden
+            />
+          </div>
+        </div>
+
+        <div class="content-one">
+          <p>{{ "create_product_listing.upload_video" | translate }}</p>
+          <div class="d-flex flex-wrap">
+            <div class="upload-box" (click)="selectVideoFile()">
+              <ng-container *ngIf="videoUrl; else uploadPlaceholderVideo">
+                <video
+                  *ngIf="videoUrl"
+                  controls
+                  [src]="videoUrl"
+                  style="height: 100%; width: 100%; object-fit: cover"
+                ></video>
+                <button class="delete-btn" (click)="removeVideo()">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </ng-container>
+              <ng-template #uploadPlaceholderVideo>
+                <span>+</span>
+              </ng-template>
+              <input
+                #videoInput
+                type="file"
+                hidden
+                (change)="onVideoSelected($event)"
+                accept="video/*"
+              />
+            </div>
+          </div>
+        </div>
+
+        <!-- Other Images -->
+        <div class="content-two">
+          <p>{{ "create_product_listing.other_images" | translate }}</p>
+          <div class="d-flex flex-wrap gap-3">
+            <div class="upload-box" (click)="selectOtherImages()">
+              <span>+</span>
+            </div>
+            <input
+              type="file"
+              #otherImagesInput
+              (change)="onOtherImagesSelected($event)"
+              accept="image/*"
+              multiple
+              hidden
+            />
+
+            <div class="image-preview" *ngFor="let image of otherImages">
+              <img [src]="image.url" *ngIf="!image.isUploading" alt="Preview" />
+
+              <!-- Show the progress bar if the image is uploading -->
+              <div *ngIf="image.isUploading" class="upload-progress">
+                <p>Uploading</p>
+                <mat-progress-bar mode="indeterminate"></mat-progress-bar>
               </div>
 
-              <div class="row">
-                <div class="col-md-6 mb-3">
-                  <mat-form-field
-                    [dir]="
-                      translateService.currentLang === 'en' ? 'ltr' : 'rtl'
-                    "
-                    appearance="outline"
-                    class="w-100"
+              <!-- Show the delete button only when the upload is complete -->
+              <button
+                *ngIf="!image.isUploading"
+                class="delete-btn"
+                (click)="removeImage(image)"
+              >
+                <mat-icon>delete</mat-icon>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div
+          [ngClass]="{
+            'reverse-order-listing-details-btn-div':
+              translateService.currentLang !== 'en'
+          }"
+          class="align-items-center justify-content-end d-flex gap-2 mt-3 mb-3"
+          style="padding: 0 20px 0 20px"
+        >
+          <!-- <button
+                    class="save-can-btn canc-bg-color"
+                    (click)="backbtn('watchDetails')"
                   >
-                    <mat-label class="label-header">{{
-                      "create_product_listing.type_of_clasp" | translate
-                    }}</mat-label>
-                    <input
-                      matInput
-                      formControlName="type_of_clasp"
-                      placeholder="{{
-                        'create_product_listing.type_of_clasp_placeHolder'
-                          | translate
-                      }}"
-                    />
-                    <span
-                      style="
-                        padding: 17px 15px 17px 15px;
-                        background-color: #dbdbdb;
-                      "
-                      matSuffix
-                      >mm</span
-                    >
-                    <mat-error
-                      [ngClass]="{
-                        'text-left': translateService.currentLang === 'en',
-                        'text-right': translateService.currentLang !== 'en'
-                      }"
-                      *ngIf="type_of_clasp.hasError('pattern')"
-                    >
-                      {{
-                        "create_product_listing.type_of_clasp_pattern"
-                          | translate
-                      }}
-                    </mat-error>
-                  </mat-form-field>
-                </div>
+                    {{ "create_product_listing.back_btn" | translate }}
+                  </button> -->
+          <button
+            class="save-can-btn save-btn-bg"
+            (click)="onSubmit('uploadImages')"
+          >
+            {{ "create_product_listing.save_btn" | translate }}
+          </button>
+        </div>
+      </div>
+    </mat-expansion-panel>
 
-                <div class="col-md-6 mb-3">
-                  <mat-form-field
-                    [dir]="
-                      translateService.currentLang === 'en' ? 'ltr' : 'rtl'
-                    "
-                    appearance="outline"
-                    class="w-100"
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        {{ "create_product_listing.condition_grading" | translate }}
+      </mat-expansion-panel-header>
+      <div class="image-upload-container">
+        <div
+          [ngClass]="{
+            'reverse-order-condition-gradding':
+              translateService.currentLang !== 'en'
+          }"
+          class="container-fluid my-4"
+        >
+          <div class="row">
+            <div
+              class="col-md-6 mb-3"
+              *ngFor="let condition of dealerconditions"
+              (click)="selectCondition(condition)"
+              [class.selected]="condition === selectedCondition"
+            >
+              <div class="card condition-card h-100" style="border-radius: 16px">
+                <div
+                  class="card-body"
+                  [ngClass]="{
+                    'reverse-order-condition-gradding-body':
+                      translateService.currentLang !== 'en'
+                  }"
+                >
+                  <p
+                    *ngIf="translateService.currentLang == 'en'"
+                    class="font-size-16 font-wight-700 color-242424 margin-0"
                   >
-                    <mat-label class="label-header">{{
-                      "create_product_listing.clasp_material" | translate
-                    }}</mat-label>
-                    <input
-                      matInput
-                      formControlName="clasp_material"
-                      placeholder="{{
-                        'create_product_listing.clasp_material_placeHolder'
-                          | translate
-                      }}"
-                      appOnlyCharacterLimitThirty
-                    />
-                  </mat-form-field>
+                    {{ condition.title }}
+                  </p>
+                  <p
+                    *ngIf="translateService.currentLang == 'en'"
+                    class="font-size-14 font-weight-400 color-909090"
+                  >
+                    {{ condition.description }}
+                  </p>
+
+                  <p
+                    *ngIf="translateService.currentLang != 'en'"
+                    class="font-size-16 font-wight-700 color-242424 margin-0"
+                  >
+                    {{ condition.arabictitle }}
+                  </p>
+                  <p
+                    *ngIf="translateService.currentLang != 'en'"
+                    class="font-size-14 font-weight-400 color-909090"
+                  >
+                    {{ condition.arabicdescription }}
+                  </p>
                 </div>
               </div>
             </div>
-          </mat-expansion-panel>
-        </mat-accordion>
+          </div>
+        </div>
+
+        <div
+          [ngClass]="{
+            'reverse-order-listing-details-btn-div':
+              translateService.currentLang !== 'en'
+          }"
+          class="d-flex align-items-center justify-content-end gap-2 mb-3"
+          style="padding: 0 20px 0 20px"
+        >
+          <!-- <button
+      class="save-can-btn canc-bg-color"
+      (click)="backbtn('uploadImages')"
+    >
+      {{ "create_product_listing.back_btn" | translate }}
+    </button> -->
+          <!-- <button
+      *ngIf="!isNextButtonShowonScopeOfdelivery"
+      class="save-can-btn save-btn-bg"
+      (click)="onSubmit('conditionGrading')"
+    >
+      {{ "create_product_listing.save_btn" | translate }}
+    </button> -->
+
+          <button
+            class="save-can-btn save-btn-bg"
+            (click)="onSubmit('conditionGrading')"
+          >
+            {{ "create_product_listing.save_btn" | translate }}
+          </button>
+          <!-- <button
+      *ngIf="isNextButtonShowonScopeOfdelivery"
+      class="save-can-btn save-btn-bg"
+      (click)="nextMoveToScopeOfDelivery()"
+    >
+      {{ "create_product_listing.next_btn" | translate }}
+    </button> -->
+        </div>
+      </div>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        {{ "create_product_listing.scope_of_delivery" | translate }}
+      </mat-expansion-panel-header>
+      <div class="container-fluid my-4">
+        <div class="row">
+          <div
+            class="col-md-6 col-lg-4 mb-3"
+            *ngFor="let option of options"
+            (click)="toggleOption(option)"
+            [class.selected]="isSelected(option)"
+          >
+            <div class="card delivery-card h-100">
+              <div class="card-body d-flex flex-column">
+                <img
+                  [src]="option.icon"
+                  alt="{{ option.title }}"
+                  class="icon mb-3"
+                  style="align-self: center"
+                />
+                <h6
+                  *ngIf="translateService.currentLang === 'en'"
+                  class="card-title"
+                  style="align-self: center"
+                >
+                  {{ option.title }}
+                </h6>
+                <h6
+                  *ngIf="translateService.currentLang != 'en'"
+                  class="card-title"
+                  style="align-self: center"
+                >
+                  {{ option.arabictitle }}
+                </h6>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
       <div
@@ -1126,200 +1441,786 @@
           'reverse-order-listing-details-btn-div':
             translateService.currentLang !== 'en'
         }"
-        class="d-flex gap-2 align-items-center justify-content-end mb-3"
+        class="d-flex align-items-center justify-content-end gap-2 mb-3"
         style="padding: 0 20px 0 20px"
       >
         <!-- <button
-                  class="save-can-btn canc-bg-color"
-                  (click)="backbtn('listingDetails')"
-                >
-                  {{ "create_product_listing.back_btn" | translate }}
-                </button> -->
+        class="save-can-btn canc-bg-color"
+        (click)="backbtn('conditionGrading')"
+      >
+        {{ "create_product_listing.back_btn" | translate }}
+      </button> -->
+        <!-- <button
+        
+        class="save-can-btn save-btn-bg"
+        (click)="onSubmit('conditionGrading')"
+      >
+        Save
+      </button> -->
         <button
           class="save-can-btn save-btn-bg"
-          (click)="onSubmit('watchDetails')"
+          (click)="onSubmit('scopeofdelivery')"
+        >
+          {{ "create_product_listing.save_btn" | translate }}
+        </button>
+        <!-- <button
+        *ngIf="isNextButtonShowonScopeOfdelivery"
+        class="save-can-btn save-btn-bg"
+        (click)="nextMoveToScopeOfDelivery()"
+      >
+        {{ "create_product_listing.next_btn" | translate }}
+      </button> -->
+      </div>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        {{ "create_product_listing.price_shipment" | translate }}
+      </mat-expansion-panel-header>
+      <div
+        [ngClass]="{
+          'reverse-orderdealer-or-dealer-div':
+            translateService.currentLang !== 'en'
+        }"
+        class="container-fluid mt-5 d-flex flex-wrap"
+      >
+        <div class="col-md-6 shipping-changing-cont">
+          <mat-form-field
+            style="width: 100%"
+            class="full-width"
+            appearance="outline"
+            [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'"
+          >
+            <mat-label class="label-header">{{
+              "create_product_listing.watch_price" | translate
+            }}</mat-label>
+            <input
+              matInput
+              [(ngModel)]="watchPrice"
+              placeholder="{{
+                'create_product_listing.watch_price_place' | translate
+              }}"
+              appPriceLimit
+              (input)="calculatePayout()"
+            />
+            <mat-hint align="end">{{
+              "create_product_listing.watch_price_commission" | translate
+            }}</mat-hint>
+          </mat-form-field>
+
+          <mat-form-field
+            style="width: 100%"
+            class="full-width"
+            appearance="outline"
+            [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'"
+          >
+            <mat-label class="label-header">
+              {{
+                "create_product_listing.select_shipping_type" | translate
+              }}</mat-label
+            >
+            <mat-select
+              (selectionChange)="countShipping()"
+              [(ngModel)]="shipping_type"
+            >
+              <mat-option value="exclusiveShipping">
+                {{
+                  "create_product_listing.exclusive_shipping" | translate
+                }}g</mat-option
+              >
+              <mat-option value="freeCharge">
+                {{
+                  "create_product_listing.free_of_charge" | translate
+                }}</mat-option
+              >
+              <mat-option value="inclusiveShipping">
+                {{
+                  "create_product_listing.inclusive_shipping" | translate
+                }}</mat-option
+              >
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field
+            *ngIf="shipping_type === 'inclusiveShipping'"
+            style="width: 100%"
+            class="full-width"
+            appearance="outline"
+            [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'"
+          >
+            <mat-label class="label-header">{{
+              "create_product_listing.shipping_cost" | translate
+            }}</mat-label>
+            <input
+              matInput
+              [(ngModel)]="shipping_charges"
+              appPriceLimit
+              placeholder="{{
+                'create_product_listing.shipping_cost_place' | translate
+              }}"
+              (input)="Payoutaftershippingcharges()"
+            />
+          </mat-form-field>
+
+          <mat-form-field
+            *ngIf="shipping_type === 'inclusiveShipping'"
+            style="width: 100%"
+            class="full-width"
+            appearance="outline"
+            [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'"
+          >
+            <mat-label class="label-header">
+              {{
+                "create_product_listing.est_delivery_time" | translate
+              }}</mat-label
+            >
+            <input
+              matInput
+              type="text"
+              [(ngModel)]="estimate_delivery"
+              placeholder="  {{
+                'create_product_listing.est_delivery_time_place' | translate
+              }}"
+              appFieldLimitIntoHundered
+            />
+          </mat-form-field>
+
+          <mat-checkbox
+            [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'"
+            [(ngModel)]="allow_to_make_offer"
+          >
+            <label class="mdc-label" style="margin-top: 13px; margin-bottom: 5px">
+              {{ "create_product_listing.allow_make_offer" | translate }}
+            </label>
+          </mat-checkbox>
+        </div>
+        <div class="col-md-6 for-reverse">
+          <mat-card class="info-card p-3">
+            <p
+              style="
+                font-size: 18px !important;
+                font-weight: 700 !important;
+                color: #132138 !important;
+              "
+              class="font-size-18 font-wight-700 color-132138"
+            >
+              {{ "create_product_listing.payout_info" | translate }}
+            </p>
+            <div class="info-row d-flex justify-content-between">
+              <p
+                style="
+                  font-size: 16px !important;
+                  font-weight: 400 !important;
+                  color: #909090 !important;
+                "
+                class="font-size-16 font-wight-400 color-909090"
+              >
+                {{ "create_product_listing.watch_price" | translate }}
+              </p>
+              <p
+                style="
+                  font-size: 16px !important;
+                  font-weight: 600 !important;
+                  color: #0f172a !important;
+                "
+                class="font-size-16 font-wight-600 color-0F172A"
+              >
+                <img
+                  src="../../../../assets/images/Saudi_Riyal_Symbol-2.svg"
+                  class="sar-icon-style"
+                  alt="SAR"
+                />
+
+                {{ watchPriceDisplay }}
+              </p>
+            </div>
+            <div class="info-row d-flex justify-content-between">
+              <span class="font-size-16 font-wight-400 color-909090">{{
+                "create_product_listing.platform_fees" | translate
+              }}</span>
+              <span class="font-size-16 font-wight-600 color-0F172A">
+                -
+                <img
+                  src="../../../../assets/images/Saudi_Riyal_Symbol-2.svg"
+                  class="sar-icon-style"
+                  alt="SAR"
+                />
+
+                {{ platformFee }}
+              </span>
+            </div>
+            <mat-divider></mat-divider>
+            <div class="info-row d-flex justify-content-between">
+              <span class="font-size-16 font-wight-400 color-909090">{{
+                "create_product_listing.payout" | translate
+              }}</span>
+              <span class="font-size-16 font-wight-600 color-0F172A">
+                <img
+                  src="../../../../assets/images/Saudi_Riyal_Symbol-2.svg"
+                  class="sar-icon-style"
+                  alt="SAR"
+                />
+
+                {{ estimatedPayout }}
+              </span>
+            </div>
+
+            <div
+              *ngIf="shipping_type === 'inclusiveShipping'"
+              class="info-row d-flex justify-content-between"
+            >
+              <span class="font-size-16 font-wight-400 color-909090">{{
+                "create_product_listing.shipping_charges" | translate
+              }}</span>
+              <span class="font-size-16 font-wight-600 color-0F172A">
+                -
+                <img
+                  src="../../../../assets/images/Saudi_Riyal_Symbol-2.svg"
+                  class="sar-icon-style"
+                  alt="SAR"
+                />
+
+                {{ shipping_charges ? shipping_charges : 0 }}
+              </span>
+            </div>
+            <mat-divider *ngIf="estimatedPayoutwithShipping"></mat-divider>
+            <div
+              *ngIf="estimatedPayoutwithShipping"
+              class="info-row d-flex justify-content-between"
+            >
+              <span class="font-size-16 font-wight-400 color-909090">{{
+                "create_product_listing.estimated_payout" | translate
+              }}</span>
+              <span class="font-size-16 font-wight-600 color-0F172A">
+                <img
+                  src="../../../../assets/images/Saudi_Riyal_Symbol-2.svg"
+                  class="sar-icon-style"
+                  alt="SAR"
+                />
+
+                {{ estimatedPayoutwithShipping }}
+              </span>
+            </div>
+          </mat-card>
+        </div>
+      </div>
+
+      <div
+        [ngClass]="{
+          'reverse-order-listing-details-btn-div':
+            translateService.currentLang !== 'en'
+        }"
+        class="d-flex align-items-center justify-content-end gap-2 mb-3"
+        style="padding: 0 20px 0 20px"
+      >
+        <!-- <button
+        class="save-can-btn canc-bg-color"
+        (click)="backbtn('proofofownership')"
+      >
+        {{ "create_product_listing.back_btn" | translate }}
+      </button> -->
+        <button
+          class="save-can-btn save-btn-bg"
+          (click)="onSubmit('priceshipment')"
         >
           {{ "create_product_listing.save_btn" | translate }}
         </button>
       </div>
-    </form>
-  </mat-expansion-panel>
+    </mat-expansion-panel>
 
-  <mat-expansion-panel>
-    <mat-expansion-panel-header> {{ "create_product_listing.upload_images" | translate }} </mat-expansion-panel-header>
-    <div
-              class="image-upload-container"
-             
-              [ngClass]="{
-                'reverse-order-upload-images-content':
-                  translateService.currentLang !== 'en'
-              }"
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        {{ "create_product_listing.billing_information" | translate }}
+      </mat-expansion-panel-header>
+      <form [formGroup]="billingForm">
+        <mat-form-field
+          style="width: 100%; margin-top: 8px"
+          class="full-width"
+          appearance="outline"
+          [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'"
+        >
+          <mat-label class="label-header">
+            {{ "create_product_listing.Billing_Address" | translate }}</mat-label
+          >
+          <input
+            matInput
+            formControlName="billing_address"
+            placeholder=" {{
+              'create_product_listing.Billing_Address_plac' | translate
+            }}"
+            appFieldLimitIntoHundered
+            [readonly]="billingInformationDetails?.billing_address ? true : false"
+          />
+          <mat-error *ngIf="billing_address.hasError('required')">
+            {{ "create_product_listing.Billing_Address_req" | translate }}
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field
+          style="width: 100%; margin-top: 8px"
+          class="full-width"
+          appearance="outline"
+          [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'"
+        >
+          <mat-label class="label-header">
+            {{ "create_product_listing.First_Name" | translate }}</mat-label
+          >
+          <input
+            matInput
+            formControlName="first_name"
+            appOnlyCharacterLimitThirty
+            placeholder=" {{
+              'create_product_listing.First_Name_plac' | translate
+            }}"
+            [readonly]="billingInformationDetails?.first_name ? true : false"
+          />
+          <mat-error *ngIf="first_name.hasError('required')">
+            {{ "create_product_listing.First_Name_req" | translate }}
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field
+          style="width: 100%; margin-top: 8px"
+          class="full-width"
+          appearance="outline"
+          [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'"
+        >
+          <mat-label class="label-header">
+            {{ "create_product_listing.Last_Name" | translate }}</mat-label
+          >
+          <input
+            matInput
+            appOnlyCharacterLimitThirty
+            formControlName="last_name"
+            placeholder=" {{
+              'create_product_listing.Last_Name_plac' | translate
+            }}"
+            [readonly]="billingInformationDetails?.last_name ? true : false"
+          />
+          <mat-error *ngIf="last_name.hasError('required')">
+            {{ "create_product_listing.Last_Name_req" | translate }}
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field
+          style="width: 100%; margin-top: 8px"
+          class="full-width"
+          appearance="outline"
+          [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'"
+        >
+          <mat-label class="label-header">
+            {{ "create_product_listing.Street" | translate }}</mat-label
+          >
+          <input
+            matInput
+            formControlName="street"
+            placeholder="{{ 'create_product_listing.Street_plac' | translate }}"
+            [readonly]="billingInformationDetails?.street ? true : false"
+          />
+          <mat-error *ngIf="street.hasError('required')">
+            {{ "create_product_listing.Street_req" | translate }}
+          </mat-error>
+          <mat-error *ngIf="street.hasError('pattern')">
+            {{ "create_product_listing.Street_patt" | translate }}
+          </mat-error>
+          <mat-error *ngIf="street.hasError('maxlength')">
+            {{ "create_product_listing.Street_maxLen" | translate }}
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field
+          style="width: 100%; margin-top: 8px"
+          class="full-width"
+          appearance="outline"
+          [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'"
+        >
+          <mat-label class="label-header">
+            {{ "create_product_listing.Street_Line_two" | translate }}</mat-label
+          >
+          <input
+            matInput
+            formControlName="street_line_2"
+            placeholder="{{
+              'create_product_listing.Street_Line_two_plac' | translate
+            }}"
+            [readonly]="billingInformationDetails?.street_line_2 ? true : false"
+          />
+          <mat-error *ngIf="street_line_2.hasError('pattern')">
+            {{ "create_product_listing.Street_Line_two_patt" | translate }}
+          </mat-error>
+          <mat-error *ngIf="street_line_2.hasError('maxlength')">
+            {{ "create_product_listing.Street_Line_two_maxLen" | translate }}
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field
+          style="width: 100%; margin-top: 8px"
+          class="full-width"
+          appearance="outline"
+          [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'"
+        >
+          <mat-label class="label-header">
+            {{ "create_product_listing.ZIP_Code" | translate }}</mat-label
+          >
+          <input
+            matInput
+            formControlName="zip_code"
+            appPositiveNumber
+            placeholder="   {{
+              'create_product_listing.ZIP_Code_plac' | translate
+            }}"
+            [readonly]="billingInformationDetails?.zip_code ? true : false"
+          />
+          <mat-error *ngIf="zip_code.hasError('required')">
+            {{ "create_product_listing.ZIP_Code_req" | translate }}
+          </mat-error>
+          <mat-error *ngIf="zip_code.hasError('pattern')">
+            {{ "create_product_listing.ZIP_Code_patt" | translate }}
+          </mat-error>
+          <mat-error *ngIf="zip_code.hasError('maxlength')">
+            {{ "create_product_listing.ZIP_Code_maxLen" | translate }}
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field
+          style="width: 100%; margin-top: 8px"
+          class="full-width"
+          appearance="outline"
+          [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'"
+        >
+          <mat-label class="label-header">
+            {{ "create_product_listing.City_Name" | translate }}</mat-label
+          >
+          <input
+            matInput
+            formControlName="city"
+            appOnlyCharacterLimitThirty
+            placeholder="{{ 'create_product_listing.City_plac' | translate }}"
+            [readonly]="billingInformationDetails?.city ? true : false"
+          />
+          <mat-error *ngIf="city.hasError('required')">
+            {{ "create_product_listing.City_req" | translate }}
+          </mat-error>
+        </mat-form-field>
+      </form>
+
+      <div
+        [ngClass]="{
+          'reverse-order-listing-details-btn-div':
+            translateService.currentLang !== 'en'
+        }"
+        class="d-flex align-items-center justify-content-end gap-2 mb-3"
+        style="padding: 0 20px 0 20px"
+      >
+        <!-- <button
+      class="save-can-btn canc-bg-color"
+      (click)="backbtn('priceshipment')"
+    >
+      {{ "create_product_listing.back_btn" | translate }}
+    </button> -->
+
+        <button
+          class="save-can-btn save-btn-bg"
+          (click)="onSubmit('billinginformation')"
+        >
+          {{ "create_product_listing.save_btn" | translate }}
+        </button>
+        <!-- <button
+      *ngIf="!isNextButtonShowonBillingInformation"
+      class="save-can-btn save-btn-bg"
+      (click)="onSubmit('billinginformation')"
+    >
+      {{ "create_product_listing.save_btn" | translate }}
+    </button> -->
+        <!-- <button
+      *ngIf="isNextButtonShowonBillingInformation"
+      class="save-can-btn save-btn-bg"
+      (click)="nextMoveToSummary()"
+    >
+      {{ "create_product_listing.next_btn" | translate }}
+    </button> -->
+      </div>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        {{ "create_product_listing.summary" | translate }}
+      </mat-expansion-panel-header>
+      <!-- <div class="container-fluid mt-4">
+        <div class="row">
+    
+          <div class="col-md-6">
+            <div
+              style="background: #f7f7f8; border-radius: 15px"
+              class="card p-3"
             >
-              <!-- Cover Image -->
-              <div class="content-one">
-                <p>{{ "create_product_listing.cover_image" | translate }}</p>
-                <div class="d-flex flex-wrap">
-                  <div class="upload-box" (click)="selectCoverImage()">
-                    <ng-container
-                      *ngIf="
-                        coverImage?.url &&
-                          coverImage.url !== 'https://api.chronosouq.com/null';
-                        else uploadPlaceholder
-                      "
-                    >
-                      <img
-                        *ngIf="
-                          coverImage?.url &&
-                          coverImage.url !== 'https://api.chronosouq.com/null'
-                        "
-                        style="height: 100%; width: 100%; object-fit: cover"
-                        [src]="coverImage.url"
-                        alt="Cover Image"
-                      />
-                      <!-- Show delete button when cover image is present -->
-                      <button
-                        *ngIf="
-                          coverImage?.url &&
-                          coverImage.url !== 'https://api.chronosouq.com/null'
-                        "
-                        class="delete-btn"
-                        (click)="removeCoverImage()"
-                      >
-                        <mat-icon>delete</mat-icon>
-                      </button>
-                    </ng-container>
-                    <ng-template #uploadPlaceholder>
-                      <span>+</span>
-                    </ng-template>
-                    <!-- Show the upload progress if cover image is uploading -->
-                    <div *ngIf="isCoverImageUploading" class="upload-progress">
-                      <p>Uploading</p>
-                      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
-                    </div>
-                  </div>
-                  <input
-                    type="file"
-                    #coverImageInput
-                    (change)="onCoverImageSelected($event)"
-                    accept="image/*"
-                    hidden
-                  />
-                </div>
-              </div>
-
-
-              <div class="content-one">
-                <p>{{ "create_product_listing.upload_video" | translate }}</p>
-                  <div class="d-flex flex-wrap">
-                    <div class="upload-box" (click)="selectVideoFile()">
-                      <ng-container *ngIf="videoUrl ;else uploadPlaceholderVideo">
-                          <video *ngIf="videoUrl" controls [src]="videoUrl"  style="height: 100%; width: 100%; object-fit: cover"></video>
-                          <button
-                            class="delete-btn"
-                            (click)="removeVideo()"
-                          >
-                            <mat-icon>delete</mat-icon>
-                          </button>
-                      </ng-container>
-                      <ng-template #uploadPlaceholderVideo>
-                        <span>+</span>
-                      </ng-template>
-                      <input 
-                      #videoInput
-                      type="file" 
-                      hidden 
-                      (change)="onVideoSelected($event)" 
-                      accept="video/*" />
-                    </div>
-                  </div>
-              </div>
-
-              <!-- Other Images -->
-              <div class="content-two">
-                <p>{{ "create_product_listing.other_images" | translate }}</p>
-                <div class="d-flex flex-wrap gap-3">
-                  <div class="upload-box" (click)="selectOtherImages()">
-                    <span>+</span>
-                  </div>
-                  <input
-                    type="file"
-                    #otherImagesInput
-                    (change)="onOtherImagesSelected($event)"
-                    accept="image/*"
-                    multiple
-                    hidden
-                  />
-
-                  <div class="image-preview" *ngFor="let image of otherImages">
-                    <img
-                      [src]="image.url"
-                      *ngIf="!image.isUploading"
-                      alt="Preview"
-                    />
-
-                    <!-- Show the progress bar if the image is uploading -->
-                    <div *ngIf="image.isUploading" class="upload-progress">
-                      <p>Uploading</p>
-                      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
-                    </div>
-
-                    <!-- Show the delete button only when the upload is complete -->
-                    <button
-                      *ngIf="!image.isUploading"
-                      class="delete-btn"
-                      (click)="removeImage(image)"
-                    >
-                      <mat-icon>delete</mat-icon>
-                    </button>
-                  </div>
-                </div>
-              </div>
-              <div
+              <h6
                 [ngClass]="{
-                  'reverse-order-listing-details-btn-div':
+                  'reverse-order-upload-images-labels':
                     translateService.currentLang !== 'en'
                 }"
-                class="align-items-center justify-content-end d-flex gap-2 mt-3 mb-3"
-                style="padding: 0 20px 0 20px"
+                class="font-weight-bold"
               >
-                <!-- <button
-                  class="save-can-btn canc-bg-color"
-                  (click)="backbtn('watchDetails')"
-                >
-                  {{ "create_product_listing.back_btn" | translate }}
-                </button> -->
-                <button
-                  class="save-can-btn save-btn-bg"
-                  (click)="onSubmit('uploadImages')"
-                >
-                  {{ "create_product_listing.save_btn" | translate }}
-                </button>
+                {{ "create_product_listing.Ad_Preview" | translate }}
+              </h6>
+              <div
+                [ngClass]="{
+                  'reverse-order': translateService.currentLang !== 'en'
+                }"
+                class="d-flex align-items-center"
+              >
+                <img
+                  [src]="coverImage.url"
+                  alt="Watch Image"
+                  class="img-fluid"
+                  style="max-width: 127px; max-height: 150px"
+                />
+                <div class="ml-3">
+                  <h6 class="text-secondary">
+                    {{ brandnametoDisplay }} |
+                    {{ listingForm.get("name").value }}
+                  </h6>
+                  <p class="font-weight-bold mb-1">
+                    {{ brandnametoDisplay }}
+                    {{ productDetails.name }}
+                    {{ productDetails.title }}
+                  </p>
+                  <p class="text-primary font-weight-bold mb-0">
+                    <img
+                      src="../../../../assets/images/Saudi_Riyal_Symbol-2.svg"
+                      class="sar-icon-style"
+                      alt="SAR"
+                    />
+
+                    {{ productDetails.price }}
+                  </p>
+                  <small class="text-muted">{{
+                    productDetails.shipping_type == "inclusiveShipping"
+                      ? "Inclusive Shipping"
+                      : productDetails.shipping_type == "exclusiveShipping"
+                      ? "Exclusive Shipping"
+                      : productDetails.shipping_type == "freeCharge"
+                      ? "Free Charge"
+                      : productDetails.shipping_type
+                  }}</small>
+                </div>
               </div>
             </div>
-  </mat-expansion-panel>
+          </div>
 
-  <mat-expansion-panel>
-    <mat-expansion-panel-header> Panel 4 </mat-expansion-panel-header>
-    <p>Content for panel 4</p>
-  </mat-expansion-panel>
 
-  <mat-expansion-panel>
-    <mat-expansion-panel-header> Panel 5 </mat-expansion-panel-header>
-    <p>Content for panel 5</p>
-  </mat-expansion-panel>
+          <div class="col-md-6">
+            <mat-card
+              [ngClass]="{
+                'reverse-order-info-row': translateService.currentLang !== 'en'
+              }"
+              class="info-card"
+            >
+              <p
+                [ngClass]="{
+                  'reverse-order-upload-images-labels':
+                    translateService.currentLang !== 'en'
+                }"
+                style="
+                  font-size: 18px !important;
+                  font-weight: 700 !important;
+                  color: #132138 !important;
+                "
+                class="font-size-18 font-wight-700 color-132138"
+              >
+                {{ "create_product_listing.Payout_Information" | translate }}
+              </p>
+              <div class="info-row d-flex justify-content-between">
+                <p
+                  style="
+                    font-size: 16px !important;
+                    font-weight: 600 !important;
+                    color: #909090 !important;
+                  "
+                  class="font-size-16 font-wight-400 color-909090"
+                >
+                  {{ "create_product_listing.watch_price" | translate }}
+                </p>
+                <p
+                  style="
+                    font-size: 16px !important;
+                    font-weight: 600 !important;
+                    color: #0f172a !important;
+                  "
+                  class="font-size-16 font-wight-600 color-0F172A"
+                >
+                  <img
+                    src="../../../../assets/images/Saudi_Riyal_Symbol-2.svg"
+                    class="sar-icon-style"
+                    alt="SAR"
+                  />
+                  {{ watchPriceDisplay }}
+                </p>
+              </div>
+              <div class="info-row d-flex justify-content-between">
+                <span class="font-size-16 font-wight-400 color-909090">
+                  {{ "create_product_listing.platform_fees" | translate }}</span
+                >
+                <span class="font-size-16 font-wight-600 color-0F172A">
+                  -
+                  <img
+                    src="../../../../assets/images/Saudi_Riyal_Symbol-2.svg"
+                    class="sar-icon-style"
+                    alt="SAR"
+                  />
 
-  <mat-expansion-panel>
-    <mat-expansion-panel-header> Panel 6 </mat-expansion-panel-header>
-    <p>Content for panel 6</p>
-  </mat-expansion-panel>
+                  {{ platformFee }}
+                </span>
+              </div>
+              <mat-divider></mat-divider>
+              <div class="info-row d-flex justify-content-between">
+                <span class="font-size-16 font-wight-400 color-909090">
+                  {{ "create_product_listing.payout" | translate }}</span
+                >
+                <span class="font-size-16 font-wight-600 color-0F172A">
+                  <img
+                    src="../../../../assets/images/Saudi_Riyal_Symbol-2.svg"
+                    class="sar-icon-style"
+                    alt="SAR"
+                  />
 
-  <mat-expansion-panel>
-    <mat-expansion-panel-header> Panel 7 </mat-expansion-panel-header>
-    <p>Content for panel 7</p>
-  </mat-expansion-panel>
+                  {{ estimatedPayout }}
+                </span>
+              </div>
 
-  <mat-expansion-panel>
-    <mat-expansion-panel-header> Panel 8 </mat-expansion-panel-header>
-    <p>Content for panel 8</p>
-  </mat-expansion-panel>
-</mat-accordion>
+              <div class="info-row d-flex justify-content-between">
+                <span class="font-size-16 font-wight-400 color-909090">{{
+                  "create_product_listing.shipping_charges" | translate
+                }}</span>
+                <span class="font-size-16 font-wight-600 color-0F172A">
+                  +
+                  <img
+                    src="../../../../assets/images/Saudi_Riyal_Symbol-2.svg"
+                    class="sar-icon-style"
+                    alt="SAR"
+                  />
+
+                  {{ shipping_charges }}
+                </span>
+              </div>
+              <mat-divider *ngIf="estimatedPayoutwithShipping"></mat-divider>
+              <div
+                *ngIf="estimatedPayoutwithShipping"
+                class="info-row d-flex justify-content-between"
+              >
+                <span class="font-size-16 font-wight-400 color-909090">{{
+                  "create_product_listing.estimated_payout" | translate
+                }}</span>
+                <span class="font-size-16 font-wight-600 color-0F172A">
+                  <img
+                    src="../../../../assets/images/Saudi_Riyal_Symbol-2.svg"
+                    class="sar-icon-style"
+                    alt="SAR"
+                  />
+
+                  {{ estimatedPayoutwithShipping }}
+                </span>
+              </div>
+            </mat-card>
+          </div>
+        </div>
+
+        <div
+          class="card mt-4 p-3"
+          style="background: #f7f7f8; border-radius: 15px"
+          [ngClass]="{
+            'reverse-order-billing-info-for':
+              translateService.currentLang !== 'en'
+          }"
+        >
+          <h6
+            [ngClass]="{
+              'reverse-order-upload-images-labels':
+                translateService.currentLang !== 'en'
+            }"
+            class="font-weight-bold"
+          >
+            {{ "create_product_listing.billing_information" | translate }}
+          </h6>
+          <div class="row">
+            <div class="col-md-6 biilimg-card-data">
+              <div>
+                <p class="mb-1 font-size-16 font-weight-400 color-909090">
+                  Billing Address
+                </p>
+                <p class="font-size-16 font-wight-600 color-0F172A b-0">
+                  {{ billingForm.get("billing_address").value }}
+                </p>
+              </div>
+              <div>
+                <p class="mb-1 font-size-16 font-weight-400 color-909090">
+                  Street
+                </p>
+                <p class="font-size-16 font-wight-600 color-0F172A b-0">
+                  {{ billingForm.get("street").value }}
+                </p>
+              </div>
+              <div>
+                <p class="mb-1 font-size-16 font-weight-400 color-909090">City</p>
+                <p class="font-size-16 font-wight-600 color-0F172A mb-0">
+                  {{ billingForm.get("city").value }}
+                </p>
+              </div>
+            </div>
+            <div class="col-md-6 biilimg-card-data">
+              <div
+                *ngIf="billingForm.get('street_line_2').value"
+                class="text-lg-end"
+              >
+                <p class="mb-1 font-size-16 font-weight-400 color-909090">
+                  Street Line 2
+                </p>
+                <p class="font-size-16 font-wight-600 color-0F172A b-0">
+                  {{ billingForm.get("street_line_2").value }}
+                </p>
+              </div>
+              <div class="text-lg-end">
+                <p class="mb-1 font-size-16 font-weight-400 color-909090">
+                  Zip Code
+                </p>
+                <p class="font-size-16 font-wight-600 color-0F172A b-0">
+                  {{ billingForm.get("zip_code").value }}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div> -->
+
+      <div
+        [ngClass]="{
+          'reverse-order-listing-details-btn-div':
+            translateService.currentLang !== 'en'
+        }"
+        class="d-flex align-items-center justify-content-end gap-2 mb-3 small-screen-btn-wrap"
+        style="padding: 0 20px 0 20px"
+      >
+        <!-- <button
+        class="save-can-btn canc-bg-color"
+        style="width: 170px !important;"
+        (click)="routeToProductDetail()"
+      >
+        {{ "create_product_listing.Preview_your_Ad" | translate }}
+      </button>
+      <button
+        class="save-can-btn canc-bg-color"
+        (click)="backbtn('billinginformation')"
+      >
+        {{ "create_product_listing.back_btn" | translate }}
+      </button>
+      <button
+        *ngIf="!isPublishedProduct"
+        class="save-can-btn save-btn-bg"
+        (click)="onSubmit('summary')"
+      >
+        {{ "create_product_listing.publish_btn" | translate }}
+      </button> -->
+      </div>
+    </mat-expansion-panel>
+  </mat-accordion>
+</div>

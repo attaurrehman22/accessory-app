@@ -149,3 +149,43 @@ mat-expansion-panel {
     justify-content: end;
     flex-direction: row-reverse;
   }
+
+  .container {
+    max-width: 700px;
+  }
+  
+  .condition-card {
+    border: 1px solid #ddd;
+    cursor: pointer;
+    transition: border-color 0.2s ease-in-out;
+  }
+  
+  .condition-card:hover {
+    border-color: #000;
+  }
+  
+  .selected .condition-card {
+    border-color: #000;
+  }
+
+
+  .delivery-card {
+    border: 1px solid #ddd;
+    cursor: pointer;
+    transition: border-color 0.2s ease-in-out;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+  }
+  
+  .delivery-card:hover {
+    border-color: #000;
+  }
+  
+  .selected .delivery-card {
+    border-color: #000;
+  }
+  
+  .icon {
+    width: 140px;
+    height: auto;
+  }

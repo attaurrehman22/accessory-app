@@ -101,14 +101,16 @@ import { CreateAccessoriesProductComponent } from './views/adminpages/create-acc
 import { UsernameValidationDirective } from './views/directives/username-validation/username-validation.directive';
 import { AddEditPromotionComponent } from './views/adminpages/add-edit-promotion/add-edit-promotion.component';
 
-
-
-
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { TopBrandsLogosComponent } from './views/adminpages/top-brands-logos/top-brands-logos.component';
 
 
+// ✅ Firebase imports
+import { initializeApp } from 'firebase/app';
+import { getAuth } from 'firebase/auth';
+
+import { environment } from '../environments/environment';
 
 
 @NgModule({
@@ -215,14 +217,24 @@ import { TopBrandsLogosComponent } from './views/adminpages/top-brands-logos/top
             useFactory: (http: HttpClient) => { return new TranslateHttpLoader(http, './assets/i18n/', '.json'); },
             deps: [HttpClient]
         }
-    }),
+    })
 ],
 providers: [
   TranslateService,
   provideAnimationsAsync(),
-  provideHttpClient(withInterceptors([authInterceptorInterceptor]))
+  provideHttpClient(withInterceptors([authInterceptorInterceptor])),
+
+  // ✅ Move Firebase setup to `providers`
+  {
+    provide: 'FIREBASE_APP',
+    useFactory: () => initializeApp(environment.firebase)
+  },
+  {
+    provide: 'FIREBASE_AUTH',
+    useFactory: () => getAuth()
+  }
 ],
-  bootstrap: [AppComponent],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA]
+bootstrap: [AppComponent],
+schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
-export class AppModule { }
+export class AppModule {}

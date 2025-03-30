@@ -34,6 +34,90 @@ interface ImageFile {
 export class CreateAccessoriesProductComponent implements OnInit {
   supportLanguages = ["en", "ar", "fr", "ta", "hi"];
   currentLanguage: string;
+
+
+  dealerconditions = [
+    {
+      title: "New",
+      description:
+        "The item has no signs of wear such as scratches or dents and is unworn. The item has not been polished.",
+        arabictitle: "جديد",
+        arabicdescription: "العنصر ليس به أي علامات تآكل مثل الخدوش أو الانبعاجات ولم يُستخدم. لم يتم تلميع العنصر."
+    },
+    {
+      title: "Like new and unworn",
+      description:
+        "The item shows minor signs of wear, such as small but physically imperceptible scratches.",
+         arabictitle: "كالجديد وغير مُستخدم",
+         arabicdescription: "يظهر العنصر علامات تآكل طفيفة، مثل خدوش صغيرة لكنها غير محسوسة جسديًا."
+    },
+    {
+      title: "Used",
+      description:
+        "The item shows visible and physically perceptible signs of wear such as scratches, scuffs or small dents.",
+        arabictitle: "مُستخدم",
+        arabicdescription: "يظهر العنصر علامات تآكل مرئية ومحسوسة جسديًا مثل الخدوش أو الحكات أو الانبعاجات الصغيرة."
+    },
+    {
+      title: "Very good (minor signs of wear)",
+      description:
+        "The item shows major, visible signs of wear like scratches and dents.",
+         arabictitle: "جيد جدًا (علامات تآكل طفيفة)",
+         arabicdescription: "يظهر العنصر علامات تآكل كبيرة ومرئية مثل الخدوش والانبعاجات."
+    },
+    {
+      title: "Good (moderate signs of wear)",
+      description:
+        "The item shows major, visible signs of wear like scratches and dents.",
+        arabictitle: "جيد (علامات تآكل متوسطة)",
+        arabicdescription: "يظهر العنصر علامات تآكل كبيرة ومرئية مثل الخدوش والانبعاجات."
+    },
+    {
+      title: "Incomplete",
+      description: "The item is missing some parts and is not functional.",
+      arabictitle: "غير مكتمل",
+      arabicdescription: "العنصر يفتقد بعض الأجزاء وغير قابل للاستخدام."
+    },
+  ];
+
+
+  options = [
+    {
+      title: "Original Box & Original Papers",
+      icon: "../assets/images/original-box-papers.png",
+      arabictitle: "الصندوق الأصلي والأوراق الأصلية"
+    },
+    {
+      title: "Original Box",
+      icon: "../assets/images/original-box.png",
+      arabictitle: "الصندوق الأصلي"
+    },
+    {
+      title: "Original Papers",
+      icon: "/assets/images/original-papers.png",
+      arabictitle: "الأوراق الأصلية"
+    },
+    {
+      title: "Watch Only",
+      icon: "/assets/images/watch-only.png",
+      arabictitle: "الساعة فقط"
+    },
+  ];
+
+  selectedOptions: any;
+
+  toggleOption(option: any) {
+    this.selectedOptions = option;
+  }
+
+  isSelected(option: any): boolean {
+    if (this.selectedOptions === option) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   listingForm: FormGroup;
   // Listing Form Details
 
@@ -120,6 +204,27 @@ export class CreateAccessoriesProductComponent implements OnInit {
   panelStrapOpenState = false;
   panelOpenState = false;
   panelDialOpenState = false;
+
+   // Billing Information Form Details
+   billing_address = new FormControl("", [Validators.required]);
+   first_name = new FormControl("", [Validators.required]);
+   last_name = new FormControl("", [Validators.required]);
+   street = new FormControl("", [
+     Validators.required, // Ensures the field is not empty
+     Validators.pattern("^[a-zA-Z0-9 ]*$"), // Allows only alphanumeric characters and spaces (A-Z, a-z, 0-9, space)
+     Validators.maxLength(80), // Limits the input to 30 characters
+   ]);
+ 
+   street_line_2 = new FormControl("", [
+     Validators.pattern("^[a-zA-Z0-9 ]*$"), // Allows only alphanumeric characters and spaces (A-Z, a-z, 0-9, space)
+     Validators.maxLength(80), // Limits the input to 30 characters
+   ]);
+   zip_code = new FormControl("", [
+     Validators.required, // Ensures the field is not empty
+     Validators.pattern("^[0-9]*$"), // Ensures only numeric values (digits)
+     Validators.maxLength(10),
+   ]);
+   city = new FormControl("", [Validators.required]);
 
 
   constructor(
@@ -373,6 +478,42 @@ export class CreateAccessoriesProductComponent implements OnInit {
     this.coverImageInput.nativeElement.click();
   }
 
+  billingInformationDetails: any;
+
+  getBillingInformation() {
+    // let userID: any = localStorage.getItem("userID");
+    this.http.getBillingInformation().subscribe((res) => {
+      // billingForm
+      this.billingInformationDetails = res?.data;
+      this.billingForm
+        .get("billing_address")
+        .setValue(this.billingInformationDetails.billing_address || "");
+
+      this.billingForm
+        .get("first_name")
+        .setValue(this.billingInformationDetails.first_name || "");
+
+      this.billingForm
+        .get("last_name")
+        .setValue(this.billingInformationDetails.last_name || "");
+
+      this.billingForm
+        .get("street")
+        .setValue(this.billingInformationDetails.street || "");
+      this.billingForm
+        .get("street_line_2")
+        .setValue(this.billingInformationDetails.street_line_2 || "");
+
+      this.billingForm
+        .get("zip_code")
+        .setValue(this.billingInformationDetails.zip_code || "");
+
+      this.billingForm
+        .get("city")
+        .setValue(this.billingInformationDetails.city || "");
+    });
+  }
+
 
   ngOnInit(): void {
     // Listing Form
@@ -392,6 +533,7 @@ export class CreateAccessoriesProductComponent implements OnInit {
     this.getAllBrandsDropDown();
     this.getCategoriesDropDown();
     this.allDropDownData();
+    this.getBillingInformation()
 
     this.filteredOptions = this.myControl.valueChanges.pipe(
       startWith(""),
@@ -439,6 +581,16 @@ export class CreateAccessoriesProductComponent implements OnInit {
       type_of_clasp: this.type_of_clasp,
       clasp_material: this.clasp_material,
     });
+
+    this.billingForm = new FormGroup({
+      billing_address: this.billing_address,
+      first_name: this.first_name,
+      last_name: this.last_name,
+      street: this.street,
+      street_line_2: this.street_line_2,
+      zip_code: this.zip_code,
+      city: this.city,
+    });
   }
 
   private _filterCategories(name: string): Category[] {
@@ -478,8 +630,60 @@ export class CreateAccessoriesProductComponent implements OnInit {
     });
   }
 
+  selectedCondition = null;
+
+  selectCondition(condition: any) {
+    this.selectedCondition = condition;
+  }
+
+  watchPrice: number = 0;
+  shipping_type: any;
+  shipping_charges: number = 0;
+  estimate_delivery: any;
+  allow_to_make_offer: false;
+  watchPriceDisplay: number = 0;
+  platformFee: number = 0;
+  estimatedPayout: number = 0;
+  estimatedPayoutwithShipping: number = 0;
+
+  calculatePayout() {
+    this.watchPriceDisplay = this.watchPrice;
+    this.platformFee = this.watchPrice * 0.04;
+    this.estimatedPayout = this.watchPrice - this.platformFee;
+    if(this.shipping_charges){
+      this.estimatedPayoutwithShipping = this.estimatedPayout - this.shipping_charges
+    }
+  }
+
+  Payoutaftershippingcharges() {
+    this.estimatedPayoutwithShipping = this.estimatedPayout - this.shipping_charges;
+  }
+
+  countShipping(){
+    // console.log("Onshiping Charges Change is call")
+    // console.log("this.shipping_type",this.shipping_type)
+    // console.log("this.shipping_charges",this.shipping_charges)
+    if(this.shipping_type == 'inclusiveShipping'){
+      console.log("this.shipping_type is inclusiveShipping ")
+      if(this.shipping_charges){
+        console.log("this.shipping_charges",this.shipping_charges)
+        console.log("this.estimatedPayoutwithShipping bwfore",this.estimatedPayoutwithShipping)
+        this.estimatedPayoutwithShipping = Number(this.estimatedPayout) - Number(this.shipping_charges);
+        console.log("this.estimatedPayoutwithShipping after",this.estimatedPayoutwithShipping)
+      }
+    }else{
+      if(this.shipping_charges){
+        console.log("this.estimatedPayoutwithShipping bwfore",this.estimatedPayoutwithShipping)
+        this.estimatedPayoutwithShipping = Number(this.estimatedPayout);
+        console.log("this.estimatedPayoutwithShipping after",this.estimatedPayoutwithShipping)
+      }
+    }
+  }
+
+  billingForm: FormGroup;
+
   onSubmit(Param: string) {
-    if (Param === "listingDetails") {
+    if (Param == "listingDetails") {
       if (this.myControl.value) {
         this.listingForm
           .get("brand_id")
@@ -525,13 +729,13 @@ export class CreateAccessoriesProductComponent implements OnInit {
           this.alertService.showAlert("warning", "Enter Form Values");
         }
       }
-    }else if(Param === "watchDetails"){
+    }else if(Param == "watchDetails"){
       if(this.watchDetailsForm.valid){
         console.log("this.watchDetailsForm.value",this.watchDetailsForm.value)
       }else{
         this.alertService.showAlert('warning','Enter Form Values')
       }
-    }else if(Param === "uploadImages"){
+    }else if(Param == "uploadImages"){
       if (!this.coverImage) {
         alert("Please upload a cover image.");
         return;
@@ -564,6 +768,37 @@ export class CreateAccessoriesProductComponent implements OnInit {
       }
     });
     formData.forEach((value, key) => console.log(key, value));
+    }else if(Param == "conditionGrading"){
+      console.log("this.selectedCondition.title",this.selectedCondition.title)
+    }else if(Param == "scopeofdelivery"){
+      console.log("this.selectedOptions.title",this.selectedOptions.title)
+    }
+    else if(Param == "priceshipment"){
+      if (
+        this.shipping_type === "inclusiveShipping" &&
+        !this.shipping_charges
+      ) {
+        this.alertService.showAlert("info", "Enter Form Values");
+        return;
+      } else {
+        let isUpdate;
+        const formData = {
+          price: this.watchPrice,
+          shipping_type: this.shipping_type,
+          shipping_charges: this.shipping_charges,
+          estimate_delivery: this.estimate_delivery,
+          allow_to_make_offer: this.allow_to_make_offer,
+          estimate_payout: this.estimatedPayoutwithShipping,
+          isUpdate: isUpdate,
+        };
+
+        console.log("formData",formData)
+      }
+    }
+    else if(Param == "billinginformation"){
+
+      console.log("this.billing info",this.billingForm.value)
+
     }
   }
 }

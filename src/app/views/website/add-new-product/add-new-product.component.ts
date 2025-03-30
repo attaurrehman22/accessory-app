@@ -253,9 +253,9 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
   }
 
   countShipping(){
-    console.log("Onshiping Charges Change is call")
-    console.log("this.shipping_type",this.shipping_type)
-    console.log("this.shipping_charges",this.shipping_charges)
+    // console.log("Onshiping Charges Change is call")
+    // console.log("this.shipping_type",this.shipping_type)
+    // console.log("this.shipping_charges",this.shipping_charges)
     if(this.shipping_type == 'inclusiveShipping'){
       console.log("this.shipping_type is inclusiveShipping ")
       if(this.shipping_charges){

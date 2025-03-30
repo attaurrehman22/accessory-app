@@ -17,6 +17,7 @@ import { AlertsServicesService } from "src/services/alerts-service/alerts-servic
 import { HttpService } from "src/services/http/http.service";
 import { RegisterComponent } from "../register/register.component";
 import { LoginStateService } from "src/services/login-service/login-state.service";
+import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 
 @Component({
   selector: "app-login",
@@ -118,6 +119,47 @@ export class LoginComponent implements OnInit {
       this.alertService.showAlert("info", "Enter UserName/Email and Password");
     }
   }
+
+
+  async signInWithGoogle() {
+    const auth = getAuth();
+    const provider = new GoogleAuthProvider();
+    try {
+      const result = await signInWithPopup(auth, provider);
+      const credential = GoogleAuthProvider.credentialFromResult(result);
+      const token = credential?.accessToken;
+      const user = result.user;
+
+      console.log("token",token)
+      console.log("user",user)
+
+      // ✅ Send Google token to your backend for verification
+      // this.http.googleLogin({ token }).subscribe(
+      //   (response) => {
+      //     if (response.status === "success") {
+      //       localStorage.setItem("user_token", response.authorization.token);
+      //       localStorage.setItem("isLoggedIn", "true");
+      //       localStorage.setItem("userID", response.user.id);
+      //       localStorage.setItem("userType", response.user.type);
+
+      //       if (response.user.type === "admin") {
+      //         localStorage.setItem("isAdmin", "true");
+      //       }
+
+      //       this.router.navigateByUrl("").then(() => window.location.reload());
+      //     }
+      //   },
+      //   (error) => {
+      //     this.alertService.showAlert("danger", "Google sign-in failed");
+      //     console.error(error);
+      //   }
+      // );
+    } catch (error) {
+      this.alertService.showAlert("danger", "Google sign-in failed");
+      console.error(error);
+    }
+  }
+
 
   gotoRegister() {
     this.router.navigateByUrl("register");
