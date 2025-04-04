@@ -67,45 +67,25 @@
     </div>
     <div class="col-lg-6 col-md-12 col-sm-12">
       <div class="container mt-5">
-        <p-carousel
-          [autoplayInterval]="5000"
-          [value]="products"
-          [numVisible]="responsiveOptions[0].numVisible"
-          [numScroll]="responsiveOptions[0].numScroll"
-          [responsiveOptions]="responsiveOptions"
-          [circular]="true"
-          (onPage)="onCarouselMove($event)"
-        >
-          <ng-template let-product let-i="index" pTemplate="item">
-            <div class="surface-border border-round m-2" style="cursor: pointer;" 
-            (click)="logProductName(product?.product)">
-              <div class="mb-3">
-                <div class="relative mx-auto">
-                  <img
-                    [src]="
-                      'https://api.chronosouq.com/' + product.promotion_banner
-                    "
-                    [alt]="product?.name"
-                    class="w-full border-round card-img img-fluid"
-                  />
-                  <div class="img-details">
-                    <div class="d-flex">
-                      <p class="font-size-16 font-wight-400 color-484848">
-                        {{ product?.promotion_type }}
-                      </p>
-                    </div>
-                    <div class="d-flex">
-                      <!-- <p class="font-size-16 font-wight-400 color-484848">
-                        {{ product?.product?.name }}
-                      </p> -->
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </ng-template>
-        </p-carousel>
+        <ng-image-slider 
+          #imageSlider
+          [images]="sliderImages"
+          [infinite]="true"
+          [imageSize]="{width: 300, height: 270}"
+          [autoSlide]="false"
+          [showArrow]="true"
+          [showDots]="true"
+          [showPreview]="false"
+          [slideImageCount]="3"
+          (arrowClick)="onSlideChange($event)"
+          class="custom-slider">
+        </ng-image-slider>
       </div>
+      
+      
+      
     </div>
   </div>
 </div>
+
+<!-- [autoSlide]="{interval: 5, stopOnHover: true}" -->

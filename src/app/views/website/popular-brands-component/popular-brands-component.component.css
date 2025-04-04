@@ -274,3 +274,79 @@
     height: 45px;
   }
 }
+
+.image-container {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.image-item img {
+  width: 350px;  /* Set image width */
+  transition: height 0.5s ease-in-out;  /* Smooth transition for height change */
+}
+
+.custom-slider .ng-image-slider {
+  position: relative;
+}
+
+
+
+/* Ensure the slider is relatively positioned for absolute children */
+.custom-slider ::ng-deep .ng-image-slider {
+  position: relative;
+  padding-bottom: 50px; /* Space for arrows */
+}
+
+/* Style arrows and position them at the bottom */
+.custom-slider ::ng-deep .prev-icon,
+.custom-slider ::ng-deep .next-icon {
+  /* position: absolute;
+  bottom: 10px;
+  background-color: rgba(0, 0, 0, 0.5) !important; 
+  color: white;
+  font-size: 24px;
+  padding: 8px 12px;
+  cursor: pointer;
+  z-index: 2;
+  border-radius: 5px; */
+
+  width: 4.5% !important;
+  height: 10% !important;
+}
+
+/* Align left and right */
+.custom-slider ::ng-deep .prev-icon {
+  left: 65% !important;
+  background-color: black !important;
+    color: white;
+    top: 93% !important;
+}
+
+.custom-slider ::ng-deep .next-icon {
+  right: 25% !important;
+  background-color: black !important;
+    color: white;
+    top: 93% !important;
+}
+
+.custom-slider ::ng-deep .main {
+  height: 350px !important;
+}
+
+
+/* Default image height */
+.custom-slider ::ng-deep .img-div.image-popup {
+  height: 285px !important;
+  transition: all 0.3s ease;
+}
+
+.custom-slider ::ng-deep .image {
+  object-fit: scale-down !important;
+}
+
+/* First visible image - increased height */
+.custom-slider ::ng-deep .img-div.image-popup.highlight-first {
+  height: 330px !important;
+}
+

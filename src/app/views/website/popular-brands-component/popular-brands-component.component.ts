@@ -1,6 +1,7 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ViewChild } from "@angular/core";
 import { Router } from "@angular/router";
 import { TranslateService } from "@ngx-translate/core";
+import { NgImageSliderComponent } from "ng-image-slider";
 import { HttpService } from "src/services/http/http.service";
 
 @Component({
@@ -64,39 +65,77 @@ export class PopularBrandsComponentComponent implements OnInit {
     this.logFirstProduct();
   }
 
+
+  @ViewChild('imageSlider', { static: false }) imageSlider: NgImageSliderComponent;
+
+  currentIndex: number = 0;
+  sliderImages: any[] = [];
+  // responsiveOptions: any[] = [];
+
+  // onSlideChange(event: any) {
+  //   console.log("Arrow Click Event Data:", event);
+  //   this.updateFirstVisibleImage();
+  // }
+
+  onSlideChange(event: any): void {
+    // Using internal image index tracking
+    const allImgElements = document.querySelectorAll('.img-div');
+    allImgElements.forEach((el, index) => {
+      el.classList.remove('highlight-first'); // remove all
+    });
+
+    // Wait for DOM update
+    setTimeout(() => {
+      const selectedImages = document.querySelectorAll('.img-div.image-popup');
+      if (selectedImages.length > 0) {
+        selectedImages[0+1].classList.add('highlight-first');
+      }
+    }, 100);
+  }
+
+  updateFirstVisibleImage() {
+    if (this.imageSlider) {
+      // ✅ Get first visible image index (assuming the first one in list is visible)
+      this.currentIndex = (this.currentIndex + 1) % this.sliderImages.length;
+      console.log("First visible image:", this.sliderImages[this.currentIndex]);
+    }
+  }
+  
   getAllFeaturedProducts() {
     this.http.getFeaturedList().subscribe(
       (res) => {
-        this.products = res.data
-        .filter((product: any) => product?.promotion_banner) // promotion_banner check
-        .map((product: any) => {
-          product.promotion_banner = product.promotion_banner.replace(/\\/g, "");
-          return product;
-        });
-
-        console.log("Featured Products:", this.products);
-    
-        // Duplicate the first two items and append them to the end of the list
-        const firstTwoItems = this.products.slice(0, 2); // Get the first two items
-        this.products = [...this.products, ...firstTwoItems]; // Add them to the end of the array
-    
-        // Filter out active promotions
-        this.activePromotions = this.products.filter(
-          (product) => product.start_date && product.end_date && product.is_active
-        );
-    
-        // Start countdowns for active promotions
-        this.activePromotions.forEach((promotion, index) => {
-          this.updateRemainingTime(promotion.start_date, promotion.end_date, index);
-          this.startCountdown(promotion.start_date, promotion.end_date, index); // Start the countdown for each promotion
-        });
+        this.sliderImages = res.data
+          .filter((product: any) => product?.promotion_banner) // Filter products with promotion_banner
+          .map((product: any) => ({
+            image: 'https://api.chronosouq.com/' + product.promotion_banner.replace(/\\/g, ''),
+            thumbImage: 'https://api.chronosouq.com/' + product.promotion_banner.replace(/\\/g, ''),
+            title: product.promotion_type,
+            alt: product.name
+          }));
       },
       (err) => {
         console.error("Error fetching featured products:", err);
       }
     );
-    
   }
+
+  ngAfterViewInit(): void {
+    const allImgElements = document.querySelectorAll('.img-div');
+    allImgElements.forEach((el, index) => {
+      el.classList.remove('highlight-first'); // remove all
+    });
+
+    // Wait for DOM update
+    setTimeout(() => {
+      const selectedImages = document.querySelectorAll('.img-div.image-popup');
+      if (selectedImages.length > 0) {
+        selectedImages[0+1].classList.add('highlight-first');
+      }
+    }, 100); 
+  }
+  
+  
+
 
   onCarouselMove(event: any) {
     this.firstVisibleIndex = event.page;
@@ -194,4 +233,3 @@ export class PopularBrandsComponentComponent implements OnInit {
     });
   }
 }
-
