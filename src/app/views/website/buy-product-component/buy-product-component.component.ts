@@ -8,6 +8,7 @@ import { TranslateService } from "@ngx-translate/core";
 import { LanguageService } from "src/services/lang-service/language.service";
 import { CustomOfferComponent } from "../../modal/custom-offer/custom-offer.component";
 import { ConfirmationModelComponent } from "../../modal/confirmation-model/confirmation-model.component";
+import { OrderInitiatedModelComponent } from "../../modal/order-initiated-model/order-initiated-model.component";
 
 @Component({
   selector: "app-buy-product-component",
@@ -92,7 +93,8 @@ export class BuyProductComponentComponent implements OnInit {
 
   productsList: any;
   selectedImage: string;
-  thumbnails: string[] = [];
+  thumbnails: { url: string; type: string }[] = [];
+
 
   constructor(
     private http: HttpService,
@@ -118,9 +120,23 @@ export class BuyProductComponentComponent implements OnInit {
     }
   }
 
-  swapImages(clickedImage: string): void {
-    this.selectedImage = clickedImage;
+  selectedType: string = "image";
+
+  swapImages(clickedItem: { url: string; type: string }): void {
+    console.log("clickedItem",clickedItem)
+    if (clickedItem.type === 'image') {
+      this.selectedImage = clickedItem.url; // Extract only the URL
+      this.selectedType = 'image'; // Set the selected type to 'image'
+    }
+    if(clickedItem.type === 'video'){
+      console.log("clickedItem",clickedItem)
+      this.selectedImage = clickedItem.url; // Extract only the URL
+      this.selectedType = 'video'; // Set the selected type to 'video'
+    }
   }
+  
+  
+  
 
   productDetails: any;
   dealerDetails: any;
@@ -222,35 +238,30 @@ export class BuyProductComponentComponent implements OnInit {
         await this.getDetailsofUnVerfiedProduct()
       }
       this.productMainImage = this.productDetails.main_image;
-      this.thumbnails = this.productDetails.additional_images.map((image) =>
-        image.replace(/\\/g, "")
-      );
+      this.thumbnails = this.productDetails.additional_images.map((image) => ({
+        url: image.replace(/\\/g, ""),
+        type: "image"
+      }));
       
       if (this.productDetails?.proof_image_1) {
-        this.productDetails.proof_image_1 = this.productDetails.proof_image_1.replace(
-          /\\/g,
-          ""
-        );
+        this.productDetails.proof_image_1 = this.productDetails.proof_image_1.replace(/\\/g, "");
+        this.thumbnails.push({ url: this.productDetails.proof_image_1, type: "image" });
       }
-
+      
       if (this.productDetails?.proof_image_2) {
-        this.productDetails.proof_image_2 = this.productDetails.proof_image_2.replace(
-          /\\/g,
-          ""
-        );
+        this.productDetails.proof_image_2 = this.productDetails.proof_image_2.replace(/\\/g, "");
+        this.thumbnails.push({ url: this.productDetails.proof_image_2, type: "image" });
       }
-
-      if(this.productDetails?.proof_image_1){
-        this.thumbnails.push(this.productDetails?.proof_image_1);
+      
+      if (this.productDetails?.video) {
+        this.productDetails.video = this.productDetails.video.replace(/\\/g, "");
+        this.thumbnails.push({ url: this.productDetails.video, type: "video" });
       }
-      if(this.productDetails?.proof_image_2){
-        this.thumbnails.push(this.productDetails?.proof_image_2);
-      }
+      
 
       if (this.thumbnails.length > 0) {
-        this.selectedImage = this.thumbnails[0];
+        this.selectedImage = this.thumbnails[0].url; // Store only the URL
       }
-
       if (this.isDealer === "dealer" && this.routeFrom !== "listing-to-product") {
         if (this.productDetails.created_by.id && this.isReviewsCount) {
           await this.fetchDealerDetails(this.productDetails.created_by.id);
@@ -393,7 +404,6 @@ export class BuyProductComponentComponent implements OnInit {
       receiver_id:this.productDetails.created_by.id,
       message:'I want to buy this product.'
     }
-    // const isUserLogin = localStorage.getItem("isLoggedIn");
     if (userLogin) {
       const dialogRef = this.dialog.open(ConfirmationModelComponent, {
         width: "600px",
@@ -405,6 +415,28 @@ export class BuyProductComponentComponent implements OnInit {
           this.http.buyNowFromDetailsProduct(this.productDetails.id,bodyData).subscribe(
             (res)=>{
               this.alertService.showAlert('success','Message send to Seller.')
+
+              const dialogRef = this.dialog.open(OrderInitiatedModelComponent, {
+                width: "600px",
+                data: {
+                  label:'Order Initiated', 
+                  paragraph: "You’ve initiated an order, you can track it in your buy orders."
+           },
+              });
+        
+              dialogRef.afterClosed().subscribe((result) => {
+                if (result == 'openChat' || result == 'viewOrder') {
+                  if(result == 'openChat'){
+                    this.router.navigate(["/chat"], {
+                      state: { data: this.productDetails },
+                    });
+                  }else if(result == 'viewOrder'){
+                    this.router.navigate(["/my-orders"]);
+                  }
+                }
+              });
+
+
             },(err)=>{
       
               this.alertService.showAlert('warning',`${err.error.message}`)
@@ -413,7 +445,6 @@ export class BuyProductComponentComponent implements OnInit {
         }
       });
           
-      // this.router.navigate(["/buy-now"]);
     } else {
       this.loginFirst();
     }
@@ -456,7 +487,12 @@ export class BuyProductComponentComponent implements OnInit {
   openDialogForCustomOffer(){
     const dialogRef = this.dialog.open(CustomOfferComponent, {
       width: "600px",
-      data: { productDetail: this.productDetails,param:'buyComp' },
+      data: {
+         productDetail: this.productDetails,
+         param:'buyComp',buyLabel: 'Custom Offer',
+         header:'Make an Offer',
+         headerPara:'Send custom offer to seller.'
+        },
     });
 
     dialogRef.afterClosed().subscribe((result) => {

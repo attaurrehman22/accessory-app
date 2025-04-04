@@ -19,6 +19,11 @@ export class CustomOfferComponent {
   offerDetails:any;
   validDays: any;
   isUserBuyer:boolean=false;
+  getProductDetails: any;
+  fromProductDeatilsLabel:any;
+  headerLabel: string = "Custom Offer";
+  headerParagraph: string = "Create Custom Offer";
+  fromProductDeatilsLabelPlaceholder: string = "Price";
 
   constructor(
     private fb: FormBuilder,
@@ -40,6 +45,32 @@ export class CustomOfferComponent {
     }
     if(this.data?.productDetail?.price){
       this.productPrice=this.data?.productDetail?.price
+    }
+
+    if(data?.productDetailsfromChat){
+      console.log("data?.productDetailsfromChat",data?.productDetailsfromChat)
+      this.getProductDetails = data?.productDetailsfromChat;
+    }
+
+    if(this.compoName == "buyComp") {
+      console.log("this.data?.productDetail?",this.data?.productDetail)
+      this.getProductDetails = this.data?.productDetail;
+    }
+
+    if(this.data?.buyLabel){
+      this.fromProductDeatilsLabel = this.data?.buyLabel;
+      this.fromProductDeatilsLabelPlaceholder= 'Enter Custom Offer'
+    }else{
+      this.fromProductDeatilsLabel='Price'
+       this.fromProductDeatilsLabelPlaceholder= 'Enter Price'
+    }
+
+    if(this.data?.header){
+      this.headerLabel = this.data?.header;
+    }
+
+    if(this.data?.headerPara){
+      this.headerParagraph = this.data?.headerPara;
     }
 
 

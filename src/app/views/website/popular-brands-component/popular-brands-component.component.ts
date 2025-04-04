@@ -68,9 +68,13 @@ export class PopularBrandsComponentComponent implements OnInit {
     this.http.getFeaturedList().subscribe(
       (res) => {
         this.products = res.data.map((product: any) => {
+          if(product?.promotion_banner) {
           product.promotion_banner = product.promotion_banner.replace(/\\/g, "");
           return product;
+          }
         });
+
+        console.log("Featured Products:", this.products);
     
         // Duplicate the first two items and append them to the end of the list
         const firstTwoItems = this.products.slice(0, 2); // Get the first two items

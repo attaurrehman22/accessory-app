@@ -10,7 +10,7 @@
     [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }"
   >
     <div class="col-md-6">
-      <img
+      <img *ngIf="selectedType === 'image'"
         [src]="'https://api.chronosouq.com/' + selectedImage"
         style="
           object-fit: scale-down;
@@ -23,6 +23,21 @@
         class="img-fluid"
         alt="Selected Watch"
       />
+
+      <video *ngIf="selectedType === 'video'"
+      [src]="'https://api.chronosouq.com/' + selectedImage"
+      style="
+        object-fit: scale-down;
+        height: 485px;
+        width: 100%;
+        border: none !important;
+        border-radius: 16px;
+        background: #f8f8f8;
+      "
+      class="img-fluid"
+      alt="Selected Watch"
+      controls
+    ></video>
       <div
         [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }"
         class="featured-card"
@@ -67,24 +82,31 @@
       </div>
 
       <div class="mt-3" style="display: flex; overflow-x: auto">
-        <div
-          class="col-3"
-          style="height: 110px"
-          *ngFor="let image of thumbnails"
-        >
+        <div class="col-3" style="height: 110px" *ngFor="let item of thumbnails">
+          <!-- Display Image -->
           <img
-            [src]="'https://api.chronosouq.com/' + image"
-            style="background: #f8f8f8; object-fit: scale-down"
+          *ngIf="item.type === 'image'"
+          [src]="'https://api.chronosouq.com/' + item.url"
+          style="background: #f8f8f8; object-fit: scale-down"
+          class="img-fluid"
+          alt="thumbnail"
+          [ngClass]="{ 'blur-image': item.url !== selectedImage, 'hover-remove-blur': true }"
+          (click)="swapImages(item)"
+        />
+        
+        
+      
+          <!-- Display Video -->
+          <video
+            *ngIf="item.type === 'video'"
+            (click)="swapImages(item)"
+            [src]="'https://api.chronosouq.com/' + item.url"
+            style="background: #f8f8f8; object-fit: scale-down;height: 100%;"
             class="img-fluid"
-            alt="thumbnail"
-            [ngClass]="{
-              'blur-image': image !== selectedImage,
-              'hover-remove-blur': true
-            }"
-            (click)="swapImages(image)"
-          />
+          ></video>
         </div>
       </div>
+      
     </div>
     <div
       *ngIf="productDetails"

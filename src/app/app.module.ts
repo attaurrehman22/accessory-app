@@ -111,6 +111,7 @@ import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
 
 import { environment } from '../environments/environment';
+import { OrderInitiatedModelComponent } from './views/modal/order-initiated-model/order-initiated-model.component';
 
 
 @NgModule({
@@ -168,7 +169,8 @@ import { environment } from '../environments/environment';
     CreateAccessoriesProductComponent,
     UsernameValidationDirective,
     AddEditPromotionComponent,
-    TopBrandsLogosComponent
+    TopBrandsLogosComponent,
+    OrderInitiatedModelComponent
   ],
   imports: [
     MatSortModule,

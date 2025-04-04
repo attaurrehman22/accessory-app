@@ -1,0 +1,12 @@
+<div class="edit-offer-container mat-elevation-z3">
+    <div class="col-md-12 d-flex flex-column">
+        <h2 class="text-center">{{label}}</h2>
+        <p class="text-center">{{paragraph}}</p>
+    </div>
+    <div class="d-flex align-items-center justify-content-center gap-2">
+        <button (click)="onOpenChat()" type="button" class="cancel-btn">
+            Open Chat
+          </button>
+          <button class="send-btn" (click)="viewOrder()">View Order</button>
+    </div>
+</div>

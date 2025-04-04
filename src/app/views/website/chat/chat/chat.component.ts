@@ -128,6 +128,8 @@ if (filteredChats.length > 0) {
 }
   }
 
+  filteredChats: any[] = [];
+
   getLatestMessage() {
     this.http.getChatsWithLatestMessage().subscribe((res) => {
       this.chats = res.chats.map(
@@ -146,6 +148,7 @@ if (filteredChats.length > 0) {
           }
         }
       );
+      this.filteredChats=this.chats;
     });
   }
 
@@ -294,7 +297,11 @@ if (filteredChats.length > 0) {
     console.log("Offer Details", customOfferDetails);
     const dialogRef = this.dialog.open(CustomOfferComponent, {
       width: "600px",
-      data: { customOfferDetails: customOfferDetails, param: "editComp" ,userCategory: this.isBuyerUser },
+      data: { customOfferDetails: customOfferDetails,
+         param: "editComp" ,userCategory: this.isBuyerUser,
+           header:'Edit Offer',
+         headerPara:'Edit custom offer.',
+         },
       
     });
 
@@ -384,8 +391,32 @@ if (filteredChats.length > 0) {
 
   activeOption(option: any) {
     this.isActive = option;
+    console.log("this.isActive", this.isActive);
+    console.log("this.chats", this.chats);
+    console.log("option", option);
     if (option === "All") {
-      this.getLatestMessage();
+      this.filteredChats=this.chats;
+    }else if(option == "Buy") {
+      this.filteredChats = this.chats.filter((item: any) => {
+        console.log("item.product.created_by.id", item.product.created_by.id);
+        console.log("localStorage.getItem('userID')", localStorage.getItem("userID"));
+        return item.product.created_by.id != localStorage.getItem("userID");
+      });
+    }else if(option == "Sell") {
+      this.filteredChats = this.chats.filter((item: any) => {
+        console.log("item.product.created_by.id", item.product.created_by.id);
+        console.log("localStorage.getItem('userID')", localStorage.getItem("userID"));
+       return  item.product.created_by.id == localStorage.getItem("userID");
+      }
+      ); 
+    }
+
+    console.log("this.chats", this.chats);
+    if (this.chats.length === 0) {
+      this.alertService.showAlert(
+        "warning",
+        "No Chats Available for this filter"
+      );
     }
   }
 
@@ -500,12 +531,13 @@ if (filteredChats.length > 0) {
       reciever_ID: this.reciever_ID,
       chat_ID: this.chat_id,
       product_ID: this.messages[0].product_id,
+      
     };
 
     const dialogRef = this.dialog.open(CustomOfferComponent, {
       width: "600px",
-      data: { datawithChat_ID: datawithChat_ID, param: "chatComp" },
-      
+      data: { datawithChat_ID: datawithChat_ID, param: "chatComp" ,
+        productDetailsfromChat: this.getProductDetails,},
     });
 
     dialogRef.afterClosed().subscribe((result) => {
@@ -624,8 +656,7 @@ if (filteredChats.length > 0) {
 
   addShippingFromChat() {
     const dialogRef = this.dialog.open(AddShippingComponent, {
-      width: "700px",
-      
+      width: "900px",
       data: { isShowMarkAsSold: this.isShowMarkAsSold },
     });
 
