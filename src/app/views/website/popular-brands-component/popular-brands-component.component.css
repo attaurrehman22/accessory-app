@@ -313,20 +313,24 @@
 
   width: 4.5% !important;
   height: 10% !important;
+  box-shadow: 0px 4px 14px 1px #00000029 !important;
+  background-color: #fff !important;
+  color: #242424;
 }
+
 
 /* Align left and right */
 .custom-slider ::ng-deep .prev-icon {
   left: 65% !important;
-  background-color: black !important;
-    color: white;
+  /* background-color: black !important; */
+    /* color: white; */
     top: 93% !important;
 }
 
 .custom-slider ::ng-deep .next-icon {
   right: 25% !important;
-  background-color: black !important;
-    color: white;
+  /* background-color: black !important; */
+    /* color: white; */
     top: 93% !important;
 }
 
@@ -341,8 +345,12 @@
   transition: all 0.3s ease;
 }
 
+.custom-slider ::ng-deep .img-div.image-popup  > .caption{
+  display: none !important;
+}
+
 .custom-slider ::ng-deep .image {
-  object-fit: scale-down !important;
+  object-fit: fill !important;
 }
 
 /* First visible image - increased height */
@@ -350,3 +358,100 @@
   height: 330px !important;
 }
 
+.custom-slider ::ng-deep .img-div.image-popup.highlight-first > .caption {
+  display: block !important;
+  width: 90% !important;
+  margin: 0 0 5% 5% !important;
+height: 15% !important;
+border-radius: 10px !important;
+background-color: #FFF !important;
+color: #242424 !important;
+background-image: none !important;
+padding: 2% 0 10% 0 !important;
+font-size: 20px !important;
+font-weight: 400;
+}
+
+
+
+@media (max-width: 1160px) {
+ /* Align left and right */
+.custom-slider ::ng-deep .prev-icon {
+  left: 85% !important;
+  background-color: black !important;
+    color: white;
+    top: 93% !important;
+}
+
+.custom-slider ::ng-deep .next-icon {
+  right: 4% !important;
+  background-color: black !important;
+    color: white;
+    top: 93% !important;
+}
+
+
+}
+
+@media (max-width: 990px) {
+  /* Align left and right */
+ .custom-slider ::ng-deep .prev-icon {
+  left: 45% !important;
+   background-color: black !important;
+     color: white;
+     top: 93% !important;
+ }
+ 
+ .custom-slider ::ng-deep .next-icon {
+   right: 40% !important;
+   background-color: black !important;
+     color: white;
+     top: 93% !important;
+ }
+
+ .custom-slider ::ng-deep .img-div.image-popup.highlight-first {
+  height: 285px !important;
+}
+
+.custom-slider ::ng-deep .prev-icon,
+.custom-slider ::ng-deep .next-icon {
+
+  width: 6% !important;
+  height: 10% !important;
+  box-shadow: 0px 4px 14px 1px #00000029 !important;
+  background-color: #fff !important;
+  color: #242424;
+}
+ }
+
+
+ @media (max-width: 768px) {
+  /* Align left and right */
+ .custom-slider ::ng-deep .prev-icon {
+  left: 40% !important;
+   background-color: black !important;
+     color: white;
+     top: 93% !important;
+ }
+ 
+ .custom-slider ::ng-deep .next-icon {
+   right: 35% !important;
+   background-color: black !important;
+     color: white;
+     top: 93% !important;
+ }
+
+ .custom-slider ::ng-deep .img-div.image-popup.highlight-first {
+  height: 285px !important;
+}
+
+.custom-slider ::ng-deep .prev-icon,
+.custom-slider ::ng-deep .next-icon {
+
+  width: 10% !important;
+  height: 10% !important;
+  box-shadow: 0px 4px 14px 1px #00000029 !important;
+  background-color: #fff !important;
+  color: #242424;
+}
+ }

@@ -65,30 +65,49 @@ export class PopularBrandsComponentComponent implements OnInit {
     this.logFirstProduct();
   }
 
-
-  @ViewChild('imageSlider', { static: false }) imageSlider: NgImageSliderComponent;
+  @ViewChild("imageSlider", { static: false })
+  imageSlider: NgImageSliderComponent;
 
   currentIndex: number = 0;
   sliderImages: any[] = [];
-  // responsiveOptions: any[] = [];
-
-  // onSlideChange(event: any) {
-  //   console.log("Arrow Click Event Data:", event);
-  //   this.updateFirstVisibleImage();
-  // }
 
   onSlideChange(event: any): void {
-    // Using internal image index tracking
-    const allImgElements = document.querySelectorAll('.img-div');
-    allImgElements.forEach((el, index) => {
-      el.classList.remove('highlight-first'); // remove all
+    // Remove previously highlighted class
+    const allImgElements = document.querySelectorAll(".img-div");
+    allImgElements.forEach((el) => {
+      el.classList.remove("highlight-first");
     });
 
-    // Wait for DOM update
+    // Wait for DOM to update before selecting again
     setTimeout(() => {
-      const selectedImages = document.querySelectorAll('.img-div.image-popup');
-      if (selectedImages.length > 0) {
-        selectedImages[0+1].classList.add('highlight-first');
+      const selectedImages = document.querySelectorAll(".img-div.image-popup");
+      if (selectedImages.length > 1) {
+        const highlightIndex = 1; // because you're using selectedImages[0+1]
+        const elementToHighlight = selectedImages[highlightIndex];
+        elementToHighlight.classList.add("highlight-first");
+
+        // ✅ Now log the related product
+        const product = this.sliderImages[highlightIndex];
+        console.log("Highlighted product:", product);
+        // Clear any existing countdown before starting a new one
+      this.clearCountdown(this.currentIndex);
+
+      // Start the countdown for the new product
+      this.updateRemainingTime(
+        product.start_date,
+        product.end_date,
+        highlightIndex
+      );
+
+      // Start the countdown timer for the product
+      this.startCountdown(
+        product.start_date,
+        product.end_date,
+        highlightIndex
+      );
+
+      // Update current index to the active product
+      this.currentIndex = highlightIndex;
       }
     }, 100);
   }
@@ -100,18 +119,26 @@ export class PopularBrandsComponentComponent implements OnInit {
       console.log("First visible image:", this.sliderImages[this.currentIndex]);
     }
   }
-  
+
   getAllFeaturedProducts() {
     this.http.getFeaturedList().subscribe(
       (res) => {
         this.sliderImages = res.data
           .filter((product: any) => product?.promotion_banner) // Filter products with promotion_banner
           .map((product: any) => ({
-            image: 'https://api.chronosouq.com/' + product.promotion_banner.replace(/\\/g, ''),
-            thumbImage: 'https://api.chronosouq.com/' + product.promotion_banner.replace(/\\/g, ''),
+            image:
+              "https://api.chronosouq.com/" +
+              product.promotion_banner.replace(/\\/g, ""),
+            thumbImage:
+              "https://api.chronosouq.com/" +
+              product.promotion_banner.replace(/\\/g, ""),
             title: product.promotion_type,
-            alt: product.name
+            alt: product.name,
+            start_date: product.start_date,
+            end_date: product.end_date,
           }));
+
+          setTimeout(() => this.highlightFirstImage(), 300);
       },
       (err) => {
         console.error("Error fetching featured products:", err);
@@ -119,43 +146,50 @@ export class PopularBrandsComponentComponent implements OnInit {
     );
   }
 
-  ngAfterViewInit(): void {
-    const allImgElements = document.querySelectorAll('.img-div');
-    allImgElements.forEach((el, index) => {
-      el.classList.remove('highlight-first'); // remove all
-    });
-
-    // Wait for DOM update
-    setTimeout(() => {
-      const selectedImages = document.querySelectorAll('.img-div.image-popup');
-      if (selectedImages.length > 0) {
-        selectedImages[0+1].classList.add('highlight-first');
-      }
-    }, 100); 
+  highlightFirstImage() {
+    const selectedImages = document.querySelectorAll(".img-div.image-popup");
+    selectedImages.forEach((el) => el.classList.remove("highlight-first"));
+  
+    if (selectedImages.length > 1) {
+      const highlightIndex = 1;
+      selectedImages[highlightIndex].classList.add("highlight-first");
+    }
   }
   
-  
 
+  // ngAfterViewInit(): void {
+  //   setTimeout(() => {
+  //     const selectedImages = document.querySelectorAll(".img-div.image-popup");
+  
+  //     if (selectedImages.length > 0) {
+  //       const firstVisibleElement = selectedImages[0]; // First visible image
+  //       firstVisibleElement.classList.add("highlight-first");
+  //     }
+  //   }, 500); // Increased delay to ensure DOM is fully updated
+  // }
+  
 
   onCarouselMove(event: any) {
     this.firstVisibleIndex = event.page;
-  
+
     // Ensure first item is visible when looping back
-    if (this.firstVisibleIndex >= this.products.length - this.responsiveOptions[0].numVisible) {
+    if (
+      this.firstVisibleIndex >=
+      this.products.length - this.responsiveOptions[0].numVisible
+    ) {
       setTimeout(() => {
         this.firstVisibleIndex = 0;
       }, 500); // Delay for a smooth transition
     }
   }
 
-  
   updateRemainingTime(startDate: string, endDate: string, index: number) {
     // Ensure the start and end dates are in ISO 8601 format (properly replace the space with 'T')
+
     const formattedStartDate = startDate.replace(" ", "T");
     const formattedEndDate = endDate.replace(" ", "T");
 
     // Log the formatted dates to verify they are correct
-
 
     // Parsing the dates to ensure they're valid
     const end = new Date(formattedEndDate).getTime();
@@ -177,20 +211,23 @@ export class PopularBrandsComponentComponent implements OnInit {
     // If time remaining is greater than 0, calculate the countdown
     if (timeRemaining > 0) {
       days = this.pad(Math.floor(timeRemaining / (1000 * 60 * 60 * 24)));
-      hours = this.pad(Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)));
-      minutes = this.pad(Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60)));
+      hours = this.pad(
+        Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
+      );
+      minutes = this.pad(
+        Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60))
+      );
       seconds = this.pad(Math.floor((timeRemaining % (1000 * 60)) / 1000));
     }
 
-    this.days=days;
-    this.hours=hours;
-    this.minutes=minutes;
-    this.seconds=seconds;
+    this.days = days;
+    this.hours = hours;
+    this.minutes = minutes;
+    this.seconds = seconds;
 
     // Update countdownTimers array with remaining time for the promotion
     this.countdownTimers[index] = { days, hours, minutes, seconds };
   }
-
 
   startCountdown(startDate: string, endDate: string, index: number) {
     const interval = setInterval(() => {
@@ -220,9 +257,7 @@ export class PopularBrandsComponentComponent implements OnInit {
     if (this.products.length > 0) {
       const productName = this.products[this.firstVisibleIndex]?.name;
       if (productName) {
-
       } else {
-
       }
     }
   }

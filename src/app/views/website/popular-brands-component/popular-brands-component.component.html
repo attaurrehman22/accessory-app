@@ -1,4 +1,4 @@
-<div class="container-div">
+<div class="container-div mb-3">
   <div
     class="col-lg-12 col-md-12 col-sm-12 d-flex flex-wrap"
     [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }"
@@ -72,7 +72,7 @@
           [images]="sliderImages"
           [infinite]="true"
           [imageSize]="{width: 300, height: 270}"
-          [autoSlide]="false"
+          [autoSlide]="{interval: 5, stopOnHover: true}"
           [showArrow]="true"
           [showDots]="true"
           [showPreview]="false"
