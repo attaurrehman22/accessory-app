@@ -78,14 +78,23 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     if(!this.user_id){
       this.loginFirst()
     }
+
+    console.log("history?.state?.data open" ,history?.state)
+
+
     if(history?.state?.chatID){
       this.getLatestMessage();
 
-      this.getDetailsofProduct(history?.state?.productID);
+      if(history?.state?.fromRoute == 'gotToChat'){
+        this.getDetailsofProduct(history?.state?.data.id);
+      }else{
+        this.getDetailsofProduct(history?.state?.productID);
+      }
+
       this.chat_id = history?.state?.chatID;
       this.getChatDetails();
     }
-    if (history?.state?.data) {
+    if (history?.state?.data && history?.state?.fromRoute != 'gotToChat') {
       this.productDeatils = history.state.data;
       this.noMessageDetails = this.productDeatils.created_by;
     }
@@ -95,8 +104,9 @@ export class ChatComponent implements OnInit, AfterViewChecked {
       this.getDetailsofProduct(history?.state?.chat.product_id);
       this.chat_id = history?.state?.chat.chat_id;
       this.getChatDetails();
-      // this. getMesageDetails(history?.state?.chat)
     }
+
+   
     if (this.productDeatils) {
       this.getLatestMessage();
       this.getDetailsofProduct(this.productDeatils.id);

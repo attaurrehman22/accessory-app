@@ -67,11 +67,11 @@ export class PopularBrandsComponentComponent implements OnInit {
   getAllFeaturedProducts() {
     this.http.getFeaturedList().subscribe(
       (res) => {
-        this.products = res.data.map((product: any) => {
-          if(product?.promotion_banner) {
+        this.products = res.data
+        .filter((product: any) => product?.promotion_banner) // promotion_banner check
+        .map((product: any) => {
           product.promotion_banner = product.promotion_banner.replace(/\\/g, "");
           return product;
-          }
         });
 
         console.log("Featured Products:", this.products);

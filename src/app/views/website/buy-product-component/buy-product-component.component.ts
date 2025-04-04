@@ -47,17 +47,16 @@ export class BuyProductComponentComponent implements OnInit {
   }
 
   getDealerSince(createdAt: string): string {
-    if (!createdAt) return '';
+    if (!createdAt) return "";
     const year = new Date(createdAt).getFullYear();
     // const browserLang = this.translateService.getBrowserLang();
     // console.log("Current lang",browserLang)
-    if(this.translateService.currentLang == 'en'){
+    if (this.translateService.currentLang == "en") {
       return `Since ${year}`;
-    }else{
+    } else {
       return `${year} منذ`;
     }
   }
-  
 
   displayedWatches: number = 6;
   currentPage: number = 1;
@@ -95,7 +94,6 @@ export class BuyProductComponentComponent implements OnInit {
   selectedImage: string;
   thumbnails: { url: string; type: string }[] = [];
 
-
   constructor(
     private http: HttpService,
     private alertService: AlertsServicesService,
@@ -103,7 +101,7 @@ export class BuyProductComponentComponent implements OnInit {
     private dialog: MatDialog,
     public translateService: TranslateService,
     private languageService: LanguageService,
-    private route: ActivatedRoute,
+    private route: ActivatedRoute
   ) {
     this.translateService.addLangs(this.supportLanguages);
     const savedLang = this.languageService.getCurrentLanguage();
@@ -123,20 +121,17 @@ export class BuyProductComponentComponent implements OnInit {
   selectedType: string = "image";
 
   swapImages(clickedItem: { url: string; type: string }): void {
-    console.log("clickedItem",clickedItem)
-    if (clickedItem.type === 'image') {
+    console.log("clickedItem", clickedItem);
+    if (clickedItem.type === "image") {
       this.selectedImage = clickedItem.url; // Extract only the URL
-      this.selectedType = 'image'; // Set the selected type to 'image'
+      this.selectedType = "image"; // Set the selected type to 'image'
     }
-    if(clickedItem.type === 'video'){
-      console.log("clickedItem",clickedItem)
+    if (clickedItem.type === "video") {
+      console.log("clickedItem", clickedItem);
       this.selectedImage = clickedItem.url; // Extract only the URL
-      this.selectedType = 'video'; // Set the selected type to 'video'
+      this.selectedType = "video"; // Set the selected type to 'video'
     }
   }
-  
-  
-  
 
   productDetails: any;
   dealerDetails: any;
@@ -148,9 +143,9 @@ export class BuyProductComponentComponent implements OnInit {
   loginFirst() {
     const dialogRef = this.dialog.open(ModelLoginComponent, {
       backdropClass: "hello",
- 
+
       width: "600px",
-      
+
       data: { message: "header" },
     });
 
@@ -172,41 +167,40 @@ export class BuyProductComponentComponent implements OnInit {
       this.getWishList();
     }
     this.routeFrom = history.state.param;
-   
 
     if (this.routeFrom === "listing-to-product") {
       this.ProductID = history.state.ID;
-   
-      this.productDetails=history.state.data;
-      this.getDetailsofUnVerfiedProduct()
-   
+
+      this.productDetails = history.state.data;
+      this.getDetailsofUnVerfiedProduct();
     } else {
-      const watchId = this.route.snapshot.queryParamMap.get('id');
-      if(watchId){
+      const watchId = this.route.snapshot.queryParamMap.get("id");
+      if (watchId) {
         this.ProductID = watchId;
-      }else{
+      } else {
         this.ProductID = history.state.data.id;
       }
 
-      const fromChat = this.route.snapshot.queryParamMap.get('fromChat');
-      if (fromChat === 'true') {
-         this.fromChat = true;
+      const fromChat = this.route.snapshot.queryParamMap.get("fromChat");
+      if (fromChat === "true") {
+        this.fromChat = true;
         //  this.openDialog();
       }
-      
     }
     // if(this.routeFrom !== "listing-to-product"){
     // if(this.fromChat == true ){
     //   this.initializeStatusReservedComponent();
     // }else{
-      this.initializeComponent();
+    this.initializeComponent();
     // }
     // }
   }
 
   async getDetailsofUnVerfiedProduct() {
     try {
-      const res = await this.http.getProductsofUnverifiedByID(this.ProductID).toPromise();
+      const res = await this.http
+        .getProductsofUnverifiedByID(this.ProductID)
+        .toPromise();
       this.isDealer = res.typeOfProduct;
       this.productDetails = res.data;
       this.isReviewsCount = res.reviewsCount;
@@ -226,57 +220,68 @@ export class BuyProductComponentComponent implements OnInit {
       console.error("Error fetching product details:", err);
     }
   }
-  
 
   isReviewsCount: any;
 
   async initializeComponent() {
     try {
-      if(this.routeFrom != "listing-to-product" && this.fromChat != true){
+      if (this.routeFrom != "listing-to-product" && this.fromChat != true) {
         await this.fetchProductDetails();
-      }else{
-        await this.getDetailsofUnVerfiedProduct()
+      } else {
+        await this.getDetailsofUnVerfiedProduct();
       }
       this.productMainImage = this.productDetails.main_image;
       this.thumbnails = this.productDetails.additional_images.map((image) => ({
         url: image.replace(/\\/g, ""),
-        type: "image"
+        type: "image",
       }));
-      
+
       if (this.productDetails?.proof_image_1) {
-        this.productDetails.proof_image_1 = this.productDetails.proof_image_1.replace(/\\/g, "");
-        this.thumbnails.push({ url: this.productDetails.proof_image_1, type: "image" });
+        this.productDetails.proof_image_1 =
+          this.productDetails.proof_image_1.replace(/\\/g, "");
+        this.thumbnails.push({
+          url: this.productDetails.proof_image_1,
+          type: "image",
+        });
       }
-      
+
       if (this.productDetails?.proof_image_2) {
-        this.productDetails.proof_image_2 = this.productDetails.proof_image_2.replace(/\\/g, "");
-        this.thumbnails.push({ url: this.productDetails.proof_image_2, type: "image" });
+        this.productDetails.proof_image_2 =
+          this.productDetails.proof_image_2.replace(/\\/g, "");
+        this.thumbnails.push({
+          url: this.productDetails.proof_image_2,
+          type: "image",
+        });
       }
-      
+
       if (this.productDetails?.video) {
-        this.productDetails.video = this.productDetails.video.replace(/\\/g, "");
+        this.productDetails.video = this.productDetails.video.replace(
+          /\\/g,
+          ""
+        );
         this.thumbnails.push({ url: this.productDetails.video, type: "video" });
       }
-      
 
       if (this.thumbnails.length > 0) {
         this.selectedImage = this.thumbnails[0].url; // Store only the URL
       }
-      if (this.isDealer === "dealer" && this.routeFrom !== "listing-to-product") {
+      if (
+        this.isDealer === "dealer" &&
+        this.routeFrom !== "listing-to-product"
+      ) {
         if (this.productDetails.created_by.id && this.isReviewsCount) {
           await this.fetchDealerDetails(this.productDetails.created_by.id);
           await this.fetchDealerUserDetails(this.productDetails.created_by.id);
         }
       }
- 
-        await this.getAllSimilarProducts();
-      
+
+      await this.getAllSimilarProducts();
     } catch (err) {
       console.error("Error initializing component:", err);
     }
   }
 
-  viewProduct(watchID){
+  viewProduct(watchID) {
     this.ProductID = watchID;
     window.scrollTo(0, 0);
     this.initializeComponent();
@@ -355,7 +360,7 @@ export class BuyProductComponentComponent implements OnInit {
             : null,
         };
       });
- 
+
       this.totalPages = res.data.last_page;
     } catch (err) {
       console.error("Error fetching similar products:", err);
@@ -399,11 +404,11 @@ export class BuyProductComponentComponent implements OnInit {
 
   buyNow() {
     const userLogin = localStorage.getItem("user_token");
-    const bodyData={
-      product_id:this.productDetails.id,
-      receiver_id:this.productDetails.created_by.id,
-      message:'I want to buy this product.'
-    }
+    const bodyData = {
+      product_id: this.productDetails.id,
+      receiver_id: this.productDetails.created_by.id,
+      message: "I want to buy this product.",
+    };
     if (userLogin) {
       const dialogRef = this.dialog.open(ConfirmationModelComponent, {
         width: "600px",
@@ -412,39 +417,73 @@ export class BuyProductComponentComponent implements OnInit {
 
       dialogRef.afterClosed().subscribe((result) => {
         if (result == true) {
-          this.http.buyNowFromDetailsProduct(this.productDetails.id,bodyData).subscribe(
-            (res)=>{
-              this.alertService.showAlert('success','Message send to Seller.')
+          this.http
+            .buyNowFromDetailsProduct(this.productDetails.id, bodyData)
+            .subscribe(
+              (res) => {
+                this.alertService.showAlert(
+                  "success",
+                  "Message send to Seller."
+                );
 
-              const dialogRef = this.dialog.open(OrderInitiatedModelComponent, {
-                width: "600px",
-                data: {
-                  label:'Order Initiated', 
-                  paragraph: "You’ve initiated an order, you can track it in your buy orders."
-           },
-              });
-        
-              dialogRef.afterClosed().subscribe((result) => {
-                if (result == 'openChat' || result == 'viewOrder') {
-                  if(result == 'openChat'){
-                    this.router.navigate(["/chat"], {
-                      state: { data: this.productDetails },
-                    });
-                  }else if(result == 'viewOrder'){
-                    this.router.navigate(["/my-orders"]);
-                  }
+                let OrderTypeval;
+                if (
+                  this.productDetails.created_by.id ==
+                  localStorage.getItem("userID")
+                ) {
+                  OrderTypeval = "sell";
+                } else {
+                  OrderTypeval = "buy";
                 }
-              });
 
+                const dialogRef = this.dialog.open(
+                  OrderInitiatedModelComponent,
+                  {
+                    width: "600px",
+                    data: {
+                      label: "Order Initiated",
+                      paragraph:
+                        "You’ve initiated an order, you can track it in your buy orders.",
+                    },
+                  }
+                );
 
-            },(err)=>{
-      
-              this.alertService.showAlert('warning',`${err.error.message}`)
-            }
-          )
+                dialogRef.afterClosed().subscribe((result) => {
+                  if (result == "openChat" || result == "viewOrder") {
+                    if (result == "openChat") {
+                      this.router.navigate(["/chat"], {
+                        // state: { data: this.productDetails },
+                        state: {
+                          data: this.productDetails,
+                          chatID: "chat_id",
+                          fromRoute: "gotToChat",
+                        },
+                      });
+                    } else if (result == "viewOrder") {
+                      this.router.navigate(["/myListing"], {
+                        state: {
+                          data: {
+                            id: "order_id",
+                            product_id: this.productDetails.id,
+                            product: this.productDetails,
+                            chat_id: "chat_id",
+                          },
+
+                          orderID: "order_id",
+                          Ordertype: OrderTypeval,
+                          fromRoute: "gotToOrderDetails",
+                        },
+                      });
+                    }
+                  }
+                });
+              },
+              (err) => {
+                this.alertService.showAlert("warning", `${err.error.message}`);
+              }
+            );
         }
       });
-          
     } else {
       this.loginFirst();
     }
@@ -461,38 +500,36 @@ export class BuyProductComponentComponent implements OnInit {
     const userID = localStorage.getItem("userID");
     if (userLogin && userID) {
       if (userID != this.productDetails.created_by.id) {
-          this.router.navigate(["/chat"], {
-            state: { data: this.productDetails },
-          });
-        } else {
-          this.alertService.showAlert("warning", "You can't chat with yourself");
-        }
+        this.router.navigate(["/chat"], {
+          state: { data: this.productDetails },
+        });
+      } else {
+        this.alertService.showAlert("warning", "You can't chat with yourself");
+      }
     } else {
       this.loginFirst();
     }
   }
 
-
-
-  makeanOffer(){
+  makeanOffer() {
     const userLogin = localStorage.getItem("user_token");
-    if(!userLogin) {
+    if (!userLogin) {
       this.loginFirst();
-    }else{
-      this.openDialogForCustomOffer()
+    } else {
+      this.openDialogForCustomOffer();
     }
   }
 
-
-  openDialogForCustomOffer(){
+  openDialogForCustomOffer() {
     const dialogRef = this.dialog.open(CustomOfferComponent, {
       width: "600px",
       data: {
-         productDetail: this.productDetails,
-         param:'buyComp',buyLabel: 'Custom Offer',
-         header:'Make an Offer',
-         headerPara:'Send custom offer to seller.'
-        },
+        productDetail: this.productDetails,
+        param: "buyComp",
+        buyLabel: "Custom Offer",
+        header: "Make an Offer",
+        headerPara: "Send custom offer to seller.",
+      },
     });
 
     dialogRef.afterClosed().subscribe((result) => {

@@ -1,71 +1,98 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
-import { HttpService } from 'src/services/http/http.service';
-import { ModelLoginComponent } from '../../auth/model-login/model-login.component';
-import { MatDialog } from '@angular/material/dialog';
-import { AlertsServicesService } from 'src/services/alerts-service/alerts-services.service';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit } from "@angular/core";
+import { Router } from "@angular/router";
+import { Observable } from "rxjs";
+import { HttpService } from "src/services/http/http.service";
+import { ModelLoginComponent } from "../../auth/model-login/model-login.component";
+import { MatDialog } from "@angular/material/dialog";
+import { AlertsServicesService } from "src/services/alerts-service/alerts-services.service";
+import { FormControl, FormGroup, Validators } from "@angular/forms";
 
 @Component({
-  selector: 'app-my-listing-details',
-  templateUrl: './my-listing-details.component.html',
-  styleUrls: ['./my-listing-details.component.css']
+  selector: "app-my-listing-details",
+  templateUrl: "./my-listing-details.component.html",
+  styleUrls: ["./my-listing-details.component.css"],
 })
-export class MyListingDetailsComponent implements OnInit{
-
-  billing_address = new FormControl(null, [Validators.required,Validators.maxLength(120)]);
-  first_name = new FormControl([], [Validators.required,Validators.maxLength(50)]);
-  last_name = new FormControl("", [Validators.required,Validators.maxLength(50)]);
-  street = new FormControl("", [Validators.required,Validators.maxLength(80)]);
+export class MyListingDetailsComponent implements OnInit {
+  billing_address = new FormControl(null, [
+    Validators.required,
+    Validators.maxLength(120),
+  ]);
+  first_name = new FormControl(
+    [],
+    [Validators.required, Validators.maxLength(50)]
+  );
+  last_name = new FormControl("", [
+    Validators.required,
+    Validators.maxLength(50),
+  ]);
+  street = new FormControl("", [Validators.required, Validators.maxLength(80)]);
   street_line_2 = new FormControl("", [Validators.maxLength(80)]);
-  zip_code = new FormControl("", [Validators.required,Validators.pattern("^[0-9]*$"),Validators.maxLength(9)]);
-  city = new FormControl("", [Validators.required,Validators.maxLength(50)]);
-  country = new FormControl("", [Validators.required,Validators.maxLength(50)]);
-  state = new FormControl("", [Validators.required,Validators.maxLength(50)]);
+  zip_code = new FormControl("", [
+    Validators.required,
+    Validators.pattern("^[0-9]*$"),
+    Validators.maxLength(9),
+  ]);
+  city = new FormControl("", [Validators.required, Validators.maxLength(50)]);
+  country = new FormControl("", [
+    Validators.required,
+    Validators.maxLength(50),
+  ]);
+  state = new FormControl("", [Validators.required, Validators.maxLength(50)]);
 
-
-    billingForm: FormGroup;
+  billingForm: FormGroup;
 
   menuItems = [
-    { label: 'Personal Info', icon: 'bi bi-person' },
-    { label: 'Shipping Address', icon: 'bi bi-credit-card' },
-    { label: 'Messages', icon: 'bi bi-chat' },
-    { label: 'My Listings', icon: 'bi bi-card-list' },
-    { label: 'Buy Orders', icon: 'bi bi-cart' },
-    { label: 'Sell Orders', icon: 'bi bi-basket' },
-    { label: 'Security', icon: 'bi bi-shield-lock' },
-    { label: 'Privacy', icon: 'bi bi-globe' },
-    { label: 'My Subscriptions', icon: 'bi bi-box-arrow-in-right' },
-    { label: 'Favorites', icon: 'bi bi-heart' },
-    { label: 'Feedback', icon: 'bi bi-star' },
-    { label: 'Help Center', icon: 'bi bi-question-circle' },
+    { label: "Personal Info", icon: "bi bi-person" },
+    { label: "Shipping Address", icon: "bi bi-credit-card" },
+    { label: "Messages", icon: "bi bi-chat" },
+    { label: "My Listings", icon: "bi bi-card-list" },
+    { label: "Buy Orders", icon: "bi bi-cart" },
+    { label: "Sell Orders", icon: "bi bi-basket" },
+    { label: "Security", icon: "bi bi-shield-lock" },
+    { label: "Privacy", icon: "bi bi-globe" },
+    { label: "My Subscriptions", icon: "bi bi-box-arrow-in-right" },
+    { label: "Favorites", icon: "bi bi-heart" },
+    { label: "Feedback", icon: "bi bi-star" },
+    { label: "Help Center", icon: "bi bi-question-circle" },
   ];
   listings: any[] = [];
-  userID:any;
+  userID: any;
   ngOnInit(): void {
-  this.userID=localStorage.getItem('userID')
-  if(!this.userID){
-    this.loginFirst()
+    this.userID = localStorage.getItem("userID");
+    if (!this.userID) {
+      this.loginFirst();
+    }
+    if(history?.state?.Ordertype == 'buy'){
+      this.activeIndex = 4;
+      this.isShowSellOrdersListngDetails = false;
+      this.isShowBuyOrdersListngDetails = false;
+      this.detailsBuyListing(history?.state?.data);
+      this.getOrderDetails();
+    }
+    if(history?.state?.Ordertype == 'sell'){
+      this.activeIndex = 5;
+      this.isShowSellOrdersListngDetails = false;
+      this.isShowBuyOrdersListngDetails = false;
+      this.detailListing(history?.state?.data);
+      this.getOrderDetails();
+    }
+    this.fetchListings();
+    this.billingForm = new FormGroup({
+      billing_address: this.billing_address,
+      first_name: this.first_name,
+      last_name: this.last_name,
+      street: this.street,
+      street_line_2: this.street_line_2,
+      zip_code: this.zip_code,
+      city: this.city,
+      country: this.country,
+      state: this.state,
+    });
   }
-    this.fetchListings(); 
-     this.billingForm = new FormGroup({
-          billing_address: this.billing_address,
-          first_name: this.first_name,
-          last_name: this.last_name,
-          street: this.street,
-          street_line_2: this.street_line_2,
-          zip_code: this.zip_code,
-          city: this.city,
-          country: this.country,
-          state:this.state
-        }); 
 
-  }
-
-  getBillingInformation(){
+  getBillingInformation() {
     this.http.getBillingInformation().subscribe(
-      (res)=>{  
+      (res) => {
         this.billingForm.patchValue({
           first_name: res.data.first_name,
           last_name: res.data.last_name,
@@ -76,28 +103,36 @@ export class MyListingDetailsComponent implements OnInit{
           billing_address: res.data.billing_address,
           country: res?.data?.country,
           state: res?.data?.state,
-        })
+        });
       },
-      (err)=>{              
-        this.alertService.showAlert("warning","Error in Fetching Billing Information")
-      } 
-    )
+      (err) => {
+        this.alertService.showAlert(
+          "warning",
+          "Error in Fetching Billing Information"
+        );
+      }
+    );
   }
 
-
-  submitBillingForm(){
-    console.log("this.billingForm",this.billingForm.value)
-    if(this.billingForm.invalid){
-      this.alertService.showAlert("warning","Please fill all the fields")
-    }else{
+  submitBillingForm() {
+    console.log("this.billingForm", this.billingForm.value);
+    if (this.billingForm.invalid) {
+      this.alertService.showAlert("warning", "Please fill all the fields");
+    } else {
       this.http.saveBillingInformation(this.billingForm.value).subscribe(
-        (res)=>{  
-          this.alertService.showAlert("success","Billing Information Saved Successfully")
+        (res) => {
+          this.alertService.showAlert(
+            "success",
+            "Billing Information Saved Successfully"
+          );
         },
-        (err)=>{              
-          this.alertService.showAlert("warning","Error in Saving Billing Information")
-        } 
-      )
+        (err) => {
+          this.alertService.showAlert(
+            "warning",
+            "Error in Saving Billing Information"
+          );
+        }
+      );
     }
   }
 
@@ -105,7 +140,7 @@ export class MyListingDetailsComponent implements OnInit{
   getWishList() {
     this.http.getWishList().subscribe((res) => {
       this.wishList = res?.data;
-      this.fetchProductDetails()
+      this.fetchProductDetails();
     });
   }
 
@@ -115,79 +150,85 @@ export class MyListingDetailsComponent implements OnInit{
     for (const productId of this.wishList) {
       try {
         const res = await this.http.getProductsByID(productId).toPromise(); // Call the API with each product ID
-  
+
         const productDetail = res.data; // Store the fetched details for this product
-  
+
         if (productDetail.additional_images) {
-          productDetail.additional_images = JSON.parse(productDetail.additional_images);
+          productDetail.additional_images = JSON.parse(
+            productDetail.additional_images
+          );
         }
-  
+
         if (productDetail.main_image) {
-          productDetail.main_image = productDetail.main_image.replace(/\\/g, "");
+          productDetail.main_image = productDetail.main_image.replace(
+            /\\/g,
+            ""
+          );
         }
-  
-        this.favoritesProductDetails.push(productDetail); // Add the product details to the array  
+
+        this.favoritesProductDetails.push(productDetail); // Add the product details to the array
       } catch (err) {
-        console.error("Error fetching product details for ID " + productId, err);
+        console.error(
+          "Error fetching product details for ID " + productId,
+          err
+        );
       }
     }
   }
 
-  startChat(product){
-    console.log("product",product)
+  startChat(product) {
+    console.log("product", product);
     this.router.navigate(["/chat"], {
-      state: { data:product },
+      state: { data: product },
     });
   }
-  
 
-  orderDetails:any
+  orderDetails: any;
 
-  getOrderDetails(){
-    this.http.getOrderDetails(this.orderID).subscribe(
-      (res)=>{
-           this.orderDetails=res.order;
-           this.orderDetails.product.main_image = this.orderDetails.product.main_image.replace(/\\/g, "");
-      }
-     )
+  getOrderDetails() {
+    this.http.getOrderDetails(this.orderID).subscribe((res) => {
+      this.orderDetails = res.order;
+      this.orderDetails.product.main_image =
+        this.orderDetails.product.main_image.replace(/\\/g, "");
+    });
   }
 
-   loginFirst() {
-      const dialogRef = this.dialog.open(ModelLoginComponent, {
-        width: "600px",
-        data: { message: "dialog-box" },
-   
-      });
-  
-      dialogRef.afterClosed().subscribe((result) => {
-        if (result) {
-        }
-      });
-    }
+  loginFirst() {
+    const dialogRef = this.dialog.open(ModelLoginComponent, {
+      width: "600px",
+      data: { message: "dialog-box" },
+    });
 
-  constructor(private http:HttpService,private router:Router,private dialog: MatDialog,private alertService:AlertsServicesService){}
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+      }
+    });
+  }
+
+  constructor(
+    private http: HttpService,
+    private router: Router,
+    private dialog: MatDialog,
+    private alertService: AlertsServicesService
+  ) {}
 
   fetchListings(): void {
-     this.http.getMyProductsListing().subscribe(
-      (res)=>{
-        this.listings=res.data.map((detail: any) => {
-          if (detail.main_image) {
-            detail.main_image = detail.main_image.replace(/\\/g, "");
-          }
-          return detail;
-        });
-
-  
-      }
-     )
+    this.http.getMyProductsListing().subscribe((res) => {
+      this.listings = res.data.map((detail: any) => {
+        if (detail.main_image) {
+          detail.main_image = detail.main_image.replace(/\\/g, "");
+        }
+        return detail;
+      });
+    });
   }
 
   activeIndex: number = 0; // Default: First item is active
   setActive(index: number): void {
     this.activeIndex = index;
-    this.isShowSellOrdersListngDetails=false
-    this.isShowBuyOrdersListngDetails=false
-    this.showSellerConfirmOrderAvailability=false;
+    this.isShowSellOrdersListngDetails = false;
+    this.isShowBuyOrdersListngDetails = false;
+    this.showSellerConfirmOrderAvailability = false;
 
     this.sellerStatuses[0].active = false;
     this.sellerStatuses[1].active = false;
@@ -197,7 +238,6 @@ export class MyListingDetailsComponent implements OnInit{
     this.sellerStatuses[5].active = false;
     this.sellerStatuses[6].active = false;
 
-
     this.statuses[0].active = false;
     this.statuses[1].active = false;
     this.statuses[2].active = false;
@@ -206,202 +246,212 @@ export class MyListingDetailsComponent implements OnInit{
     this.statuses[5].active = false;
     this.statuses[6].active = false;
 
-
-    if(this.activeIndex == 4){
-      this.getBuyOrders()
-    } else if(this.activeIndex == 5){
-      this.getSellOrders()
-    }else if(this.activeIndex == 9){
+    if (this.activeIndex == 4) {
+      this.getBuyOrders();
+    } else if (this.activeIndex == 5) {
+      this.getSellOrders();
+    } else if (this.activeIndex == 9) {
       this.getWishList();
-    }else if(this.activeIndex == 1){
+    } else if (this.activeIndex == 1) {
       this.getBillingInformation();
     }
   }
 
   buyOrdersListings: any[] = [];
 
-  getBuyOrders(){
-    this.http.getBuyOrders().subscribe(
-      (res)=>{
-        this.buyOrdersListings = res.orders.map((detail: any) => {
-          if (detail.product.main_image) {
-            detail.product.main_image = detail.product.main_image.replace(/\\/g, "");
-          }
-          return detail;
-        });
-      }
-    )
+  getBuyOrders() {
+    this.http.getBuyOrders().subscribe((res) => {
+      this.buyOrdersListings = res.orders.map((detail: any) => {
+        if (detail.product.main_image) {
+          detail.product.main_image = detail.product.main_image.replace(
+            /\\/g,
+            ""
+          );
+        }
+        return detail;
+      });
+    });
   }
 
   sellOrders: any[] = [];
 
-  getSellOrders(){
-    this.http.getSellOrders().subscribe(
-      (res)=>{
-        this.sellOrders = res.orders.map((detail: any) => {
-          if (detail.product.main_image) {
-            detail.product.main_image = detail.product.main_image.replace(/\\/g, "");
-          }
-          return detail;
-        });
-      }
-    )
+  getSellOrders() {
+    this.http.getSellOrders().subscribe((res) => {
+      this.sellOrders = res.orders.map((detail: any) => {
+        if (detail.product.main_image) {
+          detail.product.main_image = detail.product.main_image.replace(
+            /\\/g,
+            ""
+          );
+        }
+        return detail;
+      });
+    });
   }
 
-  editListing(listing){
-   this.router.navigate(['/new-product'],{
-    state:{productID:listing.id}
-   })
+  editListing(listing) {
+    this.router.navigate(["/new-product"], {
+      state: { productID: listing.id },
+    });
   }
 
   isShowSellOrdersListngDetails: boolean = false;
   isShowBuyOrdersListngDetails: boolean = false;
   sellerDetails: any = null;
   buyerDetails: any = null;
-  productDetails:any;
-  orderID:any;
-  orderDate:any;
-  estimateDelivery:any;
-  chat_ID:any;
-  forSendingProductID:any;
+  productDetails: any;
+  orderID: any;
+  orderDate: any;
+  estimateDelivery: any;
+  chat_ID: any;
+  forSendingProductID: any;
 
   detailListing(listing: any): void {
     this.isShowSellOrdersListngDetails = true;
-    this.orderID=listing?.id;
-    this.forSendingProductID=listing?.product_id
-    this.chat_ID=listing?.chat_id;
-    this.orderDate=listing?.status_updated_at;
-    this.estimateDelivery=listing?.status_updated_at;
-    this.productDetails=listing.product;
-    if(this.productDetails?.main_image){
-      this.productDetails.main_image=  this.productDetails.main_image.replace(/\\/g, "");
+    this.orderID = listing?.id;
+    this.forSendingProductID = listing?.product_id;
+    this.chat_ID = listing?.chat_id;
+    this.orderDate = listing?.status_updated_at;
+    this.estimateDelivery = listing?.status_updated_at;
+    this.productDetails = listing.product;
+    if (this.productDetails?.main_image) {
+      this.productDetails.main_image = this.productDetails.main_image.replace(
+        /\\/g,
+        ""
+      );
     }
- 
-      
-    this.fetchOrderStatus(listing.id, 'seller');
+
+    this.fetchOrderStatus(listing.id, "seller");
   }
 
   // existingProductUserID:any;
   detailsBuyListing(listing: any): void {
     this.isShowBuyOrdersListngDetails = true;
-    this.orderID=listing?.id
-    this.forSendingProductID=listing?.product_id
-    this.productDetails=listing.product;
-    this.orderDate=listing?.status_updated_at;
-    this.chat_ID=listing?.chat_id;
-    this.estimateDelivery=listing?.status_updated_at;
+    this.orderID = listing?.id;
+    this.forSendingProductID = listing?.product_id;
+    this.productDetails = listing.product;
+    this.orderDate = listing?.status_updated_at || null;
+    this.chat_ID = listing?.chat_id;
+    this.estimateDelivery = listing?.status_updated_at || null;
     // this.existingProductUserID=this.productDetails.created_by.id
-    if(this.productDetails?.main_image){
-      this.productDetails.main_image=  this.productDetails.main_image.replace(/\\/g, "");
+    if (this.productDetails?.main_image) {
+      this.productDetails.main_image = this.productDetails.main_image.replace(
+        /\\/g,
+        ""
+      );
     }
-    this.fetchOrderStatus(listing.id, 'buyer');
+    this.fetchOrderStatus(listing.id, "buyer");
   }
 
-  lengthTwoofSeller:boolean=false;
-  isSellerDeliveryInprogress:boolean=false;
+  lengthTwoofSeller: boolean = false;
+  isSellerDeliveryInprogress: boolean = false;
 
-  fetchOrderStatus(orderID: number, type: 'seller' | 'buyer'): void {
+  fetchOrderStatus(orderID: number, type: "seller" | "buyer"): void {
     this.getOrderStatus(orderID).subscribe(
       (res) => {
-        
-        if (type === 'seller') {
-           if(res?.status_flow?.initiated && res?.status_flow?.awaiting_confirmation && !res?.status_flow?.make_payment){
-             this.lengthTwoofSeller=true
-           }
+        if (type === "seller") {
+          if (
+            res?.status_flow?.initiated &&
+            res?.status_flow?.awaiting_confirmation &&
+            !res?.status_flow?.make_payment
+          ) {
+            this.lengthTwoofSeller = true;
+          }
 
-           if(res?.status_flow?.delivery_in_progress && !res?.status_flow?.order_delivered){
-            this.isSellerDeliveryInprogress=true
+          if (
+            res?.status_flow?.delivery_in_progress &&
+            !res?.status_flow?.order_delivered
+          ) {
+            this.isSellerDeliveryInprogress = true;
           }
 
           this.sellerDetails = res;
-          this.orderID=res.order_id;
-          if(res?.status_flow){
-            if(res?.status_flow?.initiated){
+          this.orderID = res.order_id;
+          if (res?.status_flow) {
+            if (res?.status_flow?.initiated) {
               this.sellerStatuses[0].active = true;
             }
-            if(res?.status_flow?.awaiting_confirmation){
+            if (res?.status_flow?.awaiting_confirmation) {
               this.sellerStatuses[1].active = true;
             }
-            if(res?.status_flow?.make_payment){
+            if (res?.status_flow?.make_payment) {
               this.sellerStatuses[2].active = true;
             }
-            if(res?.status_flow?.preparing_shipment){
+            if (res?.status_flow?.preparing_shipment) {
               this.sellerStatuses[3].active = true;
             }
-            if(res?.status_flow?.delivery_in_progress){
+            if (res?.status_flow?.delivery_in_progress) {
               this.sellerStatuses[4].active = true;
             }
-            if(res?.status_flow?.order_delivered){
+            if (res?.status_flow?.order_delivered) {
               this.sellerStatuses[5].active = true;
             }
-            if(res?.status_flow?.order_completed){
+            if (res?.status_flow?.order_completed) {
               this.sellerStatuses[6].active = true;
             }
           }
-        } else if (type === 'buyer') {
+        } else if (type === "buyer") {
           this.buyerDetails = res;
-          if(res?.status_flow){
-            if(res?.status_flow?.initiated){
+          if (res?.status_flow) {
+            if (res?.status_flow?.initiated) {
               this.statuses[0].active = true;
             }
-            if(res?.status_flow?.awaiting_confirmation){
+            if (res?.status_flow?.awaiting_confirmation) {
               this.statuses[1].active = true;
             }
-            if(res?.status_flow?.make_payment){
+            if (res?.status_flow?.make_payment) {
               this.statuses[2].active = true;
             }
-            if(res?.status_flow?.preparing_shipment){
+            if (res?.status_flow?.preparing_shipment) {
               this.statuses[3].active = true;
             }
-            if(res?.status_flow?.delivery_in_progress){
+            if (res?.status_flow?.delivery_in_progress) {
               this.statuses[4].active = true;
             }
-            if(res?.status_flow?.order_delivered){
+            if (res?.status_flow?.order_delivered) {
               this.statuses[5].active = true;
             }
-            if(res?.status_flow?.order_completed){
+            if (res?.status_flow?.order_completed) {
               this.statuses[6].active = true;
             }
           }
         }
-        this.getOrderDetails()
+        this.getOrderDetails();
       },
       (error) => {
-        console.error('Error fetching order status:', error);
+        console.error("Error fetching order status:", error);
       }
     );
   }
-  
+
   getOrderStatus(orderID: number): Observable<any> {
     return this.http.getOrderStatus(orderID);
   }
 
-  deleteListing(listing){
+  deleteListing(listing) {}
 
-  }
+  showSellerConfirmOrderAvailability: boolean = false;
+  showSellerProofofShipping: boolean = false;
 
-  showSellerConfirmOrderAvailability:boolean=false;
-  showSellerProofofShipping:boolean=false;
-
-  callSellerOption(){
-    if(this.lengthTwoofSeller){
-      this.showSellerConfirmOrderAvailability=true;
+  callSellerOption() {
+    if (this.lengthTwoofSeller) {
+      this.showSellerConfirmOrderAvailability = true;
     }
-    if(this.isSellerDeliveryInprogress){
-       this.showSellerProofofShipping=true
+    if (this.isSellerDeliveryInprogress) {
+      this.showSellerProofofShipping = true;
     }
   }
 
-  shippingCharges:any;
-  offerValidity:any;
+  shippingCharges: any;
+  offerValidity: any;
 
-  sendSellerOffer(){
-    console.log("Function calling")
+  sendSellerOffer() {
+    console.log("Function calling");
     let userIDD;
-    if(localStorage.getItem("userID")){
+    if (localStorage.getItem("userID")) {
       userIDD = localStorage.getItem("userID").toString();
     }
-    
+
     const formData = {
       product_id: this.orderDetails.product_id || 0,
       sender_id: userIDD || 0,
@@ -409,29 +459,26 @@ export class MyListingDetailsComponent implements OnInit{
       // offer_price: Number(this.orderDetails.final_price) || 0,
       ship_price: this.shippingCharges || 0,
       // Safely handle null or undefined chat_id
-      chat_id: this.orderDetails.chat_id ? this.orderDetails.chat_id.toString() : '0', // Fallback to '0' if null/undefined
+      chat_id: this.orderDetails.chat_id
+        ? this.orderDetails.chat_id.toString()
+        : "0", // Fallback to '0' if null/undefined
       validity_days: this.offerValidity || 0,
     };
-    
 
-  console.log("formData",formData)
- 
+    console.log("formData", formData);
+
     this.http.sendOffer(formData).subscribe(
       (res) => {
-        this.alertService.showAlert(
-          "success",
-          "offer Send Succesfully"
-        );
-
+        this.alertService.showAlert("success", "offer Send Succesfully");
       },
       (err) => {
         const errorMessage = err.error?.message || "Something went wrong!";
-        this.alertService.showAlert("warning",errorMessage);
+        this.alertService.showAlert("warning", errorMessage);
       }
     );
   }
 
-  markAsSold(){
+  markAsSold() {
     // const formData = {
     //   offer_id: this.offerID,
     //   product_id:this.offerDetails.product.id,
@@ -454,21 +501,21 @@ export class MyListingDetailsComponent implements OnInit{
     // );
   }
 
-  cancelSellerOffer(){
-    this.showSellerConfirmOrderAvailability=false
+  cancelSellerOffer() {
+    this.showSellerConfirmOrderAvailability = false;
   }
 
-  trackingID:any;
-  logisticsPartner:any;
+  trackingID: any;
+  logisticsPartner: any;
   uploadedFiles: File[] = [];
   imagePreviews: string[] = [];
-  allowedExtensions = ['jpeg', 'jpg', 'png'];
+  allowedExtensions = ["jpeg", "jpg", "png"];
 
   onFileSelected(event: any) {
     const files = event.target.files;
     if (files) {
       for (let file of files) {
-        const fileExt = file.name.split('.').pop().toLowerCase();
+        const fileExt = file.name.split(".").pop().toLowerCase();
         if (this.allowedExtensions.includes(fileExt)) {
           this.uploadedFiles.push(file);
           const reader = new FileReader();
@@ -477,7 +524,7 @@ export class MyListingDetailsComponent implements OnInit{
           };
           reader.readAsDataURL(file);
         } else {
-          alert('Only JPEG, JPG, and PNG files are allowed.');
+          alert("Only JPEG, JPG, and PNG files are allowed.");
         }
       }
     }
@@ -491,65 +538,124 @@ export class MyListingDetailsComponent implements OnInit{
 
   sendProofofShipMent() {
     if (this.uploadedFiles.length === 0) {
-      console.log('No files selected.');
+      console.log("No files selected.");
       return;
     }
 
     const formData = new FormData();
-    formData.append('order_id', this.orderDetails.id);
-    formData.append('shipping_tracking_id', this.trackingID);
-    formData.append('shipping_partner', this.logisticsPartner);
-    formData.append('shipping_address', this.orderDetails.shipping_address || 'ship xyz 123');
+    formData.append("order_id", this.orderDetails.id);
+    formData.append("shipping_tracking_id", this.trackingID);
+    formData.append("shipping_partner", this.logisticsPartner);
+    formData.append(
+      "shipping_address",
+      this.orderDetails.shipping_address || "ship xyz 123"
+    );
 
     // Append multiple images as shipping_proof[]
     this.uploadedFiles.forEach((file) => {
-      formData.append('shipping_proof[]', file); 
+      formData.append("shipping_proof[]", file);
     });
 
     this.http.createShipment(formData).subscribe(
-      (res)=>{
-        this.showSellerProofofShipping=false;
-
-      },(err)=>{
-        this.alertService.showAlert('warning','Error in sending Proof of owner ship')
+      (res) => {
+        this.showSellerProofofShipping = false;
+      },
+      (err) => {
+        this.alertService.showAlert(
+          "warning",
+          "Error in sending Proof of owner ship"
+        );
       }
-    )
+    );
 
-    console.log("formData",formData)
-  } 
+    console.log("formData", formData);
+  }
 
-
-  cancelProofofShipMent(){
-    this.showSellerProofofShipping=false
+  cancelProofofShipMent() {
+    this.showSellerProofofShipping = false;
   }
 
   // for buyer
   statuses = [
-    { label: 'Order Initiated', description: 'Order has been initiated.', active: false },
-    { label: 'Awaiting For Confirmation', description: 'Waiting for seller to confirm the order.', active: false },
-    { label: 'Make Payment', description: 'Make a payment for your order.', active: false },
-    { label: 'Preparing Shipment', description: 'Seller is preparing your order.', active: false },
-    { label: 'Delivery in Progress', description: 'Click to track your order.', active: false },
-    { label: 'Order Delivered', description: 'Authorize payout for your order.', active: false },
-    { label: 'Order Completed', description: 'Your order has been completed successfully.', active: false }
+    {
+      label: "Order Initiated",
+      description: "Order has been initiated.",
+      active: false,
+    },
+    {
+      label: "Awaiting For Confirmation",
+      description: "Waiting for seller to confirm the order.",
+      active: false,
+    },
+    {
+      label: "Make Payment",
+      description: "Make a payment for your order.",
+      active: false,
+    },
+    {
+      label: "Preparing Shipment",
+      description: "Seller is preparing your order.",
+      active: false,
+    },
+    {
+      label: "Delivery in Progress",
+      description: "Click to track your order.",
+      active: false,
+    },
+    {
+      label: "Order Delivered",
+      description: "Authorize payout for your order.",
+      active: false,
+    },
+    {
+      label: "Order Completed",
+      description: "Your order has been completed successfully.",
+      active: false,
+    },
   ];
 
-    // for Seller
-    sellerStatuses = [
-      { label: 'Order Received', description: 'Buyer has initiated the order.', active: false },
-      { label: 'Confirm Order Availability', description: 'Confirm availability for your listed order.', active: false },
-      { label: 'Awaiting Payment', description: 'Awaiting payment confirmation from buyer.', active: false },
-      { label: 'Prepare Shipment', description: 'Prepare shipment for your order.', active: false },
-      { label: 'Delivery in Progress', description: 'Click to track your order.', active: false },
-      { label: 'Order Delivered', description: 'Awaiting for buyer to authorize payment.', active: false },
-      { label: 'Payout Confirmation', description: 'Your payment has been released.', active: false }
-    ];
+  // for Seller
+  sellerStatuses = [
+    {
+      label: "Order Received",
+      description: "Buyer has initiated the order.",
+      active: false,
+    },
+    {
+      label: "Confirm Order Availability",
+      description: "Confirm availability for your listed order.",
+      active: false,
+    },
+    {
+      label: "Awaiting Payment",
+      description: "Awaiting payment confirmation from buyer.",
+      active: false,
+    },
+    {
+      label: "Prepare Shipment",
+      description: "Prepare shipment for your order.",
+      active: false,
+    },
+    {
+      label: "Delivery in Progress",
+      description: "Click to track your order.",
+      active: false,
+    },
+    {
+      label: "Order Delivered",
+      description: "Awaiting for buyer to authorize payment.",
+      active: false,
+    },
+    {
+      label: "Payout Confirmation",
+      description: "Your payment has been released.",
+      active: false,
+    },
+  ];
 
-
-    routeToChat(){
-      this.router.navigate(['/chat'],{
-        state:{chatID:this.chat_ID,productID:this.forSendingProductID}
-      })
-    }
-
+  routeToChat() {
+    this.router.navigate(["/chat"], {
+      state: { chatID: this.chat_ID, productID: this.forSendingProductID },
+    });
+  }
 }
