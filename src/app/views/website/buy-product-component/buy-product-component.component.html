@@ -265,6 +265,7 @@
       </div>
       <div class="mt-4">
         <button
+          *ngIf="!loggedUserType || ( loggedUserType == 'buyer' && !orderID && !chatID)"
           (click)="buyNow()"
           [disabled]="routeFrom === 'listing-to-product'"
           class="buy-btn"
@@ -273,7 +274,28 @@
           {{ "buy_product.buy" | translate }}
         </button>
         <button
-          *ngIf="productDetails?.allow_to_make_offer === 1"
+          *ngIf="loggedUserType && ( loggedUserType == 'seller' && orderID && chatID)"
+          (click)="goToOrderDetails()"
+          [disabled]="routeFrom === 'listing-to-product'"
+          class="buy-btn"
+        >
+          <!-- Buy -->
+          <!-- {{ "buy_product.buy" | translate }} -->
+            Oder Status
+        </button>
+
+        <button
+            *ngIf="loggedUserType && ( loggedUserType == 'buyer' && orderID && chatID)"
+            (click)="goToChatOrOrderDetails()"
+            [disabled]="routeFrom === 'listing-to-product'"
+            class="buy-btn"
+          >
+            <!-- Buy -->
+            <!-- {{ "buy_product.buy" | translate }} -->
+             View Order Status or Chat
+          </button>
+        <button
+          *ngIf="productDetails?.allow_to_make_offer === 1 && ( loggedUserType == 'buyer' && !orderID && !chatID)"
           [disabled]="routeFrom === 'listing-to-product'"
           (click)="makeanOffer()"
           class="make-offer-btn mt-2"

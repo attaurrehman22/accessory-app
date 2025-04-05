@@ -156,15 +156,23 @@ export class BuyProductComponentComponent implements OnInit {
   }
 
   fromChat: any;
+  orderID: any;
+  chatID: any;
+  loggedUserType: any;
+
+  getOrderandChatID() {
+    this.http.getOrderandChatIDDetails(this.productDetails.id).subscribe((res) => {
+      this.orderID = res.order.id;
+      this.chatID = res.chats.chat_id;
+    });
+  }
 
   ngOnInit(): void {
     window.scrollTo(0, 0);
     this.isUserLogin = localStorage.getItem("isLoggedIn");
-    // if (this.isUserLogin == 'false') {
-    //   this.loginFirst();
-    // }
     if (this.isUserLogin === "true") {
       this.getWishList();
+     
     }
     this.routeFrom = history.state.param;
 
@@ -215,6 +223,12 @@ export class BuyProductComponentComponent implements OnInit {
           /\\/g,
           ""
         );
+      }
+
+      if (this.productDetails.created_by.id == localStorage.getItem("userID")) {
+        this.loggedUserType = "seller";
+      } else {
+        this.loggedUserType = "buyer";
       }
     } catch (err) {
       console.error("Error fetching product details:", err);
@@ -274,6 +288,10 @@ export class BuyProductComponentComponent implements OnInit {
           await this.fetchDealerUserDetails(this.productDetails.created_by.id);
         }
       }
+      if (this.isUserLogin === "true") {
+        this.getOrderandChatID();
+      }
+    
 
       await this.getAllSimilarProducts();
     } catch (err) {
@@ -304,6 +322,12 @@ export class BuyProductComponentComponent implements OnInit {
           /\\/g,
           ""
         );
+      }
+
+      if (this.productDetails.created_by.id == localStorage.getItem("userID")) {
+        this.loggedUserType = "seller";
+      } else {
+        this.loggedUserType = "buyer";
       }
     } catch (err) {
       console.error("Error fetching product details:", err);
@@ -402,6 +426,83 @@ export class BuyProductComponentComponent implements OnInit {
       });
   }
 
+  goToOrderDetails() {
+    let OrderTypeval;
+    if (this.productDetails.created_by.id == localStorage.getItem("userID")) {
+      OrderTypeval = "sell";
+    } else {
+      OrderTypeval = "buy";
+    }
+    this.router.navigate(["/myListing"], {
+      state: {
+        data: {
+          id: this.orderID,
+          product_id: this.productDetails.id,
+          product: this.productDetails,
+          chat_id: this.chatID,
+        },
+
+        orderID: this.orderID,
+        Ordertype: OrderTypeval,
+        fromRoute: "gotToOrderDetails",
+      },
+    });
+  }
+
+  goToChatOrOrderDetails() {
+    let OrderTypeval;
+    if (
+      this.productDetails.created_by.id ==
+      localStorage.getItem("userID")
+    ) {
+      OrderTypeval = "sell";
+    } else {
+      OrderTypeval = "buy";
+    }
+
+    const dialogRef = this.dialog.open(
+      OrderInitiatedModelComponent,
+      {
+        width: "600px",
+        data: {
+          label: "Do you want to see your order details or chat with seller ?",
+          paragraph:
+            "Please select one of the options below to proceed.",
+        },
+      }
+    );
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result == "openChat" || result == "viewOrder") {
+        if (result == "openChat") {
+          this.router.navigate(["/chat"], {
+            // state: { data: this.productDetails },
+            state: {
+              data: this.productDetails,
+              chatID: this.chatID,
+              fromRoute: "gotToChat",
+            },
+          });
+        } else if (result == "viewOrder") {
+          this.router.navigate(["/myListing"], {
+            state: {
+              data: {
+                id: this.orderID,
+                product_id: this.productDetails.id,
+                product: this.productDetails,
+                chat_id: this.chatID,
+              },
+
+              orderID: this.orderID,
+              Ordertype: OrderTypeval,
+              fromRoute: "gotToOrderDetails",
+            },
+          });
+        }
+      }
+    });
+  }
+
   buyNow() {
     const userLogin = localStorage.getItem("user_token");
     const bodyData = {
@@ -455,7 +556,7 @@ export class BuyProductComponentComponent implements OnInit {
                         // state: { data: this.productDetails },
                         state: {
                           data: this.productDetails,
-                          chatID: "chat_id",
+                          chatID: this.chatID,
                           fromRoute: "gotToChat",
                         },
                       });
@@ -463,13 +564,13 @@ export class BuyProductComponentComponent implements OnInit {
                       this.router.navigate(["/myListing"], {
                         state: {
                           data: {
-                            id: "order_id",
+                            id: this.orderID,
                             product_id: this.productDetails.id,
                             product: this.productDetails,
-                            chat_id: "chat_id",
+                            chat_id: this.chatID,
                           },
 
-                          orderID: "order_id",
+                          orderID: this.orderID,
                           Ordertype: OrderTypeval,
                           fromRoute: "gotToOrderDetails",
                         },
@@ -500,9 +601,19 @@ export class BuyProductComponentComponent implements OnInit {
     const userID = localStorage.getItem("userID");
     if (userLogin && userID) {
       if (userID != this.productDetails.created_by.id) {
-        this.router.navigate(["/chat"], {
-          state: { data: this.productDetails },
-        });
+        if(this.chatID){
+          this.router.navigate(["/chat"], {
+            state: {
+              data: this.productDetails,
+              chatID: this.chatID,
+              fromRoute: "gotToChat",
+            },
+          });
+        }else{
+          this.router.navigate(["/chat"], {
+            state: { data: this.productDetails },
+          });
+        }
       } else {
         this.alertService.showAlert("warning", "You can't chat with yourself");
       }
