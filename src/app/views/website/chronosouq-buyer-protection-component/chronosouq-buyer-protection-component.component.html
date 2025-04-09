@@ -84,8 +84,8 @@ class="category_btn"
                 class="d-flex justify-content-between align-items-center mt-3"
               >
                 <p *ngIf="watch?.shipping_charges" class="price">
-                  <img src="../../../../assets/images/Saudi_Riyal_Symbol-2.svg" class="sar-icon-style" alt="SAR"/>
-                  +{{ watch?.shipping_charges || 'Without' }} 
+                  + <img src="../../../../assets/images/Saudi_Riyal_Symbol-2.svg" class="sar-icon-style" alt="SAR"/>
+                  {{ watch?.shipping_charges || 'Without' }} 
               
                    <!-- {{ watch?.currency }} -->
                     Shipping

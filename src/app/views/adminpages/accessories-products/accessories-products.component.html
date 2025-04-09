@@ -14,7 +14,7 @@
           <div class="table">
             <mat-card class="mt">
               <mat-card-content>
-                <div class="row">
+                <!-- <div class="row">
                   <div class="col-12 d-flex flex-wrap gap-2 align-items-center">
                     <mat-form-field appearance="outline">
                       <mat-label>Search</mat-label>
@@ -66,7 +66,7 @@
                   </div>
                   <div class="col-4 col-lg-4 col-md-4 col-sm-6 d-flex justify-content-end align-items-center">
                   </div>
-                </div>
+                </div> -->
                 <div class="row">
                     <div class="col-12 d-flex justify-content-end">
                         <button
@@ -156,15 +156,15 @@
                             <mat-icon>more_vert</mat-icon>
                           </button>
                           <mat-menu #menu="matMenu">
-                            <button mat-menu-item (click)="deleteProduct(row)">
+                            <!-- <button mat-menu-item (click)="deleteProduct(row)">
                               <mat-icon>delete</mat-icon>
                               <span>Delete</span>
-                            </button>
+                            </button> -->
                             <button mat-menu-item (click)="editProduct(row)">
                               <mat-icon>edit</mat-icon>
                               <span>Edit</span>
                             </button>
-                            <button mat-menu-item (click)="addPopularProduct(row)">
+                            <!-- <button mat-menu-item (click)="addPopularProduct(row)">
                               <mat-icon>refresh</mat-icon>
                               <span>Add To Popular</span>
                             </button>
@@ -172,7 +172,7 @@
                             <button mat-menu-item (click)="addFeatureProduct(row)">
                               <mat-icon>refresh</mat-icon>
                               <span>Add To Feature</span>
-                            </button>
+                            </button> -->
                           </mat-menu>
                         </td>
                       </ng-container>
@@ -181,9 +181,9 @@
                       <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
   
                       <!-- Row shown when there is no matching data. -->
-                      <tr class="mat-row" *matNoDataRow>
+                      <!-- <tr class="mat-row" *matNoDataRow>
                         <td class="mat-cell" colspan="4">No data matching the filter "{{ input.value }}"</td>
-                      </tr>
+                      </tr> -->
                     </table>
   
                     <mat-paginator

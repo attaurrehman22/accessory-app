@@ -4,38 +4,16 @@
       class="d-flex global-main-wraper w-100"
       [ngClass]="{ 'rtl-reverse': isRtl }"
     >
-      <button
-        class="navbar-toggler"
-        type="button"
-        (click)="toggleNavbar()"
-        aria-controls="navbarSupportedContent"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
-      >
-        <svg
-          class="navbar-toggler-icon"
-          xmlns="http://www.w3.org/2000/svg"
-          clip-rule="evenodd"
-          fill-rule="evenodd"
-          stroke-linejoin="round"
-          stroke-miterlimit="2"
-          viewBox="0 0 24 24"
-        >
-          <path
-            d="m21 15.75c0-.414-.336-.75-.75-.75h-16.5c-.414 0-.75.336-.75.75s.336.75.75.75h16.5c.414 0 .75-.336.75-.75zm0-4c0-.414-.336-.75-.75-.75h-16.5c-.414 0-.75.336-.75.75s.336.75.75.75h16.5c.414 0 .75-.336.75-.75zm0-4c0-.414-.336-.75-.75-.75h-16.5c-.414 0-.75.336-.75.75s.336.75.75.75h16.5c.414 0 .75-.336.75-.75z"
-            fill-rule="nonzero"
-          />
-        </svg>
-      </button>
+      
       <div class="query w-100" [ngClass]="{ 'rtl-layout-reverse': isRtl }">
         <div [ngClass]="{ 'lag-logo-stl': isRtl }" class="logo">
           <a href="/">
           <img
-            class="logo-img"
+            class="logo-img sidebar-logo-small-screen"
             routerLink="/"
-            src="./assets/images/logo.png"
+            src="./assets/images/logo.svg"
             alt="Cronosuq"
-            style="cursor: pointer"
+            style="cursor: pointer;"
           />
         </a>
         </div>
@@ -130,6 +108,32 @@
           </button>
         </div>
       </div>
+
+      <button
+        class="navbar-toggler"
+        type="button"
+        (click)="toggleNavbar()"
+        aria-controls="navbarSupportedContent"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <svg
+          class="navbar-toggler-icon"
+          xmlns="http://www.w3.org/2000/svg"
+          clip-rule="evenodd"
+          fill-rule="evenodd"
+          stroke-linejoin="round"
+          stroke-miterlimit="2"
+          viewBox="0 0 24 24"
+        >
+          <path
+            d="m21 15.75c0-.414-.336-.75-.75-.75h-16.5c-.414 0-.75.336-.75.75s.336.75.75.75h16.5c.414 0 .75-.336.75-.75zm0-4c0-.414-.336-.75-.75-.75h-16.5c-.414 0-.75.336-.75.75s.336.75.75.75h16.5c.414 0 .75-.336.75-.75zm0-4c0-.414-.336-.75-.75-.75h-16.5c-.414 0-.75.336-.75.75s.336.75.75.75h16.5c.414 0 .75-.336.75-.75z"
+            fill-rule="nonzero"
+          />
+        </svg>
+      </button>
+
+      
       <div
         class="nav-overlay"
         [class.active]="isNavbarOpen"
@@ -145,7 +149,7 @@
         <img
           class="logo-img sidebar-logo"
           routerLink="/"
-          src="./assets/images/logo.png"
+          src="./assets/images/logo.svg"
           alt="Cronosuq"
           style="cursor: pointer"
         />

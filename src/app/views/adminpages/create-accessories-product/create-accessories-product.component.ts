@@ -1,8 +1,9 @@
 import { Component, ElementRef, OnInit, ViewChild } from "@angular/core";
 import { FormArray, FormControl, FormGroup, Validators } from "@angular/forms";
-import { Router } from "@angular/router";
+import { MatExpansionPanel } from "@angular/material/expansion";
+import { NavigationStart, Router } from "@angular/router";
 import { TranslateService } from "@ngx-translate/core";
-import { Observable } from "rxjs";
+import { Observable, Subscription } from "rxjs";
 import { map, startWith } from "rxjs/operators";
 import { AlertsServicesService } from "src/services/alerts-service/alerts-services.service";
 import { HttpService } from "src/services/http/http.service";
@@ -25,7 +26,6 @@ interface ImageFile {
   isUploading: boolean;
 }
 
-
 @Component({
   selector: "app-create-accessories-product",
   templateUrl: "./create-accessories-product.component.html",
@@ -34,73 +34,77 @@ interface ImageFile {
 export class CreateAccessoriesProductComponent implements OnInit {
   supportLanguages = ["en", "ar", "fr", "ta", "hi"];
   currentLanguage: string;
-
+  private routerSubscription: Subscription;
 
   dealerconditions = [
     {
       title: "New",
       description:
         "The item has no signs of wear such as scratches or dents and is unworn. The item has not been polished.",
-        arabictitle: "جديد",
-        arabicdescription: "العنصر ليس به أي علامات تآكل مثل الخدوش أو الانبعاجات ولم يُستخدم. لم يتم تلميع العنصر."
+      arabictitle: "جديد",
+      arabicdescription:
+        "العنصر ليس به أي علامات تآكل مثل الخدوش أو الانبعاجات ولم يُستخدم. لم يتم تلميع العنصر.",
     },
     {
       title: "Like new and unworn",
       description:
         "The item shows minor signs of wear, such as small but physically imperceptible scratches.",
-         arabictitle: "كالجديد وغير مُستخدم",
-         arabicdescription: "يظهر العنصر علامات تآكل طفيفة، مثل خدوش صغيرة لكنها غير محسوسة جسديًا."
+      arabictitle: "كالجديد وغير مُستخدم",
+      arabicdescription:
+        "يظهر العنصر علامات تآكل طفيفة، مثل خدوش صغيرة لكنها غير محسوسة جسديًا.",
     },
     {
       title: "Used",
       description:
         "The item shows visible and physically perceptible signs of wear such as scratches, scuffs or small dents.",
-        arabictitle: "مُستخدم",
-        arabicdescription: "يظهر العنصر علامات تآكل مرئية ومحسوسة جسديًا مثل الخدوش أو الحكات أو الانبعاجات الصغيرة."
+      arabictitle: "مُستخدم",
+      arabicdescription:
+        "يظهر العنصر علامات تآكل مرئية ومحسوسة جسديًا مثل الخدوش أو الحكات أو الانبعاجات الصغيرة.",
     },
     {
       title: "Very good (minor signs of wear)",
       description:
         "The item shows major, visible signs of wear like scratches and dents.",
-         arabictitle: "جيد جدًا (علامات تآكل طفيفة)",
-         arabicdescription: "يظهر العنصر علامات تآكل كبيرة ومرئية مثل الخدوش والانبعاجات."
+      arabictitle: "جيد جدًا (علامات تآكل طفيفة)",
+      arabicdescription:
+        "يظهر العنصر علامات تآكل كبيرة ومرئية مثل الخدوش والانبعاجات.",
     },
     {
       title: "Good (moderate signs of wear)",
       description:
         "The item shows major, visible signs of wear like scratches and dents.",
-        arabictitle: "جيد (علامات تآكل متوسطة)",
-        arabicdescription: "يظهر العنصر علامات تآكل كبيرة ومرئية مثل الخدوش والانبعاجات."
+      arabictitle: "جيد (علامات تآكل متوسطة)",
+      arabicdescription:
+        "يظهر العنصر علامات تآكل كبيرة ومرئية مثل الخدوش والانبعاجات.",
     },
     {
       title: "Incomplete",
       description: "The item is missing some parts and is not functional.",
       arabictitle: "غير مكتمل",
-      arabicdescription: "العنصر يفتقد بعض الأجزاء وغير قابل للاستخدام."
+      arabicdescription: "العنصر يفتقد بعض الأجزاء وغير قابل للاستخدام.",
     },
   ];
-
 
   options = [
     {
       title: "Original Box & Original Papers",
       icon: "../assets/images/original-box-papers.png",
-      arabictitle: "الصندوق الأصلي والأوراق الأصلية"
+      arabictitle: "الصندوق الأصلي والأوراق الأصلية",
     },
     {
       title: "Original Box",
       icon: "../assets/images/original-box.png",
-      arabictitle: "الصندوق الأصلي"
+      arabictitle: "الصندوق الأصلي",
     },
     {
       title: "Original Papers",
       icon: "/assets/images/original-papers.png",
-      arabictitle: "الأوراق الأصلية"
+      arabictitle: "الأوراق الأصلية",
     },
     {
       title: "Watch Only",
       icon: "/assets/images/watch-only.png",
-      arabictitle: "الساعة فقط"
+      arabictitle: "الساعة فقط",
     },
   ];
 
@@ -148,7 +152,7 @@ export class CreateAccessoriesProductComponent implements OnInit {
   brandsList: any;
   categoryList: any;
 
- // Watch Form Details
+  // Watch Form Details
   reference_number = new FormControl("", [
     Validators.required, // Field must not be empty
     Validators.pattern("^[a-zA-Z0-9]*$"), // Only alphanumeric characters (letters and numbers)
@@ -205,27 +209,26 @@ export class CreateAccessoriesProductComponent implements OnInit {
   panelOpenState = false;
   panelDialOpenState = false;
 
-   // Billing Information Form Details
-   billing_address = new FormControl("", [Validators.required]);
-   first_name = new FormControl("", [Validators.required]);
-   last_name = new FormControl("", [Validators.required]);
-   street = new FormControl("", [
-     Validators.required, // Ensures the field is not empty
-     Validators.pattern("^[a-zA-Z0-9 ]*$"), // Allows only alphanumeric characters and spaces (A-Z, a-z, 0-9, space)
-     Validators.maxLength(80), // Limits the input to 30 characters
-   ]);
- 
-   street_line_2 = new FormControl("", [
-     Validators.pattern("^[a-zA-Z0-9 ]*$"), // Allows only alphanumeric characters and spaces (A-Z, a-z, 0-9, space)
-     Validators.maxLength(80), // Limits the input to 30 characters
-   ]);
-   zip_code = new FormControl("", [
-     Validators.required, // Ensures the field is not empty
-     Validators.pattern("^[0-9]*$"), // Ensures only numeric values (digits)
-     Validators.maxLength(10),
-   ]);
-   city = new FormControl("", [Validators.required]);
+  // Billing Information Form Details
+  billing_address = new FormControl("", [Validators.required]);
+  first_name = new FormControl("", [Validators.required]);
+  last_name = new FormControl("", [Validators.required]);
+  street = new FormControl("", [
+    Validators.required, // Ensures the field is not empty
+    Validators.pattern("^[a-zA-Z0-9 ]*$"), // Allows only alphanumeric characters and spaces (A-Z, a-z, 0-9, space)
+    Validators.maxLength(80), // Limits the input to 30 characters
+  ]);
 
+  street_line_2 = new FormControl("", [
+    Validators.pattern("^[a-zA-Z0-9 ]*$"), // Allows only alphanumeric characters and spaces (A-Z, a-z, 0-9, space)
+    Validators.maxLength(80), // Limits the input to 30 characters
+  ]);
+  zip_code = new FormControl("", [
+    Validators.required, // Ensures the field is not empty
+    Validators.pattern("^[0-9]*$"), // Ensures only numeric values (digits)
+    Validators.maxLength(10),
+  ]);
+  city = new FormControl("", [Validators.required]);
 
   constructor(
     public translateService: TranslateService,
@@ -373,7 +376,7 @@ export class CreateAccessoriesProductComponent implements OnInit {
 
   @ViewChild("videoInput") videoInput!: ElementRef<HTMLInputElement>;
   selectedVideo: File | null = null;
-  videoUrl: string | null = null; 
+  videoUrl: string | null = null;
   @ViewChild("otherImagesInput")
   otherImagesInput!: ElementRef<HTMLInputElement>;
   otherImages: ImageFile[] = [];
@@ -412,27 +415,27 @@ export class CreateAccessoriesProductComponent implements OnInit {
 
   onVideoSelected(event: any): void {
     const file = event.target.files[0];
-    if (file && file.type.startsWith('video/')) {
+    if (file && file.type.startsWith("video/")) {
       this.selectedVideo = file;
-      this.videoUrl = URL.createObjectURL(file);  // Create a URL for video preview
+      this.videoUrl = URL.createObjectURL(file); // Create a URL for video preview
     } else {
-      alert('Please select a valid video file');
+      alert("Please select a valid video file");
       this.videoUrl = null; // Clear the video URL if invalid file
     }
   }
 
-  removeVideo(){
+  removeVideo() {
     this.selectedVideo = null;
     this.videoUrl = null;
   }
 
   uploadVideo(): void {
     if (!this.selectedVideo) {
-      alert('Please select a video file first');
+      alert("Please select a video file first");
       return;
     }
     const formData = new FormData();
-    formData.append('video', this.selectedVideo, this.selectedVideo.name);
+    formData.append("video", this.selectedVideo, this.selectedVideo.name);
   }
 
   coverImage: { file: File; url: string } | null = null;
@@ -471,8 +474,7 @@ export class CreateAccessoriesProductComponent implements OnInit {
     }
   }
 
-
-@ViewChild("coverImageInput") coverImageInput!: ElementRef<HTMLInputElement>;
+  @ViewChild("coverImageInput") coverImageInput!: ElementRef<HTMLInputElement>;
 
   selectCoverImage() {
     this.coverImageInput.nativeElement.click();
@@ -514,6 +516,134 @@ export class CreateAccessoriesProductComponent implements OnInit {
     });
   }
 
+  ngOnDestroy() {
+    // Unsubscribe from router events when component is destroyed to avoid memory leaks
+    if (this.routerSubscription) {
+      this.routerSubscription.unsubscribe();
+    }
+  }
+
+  getSteeper(productID: any) {
+    this.http.getAccesriesStepper(productID).subscribe((res) => {
+      console.log("res", res);
+      if (res?.step) {
+        if (res.step == "listingDetails") {
+          this.watchDetailsPanel.open();
+        } else if (res.step == "watchDetails") {
+          this.uploadImagesPanel.open();
+        } else if (res.step == "uploadImages") {
+          this.conditionGradingsPanel.open();
+        } else if (res.step == "conditionGrading") {
+          this.scopeofdeliveryPanel.open();
+        } else if (res.step == "scopeofdelivery") {
+          this.priceShipmentPanel.open();
+        } else if (res.step == "priceShipment") {
+          this.billingInformationPanel.open();
+        } else if (res.step == "billingInformation") {
+          this.summaryPanel.open();
+        } else if (res.step == "summary") {
+          this.summaryPanel.open();
+        } else if (res.step == "completed") {
+          // this.alertService.showAlert('success','Product Created Successfully')
+          this.summaryPanel.open();
+        }
+      }
+    });
+  }
+
+  patchData(data) {
+    console.log("data", data);
+    this.listingForm.get("brand_id").setValue(data?.brand.id);
+    this.listingForm.get("name").setValue(data?.name);
+    this.listingForm.get("model").setValue(data?.model);
+    this.listingForm.get("title").setValue(data?.title);
+    this.listingForm.get("description").setValue(data?.description);
+    this.listingForm.get("watch_type").setValue(data?.watch_type);
+    this.listingForm
+      .get("year_of_production")
+      .setValue(data?.year_of_production);
+    this.listingForm.get("approximation").setValue(data?.approximation);
+    this.listingForm.get("unknown").setValue(data?.unknown);
+    this.listingForm
+      .get("category_ids")
+      .setValue(data?.categories.map((cat: any) => cat.id));
+
+    // this.watchDetailsForm.get("reference_number").setValue(data?.reference_number || '');
+    // this.watchDetailsForm.get("serial_no").setValue(data?.serial_no || '');
+
+    // this.watchDetailsForm.get("gender").setValue(data?.gender || '');
+    // this.watchDetailsForm.get("movement").setValue(data?.movement || '');
+    // this.watchDetailsForm.get("case_diameter_value_1").setValue(data?.case_diameter_value_1 || '');
+    // this.watchDetailsForm.get("case_diameter_value_2").setValue(data?.case_diameter_value_2 || '');
+    // this.watchDetailsForm.get("dial_color").setValue(data?.dial_color || '');
+    // this.watchDetailsForm.get("caliber_movement").setValue(data?.caliber_movement || '');
+    // this.watchDetailsForm.get("base_caliber").setValue(data?.base_caliber || '');
+    // this.watchDetailsForm.get("power_reserve").setValue(data?.power_reserve || '');
+    // this.watchDetailsForm.get("no_of_jewels").setValue(data?.no_of_jewels || '');
+    // this.watchDetailsForm.get("frequency").setValue(data?.frequency || '');
+    // this.watchDetailsForm.get("additional_details").setValue(data?.additional_details || '');
+    // this.watchDetailsForm.get("case_material").setValue(data?.case_material || '');
+    // this.watchDetailsForm.get("bezel_material").setValue(data?.bezel_material || '');
+    // this.watchDetailsForm.get("thickness").setValue(data?.thickness || '');
+    // this.watchDetailsForm.get("crystal").setValue(data?.crystal || '');
+    // this.watchDetailsForm.get("water_resistance").setValue(data?.water_resistance || '');
+    // this.watchDetailsForm.get("dial_numerals").setValue(data?.dial_numerals || '');
+    // this.watchDetailsForm.get("bracelet_material").setValue(data?.bracelet_material || '');
+    // this.watchDetailsForm.get("bracelet_color").setValue(data?.bracelet_color || '');
+    // this.watchDetailsForm.get("type_of_clasp").setValue(data?.type_of_clasp || '');
+    // this.watchDetailsForm.get("clasp_material").setValue(data?.clasp_material || '');
+
+    this.watchPrice = data?.price;
+    this.shipping_type = data?.shipping_type;
+    this.shipping_charges = data?.shipping_charges;
+    this.estimate_delivery = data?.estimate_delivery;
+    // this.allow_to_make_offer = data?.allow_to_make_offer;
+    this.estimatedPayoutwithShipping = data?.estimate_payout;
+    this.calculatePayout();
+
+    if (data?.condition) {
+      let selectedCondition;
+
+      selectedCondition = this.dealerconditions.find(
+        (condition) => condition.title == data?.condition
+      );
+
+      this.dealerconditions = [selectedCondition];
+
+      this.selectCondition(selectedCondition);
+    }
+
+    const scopeofDelivery = this.options.find(
+      (option) => option.title === data?.scope_of_delivery
+    );
+
+    this.selectedOptions = scopeofDelivery;
+
+    if (data?.video) {
+      this.videoUrl = "https://api.chronosouq.com/" + data?.video;
+    }
+    if (data?.main_image) {
+      this.coverImage = {
+        file: null,
+        url: "https://api.chronosouq.com/" + data?.main_image,
+      };
+    }
+    if (data?.additional_images.length > 0) {
+      if (data?.additional_images) {
+        console.log("data?.additional_images", data?.additional_images)
+        this.otherImages = data?.additional_images.map(
+          (img) => (
+            {
+            file: null,
+            url: "https://api.chronosouq.com/" + img,
+            isUploading: false,
+          })
+        );
+      }
+    }
+  }
+
+  paramTyepe: any = "Create";
 
   ngOnInit(): void {
     // Listing Form
@@ -533,7 +663,21 @@ export class CreateAccessoriesProductComponent implements OnInit {
     this.getAllBrandsDropDown();
     this.getCategoriesDropDown();
     this.allDropDownData();
-    this.getBillingInformation()
+    this.getBillingInformation();
+
+    if (history?.state.param == "Edit") {
+      this.paramTyepe = history?.state.param;
+      this.productID = history?.state?.data?.id;
+      if (this.productID) {
+        this.getSteeper(this.productID);
+      }
+      localStorage.setItem("userProductStoredId", this.productID);
+      this.patchData(history?.state?.data);
+    }
+
+    if (this.productID) {
+      this.getSteeper(this.productID);
+    }
 
     this.filteredOptions = this.myControl.valueChanges.pipe(
       startWith(""),
@@ -555,6 +699,13 @@ export class CreateAccessoriesProductComponent implements OnInit {
           : this.categoryList;
       })
     );
+
+    this.routerSubscription = this.router.events.subscribe((event) => {
+      if (event instanceof NavigationStart) {
+        // Clear the id from localStorage when navigating to a different route
+        localStorage.removeItem("userProductStoredId");
+      }
+    });
 
     this.watchDetailsForm = new FormGroup({
       reference_number: this.reference_number,
@@ -650,37 +801,62 @@ export class CreateAccessoriesProductComponent implements OnInit {
     this.watchPriceDisplay = this.watchPrice;
     this.platformFee = this.watchPrice * 0.04;
     this.estimatedPayout = this.watchPrice - this.platformFee;
-    if(this.shipping_charges){
-      this.estimatedPayoutwithShipping = this.estimatedPayout - this.shipping_charges
+    if (this.shipping_charges) {
+      this.estimatedPayoutwithShipping =
+        this.estimatedPayout - this.shipping_charges;
     }
   }
 
   Payoutaftershippingcharges() {
-    this.estimatedPayoutwithShipping = this.estimatedPayout - this.shipping_charges;
+    this.estimatedPayoutwithShipping =
+      this.estimatedPayout - this.shipping_charges;
   }
 
-  countShipping(){
+  countShipping() {
     // console.log("Onshiping Charges Change is call")
     // console.log("this.shipping_type",this.shipping_type)
     // console.log("this.shipping_charges",this.shipping_charges)
-    if(this.shipping_type == 'inclusiveShipping'){
-      console.log("this.shipping_type is inclusiveShipping ")
-      if(this.shipping_charges){
-        console.log("this.shipping_charges",this.shipping_charges)
-        console.log("this.estimatedPayoutwithShipping bwfore",this.estimatedPayoutwithShipping)
-        this.estimatedPayoutwithShipping = Number(this.estimatedPayout) - Number(this.shipping_charges);
-        console.log("this.estimatedPayoutwithShipping after",this.estimatedPayoutwithShipping)
+    if (this.shipping_type == "inclusiveShipping") {
+      console.log("this.shipping_type is inclusiveShipping ");
+      if (this.shipping_charges) {
+        console.log("this.shipping_charges", this.shipping_charges);
+        console.log(
+          "this.estimatedPayoutwithShipping bwfore",
+          this.estimatedPayoutwithShipping
+        );
+        this.estimatedPayoutwithShipping =
+          Number(this.estimatedPayout) - Number(this.shipping_charges);
+        console.log(
+          "this.estimatedPayoutwithShipping after",
+          this.estimatedPayoutwithShipping
+        );
       }
-    }else{
-      if(this.shipping_charges){
-        console.log("this.estimatedPayoutwithShipping bwfore",this.estimatedPayoutwithShipping)
+    } else {
+      if (this.shipping_charges) {
+        console.log(
+          "this.estimatedPayoutwithShipping bwfore",
+          this.estimatedPayoutwithShipping
+        );
         this.estimatedPayoutwithShipping = Number(this.estimatedPayout);
-        console.log("this.estimatedPayoutwithShipping after",this.estimatedPayoutwithShipping)
+        console.log(
+          "this.estimatedPayoutwithShipping after",
+          this.estimatedPayoutwithShipping
+        );
       }
     }
   }
 
   billingForm: FormGroup;
+  @ViewChild("watchDetailsPanel") watchDetailsPanel!: MatExpansionPanel;
+  @ViewChild("uploadImagesPanel") uploadImagesPanel!: MatExpansionPanel;
+  @ViewChild("conditionGradingsPanel")
+  conditionGradingsPanel!: MatExpansionPanel;
+  @ViewChild("scopeofdeliveryPanel") scopeofdeliveryPanel!: MatExpansionPanel;
+  @ViewChild("priceShipmentPanel") priceShipmentPanel!: MatExpansionPanel;
+  @ViewChild("billingInformationPanel")
+  billingInformationPanel!: MatExpansionPanel;
+  @ViewChild("summaryPanel") summaryPanel!: MatExpansionPanel;
+  productID: any;
 
   onSubmit(Param: string) {
     if (Param == "listingDetails") {
@@ -703,6 +879,18 @@ export class CreateAccessoriesProductComponent implements OnInit {
       this.listingForm.markAllAsTouched();
       if (this.listingForm.valid) {
         console.log("this.listingForm.value", this.listingForm.value);
+
+        this.http.saveAccesriesInformation(this.listingForm.value).subscribe(
+          (res) => {
+            this.productID = res.id;
+            this.alertService.showAlert(
+              "success",
+              "Product Created Successfully"
+            );
+            this.watchDetailsPanel.open();
+          },
+          (err) => {}
+        );
       } else {
         const firstInvalidControl = Object.keys(this.listingForm.controls).find(
           (key) => {
@@ -729,13 +917,32 @@ export class CreateAccessoriesProductComponent implements OnInit {
           this.alertService.showAlert("warning", "Enter Form Values");
         }
       }
-    }else if(Param == "watchDetails"){
-      if(this.watchDetailsForm.valid){
-        console.log("this.watchDetailsForm.value",this.watchDetailsForm.value)
-      }else{
-        this.alertService.showAlert('warning','Enter Form Values')
+    } else if (Param == "watchDetails") {
+      if (this.watchDetailsForm.valid) {
+        const watchDetailsData = {
+          ...this.watchDetailsForm.value,
+          product_id: this.productID, // or from response if you get it there
+        };
+
+        this.http
+          .saveAccesriesWatchDetails(watchDetailsData)
+          .subscribe((res) => {
+            this.productID = res.data.product_id;
+            this.alertService.showAlert(
+              "success",
+              "Product Created Successfully"
+            );
+            this.uploadImagesPanel.open();
+          });
+
+        console.log(
+          "this.watchDetailsForm.value with productID",
+          watchDetailsData
+        );
+      } else {
+        this.alertService.showAlert("warning", "Enter Form Values");
       }
-    }else if(Param == "uploadImages"){
+    } else if (Param == "uploadImages") {
       if (!this.coverImage) {
         alert("Please upload a cover image.");
         return;
@@ -755,25 +962,52 @@ export class CreateAccessoriesProductComponent implements OnInit {
       }
 
       if (this.selectedVideo) {
-        formData.append("video",this.selectedVideo || "main_image.jpg");
-     }
-
-     this.otherImages.forEach((image, index) => {
-      if (image.file) {
-        formData.append(
-          `additional_images[]`,
-          image.file,
-          image.file.name || `additional_image_${index}.jpg`
-        );
+        formData.append("video", this.selectedVideo || "main_image.jpg");
       }
-    });
-    formData.forEach((value, key) => console.log(key, value));
-    }else if(Param == "conditionGrading"){
-      console.log("this.selectedCondition.title",this.selectedCondition.title)
-    }else if(Param == "scopeofdelivery"){
-      console.log("this.selectedOptions.title",this.selectedOptions.title)
-    }
-    else if(Param == "priceshipment"){
+
+      if (this.productID) {
+        formData.append("product_id", this.productID);
+      }
+
+      this.otherImages.forEach((image, index) => {
+        if (image.file) {
+          formData.append(
+            `additional_images[]`,
+            image.file,
+            image.file.name || `additional_image_${index}.jpg`
+          );
+        }
+      });
+      formData.forEach((value, key) => console.log(key, value));
+      this.http.saveAccesriesUploadImages(formData).subscribe((res) => {
+        this.productID = res.data.product_id;
+        this.alertService.showAlert("success", "Product Created Successfully");
+        this.conditionGradingsPanel.open();
+      });
+    } else if (Param == "conditionGrading") {
+      console.log("this.selectedCondition.title", this.selectedCondition.title);
+      const formData = {
+        condition: this.selectedCondition.title,
+        product_id: this.productID,
+      };
+
+      this.http.saveAccesrieswatchCondition(formData).subscribe((res) => {
+        this.productID = res.data.product_id;
+        this.alertService.showAlert("success", "Product Created Successfully");
+        this.scopeofdeliveryPanel.open();
+      });
+    } else if (Param == "scopeofdelivery") {
+      console.log("this.selectedOptions.title", this.selectedOptions.title);
+      const formData = {
+        scope_of_delivery: this.selectedOptions.title,
+        product_id: this.productID,
+      };
+      this.http.saveAccesriesscopeOfDelivery(formData).subscribe((res) => {
+        this.productID = res.data.product_id;
+        this.alertService.showAlert("success", "Product Created Successfully");
+        this.priceShipmentPanel.open();
+      });
+    } else if (Param == "priceshipment") {
       if (
         this.shipping_type === "inclusiveShipping" &&
         !this.shipping_charges
@@ -790,15 +1024,32 @@ export class CreateAccessoriesProductComponent implements OnInit {
           allow_to_make_offer: this.allow_to_make_offer,
           estimate_payout: this.estimatedPayoutwithShipping,
           isUpdate: isUpdate,
+          product_id: this.productID,
         };
 
-        console.log("formData",formData)
+        console.log("formData", formData);
+
+        this.http.saveAccesriespriceAndShipment(formData).subscribe((res) => {
+          this.productID = res.data.product_id;
+          this.alertService.showAlert(
+            "success",
+            "Product Created Successfully"
+          );
+          this.billingInformationPanel.open();
+        });
       }
-    }
-    else if(Param == "billinginformation"){
-
-      console.log("this.billing info",this.billingForm.value)
-
+    } else if (Param == "billinginformation") {
+      const formData = {
+        ...this.billingForm.value,
+        // billing_address: this.billing_address.value,
+        product_id: this.productID,
+      };
+      console.log("this.billing info", this.billingForm.value);
+      this.http.saveAccesriesbillingInformation(formData).subscribe((res) => {
+        this.productID = res.data.product_id;
+        this.alertService.showAlert("success", "Product Created Successfully");
+        this.summaryPanel.open();
+      });
     }
   }
 }

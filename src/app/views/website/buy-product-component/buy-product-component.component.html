@@ -1479,9 +1479,10 @@
           </div>
           <div class="d-flex justify-content-between align-items-center mt-2">
             <span *ngIf="watch.shipping_charges" class="price color-6a6a6a"
-              ><img src="../../../../assets/images/Saudi_Riyal_Symbol-2.svg" class="sar-icon-style" alt="SAR"/>
+              >
+              + <img src="../../../../assets/images/Saudi_Riyal_Symbol-2.svg" class="sar-icon-style" alt="SAR"/>
 
-              +{{ watch.shipping_charges }} 
+              {{ watch.shipping_charges }} 
                Shipping</span
             >
             <span *ngIf="!watch.shipping_charges" class="price color-6a6a6a"

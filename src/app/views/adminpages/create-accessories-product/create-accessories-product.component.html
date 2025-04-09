@@ -344,7 +344,7 @@
       </form>
     </mat-expansion-panel>
 
-    <mat-expansion-panel>
+    <mat-expansion-panel #watchDetailsPanel>
       <mat-expansion-panel-header>
         {{ "create_product_listing.watch_details" | translate }}
       </mat-expansion-panel-header>
@@ -1147,7 +1147,7 @@
       </form>
     </mat-expansion-panel>
 
-    <mat-expansion-panel>
+    <mat-expansion-panel #uploadImagesPanel>
       <mat-expansion-panel-header>
         {{ "create_product_listing.upload_images" | translate }}
       </mat-expansion-panel-header>
@@ -1299,7 +1299,7 @@
       </div>
     </mat-expansion-panel>
 
-    <mat-expansion-panel>
+    <mat-expansion-panel #conditionGradingsPanel>
       <mat-expansion-panel-header>
         {{ "create_product_listing.condition_grading" | translate }}
       </mat-expansion-panel-header>
@@ -1396,7 +1396,7 @@
       </div>
     </mat-expansion-panel>
 
-    <mat-expansion-panel>
+    <mat-expansion-panel #scopeofdeliveryPanel>
       <mat-expansion-panel-header>
         {{ "create_product_listing.scope_of_delivery" | translate }}
       </mat-expansion-panel-header>
@@ -1473,7 +1473,7 @@
       </div>
     </mat-expansion-panel>
 
-    <mat-expansion-panel>
+    <mat-expansion-panel #priceShipmentPanel>
       <mat-expansion-panel-header>
         {{ "create_product_listing.price_shipment" | translate }}
       </mat-expansion-panel-header>
@@ -1585,14 +1585,14 @@
             />
           </mat-form-field>
 
-          <mat-checkbox
+          <!-- <mat-checkbox
             [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'"
             [(ngModel)]="allow_to_make_offer"
           >
             <label class="mdc-label" style="margin-top: 13px; margin-bottom: 5px">
               {{ "create_product_listing.allow_make_offer" | translate }}
             </label>
-          </mat-checkbox>
+          </mat-checkbox> -->
         </div>
         <div class="col-md-6 for-reverse">
           <mat-card class="info-card p-3">
@@ -1728,7 +1728,7 @@
       </div>
     </mat-expansion-panel>
 
-    <mat-expansion-panel>
+    <mat-expansion-panel #billingInformationPanel>
       <mat-expansion-panel-header>
         {{ "create_product_listing.billing_information" | translate }}
       </mat-expansion-panel-header>
@@ -1942,7 +1942,7 @@
       </div>
     </mat-expansion-panel>
 
-    <mat-expansion-panel>
+    <mat-expansion-panel #summaryPanel>
       <mat-expansion-panel-header>
         {{ "create_product_listing.summary" | translate }}
       </mat-expansion-panel-header>

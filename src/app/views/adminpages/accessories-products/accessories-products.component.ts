@@ -1,14 +1,20 @@
-import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { MatPaginator, PageEvent } from '@angular/material/paginator';
-import { MatSort, Sort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
-import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
-import { AlertsServicesService } from 'src/services/alerts-service/alerts-services.service';
-import { HttpService } from 'src/services/http/http.service';
-import { SidebarService } from 'src/services/sidebar.service';
-import { AdminAddProductComponent } from '../admin-add-product/admin-add-product.component';
+import {
+  AfterViewInit,
+  Component,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from "@angular/core";
+import { MatDialog } from "@angular/material/dialog";
+import { MatPaginator, PageEvent } from "@angular/material/paginator";
+import { MatSort, Sort } from "@angular/material/sort";
+import { MatTableDataSource } from "@angular/material/table";
+import { Router } from "@angular/router";
+import { Subscription } from "rxjs";
+import { AlertsServicesService } from "src/services/alerts-service/alerts-services.service";
+import { HttpService } from "src/services/http/http.service";
+import { SidebarService } from "src/services/sidebar.service";
+import { AdminAddProductComponent } from "../admin-add-product/admin-add-product.component";
 
 export interface UserData {
   name: any;
@@ -24,12 +30,14 @@ export interface UserData {
 }
 
 @Component({
-  selector: 'app-accessories-products',
-  templateUrl: './accessories-products.component.html',
-  styleUrls: ['./accessories-products.component.css']
+  selector: "app-accessories-products",
+  templateUrl: "./accessories-products.component.html",
+  styleUrls: ["./accessories-products.component.css"],
 })
-export class AccessoriesProductsComponent implements OnInit, AfterViewInit, OnDestroy{
-displayedColumns: string[] = [
+export class AccessoriesProductsComponent
+  implements OnInit, AfterViewInit, OnDestroy
+{
+  displayedColumns: string[] = [
     "name",
     "watch_type",
     "brand",
@@ -50,8 +58,6 @@ displayedColumns: string[] = [
   allData: any;
   sidebarClickSubscription: Subscription;
 
- 
-
   userStatu: any = [
     { value: "All", viewValue: "All" },
     { value: false, viewValue: "Blocked user" },
@@ -67,31 +73,32 @@ displayedColumns: string[] = [
     private http: HttpService,
     private toast: AlertsServicesService,
     private route: Router,
-    private sidebarService: SidebarService,
+    private sidebarService: SidebarService
   ) {}
 
   ngOnInit(): void {
-    this.sidebarClickSubscription = this.sidebarService.sidebarClick$.subscribe(() => {
-      this.dialog.closeAll();
-    });
+    this.sidebarClickSubscription = this.sidebarService.sidebarClick$.subscribe(
+      () => {
+        this.dialog.closeAll();
+      }
+    );
 
-    this.getAllCategory()
-    this.getAllBrands()
+    // this.getAllCategory();
+    // this.getAllBrands();
   }
 
+  category_ids: any[] = [];
+  brand_ids: any[] = [];
+  watch_gender: any;
+  sort_by: any;
+  sort_order: any = "desc";
+  name: any;
 
-  category_ids:any[]=[];
-  brand_ids:any[]=[];
-  watch_gender:any;
-  sort_by:any;
-  sort_order:any='desc';
-  name:any;
+  brandsList: any;
+  categoryList: any;
 
-  brandsList:any;
-  categoryList:any;
-
- async getAllCategory(){
- try {
+  async getAllCategory() {
+    try {
       // Await the promise returned by the HTTP request
       const res = await this.http.getCategoryDropDown().toPromise();
       this.categoryList = res.data;
@@ -100,15 +107,15 @@ displayedColumns: string[] = [
     }
   }
 
-  async getAllBrands(){
+  async getAllBrands() {
     try {
-          // Wait for the API response
-          const res = await this.http.getAllBrandsDropdDown().toPromise();
-          this.brandsList = res.data;
-        } catch (error) {
-          // Log error if something goes wrong with the API request
-          console.error("Error fetching brands:", error);
-        }
+      // Wait for the API response
+      const res = await this.http.getAllBrandsDropdDown().toPromise();
+      this.brandsList = res.data;
+    } catch (error) {
+      // Log error if something goes wrong with the API request
+      console.error("Error fetching brands:", error);
+    }
   }
 
   ngAfterViewInit() {
@@ -123,67 +130,36 @@ displayedColumns: string[] = [
     }
   }
 
-  ClearFilter(){
-    this.category_ids=[];
-    this.brand_ids=[];
-    this.watch_gender='';
-    this.sort_by='';
-    this.sort_order='desc';
-    this.name='';
+  ClearFilter() {
+    this.category_ids = [];
+    this.brand_ids = [];
+    this.watch_gender = "";
+    this.sort_by = "";
+    this.sort_order = "desc";
+    this.name = "";
 
-    this.loadData()
+    this.loadData();
   }
 
   async loadData() {
-    const page = this.pageEvent ? this.pageEvent.pageIndex + 1 : 1;
-    const per_page = this.pageEvent ? this.pageEvent.pageSize : this.pageSize;
-    const category_ids = this.category_ids;
-    const brand_ids = this.brand_ids;
-    const watch_gender = this.watch_gender;
-    const sortField = this.sort?.active || '';
-    const sortDirection = this.sort?.direction || '';
-
-    try {
-      const data: any = await this.http
-        .getAdminProducts(
-          this.name,
-          page,
-          per_page,
-          sortField,
-          sortDirection,
-          category_ids,
-          brand_ids,
-          watch_gender,
-          this.sort_by,
-          this.sort_order
-        )
-        .toPromise();
-
-      if (data && data.data) {
-        // ✅ Format data if needed
-        const formattedData = data.data.data.map((product: any) => {
-          if (product.main_image) {
-            product.main_image = product.main_image
-              .replace(/\\/g, '/')
-              .replace(/^\/+/, '');
+   this.http.getAllAccesriesInformation().subscribe(
+      (res) => {
+        this.allData = res.data;
+        
+        this.allData.forEach((item) => {
+          if (item.additional_images && Array.isArray(item.additional_images)) {
+            // Remove backslashes from each image URL (or string)
+            item.additional_images = item.additional_images.map((image) => image.replace(/\\/g, ""));
           }
-          return product;
         });
 
-        // ✅ Set DataSource
-        this.dataSource.data = formattedData;
-        this.resultsLength = data.data.total;
-
-        // ✅ Bind paginator and sort explicitly after setting the data source
+        this.dataSource = new MatTableDataSource(this.allData);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
-      
+        this.resultsLength = res.data.length;
       }
-    } catch (error) {
-      console.error('Error loading data:', error);
-    }
+    );
   }
-  
 
   // ✅ Handle Page Change
   onPageChange(event: PageEvent) {
@@ -191,8 +167,6 @@ displayedColumns: string[] = [
     this.pageEvent = event;
     this.loadData(); // Reload data on page change
   }
-  
-  
 
   sortData(sort: Sort) {
     this.loadData();
@@ -253,7 +227,6 @@ displayedColumns: string[] = [
     );
   }
 
-
   addFeatureProduct(data) {
     this.http.topFeatureProducts(data.id).subscribe(
       (res) => {
@@ -267,9 +240,7 @@ displayedColumns: string[] = [
     );
   }
 
-
-
-  deleteUser(data: any) { }
+  deleteUser(data: any) {}
 
   changingStatus(value: any) {
     if (value == "All") {
@@ -318,20 +289,24 @@ displayedColumns: string[] = [
   }
 
   editProduct(data) {
-    const dialogRef = this.dialog.open(AdminAddProductComponent, {
-      width: '1000px',
-      height: 'auto',
-      data: { param: 'Edit', data: data },
+    this.router.navigate(["/admin/accessories/add"], {
+      state: { param: "Edit", data: data },
     });
 
-    dialogRef.afterClosed().subscribe((param) => {
-      if (param) {
-        if (param === 'approved' || param === 'reject') {
-          this.activateProduct(data)
-        } else {
-          this.loadData()
-        }
-      }
-    });
+    // const dialogRef = this.dialog.open(AdminAddProductComponent, {
+    //   width: "1000px",
+    //   height: "auto",
+    //   data: { param: "Edit", data: data },
+    // });
+
+    // dialogRef.afterClosed().subscribe((param) => {
+    //   if (param) {
+    //     if (param === "approved" || param === "reject") {
+    //       this.activateProduct(data);
+    //     } else {
+    //       this.loadData();
+    //     }
+    //   }
+    // });
   }
 }

@@ -899,4 +899,97 @@ export class HttpService implements OnInit {
   // -------------------------------------------- My Listing Module APIs end --------------------------
 
 
+
+
+    // ----------------------------------  create Accesries start ------------------------------
+
+    getAccesriesStepper(ID): Observable<any> {
+      return this.http.get(`${this.apiUrl}/api/accessories/listing/getStep?product_id=${ID}`, {
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${this.token}`,
+        },
+      });
+    }
+
+    getAllAccesriesInformation(): Observable<any> {
+      return this.http.get(`${this.apiUrl}/api/accessories/listing/user-listings`, {
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${this.token}`,
+        },
+      });
+    }
+
+
+    saveAccesriesInformation(formData): Observable<any> {
+      return this.http.post(`${this.apiUrl}/api/accessories/listing/create`, formData, {
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${this.token}`,
+        },
+      });
+    }
+
+    saveAccesriesWatchDetails(formData): Observable<any> {
+      return this.http.post(`${this.apiUrl}/api/accessories/listing/watchDetails`, formData, {
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${this.token}`,
+        },
+      });
+    }
+
+    saveAccesriesUploadImages(formData): Observable<any> {
+      return this.http.post(`${this.apiUrl}/api/accessories/listing/uploadImages`, formData, {
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${this.token}`,
+        },
+      });
+    }
+
+    saveAccesrieswatchCondition(formData): Observable<any> {
+      return this.http.post(`${this.apiUrl}/api/accessories/listing/watchCondition`, formData, {
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${this.token}`,
+        },
+      });
+    }
+
+    saveAccesriesscopeOfDelivery(formData): Observable<any> {
+      return this.http.post(`${this.apiUrl}/api/accessories/listing/scopeOfDelivery`, formData, {
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${this.token}`,
+        },
+      });
+    }
+
+    saveAccesriespriceAndShipment(formData): Observable<any> {
+      return this.http.post(`${this.apiUrl}/api/accessories/listing/priceAndShipment`, formData, {
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${this.token}`,
+        },
+      });
+    }
+
+    saveAccesriesbillingInformation(formData): Observable<any> {
+      return this.http.post(`${this.apiUrl}/api/accessories/listing/billingInformation`, formData, {
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${this.token}`,
+        },
+      });
+    }
+
+        // ----------------------------------  create Accesries end ------------------------------
+
+
 }
+
+
+
+  
