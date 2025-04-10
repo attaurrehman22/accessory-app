@@ -931,6 +931,15 @@ export class HttpService implements OnInit {
       });
     }
 
+    editAccesriesInformation(formData): Observable<any> {
+      return this.http.post(`${this.apiUrl}/api/accessories/listing/update`, formData, {
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${this.token}`,
+        },
+      });
+    }
+
     saveAccesriesWatchDetails(formData): Observable<any> {
       return this.http.post(`${this.apiUrl}/api/accessories/listing/watchDetails`, formData, {
         headers: {
@@ -978,6 +987,15 @@ export class HttpService implements OnInit {
 
     saveAccesriesbillingInformation(formData): Observable<any> {
       return this.http.post(`${this.apiUrl}/api/accessories/listing/billingInformation`, formData, {
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${this.token}`,
+        },
+      });
+    }
+
+    saveAccesriesSummary(formData): Observable<any> {
+      return this.http.post(`${this.apiUrl}/api/accessories/listing/publishListing`, formData, {
         headers: {
           Accept: "application/json",
           Authorization: `Bearer ${this.token}`,

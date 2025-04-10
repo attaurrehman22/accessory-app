@@ -36,6 +36,9 @@ export class CreateAccessoriesProductComponent implements OnInit {
   currentLanguage: string;
   private routerSubscription: Subscription;
 
+  selectedSection: string = "listingDetails";
+  selectedOptionsList: any = ["listingDetails"];
+
   dealerconditions = [
     {
       title: "New",
@@ -523,37 +526,186 @@ export class CreateAccessoriesProductComponent implements OnInit {
     }
   }
 
+  isPublishedBefore:boolean=false;
+
   getSteeper(productID: any) {
     this.http.getAccesriesStepper(productID).subscribe((res) => {
-      console.log("res", res);
       if (res?.step) {
+        if(res?.product?.published_date){
+          this.isPublishedBefore=true;
+        }
+        let data = res?.product;
+        this.productDetails = data
+
+        if (data?.main_image){
+          data.main_image = data.main_image.replace(/\\/g, "");
+        }
+
+        if(data?.additional_images) {
+          try {
+            data.additional_images = JSON.parse(data.additional_images).map((image)=> image.replace(/\\/g, ""));
+          }
+        catch (e) {
+
+        }
+      }
+
+      this.patchData(data);
         if (res.step == "listingDetails") {
+          this.selectedSection = "watchDetails";
+          this.selectedOptionsList.push(this.selectedSection);
           this.watchDetailsPanel.open();
         } else if (res.step == "watchDetails") {
-          this.uploadImagesPanel.open();
+          this.selectedSection = "uploadImages";
+          this.selectedOptionsList.push('uploadImages');
+          this.selectedOptionsList.push('watchDetails');
+          
+
+          setTimeout(() => {
+            if (this.uploadImagesPanel) {
+              this.uploadImagesPanel.open();
+            }
+          });
+
         } else if (res.step == "uploadImages") {
-          this.conditionGradingsPanel.open();
+          this.selectedOptionsList.push('uploadImages');
+          this.selectedOptionsList.push('watchDetails');
+          this.selectedOptionsList.push('conditionGrading');
+          this.selectedSection = "conditionGrading";
+          setTimeout(() => {
+            if (this.conditionGradingsPanel) {
+              this.conditionGradingsPanel.open();
+            }
+          });
         } else if (res.step == "conditionGrading") {
-          this.scopeofdeliveryPanel.open();
-        } else if (res.step == "scopeofdelivery") {
-          this.priceShipmentPanel.open();
+          this.selectedSection = "scopeofdelivery";
+          this.selectedOptionsList.push('uploadImages');
+          this.selectedOptionsList.push('watchDetails');
+          this.selectedOptionsList.push('conditionGrading');
+          this.selectedOptionsList.push('scopeofdelivery');
+         
+
+          
+          setTimeout(() => {
+            if (this.scopeofdeliveryPanel) {
+              this.scopeofdeliveryPanel.open();
+            }
+          });
+        } else if (res.step == "scopeOfDelivery" || res.step == "proofOfOwnership") {
+          
+          this.selectedSection = "priceshipment";
+          this.selectedOptionsList.push('uploadImages');
+          this.selectedOptionsList.push('watchDetails');
+          this.selectedOptionsList.push('conditionGrading');
+          this.selectedOptionsList.push('scopeofdelivery');
+          this.selectedOptionsList.push('priceshipment');
+        
+
+          setTimeout(() => {
+            if (this.priceShipmentPanel) {
+              this.priceShipmentPanel.open();
+            }
+          });
         } else if (res.step == "priceShipment") {
-          this.billingInformationPanel.open();
+          
+          this.selectedSection = "billinginformation";
+          this.selectedOptionsList.push('uploadImages');
+          this.selectedOptionsList.push('watchDetails');
+          this.selectedOptionsList.push('conditionGrading');
+          this.selectedOptionsList.push('scopeofdelivery');
+          this.selectedOptionsList.push('priceshipment');
+          this.selectedOptionsList.push('billinginformation');
+          
+         
+
+          setTimeout(() => {
+            if (this.billingInformationPanel) {
+              this.billingInformationPanel.open();
+            }
+          });
         } else if (res.step == "billingInformation") {
-          this.summaryPanel.open();
+          
+          this.selectedSection = "summary";
+          this.selectedOptionsList.push('uploadImages');
+          this.selectedOptionsList.push('watchDetails');
+          this.selectedOptionsList.push('conditionGrading');
+          this.selectedOptionsList.push('scopeofdelivery');
+          this.selectedOptionsList.push('priceshipment');
+          this.selectedOptionsList.push('billinginformation');
+          this.selectedOptionsList.push('summary');
+         
+
+          setTimeout(() => {
+            if (this.summaryPanel) {
+              this.summaryPanel.open();
+            }
+          });
+
         } else if (res.step == "summary") {
-          this.summaryPanel.open();
+
+          this.selectedSection = "summary";
+          this.selectedOptionsList.push('uploadImages');
+          this.selectedOptionsList.push('watchDetails');
+          this.selectedOptionsList.push('conditionGrading');
+          this.selectedOptionsList.push('scopeofdelivery');
+          this.selectedOptionsList.push('priceshipment');
+          this.selectedOptionsList.push('billinginformation');
+          this.selectedOptionsList.push('summary');
+          
+          setTimeout(() => {
+            if (this.summaryPanel) {
+              this.summaryPanel.open();
+            }
+          });
+
         } else if (res.step == "completed") {
           // this.alertService.showAlert('success','Product Created Successfully')
-          this.summaryPanel.open();
+          
+          this.selectedSection = "summary";
+          this.selectedOptionsList.push('uploadImages');
+          this.selectedOptionsList.push('watchDetails');
+          this.selectedOptionsList.push('conditionGrading');
+          this.selectedOptionsList.push('scopeofdelivery');
+          this.selectedOptionsList.push('priceshipment');
+          this.selectedOptionsList.push('billinginformation');
+          this.selectedOptionsList.push('summary');
+          setTimeout(() => {
+            if (this.summaryPanel) {
+              this.summaryPanel.open();
+            }
+          });
+
+        }
+        else if (res.step == "publishListing") {
+          // this.alertService.showAlert('success','Product Created Successfully')
+
+          
+          this.selectedSection = "summary";
+          this.selectedOptionsList.push('uploadImages');
+          this.selectedOptionsList.push('watchDetails');
+          this.selectedOptionsList.push('conditionGrading');
+          this.selectedOptionsList.push('scopeofdelivery');
+          this.selectedOptionsList.push('priceshipment');
+          this.selectedOptionsList.push('billinginformation');
+          this.selectedOptionsList.push('summary');
+          setTimeout(() => {
+            if (this.summaryPanel) {
+              this.summaryPanel.open();
+            }
+          });
+
+
         }
       }
     });
   }
 
   patchData(data) {
-    console.log("data", data);
     this.listingForm.get("brand_id").setValue(data?.brand.id);
+    this.myControl.setValue(data?.brand);
+    if(data?.brand){
+      this.listingForm.get("brand_id").disable();
+    }
     this.listingForm.get("name").setValue(data?.name);
     this.listingForm.get("model").setValue(data?.model);
     this.listingForm.get("title").setValue(data?.title);
@@ -564,34 +716,47 @@ export class CreateAccessoriesProductComponent implements OnInit {
       .setValue(data?.year_of_production);
     this.listingForm.get("approximation").setValue(data?.approximation);
     this.listingForm.get("unknown").setValue(data?.unknown);
-    this.listingForm
-      .get("category_ids")
-      .setValue(data?.categories.map((cat: any) => cat.id));
+    // this.listingForm
+    //   .get("category_ids")
+    //   .setValue(data?.categories.map((cat: any) => cat.id));
 
-    // this.watchDetailsForm.get("reference_number").setValue(data?.reference_number || '');
-    // this.watchDetailsForm.get("serial_no").setValue(data?.serial_no || '');
+    if(data?.categories) {
+    
+      let ids = data.categories.map((item: any) => item.id);
+      data.categories.map((item: any) => this.addCategory(item));
+      // this.filteredCategoryOptions=data.categories
+      this.listingForm.get("category_ids").setValue(ids);
+      if (ids.length > 0) {
+        this.listingForm.get("category_ids").disable();
+      }
+    }
 
-    // this.watchDetailsForm.get("gender").setValue(data?.gender || '');
-    // this.watchDetailsForm.get("movement").setValue(data?.movement || '');
-    // this.watchDetailsForm.get("case_diameter_value_1").setValue(data?.case_diameter_value_1 || '');
-    // this.watchDetailsForm.get("case_diameter_value_2").setValue(data?.case_diameter_value_2 || '');
-    // this.watchDetailsForm.get("dial_color").setValue(data?.dial_color || '');
-    // this.watchDetailsForm.get("caliber_movement").setValue(data?.caliber_movement || '');
-    // this.watchDetailsForm.get("base_caliber").setValue(data?.base_caliber || '');
-    // this.watchDetailsForm.get("power_reserve").setValue(data?.power_reserve || '');
-    // this.watchDetailsForm.get("no_of_jewels").setValue(data?.no_of_jewels || '');
-    // this.watchDetailsForm.get("frequency").setValue(data?.frequency || '');
-    // this.watchDetailsForm.get("additional_details").setValue(data?.additional_details || '');
-    // this.watchDetailsForm.get("case_material").setValue(data?.case_material || '');
-    // this.watchDetailsForm.get("bezel_material").setValue(data?.bezel_material || '');
-    // this.watchDetailsForm.get("thickness").setValue(data?.thickness || '');
-    // this.watchDetailsForm.get("crystal").setValue(data?.crystal || '');
-    // this.watchDetailsForm.get("water_resistance").setValue(data?.water_resistance || '');
-    // this.watchDetailsForm.get("dial_numerals").setValue(data?.dial_numerals || '');
-    // this.watchDetailsForm.get("bracelet_material").setValue(data?.bracelet_material || '');
-    // this.watchDetailsForm.get("bracelet_color").setValue(data?.bracelet_color || '');
-    // this.watchDetailsForm.get("type_of_clasp").setValue(data?.type_of_clasp || '');
-    // this.watchDetailsForm.get("clasp_material").setValue(data?.clasp_material || '');
+
+      
+    this.watchDetailsForm.get("reference_number").setValue(data?.reference_number || '');
+    this.watchDetailsForm.get("serial_no").setValue(data?.serial_no || '');
+
+    this.watchDetailsForm.get("gender").setValue(data?.gender || '');
+    this.watchDetailsForm.get("movement").setValue(data?.movement || '');
+    this.watchDetailsForm.get("case_diameter_value_1").setValue(data?.case_diameter_value_1 || '');
+    this.watchDetailsForm.get("case_diameter_value_2").setValue(data?.case_diameter_value_2 || '');
+    this.watchDetailsForm.get("dial_color").setValue(data?.dial_color || '');
+    this.watchDetailsForm.get("caliber_movement").setValue(data?.caliber_movement || '');
+    this.watchDetailsForm.get("base_caliber").setValue(data?.base_caliber || '');
+    this.watchDetailsForm.get("power_reserve").setValue(data?.power_reserve || '');
+    this.watchDetailsForm.get("no_of_jewels").setValue(data?.no_of_jewels || '');
+    this.watchDetailsForm.get("frequency").setValue(data?.frequency || '');
+    this.watchDetailsForm.get("additional_details").setValue(data?.additional_details || '');
+    this.watchDetailsForm.get("case_material").setValue(data?.case_material || '');
+    this.watchDetailsForm.get("bezel_material").setValue(data?.bezel_material || '');
+    this.watchDetailsForm.get("thickness").setValue(data?.thickness || '');
+    this.watchDetailsForm.get("crystal").setValue(data?.crystal || '');
+    this.watchDetailsForm.get("water_resistance").setValue(data?.water_resistance || '');
+    this.watchDetailsForm.get("dial_numerals").setValue(data?.dial_numerals || '');
+    this.watchDetailsForm.get("bracelet_material").setValue(data?.bracelet_material || '');
+    this.watchDetailsForm.get("bracelet_color").setValue(data?.bracelet_color || '');
+    this.watchDetailsForm.get("type_of_clasp").setValue(data?.type_of_clasp || '');
+    this.watchDetailsForm.get("clasp_material").setValue(data?.clasp_material || '');
 
     this.watchPrice = data?.price;
     this.shipping_type = data?.shipping_type;
@@ -628,20 +793,19 @@ export class CreateAccessoriesProductComponent implements OnInit {
         url: "https://api.chronosouq.com/" + data?.main_image,
       };
     }
-    if (data?.additional_images.length > 0) {
-      if (data?.additional_images) {
-        console.log("data?.additional_images", data?.additional_images)
-        this.otherImages = data?.additional_images.map(
-          (img) => (
-            {
-            file: null,
-            url: "https://api.chronosouq.com/" + img,
-            isUploading: false,
-          })
-        );
-      }
+    if (Array.isArray(data?.additional_images) && data?.additional_images.length > 0) {
+      this.otherImages = data?.additional_images.map(img => ({
+        file: null,
+        url: "https://api.chronosouq.com/" + img,
+        isUploading: false,
+      }));
+    } else {
+ 
     }
+    
   }
+
+  productDetails:any;
 
   paramTyepe: any = "Create";
 
@@ -658,53 +822,6 @@ export class CreateAccessoriesProductComponent implements OnInit {
       year_of_production: this.year_of_production,
       approximation: this.approximation,
       unknown: this.unknown,
-    });
-
-    this.getAllBrandsDropDown();
-    this.getCategoriesDropDown();
-    this.allDropDownData();
-    this.getBillingInformation();
-
-    if (history?.state.param == "Edit") {
-      this.paramTyepe = history?.state.param;
-      this.productID = history?.state?.data?.id;
-      if (this.productID) {
-        this.getSteeper(this.productID);
-      }
-      localStorage.setItem("userProductStoredId", this.productID);
-      this.patchData(history?.state?.data);
-    }
-
-    if (this.productID) {
-      this.getSteeper(this.productID);
-    }
-
-    this.filteredOptions = this.myControl.valueChanges.pipe(
-      startWith(""),
-      map((value) => {
-        const name = typeof value === "string" ? value : value?.name;
-        return name
-          ? this._filter(name as string)
-          : this.brandsList
-          ? this.brandsList.slice()
-          : [];
-      })
-    );
-    this.filteredCategoryOptions = this.myCategoryControl.valueChanges.pipe(
-      startWith(""),
-      map((value) => {
-        const name = typeof value === "string" ? value : value?.name;
-        return name
-          ? this._filterCategories(name as string)
-          : this.categoryList;
-      })
-    );
-
-    this.routerSubscription = this.router.events.subscribe((event) => {
-      if (event instanceof NavigationStart) {
-        // Clear the id from localStorage when navigating to a different route
-        localStorage.removeItem("userProductStoredId");
-      }
     });
 
     this.watchDetailsForm = new FormGroup({
@@ -742,6 +859,59 @@ export class CreateAccessoriesProductComponent implements OnInit {
       zip_code: this.zip_code,
       city: this.city,
     });
+
+    this.getAllBrandsDropDown();
+    this.getCategoriesDropDown();
+    this.allDropDownData();
+    this.getBillingInformation();
+
+    if (history?.state.param == "Edit") {
+      this.paramTyepe = history?.state.param;
+      this.productID = history?.state?.data?.id;
+      if (this.productID) {
+        this.getSteeper(this.productID);
+      }
+      localStorage.setItem("userProductStoredId", this.productID);
+      this.patchData(history?.state?.data);
+      this.productDetails= history?.state?.data;
+    }
+
+    if (this.productID || localStorage.getItem("userProductStoredId")) {
+      if(!this.productID){
+        this.productID = localStorage.getItem("userProductStoredId");
+      }
+      this.getSteeper(this.productID);
+    }
+
+    this.filteredOptions = this.myControl.valueChanges.pipe(
+      startWith(""),
+      map((value) => {
+        const name = typeof value === "string" ? value : value?.name;
+        return name
+          ? this._filter(name as string)
+          : this.brandsList
+          ? this.brandsList.slice()
+          : [];
+      })
+    );
+    this.filteredCategoryOptions = this.myCategoryControl.valueChanges.pipe(
+      startWith(""),
+      map((value) => {
+        const name = typeof value === "string" ? value : value?.name;
+        return name
+          ? this._filterCategories(name as string)
+          : this.categoryList;
+      })
+    );
+
+    this.routerSubscription = this.router.events.subscribe((event) => {
+      if (event instanceof NavigationStart) {
+        // Clear the id from localStorage when navigating to a different route
+        localStorage.removeItem("userProductStoredId");
+      }
+    });
+
+   
   }
 
   private _filterCategories(name: string): Category[] {
@@ -759,7 +929,6 @@ export class CreateAccessoriesProductComponent implements OnInit {
       this.formdropdownListData.watch_type = Object.entries(
         res.data.watch_type
       ).map(([key, value]) => ({ key, value }));
-      console.log("formdropdownListData", this.formdropdownListData);
       this.formdropdownListData.gender = Object.entries(res.data.gender).map(
         ([key, value]) => ({ key, value })
       );
@@ -813,35 +982,18 @@ export class CreateAccessoriesProductComponent implements OnInit {
   }
 
   countShipping() {
-    // console.log("Onshiping Charges Change is call")
-    // console.log("this.shipping_type",this.shipping_type)
-    // console.log("this.shipping_charges",this.shipping_charges)
     if (this.shipping_type == "inclusiveShipping") {
-      console.log("this.shipping_type is inclusiveShipping ");
       if (this.shipping_charges) {
-        console.log("this.shipping_charges", this.shipping_charges);
-        console.log(
-          "this.estimatedPayoutwithShipping bwfore",
-          this.estimatedPayoutwithShipping
-        );
+       
         this.estimatedPayoutwithShipping =
           Number(this.estimatedPayout) - Number(this.shipping_charges);
-        console.log(
-          "this.estimatedPayoutwithShipping after",
-          this.estimatedPayoutwithShipping
-        );
+        
       }
     } else {
       if (this.shipping_charges) {
-        console.log(
-          "this.estimatedPayoutwithShipping bwfore",
-          this.estimatedPayoutwithShipping
-        );
+       
         this.estimatedPayoutwithShipping = Number(this.estimatedPayout);
-        console.log(
-          "this.estimatedPayoutwithShipping after",
-          this.estimatedPayoutwithShipping
-        );
+       
       }
     }
   }
@@ -860,12 +1012,10 @@ export class CreateAccessoriesProductComponent implements OnInit {
 
   onSubmit(Param: string) {
     if (Param == "listingDetails") {
+
       if (this.myControl.value) {
-        this.listingForm
-          .get("brand_id")
-          .setValue(
-            this.myControl.value && typeof this.myControl.value !== "string"
-              ? this.myControl.value.id
+        this.listingForm.get("brand_id").setValue(
+            this.myControl.value && typeof this.myControl.value !== "string" ? this.myControl.value.id
               : null
           );
       }
@@ -877,20 +1027,58 @@ export class CreateAccessoriesProductComponent implements OnInit {
           );
       }
       this.listingForm.markAllAsTouched();
-      if (this.listingForm.valid) {
-        console.log("this.listingForm.value", this.listingForm.value);
 
-        this.http.saveAccesriesInformation(this.listingForm.value).subscribe(
-          (res) => {
-            this.productID = res.id;
-            this.alertService.showAlert(
-              "success",
-              "Product Created Successfully"
-            );
-            this.watchDetailsPanel.open();
-          },
-          (err) => {}
-        );
+      const formData= {
+        ...this.listingForm.value,
+        brand_id: this.listingForm.get("brand_id").value,
+        category_ids: this.listingForm.get("category_ids").value,
+      }
+      if (this.listingForm.valid) {
+        if(this.paramTyepe == "Edit" || localStorage.getItem("userProductStoredId")){
+          formData["product_id"] = this.productID;
+          formData["isUpdate"] = true;
+          this.http.editAccesriesInformation(formData).subscribe(
+            (res) => {
+              this.productID = res.id;
+              localStorage.setItem(
+                "userProductStoredId",this.productID
+              );
+              this.alertService.showAlert(
+                "success",
+                "Product Created Successfully"
+              );
+             this.selectedSection = "watchDetails";
+              // this.selectedOptionsList.push(this.selectedSection);
+
+              this.watchDetailsPanel.open();
+              
+            },
+            (err) => {}
+          );
+        }else{
+          this.http.saveAccesriesInformation(formData).subscribe(
+            (res) => {
+              this.productID = res.id;
+              localStorage.setItem(
+                "userProductStoredId",this.productID
+              );
+              this.alertService.showAlert(
+                "success",
+                "Listing Details add Successfully"
+              );
+              this.selectedSection = "watchDetails";
+              this.selectedOptionsList.push(this.selectedSection);
+              // this.watchDetailsPanel.open();
+
+              setTimeout(() => {
+                if (this.watchDetailsPanel) {
+                  this.watchDetailsPanel.open();
+                }
+              });
+            },
+            (err) => {}
+          );
+        }
       } else {
         const firstInvalidControl = Object.keys(this.listingForm.controls).find(
           (key) => {
@@ -913,7 +1101,6 @@ export class CreateAccessoriesProductComponent implements OnInit {
             );
           }
         } else {
-          // console.log("Form is valid, proceed with submission.");
           this.alertService.showAlert("warning", "Enter Form Values");
         }
       }
@@ -928,17 +1115,24 @@ export class CreateAccessoriesProductComponent implements OnInit {
           .saveAccesriesWatchDetails(watchDetailsData)
           .subscribe((res) => {
             this.productID = res.data.product_id;
+            localStorage.setItem(
+              "userProductStoredId",this.productID
+            );
             this.alertService.showAlert(
               "success",
-              "Product Created Successfully"
+              "Watch details add Successfully"
             );
-            this.uploadImagesPanel.open();
+            this.selectedSection = "uploadImages";
+              this.selectedOptionsList.push(this.selectedSection);
+            // this.uploadImagesPanel.open();
+            setTimeout(() => {
+              if (this.uploadImagesPanel) {
+                this.uploadImagesPanel.open();
+              }
+            });
           });
 
-        console.log(
-          "this.watchDetailsForm.value with productID",
-          watchDetailsData
-        );
+       
       } else {
         this.alertService.showAlert("warning", "Enter Form Values");
       }
@@ -981,11 +1175,21 @@ export class CreateAccessoriesProductComponent implements OnInit {
       formData.forEach((value, key) => console.log(key, value));
       this.http.saveAccesriesUploadImages(formData).subscribe((res) => {
         this.productID = res.data.product_id;
-        this.alertService.showAlert("success", "Product Created Successfully");
-        this.conditionGradingsPanel.open();
+        localStorage.setItem(
+          "userProductStoredId",this.productID
+        );
+        this.alertService.showAlert("success", "Media upload Successfully");
+        this.selectedSection = "conditionGrading";
+        this.selectedOptionsList.push(this.selectedSection);
+        // this.conditionGradingsPanel.open();
+
+        setTimeout(() => {
+          if (this.conditionGradingsPanel) {
+            this.conditionGradingsPanel.open();
+          }
+        });
       });
     } else if (Param == "conditionGrading") {
-      console.log("this.selectedCondition.title", this.selectedCondition.title);
       const formData = {
         condition: this.selectedCondition.title,
         product_id: this.productID,
@@ -993,20 +1197,38 @@ export class CreateAccessoriesProductComponent implements OnInit {
 
       this.http.saveAccesrieswatchCondition(formData).subscribe((res) => {
         this.productID = res.data.product_id;
-        this.alertService.showAlert("success", "Product Created Successfully");
-        this.scopeofdeliveryPanel.open();
+        this.alertService.showAlert("success", "Condition Grading add Successfully");
+        this.selectedSection = "scopeofdelivery";
+        this.selectedOptionsList.push(this.selectedSection);
+        // this.scopeofdeliveryPanel.open();
+
+        setTimeout(() => {
+          if (this.scopeofdeliveryPanel) {
+            this.scopeofdeliveryPanel.open();
+          }
+        });
       });
     } else if (Param == "scopeofdelivery") {
-      console.log("this.selectedOptions.title", this.selectedOptions.title);
       const formData = {
         scope_of_delivery: this.selectedOptions.title,
         product_id: this.productID,
       };
       this.http.saveAccesriesscopeOfDelivery(formData).subscribe((res) => {
         this.productID = res.data.product_id;
-        this.alertService.showAlert("success", "Product Created Successfully");
-        this.priceShipmentPanel.open();
-      });
+        localStorage.setItem(
+          "userProductStoredId",this.productID
+        );
+        this.alertService.showAlert("success", "Scope of Delivery Successfully");
+        this.selectedSection = "priceshipment";
+        this.selectedOptionsList.push(this.selectedSection);
+        // this.priceShipmentPanel.open();
+
+
+        setTimeout(() => {
+          if (this.priceShipmentPanel) {
+            this.priceShipmentPanel.open();
+          }
+        });      });
     } else if (Param == "priceshipment") {
       if (
         this.shipping_type === "inclusiveShipping" &&
@@ -1027,15 +1249,26 @@ export class CreateAccessoriesProductComponent implements OnInit {
           product_id: this.productID,
         };
 
-        console.log("formData", formData);
 
         this.http.saveAccesriespriceAndShipment(formData).subscribe((res) => {
           this.productID = res.data.product_id;
+          localStorage.setItem(
+            "userProductStoredId",this.productID
+          );
           this.alertService.showAlert(
             "success",
-            "Product Created Successfully"
+            "Price add Successfully"
           );
-          this.billingInformationPanel.open();
+          this.selectedSection = "billinginformation";
+          this.selectedOptionsList.push(this.selectedSection);
+          // this.billingInformationPanel.open();
+
+          setTimeout(() => {
+            if (this.billingInformationPanel) {
+              this.billingInformationPanel.open();
+            }
+          });
+
         });
       }
     } else if (Param == "billinginformation") {
@@ -1044,12 +1277,58 @@ export class CreateAccessoriesProductComponent implements OnInit {
         // billing_address: this.billing_address.value,
         product_id: this.productID,
       };
-      console.log("this.billing info", this.billingForm.value);
       this.http.saveAccesriesbillingInformation(formData).subscribe((res) => {
         this.productID = res.data.product_id;
-        this.alertService.showAlert("success", "Product Created Successfully");
-        this.summaryPanel.open();
+        localStorage.setItem(
+          "userProductStoredId",this.productID
+        );
+        this.alertService.showAlert("success", "Billing information add Successfully");
+        this.matchBrandname();
+        this.selectedSection = "summary";
+        this.selectedOptionsList.push(this.selectedSection);
+        // this.summaryPanel.open();
+
+        setTimeout(() => {
+          if (this.summaryPanel) {
+            this.summaryPanel.open();
+          }
+        });
+      });
+    }else if (Param == "summary") {
+      const formData = {
+        product_id: this.productID,
+      };
+      this.http.saveAccesriesSummary(formData).subscribe((res) => {
+        this.productID = res.data.product_id;
+        localStorage.setItem(
+          "userProductStoredId",this.productID
+        );
+        this.alertService.showAlert("success", "Product Published Successfully");
+        this.selectedSection = "summary";
+        this.selectedOptionsList.push(this.selectedSection);
+        // this.summaryPanel.open();
+
+        setTimeout(() => {
+          if (this.summaryPanel) {
+            this.summaryPanel.open();
+          }
+        });
       });
     }
+  }
+
+  brandnametoDisplay: any;
+
+  matchBrandname() {
+    let SelectedbrandID;
+    if (this.productDetails) {
+      SelectedbrandID = this.productDetails.brand.id;
+    } else {
+      SelectedbrandID = this.listingForm.get("brand_id").value;
+    }
+    const selectedBrand = this.brandsList.find(
+      (brand) => brand.id === SelectedbrandID
+    );
+    this.brandnametoDisplay = selectedBrand ? selectedBrand.name : null;
   }
 }

@@ -147,11 +147,22 @@ export class AccessoriesProductsComponent
         this.allData = res.data;
         
         this.allData.forEach((item) => {
-          if (item.additional_images && Array.isArray(item.additional_images)) {
-            // Remove backslashes from each image URL (or string)
-            item.additional_images = item.additional_images.map((image) => image.replace(/\\/g, ""));
+          if (item.additional_images && typeof item.additional_images === 'string') {
+            try {
+              // Parse the string into an array
+              const parsedImages = JSON.parse(item.additional_images);
+        
+              // Then remove the backslashes if needed (though JSON.parse handles them)
+              item.additional_images = parsedImages.map((image: string) =>
+                image.replace(/\\/g, "")
+              );
+            } catch (e) {
+              console.error("Error parsing additional_images:", item.additional_images, e);
+              item.additional_images = []; // fallback if parsing fails
+            }
           }
         });
+        
 
         this.dataSource = new MatTableDataSource(this.allData);
         this.dataSource.paginator = this.paginator;
