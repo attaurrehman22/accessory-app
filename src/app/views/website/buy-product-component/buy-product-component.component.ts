@@ -463,7 +463,7 @@ export class BuyProductComponentComponent implements OnInit {
     const dialogRef = this.dialog.open(
       OrderInitiatedModelComponent,
       {
-        width: "600px",
+        width: "700px",
         data: {
           label: "Do you want to see your order details or chat with seller ?",
           paragraph:
@@ -513,7 +513,7 @@ export class BuyProductComponentComponent implements OnInit {
     if (userLogin) {
       const dialogRef = this.dialog.open(ConfirmationModelComponent, {
         width: "600px",
-        data: { message: "Are you sure you want to buy this product" },
+        data: { message: "Are you sure you want to buy this product ?"  },
       });
 
       dialogRef.afterClosed().subscribe((result) => {
