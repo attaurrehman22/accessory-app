@@ -759,6 +759,7 @@ export class CreateAccessoriesProductComponent implements OnInit {
     this.watchDetailsForm.get("clasp_material").setValue(data?.clasp_material || '');
 
     this.watchPrice = data?.price;
+    this.discount_price=data?.discount_price;
     this.shipping_type = data?.shipping_type;
     this.shipping_charges = data?.shipping_charges;
     this.estimate_delivery = data?.estimate_delivery;
@@ -957,6 +958,7 @@ export class CreateAccessoriesProductComponent implements OnInit {
   }
 
   watchPrice: number = 0;
+  discount_price:any;
   shipping_type: any;
   shipping_charges: number = 0;
   estimate_delivery: any;
@@ -970,6 +972,11 @@ export class CreateAccessoriesProductComponent implements OnInit {
     this.watchPriceDisplay = this.watchPrice;
     this.platformFee = this.watchPrice * 0.04;
     this.estimatedPayout = this.watchPrice - this.platformFee;
+
+    if(this.discount_price){
+      this.estimatedPayout = this.estimatedPayout - this.discount_price;
+    }
+
     if (this.shipping_charges) {
       this.estimatedPayoutwithShipping =
         this.estimatedPayout - this.shipping_charges;
@@ -1242,6 +1249,7 @@ export class CreateAccessoriesProductComponent implements OnInit {
           price: this.watchPrice,
           shipping_type: this.shipping_type,
           shipping_charges: this.shipping_charges,
+          discount_price:this.discount_price,
           estimate_delivery: this.estimate_delivery,
           allow_to_make_offer: this.allow_to_make_offer,
           estimate_payout: this.estimatedPayoutwithShipping,

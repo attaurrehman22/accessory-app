@@ -207,7 +207,7 @@
 
       <div class="d-flex mt-4 gap-3">
         <p class="header-highligted-color brand-name-title">
-          {{ productDetails?.currency }} {{ productDetails?.price }}
+          <img src="../../../../assets/images/Saudi_Riyal_Symbol-2.svg" style="height: 30px !important;" class="sar-icon-style" alt="SAR"/> {{ productDetails?.price }}
         </p>
         <p class="color-666666 font-wight-400 font-size-14">
           {{
@@ -220,6 +220,12 @@
               : productDetails?.shipping_type
           }}
         </p>
+
+        <p *ngIf="productDetails?.discount_price" class="color-666666 font-wight-400 font-size-14" style="margin: 15px 0 0 0;">
+        <b style="font-size: 17px;
+    color: black;"> Discount </b>: <img src="../../../../assets/images/Saudi_Riyal_Symbol-2.svg" class="sar-icon-style" alt="SAR"/> {{ productDetails?.discount_price }}
+        </p>
+
       </div>
 
       <div class="d-flex flex-column">

@@ -1522,6 +1522,26 @@
             appearance="outline"
             [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'"
           >
+            <mat-label class="label-header">{{
+              "create_product_listing.discount_price" | translate
+            }}</mat-label>
+            <input
+              matInput
+              [(ngModel)]="discount_price"
+              placeholder="{{
+                'create_product_listing.discount_price_place' | translate
+              }}"
+              appPriceLimit
+              (input)="calculatePayout()"
+            />
+          </mat-form-field>
+
+          <mat-form-field
+            style="width: 100%"
+            class="full-width"
+            appearance="outline"
+            [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'"
+          >
             <mat-label class="label-header">
               {{
                 "create_product_listing.select_shipping_type" | translate

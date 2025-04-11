@@ -198,7 +198,7 @@ export class AccessoriesProductsComponent
   }
 
   deleteProduct(data) {
-    this.http.deleteAdminProducts(data.id).subscribe(
+    this.http.deleteAccesriesStepper(data.id).subscribe(
       (res) => {
         this.toast.showAlert("success", "Product Delete Susseccfully");
         this.loadData();
@@ -210,12 +210,12 @@ export class AccessoriesProductsComponent
   }
 
   activateProduct(data) {
-    this.http.activateAdminProducts(data.id).subscribe(
+    this.http.toogleActiveAccesriesInformation(data.id).subscribe(
       (res) => {
         if (res.data.is_active === true) {
-          this.toast.showAlert("success", "Product add to Susseccfully");
+          this.toast.showAlert("success", "Accessory Activate Susseccfully");
         } else {
-          this.toast.showAlert("success", "Product De-activate Susseccfully");
+          this.toast.showAlert("success", "Accessory De-activate Susseccfully");
         }
         this.loadData();
       },
@@ -226,10 +226,9 @@ export class AccessoriesProductsComponent
   }
 
   addPopularProduct(data) {
-    this.http.topAdminPopularProducts(data.id).subscribe(
+    this.http.addPopularAccesriesInformation(data.id).subscribe(
       (res) => {
-        this.toast.showAlert("success", "Product move on top Susseccfully");
-
+        this.toast.showAlert("success", "Accessory move on top Susseccfully");
         this.loadData();
       },
       (err) => {
@@ -239,9 +238,9 @@ export class AccessoriesProductsComponent
   }
 
   addFeatureProduct(data) {
-    this.http.topFeatureProducts(data.id).subscribe(
+    this.http.addFeatureAccesriesInformation(data.id).subscribe(
       (res) => {
-        this.toast.showAlert("success", "Product Add Features Susseccfully");
+        this.toast.showAlert("success", "Accessory Add Features Susseccfully");
 
         this.loadData();
       },

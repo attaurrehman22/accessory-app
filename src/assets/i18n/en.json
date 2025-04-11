@@ -561,6 +561,11 @@
     "Preview_your_Ad":" Preview your Ad",
     "upload_video":"Upload Video",
     "upload_images": "Upload Media"
+
+    ,
+
+    "discount_price_place" :"Enter Discount Price",
+    "discount_price" :"Discount Price"
   },
 
   "chat_com":{

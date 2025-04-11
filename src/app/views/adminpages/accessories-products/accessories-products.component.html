@@ -156,23 +156,28 @@
                             <mat-icon>more_vert</mat-icon>
                           </button>
                           <mat-menu #menu="matMenu">
-                            <!-- <button mat-menu-item (click)="deleteProduct(row)">
+                            <button mat-menu-item (click)="deleteProduct(row)">
                               <mat-icon>delete</mat-icon>
                               <span>Delete</span>
-                            </button> -->
+                            </button>
                             <button mat-menu-item (click)="editProduct(row)">
                               <mat-icon>edit</mat-icon>
                               <span>Edit</span>
                             </button>
-                            <!-- <button mat-menu-item (click)="addPopularProduct(row)">
+                             <button mat-menu-item (click)="activateProduct(row)">
                               <mat-icon>refresh</mat-icon>
-                              <span>Add To Popular</span>
+                              <span>Active Accessory</span>
+                            </button>
+
+                            <button mat-menu-item (click)="addPopularProduct(row)">
+                              <mat-icon>refresh</mat-icon>
+                              <span>Add to Popular</span>
                             </button>
   
-                            <button mat-menu-item (click)="addFeatureProduct(row)">
+                           <button mat-menu-item (click)="addFeatureProduct(row)">
                               <mat-icon>refresh</mat-icon>
                               <span>Add To Feature</span>
-                            </button> -->
+                            </button>
                           </mat-menu>
                         </td>
                       </ng-container>

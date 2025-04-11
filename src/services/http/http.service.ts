@@ -940,6 +940,43 @@ export class HttpService implements OnInit {
       });
     }
 
+    toogleActiveAccesriesInformation(ID): Observable<any> {
+      return this.http.patch(`${this.apiUrl}/api/admin/accessories/${ID}/toggle-active`, {},{
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${this.token}`,
+        },
+      });
+    }
+
+    addPopularAccesriesInformation(ID): Observable<any> {
+      return this.http.patch(`${this.apiUrl}/api/admin/accessories/${ID}/toggle-popular`, {},{
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${this.token}`,
+        },
+      });
+    }
+
+    addFeatureAccesriesInformation(ID): Observable<any> {
+      return this.http.patch(`${this.apiUrl}/api/admin/accessories/${ID}/toggle-feature`, {},{
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${this.token}`,
+        },
+      });
+    }
+
+
+    deleteAccesriesStepper(ID): Observable<any> {
+      return this.http.delete(`${this.apiUrl}/api/admin/accessories/${ID}`, {
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${this.token}`,
+        },
+      });
+    }
+
     saveAccesriesWatchDetails(formData): Observable<any> {
       return this.http.post(`${this.apiUrl}/api/accessories/listing/watchDetails`, formData, {
         headers: {

@@ -520,7 +520,11 @@
     "publish_btn": "نشر",
     "Preview_your_Ad": "معاينة إعلانك",
       "upload_video": "تحميل الفيديو",
-  "upload_images": "تحميل الوسائط"
+  "upload_images": "تحميل الوسائط",
+
+  "discount_price_place": "أدخل سعر الخصم",
+"discount_price": "سعر الخصم"
+
 
   },
 
