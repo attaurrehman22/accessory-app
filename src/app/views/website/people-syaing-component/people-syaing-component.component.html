@@ -8,10 +8,13 @@
     </p>
   </div>
   @if(!!testimonials){
-
   <div *ngIf="testimonials && testimonials.length > 0" class="col-12 carosal-div mt-3">
-    <div id="testimonialCarousel" class="carousel slide carousel-fade carousal-div pt-3 pb-3" data-bs-ride="carousel"
-      #testimonialCarousel>
+    <div id="testimonialCarousel" 
+    class="carousel slide carousel-fade carousal-div pt-3 pb-3" 
+    data-bs-ride="carousel" 
+    data-bs-interval="5000"
+    #testimonialCarousel>
+
       <div class="carousel-inner carosal-inner-custom">
 
         <div *ngFor="let testimonial of testimonials; let i = index" class="carousel-item"
@@ -57,7 +60,7 @@
 
       <div class="card-list gap-5">
         <div class="d-flex justify-content-center">
-          <div class="card border-0 shadow p-4 mb-5 bg-white rounded">
+          <div class="card border-0 shadow p-4 mb-5 bg-white rounded" [ngClass]="{ 'animate-card': animationTrigger }">
             @if(!!testimonials){
             <div class="row no-gutters"  [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }">
               <div class="col-md-4 d-flex justify-content-center align-items-center">
@@ -93,7 +96,7 @@
 
         <!-- Third Testimonial (Next after second) -->
         <div class="d-flex justify-content-center">
-          <div class="card border-0 shadow p-4 mb-5 bg-white rounded">
+          <div class="card border-0 shadow p-4 mb-5 bg-white rounded" [ngClass]="{ 'animate-card': animationTrigger }">
             @if(!!testimonials){
             <div class="row no-gutters" [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }">
               <div class="col-md-4 d-flex justify-content-center align-items-center">
@@ -139,7 +142,6 @@
         <span class="visually-hidden">Next</span>
       </button>
       
-
     </div>
   </div>
   }

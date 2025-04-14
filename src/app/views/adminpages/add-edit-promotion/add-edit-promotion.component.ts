@@ -28,7 +28,6 @@ promotionID:any;
     public dialogRef: MatDialogRef<AddEditPromotionComponent>,
     @Inject(MAT_DIALOG_DATA) data: any
   ) {
-    console.log("Data", data);
 
     // Initialize form in the constructor
     this.promotionForm = this.fb.group({
@@ -126,7 +125,6 @@ promotionID:any;
       }
     }
     if (this.promotionForm.valid && this.labelMessage == "Add New Promotion") {
-      console.log("FormData:", formData);
 
       this.http.AddPromotionProducts(formData).subscribe(
         (res) => {
@@ -182,7 +180,6 @@ promotionID:any;
         }
     } else {
       this.alertService.showAlert("warning", "Please add form values");
-      console.log("Form is invalid");
     }
   }
 

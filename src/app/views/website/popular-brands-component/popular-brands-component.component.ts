@@ -88,7 +88,6 @@ export class PopularBrandsComponentComponent implements OnInit {
 
         // ✅ Now log the related product
         const product = this.sliderImages[highlightIndex];
-        console.log("Highlighted product:", product);
         // Clear any existing countdown before starting a new one
       this.clearCountdown(this.currentIndex);
 
@@ -116,7 +115,6 @@ export class PopularBrandsComponentComponent implements OnInit {
     if (this.imageSlider) {
       // ✅ Get first visible image index (assuming the first one in list is visible)
       this.currentIndex = (this.currentIndex + 1) % this.sliderImages.length;
-      console.log("First visible image:", this.sliderImages[this.currentIndex]);
     }
   }
 

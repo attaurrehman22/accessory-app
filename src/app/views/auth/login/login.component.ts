@@ -130,8 +130,7 @@ export class LoginComponent implements OnInit {
       const token = credential?.accessToken;
       const user = result.user;
 
-      console.log("token",token)
-      console.log("user",user)
+   
 
       // ✅ Send Google token to your backend for verification
       // this.http.googleLogin({ token }).subscribe(

@@ -226,7 +226,7 @@ export class AddProductWatchOfTheDayComponent {
 
   // Save data
   saveData() {
-    console.log("watchForm", this.watchDayForm);
+
     //  this.cdRef.detectChanges();
     if (!this.param) {
       if (
@@ -256,7 +256,6 @@ export class AddProductWatchOfTheDayComponent {
             this.watchDayForm.get("english_text")?.value
           );
 
-          console.log("arabic calling");
           formData.append(
             "arabic_text",
             this.watchDayForm.get("arabic_text")?.value
@@ -284,7 +283,7 @@ export class AddProductWatchOfTheDayComponent {
         );
       } else {
         this.alertService.showAlert("warning", "Add Form Values");
-        console.log("Form is invalid");
+
       }
     } else {
       if (
@@ -343,7 +342,7 @@ export class AddProductWatchOfTheDayComponent {
         );
       } else {
         this.alertService.showAlert("warning", "Add Form Values");
-        console.log("Form is invalid");
+        
       }
     }
   }

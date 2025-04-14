@@ -130,7 +130,6 @@ export class AdminBrandsComponent implements OnInit, AfterViewInit, OnDestroy {
   allBrands:any;
 
   filterBrands(){
-    console.log("selectedValue", this.selectedValue);
     if (this.selectedValue == 'allBrands') {
       this.allData = this.allBrands;
       this.dataSource = new MatTableDataSource(this.allData);

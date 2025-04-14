@@ -115,7 +115,6 @@ export class MyListingDetailsComponent implements OnInit {
   }
 
   submitBillingForm() {
-    console.log("this.billingForm", this.billingForm.value);
     if (this.billingForm.invalid) {
       this.alertService.showAlert("warning", "Please fill all the fields");
     } else {
@@ -177,7 +176,6 @@ export class MyListingDetailsComponent implements OnInit {
   }
 
   startChat(product) {
-    console.log("product", product);
     this.router.navigate(["/chat"], {
       state: { data: product },
     });
@@ -446,7 +444,6 @@ export class MyListingDetailsComponent implements OnInit {
   offerValidity: any;
 
   sendSellerOffer() {
-    console.log("Function calling");
     let userIDD;
     if (localStorage.getItem("userID")) {
       userIDD = localStorage.getItem("userID").toString();
@@ -465,7 +462,6 @@ export class MyListingDetailsComponent implements OnInit {
       validity_days: this.offerValidity || 0,
     };
 
-    console.log("formData", formData);
 
     this.http.sendOffer(formData).subscribe(
       (res) => {
@@ -538,7 +534,6 @@ export class MyListingDetailsComponent implements OnInit {
 
   sendProofofShipMent() {
     if (this.uploadedFiles.length === 0) {
-      console.log("No files selected.");
       return;
     }
 
@@ -568,7 +563,6 @@ export class MyListingDetailsComponent implements OnInit {
       }
     );
 
-    console.log("formData", formData);
   }
 
   cancelProofofShipMent() {

@@ -39,7 +39,6 @@ export class CustomOfferComponent {
     }
     if(this.data?.customOfferDetails?.product){
       this.offerDetails=data?.customOfferDetails;
-      console.log("offerDetails days",this.offerDetails?.days);
       this.validDays=data?.customOfferDetails?.days?.toString();
       this.productPrice=this.data?.customOfferDetails?.product?.price
     }
@@ -48,12 +47,12 @@ export class CustomOfferComponent {
     }
 
     if(data?.productDetailsfromChat){
-      console.log("data?.productDetailsfromChat",data?.productDetailsfromChat)
+
       this.getProductDetails = data?.productDetailsfromChat;
     }
 
     if(this.compoName == "buyComp") {
-      console.log("this.data?.productDetail?",this.data?.productDetail)
+
       this.getProductDetails = this.data?.productDetail;
     }
 
@@ -150,7 +149,7 @@ export class CustomOfferComponent {
             this.dialogRef.close(this.offerForm.value);
           },
           (err) => {
-            console.log("err message",err.error);
+
             if(err && err.error && err.error.error){
               this.alertService.showAlert("warning", err.error.error);
             }else{
@@ -172,7 +171,7 @@ export class CustomOfferComponent {
             this.dialogRef.close(this.offerForm.value);
           },
           (err) => {
-            console.log("err message",err.error);
+       
             if(err && err.error && err.error.error){
               this.alertService.showAlert("warning", err.error.error);
             }else{

@@ -79,8 +79,6 @@ export class ChatComponent implements OnInit, AfterViewChecked {
       this.loginFirst()
     }
 
-    console.log("history?.state?.data open" ,history?.state)
-
 
     if(history?.state?.chatID){
       this.getLatestMessage();
@@ -304,7 +302,7 @@ if (filteredChats.length > 0) {
   }
 
   editOffer(customOfferDetails: any) {
-    console.log("Offer Details", customOfferDetails);
+
     const dialogRef = this.dialog.open(CustomOfferComponent, {
       width: "600px",
       data: { customOfferDetails: customOfferDetails,
@@ -401,27 +399,20 @@ if (filteredChats.length > 0) {
 
   activeOption(option: any) {
     this.isActive = option;
-    console.log("this.isActive", this.isActive);
-    console.log("this.chats", this.chats);
-    console.log("option", option);
     if (option === "All") {
       this.filteredChats=this.chats;
     }else if(option == "Buy") {
       this.filteredChats = this.chats.filter((item: any) => {
-        console.log("item.product.created_by.id", item.product.created_by.id);
-        console.log("localStorage.getItem('userID')", localStorage.getItem("userID"));
+
         return item.product.created_by.id != localStorage.getItem("userID");
       });
     }else if(option == "Sell") {
       this.filteredChats = this.chats.filter((item: any) => {
-        console.log("item.product.created_by.id", item.product.created_by.id);
-        console.log("localStorage.getItem('userID')", localStorage.getItem("userID"));
        return  item.product.created_by.id == localStorage.getItem("userID");
       }
       ); 
     }
 
-    console.log("this.chats", this.chats);
     if (this.chats.length === 0) {
       this.alertService.showAlert(
         "warning",
@@ -697,7 +688,6 @@ if (filteredChats.length > 0) {
             }
           }
         );
-        console.log("result?.soldMark",result?.soldMark)
         if(result?.soldMark == true){ 
           const formData = {
             product_id: this.messages[0].product_id,

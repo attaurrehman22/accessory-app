@@ -330,7 +330,6 @@ export class ProductListComponent implements OnInit {
 
     const rangeRect = this.range.nativeElement.getBoundingClientRect();
     let newLeft = ((event.clientX - rangeRect.left) / rangeRect.width) * 100;
-    console.log("newLeft",newLeft)
     // Constrain within bounds (0% to 100%)
     newLeft = Math.max(0, Math.min(100, newLeft));
 

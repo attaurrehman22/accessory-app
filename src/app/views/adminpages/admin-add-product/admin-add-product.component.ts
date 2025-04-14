@@ -26,7 +26,7 @@ export class AdminAddProductComponent {
     @Inject(MAT_DIALOG_DATA) data: any
   ) {
     this.product=data.data;
-    console.log("this.product",this.product)
+
     if (this.product) {
       this.productMainImage = this.product.main_image;
     
@@ -38,15 +38,12 @@ export class AdminAddProductComponent {
         this.thumbnails = []; // Default to an empty array if parsing fails
       }
     
-      console.log("this.thumbnails", this.thumbnails);
-    
       if (!Array.isArray(this.thumbnails)) {
         this.thumbnails = []; // Ensure it's an array
       }
     
       // Add proof images if they exist
       if (this.product?.proof_image_1) {
-        console.log("this.product.proof_image_1", this.product.proof_image_1);
         this.thumbnails.push(this.product.proof_image_1);
       }
     

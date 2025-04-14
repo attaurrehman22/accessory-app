@@ -18,7 +18,6 @@ export class eamFindDreamComponentComponent implements OnInit {
 
   ngOnInit(): void {
     this.isUserLogin=localStorage.getItem('isLoggedIn')
-    console.log("isUserLogin",this.isUserLogin)
     this.getStatics();
     this.getSlideData();
   }

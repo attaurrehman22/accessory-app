@@ -17,10 +17,10 @@ export class LoaderService {
       filter(event => event instanceof NavigationEnd) // listen to route changes
     ).subscribe(event => {
       const currentRoute = this.router.url;
-      console.log('Current Route:', currentRoute);
+    
       // Skip loader for specific routes
       if (currentRoute.includes('/product-list') || currentRoute.includes('/login') || currentRoute.includes('/register')) {
-        console.log('Skipping loader for /product-list');
+      
         this.isLoadingSubject.next(false); // Set loader to false for /product-list
       } else {
         this.isLoadingSubject.next(true); // Default to show loader for other routes

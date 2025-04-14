@@ -122,7 +122,7 @@ export class TopBrandsLogosComponent implements OnInit, AfterViewInit, OnDestroy
             return product;
           });
   
-        console.log("allData", this.allData);
+
   
         this.dataSource = new MatTableDataSource(this.allData);
         this.dataSource.paginator = this.paginator;

@@ -253,22 +253,16 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
   }
 
   countShipping(){
-    // console.log("Onshiping Charges Change is call")
-    // console.log("this.shipping_type",this.shipping_type)
-    // console.log("this.shipping_charges",this.shipping_charges)
+
     if(this.shipping_type == 'inclusiveShipping'){
-      console.log("this.shipping_type is inclusiveShipping ")
+
       if(this.shipping_charges){
-        console.log("this.shipping_charges",this.shipping_charges)
-        console.log("this.estimatedPayoutwithShipping bwfore",this.estimatedPayoutwithShipping)
+       
         this.estimatedPayoutwithShipping = Number(this.estimatedPayout) - Number(this.shipping_charges);
-        console.log("this.estimatedPayoutwithShipping after",this.estimatedPayoutwithShipping)
       }
     }else{
       if(this.shipping_charges){
-        console.log("this.estimatedPayoutwithShipping bwfore",this.estimatedPayoutwithShipping)
         this.estimatedPayoutwithShipping = Number(this.estimatedPayout);
-        console.log("this.estimatedPayoutwithShipping after",this.estimatedPayoutwithShipping)
       }
     }
   }
@@ -1582,7 +1576,7 @@ currentStepper:any='';
           } else {
             this.alertService.showAlert("warning", "Error in adding Images");
           }
-          console.log("err", err);
+   
         }
       );
     } else if (Param === "conditionGrading") {

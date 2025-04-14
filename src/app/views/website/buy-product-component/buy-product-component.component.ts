@@ -49,8 +49,7 @@ export class BuyProductComponentComponent implements OnInit {
   getDealerSince(createdAt: string): string {
     if (!createdAt) return "";
     const year = new Date(createdAt).getFullYear();
-    // const browserLang = this.translateService.getBrowserLang();
-    // console.log("Current lang",browserLang)
+ 
     if (this.translateService.currentLang == "en") {
       return `Since ${year}`;
     } else {
@@ -121,13 +120,13 @@ export class BuyProductComponentComponent implements OnInit {
   selectedType: string = "image";
 
   swapImages(clickedItem: { url: string; type: string }): void {
-    console.log("clickedItem", clickedItem);
+
     if (clickedItem.type === "image") {
       this.selectedImage = clickedItem.url; // Extract only the URL
       this.selectedType = "image"; // Set the selected type to 'image'
     }
     if (clickedItem.type === "video") {
-      console.log("clickedItem", clickedItem);
+
       this.selectedImage = clickedItem.url; // Extract only the URL
       this.selectedType = "video"; // Set the selected type to 'video'
     }

@@ -53,7 +53,6 @@ export class AdminBrandsProductComponent {
     });
     if(data?.data){
       this.data=data.data;
-      console.log("DATA ----- ",this.data)
       this.populateForm(this.data);
     }
   }

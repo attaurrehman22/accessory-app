@@ -109,8 +109,6 @@ export class AdminProductsComponent
         end_date: prod.end_date,
         discount: prod.discount,
       }));
-
-      console.log("productPromotionsList", this.productPromotionsList);
     } catch (err) {
       console.error("Error fetching promotion products:", err);
     }
@@ -210,7 +208,7 @@ export class AdminProductsComponent
           );
 
           if (matchedPromotion) {
-            console.log("matchedPromotion", matchedPromotion);
+      
             // ✅ Merge matched promotion details into product
             product.promotion_id = matchedPromotion.promotion_id;
             product.promotion_type = matchedPromotion.promotion_type;
@@ -228,7 +226,7 @@ export class AdminProductsComponent
 
         // ✅ Set DataSource
         this.dataSource.data = formattedData;
-        console.log("formattedData", formattedData);
+
         this.resultsLength = data.data.total;
         // ✅ Bind paginator and sort explicitly after setting the data source
         this.dataSource.paginator = this.paginator;
@@ -344,7 +342,7 @@ export class AdminProductsComponent
   }
 
   deletePromoteProduct(row) {
-    console.log("promotion_id", row.promotion_id);
+
     const dialogRef = this.dialog.open(ConfirmationModelComponent, {
       width: "600px",
       data: {

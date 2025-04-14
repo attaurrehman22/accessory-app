@@ -137,7 +137,6 @@ export class HeaderComponent {
     if(this.userToken){
       this.getUserDetails()
     }
-    console.log("isUser Login",this.isUserLoggedIn)
 
     this.router.events.pipe(
       filter(event => event instanceof NavigationEnd)
@@ -165,7 +164,6 @@ export class HeaderComponent {
     this.http.gtUserDetails().subscribe(
       (res)=>{
       this.userDetails = res.user
-      console.log("user details",res)
     })
   }
 
