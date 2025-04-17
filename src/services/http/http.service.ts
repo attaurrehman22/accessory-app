@@ -112,6 +112,16 @@ export class HttpService implements OnInit {
     });
   }
 
+  removeProduct(ID: any): Observable<any> {
+    const url = `${this.apiUrl}/api/products/${ID}`;
+    return this.http.delete(url, {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+  }
+
   gtUserDetails(): Observable<any> {
     const url = `${this.apiUrl}/api/me`;
     return this.http.get(url, {

@@ -344,6 +344,86 @@ export class MyListingDetailsComponent implements OnInit {
   lengthTwoofSeller: boolean = false;
   isSellerDeliveryInprogress: boolean = false;
 
+  // fetchOrderStatus(orderID: number, type: "seller" | "buyer"): void {
+  //   this.getOrderStatus(orderID).subscribe(
+  //     (res) => {
+  //       if (type === "seller") {
+  //         if (
+  //           res?.status_flow?.initiated &&
+  //           res?.status_flow?.awaiting_confirmation &&
+  //           !res?.status_flow?.make_payment
+  //         ) {
+  //           this.lengthTwoofSeller = true;
+  //         }
+
+  //         if (
+  //           res?.status_flow?.delivery_in_progress &&
+  //           !res?.status_flow?.order_delivered
+  //         ) {
+  //           this.isSellerDeliveryInprogress = true;
+  //         }
+
+  //         this.sellerDetails = res;
+  //         this.orderID = res.order_id;
+  //         if (res?.status_flow) {
+  //           if (res?.status_flow?.initiated) {
+  //             this.sellerStatuses[0].active = true;
+  //           }
+  //           if (res?.status_flow?.awaiting_confirmation) {
+  //             this.sellerStatuses[1].active = true;
+  //           }
+  //           if (res?.status_flow?.make_payment) {
+  //             this.sellerStatuses[2].active = true;
+  //           }
+  //           if (res?.status_flow?.preparing_shipment) {
+  //             this.sellerStatuses[3].active = true;
+  //           }
+  //           if (res?.status_flow?.delivery_in_progress) {
+  //             this.sellerStatuses[4].active = true;
+  //           }
+  //           if (res?.status_flow?.order_delivered) {
+  //             this.sellerStatuses[5].active = true;
+  //           }
+  //           if (res?.status_flow?.order_completed) {
+  //             this.sellerStatuses[6].active = true;
+  //           }
+  //         }
+  //       } else if (type === "buyer") {
+  //         this.buyerDetails = res;
+  //         if (res?.status_flow) {
+  //           if (res?.status_flow?.initiated) {
+  //             this.statuses[0].active = true;
+  //           }
+  //           if (res?.status_flow?.awaiting_confirmation) {
+  //             this.statuses[1].active = true;
+  //           }
+  //           if (res?.status_flow?.make_payment) {
+  //             this.statuses[2].active = true;
+  //           }
+  //           if (res?.status_flow?.preparing_shipment) {
+  //             this.statuses[3].active = true;
+  //           }
+  //           if (res?.status_flow?.delivery_in_progress) {
+  //             this.statuses[4].active = true;
+  //           }
+  //           if (res?.status_flow?.order_delivered) {
+  //             this.statuses[5].active = true;
+  //           }
+  //           if (res?.status_flow?.order_completed) {
+  //             this.statuses[6].active = true;
+  //           }
+  //         }
+  //       }
+  //       this.getOrderDetails();
+  //     },
+  //     (error) => {
+  //       console.error("Error fetching order status:", error);
+  //     }
+  //   );
+  // }
+
+  activeSellerStatuses:any
+
   fetchOrderStatus(orderID: number, type: "seller" | "buyer"): void {
     this.getOrderStatus(orderID).subscribe(
       (res) => {
@@ -355,16 +435,20 @@ export class MyListingDetailsComponent implements OnInit {
           ) {
             this.lengthTwoofSeller = true;
           }
-
+  
           if (
             res?.status_flow?.delivery_in_progress &&
             !res?.status_flow?.order_delivered
           ) {
             this.isSellerDeliveryInprogress = true;
           }
-
+  
           this.sellerDetails = res;
           this.orderID = res.order_id;
+  
+          // Reset all to inactive
+          this.sellerStatuses.forEach((s) => (s.active = false));
+  
           if (res?.status_flow) {
             if (res?.status_flow?.initiated) {
               this.sellerStatuses[0].active = true;
@@ -388,8 +472,15 @@ export class MyListingDetailsComponent implements OnInit {
               this.sellerStatuses[6].active = true;
             }
           }
+  
+          // 🔥 Filter only active statuses for display
+          this.activeSellerStatuses = this.sellerStatuses.filter((s) => s.active);
         } else if (type === "buyer") {
           this.buyerDetails = res;
+        
+          // Reset all to inactive
+          this.statuses.forEach((s) => (s.active = false));
+        
           if (res?.status_flow) {
             if (res?.status_flow?.initiated) {
               this.statuses[0].active = true;
@@ -413,7 +504,11 @@ export class MyListingDetailsComponent implements OnInit {
               this.statuses[6].active = true;
             }
           }
+        
+          // 🔥 Filter only active buyer statuses
+          this.activeBuyerStatuses = this.statuses.filter((s) => s.active);
         }
+  
         this.getOrderDetails();
       },
       (error) => {
@@ -421,12 +516,22 @@ export class MyListingDetailsComponent implements OnInit {
       }
     );
   }
+  
+  activeBuyerStatuses: any[] = [];
 
   getOrderStatus(orderID: number): Observable<any> {
     return this.http.getOrderStatus(orderID);
   }
 
-  deleteListing(listing) {}
+  deleteListing(listing) {
+    this.http.removeProduct(listing.id).subscribe(
+      (res)=>{
+        this.alertService.showAlert('success','Product Delete Successfully')
+      },(err)=>{
+        this.alertService.showAlert('warning','Error in Deleting Product')
+      }
+    )
+  }
 
   showSellerConfirmOrderAvailability: boolean = false;
   showSellerProofofShipping: boolean = false;

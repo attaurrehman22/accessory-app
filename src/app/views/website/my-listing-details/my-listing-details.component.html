@@ -10,7 +10,7 @@
 >
   <div class="col-12 d-flex flex-wrap mb-3">
     <div class="col-md-3">
-      <div class="d-flex flex-column p-3 bg-light">
+      <div class="d-flex flex-column p-lg-3 p-md-1 p-sm-1 bg-light">
         <ul class="nav nav-pills flex-column mb-auto">
           <li class="nav-item" *ngFor="let item of menuItems; let i = index">
             <a
@@ -28,7 +28,7 @@
       <!-- if "My Listing" is Active -->
       <div *ngIf="activeIndex === 3" class="container">
         <div class="d-flex justify-content-between align-items-center mb-3">
-          <h4 class="">My Listings</h4>
+          <h4 class="mobile-label">My Listings</h4>
           <div class="d-flex justify-content-between align-items-center gap-2">
             <div>
               <select class="form-select form-select-sm" style="width: 150px">
@@ -51,13 +51,13 @@
         <div class="list-cards">
           <div *ngFor="let listing of listings" class="card mb-3">
             <div class="card-body d-flex align-items-center">
-              <div class="col-md-6">
-                <small class="text-muted">
+              <div class="col-11">
+                <small class="text-muted mobile-label">
                   Listing ID {{ listing.listing_code || "N/A" }} | Created
                   {{ listing.created_at | date : "yyyy-MM-dd" }}
                 </small>
 
-                <h6 class="mt-1 mb-1">
+                <h6 class="mt-1 mb-1 mobile-label">
                   {{ listing.brand.name }} {{ listing.model }}
                   {{ listing.title }}
                 </h6>
@@ -70,7 +70,7 @@
                     : "N/A"
                 }}</span>
               </div>
-              <div class="col-md-6 d-flex justify-content-end">
+              <div class="col-1 d-flex justify-content-end">
                 <button
                   mat-icon-button
                   [matMenuTriggerFor]="menu"
@@ -230,7 +230,7 @@
       <!-- if "Shipping Address" is Active -->
       <div *ngIf="activeIndex === 1" class="container">
         <form [formGroup]="billingForm">
-          <h3>Shipping Address</h3>
+          <h3 class="mobile-label">Shipping Address</h3>
           <div class="row">
             <div class="col-md-6 mb-3">
               <label for="firstName" class="form-label">First Name</label>
@@ -419,7 +419,7 @@
           *ngIf="!isShowBuyOrdersListngDetails"
           class="d-flex justify-content-between align-items-center mb-3"
         >
-          <h4 class="">Buy Orders</h4>
+          <h4 class="mobile-label">Buy Orders</h4>
           <div class="d-flex justify-content-between align-items-center gap-2">
             <div>
               <select class="form-select form-select-sm" style="width: 150px">
@@ -443,14 +443,14 @@
           <div class="" *ngIf="!isShowBuyOrdersListngDetails">
             <div *ngFor="let listing of buyOrdersListings" class="card mb-3">
               <div class="card-body d-flex align-items-center">
-                <div class="col-md-6">
-                  <small class="text-muted">
+                <div class="col-11">
+                  <small class="text-muted mobile-label">
                     Listing ID {{ listing.product.listing_code || "N/A" }} |
                     Created
                     {{ listing.product.created_at | date : "yyyy-MM-dd" }}
                   </small>
 
-                  <h6 class="mt-1 mb-1">
+                  <h6 class="mt-1 mb-1 mobile-label">
                     {{ listing.product.brand.name }} {{ listing.product.model }}
                     {{ listing.product.title }}
                   </h6>
@@ -459,7 +459,7 @@
                     listing?.product.status || "In Process"
                   }}</span>
                 </div>
-                <div class="col-md-6 d-flex justify-content-end">
+                <div class="col-1 d-flex justify-content-end">
                   <button
                     mat-icon-button
                     [matMenuTriggerFor]="menu"
@@ -497,8 +497,10 @@
                     class="col-md-12 d-flex flex-wrap align-items-center"
                     style="background: #f9fafb"
                   >
-                    <div class="col-md-11 d-flex flex-wrap align-items-center">
-                      <button (click)="setActive(4)" class="prev-btn"><</button>
+                    <div class="col-11 d-flex align-items-center">
+                      <button (click)="setActive(4)" class="prev-btn">
+                        <img src="../../../../assets/images/prev_btn.png" alt="IMG" class="prev-btn-img"/>
+                      </button>
                       <img
                         style="height: 64px; width: 64px; object-fit: contain"
                         [src]="
@@ -508,26 +510,28 @@
                         src="../../../../assets/images/apple-logo.png"
                         alt="img"
                       />
-                      <div class="d-flex flex-column p-1">
+                      <div class="brand-name-title-price p-1">
                         <p
-                          class="font-size-20 font-weight-600 color-242424 margin-0"
+                          class="brand-title-model-label-name"
                         >
                           {{ productDetails?.brand?.name }}
                           {{ productDetails.model }} {{ productDetails.title }}
                         </p>
                         <p
-                          class="font-size-24 font-weight-600 color-909090 margin-0"
+                          class="currency-price-label"
                         >
                           {{ productDetails.currency }}
                           {{ productDetails.price }}
                         </p>
                       </div>
                     </div>
-                    <div class="col-md-1">
-                      <p>...</p>
+                    <div class="col-1">
+                      <p>
+                        <img src="../../../../assets/images/three-dot.png" alt="..." class="three-dot-style"/>
+                      </p>
                     </div>
                   </div>
-                  <div class="col-md-12 d-flex justify-content-between">
+                  <div class="col-md-12 order-status-action-details">
                     <div>
                       <p
                         class="font-size-16 font-weight-600 color-909090 margin-0"
@@ -540,25 +544,34 @@
                         {{ orderID }}
                       </p>
                     </div>
-                    <div class="d-flex flex-wrap gap-2">
+                    <div class="d-flex flex-wrap gap-2 justify-content-end">
                       <button class="action-btn">Invoice</button>
                       <button (click)="routeToChat()" class="action-btn">Open Chat</button>
                     </div>
                   </div>
                   <div class="col-md-12 d-flex flex-column">
-                    <h4>Order Status</h4>
+                    <p class="order-status-label">Order Status</p>
                     <ul class="list-group">
                       <li
-                        *ngFor="let status of statuses"
-                        class="list-group-item d-flex align-items-center"
-                        style="border: none; background: transparent"
+                        *ngFor="let status of activeBuyerStatuses ; let i = index"
+                        class="list-group-item d-flex align-items-center "
+                        style="border: none; background: transparent ;    background: transparent;"
                         [class.active]="status.active"
                       >
-                        <input
+                        <!-- <input
                           type="radio"
-                          class="me-2"
+                          class="me-2 custom-radio"
                           [checked]="status.active"
-                        />
+                        /> -->
+                        <label class="radio-container me-2">
+                          <input
+                            type="radio"
+                            [checked]="status.active"
+                          />
+                          <span class="radio-custom"></span>
+                        </label>
+                        <!-- <div class="vertical-line" *ngIf="i !== statuses.length - 1"></div> -->
+                        <div class="vertical-line" *ngIf="i !== activeBuyerStatuses.length - 1"></div>
                         <div class="order-details">
                           <p class="label-stl">{{ status.label }}</p>
                           <p class="desc-stl">{{ status.description }}</p>
@@ -572,10 +585,10 @@
             <div class="col-md-4">
               <div class="card shadow-sm">
                 <div class="card-body d-flex flex-column">
-                  <div class="col-md-12 d-flex flex-wrap align-items-center">
-                    <div class="col-md-11 d-flex flex-wrap align-items-center">
+                  <div class="col-md-12 d-flex flex-wrap align-items-center" style="padding: 0;margin: 0;background: #faf9fb;">
+                    <div class="col-md-10 d-flex flex-wrap align-items-center">
                       <img
-                        style="height: 100px; width: 100px; object-fit: contain"
+                        class="user-name-img-initials"
                         src="../../../../assets/images/apple-logo.png"
                         alt="img"
                       />
@@ -592,31 +605,33 @@
                         </p>
                       </div>
                     </div>
-                    <div class="col-md-1">
-                      <p>...</p>
+                    <div class="col-md-2 d-flex justify-content-end">
+                      <p>
+                        <img src="../../../../assets/images/blur-three-dot.png" alt="..." class="three-dot-style pt-3"/>
+                      </p>
                     </div>
                   </div>
-                  <div class="col-md-12 d-flex justify-content-between">
+                  <div class="col-md-12 d-flex justify-content-between" style="padding: 0 10px 10px 20px">
                     <div>
                       <p
-                        class="font-size-14 font-weight-400 margin-0 color-909090"
+                        class="order-date-label"
                       >
                         Order date
                       </p>
                       <p
-                        class="font-size-14 font-weight-600 margin-0 color-6a6a6a"
+                        class="order-date-value-label"
                       >
                         {{ orderDate | date : "yyyy-MM-dd" }}
                       </p>
                     </div>
                     <div>
                       <p
-                        class="font-size-14 font-weight-400 margin-0 color-909090"
+                        class="order-date-label"
                       >
                         Estimated Delivery
                       </p>
                       <p
-                        class="font-size-14 font-weight-600 margin-0 color-6a6a6a"
+                        class="order-date-value-label"
                       >
                         {{ estimateDelivery | date : "yyyy-MM-dd" }}
                       </p>
@@ -648,7 +663,7 @@
           *ngIf="!isShowSellOrdersListngDetails"
           class="d-flex justify-content-between align-items-center mb-3"
         >
-          <h4 class="">Sell Orders</h4>
+          <h4 class="mobile-label">Sell Orders</h4>
           <div class="d-flex justify-content-between align-items-center gap-2">
             <div>
               <select class="form-select form-select-sm" style="width: 150px">
@@ -672,14 +687,14 @@
           <div class="" *ngIf="!isShowSellOrdersListngDetails">
             <div *ngFor="let listing of sellOrders" class="card mb-3">
               <div class="card-body d-flex align-items-center">
-                <div class="col-md-6">
-                  <small class="text-muted">
+                <div class="col-11">
+                  <small class="text-muted mobile-label">
                     Listing ID {{ listing.product.listing_code || "N/A" }} |
                     Created
                     {{ listing.created_at | date : "yyyy-MM-dd" }}
                   </small>
 
-                  <h6 class="mt-1 mb-1">
+                  <h6 class="mt-1 mb-1 mobile-label">
                     {{ listing.product.brand.name }} {{ listing.product.model }}
                     {{ listing.product.title }}
                   </h6>
@@ -688,7 +703,7 @@
                     listing.product?.status || "In Process"
                   }}</span>
                 </div>
-                <div class="col-md-6 d-flex justify-content-end">
+                <div class="col-1 d-flex justify-content-end">
                   <button
                     mat-icon-button
                     [matMenuTriggerFor]="menu"
@@ -725,8 +740,10 @@
                     class="col-md-12 d-flex flex-wrap align-items-center"
                     style="background: #f9fafb"
                   >
-                    <div class="col-md-11 d-flex flex-wrap align-items-center">
-                      <button (click)="setActive(5)" class="prev-btn"><</button>
+                    <div class="col-11 d-flex align-items-center">
+                      <button (click)="setActive(5)" class="prev-btn">
+                        <img src="../../../../assets/images/prev_btn.png" alt="IMG" class="prev-btn-img"/>
+                      </button>
                       <img
                         style="height: 64px; width: 64px; object-fit: contain"
                         [src]="
@@ -735,26 +752,29 @@
                         "
                         alt="img"
                       />
-                      <div class="d-flex flex-column p-1">
+                      <div class="brand-name-title-price p-1">
                         <p
-                          class="font-size-20 font-weight-600 color-242424 margin-0"
+                          class="brand-title-model-label-name"
                         >
                           {{ productDetails?.brand?.name }}
                           {{ productDetails.model }} {{ productDetails.title }}
                         </p>
                         <p
-                          class="font-size-24 font-weight-600 color-909090 margin-0"
+                          class="currency-price-label"
                         >
                           {{ productDetails.currency }}
                           {{ productDetails.price }}
                         </p>
                       </div>
                     </div>
-                    <div class="col-md-1">
-                      <p>...</p>
+                    <div class="col-1">
+                      <p>
+                        <img src="../../../../assets/images/three-dot.png" alt="..." class="three-dot-style"/>
+                      </p>
                     </div>
                   </div>
-                  <div class="col-md-12 d-flex justify-content-between">
+                  <div
+                   class="col-md-12 order-status-action-details">
                     <div>
                       <p
                         class="font-size-16 font-weight-600 color-909090 margin-0"
@@ -767,26 +787,28 @@
                         {{ orderID }}
                       </p>
                     </div>
-                    <div class="d-flex flex-wrap gap-2">
+                    <div class="d-flex flex-wrap gap-2 justify-content-end">
                       <button class="action-btn">Invoice</button>
                       <button (click)="routeToChat()" class="action-btn">Open Chat</button>
                     </div>
                   </div>
                   <div class="col-md-12 d-flex flex-column">
-                    <h4>Order Status</h4>
+                    <p class="order-status-label">Order Status</p>
                     <ul class="list-group">
                       <li
-                        *ngFor="let status of sellerStatuses"
-                        class="list-group-item d-flex align-items-center"
-                        style="border: none; background: transparent"
+                        *ngFor="let status of activeSellerStatuses ; let i = index"
+                        class="list-group-item d-flex align-items-center "
+                        style="border: none; background: transparent ;    position: relative;"
                         [class.active]="status.active"
                       >
-                        <input
-                          disabled="true"
-                          type="radio"
-                          class="me-2"
-                          [checked]="status.active"
-                        />
+                        <label class="radio-container me-2">
+                          <input
+                            type="radio"
+                            [checked]="status.active"
+                          />
+                          <span class="radio-custom"></span>
+                        </label>
+                        <div class="vertical-line" *ngIf="i !== activeSellerStatuses.length - 1"></div>
                         <div
                           (click)="callSellerOption()"
                           style="cursor: pointer"
@@ -804,10 +826,10 @@
             <div class="col-md-4">
               <div class="card shadow-sm">
                 <div class="card-body d-flex flex-column">
-                  <div class="col-md-12 d-flex flex-wrap align-items-center">
-                    <div class="col-md-11 d-flex flex-wrap align-items-center">
+                  <div class="col-md-12 d-flex flex-wrap align-items-center" style="padding: 0;margin: 0;background: #faf9fb;">
+                    <div class="col-md-10 d-flex flex-wrap align-items-center">
                       <img
-                        style="height: 100px; width: 100px; object-fit: contain"
+                      class="user-name-img-initials"
                         src="../../../../assets/images/apple-logo.png"
                         alt="img"
                       />
@@ -824,31 +846,33 @@
                         </p>
                       </div>
                     </div>
-                    <div class="col-md-1">
-                      <p>...</p>
+                    <div class="col-md-2 d-flex justify-content-end">
+                      <p>
+                        <img src="../../../../assets/images/blur-three-dot.png" alt="..." class="three-dot-style pt-3"/>
+                      </p>
                     </div>
                   </div>
-                  <div class="col-md-12 d-flex justify-content-between">
+                  <div class="col-md-12 d-flex justify-content-between" style="padding: 0 10px 10px 20px;">
                     <div>
                       <p
-                        class="font-size-14 font-weight-400 margin-0 color-909090"
+                        class="order-date-label"
                       >
                         Order date
                       </p>
                       <p
-                        class="font-size-14 font-weight-600 margin-0 color-6a6a6a"
+                        class="order-date-value-label"
                       >
                         {{ orderDate | date : "yyyy-MM-dd" }}
                       </p>
                     </div>
                     <div>
                       <p
-                        class="font-size-14 font-weight-400 margin-0 color-909090"
+                        class="order-date-label"
                       >
                         Estimated Delivery
                       </p>
                       <p
-                        class="font-size-14 font-weight-600 margin-0 color-6a6a6a"
+                        class="order-date-value-label"
                       >
                         {{ estimateDelivery | date : "yyyy-MM-dd" }}
                       </p>
@@ -873,9 +897,11 @@
           </div>
         </div>
       </div>
+
+
       <div *ngIf="activeIndex === 9" class="container-fluid">
         <div class="d-flex justify-content-between align-items-center mb-3">
-          <h4 class="">Favorites</h4>
+          <h4 class="mobile-label">Favorites</h4>
           <!-- <div class="d-flex justify-content-between align-items-center gap-2">
             <div>
               <select class="form-select form-select-sm" style="width: 150px">
@@ -898,13 +924,13 @@
         <div class="list-cards">
           <div *ngFor="let listing of favoritesProductDetails" class="card mb-3">
             <div class="card-body d-flex align-items-center">
-              <div class="col-md-6">
-                <small class="text-muted">
+              <div class="col-11">
+                <small class="text-muted mobile-label">
                   Listing ID {{ listing.listing_code || "N/A" }} | Created
                   {{ listing.created_at | date : "yyyy-MM-dd" }}
                 </small>
 
-                <h6 class="mt-1 mb-1">
+                <h6 class="mt-1 mb-1 mobile-label">
                   {{ listing.brand.name }} {{ listing.model }}
                   {{ listing.title }}
                 </h6>
@@ -917,7 +943,7 @@
                     : "N/A"
                 }}</span>
               </div>
-              <div class="col-md-6 d-flex justify-content-end">
+              <div class="col-1 d-flex justify-content-end">
                 <button
                   mat-icon-button
                   [matMenuTriggerFor]="menu"

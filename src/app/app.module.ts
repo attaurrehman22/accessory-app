@@ -46,7 +46,6 @@ import { BuyProductComponentComponent } from './views/website/buy-product-compon
 import { SecondHeaderComponent } from "./views/website/second-header/second-header.component";
 import { ProductListComponent } from './views/website/product-list/product-list.component';
 import { FormsModule } from '@angular/forms';
-import { PopularBrandsListAlphabeticallyComponent } from './views/website/popular-brands-list-alphabetically/popular-brands-list-alphabetically.component';
 import { BidiModule } from '@angular/cdk/bidi';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -72,7 +71,6 @@ import { ButtonModule } from 'primeng/button';
 import { TagModule } from 'primeng/tag';
 import {MatExpansionModule} from '@angular/material/expansion';
 import { AdminPageHeaderComponent } from "./views/adminpages/admin-page-header/admin-page-header.component";
-import { BrandsListComponent } from './views/website/brands-list/brands-list.component';
 import { PositiveNumberDirective } from 'src/directives/positiveNumberDirective/positive-number.directive';
 import {MatRadioModule} from '@angular/material/radio';
 import { ChatComponent } from './views/website/chat/chat/chat.component';
@@ -135,7 +133,6 @@ import { OrderInitiatedModelComponent } from './views/modal/order-initiated-mode
     BuyProductComponentComponent,
     SecondHeaderComponent,
     ProductListComponent,
-    PopularBrandsListAlphabeticallyComponent,
     ModelLoginComponent,
     ModelRegisterComponent,
     AdminHomeComponent,
@@ -148,7 +145,6 @@ import { OrderInitiatedModelComponent } from './views/modal/order-initiated-mode
     AdminCategoryComponent,
     AdminBrandsProductComponent,
     AdminCategoryProductComponent,
-    BrandsListComponent,
     PositiveNumberDirective,
     ChatComponent,
     CustomOfferComponent,

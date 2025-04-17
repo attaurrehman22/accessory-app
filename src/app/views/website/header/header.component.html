@@ -73,8 +73,18 @@
 
             <p style="padding: 10px 10px 0 10px;" *ngIf="userDetails?.name && selectedLang == 'ar'"> {{userDetails.name}} {{ "header.wellCome" | translate }}</p>
 
+
             <a routerLink="/myListing"  mat-menu-item  *ngIf="isUserLogin === 'true'"> 
               {{ "header.settings" | translate }}
+            </a>
+
+            <a style="padding: 10px 10px 0 10px;"
+               mat-menu-item
+              class="custom-btn"
+              *ngIf="showHideAdminUser === true"
+              routerLink="/admin/dashboard"
+            >
+              {{ "header.admin_pannel" | translate }}
             </a>
             <button
               mat-menu-item
@@ -172,13 +182,13 @@
             {{ "header.sell_watch" | translate }}
           </a>
 
-          <a
+          <!-- <a
             class="custom-btn"
             *ngIf="showHideAdminUser === true"
             routerLink="/admin/dashboard"
           >
             {{ "header.admin_pannel" | translate }}
-          </a>
+          </a> -->
           <a class="custom-btn" *ngIf="isUserLogin === 'true'" routerLink="/chat">
             {{ "header.Chat" | translate }}
           </a>

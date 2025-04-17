@@ -7,7 +7,6 @@ import { AddNewProductComponent } from './views/website/add-new-product/add-new-
 import { BuyProductComponentComponent } from './views/website/buy-product-component/buy-product-component.component';
 import { ProductDetailComponentComponent } from './views/website/product-detail-component/product-detail-component.component';
 import { ProductListComponent } from './views/website/product-list/product-list.component';
-import { PopularBrandsListAlphabeticallyComponent } from './views/website/popular-brands-list-alphabetically/popular-brands-list-alphabetically.component';
 import { AdminHomeComponent } from './views/adminpages/admin-home/admin-home.component';
 import { AdminProductsComponent } from './views/adminpages/admin-products/admin-products.component';
 import { AdminAddProductComponent } from './views/adminpages/admin-add-product/admin-add-product.component';
@@ -37,7 +36,6 @@ const routes: Routes = [
   { path: 'buy-product', component:  BuyProductComponentComponent},
   { path: 'product-list', component:  ProductListComponent},
   { path: 'product-detail', component:  ProductDetailComponentComponent},
-  { path: 'popular-brands-list', component:  PopularBrandsListAlphabeticallyComponent},
   { path: 'newArrivals', component:  NewArrivalsComponent},
   
   {  canActivate: [adminGuard],path: 'admin/dashboard', component:  AdminHomeComponent},
