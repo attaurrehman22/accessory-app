@@ -113,7 +113,7 @@ export class HttpService implements OnInit {
   }
 
   removeProduct(ID: any): Observable<any> {
-    const url = `${this.apiUrl}/api/products/${ID}`;
+    const url = `${this.apiUrl}/api/listing/delete/${ID}`;
     return this.http.delete(url, {
       headers: {
         Accept: "application/json",

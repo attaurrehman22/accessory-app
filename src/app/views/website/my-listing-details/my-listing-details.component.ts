@@ -527,6 +527,7 @@ export class MyListingDetailsComponent implements OnInit {
     this.http.removeProduct(listing.id).subscribe(
       (res)=>{
         this.alertService.showAlert('success','Product Delete Successfully')
+        this.fetchListings();
       },(err)=>{
         this.alertService.showAlert('warning','Error in Deleting Product')
       }
