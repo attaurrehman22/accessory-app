@@ -8,42 +8,371 @@
   }"
   class="mt-5"
 >
-  <div class="col-12 d-flex flex-wrap mb-3">
-    <div class="col-md-3">
+  <div class="col-12 d-flex flex-wrap mb-3"  [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }">
+    <div class="col-md-3 arabic-style">
       <div class="d-flex flex-column p-lg-3 p-md-1 p-sm-1 bg-light" style="height: 100%;">
         <ul class="nav nav-pills flex-column mb-auto">
           <li class="nav-item" *ngFor="let item of menuItems; let i = index">
-            <a
+            <a *ngIf="translateService.currentLang == 'en'"
               class="nav-link"
               [ngClass]="{ active: activeIndex === i }"
               (click)="setActive(i)"
             >
               <i class="{{ item.icon }}"></i> {{ item.label }}
             </a>
+
+            <a *ngIf="translateService.currentLang !== 'en'"
+            class="nav-link"
+            [ngClass]="{ active: activeIndex === i }"
+            (click)="setActive(i)"
+          >
+          {{ item.arabicLabel }} <i class="{{ item.icon }}"></i> 
+          </a>
           </li>
         </ul>
       </div>
     </div>
-    <div class="col-md-9" style="min-height: 85vh;">
+    <div class="col-md-9" style="min-height: 85vh;" [ngClass]="{ 'reverse-order-details': translateService.currentLang !== 'en' }">
+      <!-- if "Personal Info" is Active -->
+      <div *ngIf="activeIndex === 0" class="container">
+        <form class="arabic-style-form">
+          <h3>{{ "my_Listing.Personal_Information" | translate }}</h3>
+          <div class="row">
+            <div class="col-md-6 mb-3" [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'">
+              <label for="firstName" class="form-label">{{ "my_Listing.First_Name" | translate }}</label>
+              <input
+                type="text"
+                id="firstName"
+                class="form-control"
+                placeholder='{{ "my_Listing.First_Name_place" | translate }}'
+              />
+            </div>
+            <div class="col-md-6 mb-3" [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'">
+              <label for="lastName" class="form-label">{{ "my_Listing.Last_Name" | translate }}</label>
+              <input
+                type="text"
+                id="lastName"
+                class="form-control"
+                placeholder='{{ "my_Listing.Last_Name_place" | translate }}'
+              />
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6 mb-3" [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'">
+              <label for="gender" class="form-label">{{ "my_Listing.Gender" | translate }}</label>
+              <select id="gender" class="form-select">
+                <option selected>{{ "my_Listing.select_gender" | translate }}</option>
+                <option value="male">{{ "my_Listing.Male" | translate }}</option>
+                <option value="female">{{ "my_Listing.Female" | translate }}</option>
+                <option value="other">{{ "my_Listing.Other" | translate }}</option>
+              </select>
+            </div>
+            <div class="col-md-6 mb-3" [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'">
+              <label for="dob" class="form-label">{{ "my_Listing.Date_of_Birth" | translate }}</label>
+              <input type="date" id="dob" class="form-control" />
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6 mb-3" [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'">
+              <label for="phone" class="form-label">{{ "my_Listing.Phone" | translate }}</label>
+              <div class="input-group">
+                <select class="form-select" style="max-width: 100px">
+                  <option value="KSA">KSA</option>
+                  <!-- Add more options as needed -->
+                </select>
+                <input
+                  type="text"
+                  id="phone"
+                  class="form-control"
+                  placeholder="+966 55 000 0000"
+                />
+              </div>
+            </div>
+            <div class="col-md-6 mb-3" [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'">
+              <label for="language" class="form-label">{{ "my_Listing.Language" | translate }}</label>
+              <select id="language" class="form-select">
+                <option selected>{{ "my_Listing.English" | translate }}</option>
+                <option value="arabic">{{ "my_Listing.Arabic" | translate }}</option>
+                <!-- Add more languages -->
+              </select>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6 mb-3" [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'">
+              <label for="occupation" class="form-label">{{ "my_Listing.Occupation" | translate }}</label>
+              <input
+                type="text"
+                id="occupation"
+                class="form-control"
+                placeholder='{{ "my_Listing.Occupation" | translate }}'
+              />
+            </div>
+            <div class="col-md-6 mb-3" [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'">
+              <label for="aboutMe" class="form-label">{{ "my_Listing.About_Me" | translate }}</label>
+              <textarea
+                id="aboutMe"
+                class="form-control"
+                rows="2"
+                placeholder='{{ "my_Listing.Description" | translate }}'
+              ></textarea>
+            </div>
+          </div>
+
+          <h3>{{ "my_Listing.Login_Information" | translate }}</h3>
+          <div class="row">
+            <div class="col-md-6 mb-3" [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'">
+              <label for="email" class="form-label">{{ "my_Listing.Email_Address" | translate }}</label>
+              <input
+                type="email"
+                id="email"
+                class="form-control"
+                placeholder='{{ "my_Listing.Email_Address_place" | translate }}'
+              />
+            </div>
+            <div class="col-md-6 mb-3" [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'">
+              <label for="password" class="form-label">{{ "my_Listing.Password" | translate }}</label>
+              <a href="#" class="d-block text-decoration-none"
+                >{{ "my_Listing.Change_password" | translate }}</a
+              >
+            </div>
+          </div>
+
+          <h3>{{ "my_Listing.Login_with" | translate }}</h3>
+          <div class="d-flex gap-3 my-3 search-arabic-style">
+            <button type="button" class="btn btn-outline-secondary w-100">
+              <img
+                src="../assets/images/download.png"
+                alt="Google Logo"
+                class="me-2"
+                style="width: 20px"
+              />
+              {{ "my_Listing.Sign_in_Google" | translate }}
+            </button>
+            <button type="button" class="btn btn-outline-secondary w-100">
+              <img
+                src="../assets/images/apple-logo.png"
+                alt="Apple Logo"
+                class="me-2"
+                style="width: 20px"
+              />
+              {{ "my_Listing.Sign_in_Apple" | translate }}
+
+            </button>
+          </div>
+
+          <div class="text-end">
+            <button type="submit" class="submit-btn"> {{ "my_Listing.Save_Changes" | translate }}</button>
+          </div>
+        </form>
+      </div>
+      <!-- if "Shipping Address" is Active -->
+      <div *ngIf="activeIndex === 1" class="container">
+        <form class="arabic-style-form" [formGroup]="billingForm">
+          <h3 class="mobile-label">{{ "my_Listing.Shipping_Address" | translate }}</h3>
+          <div class="row">
+            <div class="col-md-6 mb-3" [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'">
+              <label for="firstName" class="form-label">{{ "my_Listing.First_Name" | translate }}</label>
+              <input
+                type="text"
+                id="firstName"
+                class="form-control"
+                placeholder='{{ "my_Listing.First_Name_place" | translate }}'
+                formControlName="first_name"
+              />
+              <div class="" *ngIf="billingForm.get('first_name').hasError('required') && billingForm.get('first_name').touched">
+                <small class="text-danger">{{ "my_Listing.First_Name_required" | translate }}</small>
+              </div>
+
+              <div class="" *ngIf="billingForm.get('first_name').hasError('maxlength')">
+                <small class="text-danger">{{ "my_Listing.First_name_exceed_limit" | translate }}</small>
+              </div>
+            </div>
+            <div class="col-md-6 mb-3" [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'">
+              <label for="lastName" class="form-label">{{ "my_Listing.Last_Name" | translate }}</label>
+              <input
+                type="text"
+                id="lastName"
+                class="form-control"
+                placeholder='{{ "my_Listing.Last_Name_place" | translate }}'
+                formControlName="last_name"
+              />
+              <div class="" *ngIf="billingForm.get('last_name').hasError('required') && billingForm.get('last_name').touched">
+                <small class="text-danger">{{ "my_Listing.Last_Name_required" | translate }}</small>
+              </div>
+
+              <div class="" *ngIf="billingForm.get('last_name').hasError('maxlength')">
+                <small class="text-danger">{{ "my_Listing.First_name_exceed_limit" | translate }}</small>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6 mb-3" [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'">
+              <label for="street" class="form-label">{{ "my_Listing.Street" | translate }}</label>
+              <input
+                type="text"
+                id="street"
+                class="form-control"
+                placeholder='{{ "my_Listing.Enter_street_Place" | translate }}'
+                formControlName="street"
+              />
+              <div class="" *ngIf="billingForm.get('street').hasError('required') && billingForm.get('street').touched">
+                <small class="text-danger">{{ "my_Listing.Street_is_required" | translate }}</small>
+              </div>
+
+              <div class="" *ngIf="billingForm.get('street').hasError('maxlength')">
+                <small class="text-danger">{{ "my_Listing.Cannot_exceed_limit_of_80_character" | translate }}</small>
+              </div>
+            </div>
+            <div class="col-md-6 mb-3" [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'">
+              <label for="street2" class="form-label">Street Line 2</label>
+              <input
+                type="text"
+                id="street2"
+                class="form-control"
+                placeholder='{{ "my_Listing.Enter_street_line_addres" | translate }}'
+                formControlName="street_line_2"
+              />
+              <!-- <div class="" *ngIf="billingForm.get('street_line_2').hasError('required') && billingForm.get('street_line_2').touched">
+                <small class="text-danger">street line 2 is required</small>
+              </div> -->
+
+              <div class="" *ngIf="billingForm.get('street_line_2').hasError('maxlength')">
+                <small class="text-danger">{{ "my_Listing.Cannot_exceed_limit_of_80_character" | translate }}</small>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6 mb-3" [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'">
+              <label for="zipCode" class="form-label">{{ "my_Listing.ZIP_Code" | translate }}</label>
+              <input
+                type="text"
+                id="zipCode"
+                class="form-control"
+                placeholder='{{ "my_Listing.ZIP_Code_place" | translate }}'
+                formControlName="zip_code"
+                appPositiveNumber
+              />
+              <div class="" *ngIf="billingForm.get('zip_code').hasError('required') && billingForm.get('zip_code').touched">
+                <small class="text-danger">{{ "my_Listing.ZIP_Code_Required" | translate }}</small>
+              </div>
+
+              <div class="" *ngIf="billingForm.get('zip_code').hasError('maxlength')">
+                <small class="text-danger">{{ "my_Listing.Cannot_exceed_limit__9_character" | translate }}</small>
+              </div>
+
+              <div class="" *ngIf="billingForm.get('zip_code').hasError('pattern')">
+                <small class="text-danger">{{ "my_Listing.Only_numeric_values_allowed_zip_code" | translate }}</small>
+              </div>
+            </div>
+            <div class="col-md-6 mb-3" [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'">
+              <label for="city" class="form-label">{{ "my_Listing.City" | translate }}</label>
+              <input
+                type="text"
+                id="city"
+                class="form-control"
+                placeholder='{{ "my_Listing.Enter_city_pace" | translate }}'
+                formControlName="city"
+              />
+              <div class="" *ngIf="billingForm.get('city').hasError('required') && billingForm.get('city').touched">
+                <small class="text-danger">{{ "my_Listing.City_required" | translate }}</small>
+              </div>
+
+              <div class="" *ngIf="billingForm.get('city').hasError('maxlength')">
+                <small class="text-danger">{{ "my_Listing.First_name_exceed_limit" | translate }}</small>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            
+            <div class="col-md-6 mb-3" [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'">
+              <label for="billing_address" class="form-label">{{ "my_Listing.Billing_Address" | translate }}</label>
+              <input
+                type="text"
+                id="billing_address"
+                class="form-control"
+                placeholder='{{ "my_Listing.Enter_Billing_address" | translate }}'
+                formControlName="billing_address"
+              />
+              <div class="" *ngIf="billingForm.get('billing_address').hasError('required') && billingForm.get('billing_address').touched">
+                <small class="text-danger">{{ "my_Listing.Billing_address_required" | translate }}</small>
+              </div>
+
+              <div class="" *ngIf="billingForm.get('billing_address').hasError('maxlength')">
+                <small class="text-danger">{{ "my_Listing.Cannot_exceed_limit_120_character" | translate }}</small>
+              </div>
+            </div>
+
+            <div class="col-md-6 mb-3" [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'">
+              <label for="country" class="form-label">{{ "my_Listing.Country" | translate }}</label>
+              <input
+                type="text"
+                id="country"
+                class="form-control"
+                placeholder='{{ "my_Listing.Country_place" | translate }}'
+                formControlName="country"
+              />
+              <div class="" *ngIf="billingForm.get('country').hasError('required') && billingForm.get('country').touched">
+                <small class="text-danger">{{ "my_Listing.Country_is_required" | translate }}</small>
+              </div>
+
+              <div class="" *ngIf="billingForm.get('country').hasError('maxlength')">
+                <small class="text-danger"> {{ "my_Listing.First_name_exceed_limit" | translate }}
+                  </small>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+
+            <div class="col-md-6 mb-3" [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'">
+              <label for="state" class="form-label">{{ "my_Listing.State" | translate }}</label>
+              <input
+                type="text"
+                id="state"
+                class="form-control"
+                placeholder='{{ "my_Listing.State_place" | translate }}'
+                formControlName="state"
+              />
+              <div class="" *ngIf="billingForm.get('state').hasError('required') && billingForm.get('state').touched">
+                <small class="text-danger">{{ "my_Listing.State_required" | translate }}</small>
+              </div>
+
+              <div class="" *ngIf="billingForm.get('state').hasError('maxlength')">
+                <small class="text-danger">{{ "my_Listing.First_name_exceed_limit" | translate }}</small>
+              </div>
+            </div>
+          </div>
+
+          <div class="text-end">
+            <button (click)="submitBillingForm()" class="submit-btn">{{ "my_Listing.Save_Changes" | translate }}</button>
+          </div>
+        </form>
+      </div>
       <!-- if "My Listing" is Active -->
       <div *ngIf="activeIndex === 3" class="container">
-        <div class="d-flex justify-content-between align-items-center mb-3">
-          <h4 class="mobile-label">My Listings</h4>
-          <div class="d-flex justify-content-between align-items-center gap-2">
+        <div class="d-flex justify-content-between align-items-center mb-3 filtered-div">
+          <h4 class="mobile-label">{{ "my_Listing.My_Listings" | translate }}</h4>
+          <div class="d-flex justify-content-between align-items-center gap-2 filtered-btn-div">
             <div>
               <select class="form-select form-select-sm" style="width: 150px">
-                <option selected>Status</option>
-                <option value="1">In Process</option>
-                <option value="2">Delivered</option>
-                <option value="3">Cancelled</option>
+                <option selected>{{ "my_Listing.Status" | translate }}</option>
+                <option value="1">{{ "my_Listing.In_Process" | translate }}</option>
+                <option value="2">{{ "my_Listing.Delivered" | translate }}</option>
+                <option value="3">{{ "my_Listing.Cancelled" | translate }}</option>
               </select>
             </div>
             <div>
               <select class="form-select form-select-sm" style="width: 150px">
-                <option selected>4 Weeks</option>
-                <option value="1">1 Week</option>
-                <option value="2">1 Month</option>
-                <option value="3">6 Months</option>
+                <option selected>{{ "my_Listing.4_Weeks" | translate }}</option>
+                <option value="1">{{ "my_Listing.1_Weeks" | translate }}</option>
+                <option value="2">{{ "my_Listing.1_Month" | translate }}</option>
+                <option value="3">{{ "my_Listing.6_Weeks" | translate }}</option>
               </select>
             </div>
           </div>
@@ -52,7 +381,12 @@
           <div *ngFor="let listing of listings" class="card mb-3">
             <div class="card-body d-flex align-items-center">
               <div class="col-11">
-                <small class="text-muted mobile-label">
+                <small *ngIf="translateService.currentLang == 'en'" class="text-muted mobile-label">
+                  Listing ID {{ listing.listing_code || "N/A" }} | Created
+                  {{ listing.created_at | date : "yyyy-MM-dd" }}
+                </small>
+
+                <small *ngIf="translateService.currentLang !== 'en'" class="text-muted mobile-label">
                   Listing ID {{ listing.listing_code || "N/A" }} | Created
                   {{ listing.created_at | date : "yyyy-MM-dd" }}
                 </small>
@@ -93,354 +427,34 @@
           </div>
         </div>
       </div>
-      <!-- if "Personal Info" is Active -->
-      <div *ngIf="activeIndex === 0" class="container">
-        <form>
-          <h3>Personal Information</h3>
-          <div class="row">
-            <div class="col-md-6 mb-3">
-              <label for="firstName" class="form-label">First Name</label>
-              <input
-                type="text"
-                id="firstName"
-                class="form-control"
-                placeholder="Enter your first name"
-              />
-            </div>
-            <div class="col-md-6 mb-3">
-              <label for="lastName" class="form-label">Last Name</label>
-              <input
-                type="text"
-                id="lastName"
-                class="form-control"
-                placeholder="Enter your last name"
-              />
-            </div>
-          </div>
-
-          <div class="row">
-            <div class="col-md-6 mb-3">
-              <label for="gender" class="form-label">Gender</label>
-              <select id="gender" class="form-select">
-                <option selected>Select gender...</option>
-                <option value="male">Male</option>
-                <option value="female">Female</option>
-                <option value="other">Other</option>
-              </select>
-            </div>
-            <div class="col-md-6 mb-3">
-              <label for="dob" class="form-label">Date of Birth</label>
-              <input type="date" id="dob" class="form-control" />
-            </div>
-          </div>
-
-          <div class="row">
-            <div class="col-md-6 mb-3">
-              <label for="phone" class="form-label">Phone</label>
-              <div class="input-group">
-                <select class="form-select" style="max-width: 100px">
-                  <option value="KSA">KSA</option>
-                  <!-- Add more options as needed -->
-                </select>
-                <input
-                  type="text"
-                  id="phone"
-                  class="form-control"
-                  placeholder="+966 55 000 0000"
-                />
-              </div>
-            </div>
-            <div class="col-md-6 mb-3">
-              <label for="language" class="form-label">Language</label>
-              <select id="language" class="form-select">
-                <option selected>English</option>
-                <option value="arabic">Arabic</option>
-                <!-- Add more languages -->
-              </select>
-            </div>
-          </div>
-
-          <div class="row">
-            <div class="col-md-6 mb-3">
-              <label for="occupation" class="form-label">Occupation</label>
-              <input
-                type="text"
-                id="occupation"
-                class="form-control"
-                placeholder="Occupation"
-              />
-            </div>
-            <div class="col-md-6 mb-3">
-              <label for="aboutMe" class="form-label">About Me</label>
-              <textarea
-                id="aboutMe"
-                class="form-control"
-                rows="2"
-                placeholder="Description"
-              ></textarea>
-            </div>
-          </div>
-
-          <h3>Login Information</h3>
-          <div class="row">
-            <div class="col-md-6 mb-3">
-              <label for="email" class="form-label">Email Address</label>
-              <input
-                type="email"
-                id="email"
-                class="form-control"
-                placeholder="Enter your email address"
-              />
-            </div>
-            <div class="col-md-6 mb-3">
-              <label for="password" class="form-label">Password</label>
-              <a href="#" class="d-block text-decoration-none"
-                >Change password</a
-              >
-            </div>
-          </div>
-
-          <h3>Login with Google/Apple</h3>
-          <div class="d-flex gap-3 my-3">
-            <button type="button" class="btn btn-outline-secondary w-100">
-              <img
-                src="../assets/images/download.png"
-                alt="Google Logo"
-                class="me-2"
-                style="width: 20px"
-              />
-              Sign in with Google
-            </button>
-            <button type="button" class="btn btn-outline-secondary w-100">
-              <img
-                src="../assets/images/apple-logo.png"
-                alt="Apple Logo"
-                class="me-2"
-                style="width: 20px"
-              />
-              Sign in with Apple
-            </button>
-          </div>
-
-          <div class="text-end">
-            <button type="submit" class="submit-btn">Save Changes</button>
-          </div>
-        </form>
-      </div>
-      <!-- if "Shipping Address" is Active -->
-      <div *ngIf="activeIndex === 1" class="container">
-        <form [formGroup]="billingForm">
-          <h3 class="mobile-label">Shipping Address</h3>
-          <div class="row">
-            <div class="col-md-6 mb-3">
-              <label for="firstName" class="form-label">First Name</label>
-              <input
-                type="text"
-                id="firstName"
-                class="form-control"
-                placeholder="Enter your first name..."
-                formControlName="first_name"
-              />
-              <div class="" *ngIf="billingForm.get('first_name').hasError('required') && billingForm.get('first_name').touched">
-                <small class="text-danger">First Name is required</small>
-              </div>
-
-              <div class="" *ngIf="billingForm.get('first_name').hasError('maxlength')">
-                <small class="text-danger">Cannot exceed the limit of 50 character</small>
-              </div>
-            </div>
-            <div class="col-md-6 mb-3">
-              <label for="lastName" class="form-label">Last Name</label>
-              <input
-                type="text"
-                id="lastName"
-                class="form-control"
-                placeholder="Enter your last name..."
-                formControlName="last_name"
-              />
-              <div class="" *ngIf="billingForm.get('last_name').hasError('required') && billingForm.get('last_name').touched">
-                <small class="text-danger">Last Name is required</small>
-              </div>
-
-              <div class="" *ngIf="billingForm.get('last_name').hasError('maxlength')">
-                <small class="text-danger">Cannot exceed the limit of 50 character</small>
-              </div>
-            </div>
-          </div>
-
-          <div class="row">
-            <div class="col-md-6 mb-3">
-              <label for="street" class="form-label">Street</label>
-              <input
-                type="text"
-                id="street"
-                class="form-control"
-                placeholder="Enter street address..."
-                formControlName="street"
-              />
-              <div class="" *ngIf="billingForm.get('street').hasError('required') && billingForm.get('street').touched">
-                <small class="text-danger">Strreet is required</small>
-              </div>
-
-              <div class="" *ngIf="billingForm.get('street').hasError('maxlength')">
-                <small class="text-danger">Cannot exceed the limit of 80 character</small>
-              </div>
-            </div>
-            <div class="col-md-6 mb-3">
-              <label for="street2" class="form-label">Street Line 2</label>
-              <input
-                type="text"
-                id="street2"
-                class="form-control"
-                placeholder="Enter street line address..."
-                formControlName="street_line_2"
-              />
-              <!-- <div class="" *ngIf="billingForm.get('street_line_2').hasError('required') && billingForm.get('street_line_2').touched">
-                <small class="text-danger">street line 2 is required</small>
-              </div> -->
-
-              <div class="" *ngIf="billingForm.get('street_line_2').hasError('maxlength')">
-                <small class="text-danger">Cannot exceed the limit of 80 character</small>
-              </div>
-            </div>
-          </div>
-
-          <div class="row">
-            <div class="col-md-6 mb-3">
-              <label for="zipCode" class="form-label">ZIP Code</label>
-              <input
-                type="text"
-                id="zipCode"
-                class="form-control"
-                placeholder="Enter zip code..."
-                formControlName="zip_code"
-                appPositiveNumber
-              />
-              <div class="" *ngIf="billingForm.get('zip_code').hasError('required') && billingForm.get('zip_code').touched">
-                <small class="text-danger">Zip code is required</small>
-              </div>
-
-              <div class="" *ngIf="billingForm.get('zip_code').hasError('maxlength')">
-                <small class="text-danger">Cannot exceed the limit of 9 character</small>
-              </div>
-
-              <div class="" *ngIf="billingForm.get('zip_code').hasError('pattern')">
-                <small class="text-danger">Only numeric values are allowed for zip code.</small>
-              </div>
-            </div>
-            <div class="col-md-6 mb-3">
-              <label for="city" class="form-label">City</label>
-              <input
-                type="text"
-                id="city"
-                class="form-control"
-                placeholder="Enter city..."
-                formControlName="city"
-              />
-              <div class="" *ngIf="billingForm.get('city').hasError('required') && billingForm.get('city').touched">
-                <small class="text-danger">City is required</small>
-              </div>
-
-              <div class="" *ngIf="billingForm.get('city').hasError('maxlength')">
-                <small class="text-danger">Cannot exceed the limit of 50 character</small>
-              </div>
-            </div>
-          </div>
-
-          <div class="row">
-            
-            <div class="col-md-6 mb-3">
-              <label for="billing_address" class="form-label">Billing Address</label>
-              <input
-                type="text"
-                id="billing_address"
-                class="form-control"
-                placeholder="Enter your Billing address..."
-                formControlName="billing_address"
-              />
-              <div class="" *ngIf="billingForm.get('billing_address').hasError('required') && billingForm.get('billing_address').touched">
-                <small class="text-danger">Billing address is required</small>
-              </div>
-
-              <div class="" *ngIf="billingForm.get('billing_address').hasError('maxlength')">
-                <small class="text-danger">Cannot exceed the limit of 120 character</small>
-              </div>
-            </div>
-
-            <div class="col-md-6 mb-3">
-              <label for="country" class="form-label">Country</label>
-              <input
-                type="text"
-                id="country"
-                class="form-control"
-                placeholder="Enter your country..."
-                formControlName="country"
-              />
-              <div class="" *ngIf="billingForm.get('country').hasError('required') && billingForm.get('country').touched">
-                <small class="text-danger">Country is required</small>
-              </div>
-
-              <div class="" *ngIf="billingForm.get('country').hasError('maxlength')">
-                <small class="text-danger">Cannot exceed the limit of 50 character</small>
-              </div>
-            </div>
-          </div>
-
-          <div class="row">
-
-            <div class="col-md-6 mb-3">
-              <label for="state" class="form-label">State</label>
-              <input
-                type="text"
-                id="state"
-                class="form-control"
-                placeholder="Enter your state..."
-                formControlName="state"
-              />
-              <div class="" *ngIf="billingForm.get('state').hasError('required') && billingForm.get('state').touched">
-                <small class="text-danger">State is required</small>
-              </div>
-
-              <div class="" *ngIf="billingForm.get('state').hasError('maxlength')">
-                <small class="text-danger">Cannot exceed the limit of 50 character</small>
-              </div>
-            </div>
-          </div>
-
-          <div class="text-end">
-            <button (click)="submitBillingForm()" class="submit-btn">Save Changes</button>
-          </div>
-        </form>
-      </div>
-
       <!-- if "Buy Orders" is Active -->
       <div *ngIf="activeIndex === 4" class="container-fluid">
         <div
           *ngIf="!isShowBuyOrdersListngDetails"
-          class="d-flex justify-content-between align-items-center mb-3"
+          class="d-flex justify-content-between align-items-center mb-3 filtered-div"
         >
-          <h4 class="mobile-label">Buy Orders</h4>
-          <div class="d-flex justify-content-between align-items-center gap-2">
+          <h4 class="mobile-label">{{ "my_Listing.Buy_orders" | translate }}</h4>
+          <div class="d-flex justify-content-between align-items-center gap-2 filtered-btn-div">
             <div>
               <select class="form-select form-select-sm" style="width: 150px">
-                <option selected>Status</option>
-                <option value="1">In Process</option>
-                <option value="2">Delivered</option>
-                <option value="3">Cancelled</option>
+                <option selected>{{ "my_Listing.Status" | translate }}</option>
+                <option value="1">{{ "my_Listing.In_Process" | translate }}</option>
+                <option value="2">{{ "my_Listing.Delivered" | translate }}</option>
+                <option value="3">{{ "my_Listing.Cancelled" | translate }}</option>
               </select>
             </div>
             <div>
               <select class="form-select form-select-sm" style="width: 150px">
-                <option selected>4 Weeks</option>
-                <option value="1">1 Week</option>
-                <option value="2">1 Month</option>
-                <option value="3">6 Months</option>
+                <option selected>{{ "my_Listing.4_Weeks" | translate }}</option>
+                <option value="1">{{ "my_Listing.1_Weeks" | translate }}</option>
+                <option value="2">{{ "my_Listing.1_Month" | translate }}</option>
+                <option value="3">{{ "my_Listing.6_Weeks" | translate }}</option>
               </select>
             </div>
           </div>
         </div>
         <div class="list-cards">
-          <div class="" *ngIf="!isShowBuyOrdersListngDetails">
+          <div class="listing-div" *ngIf="!isShowBuyOrdersListngDetails">
             <div *ngFor="let listing of buyOrdersListings" class="card mb-3">
               <div class="card-body d-flex align-items-center">
                 <div class="col-11">
@@ -487,10 +501,10 @@
             </div>
           </div>
           <div
-            class="col-12 d-flex flex-wrap"
+            class="col-12 d-flex flex-wrap offer-details"
             *ngIf="isShowBuyOrdersListngDetails"
           >
-            <div class="col-md-8">
+            <div class="col-md-8 offer-details-col-8">
               <div class="card shadow-sm">
                 <div class="card-body d-flex flex-column">
                   <div
@@ -498,7 +512,12 @@
                     style="background: #f9fafb"
                   >
                     <div class="col-11 d-flex align-items-center">
-                      <button (click)="setActive(4)" class="prev-btn">
+                       <!-- For english Text next icon -->
+                      <button *ngIf="translateService.currentLang == 'en'" (click)="setActive(4)" class="prev-btn">
+                        <img src="../../../../assets/images/prev_btn.png" alt="IMG" class="prev-btn-img"/>
+                      </button>
+                      <!-- For arabic Text prev icon -->
+                      <button *ngIf="translateService.currentLang !== 'en'" (click)="setActive(4)" class="prev-btn">
                         <img src="../../../../assets/images/prev_btn.png" alt="IMG" class="prev-btn-img"/>
                       </button>
                       <img
@@ -558,11 +577,6 @@
                         style="border: none; background: transparent ;    background: transparent;"
                         [class.active]="status.active"
                       >
-                        <!-- <input
-                          type="radio"
-                          class="me-2 custom-radio"
-                          [checked]="status.active"
-                        /> -->
                         <label class="radio-container me-2">
                           <input
                             type="radio"
@@ -656,35 +670,34 @@
           </div>
         </div>
       </div>
-
       <!-- if "Sell Orders" is Active -->
       <div *ngIf="activeIndex === 5" class="container-fluid">
         <div
           *ngIf="!isShowSellOrdersListngDetails"
-          class="d-flex justify-content-between align-items-center mb-3"
+          class="d-flex justify-content-between align-items-center mb-3 filtered-div"
         >
-          <h4 class="mobile-label">Sell Orders</h4>
-          <div class="d-flex justify-content-between align-items-center gap-2">
+          <h4 class="mobile-label">{{ "my_Listing.Sell_Orders" | translate }}</h4>
+          <div class="d-flex justify-content-between align-items-center gap-2 filtered-btn-div">
             <div>
               <select class="form-select form-select-sm" style="width: 150px">
-                <option selected>Status</option>
-                <option value="1">In Process</option>
-                <option value="2">Delivered</option>
-                <option value="3">Cancelled</option>
+                <option selected>{{ "my_Listing.Status" | translate }}</option>
+                <option value="1">{{ "my_Listing.In_Process" | translate }}</option>
+                <option value="2">{{ "my_Listing.Delivered" | translate }}</option>
+                <option value="3">{{ "my_Listing.Cancelled" | translate }}</option>
               </select>
             </div>
             <div>
               <select class="form-select form-select-sm" style="width: 150px">
-                <option selected>4 Weeks</option>
-                <option value="1">1 Week</option>
-                <option value="2">1 Month</option>
-                <option value="3">6 Months</option>
+                <option selected>{{ "my_Listing.4_Weeks" | translate }}</option>
+                <option value="1">{{ "my_Listing.1_Weeks" | translate }}</option>
+                <option value="2">{{ "my_Listing.1_Month" | translate }}</option>
+                <option value="3">{{ "my_Listing.6_Weeks" | translate }}</option>
               </select>
             </div>
           </div>
         </div>
         <div class="list-cards">
-          <div class="" *ngIf="!isShowSellOrdersListngDetails">
+          <div class="listing-div" *ngIf="!isShowSellOrdersListngDetails">
             <div *ngFor="let listing of sellOrders" class="card mb-3">
               <div class="card-body d-flex align-items-center">
                 <div class="col-11">
@@ -730,10 +743,10 @@
             </div>
           </div>
           <div
-            class="col-12 d-flex flex-wrap"
+            class="col-12 d-flex flex-wrap offer-details"
             *ngIf="isShowSellOrdersListngDetails"
           >
-            <div class="col-md-8">
+            <div class="col-md-8 offer-details-col-8">
               <div class="card shadow-sm">
                 <div class="card-body d-flex flex-column">
                   <div
@@ -741,9 +754,16 @@
                     style="background: #f9fafb"
                   >
                     <div class="col-11 d-flex align-items-center">
-                      <button (click)="setActive(5)" class="prev-btn">
+                      <!-- For english Text next icon -->
+                      <button *ngIf="translateService.currentLang == 'en'" (click)="setActive(5)" class="prev-btn">
                         <img src="../../../../assets/images/prev_btn.png" alt="IMG" class="prev-btn-img"/>
                       </button>
+                      <!-- For arabic Text prev icon -->
+                      <button *ngIf="translateService.currentLang !== 'en'" (click)="setActive(5)" class="prev-btn">
+                        <img src="../../../../assets/images/prev_btn.png" alt="IMG" class="prev-btn-img"/>
+                      </button>
+
+
                       <img
                         style="height: 64px; width: 64px; object-fit: contain"
                         [src]="
@@ -900,26 +920,8 @@
 
 
       <div *ngIf="activeIndex === 9" class="container-fluid">
-        <div class="d-flex justify-content-between align-items-center mb-3">
-          <h4 class="mobile-label">Favorites</h4>
-          <!-- <div class="d-flex justify-content-between align-items-center gap-2">
-            <div>
-              <select class="form-select form-select-sm" style="width: 150px">
-                <option selected>Status</option>
-                <option value="1">In Process</option>
-                <option value="2">Delivered</option>
-                <option value="3">Cancelled</option>
-              </select>
-            </div>
-            <div>
-              <select class="form-select form-select-sm" style="width: 150px">
-                <option selected>4 Weeks</option>
-                <option value="1">1 Week</option>
-                <option value="2">1 Month</option>
-                <option value="3">6 Months</option>
-              </select>
-            </div>
-          </div> -->
+        <div class="d-flex justify-content-between align-items-center mb-3 filtered-div">
+          <h4 class="mobile-label">{{ "my_Listing.Favorites" | translate }}</h4>
         </div>
         <div class="list-cards">
           <div *ngFor="let listing of favoritesProductDetails" class="card mb-3">

@@ -6,6 +6,8 @@ import { ModelLoginComponent } from "../../auth/model-login/model-login.componen
 import { MatDialog } from "@angular/material/dialog";
 import { AlertsServicesService } from "src/services/alerts-service/alerts-services.service";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
+import { TranslateService } from "@ngx-translate/core";
+import { LanguageService } from "src/services/lang-service/language.service";
 
 @Component({
   selector: "app-my-listing-details",
@@ -13,6 +15,10 @@ import { FormControl, FormGroup, Validators } from "@angular/forms";
   styleUrls: ["./my-listing-details.component.css"],
 })
 export class MyListingDetailsComponent implements OnInit {
+
+  supportLanguages = ["en", "ar", "fr", "ta", "hi"];
+  currentLanguage: string;
+
   billing_address = new FormControl(null, [
     Validators.required,
     Validators.maxLength(120),
@@ -42,19 +48,20 @@ export class MyListingDetailsComponent implements OnInit {
   billingForm: FormGroup;
 
   menuItems = [
-    { label: "Personal Info", icon: "bi bi-person" },
-    { label: "Shipping Address", icon: "bi bi-credit-card" },
-    { label: "Messages", icon: "bi bi-chat" },
-    { label: "My Listings", icon: "bi bi-card-list" },
-    { label: "Buy Orders", icon: "bi bi-cart" },
-    { label: "Sell Orders", icon: "bi bi-basket" },
-    { label: "Security", icon: "bi bi-shield-lock" },
-    { label: "Privacy", icon: "bi bi-globe" },
-    { label: "My Subscriptions", icon: "bi bi-box-arrow-in-right" },
-    { label: "Favorites", icon: "bi bi-heart" },
-    { label: "Feedback", icon: "bi bi-star" },
-    { label: "Help Center", icon: "bi bi-question-circle" },
+    { label: "Personal Info", arabicLabel: "المعلومات الشخصية", icon: "bi bi-person" },
+    { label: "Shipping Address", arabicLabel: "عنوان الشحن", icon: "bi bi-credit-card" },
+    { label: "Messages", arabicLabel: "الرسائل", icon: "bi bi-chat" },
+    { label: "My Listings", arabicLabel: "قوائمي", icon: "bi bi-card-list" },
+    { label: "Buy Orders", arabicLabel: "طلبات الشراء", icon: "bi bi-cart" },
+    { label: "Sell Orders", arabicLabel: "طلبات البيع", icon: "bi bi-basket" },
+    { label: "Security", arabicLabel: "الأمان", icon: "bi bi-shield-lock" },
+    { label: "Privacy", arabicLabel: "الخصوصية", icon: "bi bi-globe" },
+    { label: "My Subscriptions", arabicLabel: "اشتراكاتي", icon: "bi bi-box-arrow-in-right" },
+    { label: "Favorites", arabicLabel: "المفضلة", icon: "bi bi-heart" },
+    { label: "Feedback", arabicLabel: "التقييمات", icon: "bi bi-star" },
+    { label: "Help Center", arabicLabel: "مركز المساعدة", icon: "bi bi-question-circle" },
   ];
+  
   listings: any[] = [];
   userID: any;
   ngOnInit(): void {
@@ -207,8 +214,24 @@ export class MyListingDetailsComponent implements OnInit {
     private http: HttpService,
     private router: Router,
     private dialog: MatDialog,
-    private alertService: AlertsServicesService
-  ) {}
+    private alertService: AlertsServicesService,
+      public translateService: TranslateService,
+       private languageService:LanguageService,
+  ) {
+    this.translateService.addLangs(this.supportLanguages);
+    const savedLang = this.languageService.getCurrentLanguage();
+    if (this.supportLanguages.includes(savedLang)) {
+      this.translateService.use(savedLang);
+    } else {
+      const browserLang = this.translateService.getBrowserLang();
+      this.currentLanguage = browserLang;
+
+      if (this.supportLanguages.includes(browserLang)) {
+        this.translateService.use(browserLang);
+        this.languageService.setLanguage(browserLang);
+      }
+    }
+  }
 
   fetchListings(): void {
     this.http.getMyProductsListing().subscribe((res) => {

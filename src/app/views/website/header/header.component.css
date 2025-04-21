@@ -47,6 +47,10 @@
   padding: 0 10px 0 10px;
 }
 
+.rtl-layout-header-reverse {
+  justify-content: left !important;
+}
+
 .header-contact {
   width: 30%;
   height: 100%;

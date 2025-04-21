@@ -1122,37 +1122,40 @@ currentStepper:any='';
   }
 
   getBillingInformation() {
-    // let userID: any = localStorage.getItem("userID");
-    this.http.getBillingInformation().subscribe((res) => {
-      // billingForm
-      this.billingInformationDetails = res?.data;
-      this.billingForm
-        .get("billing_address")
-        .setValue(this.billingInformationDetails.billing_address || "");
-
-      this.billingForm
-        .get("first_name")
-        .setValue(this.billingInformationDetails.first_name || "");
-
-      this.billingForm
-        .get("last_name")
-        .setValue(this.billingInformationDetails.last_name || "");
-
-      this.billingForm
-        .get("street")
-        .setValue(this.billingInformationDetails.street || "");
-      this.billingForm
-        .get("street_line_2")
-        .setValue(this.billingInformationDetails.street_line_2 || "");
-
-      this.billingForm
-        .get("zip_code")
-        .setValue(this.billingInformationDetails.zip_code || "");
-
-      this.billingForm
-        .get("city")
-        .setValue(this.billingInformationDetails.city || "");
-    });
+    let userID: any = localStorage.getItem("userID");
+    let userTokken: any = localStorage.getItem("user_token");
+    if(userTokken){
+      this.http.getBillingInformation().subscribe((res) => {
+        // billingForm
+        this.billingInformationDetails = res?.data;
+        this.billingForm
+          .get("billing_address")
+          .setValue(this.billingInformationDetails.billing_address || "");
+  
+        this.billingForm
+          .get("first_name")
+          .setValue(this.billingInformationDetails.first_name || "");
+  
+        this.billingForm
+          .get("last_name")
+          .setValue(this.billingInformationDetails.last_name || "");
+  
+        this.billingForm
+          .get("street")
+          .setValue(this.billingInformationDetails.street || "");
+        this.billingForm
+          .get("street_line_2")
+          .setValue(this.billingInformationDetails.street_line_2 || "");
+  
+        this.billingForm
+          .get("zip_code")
+          .setValue(this.billingInformationDetails.zip_code || "");
+  
+        this.billingForm
+          .get("city")
+          .setValue(this.billingInformationDetails.city || "");
+      });
+    }
   }
 
   isEnableProofofOwnerShip: boolean = false;

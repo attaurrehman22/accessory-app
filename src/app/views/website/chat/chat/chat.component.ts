@@ -32,12 +32,13 @@ export class ChatComponent implements OnInit, AfterViewChecked {
   newMessage: string = "";
   productDeatils: any;
   detailsWithLatestMessages: any;
-  messages: any;
+  messages: any;a
   chats: any;
   getProductDetails: any;
   chat_id: any;
   noImageName: any = "Kamran Ghulam";
   noMessageDetails: any;
+  
   constructor(
     private http: HttpService,
     private router: Router,
@@ -429,6 +430,12 @@ if (filteredChats.length > 0) {
   }
 
   sendMessage(): void {
+
+    const trimmedMessage = this.newMessage?.trim();
+    if (!trimmedMessage) {
+      return; // Don't send API request if message is only spaces or empty
+    }
+    console.log('Sending message:', trimmedMessage);
     const formData = new FormData();
     if (this.newMessage.trim()) {
       formData.append("message", this.newMessage);

@@ -110,6 +110,7 @@ import { getAuth } from 'firebase/auth';
 
 import { environment } from '../environments/environment';
 import { OrderInitiatedModelComponent } from './views/modal/order-initiated-model/order-initiated-model.component';
+import { TrimInputDirective } from './views/directives/trim-spaces/trim-input.directive';
 
 
 @NgModule({
@@ -166,7 +167,8 @@ import { OrderInitiatedModelComponent } from './views/modal/order-initiated-mode
     UsernameValidationDirective,
     AddEditPromotionComponent,
     TopBrandsLogosComponent,
-    OrderInitiatedModelComponent
+    OrderInitiatedModelComponent,
+    TrimInputDirective
   ],
   imports: [
     MatSortModule,

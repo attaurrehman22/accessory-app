@@ -1538,6 +1538,7 @@
               (keyup.enter)="sendMessage()"
               placeholder="{{ 'chat_com.type_message' | translate }}"
               maxlength="500"
+              appTrimInput
             />
 
             <div class="character-count">{{ newMessage.length }} / 500</div>
