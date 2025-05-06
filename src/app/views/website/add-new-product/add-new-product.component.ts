@@ -233,15 +233,24 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
   watchPrice: number = 0;
   shipping_type: any;
   shipping_charges: number = 0;
-  estimate_delivery: any;
+  // estimate_delivery: any;
   allow_to_make_offer: false;
   watchPriceDisplay: number = 0;
+
+  // configureable User and Dealer Platform Fees
+  configureableUserPlatFormFees: number = 0.04;
+  configureableDealerPlatFormFees: number = 0.04;
+
   platformFee: number = 0;
   estimatedPayout: number = 0;
   estimatedPayoutwithShipping: number = 0;
   calculatePayout() {
     this.watchPriceDisplay = this.watchPrice;
-    this.platformFee = this.watchPrice * 0.04;
+    if(this.userType == "dealer"){
+      this.platformFee = this.watchPrice * this.configureableUserPlatFormFees;
+    }else{
+      this.platformFee = this.watchPrice * this.configureableDealerPlatFormFees;
+    }
     this.estimatedPayout = this.watchPrice - this.platformFee;
     if(this.shipping_charges){
       this.estimatedPayoutwithShipping = this.estimatedPayout - this.shipping_charges
@@ -1105,7 +1114,7 @@ currentStepper:any='';
       this.watchPrice = this.productDetails.price;
       this.shipping_type = this.productDetails.shipping_type;
       this.shipping_charges = this.productDetails.shipping_charges;
-      this.estimate_delivery = this.productDetails.estimate_delivery;
+      // this.estimate_delivery = this.productDetails.estimate_delivery;
       this.allow_to_make_offer = this.productDetails.allow_to_make_offer;
       this.estimatedPayoutwithShipping = this.productDetails.estimate_payout;
 
@@ -1795,7 +1804,7 @@ currentStepper:any='';
               price: this.watchPrice,
               shipping_type: this.shipping_type,
               shipping_charges: this.shipping_charges,
-              estimate_delivery: this.estimate_delivery,
+              // estimate_delivery: this.estimate_delivery,
               allow_to_make_offer: this.allow_to_make_offer,
               estimate_payout: this.estimatedPayoutwithShipping,
               isUpdate: isUpdate,
@@ -1822,7 +1831,7 @@ currentStepper:any='';
               price: this.watchPrice,
               shipping_type: this.shipping_type,
               shipping_charges: this.shipping_charges,
-              estimate_delivery: this.estimate_delivery,
+              // estimate_delivery: this.estimate_delivery,
               allow_to_make_offer: this.allow_to_make_offer,
               estimate_payout: this.estimatedPayoutwithShipping,
               isUpdate: isUpdate,
