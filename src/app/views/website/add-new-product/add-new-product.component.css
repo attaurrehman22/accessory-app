@@ -818,3 +818,18 @@ video {
 .small-screen-btn-wrap {
   flex-wrap: wrap;
 }
+
+.mark-cover-btn.active {
+  background-color: #1976d2;
+  color: white;
+}
+
+
+.set-as-cover-btn {
+  width: 135px;
+  padding: 5px 5px 5px 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}

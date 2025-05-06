@@ -436,6 +436,55 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
     },
   ];
 
+  allImages: any[] = [];
+// coverImage: any = null;
+
+  @ViewChild("imagesInput") imagesInput!: ElementRef<HTMLInputElement>;
+
+  selectImages() {
+    this.imagesInput.nativeElement.click();
+  }
+
+  onImagesSelected(event: Event) {
+    const files = (event.target as HTMLInputElement).files;
+    if (files && files.length > 0) {
+      Array.from(files).forEach((file: File) => {
+        const reader = new FileReader();
+  
+        const newImage: ImageFile = { file, url: "", isUploading: true };
+        this.allImages.push(newImage); // keep track of all selected images
+  
+        reader.onload = () => {
+          newImage.url = reader.result as string;
+          newImage.isUploading = false;
+        };
+  
+        reader.readAsDataURL(file);
+      });
+    }
+  }
+  
+  setAsCoverImage(image: ImageFile) {
+    // Set as cover image
+    this.coverImage = { ...image };
+  
+    // Remove from otherImages if already present
+    this.otherImages = this.otherImages.filter(img => img.url !== image.url);
+  
+    // Add all other images (excluding cover) into otherImages
+    this.otherImages = this.allImages.filter(img => img.url !== image.url);
+  }
+  
+  removeImage(image: ImageFile) {
+    this.allImages = this.allImages.filter(img => img.url !== image.url);
+    this.otherImages = this.otherImages.filter(img => img.url !== image.url);
+  
+    if (this.coverImage?.url === image.url) {
+      this.coverImage = null;
+    }
+  }
+
+
   selectedCondition = null;
 
   selectCondition(condition: any) {
@@ -1106,6 +1155,11 @@ currentStepper:any='';
             isUploading: false,
           })
         );
+
+        if(this.otherImages.length > 0) {
+          this.allImages = this.otherImages
+          this.allImages =[...this.allImages, this.coverImage]
+        }
       }
       if (this.productDetails?.proof_image_1) {
         this.isEnableProofofOwnerShip = true;
@@ -1367,9 +1421,9 @@ currentStepper:any='';
     }
   }
 
-  removeImage(image: { url: string; isUploading: boolean }) {
-    this.otherImages = this.otherImages.filter((img) => img !== image);
-  }
+  // removeImage(image: { url: string; isUploading: boolean }) {
+  //   this.otherImages = this.otherImages.filter((img) => img !== image);
+  // }
 
   brandnametoDisplay: any;
 

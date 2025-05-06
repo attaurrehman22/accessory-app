@@ -1455,8 +1455,61 @@
                   translateService.currentLang !== 'en'
               }"
             >
-              <!-- Cover Image -->
+
+
+             <!-- All images preview -->
+          <div class="content-two mt-3">
+            <p>{{ "create_product_listing.other_images" | translate }}</p>
+            <div class="d-flex flex-wrap align-items-center gap-5">
+          
+              <div class="image-preview" *ngFor="let image of allImages">
+                <img [src]="image.url" alt="Preview" />
+          
+                <!-- Mark as cover button -->
+                <button
+                  class="mark-cover-btn set-as-cover-btn"
+                  [class.active]="coverImage?.url === image.url"
+                  (click)="setAsCoverImage(image)"
+                >
+                  <!-- <mat-icon>photo_camera</mat-icon> -->
+                  <small>Set as Cover Image</small>
+                </button>
+          
+                <!-- Delete button -->
+                <button class="delete-btn" (click)="removeImage(image)">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </div>
+          
               <div class="content-one">
+                <!-- <p>{{ "create_product_listing.cover_image" | translate }}</p> -->
+                <div class="d-flex flex-wrap">
+                  <div class="upload-box" (click)="selectImages()">
+                    <span>+</span>
+                  </div>
+                  <input
+                    type="file"
+                    #imagesInput
+                    (change)="onImagesSelected($event)"
+                    accept="image/*"
+                    multiple
+                    hidden
+                  />
+                </div>
+              </div>
+
+            </div>
+          </div>
+          
+          <!-- Optional Cover Image Preview Box -->
+          <div class="cover-preview mt-5" *ngIf="coverImage?.url !== 'https://api.chronosouq.com/null'">
+            <p>{{ "create_product_listing.cover_image" | translate }}</p>
+            <img [src]="coverImage.url" style="max-height: 150px;" alt="Cover Image" />
+          </div>
+
+
+              <!-- Cover Image -->
+              <!-- <div class="content-one">
                 <p>{{ "create_product_listing.cover_image" | translate }}</p>
                 <div class="d-flex flex-wrap">
                   <div class="upload-box" (click)="selectCoverImage()">
@@ -1476,7 +1529,6 @@
                         [src]="coverImage.url"
                         alt="Cover Image"
                       />
-                      <!-- Show delete button when cover image is present -->
                       <button
                         *ngIf="
                           coverImage?.url &&
@@ -1491,7 +1543,6 @@
                     <ng-template #uploadPlaceholder>
                       <span>+</span>
                     </ng-template>
-                    <!-- Show the upload progress if cover image is uploading -->
                     <div *ngIf="isCoverImageUploading" class="upload-progress">
                       <p>Uploading</p>
                       <mat-progress-bar mode="indeterminate"></mat-progress-bar>
@@ -1505,10 +1556,10 @@
                     hidden
                   />
                 </div>
-              </div>
+              </div> -->
 
 
-              <div class="content-one">
+              <div class="content-one mt-3">
                 <p>{{ "create_product_listing.upload_video" | translate }}</p>
                   <div class="d-flex flex-wrap">
                     <div class="upload-box" (click)="selectVideoFile()">
@@ -1535,7 +1586,7 @@
               </div>
 
               <!-- Other Images -->
-              <div class="content-two">
+              <!-- <div class="content-two">
                 <p>{{ "create_product_listing.other_images" | translate }}</p>
                 <div class="d-flex flex-wrap gap-3">
                   <div class="upload-box" (click)="selectOtherImages()">
@@ -1557,13 +1608,11 @@
                       alt="Preview"
                     />
 
-                    <!-- Show the progress bar if the image is uploading -->
                     <div *ngIf="image.isUploading" class="upload-progress">
                       <p>Uploading</p>
                       <mat-progress-bar mode="indeterminate"></mat-progress-bar>
                     </div>
 
-                    <!-- Show the delete button only when the upload is complete -->
                     <button
                       *ngIf="!image.isUploading"
                       class="delete-btn"
@@ -1573,7 +1622,7 @@
                     </button>
                   </div>
                 </div>
-              </div>
+              </div> -->
               <div
                 [ngClass]="{
                   'reverse-order-listing-details-btn-div':
@@ -4688,8 +4737,64 @@
             }"
             class="image-upload-container"
           >
+
+
+       
+          
+          <!-- All images preview -->
+          <div class="content-two mt-3">
+            <p>{{ "create_product_listing.other_images" | translate }}</p>
+            <div class="d-flex flex-wrap align-items-center gap-5">
+          
+              <div class="image-preview" *ngFor="let image of allImages">
+                <img [src]="image.url" alt="Preview" />
+          
+                <!-- Mark as cover button -->
+                <button
+                  class="mark-cover-btn set-as-cover-btn"
+                  [class.active]="coverImage?.url === image.url"
+                  (click)="setAsCoverImage(image)"
+                >
+                  <!-- <mat-icon>photo_camera</mat-icon> -->
+                  <small>Set as Cover Image</small>
+                </button>
+          
+                <!-- Delete button -->
+                <button class="delete-btn" (click)="removeImage(image)">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </div>
+          
+              <div class="content-one">
+                <!-- <p>{{ "create_product_listing.cover_image" | translate }}</p> -->
+                <div class="d-flex flex-wrap">
+                  <div class="upload-box" (click)="selectImages()">
+                    <span>+</span>
+                  </div>
+                  <input
+                    type="file"
+                    #imagesInput
+                    (change)="onImagesSelected($event)"
+                    accept="image/*"
+                    multiple
+                    hidden
+                  />
+                </div>
+              </div>
+
+            </div>
+          </div>
+          
+          <!-- Optional Cover Image Preview Box -->
+          <div class="cover-preview mt-5" *ngIf="coverImage?.url !== 'https://api.chronosouq.com/null'">
+            <p>{{ "create_product_listing.cover_image" | translate }}</p>
+            <img [src]="coverImage.url" style="max-height: 150px;" alt="Cover Image" />
+          </div>
+          
+
+
             <!-- Cover Image -->
-            <div class="content-one">
+            <!-- <div class="content-one">
               <p>{{ "create_product_listing.cover_image" | translate }}</p>
               <div class="d-flex flex-wrap">
                 <div class="upload-box" (click)="selectCoverImage()">
@@ -4709,7 +4814,6 @@
                       [src]="coverImage.url"
                       alt="Cover Image"
                     />
-                    <!-- Show delete button when cover image is present -->
                     <button
                       *ngIf="
                         coverImage?.url &&
@@ -4724,7 +4828,6 @@
                   <ng-template #uploadPlaceholder>
                     <span>+</span>
                   </ng-template>
-                  <!-- Show the upload progress if cover image is uploading -->
                   <div *ngIf="isCoverImageUploading" class="upload-progress">
                     <p>Uploading</p>
                     <mat-progress-bar mode="indeterminate"></mat-progress-bar>
@@ -4738,9 +4841,9 @@
                   hidden
                 />
               </div>
-            </div>
+            </div> -->
 
-            <div class="content-one">
+            <div class="content-one mt-3">
               <p>{{ "create_product_listing.upload_video" | translate }}</p>
                 <div class="d-flex flex-wrap">
                   <div class="upload-box" (click)="selectVideoFile()">
@@ -4767,7 +4870,7 @@
             </div>
 
             <!-- Other Images -->
-            <div class="content-two">
+            <!-- <div class="content-two">
               <p>{{ "create_product_listing.other_images" | translate }}</p>
               <div class="d-flex flex-wrap align-items-center gap-3">
                 <div class="upload-box" (click)="selectOtherImages()">
@@ -4789,13 +4892,11 @@
                     alt="Preview"
                   />
 
-                  <!-- Show the progress bar if the image is uploading -->
                   <div *ngIf="image.isUploading" class="upload-progress">
                     <p>Uploading</p>
                     <mat-progress-bar mode="indeterminate"></mat-progress-bar>
                   </div>
 
-                  <!-- Show the delete button only when the upload is complete -->
                   <button
                     *ngIf="!image.isUploading"
                     class="delete-btn"
@@ -4805,7 +4906,7 @@
                   </button>
                 </div>
               </div>
-            </div>
+            </div> -->
 
            
             
