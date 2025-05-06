@@ -279,7 +279,7 @@ export class AdminProductsComponent
     this.http.activateAdminProducts(data.id).subscribe(
       (res) => {
         if (res.data.is_active === true) {
-          this.toast.showAlert("success", "Product add to Susseccfully");
+          this.toast.showAlert("success", "Product Active Susseccfully");
         } else {
           this.toast.showAlert("success", "Product De-activate Susseccfully");
         }

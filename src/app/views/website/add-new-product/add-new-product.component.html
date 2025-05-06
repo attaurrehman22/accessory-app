@@ -176,7 +176,7 @@
                 </mat-error>
               </mat-form-field>
 
-              <mat-form-field
+              <!-- <mat-form-field
                 [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'"
                 appearance="outline"
                 class="w-100 mt-2"
@@ -203,12 +203,13 @@
                 >
                   {{ "create_product_listing.name_required" | translate }}
                 </mat-error>
-              </mat-form-field>
+              </mat-form-field> -->
 
               <mat-form-field
                 [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'"
                 appearance="outline"
                 class="w-100 mt-2"
+                [hideRequiredMarker]="true"
               >
                 <mat-label class="label-header">
                   {{ "create_product_listing.model" | translate }}</mat-label
@@ -220,7 +221,7 @@
                     'create_product_listing.enter_model_name' | translate
                   }}"
                   formControlName="model"
-                  required
+                  
                   appFieldLimitIntoHundered
                 />
                 <mat-error
@@ -238,6 +239,7 @@
                 [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'"
                 appearance="outline"
                 class="w-100 mt-2"
+                [hideRequiredMarker]="true"
               >
                 <mat-label class="label-header">{{
                   "create_product_listing.title" | translate
@@ -249,7 +251,7 @@
                   }}"
                   [readonly]="productDetails?.title ? true : false"
                   formControlName="title"
-                  required
+                  
                   appFieldLimitIntoHundered
                 />
                 <mat-error
@@ -309,6 +311,7 @@
                 [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'"
                 appearance="outline"
                 class="w-100 mt-2"
+                [hideRequiredMarker]="true"
               >
                 <mat-label class="label-header">{{
                   "create_product_listing.watchtype" | translate
@@ -341,6 +344,7 @@
                 [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'"
                 appearance="outline"
                 class="w-100 mt-2"
+                [hideRequiredMarker]="true"
               >
                 <mat-label class="label-header">
                   {{
@@ -357,7 +361,7 @@
                   formControlName="year_of_production"
                   [readonly]="productDetails?.year_of_production ? true : false"
                   appPositiveNumber
-                  required
+                  
                 />
                 <mat-error
                   [ngClass]="{
@@ -483,6 +487,7 @@
                 [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'"
                 appearance="outline"
                 class="w-100 mb-3"
+                [hideRequiredMarker]="true"
               >
                 <mat-label class="label-header">
                   {{
@@ -497,7 +502,7 @@
                     'create_product_listing.refrence_number_placeHolder'
                       | translate
                   }}"
-                  required=""
+              
                 />
                 <mat-error
                   [ngClass]="{
@@ -521,6 +526,7 @@
                     "
                     appearance="outline"
                     class="w-100"
+                    [hideRequiredMarker]="true"
                   >
                     <mat-label class="label-header">
                       {{ "create_product_listing.serial_no" | translate }}
@@ -533,7 +539,7 @@
                         'create_product_listing.serial_no_placeHolder'
                           | translate
                       }}"
-                      required
+                     
                     />
                     <mat-error
                       [ngClass]="{
@@ -556,6 +562,7 @@
                     "
                     appearance="outline"
                     class="w-100"
+                    [hideRequiredMarker]="true"
                   >
                     <mat-label class="label-header">
                       {{ "create_product_listing.gender" | translate }}
@@ -590,6 +597,7 @@
                     "
                     appearance="outline"
                     class="w-100"
+                    [hideRequiredMarker]="true"
                   >
                     <mat-label class="label-header">
                       {{ "create_product_listing.movement" | translate }}
@@ -629,6 +637,7 @@
                     "
                     appearance="outline"
                     class="w-100"
+                    [hideRequiredMarker]="true"
                   >
                     <mat-label class="label-header">
                       {{ "create_product_listing.case_diameter" | translate }}
@@ -685,6 +694,7 @@
                     "
                     appearance="outline"
                     class="w-100"
+                    [hideRequiredMarker]="true"
                   >
                     <mat-label class="label-header">
                       {{ "create_product_listing.other_diameter" | translate }}
@@ -696,7 +706,7 @@
                         'create_product_listing.other_diameter_placeholder'
                           | translate
                       }}"
-                      required
+                      
                     />
                     <span
                       style="
@@ -3417,7 +3427,7 @@
               </mat-error>
             </mat-form-field>
 
-            <mat-form-field
+            <!-- <mat-form-field
               [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'"
               appearance="outline"
               class="w-100 mt-2"
@@ -3444,12 +3454,13 @@
               >
                 {{ "create_product_listing.name_required" | translate }}
               </mat-error>
-            </mat-form-field>
+            </mat-form-field> -->
 
             <mat-form-field
               [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'"
               appearance="outline"
               class="w-100 mt-2"
+              [hideRequiredMarker]="true"
             >
               <mat-label class="label-header">
                 {{ "create_product_listing.model" | translate }}</mat-label
@@ -3461,7 +3472,7 @@
                   'create_product_listing.enter_model_name' | translate
                 }}"
                 formControlName="model"
-                required
+                
                 appFieldLimitIntoHundered
               />
               <mat-error
@@ -3479,6 +3490,7 @@
               [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'"
               appearance="outline"
               class="w-100 mt-2"
+              [hideRequiredMarker]="true"
             >
               <mat-label class="label-header">{{
                 "create_product_listing.title" | translate
@@ -3490,7 +3502,7 @@
                 }}"
                 [readonly]="productDetails?.title ? true : false"
                 formControlName="title"
-                required
+                
                 appFieldLimitIntoHundered
               />
               <mat-error
@@ -3549,6 +3561,7 @@
               [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'"
               appearance="outline"
               class="w-100 mt-2"
+              [hideRequiredMarker]="true"
             >
               <mat-label class="label-header">{{
                 "create_product_listing.watchtype" | translate
@@ -3581,6 +3594,7 @@
               [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'"
               appearance="outline"
               class="w-100 mt-2"
+              [hideRequiredMarker]="true"
             >
               <mat-label class="label-header">
                 {{
@@ -3597,7 +3611,7 @@
                 formControlName="year_of_production"
                 [readonly]="productDetails?.year_of_production ? true : false"
                 appPositiveNumber
-                required
+                
               />
               <mat-error
                 [ngClass]="{
@@ -3703,6 +3717,7 @@
                   [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'"
                   appearance="outline"
                   class="w-100 mb-3"
+                  [hideRequiredMarker]="true"
                 >
                   <mat-label class="label-header">
                     {{
@@ -3717,7 +3732,7 @@
                       'create_product_listing.refrence_number_placeHolder'
                         | translate
                     }}"
-                    required=""
+                   
                   />
                   <mat-error
                     [ngClass]="{
@@ -3741,6 +3756,7 @@
                       "
                       appearance="outline"
                       class="w-100"
+                      [hideRequiredMarker]="true"
                     >
                       <mat-label class="label-header">
                         {{ "create_product_listing.serial_no" | translate }}
@@ -3753,7 +3769,7 @@
                           'create_product_listing.serial_no_placeHolder'
                             | translate
                         }}"
-                        required
+                        
                       />
                       <mat-error
                         [ngClass]="{
@@ -3777,6 +3793,7 @@
                       "
                       appearance="outline"
                       class="w-100"
+                      [hideRequiredMarker]="true"
                     >
                       <mat-label class="label-header">
                         {{ "create_product_listing.gender" | translate }}
@@ -3814,6 +3831,7 @@
                       "
                       appearance="outline"
                       class="w-100"
+                      [hideRequiredMarker]="true"
                     >
                       <mat-label class="label-header">
                         {{ "create_product_listing.movement" | translate }}
@@ -3853,6 +3871,7 @@
                       "
                       appearance="outline"
                       class="w-100"
+                      [hideRequiredMarker]="true"
                     >
                       <mat-label class="label-header">
                         {{ "create_product_listing.case_diameter" | translate }}
@@ -3909,6 +3928,7 @@
                       "
                       appearance="outline"
                       class="w-100"
+                      [hideRequiredMarker]="true"
                     >
                       <mat-label class="label-header">
                         {{

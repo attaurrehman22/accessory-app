@@ -265,4 +265,15 @@ export class PopularBrandsComponentComponent implements OnInit {
       state: { data: product },
     });
   }
+
+
+  // onImageClick(event: any) {
+  //   const clickedImage = this.sliderImages[event.index];
+  //   console.log("Clicked image:", clickedImage);
+  //   if (clickedImage) {
+  //     this.router.navigate(['/buy-product'], {
+  //       queryParams: { id: clickedImage.id }
+  //     });
+  //   }
+  // }
 }

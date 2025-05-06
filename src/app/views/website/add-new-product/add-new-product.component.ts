@@ -110,7 +110,7 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
 
   brand_id = new FormControl(null, Validators.required);
   category_ids = new FormControl([], Validators.required);
-  name = new FormControl("", [Validators.required]);
+  // name = new FormControl("", [Validators.required]);
   model = new FormControl("", [Validators.required]);
   title = new FormControl("", [Validators.required]);
   description = new FormControl("", [
@@ -875,10 +875,9 @@ currentStepper:any='';
         this.listingForm.get("category_ids").disable();
       }
 
-      this.listingForm.get("name").setValue(this.productDetails.name);
-      if (this.productDetails.name) {
-        // this.listingForm.get("name").disable();
-      }
+      // this.listingForm.get("name").setValue(this.productDetails.name);
+      // if (this.productDetails.name) {
+      // }
 
       this.listingForm.get("model").setValue(this.productDetails.model);
       if (this.productDetails.model) {
@@ -1249,7 +1248,7 @@ currentStepper:any='';
     this.listingForm = new FormGroup({
       brand_id: this.brand_id,
       category_ids: this.category_ids,
-      name: this.name,
+      // name: this.name,
       model: this.model,
       title: this.title,
       description: this.description,
