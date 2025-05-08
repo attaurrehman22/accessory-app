@@ -63,6 +63,12 @@ export class AppComponent implements OnInit {
   showHeader: boolean = true;
   showAdminHeader: boolean = true;
   showSecondFooter: boolean = true;
+  hideaccessoriesHeader: boolean = false;
+
+  routesToHideforAccessriesUser = [
+   "/accessories/home",
+   "accessories/details"
+  ]
 
   routesToHideforUser = [
     "/admin/dashboard",
@@ -76,7 +82,7 @@ export class AppComponent implements OnInit {
     "/admin/watchOfDay",
     "/admin/accessories",
     "/admin/accessories/add",
-    "/admin/top/brands"
+    "/admin/top/brands",
   ];
   routesToHideforAdmin = [
     "/login",
@@ -100,6 +106,7 @@ export class AppComponent implements OnInit {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         const currentRoute = this.router.url;
+        this.hideaccessoriesHeader = this.routesToHideforAccessriesUser.includes(currentRoute);
         this.showHeader = !this.routesToHideforUser.includes(currentRoute);
         this.showAdminHeader =
           !this.routesToHideforAdmin.includes(currentRoute);

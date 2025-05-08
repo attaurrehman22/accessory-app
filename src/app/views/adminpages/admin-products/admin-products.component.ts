@@ -17,6 +17,7 @@ import { Subscription } from "rxjs";
 import { SidebarService } from "src/services/sidebar.service";
 import { AddEditPromotionComponent } from "../add-edit-promotion/add-edit-promotion.component";
 import { ConfirmationModelComponent } from "../../modal/confirmation-model/confirmation-model.component";
+import { RejectProductModalComponent } from "../../modal/reject-product-modal/reject-product-modal.component";
 
 export interface UserData {
   name: any;
@@ -273,6 +274,21 @@ export class AdminProductsComponent
         this.toast.showAlert("danger", "Error in removing Product");
       }
     );
+  }
+
+  rejectProduct(data) {
+    const dialogRef = this.dialog.open(RejectProductModalComponent, {
+      width: "1000px",
+      height: "auto",
+      data: { data: data },
+    });
+
+    dialogRef.afterClosed().subscribe(
+      (param) => {
+      if (param == true) {
+        this.loadData();
+      }
+    });
   }
 
   activateProduct(data) {

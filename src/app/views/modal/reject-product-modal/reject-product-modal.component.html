@@ -1,0 +1,47 @@
+<div class="confirmation-modal">
+    <div class="modal-content" style="padding: 55px 35px 60px 35px;">
+        <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Reason</mat-label>
+            <textarea
+              matInput
+              [(ngModel)]="comment"
+              #commentModel="ngModel"
+              name="comment"
+              rows="4"
+              required
+              minlength="15"
+            ></textarea>
+            <mat-error *ngIf="commentModel.invalid && (commentModel.dirty || commentModel.touched)">
+              <span *ngIf="commentModel.errors?.required">Reason is required</span>
+              <span *ngIf="commentModel.errors?.minlength">
+                Reason must be at least {{ commentModel.errors?.minlength.requiredLength }} characters (current: {{ commentModel.errors?.minlength.actualLength }})
+              </span>
+            </mat-error>
+          </mat-form-field>
+          
+  
+      <div class="d-flex justify-content-center gap-2">
+        <button
+          class="confirm-btn"
+          style="
+            height: 45px;
+            width: 140px;
+            border-radius: 8px;
+            background: #242424;
+            color: white;
+          "
+          (click)="rejectProduct(commentModel)"
+        >
+          Reject
+        </button>
+        <button
+          style="height: 45px; width: 140px; border-radius: 8px"
+          (click)="cancel()"
+        >
+          Cancel
+        </button>
+      </div>
+    </div>
+  </div>
+  
+  

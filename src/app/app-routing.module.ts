@@ -26,6 +26,8 @@ import { AccessoriesProductsComponent } from './views/adminpages/accessories-pro
 import { CreateAccessoriesProductComponent } from './views/adminpages/create-accessories-product/create-accessories-product.component';
 import { adminGuard } from './guards/admin.guard';
 import { TopBrandsLogosComponent } from './views/adminpages/top-brands-logos/top-brands-logos.component';
+import { AccessoriesHomeComponent } from './views/accessoriespages/accessories-home/accessories-home.component';
+import { AccessorieDetailComponent } from './views/accessoriespages/accessorie-detail/accessorie-detail.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -51,6 +53,11 @@ const routes: Routes = [
   {  canActivate: [adminGuard],path: 'admin/accessories/add', component:  CreateAccessoriesProductComponent},
   {  canActivate: [adminGuard],path: 'admin/top/brands', component:  TopBrandsLogosComponent},
  
+
+  { path: 'accessories/home', component:  AccessoriesHomeComponent},
+  { path: 'accessories/details', component:  AccessorieDetailComponent},
+
+
   { path: 'buy-now', component:  BuyNowComponent},
   { path: 'myListing', component:  MyListingDetailsComponent},
   { path: 'forgotPassword', component:  ForgotPasswordComponent},

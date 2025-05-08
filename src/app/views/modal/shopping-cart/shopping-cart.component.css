@@ -1,0 +1,14 @@
+img {
+    border-radius: 6px;
+  }
+
+  .container {
+    display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 100%;
+  }
+
+  ::ng-deep .mat-mdc-dialog-surface mdc-dialog__surface {
+    border-radius: 12px;
+  }

@@ -111,6 +111,12 @@ import { getAuth } from 'firebase/auth';
 import { environment } from '../environments/environment';
 import { OrderInitiatedModelComponent } from './views/modal/order-initiated-model/order-initiated-model.component';
 import { TrimInputDirective } from './views/directives/trim-spaces/trim-input.directive';
+import { RejectProductModalComponent } from './views/modal/reject-product-modal/reject-product-modal.component';
+import { AccessoriesHomeComponent } from './views/accessoriespages/accessories-home/accessories-home.component';
+import { HeroPageComponent } from './views/accessoriespages/hero-page/hero-page.component';
+import { AccessoriesNewArrivalsComponent } from './views/accessoriespages/accessories-new-arrivals/accessories-new-arrivals.component';
+import { AccessorieDetailComponent } from './views/accessoriespages/accessorie-detail/accessorie-detail.component';
+import { ShoppingCartComponent } from './views/modal/shopping-cart/shopping-cart.component';
 
 
 @NgModule({
@@ -168,7 +174,13 @@ import { TrimInputDirective } from './views/directives/trim-spaces/trim-input.di
     AddEditPromotionComponent,
     TopBrandsLogosComponent,
     OrderInitiatedModelComponent,
-    TrimInputDirective
+    TrimInputDirective,
+    RejectProductModalComponent,
+    AccessoriesHomeComponent,
+    HeroPageComponent,
+    AccessoriesNewArrivalsComponent,
+    AccessorieDetailComponent,
+    ShoppingCartComponent
   ],
   imports: [
     MatSortModule,

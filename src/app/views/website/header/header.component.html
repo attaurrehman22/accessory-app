@@ -78,6 +78,12 @@
               {{ "header.settings" | translate }}
             </a>
 
+
+            <a class="custom-btn" *ngIf="isUserLogin === 'true'"  mat-menu-item routerLink="/chat">
+              {{ "header.Chat" | translate }}
+            </a>
+
+
             <a style="padding: 10px 10px 0 10px;"
                mat-menu-item
               class="custom-btn"
@@ -189,8 +195,11 @@
           >
             {{ "header.admin_pannel" | translate }}
           </a> -->
-          <a class="custom-btn" *ngIf="isUserLogin === 'true'" routerLink="/chat">
+          <!-- <a class="custom-btn" *ngIf="isUserLogin === 'true'" routerLink="/chat">
             {{ "header.Chat" | translate }}
+          </a> -->
+          <a class="custom-btn" *ngIf="isUserLogin === 'true'" routerLink="/accessories/home">
+            {{ "header.accessories" | translate }}
           </a>
         </div>
         <div

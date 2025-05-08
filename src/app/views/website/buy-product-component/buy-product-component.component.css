@@ -448,7 +448,6 @@ mat-grid-list {
   height: 260px;
   object-fit: contain;
   background: #F8F8F8;
-
 }
 
 .watch-brand {
@@ -827,10 +826,9 @@ mat-grid-list {
    .brand-sec {
     gap: 5px;
    }
-.small-screen-size-text{
-  font-size: 12px;
-}
-
+  .small-screen-size-text{
+    font-size: 12px;
+  }
 
 }
 

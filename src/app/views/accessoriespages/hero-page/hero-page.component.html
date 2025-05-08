@@ -1,0 +1,357 @@
+<div class="container-fluid p-0 m-0" style="position: relative;">
+    <div class="col-md-12" style="position: absolute;z-index: 9999;">
+        <header>
+            <nav class="navbar navbar-expand-lg">
+              <div
+                class="d-flex global-main-wraper w-100"
+                [ngClass]="{ 'rtl-reverse': isRtl }"
+              >
+                
+                <div class="query w-100" [ngClass]="{ 'rtl-layout-reverse': isRtl }">
+                  <div [ngClass]="{ 'lag-logo-stl': isRtl }" class="logo">
+                    <a href="/">
+                    <img
+                      class="logo-img sidebar-logo-small-screen"
+                      routerLink="/"
+                      src="./assets/images/white_logo.svg"
+                      alt="Cronosuq"
+                      style="cursor: pointer;"
+                    />
+                  </a>
+                  </div>
+                  <div
+                    class="header-content gap-4"
+                    *ngIf="isSearchForm"
+                    [ngClass]="{
+                      'position-absolute search-box-small-screen': isSmallScreen
+                    }"
+                  >
+                  
+                  </div>
+                  <div class="header-contact header-contact-lg gap-4 mat-menu-nav">
+                     <img
+                      src="./assets/images/white-search-icon.svg"
+                     
+                      (click)="isShowSearchForm()"
+                      style="cursor: pointer"
+                    />
+                    <div *ngIf="isShowSearchField" class="small-screen-search-Box">
+                    <!-- <mat-menu #search3Menu="matMenu"  class="notificationsMenu"> -->
+                      <!-- <form class="d-flex flex-grow-1 ms-3 mat-menu-nav" (ngSubmit)="onSearch(searchQuery)" (click)="$event.stopPropagation()">
+                        <input
+                          [(ngModel)]="searchQuery"
+                          (ngModelChange)="onSearchChange()"
+                          class="form-control me-2"
+                          type="search"
+                          placeholder="Search"
+                          aria-label="Search"
+                        />
+                      </form> -->
+                      <form  class="d-flex flex-grow-1 ms-3" (ngSubmit)="onSearch(searchQuery)">
+                        <div class="input-group">
+                          <input
+                            [(ngModel)]="searchQuery"
+                            class="form-control me-2"
+                            type="search"
+                            placeholder="Search"
+                            aria-label="Search"
+                          />
+                          <button class="search-btn" type="submit">Search</button>
+                        </div>
+                      </form>
+                      
+                    <!-- </mat-menu> -->
+                  </div>
+                    <mat-menu #profileMenu="matMenu">
+                      <button
+                        mat-menu-item
+                        *ngIf="isUserLogin === 'false' || isUserLogin === null"
+                        (click)="goToRegister()"
+                      >
+                        {{ "header.Login" | translate }}
+                      </button>
+          
+                      <p style="padding: 10px 10px 0 10px;" *ngIf="userDetails?.name && selectedLang == 'en'">{{ "header.wellCome" | translate }} {{userDetails.name}}</p>
+          
+                      <p style="padding: 10px 10px 0 10px;" *ngIf="userDetails?.name && selectedLang == 'ar'"> {{userDetails.name}} {{ "header.wellCome" | translate }}</p>
+          
+          
+                      <a routerLink="/myListing"  mat-menu-item  *ngIf="isUserLogin === 'true'"> 
+                        {{ "header.settings" | translate }}
+                      </a>
+          
+          
+                      <a class="custom-btn" *ngIf="isUserLogin === 'true'"  mat-menu-item routerLink="/chat">
+                        {{ "header.Chat" | translate }}
+                      </a>
+          
+          
+                      <a style="padding: 10px 10px 0 10px;"
+                         mat-menu-item
+                        class="custom-btn"
+                        *ngIf="showHideAdminUser === true"
+                        routerLink="/admin/dashboard"
+                      >
+                        {{ "header.admin_pannel" | translate }}
+                      </a>
+                      <button
+                        mat-menu-item
+                        *ngIf="isUserLogin === 'true'"
+                        (click)="logout()"
+                      >
+                        {{ "header.Logout" | translate }}
+                      </button>
+                    </mat-menu>
+          
+                    <img
+                      src="./assets/images/white-profile-icon.svg"
+                      alt="Profile"
+                      [matMenuTriggerFor]="profileMenu"
+                      style="cursor: pointer"
+                    />
+
+                    <img
+                      src="./assets/images/solar_bag-smile-linear.svg"
+                      style="cursor: pointer"
+                      (click)="openCart()"
+                    />
+          
+                    <button
+                      *ngIf="selectedLang === 'en'"
+                      class="custom-btn"
+                      (click)="useLang('ar')"
+                    >
+                      ARB
+                    </button>
+                    <button
+                      *ngIf="selectedLang === 'ar'"
+                      class="custom-btn"
+                      (click)="useLang('en')"
+                    >
+                      EN
+                    </button>
+                  </div>
+                </div>
+          
+                <button
+                  class="navbar-toggler"
+                  type="button"
+                  (click)="toggleNavbar()"
+                  aria-controls="navbarSupportedContent"
+                  aria-expanded="false"
+                  aria-label="Toggle navigation"
+                >
+                  <svg
+                    class="navbar-toggler-icon"
+                    xmlns="http://www.w3.org/2000/svg"
+                    clip-rule="evenodd"
+                    fill-rule="evenodd"
+                    stroke-linejoin="round"
+                    stroke-miterlimit="2"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="m21 15.75c0-.414-.336-.75-.75-.75h-16.5c-.414 0-.75.336-.75.75s.336.75.75.75h16.5c.414 0 .75-.336.75-.75zm0-4c0-.414-.336-.75-.75-.75h-16.5c-.414 0-.75.336-.75.75s.336.75.75.75h16.5c.414 0 .75-.336.75-.75zm0-4c0-.414-.336-.75-.75-.75h-16.5c-.414 0-.75.336-.75.75s.336.75.75.75h16.5c.414 0 .75-.336.75-.75z"
+                      fill-rule="nonzero"
+                    />
+                  </svg>
+                </button>
+          
+                
+                <div
+                  class="nav-overlay"
+                  [class.active]="isNavbarOpen"
+                  (click)="closeNavbar()"
+                ></div>
+                <div
+                  class="collapse navbar-collapse justify-content-between"
+                  id="navbarSupportedContent"
+                  [ngClass]="{ 'rtl-layout-reverse': isRtl }"
+                  [class.show]="isNavbarOpen"
+                >
+                <a href="/">
+                  <img
+                    class="logo-img sidebar-logo"
+                    routerLink="/"
+                    src="./assets/images/white_logo.svg"
+                    alt="Cronosuq"
+                    style="cursor: pointer"
+                  />
+                </a>
+                  <div class="header-content gap-4" *ngIf="!isSearchForm" [ngClass]="{ 'rtl-layout-header-reverse': isRtl }">
+                    <a routerLink="/newArrivals" class="custom-btn position-relative">
+                      {{ "header.new_arrivals" | translate }}
+                      <span
+                        class="notification-dot"
+                        *ngIf="isUserLogin === 'true'"
+                      ></span>
+                    </a>
+                    <a class="custom-btn" routerLink="/product-list">
+                      {{ "header.buy_watch" | translate }}
+                    </a>
+                    <a
+                      class="custom-btn" 
+                      routerLink="/new-product"
+                    >
+                      {{ "header.sell_watch" | translate }}
+                    </a>
+          
+                    <!-- <a
+                      class="custom-btn"
+                      *ngIf="showHideAdminUser === true"
+                      routerLink="/admin/dashboard"
+                    >
+                      {{ "header.admin_pannel" | translate }}
+                    </a> -->
+                    <!-- <a class="custom-btn" *ngIf="isUserLogin === 'true'" routerLink="/chat">
+                      {{ "header.Chat" | translate }}
+                    </a> -->
+                    <a class="custom-btn" *ngIf="isUserLogin === 'true'" routerLink="/accessories/home">
+                      {{ "header.accessories" | translate }}
+                    </a>
+                  </div>
+                  <div
+                    class="header-content gap-4"
+                    *ngIf="isSearchForm"
+                    [ngClass]="{
+                      'position-absolute search-box-small-screen': isSmallScreen
+                    }"
+                  >
+                 
+                  </div>
+                  <div class="header-contact sidebar-acions gap-4">
+                    <img
+                      src="./assets/images/white-search-icon.svg"
+                     (click)="isShowSearchForm()"
+                      style="cursor: pointer"
+                    />
+                    <div *ngIf="isShowSearchField" class="large-screen-search-Box">
+                      <form class="d-flex flex-grow-1 ms-3" (ngSubmit)="onSearch(searchQuery)">
+                        <div class="input-group">
+                        <input
+                          [(ngModel)]="searchQuery"
+                          class="form-control me-2"
+                          type="search"
+                          placeholder="Search"
+                          aria-label="Search"
+                        />
+                        <button class="search-btn" type="submit">Search</button>
+                        </div>
+                      </form>
+                     </div>
+                    <mat-menu #profileMenu="matMenu">
+                      <button
+                        mat-menu-item
+                        *ngIf="isUserLogin === 'false' || isUserLogin === null"
+                        (click)="goToRegister()"
+                      >
+                        {{ "header.Login" | translate }}
+                      </button>
+                      <button
+                        mat-menu-item
+                        *ngIf="isUserLogin === 'true'"
+                        (click)="logout()"
+                      >
+                        {{ "header.Logout" | translate }}
+                      </button>
+                      <a  mat-menu-item  *ngIf="isUserLogin === 'true'" routerLink="/myListing"> 
+                        {{ "header.settings" | translate }}
+                      </a>
+                    </mat-menu>
+          
+                    <img
+                      src="./assets/images/solar_bag-smile-linear.svg"
+                      style="cursor: pointer"
+                      (click)="openCart()"
+                    />
+
+                    <img
+                      src="./assets/images/white-profile-icon.svg"
+                      alt="Profile"
+                      [matMenuTriggerFor]="profileMenu"
+                      style="cursor: pointer"
+                    />
+          
+                    <button
+                      *ngIf="selectedLang === 'en'"
+                      class="custom-btn"
+                      (click)="useLang('ar')"
+                    >
+                      ARB
+                    </button>
+                    <button
+                      *ngIf="selectedLang === 'ar'"
+                      class="custom-btn"
+                      (click)="useLang('en')"
+                    >
+                      EN
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </nav>
+        </header>
+    </div>
+    <div class="col-md-12 d-flex flex-wrap hero-page">
+        <div class="col-md-6 accessories-details-section">
+           <div class="container">
+            <p class="watch-straps-title">- Watch Straps</p>
+            <p class="watch-straps-scond-title mt-4">Snake Skin Watch Straps</p>
+            <p class="watch-straps-para mt-3">OUR SNAKE SKIN STRAPS ARE MADE WITH PURE SNAKE SKIN IMPORTED FROM REGISTERED FARMS OF CHINA AND VIETNAM. THESE ARE NOT PRINTED/EMBOSSED LEATHER. THIS IS 100% PURE EXOTIC LEATHER.</p>
+           <button class="explore-now-btn mt-5">
+            Explore Now
+           </button>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <ng-container *ngIf="homeData?.slider?.length > 0">
+            <div
+              id="carouselExample"
+              class="carousel slide"
+              data-bs-ride="carousel"
+            >
+              <div class="carousel-inner">
+                <div
+                  class="carousel-item"
+                  *ngFor="let img of homeData.slider; let i = index"
+                  [ngClass]="{ active: i === 0 }"
+                >
+                  <img
+                    class="img-fluid"
+                    style="object-fit: scale-down !important"
+                    [src]="'https://api.chronosouq.com/' + img.image"
+                    alt="{{ 'find_dream.img_alt' | translate }}"
+                  />
+                </div>
+              </div>
+    
+              <ol class="carousel-indicators">
+                <li
+                  *ngFor="let img of homeData.slider; let i = index"
+                  [attr.data-bs-target]="'#carouselExample'"
+                  [attr.data-bs-slide-to]="i"
+                  [ngClass]="{ active: i === 0 }"
+                ></li>
+              </ol>
+            </div>
+          </ng-container>
+          <ng-container *ngIf="homeData?.slider?.length === 0">
+            <p>No images available</p>
+          </ng-container>
+        </div>
+    </div>
+    <div class="col-md-8" style="position: absolute;z-index: 9999;background-color: #FFFFFF;bottom: 0;">
+      <div class="marquee-container" #container>
+        <div class="marquee-track d-flex" #slider>
+          <div
+            *ngFor="let img of duplicatedImages; let index = index"
+            class="slide"
+            [style.width.px]="imageWidth"
+            [style.margin.px]="slideMargin"
+            [innerHTML]="img | safeHtml"
+          >
+          </div>
+        </div>
+      </div>
+    </div>
+</div>

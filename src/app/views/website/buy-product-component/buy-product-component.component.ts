@@ -171,7 +171,6 @@ export class BuyProductComponentComponent implements OnInit {
     this.isUserLogin = localStorage.getItem("isLoggedIn");
     if (this.isUserLogin === "true") {
       this.getWishList();
-     
     }
     this.routeFrom = history.state.param;
 

@@ -1,0 +1,73 @@
+<div class="global-main-wraper">
+  <div class="col-md-12 mt-5">
+    <div class="row d-flex justify-content-between align-items-center mt-3">
+      <p class="font-size-28 font-wight-600 color-242424" style="width: 25%">
+        New Arrivals
+      </p>
+
+      <button class="custom-filter-btn">
+        <img src="../assets/images/hugeicons_filter.png" />
+        {{ "product_listing.filters" | translate }}
+        <img src="../assets/images/FiChevronDown.png" />
+      </button>
+    </div>
+
+    <div
+      class="row d-flex flex-wrap justify-content-between align-items-center mt-3 mb-3"
+    >
+      <div
+        class="card shadow-sm rounded-4 border-0 h-100 col-md-3"
+        *ngFor="let watch of showList"
+
+      >
+        <div class="position-relative">
+            <a
+                [routerLink]="['/accessories/details']"
+                [queryParams]="{ id: watch.id }"
+                class="card-img-link"
+            >
+            <img
+                [src]="'https://api.chronosouq.com/' + watch.main_image"
+                class="card-img-top rounded-top-4"
+                alt="Python Skin - Cerulean Blue Strap"
+            />
+                </a>
+          <button
+            class="btn btn-light rounded-circle position-absolute top-0 end-0 m-2 p-2 i-icon-style"
+          >
+            <i class="bi bi-heart-fill text-danger"></i>
+          </button>
+        </div>
+        <div class="card-body">
+          <p class="text-muted small mb-1">
+            {{ watch.brand.name }} | {{ watch.model || "N/A" }}
+          </p>
+
+          <h6 class="card-title fw-semibold mb-3">{{ watch.title }}</h6>
+
+          <div class="d-flex justify-content-between align-items-center">
+            <div>
+              <small class="text-muted d-block">Exclusive Shipping</small>
+              <span class="fw-bold"
+                ><img
+                  src="../../../../assets/images/Saudi_Riyal_Symbol-2.svg"
+                  class="sar-icon-style"
+                  alt="SAR"
+                />
+                {{ watch.price || "123" }}</span
+              >
+              <!-- Change currency if needed -->
+            </div>
+            <div class="d-flex flex-column align-items-center">
+              <small class="text-muted d-block">Reviews</small>
+              <div class="d-flex align-items-center gap-2">
+                <small class="text-muted me-1">4.1</small>
+                <i class="bi bi-star-fill text-warning"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

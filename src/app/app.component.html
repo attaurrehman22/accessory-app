@@ -3,7 +3,7 @@
 </div>
 
 <div *ngIf="showHeader">
-  <app-header></app-header>
+  <app-header *ngIf="!hideaccessoriesHeader"></app-header>
   <router-outlet></router-outlet>
   <app-footer-component></app-footer-component>
   <div *ngIf="loaderService.isLoading | async" class="loader">
@@ -11,14 +11,6 @@
   </div>
   
 </div>
-
-<!-- <div style="position: absolute; right: 15px; top: 80px; width: auto;z-index: 99999;" class="container mt-4"
-  *ngIf="alertService.alert$ | async as alert">
-  <div [ngClass]="'alert alert-' + alert.type + ' alert-dismissible fade show'" role="alert">
-    <strong>{{ alert.type | titlecase }}!</strong> {{ alert.message }}
-    <button type="button" class="btn-close" (click)="closeAlert()" aria-label="Close"></button>
-  </div>
-</div> -->
 
 <div
   *ngIf="alertService.alert$ | async as alert"
@@ -30,7 +22,5 @@
     <button type="button" class="btn-close" (click)="closeAlert()" aria-label="Close"></button>
   </div>
 </div>
-
-
 
 <router-outlet></router-outlet>

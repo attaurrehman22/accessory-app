@@ -1,0 +1,281 @@
+.featured-card {
+    position: absolute;
+    top: 10px;
+    padding: 0 15px 0 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+  }
+  
+  .featured-card-featred {
+    background-color: #ffffff;
+    padding: 3px 10px 3px 10px;
+    border-radius: 5px;
+  }
+  
+  .featured-card-heart-sec {
+    position: absolute;
+    top: 18px;
+    flex-direction: column;
+    display: flex;
+    right: 35px;
+    top: 0;
+  }
+  
+  .share-icon {
+    background: #FFFFFF;
+    padding: 10px;
+    border-radius: 18px;
+    margin: 8px 0 0 2px;
+  }
+  
+  .heart-icon-one {
+    background: #fff;
+    border-radius: 25px;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  
+  }
+  
+  .heart-icon-one i {
+    color: #ff4d4d;
+    font-size: 24px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .fa-heart-o {
+    color: #a09494 !important;
+  }
+  
+  .fa-heart {
+    color: #ff4d4d;
+  }
+
+  .featured-bottom {
+    top: 435px;
+    right: 27px;
+    position: absolute;
+    background: #FFFFFF;
+    padding: 5px 10px 5px 10px;
+    display: flex;
+    align-items: baseline;
+    gap: 5px;
+    border-radius: 8px;
+  }
+
+  .watch-brand-details-img {
+    height: 40px;
+    width: 40px;
+    border: none !important;
+  }
+
+  .condition-btn {
+    background: none;
+    border: 1px solid #242424;
+    border-radius: 4px;
+    height: 40px;
+    padding: 6px 8px 6px 8px;
+    font-size: 14px;
+    font-weight: 400;
+  }
+
+  .buy-btn {
+    width: 100%;
+    background-color: #242424;
+    color: #FFFFFF;
+    height: 60px;
+    font-size: 20px;
+    font-weight: 600;
+    border-radius: 12px;
+    border: none;
+  }
+
+  .make-offer-btn {
+    width: 100%;
+    background-color: #FFFFFF;
+    color: #242424;
+    height: 60px;
+    font-size: 20px;
+    font-weight: 600;
+    border-radius: 12px;
+    border: 1px solid #242424;
+  }
+
+  .reverse-order-prod-price-des > .routes-div {
+    flex-direction: row-reverse;
+  }
+  
+  .reverse-order-prod-price-des > .d-flex {
+    flex-direction: row-reverse;
+  }
+  
+  .reverse-order-prod-price-des > .watch-brand-details-div {
+    flex-direction: row-reverse;
+  }
+  
+  .reverse-order-prod-price-des > .d-flex > .header-highligted-color {
+    display: flex;
+    flex-direction: row-reverse;
+  }
+  
+  .reverse-order-prod-price-des > .d-flex > .condition-btn {
+    align-self: end;
+  }
+  
+  .reverse-order-prod-price-des > .d-flex > .d-flex  {
+    flex-direction: row-reverse;
+  }
+
+  @media (max-width: 768px) {
+    .small-screen-text {
+      font-size: 10px;
+    }
+  
+    .time-sec {
+      gap: 5px;
+     }
+  
+     .brand-sec {
+      gap: 5px;
+     }
+    .small-screen-size-text{
+      font-size: 12px;
+    }
+  
+  }
+
+  .custom-card {
+    min-height: 410px !important;
+  }
+
+
+
+  .nav-tabs .nav-link.active {
+    border: none !important;
+    border-bottom: 2px solid #242424 !important;
+    color: #242424 !important;
+    font-size: 18px;
+    font-weight: 600;
+  }
+  
+  .nav-tabs .nav-link {
+    font-weight: bold;
+    color: #303A42 !important;
+    font-size: 18px;
+    font-weight: 600;
+  }
+
+
+  /* ------------   Similar Products Section CSS ------------- */
+
+.card {
+    border-radius: 15px;
+    overflow: hidden;
+    padding: 8px !important;
+  }
+  
+  .card-body {
+    padding: 8px 0 0 0 !important;
+  }
+  
+  .card-img-top {
+    height: 260px;
+    object-fit: contain;
+    background: #F8F8F8;
+  }
+  
+  .watch-brand {
+    font-weight: 400;
+    font-size: 16px;
+  }
+  
+  .price {
+    font-size: 14px;
+    font-weight: 400;
+  }
+  
+  .rating {
+    color: orange;
+    font-weight: bold;
+  }
+  
+  .star-rating {
+    color: orange;
+  }
+  
+  .text-danger {
+    font-size: 0.8rem;
+  }
+  
+  .heart-icon {
+    display: flex;
+    justify-content: space-between;
+    position: absolute;
+    width: 85%;
+    top: 18px;
+    right: 25px;
+  }
+  
+  .heart-icon i {
+    color: #ff4d4d;
+    font-size: 24px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .fa-heart-o {
+    color: #a09494 !important;
+  }
+  
+  .fa-heart {
+    color: #ff4d4d;
+  }
+  
+  .view_btn {
+    border-radius: 6px;
+    padding: 0 20px 0 20px;
+    height: 40px;
+    border: 1px solid #242424;
+    background: none;
+  }
+  
+  .selected-category {
+    background-color: black;
+    color: white;
+  }
+  
+  
+  .ml-3 {
+    margin-left: 1rem;
+  }
+  
+  
+  .cont-color {
+    background-color: #F7F7F8;
+    border-radius: 12px;
+  }
+  
+  .icon {
+    font-size: 2rem;
+    color: #404040;
+  }
+  
+  .border-right {
+    border-right: 1px solid #d8d8d8;
+  }
+  
+  .progress {
+    height: 8px;
+  }
+  
+  .bg-prog-bar {
+    background: #9A9DB1;
+  
+  }
+  
+  .bi-star-fill {
+    color: gold;
+  }
+  

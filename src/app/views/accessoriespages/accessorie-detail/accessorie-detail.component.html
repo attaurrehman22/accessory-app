@@ -1,0 +1,615 @@
+<div class="container mt-5">
+  <div
+    class="row"
+    [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }"
+  >
+    <div class="col-md-6">
+      <img
+        *ngIf="selectedType === 'image'"
+        [src]="'https://api.chronosouq.com/' + selectedImage"
+        style="
+          object-fit: scale-down;
+          height: 485px;
+          width: 100%;
+          border: none !important;
+          border-radius: 16px;
+          background: #f8f8f8;
+        "
+        class="img-fluid"
+        alt="Selected Watch"
+      />
+
+      <video
+        *ngIf="selectedType === 'video'"
+        [src]="'https://api.chronosouq.com/' + selectedImage"
+        style="
+          object-fit: scale-down;
+          height: 485px;
+          width: 100%;
+          border: none !important;
+          border-radius: 16px;
+          background: #f8f8f8;
+        "
+        class="img-fluid"
+        alt="Selected Watch"
+        controls
+      ></video>
+      <div
+        [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }"
+        class="featured-card"
+      >
+        <div
+          *ngIf="productDetails?.feature_item === 1"
+          class="featured-card-featred"
+        >
+          <p style="margin: 0">Featured</p>
+        </div>
+        <div class="featured-card-heart-sec">
+          <!-- <div
+            class="heart-icon-one"
+            *ngIf="isUserLogin === 'true'"
+            (click)="addWishList(productDetails.id)"
+          >
+            <i
+              class="fa"
+              [ngClass]="
+                wishList?.includes(productDetails.id)
+                  ? 'fa-heart'
+                  : 'fa-heart fa-heart-o'
+              "
+              aria-hidden="true"
+            ></i>
+          </div>
+          <div (click)="copyCurrentUrl()">
+            <i class="fas fa-share-alt share-icon"></i>
+          </div> -->
+        </div>
+      </div>
+
+      <div
+        [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }"
+        *ngIf="productDetails && productDetails?.views_count"
+        class="featured-bottom"
+      >
+        <i class="fas fa-eye"></i>
+        <p style="margin: 0">
+          {{ productDetails?.views_count }}
+        </p>
+      </div>
+
+      <div class="mt-3" style="display: flex; overflow-x: auto">
+        <div
+          class="col-3"
+          style="height: 110px"
+          *ngFor="let item of thumbnails"
+        >
+          <!-- Display Image -->
+          <img
+            *ngIf="item.type === 'image'"
+            [src]="'https://api.chronosouq.com/' + item.url"
+            style="background: #f8f8f8; object-fit: scale-down"
+            class="img-fluid"
+            alt="thumbnail"
+            [ngClass]="{
+              'blur-image': item.url !== selectedImage,
+              'hover-remove-blur': true
+            }"
+            (click)="swapImages(item)"
+          />
+
+          <!-- Display Video -->
+          <video
+            *ngIf="item.type === 'video'"
+            (click)="swapImages(item)"
+            [src]="'https://api.chronosouq.com/' + item.url"
+            style="background: #f8f8f8; object-fit: scale-down; height: 100%"
+            class="img-fluid"
+          ></video>
+        </div>
+      </div>
+
+      <div class="mt-3">
+        <div class="mb-1">
+            <i class="bi bi-check-lg text-success"></i> About
+          </div>
+          <div class="text-muted mb-3">Usually delivers in 1-2 weeks</div>
+          
+          <div class="fw-bold border-bottom pb-1 mb-2">
+            Total Reviews
+          </div>
+          
+          <div class="d-flex align-items-center">
+            <div class="text-warning me-2">
+              <i class="bi bi-star-fill"></i>
+              <i class="bi bi-star-fill"></i>
+              <i class="bi bi-star-fill"></i>
+              <i class="bi bi-star-fill"></i>
+              <i class="bi bi-star-fill"></i>
+            </div>
+            <span class="text-muted">69 Reviews</span>
+          </div>
+          
+      </div>
+    </div>
+    <div
+      *ngIf="productDetails"
+      class="col-md-6"
+      [ngClass]="{
+        'reverse-order-prod-price-des': translateService.currentLang !== 'en'
+      }"
+    >
+      <div class="routes-div">
+        <p class="routes-styl" style="cursor: pointer" routerLink="/">
+          Homepage /
+        </p>
+        <p *ngIf="productDetails?.category" class="routes-styl-active">
+          {{ productDetails?.category?.name }} /
+        </p>
+        <p *ngIf="productDetails?.brand?.name" class="routes-styl-active">
+          {{ productDetails?.brand?.name }} /
+        </p>
+        <p *ngIf="productDetails?.listing_code" class="routes-styl-active">
+          {{ productDetails?.listing_code }}
+        </p>
+      </div>
+
+      <div
+        *ngIf="productDetails?.created_by?.city"
+        class="d-flex gap-2 align-items-baseline"
+      >
+        <i class="fas fa-map-marker-alt"></i>
+        <p class="routes-styl margin-0">{{ productDetails?.created_by?.city }}</p>
+        <p *ngIf="productDetails?.published_date" class="routes-styl margin-0">
+          {{ "buy_product.Published_At" | translate }} :
+          {{ productDetails?.published_date | date : "yyyy-MM-dd" }}
+        </p>
+      </div>
+
+      <div class="d-flex flex-wrap">
+        <p class="brand-name-title margin-0">
+          {{ productDetails?.brand?.name }} {{ productDetails?.model }}
+          {{ productDetails?.title }}
+        </p>
+      </div>
+
+      <!-- <div class="watch-brand-details-div">
+        <div class="brand-sec">
+          <div>
+            <img
+              class="watch-brand-details-img"
+              src="../../../../assets/images/brand-icon.png"
+              alt="brand"
+            />
+          </div>
+          <div style="display: flex; flex-direction: column">
+            <p class="margin-0 small-screen-text">
+              {{ "buy_product.Brand" | translate }}
+            </p>
+            <p class="margin-0 small-screen-text">
+              {{ productDetails?.brand?.name }}
+            </p>
+          </div>
+        </div>
+
+        <div class="brand-sec">
+          <div>
+            <img
+              class="watch-brand-details-img"
+              src="../../../../assets/images/model-icon.png"
+              alt="brand"
+            />
+          </div>
+          <div style="display: flex; flex-direction: column">
+            <p class="margin-0 small-screen-text">
+              {{ "buy_product.model" | translate }}
+            </p>
+            <p class="margin-0 small-screen-text">
+              {{ productDetails?.model }}
+            </p>
+          </div>
+        </div>
+
+        <div class="time-sec">
+          <div>
+            <img
+              class="watch-brand-details-img"
+              src="../../../../assets/images/watch-icon.png"
+              alt="brand"
+            />
+          </div>
+          <div style="display: flex; flex-direction: column">
+            <p class="margin-0 small-screen-text">
+              {{ "buy_product.year_of_production" | translate }}
+            </p>
+            <p class="margin-0 small-screen-text">
+              {{ productDetails?.year_of_production }}
+            </p>
+          </div>
+        </div>
+      </div> -->
+
+      <div class="d-flex mt-4 gap-3">
+        <p class="header-highligted-color brand-name-title margin-0">
+          <img
+            src="../../../../assets/images/Saudi_Riyal_Symbol-2.svg"
+            style="height: 30px !important"
+            class="sar-icon-style"
+            alt="SAR"
+          />
+          {{ productDetails?.price }}
+        </p>
+        <p class="color-666666 font-wight-400 font-size-14 margin-0">
+          {{
+            productDetails?.shipping_type == "inclusiveShipping"
+              ? "Inclusive Shipping"
+              : productDetails?.shipping_type == "exclusiveShipping"
+              ? "Exclusive Shipping"
+              : productDetails?.shipping_type == "freeCharge"
+              ? "Free Charge"
+              : productDetails?.shipping_type
+          }}
+        </p>
+
+        <p
+          *ngIf="productDetails?.discount_price"
+          class="color-666666 font-wight-400 font-size-14 margin-0"
+          style="margin: 15px 0 0 0"
+        >
+          <b style="font-size: 17px; color: black"> Discount </b>:
+          <img
+            src="../../../../assets/images/Saudi_Riyal_Symbol-2.svg"
+            class="sar-icon-style"
+            alt="SAR"
+          />
+          {{ productDetails?.discount_price }}
+        </p>
+      </div>
+
+      <div class="d-flex flex-column mt-3">
+        <p
+          class="header-highligted-color font-wight-400 font-size-16 margin-0"
+          style="padding-bottom: 7px"
+        >
+          <!-- {{ "buy_product.condition" | translate }} -->
+          LUG Width:
+        </p>
+        <div class="d-flex flex-wrap gap-2" >
+            <button *ngFor="let lug of lugWidth" class="condition-btn">{{ lug }}</button>
+        </div>
+       
+      </div>
+
+      <div
+        *ngIf="productDetails?.scope_of_delivery"
+        class="d-flex flex-column mt-3"
+      >
+        <p
+          class="header-highligted-color font-wight-400 font-size-16 margin-0"
+          style="padding-bottom: 7px"
+        >
+          <!-- {{ "buy_product.Scope_of_Delivery" | translate }} -->
+          Buckle/Connector:
+        </p>
+        <div class="d-flex flex-wrap gap-2" >
+          <button *ngFor="let buckle of Buckle_Connector" class="condition-btn">
+            {{ buckle }}
+          </button>
+        </div>
+      </div>
+
+      <div class="d-flex flex-column mt-3">
+        <p
+          class="header-highligted-color font-wight-400 font-size-16 margin-0"
+          style="padding-bottom: 7px"
+        >
+          <!-- {{ "buy_product.Est_Delivery" | translate }} -->
+          Length:
+        </p>
+        <div class="d-flex flex-wrap gap-2" >
+            <button *ngFor="let length of Length" class="condition-btn">
+            {{ length }}
+            </button>
+        </div>
+      </div>
+
+      <div class="d-flex flex-column mt-3">
+        <p
+          class="header-highligted-color font-wight-400 font-size-16 margin-0"
+          style="padding-bottom: 7px"
+        >
+          <!-- {{ "buy_product.Est_Delivery" | translate }} -->
+          Color:
+        </p>
+        <div class="d-flex flex-wrap gap-2">
+            <div *ngFor="let c of color"
+                 [ngStyle]="{
+                   'background-color': c,
+                   'width': '50px',
+                   'height': '30px',
+                   'border-radius': '5px',
+                   'border': c === 'Black' ? '1px solid #333' : 'none'
+                 }">
+            </div>
+          </div>
+          
+      </div>
+
+      <div class="d-flex flex-column mt-3">
+        <p
+          class="header-highligted-color font-wight-400 font-size-16 margin-0"
+          style="padding-bottom: 7px"
+        >
+          Quantity:
+        </p>
+        <div class="d-flex border rounded overflow-hidden" style="width: fit-content;">
+            <button class="btn btn-light border-end" (click)="decrement()">−</button>
+            <div class="d-flex align-items-center justify-content-center px-3" style="min-width: 60px;">
+              {{ quantity }}
+            </div>
+            <button class="btn btn-light border-start" (click)="increment()">+</button>
+          </div>
+          
+      </div>
+      <div class="mt-4">
+        <button
+          class="buy-btn"
+        >
+          {{ "buy_product.buy" | translate }}
+        </button>
+        <!-- <button
+          *ngIf="
+            loggedUserType && loggedUserType == 'seller' && orderID && chatID
+          "
+          (click)="goToOrderDetails()"
+          [disabled]="routeFrom === 'listing-to-product'"
+          class="buy-btn"
+        >
+
+          Oder Status
+        </button> -->
+
+        <!-- <button
+          *ngIf="
+            loggedUserType && loggedUserType == 'buyer' && orderID && chatID
+          "
+          (click)="goToChatOrOrderDetails()"
+          [disabled]="routeFrom === 'listing-to-product'"
+          class="buy-btn"
+        >
+      
+          View Order Status or Chat
+        </button> -->
+        <button
+          class="make-offer-btn mt-2"
+        >
+      
+        Add to Cart
+        </button>
+      </div>
+    </div>
+  </div>
+
+
+
+  <div class="container mt-5">
+    <div class="card-body d-flex flex-column">
+      <ul
+        class="nav nav-tabs"
+        style="display: flex; justify-content: center"
+        id="myTab"
+        role="tablist"
+        [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }"
+      >
+        <li class="nav-item" role="presentation">
+          <button
+            class="nav-link active"
+            id="details-tab"
+            data-bs-toggle="tab"
+            data-bs-target="#details"
+            type="button"
+            role="tab"
+            aria-controls="details"
+            aria-selected="true"
+          >
+            {{ "product_details.product_des" | translate }}
+          </button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button
+            class="nav-link"
+            id="security-tab"
+            data-bs-toggle="tab"
+            data-bs-target="#security"
+            type="button"
+            role="tab"
+            aria-controls="security"
+            aria-selected="false"
+          >
+            {{ "product_details.warrenty_det" | translate }}
+          </button>
+        </li>
+      </ul>
+      <div class="tab-content mt-3" id="myTabContent">
+        <div
+          class="tab-pane fade show active"
+          id="details"
+          role="tabpanel"
+          aria-labelledby="details-tab"
+        >
+          <div class="row">
+            <div class="col-12 d-flex flex-wrap justify-content-center">
+              <p class="brand-name-title margin-0">
+                {{ productDetails?.brand?.name }} {{ productDetails?.name }}
+                {{ productDetails?.condition }}
+              </p>
+            </div>
+  
+            <div class="col-12">
+              <div
+                *ngIf="productDetails?.meta_description"
+                class="col-12 d-flex flex-wrap justify-content-center"
+              >
+                <p
+                  class="font-size-20 font-wight-600 color-242424 margin-0 text-center"
+                >
+                  {{ productDetails?.meta_description || "N/A" }}
+                </p>
+              </div>
+              <div *ngIf="productDetails?.description" class="col-12">
+                <p
+                  class="font-size-16 font-wight-400 color-666666 margin-0 text-center"
+                >
+                  {{ productDetails?.description || "N/A" }}
+                </p>
+              </div>
+            </div>
+  
+            <div class="col-12 d-flex flex-wrap justify-content-center">
+              <div *ngFor="let image of productDetails?.additional_images"
+                class="col-md-6 d-flex flex-wrap"
+                style="
+                  height: 564px;
+                  border-radius: 16px;
+                "
+              >
+                <img
+                  [src]="'https://api.chronosouq.com/' + image"
+                  style="
+                    object-fit: cover;
+                    height: 100%;
+                    width: 100%;
+                    border: none;
+                    border-radius: 16px;
+                  "
+                  class="img-fluid"
+                  alt="Selected Watch"
+                />
+              </div>
+            </div>
+
+          </div>
+        </div>
+  
+        <div
+          class="tab-pane fade"
+          id="security"
+          role="tabpanel"
+          aria-labelledby="security-tab"
+        >
+          <div class="container mt-4">
+            <h5 class="mb-4"></h5>
+            <div class="row"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <div
+  *ngIf="
+    similarWatchesList?.length > 0
+  "
+  class="container mt-3"
+>
+  <p
+    class="font-wight-700 font-size-64 color-484848 text-center cormorant-styl"
+  >
+    {{ "product_details.similar_prod" | translate }}
+  </p>
+  <div class="row">
+    <div
+      class="col-md-3 col-sm-6 mb-4"
+      *ngFor="let watch of similarWatchesList; let i = index"
+    >
+      <div class="card custom-card h-100 shadow-sm">
+        <a
+          [routerLink]="['/accessories/details']"
+          [queryParams]="{ id: watch.id }"
+          class="card-img-link"
+          (click)="viewProduct(watch.id)"
+        >
+          <img
+            [src]="'https://api.chronosouq.com/' + watch.main_image"
+            class="card-img-top"
+            alt="No Image Exist"
+          />
+        </a>
+        <div class="card-body d-flex flex-column">
+            <p class="text-muted small mb-1">
+              {{ watch.brand.name }} | {{ watch.model || "N/A" }}
+            </p>
+  
+            <h6 class="card-title fw-semibold mb-3">{{ watch.title }}</h6>
+  
+            <div class="d-flex justify-content-between align-items-center">
+              <div>
+                <small class="text-muted d-block">Exclusive Shipping</small>
+                <span class="fw-bold"
+                  ><img
+                    src="../../../../assets/images/Saudi_Riyal_Symbol-2.svg"
+                    class="sar-icon-style"
+                    alt="SAR"
+                  />
+                  {{ watch.price || "123" }}</span
+                >
+                <!-- Change currency if needed -->
+              </div>
+              <div class="d-flex flex-column align-items-center">
+                <small class="text-muted d-block">Reviews</small>
+                <div class="d-flex align-items-center gap-2">
+                  <small class="text-muted me-1">4.1</small>
+                  <i class="bi bi-star-fill text-warning"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+      </div>
+      <div class="heart-icon">
+        <div class="featured-icon">
+          <div
+            *ngIf="watch?.feature_item === 1"
+            class="featured-promoted-class-badge"
+          >
+            Featured
+          </div>
+
+          <div
+            *ngIf="watch?.feature_item !== 1 && watch.is_promoted === 1"
+            class="featured-promoted-class-badge"
+          >
+            Promoted
+          </div>
+        </div>
+        <div
+          class=""
+          style="
+            background-color: #fff;
+            padding: 5px 5px 5px 5px;
+            border-radius: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+          "
+        >
+          <!-- <i
+            *ngIf="isUserLogin === 'true'"
+            (click)="addWishList(watch.id)"
+            class="fa"
+            [ngClass]="
+              wishList?.includes(watch.id) ? 'fa-heart' : 'fa-heart fa-heart-o'
+            "
+            aria-hidden="true"
+          ></i> -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="text-center mb-4" *ngIf="totalPages !== currentPage">
+    <button class="view_btn" (click)="loadMoreWatches()">
+      {{ "chrono_buyer.view_more" | translate }}
+    </button>
+  </div>
+</div>

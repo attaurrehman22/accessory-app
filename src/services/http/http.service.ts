@@ -459,6 +459,19 @@ export class HttpService implements OnInit {
     );
   }
 
+
+  rejectProduct(ID,formData): Observable<any> {
+    return this.http.post(
+      `${this.apiUrl}/api/admin/products/${ID}/reject`,formData,
+      {
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${this.token}`,
+        },
+      }
+    );
+  }
+
   EditPromotionProducts(formData,ID): Observable<any> {
     return this.http.post(
       `${this.apiUrl}/api/admin/promotions/${ID}`,formData,

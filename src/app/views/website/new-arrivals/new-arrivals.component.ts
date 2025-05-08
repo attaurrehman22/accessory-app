@@ -51,20 +51,9 @@ export class NewArrivalsComponent {
 
   getProductsofnewArrivals() {
     let queryString = "";
-    // queryString += &page=1;
-    // queryString += &per_page=100;
 
     this.http.getProductsByCategory(queryString).subscribe((res) => {
       this.showList = res;
-      // this.totalItems=this.showList?.data?.total;
-      // this.fromItem=this.showList?.data?.from;
-      // this.toItem=this.showList?.data?.to;
-
-      // if(this.showList?.data?.next_page_url === null){
-      //   this.isnextPage=false
-      // }else{
-      //   this.isnextPage=true
-      // }
       this.showList = this.showList?.data?.data;
       this.showList?.data?.data?.map((product: any) => {
         if (product.main_image) {

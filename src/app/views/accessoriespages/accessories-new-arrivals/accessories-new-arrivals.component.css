@@ -1,0 +1,31 @@
+.card-body {
+    display: flex;
+    flex-direction: column;
+}
+
+.card-img-top {
+    height: 200px;
+    object-fit:scale-down ;
+  }
+  
+  .btn-light {
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
+  }
+  
+
+  .custom-filter-btn {
+    border-radius: 10px;
+    border: 1px solid black;
+    background: none;
+    height: 50px;
+    width: 150px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+  }
+
+  .i-icon-style > i {
+    align-items: center;
+    justify-content: center;
+    display: flex;
+  }
