@@ -11,20 +11,10 @@ import { HttpService } from "src/services/http/http.service";
 import { LanguageService } from "src/services/lang-service/language.service";
 import { LoginStateService } from "src/services/login-service/login-state.service";
 
-export interface Brand {
-  name: string;
-  id: any;
-}
-
-export interface Category {
-  name: string;
-  id: any;
-}
-
-interface ImageFile {
-  file: File;
-  url: string;
-  isUploading: boolean;
+interface ColorOption {
+  value: string;
+  label: string;
+  hex: string;
 }
 
 @Component({
@@ -37,6 +27,7 @@ export class CreateAccessoriesProductComponent implements OnInit {
   showSuccessModal = false;
   uploadedImages: string[] = [];
   submitting = false;
+  displayPriceValue = '$39.99';
   
   // Define accessory type options
   accessoryTypes = [
@@ -76,6 +67,17 @@ export class CreateAccessoriesProductComponent implements OnInit {
     { value: 'water30m', label: 'Water resistant 30m' },
     { value: 'water50m', label: 'Water resistant 50m' },
     { value: 'water100m', label: 'Water resistant 100m' },
+  ];
+  // Define color options
+  colorOptions: ColorOption[] = [
+    { value: 'black', label: 'Black', hex: '#000000' },
+    { value: 'white', label: 'White', hex: '#FFFFFF' },
+    { value: 'blue', label: 'Blue', hex: '#3B82F6' },
+    { value: 'red', label: 'Red', hex: '#EF4444' },
+    { value: 'green', label: 'Green', hex: '#10B981' },
+    { value: 'pink', label: 'Pink', hex: '#EC4899' },
+    { value: 'purple', label: 'Purple', hex: '#8B5CF6' },
+    { value: 'gold', label: 'Gold', hex: '#F59E0B' },
   ];
   // Define additional features options
   featureOptions = [
@@ -120,7 +122,7 @@ export class CreateAccessoriesProductComponent implements OnInit {
           error: (error) => {
             console.error('Error submitting form:', error);
             this.submitting = false;
-            // Add error handling logic here (e.g., toast notification)
+            // Add error handling logic here
           }
         });
     } else {
@@ -151,122 +153,15 @@ export class CreateAccessoriesProductComponent implements OnInit {
     this.getColorsArray().clear();
     this.getFeaturesArray().clear();
     this.uploadedImages = [];
+    this.displayPriceValue = '$39.99';
   }
   closeSuccessModal(): void {
     this.showSuccessModal = false;
     this.resetForm();
   }
-  onImagesChange(images: string[]): void {
-    this.uploadedImages = images;
-  }
-  onToggleModel(modelValue: string, isChecked: boolean): void {
-    const compatibleModels = this.getCompatibleModelsArray();
-    if (isChecked) {
-      compatibleModels.push(this.fb.control(modelValue));
-    } else {
-      const index = compatibleModels.controls.findIndex(control => control.value === modelValue);
-      if (index !== -1) {
-        compatibleModels.removeAt(index);
-      }
-    }
-  }
-  onToggleFeature(featureValue: string, isChecked: boolean): void {
-    const features = this.getFeaturesArray();
-    if (isChecked) {
-      features.push(this.fb.control(featureValue));
-    } else {
-      const index = features.controls.findIndex(control => control.value === featureValue);
-      if (index !== -1) {
-        features.removeAt(index);
-      }
-    }
-  }
-  isModelSelected(modelValue: string): boolean {
-    return this.getCompatibleModelsArray().controls.some(control => control.value === modelValue);
-  }
-  isFeatureSelected(featureValue: string): boolean {
-    return this.getFeaturesArray().controls.some(control => control.value === featureValue);
-  }
-  getCompatibleModelsArray(): FormArray {
-    return this.accessoryForm.get('compatibleModels') as FormArray;
-  }
-  getColorsArray(): FormArray {
-    return this.accessoryForm.get('colors') as FormArray;
-  }
-  getFeaturesArray(): FormArray {
-    return this.accessoryForm.get('features') as FormArray;
-  }
-  onColorsChange(colors: string[]): void {
-    const colorsArray = this.getColorsArray();
-    colorsArray.clear();
-    colors.forEach(color => colorsArray.push(this.fb.control(color)));
-  }
-  onPriceChange(price: number): void {
-    this.accessoryForm.patchValue({ price });
-  }
-
-    @Input() selectedColors: string[] = [];
-    @Output() onChange = new EventEmitter<string[]>();
-
-    colorOptions = [
-    { value: 'black', label: 'Black', hex: '#000000' },
-    { value: 'white', label: 'White', hex: '#FFFFFF' },
-    { value: 'blue', label: 'Blue', hex: '#3B82F6' },
-    { value: 'red', label: 'Red', hex: '#EF4444' },
-    { value: 'green', label: 'Green', hex: '#10B981' },
-    { value: 'pink', label: 'Pink', hex: '#EC4899' },
-    { value: 'purple', label: 'Purple', hex: '#8B5CF6' },
-    { value: 'gold', label: 'Gold', hex: '#F59E0B' },
-  ];
-
-   toggleColor(colorValue: string): void {
-    let newColors: string[];
-    
-    if (this.selectedColors.includes(colorValue)) {
-      newColors = this.selectedColors.filter(c => c !== colorValue);
-    } else {
-      newColors = [...this.selectedColors, colorValue];
-    }
-    
-    this.onChange.emit(newColors);
-  }
-
-
-
-   @Input() value: number = 39.99;
-  // @Output() onChange = new EventEmitter<number>();
-  
-  displayValue: string = '';
-  
-  ngOnChanges(): void {
-    this.updateDisplayValue();
-  }
-  
-  handleChange(event: Event): void {
-    const input = event.target as HTMLInputElement;
-    const newValue = parseFloat(input.value);
-    // this.onChange.emit(newValue);
-    this.value = newValue;
-    this.updateDisplayValue();
-  }
-  
-  private updateDisplayValue(): void {
-    this.displayValue = `$${this.value.toFixed(2)}`;
-  }
-
-
-
-   @Input() images: string[] = [];
-  // @Output() onImagesChange = new EventEmitter<string[]>();
-  @ViewChild('fileInput') fileInput!: ElementRef<HTMLInputElement>;
-  
-  openFileSelector(): void {
-    this.fileInput.nativeElement.click();
-  }
-  
-  handleImageChange(event: Event): void {
-    const input = event.target as HTMLInputElement;
-    const files = input.files;
+  // Image upload functionality
+  handleImageChange(event: any): void {
+    const files = event.target.files;
     
     if (!files || files.length === 0) return;
     
@@ -274,18 +169,18 @@ export class CreateAccessoriesProductComponent implements OnInit {
     const remainingFiles = files.length;
     let processedFiles = 0;
     
-    Array.from(files).forEach(file => {
+    Array.from(files).forEach((file: any) => {
       if (file.type.startsWith('image/')) {
         const reader = new FileReader();
         
-        reader.onload = (e) => {
+        reader.onload = (e: any) => {
           if (e.target?.result) {
-            newImages.push(e.target.result as string);
+            newImages.push(e.target.result);
           }
           
           processedFiles++;
           if (processedFiles === remainingFiles) {
-            // this.onImagesChange.emit([...this.images, ...newImages]);
+            this.uploadedImages = [...this.uploadedImages, ...newImages];
           }
         };
         
@@ -296,12 +191,85 @@ export class CreateAccessoriesProductComponent implements OnInit {
     });
     
     // Reset the input so the same file can be selected again
-    input.value = '';
+    event.target.value = '';
   }
   
   handleRemoveImage(index: number): void {
-    const newImages = [...this.images];
-    newImages.splice(index, 1);
-    // this.onImagesChange.emit(newImages);
+    this.uploadedImages.splice(index, 1);
+  }
+  
+  openFileSelector(): void {
+    // You'd typically use ViewChild to get this reference
+    // For simplicity in this single-file example, we're using a DOM query
+    const fileInput = document.querySelector('input[type="file"]') as HTMLInputElement;
+    if (fileInput) {
+      fileInput.click();
+    }
+  }
+  // Form array helper methods
+  getCompatibleModelsArray(): FormArray {
+    return this.accessoryForm.get('compatibleModels') as FormArray;
+  }
+  getColorsArray(): FormArray {
+    return this.accessoryForm.get('colors') as FormArray;
+  }
+  getFeaturesArray(): FormArray {
+    return this.accessoryForm.get('features') as FormArray;
+  }
+  // Checkbox toggle methods
+  onToggleModel(modelValue: string, event: any): void {
+    const isChecked = event.target.checked;
+    const compatibleModels = this.getCompatibleModelsArray();
+    
+    if (isChecked) {
+      compatibleModels.push(this.fb.control(modelValue));
+    } else {
+      const index = compatibleModels.value.indexOf(modelValue);
+      if (index !== -1) {
+        compatibleModels.removeAt(index);
+      }
+    }
+  }
+  onToggleColor(colorValue: string, event: any): void {
+    const isChecked = event.target.checked;
+    const colors = this.getColorsArray();
+    
+    if (isChecked) {
+      colors.push(this.fb.control(colorValue));
+    } else {
+      const index = colors.value.indexOf(colorValue);
+      if (index !== -1) {
+        colors.removeAt(index);
+      }
+    }
+  }
+  onToggleFeature(featureValue: string, event: any): void {
+    const isChecked = event.target.checked;
+    const features = this.getFeaturesArray();
+    
+    if (isChecked) {
+      features.push(this.fb.control(featureValue));
+    } else {
+      const index = features.value.indexOf(featureValue);
+      if (index !== -1) {
+        features.removeAt(index);
+      }
+    }
+  }
+  // Check selection status methods
+  isModelSelected(modelValue: string): boolean {
+    return this.getCompatibleModelsArray().value.includes(modelValue);
+  }
+  isColorSelected(colorValue: string): boolean {
+    return this.getColorsArray().value.includes(colorValue);
+  }
+  isFeatureSelected(featureValue: string): boolean {
+    return this.getFeaturesArray().value.includes(featureValue);
+  }
+  // Price slider functionality
+  handlePriceChange(event: any): void {
+    const newValue = parseFloat(event.target.value);
+    this.accessoryForm.patchValue({ price: newValue });
+    this.displayPriceValue = `$${newValue.toFixed(2)}`;
   }
 }

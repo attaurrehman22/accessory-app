@@ -1,366 +1,391 @@
-<div class="max-w-4xl mx-auto">
-  <div class="card shadow-lg overflow-hidden">
-    <!-- Header -->
-    <div class="bg-primary py-6 px-6">
-      <h1 class="text-2xl font-semibold text-white">Watch Accessory Submission Form</h1>
-      <p class="text-primary-100 mt-1">Complete the form below to submit your watch accessory details</p>
-    </div>
-    
-    <!-- Form Container -->
-    <div class="p-6 sm:p-8">
-      <form [formGroup]="accessoryForm" (ngSubmit)="onSubmit()" class="space-y-8">
-        <!-- Basic Information Section -->
-        <div>
-          <h2 class="text-xl font-medium text-gray-900 mb-4">Basic Information</h2>
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            
-            <!-- Accessory Type -->
-            <div class="form-group">
-              <label for="accessoryType" class="form-label">
-                Accessory Type <span class="text-danger">*</span>
-              </label>
-              <select 
-                id="accessoryType" 
-                formControlName="accessoryType" 
-                class="form-select"
-                [class.is-invalid]="accessoryForm.get('accessoryType')?.invalid && 
-                                   accessoryForm.get('accessoryType')?.touched"
-              >
-                <option value="" disabled>Select type</option>
-                @for (type of accessoryTypes; track type.value) {
-                  <option [value]="type.value">{{ type.label }}</option>
-                }
-              </select>
-              @if (accessoryForm.get('accessoryType')?.invalid && 
-                  accessoryForm.get('accessoryType')?.touched) {
-                <div class="text-danger small">Please select an accessory type</div>
-              }
+ <div class="max-w-4xl mx-auto">
+      <div class="card shadow-lg overflow-hidden">
+        <!-- Header -->
+        <div class="bg-primary py-6 px-6">
+          <h1 class="text-2xl font-semibold text-white">Watch Accessory Submission Form</h1>
+          <p class="text-primary-100 mt-1">Complete the form below to submit your watch accessory details</p>
+        </div>
+        
+        <!-- Form Container -->
+        <div class="p-6 sm:p-8">
+          <form [formGroup]="accessoryForm" (ngSubmit)="onSubmit()" class="space-y-8">
+            <!-- Basic Information Section -->
+            <div>
+              <h2 class="text-xl font-medium text-gray-900 mb-4">Basic Information</h2>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                
+                <!-- Accessory Type -->
+                <div class="form-group">
+                  <label for="accessoryType" class="form-label">
+                    Accessory Type <span class="text-danger">*</span>
+                  </label>
+                  <select 
+                    id="accessoryType" 
+                    formControlName="accessoryType" 
+                    class="form-select w-full p-2 border rounded"
+                    [class.is-invalid]="accessoryForm.get('accessoryType')?.invalid && 
+                                      accessoryForm.get('accessoryType')?.touched"
+                  >
+                    <option value="" disabled>Select type</option>
+                    @for (type of accessoryTypes; track type.value) {
+                      <option [value]="type.value">{{ type.label }}</option>
+                    }
+                  </select>
+                  @if (accessoryForm.get('accessoryType')?.invalid && 
+                      accessoryForm.get('accessoryType')?.touched) {
+                    <div class="text-danger text-sm mt-1">Please select an accessory type</div>
+                  }
+                </div>
+                
+                <!-- Compatible Watch Models -->
+                <div class="form-group">
+                  <label class="form-label block mb-2">
+                    Compatible Watch Models <span class="text-danger">*</span>
+                  </label>
+                  <div class="space-y-2">
+                    @for (model of watchModels; track model.value) {
+                      <div class="flex items-center">
+                        <input 
+                          type="checkbox" 
+                          [id]="'model-' + model.value" 
+                          [checked]="isModelSelected(model.value)"
+                          (change)="onToggleModel(model.value, $event)"
+                          class="form-check-input mr-2"
+                        >
+                        <label [for]="'model-' + model.value" class="form-check-label text-sm">
+                          {{ model.label }}
+                        </label>
+                      </div>
+                    }
+                  </div>
+                  @if (getCompatibleModelsArray().invalid && getCompatibleModelsArray().touched) {
+                    <div class="text-danger text-sm mt-1">Please select at least one compatible model</div>
+                  }
+                </div>
+                
+                <!-- Material -->
+                <div class="form-group">
+                  <label for="material" class="form-label block mb-2">
+                    Material <span class="text-danger">*</span>
+                  </label>
+                  <input 
+                    type="text" 
+                    id="material" 
+                    formControlName="material" 
+                    class="form-control w-full p-2 border rounded"
+                    placeholder="e.g., Silicone, Leather, Metal, etc."
+                    [class.is-invalid]="accessoryForm.get('material')?.invalid && 
+                                      accessoryForm.get('material')?.touched"
+                  >
+                  @if (accessoryForm.get('material')?.invalid && accessoryForm.get('material')?.touched) {
+                    <div class="text-danger text-sm mt-1">Please specify the material</div>
+                  }
+                </div>
+                
+                <!-- Brand Name -->
+                <div class="form-group">
+                  <label for="brand" class="form-label block mb-2">
+                    Brand Name <span class="text-danger">*</span>
+                  </label>
+                  <input 
+                    type="text" 
+                    id="brand" 
+                    formControlName="brand" 
+                    class="form-control w-full p-2 border rounded"
+                    placeholder="e.g., YourBrand"
+                    [class.is-invalid]="accessoryForm.get('brand')?.invalid && 
+                                      accessoryForm.get('brand')?.touched"
+                  >
+                  @if (accessoryForm.get('brand')?.invalid && accessoryForm.get('brand')?.touched) {
+                    <div class="text-danger text-sm mt-1">Please enter your brand name</div>
+                  }
+                </div>
+              </div>
             </div>
             
-            <!-- Compatible Watch Models -->
-            <div class="form-group">
-              <label class="form-label">
-                Compatible Watch Models <span class="text-danger">*</span>
-              </label>
-              <div class="space-y-2">
-                @for (model of watchModels; track model.value) {
-                  <div class="form-check">
-                    <input 
-                      type="checkbox" 
-                      [id]="'model-' + model.value" 
-                      [checked]="isModelSelected(model.value)"
-                      (change)="onToggleModel(model.value, $event.target.checked)"
-                      class="form-check-input"
-                    >
-                    <label [for]="'model-' + model.value" class="form-check-label">
-                      {{ model.label }}
+            <!-- Product Details Section -->
+            <div>
+              <h2 class="text-xl font-medium text-gray-900 mb-4">Product Details</h2>
+              
+              <!-- Color Options -->
+              <div class="form-group mb-6">
+                <label class="form-label block mb-2">
+                  Available Colors <span class="text-danger">*</span>
+                </label>
+                <div class="flex flex-wrap gap-4">
+                  @for (color of colorOptions; track color.value) {
+                    <label class="color-option cursor-pointer">
+                      <input
+                        type="checkbox"
+                        class="sr-only"
+                        [checked]="isColorSelected(color.value)"
+                        (change)="onToggleColor(color.value, $event)"
+                      />
+                      <span
+                        [style.background-color]="color.hex"
+                        class="flex h-8 w-8 rounded-full border-2 border-gray-200 transition-transform duration-200"
+                        style="height: 100%;width: 30px !important;"
+                        [class.scale-110]="isColorSelected(color.value)"
+                        [class.shadow-custom]="isColorSelected(color.value)"
+                      ></span>
+                      <span class="block text-xs text-center mt-1">{{ color.label }}</span>
                     </label>
+                  }
+                </div>
+                @if (getColorsArray().invalid && getColorsArray().touched) {
+                  <div class="text-danger text-sm mt-1">Please select at least one color</div>
+                }
+              </div>
+              
+              <!-- Price Range -->
+              <div class="form-group mb-6">
+                <label class="form-label block mb-2">
+                  Price Range (USD) <span class="text-danger">*</span>
+                </label>
+                <div>
+                  <div class="flex items-center mb-2">
+                    <span class="ml-2 text-primary font-semibold">{{ displayPriceValue }}</span>
+                  </div>
+                  <input
+                    type="range"
+                    min="0"
+                    max="200"
+                    step="0.01"
+                    [value]="accessoryForm.get('price')?.value"
+                    (input)="handlePriceChange($event)"
+                    class="price-slider w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
+                  />
+                  <div class="flex justify-between text-xs text-gray-500 mt-1">
+                    <span>$0</span>
+                    <span>$50</span>
+                    <span>$100</span>
+                    <span>$150</span>
+                    <span>$200+</span>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Description -->
+              <div class="form-group mb-6">
+                <label for="description" class="form-label block mb-2">
+                  Product Description <span class="text-danger">*</span>
+                </label>
+                <textarea
+                  id="description"
+                  formControlName="description"
+                  class="form-control w-full p-2 border rounded"
+                  rows="4"
+                  placeholder="Enter a detailed description of your watch accessory..."
+                  [class.is-invalid]="accessoryForm.get('description')?.invalid && 
+                                    accessoryForm.get('description')?.touched"
+                ></textarea>
+                <div class="flex justify-end">
+                  <small class="text-muted text-xs mt-1">
+                    {{ accessoryForm.get('description')?.value?.length || 0 }}/500 characters
+                  </small>
+                </div>
+                @if (accessoryForm.get('description')?.invalid && accessoryForm.get('description')?.touched) {
+                  <div class="text-danger text-sm">
+                    @if (accessoryForm.get('description')?.errors?.['required']) {
+                      Please provide a description
+                    } @else if (accessoryForm.get('description')?.errors?.['maxlength']) {
+                      Description must be less than 500 characters
+                    }
                   </div>
                 }
               </div>
-              @if (getCompatibleModelsArray().invalid && getCompatibleModelsArray().touched) {
-                <div class="text-danger small">Please select at least one compatible model</div>
-              }
-            </div>
-            
-            <!-- Material -->
-            <div class="form-group">
-              <label for="material" class="form-label">
-                Material <span class="text-danger">*</span>
-              </label>
-              <input 
-                type="text" 
-                id="material" 
-                formControlName="material" 
-                class="form-control"
-                placeholder="e.g., Silicone, Leather, Metal, etc."
-                [class.is-invalid]="accessoryForm.get('material')?.invalid && 
-                                  accessoryForm.get('material')?.touched"
-              >
-              @if (accessoryForm.get('material')?.invalid && accessoryForm.get('material')?.touched) {
-                <div class="text-danger small">Please specify the material</div>
-              }
-            </div>
-            
-            <!-- Brand Name -->
-            <div class="form-group">
-              <label for="brand" class="form-label">
-                Brand Name <span class="text-danger">*</span>
-              </label>
-              <input 
-                type="text" 
-                id="brand" 
-                formControlName="brand" 
-                class="form-control"
-                placeholder="e.g., YourBrand"
-                [class.is-invalid]="accessoryForm.get('brand')?.invalid && 
-                                  accessoryForm.get('brand')?.touched"
-              >
-              @if (accessoryForm.get('brand')?.invalid && accessoryForm.get('brand')?.touched) {
-                <div class="text-danger small">Please enter your brand name</div>
-              }
-            </div>
-          </div>
-        </div>
-        
-        <!-- Product Details Section -->
-        <div>
-          <h2 class="text-xl font-medium text-gray-900 mb-4">Product Details</h2>
-          
-          <!-- Color Options -->
-          <div class="form-group mb-6">
-            <label class="form-label">
-              Available Colors <span class="text-danger">*</span>
-            </label>
-            <div class="flex flex-wrap gap-4">
-            @for (color of colorOptions; track color.value) {
-              <label class="color-option cursor-pointer">
-                <input
-                  type="checkbox"
-                  class="sr-only"
-                  [checked]="selectedColors.includes(color.value)"
-                  (change)="toggleColor(color.value)"
-                />
-                <span
-                  [style.background-color]="color.hex"
-                  class="flex h-8 w-8 rounded-full border-2 border-gray-200 transition-transform duration-200"
-                  [class.selected]="selectedColors.includes(color.value)"
-                ></span>
-                <span class="block text-xs text-center mt-1">{{ color.label }}</span>
-              </label>
-            }
-          </div>
-            @if (getColorsArray().invalid && getColorsArray().touched) {
-              <div class="text-danger small">Please select at least one color</div>
-            }
-          </div>
-          
-          <!-- Price Range -->
-          <div class="form-group mb-6">
-            <label class="form-label">
-              Price Range (USD) <span class="text-danger">*</span>
-            </label>
-            <!-- <app-price-range-slider
-              [value]="accessoryForm.get('price')?.value"
-              (onChange)="onPriceChange($event)"
-            ></app-price-range-slider> -->
-            <div>
-            <div class="flex items-center mb-2">
-              <span class="ml-2 text-primary font-semibold">{{ displayValue }}</span>
-            </div>
-            <input
-              type="range"
-              min="0"
-              max="200"
-              step="0.01"
-              [value]="value"
-              (input)="handleChange($event)"
-              class="price-slider w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
-            />
-            <div class="flex justify-between text-xs text-gray-500 mt-1">
-              <span>$0</span>
-              <span>$50</span>
-              <span>$100</span>
-              <span>$150</span>
-              <span>$200+</span>
-            </div>
-          </div>
-          </div>
-          
-          <!-- Description -->
-          <div class="form-group mb-6">
-            <label for="description" class="form-label">
-              Product Description <span class="text-danger">*</span>
-            </label>
-            <textarea
-              id="description"
-              formControlName="description"
-              class="form-control"
-              rows="4"
-              placeholder="Enter a detailed description of your watch accessory..."
-              [class.is-invalid]="accessoryForm.get('description')?.invalid && 
-                                accessoryForm.get('description')?.touched"
-            ></textarea>
-            <div class="d-flex justify-content-end">
-              <small class="text-muted">
-                {{ accessoryForm.get('description')?.value?.length || 0 }}/500 characters
-              </small>
-            </div>
-            @if (accessoryForm.get('description')?.invalid && accessoryForm.get('description')?.touched) {
-              <div class="text-danger small">
-                @if (accessoryForm.get('description')?.errors?.['required']) {
-                  Please provide a description
-                } @else if (accessoryForm.get('description')?.errors?.['maxlength']) {
-                  Description must be less than 500 characters
-                }
+              
+              <!-- Image Upload -->
+              <div class="form-group mb-6">
+                <label class="form-label block mb-2">Product Images (Optional)</label>
+                <div>
+                  <div class="flex items-center justify-center w-full">
+                    <label 
+                      (click)="openFileSelector()"
+                      class="flex flex-col items-center justify-center w-full h-40 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100"
+                    >
+                      <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                        <svg 
+                          class="w-10 h-10 mb-3 text-gray-400" 
+                          fill="none" 
+                          stroke="currentColor" 
+                          viewBox="0 0 24 24" 
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path 
+                            stroke-linecap="round" 
+                            stroke-linejoin="round" 
+                            stroke-width="2" 
+                            d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
+                          ></path>
+                        </svg>
+                        <p class="mb-2 text-sm text-gray-500"><span class="font-semibold">Click to upload</span> or drag and drop</p>
+                        <p class="text-xs text-gray-500">PNG, JPG or WEBP (MAX. 10MB)</p>
+                      </div>
+                      <input 
+                        #fileInput
+                        type="file" 
+                        class="hidden" 
+                        accept="image/*" 
+                        multiple 
+                        (change)="handleImageChange($event)"
+                      />
+                    </label>
+                  </div>
+                  
+                  @if (uploadedImages.length > 0) {
+                    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 mt-4">
+                      @for (image of uploadedImages; track $index) {
+                        <div class="relative">
+                          <img 
+                            [src]="image" 
+                            [alt]="'Uploaded ' + ($index + 1)" 
+                            class="w-full h-24 object-cover rounded-lg"
+                          />
+                          <button
+                            type="button"
+                            class="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center"
+                            (click)="handleRemoveImage($index)"
+                          >
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                      }
+                    </div>
+                  }
+                </div>
               </div>
-            }
-          </div>
-          
-          <!-- Image Upload -->
-          <div class="form-group mb-6">
-            <label class="form-label">Product Images (Optional)</label>
-            <!-- <app-image-uploader
-              [images]="uploadedImages"
-              (onImagesChange)="onImagesChange($event)"
-            ></app-image-uploader> -->
-
-             <div>
-      <div class="flex items-center justify-center w-full">
-        <label 
-          (click)="openFileSelector()"
-          class="flex flex-col items-center justify-center w-full h-40 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100"
-        >
-          <div class="flex flex-col items-center justify-center pt-5 pb-6">
-            <svg 
-              class="w-10 h-10 mb-3 text-gray-400" 
-              fill="none" 
-              stroke="currentColor" 
-              viewBox="0 0 24 24" 
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path 
-                stroke-linecap="round" 
-                stroke-linejoin="round" 
-                stroke-width="2" 
-                d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
-              ></path>
-            </svg>
-            <p class="mb-2 text-sm text-gray-500"><span class="font-semibold">Click to upload</span> or drag and drop</p>
-            <p class="text-xs text-gray-500">PNG, JPG or WEBP (MAX. 10MB)</p>
-          </div>
-          <input 
-            #fileInput
-            type="file" 
-            class="hidden" 
-            accept="image/*" 
-            multiple 
-            (change)="handleImageChange($event)"
-          />
-        </label>
-      </div>
-      
-      @if (images.length > 0) {
-        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 mt-4">
-          @for (image of images; track $index) {
-            <div class="relative">
-              <img 
-                [src]="image" 
-                [alt]="'Uploaded ' + ($index + 1)" 
-                class="w-full h-24 object-cover rounded-lg"
-              />
-              <button
-                type="button"
-                class="btn btn-danger btn-sm position-absolute top-0 end-0 translate-x-1/2 -translate-y-1/2 rounded-full"
-                (click)="handleRemoveImage($index)"
+            </div>
+            
+            <!-- Specifications & Features Section -->
+            <div>
+              <h2 class="text-xl font-medium text-gray-900 mb-4">Specifications & Features</h2>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Size/Dimensions -->
+                <div class="form-group">
+                  <label for="dimensions" class="form-label block mb-2">Size/Dimensions</label>
+                  <input 
+                    type="text" 
+                    id="dimensions" 
+                    formControlName="dimensions" 
+                    class="form-control w-full p-2 border rounded"
+                    placeholder="e.g., 42mm, 44mm, Small/Medium/Large"
+                  >
+                </div>
+                
+                <!-- Weight -->
+                <div class="form-group">
+                  <label for="weight" class="form-label block mb-2">Weight (grams)</label>
+                  <input 
+                    type="number" 
+                    id="weight" 
+                    formControlName="weight" 
+                    class="form-control w-full p-2 border rounded"
+                    min="0"
+                    step="0.1"
+                    placeholder="e.g., 35.5"
+                  >
+                </div>
+                
+                <!-- Warranty Period -->
+                <div class="form-group">
+                  <label for="warranty" class="form-label block mb-2">Warranty Period</label>
+                  <select id="warranty" formControlName="warranty" class="form-select w-full p-2 border rounded">
+                    @for (option of warrantyOptions; track option.value) {
+                      <option [value]="option.value">{{ option.label }}</option>
+                    }
+                  </select>
+                </div>
+                
+                <!-- Water Resistance -->
+                <div class="form-group">
+                  <label for="waterResistance" class="form-label block mb-2">Water Resistance</label>
+                  <select id="waterResistance" formControlName="waterResistance" class="form-select w-full p-2 border rounded">
+                    @for (option of waterResistanceOptions; track option.value) {
+                      <option [value]="option.value">{{ option.label }}</option>
+                    }
+                  </select>
+                </div>
+                
+                <!-- Additional Features -->
+                <div class="form-group col-span-2">
+                  <label class="form-label block mb-2">Additional Features</label>
+                  <div class="grid grid-cols-2 md:grid-cols-4 gap-2">
+                    @for (feature of featureOptions; track feature.id) {
+                      <div class="flex items-center">
+                        <input 
+                          type="checkbox" 
+                          [id]="'feature-' + feature.id" 
+                          [checked]="isFeatureSelected(feature.id)"
+                          (change)="onToggleFeature(feature.id, $event)"
+                          class="mr-2"
+                        >
+                        <label [for]="'feature-' + feature.id" class="text-sm">
+                          {{ feature.label }}
+                        </label>
+                      </div>
+                    }
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Form Actions -->
+            <div class="flex justify-between mt-8">
+              <button 
+                type="button" 
+                class="bg-gray-200 hover:bg-gray-300 text-gray-800 py-2 px-4 rounded"
+                (click)="resetForm()"
               >
-                <span aria-hidden="true">&times;</span>
-                <span class="visually-hidden">Remove</span>
+                Reset Form
+              </button>
+              <button 
+                type="submit" 
+                class="bg-primary hover:bg-primary-dark text-white py-2 px-4 rounded"
+                [disabled]="submitting"
+              >
+                {{ submitting ? 'Submitting...' : 'Submit Accessory' }}
               </button>
             </div>
-          }
+          </form>
         </div>
-      }
+      </div>
     </div>
-          </div>
-        </div>
-        
-        <!-- Specifications & Features Section -->
-        <div>
-          <h2 class="text-xl font-medium text-gray-900 mb-4">Specifications & Features</h2>
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <!-- Size/Dimensions -->
-            <div class="form-group">
-              <label for="dimensions" class="form-label">Size/Dimensions</label>
-              <input 
-                type="text" 
-                id="dimensions" 
-                formControlName="dimensions" 
-                class="form-control"
-                placeholder="e.g., 42mm, 44mm, Small/Medium/Large"
+    <!-- Success Modal -->
+    @if (showSuccessModal) {
+      <div class="modal-backdrop fixed inset-0 bg-black opacity-40"></div>
+      <div class="modal fixed inset-0 flex items-center justify-center z-50">
+        <div class="bg-white rounded-lg shadow-xl max-w-md w-full mx-4">
+          <div class="p-6">
+            <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-green-100 mb-4">
+              <svg 
+                class="h-6 w-6 text-green-600" 
+                xmlns="http://www.w3.org/2000/svg" 
+                fill="none" 
+                viewBox="0 0 24 24" 
+                stroke="currentColor"
               >
+                <path 
+                  stroke-linecap="round" 
+                  stroke-linejoin="round" 
+                  stroke-width="2" 
+                  d="M5 13l4 4L19 7"
+                />
+              </svg>
             </div>
-            
-            <!-- Weight -->
-            <div class="form-group">
-              <label for="weight" class="form-label">Weight (grams)</label>
-              <input 
-                type="number" 
-                id="weight" 
-                formControlName="weight" 
-                class="form-control"
-                min="0"
-                step="0.1"
-                placeholder="e.g., 35.5"
+            <h3 class="text-lg text-center font-medium mb-2">Submission Successful!</h3>
+            <p class="text-center text-gray-600">
+              Your watch accessory has been submitted successfully. We'll review the details and get back to you shortly.
+            </p>
+            <div class="mt-6 flex justify-center">
+              <button 
+                class="bg-primary hover:bg-primary-dark text-white py-2 px-4 rounded"
+                (click)="closeSuccessModal()"
               >
-            </div>
-            
-            <!-- Warranty Period -->
-            <div class="form-group">
-              <label for="warranty" class="form-label">Warranty Period</label>
-              <select id="warranty" formControlName="warranty" class="form-select">
-                @for (option of warrantyOptions; track option.value) {
-                  <option [value]="option.value">{{ option.label }}</option>
-                }
-              </select>
-            </div>
-            
-            <!-- Water Resistance -->
-            <div class="form-group">
-              <label for="waterResistance" class="form-label">Water Resistance</label>
-              <select id="waterResistance" formControlName="waterResistance" class="form-select">
-                @for (option of waterResistanceOptions; track option.value) {
-                  <option [value]="option.value">{{ option.label }}</option>
-                }
-              </select>
-            </div>
-            
-            <!-- Additional Features -->
-            <div class="form-group col-span-2">
-              <label class="form-label">Additional Features</label>
-              <div class="grid grid-cols-2 md:grid-cols-4 gap-2">
-                @for (feature of featureOptions; track feature.id) {
-                  <div class="form-check">
-                    <input 
-                      type="checkbox" 
-                      [id]="'feature-' + feature.id" 
-                      [checked]="isFeatureSelected(feature.id)"
-                      (change)="onToggleFeature(feature.id, $event.target.checked)"
-                      class="form-check-input"
-                    >
-                    <label [for]="'feature-' + feature.id" class="form-check-label">
-                      {{ feature.label }}
-                    </label>
-                  </div>
-                }
-              </div>
+                Close
+              </button>
             </div>
           </div>
         </div>
-        
-        <!-- Form Actions -->
-        <div class="flex justify-between mt-8">
-          <button 
-            type="button" 
-            class="btn btn-outline-secondary"
-            (click)="resetForm()"
-          >
-            Reset Form
-          </button>
-          <button 
-            type="submit" 
-            class="btn btn-primary"
-            [disabled]="submitting"
-          >
-            {{ submitting ? 'Submitting...' : 'Submit Accessory' }}
-          </button>
-        </div>
-      </form>
-    </div>
-  </div>
-</div>
-<!-- Success Modal -->
-<app-success-modal 
-  [isOpen]="showSuccessModal"
-  (onClose)="closeSuccessModal()"
-></app-success-modal>
+      </div>
+    }
