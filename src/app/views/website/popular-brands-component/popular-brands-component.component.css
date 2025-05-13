@@ -350,7 +350,7 @@
 }
 
 .custom-slider ::ng-deep .image {
-  object-fit: fill !important;
+  object-fit: cover !important;
 }
 
 /* First visible image - increased height */

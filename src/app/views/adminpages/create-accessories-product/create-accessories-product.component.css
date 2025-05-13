@@ -1,191 +1,22 @@
-mat-expansion-panel {
-    margin-bottom: 10px;
-  }
+.color-option input:checked + span {
+      transform: scale(1.2);
+      box-shadow: 0 0 0 2px white, 0 0 0 4px var(--primary-color);
+    }
 
-  .save-can-btn {
-    border: 1px solid #242424;
-    border-radius: 5px;
-    height: 50px;
-    width: 132px;
-    font-size: 16px;
-    font-weight: 400;
-    color: black;
-  }
-  .canc-bg-color {
-    background: none;
-  }
-  
-  .save-btn-bg {
-    background: #000000;
-    color: #FFFFFF !important;
-  }
-  
-  .save-btn-bg:hover {
-    background: #000000;
-    color: #FFF
-  }
-  
-  .canc-bg-color:hover {
-    background: none;
-    /* color: #FFFFFF !important;  */
-  }
-
-  .listing-details-btn-div{
-    display: flex;
-    justify-content: end;
-  }
-
-  .reverse-order-listing-details-btn-div {
-    display: flex;
-    justify-content: start !important;
-  }
-
-  .image-upload-container {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-  }
-
-  .cover-image-section, .other-images-section {
-    text-align: center;
-    display: flex;
-    align-items: center;
-    gap: 25px;
-    flex-wrap: wrap;
-  }
-  
-  .upload-box {
-    width: 100px;
-    height: 100px;
-    border: 2px dashed #ccc;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    position: relative;
-  }
-  
-  .upload-box:hover .delete-btn {
-    opacity: 1; 
-  }
-  
-  .image-preview:hover .delete-btn {
-    opacity: 1; 
-  }
-  
-  .upload-box span {
-    font-size: 2rem;
-    color: #ccc;
-  }
-  
-  .image-preview {
-    position: relative;
-    width: 80px;
-    height: 80px;
-    margin-top: 10px;
-    margin-right: 10px;
-    display: inline-block;
-  }
-  
-  .image-preview img {
-    width: 100%;
-    height: 100%;
-    border-radius: 8px;
-  }
-  
-  .upload-progress {
-    position: absolute;
-    top: 35px;
-    left: 0;
-    width: 100%;
-    height: 10px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    background-color: rgba(109, 12, 12, 0.8);
-    border-radius: 8px;
-  }
-  
-  .delete-btn {
-    position: absolute;
-    top: 35px;
-    right: 32px;
-    background: #fff;
-    border-radius: 50%;
-    width: 35px;
-    height: 35px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: red;
-    cursor: pointer;
-    border: none;
-    outline: none;
-    opacity: 0; 
-    transition: opacity 0.3s ease;
-    padding: 0 !important;
-  }
-  .upload-progress mat-progress-bar {
-    width: 80%;
-    margin-top: 10px;
-  }
-
-  .reverse-order-upload-images-content > .content-one > p {
-    text-align: end;
-  }
-  
-  .reverse-order-upload-images-content > .content-one > .d-flex {
-    display: flex;
-    justify-content: end;
-  }
-  
-  .reverse-order-upload-images-content > .content-two > p {
-    text-align: end;
-  }
-  
-  .reverse-order-upload-images-content > .content-two > .d-flex {
-    display: flex;
-    justify-content: end;
-    flex-direction: row-reverse;
-  }
-
-  .container {
-    max-width: 700px;
-  }
-  
-  .condition-card {
-    border: 1px solid #ddd;
-    cursor: pointer;
-    transition: border-color 0.2s ease-in-out;
-  }
-  
-  .condition-card:hover {
-    border-color: #000;
-  }
-  
-  .selected .condition-card {
-    border-color: #000;
-  }
-
-
-  .delivery-card {
-    border: 1px solid #ddd;
-    cursor: pointer;
-    transition: border-color 0.2s ease-in-out;
-    background-color: #f9f9f9;
-    border-radius: 10px;
-  }
-  
-  .delivery-card:hover {
-    border-color: #000;
-  }
-  
-  .selected .delivery-card {
-    border-color: #000;
-  }
-  
-  .icon {
-    width: 140px;
-    height: auto;
-  }
+     .price-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 20px;
+      height: 20px;
+      background: var(--primary-color);
+      border-radius: 50%;
+      cursor: pointer;
+    }
+    
+    .price-slider::-moz-range-thumb {
+      width: 20px;
+      height: 20px;
+      background: var(--primary-color);
+      border-radius: 50%;
+      cursor: pointer;
+    }

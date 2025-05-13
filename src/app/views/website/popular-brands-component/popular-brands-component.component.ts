@@ -134,6 +134,7 @@ export class PopularBrandsComponentComponent implements OnInit {
             alt: product.name,
             start_date: product.start_date,
             end_date: product.end_date,
+            product_id:product.product_id
           }));
 
           setTimeout(() => this.highlightFirstImage(), 300);
@@ -276,4 +277,20 @@ export class PopularBrandsComponentComponent implements OnInit {
   //     });
   //   }
   // }
+
+
+    onImageClick(imageData: any): void {
+      console.log("sliderImages",this.sliderImages)
+       console.log("imageData",imageData)
+    const clickedImage = this.sliderImages.find(img => img.index == imageData);
+    console.log('Navigating to component for image ID:', clickedImage);
+
+    if (clickedImage) {
+      console.log('Navigating to component for image ID:', clickedImage.product_id);
+      this.router.navigate(['/buy-product'], {
+        queryParams: { id: clickedImage.product_id }
+      });
+    }
+  }
+
 }

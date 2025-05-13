@@ -58,6 +58,7 @@ export class MyListingDetailsComponent implements OnInit {
     { label: "Privacy", arabicLabel: "الخصوصية", icon: "bi bi-globe" },
     { label: "My Subscriptions", arabicLabel: "اشتراكاتي", icon: "bi bi-box-arrow-in-right" },
     { label: "Favorites", arabicLabel: "المفضلة", icon: "bi bi-heart" },
+    { label: "Cart Items", arabicLabel: "المفضلة", icon: "bi bi-heart" },
     { label: "Feedback", arabicLabel: "التقييمات", icon: "bi bi-star" },
     { label: "Help Center", arabicLabel: "مركز المساعدة", icon: "bi bi-question-circle" },
   ];
@@ -780,5 +781,56 @@ export class MyListingDetailsComponent implements OnInit {
     this.router.navigate(["/chat"], {
       state: { chatID: this.chat_ID, productID: this.forSendingProductID },
     });
+  }
+
+
+
+// Cart Items Details
+
+  cartItems = [
+    {
+      image: 'assets/images/grey.png',
+      name: 'Python Skin - Slate Grey',
+      color: 'Slate Grey',
+      price: 150.50,
+      quantity: 1,
+      selected: false,
+    },
+    {
+      image: 'assets/images/copper.png',
+      name: 'Python Skin - Copper Brown',
+      color: 'Copper Brown',
+      price: 150.50,
+      quantity: 1,
+      selected: false,
+    },
+    {
+      image: 'assets/images/green.png',
+      name: 'Python Skin - Juniper Green',
+      color: 'Juniper Green',
+      price: 150.50,
+      quantity: 1,
+      selected: true,
+    },
+  ];
+
+  increment(item: any) {
+    item.quantity++;
+  }
+
+  decrement(item: any) {
+    if (item.quantity > 1) item.quantity--;
+  }
+
+  removeItem(item: any) {
+    this.cartItems = this.cartItems.filter(i => i !== item);
+  }
+
+  getTotalItems() {
+    return this.cartItems.length;
+  }
+
+  getSubTotal() {
+    return this.cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
   }
 }

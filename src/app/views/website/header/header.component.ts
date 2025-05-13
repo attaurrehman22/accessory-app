@@ -20,6 +20,7 @@ import { MatMenuTrigger } from "@angular/material/menu";
 import { jwtDecode } from 'jwt-decode';
 import { HttpService } from "src/services/http/http.service";
 import { filter } from "rxjs/operators";
+import { ShoppingCartComponent } from "../../modal/shopping-cart/shopping-cart.component";
 
 
 
@@ -260,4 +261,22 @@ export class HeaderComponent {
   userListing(){
     this.router.navigate(['/myListing'])
   }
+
+
+    openCart() {
+      console.log("open cart");
+      const dialogRef = this.dialog.open(ShoppingCartComponent, {
+        width: '400px', // Adjust as needed
+        height: '100vh',
+        position: {
+          right: '0',
+          top: '0',
+        },
+        panelClass: 'custom-dialog-panel'
+      });
+    
+      dialogRef.afterClosed().subscribe((result) => {
+        // handle result
+      });
+    }
 }

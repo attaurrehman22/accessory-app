@@ -688,3 +688,10 @@ text-align: end;
  .main_image_content_div {
   width: auto;
  }
+
+
+ .form-check-input {
+  position: relative !important;
+  margin-top: .3rem !important;
+    margin-left: auto !important;
+ }

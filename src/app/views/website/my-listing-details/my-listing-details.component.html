@@ -1,8 +1,8 @@
 <div
   [ngClass]="{
     'global-main-wraper':
-      isShowSellOrdersListngDetails || isShowBuyOrdersListngDetails,
-    container: !(isShowSellOrdersListngDetails || isShowBuyOrdersListngDetails),
+      isShowSellOrdersListngDetails || isShowBuyOrdersListngDetails || activeIndex === 10,
+    container: !(isShowSellOrdersListngDetails || isShowBuyOrdersListngDetails) && activeIndex !== 10,
     'blur-effect':
       showSellerConfirmOrderAvailability || showSellerProofofShipping
   }"
@@ -956,8 +956,7 @@
           </div>
         </div>
       </div>
-
-
+      <!-- if "Favorites" is Active -->
       <div *ngIf="activeIndex === 9" class="container-fluid">
         <div class="d-flex justify-content-between align-items-center mb-3 filtered-div">
           <h4 class="mobile-label">{{ "my_Listing.Favorites" | translate }}</h4>
@@ -1016,6 +1015,69 @@
             </div>
           </div>
         </div>
+      </div>
+      <!-- if "Cart Items" is Active -->
+      <div *ngIf="activeIndex === 10" class="container-fluid">
+        <div class="d-flex justify-content-between align-items-center mb-3 filtered-div">
+          <h4 class="mobile-label">Cart Items</h4>
+           <h4 class="mobile-label">Remove Selected</h4>
+        </div>
+        <div class="list-cards">
+          <div class="container-fluid my-4">
+            <div class="card mb-3" *ngFor="let item of cartItems">
+              <div class="row g-0 align-items-center p-2">
+                <div class="col-auto d-flex align-items-center gap-2">
+                  <input type="checkbox" [(ngModel)]="item.selected" class="form-check-input" />
+                  <img [src]="item.image" alt="{{ item.name }}" class="img-thumbnail" style="width: 80px; height: auto;">
+                </div>
+                <div class="col">
+                  <div class="card-body py-2 d-flex flex-column">
+                    <p class="mb-1 small text-muted">
+                      LUG Width Apple 38/40/41MM | Buckle/Connector Black | Length Small 115/75MM | Color {{ item.color }}
+                    </p>
+                    <h6 class="card-title mb-1">{{ item.name }}</h6>
+                    <p class="mb-1"><strong>Total Price: ₦{{ item.price | number:'1.2-2' }}</strong></p>
+                  </div>
+                </div>
+                <div class="col-auto d-flex gap-2 align-items-center justify-content-center mx-5">
+                  <label class="form-label mb-1 small">Quantity</label>
+                  <div class="input-group input-group-sm">
+                    <button class="btn btn-outline-secondary" (click)="decrement(item)">–</button>
+                    <input type="text" class="form-control text-center" style="width: 35px;" [value]="item.quantity" readonly>
+                    <button class="btn btn-outline-secondary" (click)="increment(item)">+</button>
+                  </div>
+                </div>
+                <div class="col-auto d-flex align-items-center justify-content-center mx-2">
+                  <button class="btn btn-link text-danger" (click)="removeItem(item)">
+                    <i class="bi bi-trash"></i> <!-- Bootstrap Icons trash -->
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-12 d-flex justify-content-end mt-4">
+              <div class="col-md-4 d-flex flex-column">
+                <ul class="list-group list-group-flush mb-3">
+                  <li class="list-group-item d-flex justify-content-between align-items-center">
+                    Total Items
+                    <span>{{ getTotalItems() }}</span>
+                  </li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center">
+                    Sub Total
+                    <span>₦{{ getSubTotal() | number:'1.2-2' }}</span>
+                  </li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center">
+                    Estimated Payout
+                    <span>₦{{ getSubTotal() | number:'1.2-2' }}</span>
+                  </li>
+                </ul>
+                <button class="btn btn-dark w-100">Checkout</button>
+              </div>
+            </div>
+          </div>
+
+        </div> 
+
       </div>
 
     </div>
