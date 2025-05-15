@@ -66,16 +66,15 @@
   ::ng-deep .p-carousel .p-carousel-next {
     right: 27%;
   }
-}
 
-
-@media (max-width: 990px) {
-  ::ng-deep .p-carousel .p-carousel-prev {
-    left: 62%;
+  .custom-slider ::ng-deep .prev-icon {
+    /* left: 65% !important; */
+    top: 93% !important;
   }
 
-  ::ng-deep .p-carousel .p-carousel-next {
-    right: 31%;
+  .custom-slider ::ng-deep .next-icon {
+    /* right: 25% !important; */
+    top: 93% !important;
   }
 }
 
@@ -301,18 +300,9 @@
 /* Style arrows and position them at the bottom */
 .custom-slider ::ng-deep .prev-icon,
 .custom-slider ::ng-deep .next-icon {
-  /* position: absolute;
-  bottom: 10px;
-  background-color: rgba(0, 0, 0, 0.5) !important; 
-  color: white;
-  font-size: 24px;
-  padding: 8px 12px;
-  cursor: pointer;
-  z-index: 2;
-  border-radius: 5px; */
 
-  width: 4.5% !important;
-  height: 10% !important;
+  min-width: 4.5% !important;
+  min-height: 10% !important;
   box-shadow: 0px 4px 14px 1px #00000029 !important;
   background-color: #fff !important;
   color: #242424;
@@ -321,17 +311,14 @@
 
 /* Align left and right */
 .custom-slider ::ng-deep .prev-icon {
-  left: 65% !important;
-  /* background-color: black !important; */
-    /* color: white; */
-    top: 93% !important;
+  right: 12vw !important;
+  top: 84% !important;
+  left: auto !important;
 }
 
 .custom-slider ::ng-deep .next-icon {
-  right: 25% !important;
-  /* background-color: black !important; */
-    /* color: white; */
-    top: 93% !important;
+  right: 9vw !important;
+  top: 84% !important;
 }
 
 .custom-slider ::ng-deep .main {
@@ -375,16 +362,17 @@ font-weight: 400;
 
 
 @media (max-width: 1160px) {
+
  /* Align left and right */
 .custom-slider ::ng-deep .prev-icon {
-  left: 85% !important;
+  left: 47% !important;
   background-color: black !important;
     color: white;
     top: 93% !important;
 }
 
 .custom-slider ::ng-deep .next-icon {
-  right: 4% !important;
+  right: 32% !important;
   background-color: black !important;
     color: white;
     top: 93% !important;
@@ -396,31 +384,52 @@ font-weight: 400;
 @media (max-width: 990px) {
   /* Align left and right */
  .custom-slider ::ng-deep .prev-icon {
-  left: 45% !important;
-   background-color: black !important;
+     background-color: black !important;
      color: white;
-     top: 93% !important;
+     top: 82% !important;
  }
  
- .custom-slider ::ng-deep .next-icon {
-   right: 40% !important;
-   background-color: black !important;
-     color: white;
-     top: 93% !important;
- }
+  .custom-slider ::ng-deep .next-icon {
+      background-color: black !important;
+      color: white;
+      top: 82% !important;
+  }
 
- .custom-slider ::ng-deep .img-div.image-popup.highlight-first {
-  height: 285px !important;
+  .custom-slider ::ng-deep .img-div.image-popup.highlight-first {
+    height: 285px !important;
+  }
+
+  .custom-slider ::ng-deep .prev-icon,
+  .custom-slider ::ng-deep .next-icon {
+    box-shadow: 0px 4px 14px 1px #00000029 !important;
+    background-color: #fff !important;
+    color: #242424;
+  }
+
+  ::ng-deep ng-image-slider.custom-slider > .ng-image-slider > .ng-image-slider-container > .main {
+    height: 355px !important;
+  }
+
+    ::ng-deep .p-carousel .p-carousel-prev {
+    left: 62%;
+  }
+
+  ::ng-deep .p-carousel .p-carousel-next {
+    right: 31%;
+  }
 }
 
-.custom-slider ::ng-deep .prev-icon,
-.custom-slider ::ng-deep .next-icon {
+ @media (max-width: 1255px) {
+  .custom-slider ::ng-deep .prev-icon {
+    top: 93% !important;
+  }
+ 
+  .custom-slider ::ng-deep .next-icon {
+    top: 93% !important;
+  }
 
-  width: 6% !important;
-  height: 10% !important;
-  box-shadow: 0px 4px 14px 1px #00000029 !important;
-  background-color: #fff !important;
-  color: #242424;
+  ::ng-deep ng-image-slider.custom-slider > .ng-image-slider > .ng-image-slider-container > .main > .main-inner {
+  height: 400px !important;
 }
  }
 
@@ -428,30 +437,70 @@ font-weight: 400;
  @media (max-width: 768px) {
   /* Align left and right */
  .custom-slider ::ng-deep .prev-icon {
-  left: 40% !important;
-   background-color: black !important;
-     color: white;
-     top: 93% !important;
+    background-color: black !important;
+    color: white;
+    top: 81% !important;
  }
  
  .custom-slider ::ng-deep .next-icon {
-   right: 35% !important;
-   background-color: black !important;
-     color: white;
-     top: 93% !important;
+    background-color: black !important;
+    color: white;
+    top: 81% !important;
  }
 
  .custom-slider ::ng-deep .img-div.image-popup.highlight-first {
-  height: 285px !important;
+    height: 285px !important;
+  }
+
+  .custom-slider ::ng-deep .prev-icon,
+  .custom-slider ::ng-deep .next-icon {
+    /* width: 10% !important;
+    height: 10% !important; */
+    box-shadow: 0px 4px 14px 1px #00000029 !important;
+    background-color: #fff !important;
+    color: #242424;
+  }
 }
 
-.custom-slider ::ng-deep .prev-icon,
-.custom-slider ::ng-deep .next-icon {
-
-  width: 10% !important;
-  height: 10% !important;
-  box-shadow: 0px 4px 14px 1px #00000029 !important;
-  background-color: #fff !important;
-  color: #242424;
-}
+ @media (max-width: 768px) { 
+   .custom-slider ::ng-deep .prev-icon {
+     left: 30% !important;
+   }
+ 
+ .custom-slider ::ng-deep .next-icon {
+    right: 30% !important;
+  }
  }
+
+
+ .custom-slider {
+    min-width: 320px;
+    min-height: 300px;
+  }
+
+
+  ::ng-deep ng-image-slider.custom-slider > .ng-image-slider > .ng-image-slider-container > .main > .main-inner > .img-div {
+    min-width: 300px;
+    min-height: 300px;
+  }
+
+
+::ng-deep .ng-image-slider .ng-image-slider-dot {
+
+  height: 10px;
+  width: 10px;
+  background-color: #bbb;
+  border-radius: 50%;
+  margin: 0 4px;
+  transition: background-color 0.3s;
+  display: inline-block;
+}
+
+::ng-deep .ng-image-slider .ng-image-slider-dot.active {
+  background-color: #000;
+  border: 2px solid #000;
+}
+
+::ng-deep ng-image-slider.custom-slider > .ng-image-slider > .ng-image-slider-container > .main {
+  height: 400px !important;
+}
