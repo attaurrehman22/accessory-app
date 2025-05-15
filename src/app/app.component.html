@@ -2,7 +2,7 @@
   <app-admin-page-header></app-admin-page-header>
 </div>
 
-<div *ngIf="showHeader">
+<div *ngIf="showHeader" (click)="closeSearchBox()">
   <app-header *ngIf="!hideaccessoriesHeader"></app-header>
   <router-outlet></router-outlet>
   <app-footer-component></app-footer-component>

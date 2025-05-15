@@ -27,39 +27,29 @@
         
         </div>
         <div class="header-contact header-contact-lg gap-4 mat-menu-nav">
-           <img
-            src="./assets/images/search-icon.png"
-           
+          <!-- Small Screen SearchForm Start Here  -->
+          <img
+            src="./assets/images/search-icon.svg"
             (click)="isShowSearchForm()"
             style="cursor: pointer"
           />
           <div *ngIf="isShowSearchField" class="small-screen-search-Box">
-          <!-- <mat-menu #search3Menu="matMenu"  class="notificationsMenu"> -->
-            <!-- <form class="d-flex flex-grow-1 ms-3 mat-menu-nav" (ngSubmit)="onSearch(searchQuery)" (click)="$event.stopPropagation()">
-              <input
-                [(ngModel)]="searchQuery"
-                (ngModelChange)="onSearchChange()"
-                class="form-control me-2"
-                type="search"
-                placeholder="Search"
-                aria-label="Search"
-              />
-            </form> -->
             <form  class="d-flex flex-grow-1 ms-3" (ngSubmit)="onSearch(searchQuery)">
               <div class="input-group">
                 <input
                   [(ngModel)]="searchQuery"
                   class="form-control me-2"
                   type="search"
-                  placeholder="Search"
+                  placeholder="Search "
                   aria-label="Search"
+                 (click)="onSearchInputClick()"
                 />
-                <button class="search-btn" type="submit">Search</button>
+                <button class="search-btn" (click)="onSearch(searchQuery)" type="submit">Search</button>
               </div>
             </form>
-            
+          </div>
+          <!-- Small Screen SearchForm End Here  -->
           <!-- </mat-menu> -->
-        </div>
           <mat-menu #profileMenu="matMenu">
             <button
               mat-menu-item
@@ -100,15 +90,8 @@
               {{ "header.Logout" | translate }}
             </button>
           </mat-menu>
-
-             <!-- <img
-                src="../../../../assets/images/white_olar_bag-smile-linear.svg"
-                style="cursor: pointer"
-                (click)="openCart()"
-              /> -->
-
           <img
-            src="./assets/images/profile-icon.png"
+            src="./assets/images/profile-icon.svg"
             alt="Profile"
             [matMenuTriggerFor]="profileMenu"
             style="cursor: pointer"
@@ -176,7 +159,9 @@
           style="cursor: pointer"
         />
       </a>
-        <div class="header-content gap-4" *ngIf="!isSearchForm" [ngClass]="{ 'rtl-layout-header-reverse': isRtl }">
+      <!-- For large screen Routes of Center label start here -->
+        <div class="header-content gap-4" *ngIf="!(isSearchForm || isShowSearchField) || isSmallScreenScreen" [ngClass]="{ 'rtl-layout-header-reverse': isRtl }">
+          
           <a routerLink="/newArrivals" class="custom-btn position-relative">
             {{ "header.new_arrivals" | translate }}
             <span
@@ -193,21 +178,29 @@
           >
             {{ "header.sell_watch" | translate }}
           </a>
-
-          <!-- <a
-            class="custom-btn"
-            *ngIf="showHideAdminUser === true"
-            routerLink="/admin/dashboard"
-          >
-            {{ "header.admin_pannel" | translate }}
-          </a> -->
-          <!-- <a class="custom-btn" *ngIf="isUserLogin === 'true'" routerLink="/chat">
-            {{ "header.Chat" | translate }}
-          </a> -->
           <a class="custom-btn" *ngIf="isUserLogin === 'true'" routerLink="/accessories/home">
             {{ "header.accessories" | translate }}
           </a>
         </div>
+
+        <div class="header-content" *ngIf="isShowSearchField && !isSmallScreenScreen">
+          <div class="large-screen-search-Box">
+            <form class="d-flex flex-grow-1 ms-3" (ngSubmit)="onSearch(searchQuery)">
+              <div class="input-group">
+              <input
+                [(ngModel)]="searchQuery"
+                class="form-control me-2"
+                type="search"
+                placeholder="Search"
+                aria-label="Search"
+                (click)="onSearchInputClick()"
+              />
+              <button class="search-btn" (click)="onSearch(searchQuery)" type="submit">Search</button>
+              </div>
+            </form>
+          </div>
+        </div>
+        <!-- For large screen Routes of Center label End here -->
         <div
           class="header-content gap-4"
           *ngIf="isSearchForm"
@@ -218,25 +211,13 @@
        
         </div>
         <div class="header-contact sidebar-acions gap-4">
+           <!-- Search for Large Screen Start Here -->
           <img
-            src="./assets/images/search-icon.png"
+            src="./assets/images/search-icon.svg"
            (click)="isShowSearchForm()"
             style="cursor: pointer"
           />
-          <div *ngIf="isShowSearchField" class="large-screen-search-Box">
-            <form class="d-flex flex-grow-1 ms-3" (ngSubmit)="onSearch(searchQuery)">
-              <div class="input-group">
-              <input
-                [(ngModel)]="searchQuery"
-                class="form-control me-2"
-                type="search"
-                placeholder="Search"
-                aria-label="Search"
-              />
-              <button class="search-btn" type="submit">Search</button>
-              </div>
-            </form>
-           </div>
+             <!-- Search for Large Screen End Here -->
           <mat-menu #profileMenu="matMenu">
             <button
               mat-menu-item
@@ -257,14 +238,14 @@
             </a>
           </mat-menu>
 
-           <img
-                src="../../../../assets/images/white_olar_bag-smile-linear.svg"
-                style="cursor: pointer"
-                (click)="openCart()"
-              />
+          <img
+              src="../../../../assets/images/white_olar_bag-smile-linear.svg"
+              style="cursor: pointer"
+              (click)="openCart()"
+          />
 
           <img
-            src="./assets/images/profile-icon.png"
+            src="./assets/images/profile-icon.svg"
             alt="Profile"
             [matMenuTriggerFor]="profileMenu"
             style="cursor: pointer"

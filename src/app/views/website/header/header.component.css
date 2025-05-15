@@ -356,7 +356,7 @@
 }
 
 .large-screen-search-Box {
-  position: absolute;
-  padding: 13vh 0vh 0 33vh;
+  /* position: absolute;
+  padding: 13vh 0vh 0 33vh; */
   width: 100%;
 }

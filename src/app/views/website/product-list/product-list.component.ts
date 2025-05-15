@@ -49,6 +49,8 @@ export class ProductListComponent implements OnInit {
     )
   }
 
+  isFiltereredSearchQueryIsShow:boolean=false;
+
   ngOnInit(): void {
     this.getAllCategories();
     this.getFilteredData()
@@ -58,12 +60,28 @@ export class ProductListComponent implements OnInit {
     }
     this.route.queryParams.subscribe((params) => {
       this.searchQuery = params['query'] || '';  // Read query parameter, or default to an empty string
+      if(this.searchQuery){
+         this.isFiltereredSearchQueryIsShow=true;
+      }
       this.featured = params['name'] === 'featured';  // Check if 'name' is 'featured' and set the flag
       if(this.featured){
         this.watchTypes[1].selected = true;
       }
       this.applyFilters();
     });
+  }
+
+
+
+  removeSearchQuery(){
+    this.searchQuery = "";
+     this.isFiltereredSearchQueryIsShow=false;
+       this.router.navigate([], {
+        relativeTo: this.route,
+        queryParams: { query: null },
+        queryParamsHandling: 'merge', // keep other params
+      });
+    this.applyFilters()
   }
 
   get selectedCategories() {
@@ -120,6 +138,7 @@ export class ProductListComponent implements OnInit {
   }
 
   clearFilters(){
+
     this.isFiltereredOptionIsShow=false
     this.categories.forEach(category => (category.selected = false));
     this.watchTypes.forEach(type => (type.selected = false));
@@ -129,7 +148,7 @@ export class ProductListComponent implements OnInit {
     // this.currentPercentage = 0
     this.minPercentage = 0; // Left thumb position (percentage)
     this.maxPercentage = 100; // Right thumb position (percentage)
-    this.applyFilters();
+    this.removeSearchQuery();
   }
 
   itemsPerPage:number=30;

@@ -21,6 +21,7 @@ import { jwtDecode } from 'jwt-decode';
 import { HttpService } from "src/services/http/http.service";
 import { filter } from "rxjs/operators";
 import { ShoppingCartComponent } from "../../modal/shopping-cart/shopping-cart.component";
+import { MessageServiceService } from "src/services/search-show-hide/message-service.service";
 
 
 
@@ -62,7 +63,8 @@ export class HeaderComponent {
     private searchService: SearchServiceService,
     private loginStateService: LoginStateService,
     private cdRef: ChangeDetectorRef,
-     private dialog: MatDialog,private http:HttpService
+     private dialog: MatDialog,private http:HttpService,
+     private searchShowHide:MessageServiceService
   ) {
     const languagevalues = this.supportLanguages.map((lang) => lang.value);
     this.translateService.addLangs(languagevalues);
@@ -123,15 +125,37 @@ export class HeaderComponent {
   }
 
   isShowSearchField:boolean=false;
-
+  isManuallyToggled = false;
+  
   isShowSearchForm(){
+   this.isManuallyToggled = true;
    this.isShowSearchField=!this.isShowSearchField
   }
 
   userToken:any;
 
+  isSmallScreenScreen: boolean = window.innerWidth <= 991;
+
+  checkScreenSize() {
+    this.isSmallScreenScreen = window.innerWidth <= 991;
+  }
+
   ngOnInit() {
     this.isSmallScreen = window.innerWidth <= 1500;
+   
+    // if(this.isManuallyToggled && this.isShowSearchField){
+      this.searchShowHide.getMessage().subscribe(msg => {
+       if(this.isManuallyToggled && this.isShowSearchField && this.isSearchActive){
+          this.isShowSearchField= true;
+          this.isManuallyToggled=false
+       }else{
+         this.isShowSearchField= false
+       }
+        });
+    // }
+    this.checkScreenSize();
+    window.addEventListener('resize', this.checkScreenSize.bind(this));
+
     this.isUserLogin = localStorage.getItem("isLoggedIn");
    
     this.userToken = localStorage.getItem("user_token");
@@ -172,7 +196,16 @@ export class HeaderComponent {
     this.router.navigate(["/admin/dashboard"]);
   }
 
+  isSearchActive:boolean=true;
+
+onSearchInputClick() {
+  this.isSearchActive = true
+    this.isManuallyToggled=true;
+}
+
   onSearch(query: string) {
+    this.isSearchActive = true
+    this.isManuallyToggled=true;
     if (this.search3MenuTrigger && this.search3MenuTrigger.menuOpen) {
       this.search3MenuTrigger.closeMenu();
     }

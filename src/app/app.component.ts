@@ -4,6 +4,8 @@ import { marker as TRANSLATE_ME } from "@biesbjerg/ngx-translate-extract-marker"
 import { NavigationEnd, Router } from "@angular/router";
 import { AlertsServicesService } from "src/services/alerts-service/alerts-services.service";
 import { LoaderService } from "./loader.service";
+import { SearchServiceService } from "src/services/search-service/search-service.service";
+import { MessageServiceService } from "src/services/search-show-hide/message-service.service";
 
 @Component({
   selector: "app-root",
@@ -121,7 +123,8 @@ export class AppComponent implements OnInit {
     private translateService: TranslateService,
     private router: Router,
     public alertService: AlertsServicesService,
-    public loaderService: LoaderService
+    public loaderService: LoaderService,
+    private searchShowHide:MessageServiceService
   ) {
     this.translateService.addLangs(this.supportLanguages);
     this.translateService.setDefaultLang("en");
@@ -168,5 +171,10 @@ export class AppComponent implements OnInit {
     localStorage.removeItem('user_token')
     localStorage.removeItem('isAdminUser')
    this.router.navigate(['/login'])
+  }
+
+
+  closeSearchBox(){
+     this.searchShowHide.sendMessage('true')
   }
 }

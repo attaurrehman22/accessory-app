@@ -148,13 +148,25 @@
     </div>
 
     <div
-    *ngIf="(selectedCategories?.length > 0 || selectedWatchTypes?.length > 0) && isFiltereredOptionIsShow" class="container-fluid mt-3">
+    *ngIf="(selectedCategories?.length > 0 || selectedWatchTypes?.length > 0 || searchQuery) && ( isFiltereredOptionIsShow || isFiltereredSearchQueryIsShow)" class="container-fluid mt-3">
       <div  class="col-md-12 d-flex flex-wrap align-items-center">
         <div class="col-md-10 d-flex flex-wrap">
+
+            <!-- Display selected Quer Param Name  -->
+
+             <ul *ngIf="searchQuery" class="d-flex flex-wrap align-items-center gap-1" style="list-style: none !important;">
+              <li class="d-flex align-items-center li-styl">
+                <span>{{ searchQuery }}</span>
+                <button type="button" class="btn btn-link p-0 ms-2" (click)="removeSearchQuery()">
+                  <i class="fas fa-times-circle" style="color: white;"></i>
+                </button>
+              </li>
+            </ul>
+
           <!-- Display selected categories -->
  
             <!-- <h5>Selected Categories:</h5> -->
-            <ul *ngIf="selectedCategories?.length > 0" class="d-flex flex-wrap align-items-center gap-1" style="list-style: none !important;">
+            <ul *ngIf="selectedCategories?.length > 0 && isFiltereredOptionIsShow" class="d-flex flex-wrap align-items-center gap-1" style="list-style: none !important;">
               <li *ngFor="let category of selectedCategories" class="d-flex align-items-center li-styl">
                 <span>{{ category.name }}</span>
                 <button type="button" class="btn btn-link p-0 ms-2" (click)="removeCategory(category.id)">
@@ -165,7 +177,7 @@
      
     
             <!-- <h5>Selected Watch Types:</h5> -->
-            <ul *ngIf="selectedWatchTypes?.length > 0" class="d-flex flex-wrap align-items-center gap-1" style="list-style: none !important;">
+            <ul *ngIf="selectedWatchTypes?.length > 0 && isFiltereredOptionIsShow" class="d-flex flex-wrap align-items-center gap-1" style="list-style: none !important;">
               <li *ngFor="let watchType of selectedWatchTypes" class="d-flex align-items-center li-styl">
                 <span>{{ watchType.name }}</span>
                 <button type="button" class="btn btn-link p-0 ms-2" (click)="removeWatchType(watchType.id)">
