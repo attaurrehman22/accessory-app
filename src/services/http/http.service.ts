@@ -576,6 +576,52 @@ export class HttpService implements OnInit {
     });
   }
 
+
+  getAdminAccessroiesCategory(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/api/accessory-categories`, {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+  }
+
+   addAdminAccessroyCategory(bodyData): Observable<any> {
+    return this.http.post(`${this.apiUrl}/api/accessory-categories`,bodyData, {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+  }
+
+   editAdminAccessroyCategory(bodyData,ID): Observable<any> {
+    return this.http.put(`${this.apiUrl}/api/accessory-categories/${ID}`,bodyData, {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+  }
+
+    deleteAdminAccessroyCategory(ID): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/api/accessory-categories/${ID}`, {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+  }
+
+    getAdminAccessroiesCategoryGroups(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/api/accessory-category-groups`, {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+  }
+
   // ----------------------------------  create Listing start ------------------------------
 
 

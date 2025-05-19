@@ -71,7 +71,46 @@ export class PopularBrandsComponentComponent implements OnInit {
   currentIndex: number = 0;
   sliderImages: any[] = [];
 
+  activeDateTiemeSecforShowIndex:number=0;
+  firstCalling:boolean=false;
+
+  ngOnDestroy() {
+    Object.values(this.countdownIntervals).forEach(interval => clearInterval(interval));
+  }
+
   onSlideChange(event: any): void {
+
+    if(event.action == 'next'){
+      if(this.activeDateTiemeSecforShowIndex == 0 && !this.firstCalling){
+        console.log("First Calling Enter")
+           this.activeDateTiemeSecforShowIndex = 1;
+           this.firstCalling = true;
+            if(this.sliderImages[this.activeDateTiemeSecforShowIndex]){
+            this.startCountdown(
+              this.sliderImages[this.activeDateTiemeSecforShowIndex].start_date,
+              this.sliderImages[this.activeDateTiemeSecforShowIndex].end_date,
+              1
+            );
+        }
+      }
+      else if(this.sliderImages.length == this.activeDateTiemeSecforShowIndex){
+        this.activeDateTiemeSecforShowIndex = 0;
+      }else{
+        this.activeDateTiemeSecforShowIndex ++;
+      }
+
+    }else{
+      if(this.activeDateTiemeSecforShowIndex == 0){
+        this.activeDateTiemeSecforShowIndex = this.sliderImages.length - 1;
+      }else{
+        this.activeDateTiemeSecforShowIndex --;
+      }
+    }
+
+    console.log("Slider Images",this.sliderImages)
+
+    this.currentIndex = event.currentSlide;
+
     // Remove previously highlighted class
     const allImgElements = document.querySelectorAll(".img-div");
     allImgElements.forEach((el) => {
@@ -79,36 +118,27 @@ export class PopularBrandsComponentComponent implements OnInit {
     });
 
     // Wait for DOM to update before selecting again
-    setTimeout(() => {
+    // setTimeout(() => {
       const selectedImages = document.querySelectorAll(".img-div.image-popup");
+      // console.log("selectedImages",selectedImages)
       if (selectedImages.length > 1) {
         const highlightIndex = 1; // because you're using selectedImages[0+1]
         const elementToHighlight = selectedImages[highlightIndex];
         elementToHighlight.classList.add("highlight-first");
 
-        // ✅ Now log the related product
-        const product = this.sliderImages[highlightIndex];
-        // Clear any existing countdown before starting a new one
-      this.clearCountdown(this.currentIndex);
+        console.log("activeDateTiemeSecforShowIndex",this.activeDateTiemeSecforShowIndex)
 
-      // Start the countdown for the new product
-      this.updateRemainingTime(
-        product.start_date,
-        product.end_date,
-        highlightIndex
-      );
-
-      // Start the countdown timer for the product
-      this.startCountdown(
-        product.start_date,
-        product.end_date,
-        highlightIndex
-      );
-
-      // Update current index to the active product
-      this.currentIndex = highlightIndex;
+        // Start the countdown for the new product
+        if(this.sliderImages[this.activeDateTiemeSecforShowIndex]){
+            this.startCountdown(
+              this.sliderImages[this.activeDateTiemeSecforShowIndex].start_date,
+              this.sliderImages[this.activeDateTiemeSecforShowIndex].end_date,
+              highlightIndex
+            );
+        }
+        // Update current index to the active product
+        this.currentIndex = highlightIndex;
       }
-    }, 100);
   }
 
   updateFirstVisibleImage() {
@@ -137,6 +167,10 @@ export class PopularBrandsComponentComponent implements OnInit {
             product_id:product.product_id
           }));
 
+          // this.startCountdown(this.sliderImages[0].start_date,this.sliderImages[0].end_date,0)
+          // this.activeDateTiemeSecforShowIndex = 0;
+          this.onSlideChange({ action: 'next' });
+
           setTimeout(() => this.highlightFirstImage(), 300);
       },
       (err) => {
@@ -152,33 +186,6 @@ export class PopularBrandsComponentComponent implements OnInit {
     if (selectedImages.length > 1) {
       const highlightIndex = 1;
       selectedImages[highlightIndex].classList.add("highlight-first");
-    }
-  }
-  
-
-  // ngAfterViewInit(): void {
-  //   setTimeout(() => {
-  //     const selectedImages = document.querySelectorAll(".img-div.image-popup");
-  
-  //     if (selectedImages.length > 0) {
-  //       const firstVisibleElement = selectedImages[0]; // First visible image
-  //       firstVisibleElement.classList.add("highlight-first");
-  //     }
-  //   }, 500); // Increased delay to ensure DOM is fully updated
-  // }
-  
-
-  onCarouselMove(event: any) {
-    this.firstVisibleIndex = event.page;
-
-    // Ensure first item is visible when looping back
-    if (
-      this.firstVisibleIndex >=
-      this.products.length - this.responsiveOptions[0].numVisible
-    ) {
-      setTimeout(() => {
-        this.firstVisibleIndex = 0;
-      }, 500); // Delay for a smooth transition
     }
   }
 
@@ -202,6 +209,15 @@ export class PopularBrandsComponentComponent implements OnInit {
 
     const timeRemaining = end - currentTime;
 
+    // console.log("Time Remaining",timeRemaining)
+    if(timeRemaining < 0){
+      this.days = "00";
+      this.hours = "00";
+      this.minutes = "00";
+      this.seconds = "00";
+      // this.clearCountdown(index);
+      return;
+    }
     let days = "00";
     let hours = "00";
     let minutes = "00";
@@ -225,17 +241,53 @@ export class PopularBrandsComponentComponent implements OnInit {
     this.seconds = seconds;
 
     // Update countdownTimers array with remaining time for the promotion
-    this.countdownTimers[index] = { days, hours, minutes, seconds };
+    // this.countdownTimers[index] = { days, hours, minutes, seconds };
   }
+
+  countdownIntervals: { [key: number]: any } = {};
+
 
   startCountdown(startDate: string, endDate: string, index: number) {
-    const interval = setInterval(() => {
-      this.updateRemainingTime(startDate, endDate, index);
-    }, 1000); // Update every second
+  const end = new Date(endDate);
+  const now = new Date();
 
-    // Store the interval so we can clear it later if necessary
-    this.countdownTimers[index] = interval;
+  // Clear any existing interval for this index
+  if (this.countdownIntervals[index]) {
+    clearInterval(this.countdownIntervals[index]);
+    delete this.countdownIntervals[index];
   }
+
+  // If countdown already expired
+  if (now >= end) {
+    console.log("Expired Time -----------------------------------")
+    this.days = "00";
+    this.hours = "00";
+    this.minutes = "00";
+    this.seconds = "00";
+    return;
+  }
+
+  // Start a new interval
+  this.countdownIntervals[index] = setInterval(() => {
+    const now = new Date();
+
+    if (now >= end) {
+      console.log("continue Time +++++++++++++++++++++++++++++++++")
+      clearInterval(this.countdownIntervals[index]);
+      delete this.countdownIntervals[index];
+      this.days = "00";
+      this.hours = "00";
+      this.minutes = "00";
+      this.seconds = "00";
+      return;
+    }
+
+    this.updateRemainingTime(startDate, endDate, index);
+  }, 1000);
+}
+
+
+
 
   clearCountdown(index: number) {
     clearInterval(this.countdownTimers[index]);
@@ -268,29 +320,12 @@ export class PopularBrandsComponentComponent implements OnInit {
   }
 
 
-  // onImageClick(event: any) {
-  //   const clickedImage = this.sliderImages[event.index];
-  //   console.log("Clicked image:", clickedImage);
-  //   if (clickedImage) {
-  //     this.router.navigate(['/buy-product'], {
-  //       queryParams: { id: clickedImage.id }
-  //     });
-  //   }
-  // }
-
-
     onImageClick(imageData: any): void {
-      console.log("sliderImages",this.sliderImages)
-       console.log("imageData",imageData)
-    const clickedImage = this.sliderImages.find(img => img.index == imageData);
-    console.log('Navigating to component for image ID:', clickedImage);
-
-    if (clickedImage) {
-      console.log('Navigating to component for image ID:', clickedImage.product_id);
-      this.router.navigate(['/buy-product'], {
-        queryParams: { id: clickedImage.product_id }
+      const clickedImage = this.sliderImages.find(img => img.index == imageData);
+      if (clickedImage) {
+        this.router.navigate(['/buy-product'], {
+          queryParams: { id: clickedImage.product_id }
       });
     }
   }
-
 }

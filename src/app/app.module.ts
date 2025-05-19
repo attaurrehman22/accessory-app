@@ -117,6 +117,10 @@ import { HeroPageComponent } from './views/accessoriespages/hero-page/hero-page.
 import { AccessoriesNewArrivalsComponent } from './views/accessoriespages/accessories-new-arrivals/accessories-new-arrivals.component';
 import { AccessorieDetailComponent } from './views/accessoriespages/accessorie-detail/accessorie-detail.component';
 import { ShoppingCartComponent } from './views/modal/shopping-cart/shopping-cart.component';
+import { AccessoryCategoriesComponent } from './views/adminpages/accessory-categories/accessory-categories.component';
+import { AddAccessoryCategoryComponent } from './views/adminpages/add-accessory-category/add-accessory-category.component';
+import { AccessoryCategoryGroupComponent } from './views/adminpages/accessory-category-group/accessory-category-group.component';
+import { AddAccessoryCategoryGroupComponent } from './views/adminpages/add-accessory-category-group/add-accessory-category-group.component';
 
 
 @NgModule({
@@ -180,7 +184,11 @@ import { ShoppingCartComponent } from './views/modal/shopping-cart/shopping-cart
     HeroPageComponent,
     AccessoriesNewArrivalsComponent,
     AccessorieDetailComponent,
-    ShoppingCartComponent
+    ShoppingCartComponent,
+    AccessoryCategoriesComponent,
+    AddAccessoryCategoryComponent,
+    AccessoryCategoryGroupComponent,
+    AddAccessoryCategoryGroupComponent
   ],
   imports: [
     MatSortModule,
