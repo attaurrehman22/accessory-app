@@ -1,0 +1,36 @@
+<form [formGroup]="categoryForm" class="mt-3">
+  <mat-dialog-content style="min-height: 125px">
+    <h2 class="d-flex justify-content-center">
+      {{ paramVal }} Attribute Type
+    </h2>
+    <mat-form-field class="full-width" appearance="outline">
+      <mat-label>Name</mat-label>
+      <input matInput formControlName="name" />
+      <mat-error *ngIf="categoryForm.get('name')?.hasError('required')">
+        Name is required
+      </mat-error>
+      <mat-error *ngIf="categoryForm.get('name')?.hasError('minlength')">
+        Minimum 3 characters
+      </mat-error>
+      <mat-error *ngIf="categoryForm.get('name')?.hasError('maxlength')">
+        Maximum 50 characters
+      </mat-error>
+    </mat-form-field>
+
+  </mat-dialog-content>
+  <mat-dialog-actions class="d-flex gap-2 justify-content-center">
+    <div class="button-group">
+      <button
+        class="save-btn"
+        *ngIf="paramVal === 'Create'"
+        (click)="onSubmit()"
+      >
+        Submit
+      </button>
+      <button class="save-btn" *ngIf="paramVal === 'Edit'" (click)="onSubmit()">
+        Update
+      </button>
+      <button class="cancel-btn" (click)="onCancel()">Cancel</button>
+    </div>
+  </mat-dialog-actions>
+</form>

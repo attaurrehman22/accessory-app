@@ -30,6 +30,8 @@ import { AccessoriesHomeComponent } from './views/accessoriespages/accessories-h
 import { AccessorieDetailComponent } from './views/accessoriespages/accessorie-detail/accessorie-detail.component';
 import { AccessoryCategoriesComponent } from './views/adminpages/accessory-categories/accessory-categories.component';
 import { AccessoryCategoryGroupComponent } from './views/adminpages/accessory-category-group/accessory-category-group.component';
+import { AccessorySubCategoryGroupComponent } from './views/adminpages/accessory-sub-category-group/accessory-sub-category-group.component';
+import { AttributeComponent } from './views/adminpages/accessories/attributes/attribute/attribute.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -55,8 +57,10 @@ const routes: Routes = [
   {  canActivate: [adminGuard],path: 'admin/accessories/add', component:  CreateAccessoriesProductComponent},
   {  canActivate: [adminGuard],path: 'admin/top/brands', component:  TopBrandsLogosComponent},
   {  canActivate: [adminGuard],path: 'admin/accessory/categories', component:  AccessoryCategoriesComponent},
-  {  canActivate: [adminGuard],path: 'admin/accessory/categories/group', component:  AccessoryCategoryGroupComponent},
- 
+  {  canActivate: [adminGuard],path: 'admin/group', component:  AccessoryCategoryGroupComponent},
+  {  canActivate: [adminGuard],path: 'admin/sub-group', component:  AccessorySubCategoryGroupComponent},
+  {  canActivate: [adminGuard],path: 'admin/attributes', component:  AttributeComponent},
+
   { path: 'accessories/home', component:  AccessoriesHomeComponent},
   { path: 'accessories/details', component:  AccessorieDetailComponent},
 

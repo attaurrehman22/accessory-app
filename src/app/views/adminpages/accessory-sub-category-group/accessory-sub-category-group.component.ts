@@ -1,42 +1,43 @@
-import { Component, OnInit, ViewChild } from "@angular/core";
-import { HttpService } from "src/services/http/http.service";
-import { AddAccessoryCategoryComponent } from "../add-accessory-category/add-accessory-category.component";
-import { MatDialog } from "@angular/material/dialog";
-import { MatTableDataSource } from "@angular/material/table";
-import { MatPaginator } from "@angular/material/paginator";
-import { MatSort } from "@angular/material/sort";
-import { AlertsServicesService } from "src/services/alerts-service/alerts-services.service";
+import { Component, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
+import { AlertsServicesService } from 'src/services/alerts-service/alerts-services.service';
+import { HttpService } from 'src/services/http/http.service';
+import { AddAccessorySubCategoryGroupComponent } from '../add-accessory-sub-category-group/add-accessory-sub-category-group.component';
+
 
 export interface CategoryData {
   name: any;
   slug: any;
   description: any;
   active: any;
-  featured: any;
   order: any;
   meta_title: any;
   meta_description: any;
 }
 
+
 @Component({
-  selector: "app-accessory-categories",
-  templateUrl: "./accessory-categories.component.html",
-  styleUrls: ["./accessory-categories.component.css"],
+  selector: 'app-accessory-sub-category-group',
+  templateUrl: './accessory-sub-category-group.component.html',
+  styleUrls: ['./accessory-sub-category-group.component.css']
 })
-export class AccessoryCategoriesComponent implements OnInit {
-  displayedColumns: string[] = [
+export class AccessorySubCategoryGroupComponent {
+
+    displayedColumns: string[] = [
     "name",
     "slug",
     "description",
     "active",
-    "featured",
     "order",
     "meta_title",
     "meta_description",
     "edit",
   ];
 
-  selectedValue: string;
+selectedValue: string;
   dataSource: MatTableDataSource<CategoryData>;
   accessoryCategoryList: any;
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -49,7 +50,7 @@ export class AccessoryCategoriesComponent implements OnInit {
   }
 
   getAllAccessoryCategories() {
-    this.http.getAdminAccessroiesCategory().subscribe((res) => {
+    this.http.getAdminAccessroiesSubCategoryGroups().subscribe((res) => {
       this.accessoryCategoryList = res.data;
       this.dataSource = new MatTableDataSource(this.accessoryCategoryList);
       this.dataSource.paginator = this.paginator;
@@ -58,7 +59,7 @@ export class AccessoryCategoriesComponent implements OnInit {
   }
 
   openModal() {
-    const dialogRef = this.dialog.open(AddAccessoryCategoryComponent, {
+    const dialogRef = this.dialog.open(AddAccessorySubCategoryGroupComponent, {
       width: "1000px",
       height: "auto",
       data: { param: "Create" },
@@ -84,7 +85,7 @@ export class AccessoryCategoriesComponent implements OnInit {
 
 
   editCategory(data) {
-     const dialogRef = this.dialog.open(AddAccessoryCategoryComponent, {
+     const dialogRef = this.dialog.open(AddAccessorySubCategoryGroupComponent, {
       width: "1000px",
       height: "auto",
       data: { param: "Edit",data:data },
@@ -98,7 +99,7 @@ export class AccessoryCategoriesComponent implements OnInit {
   }
 
   deleteCategory(data) {
-    this.http.deleteAdminAccessroyCategory(data.id).subscribe(
+    this.http.deleteAdminAccessroiesSubCategoryGroups(data.id).subscribe(
       (res)=>{
         this.alertService.showAlert('success','Category delete successfully')
         this.getAllAccessoryCategories();
@@ -111,4 +112,5 @@ export class AccessoryCategoriesComponent implements OnInit {
       }
     )
   }
+
 }

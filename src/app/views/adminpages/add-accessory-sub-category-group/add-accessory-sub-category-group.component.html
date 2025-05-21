@@ -1,6 +1,6 @@
 <form [formGroup]="categoryForm" class="mt-3">
      <mat-dialog-content style="min-height: 520px ;">
-         <h2 class="d-flex justify-content-center">{{ paramVal }} Accessory Category</h2>
+         <h2 class="d-flex justify-content-center">{{ paramVal }} Accessory Category Sub Group</h2>
   <mat-form-field class="full-width" appearance="outline">
     <mat-label>Name</mat-label>
     <input matInput formControlName="name" />
@@ -62,7 +62,7 @@
 
    <mat-form-field class="full-width" appearance="outline">
     <mat-label>Category Group ID</mat-label>
-    <mat-select formControlName="category_sub_group_id">
+    <mat-select formControlName="category_group_id">
       <mat-option *ngFor="let cat of accessroiesCategoryGroupList" [value]="cat.id">{{cat.name}}</mat-option>
     </mat-select>
     <mat-error *ngIf="categoryForm.get('category_sub_group_id')?.hasError('required')">
@@ -123,3 +123,4 @@
 
   </mat-dialog-actions>
 </form>
+

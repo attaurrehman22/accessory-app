@@ -91,9 +91,25 @@ export class AdminSidebarComponent {
       iconWidth: 20,
       iconHeight: 20,
     },
-    AccessoriesCategoriesGroup: {
+    Group: {
       label: 'Accessoriy Categories Group',
-      router: '/admin/accessory/categories/group',
+      router: '/admina/group',
+      routerActive: 'navbar-button-active',
+      icon: 'assets/images/dashboard-2-svgrepo-com (1).svg',
+      iconWidth: 20,
+      iconHeight: 20,
+    },
+    Sub: {
+      label: 'Accessoriy Categories Group',
+      router: '/admin/sub-group',
+      routerActive: 'navbar-button-active',
+      icon: 'assets/images/dashboard-2-svgrepo-com (1).svg',
+      iconWidth: 20,
+      iconHeight: 20,
+    },
+    Attributes: {
+      label: 'Attributes',
+      router: '/admin/attributes',
       routerActive: 'navbar-button-active',
       icon: 'assets/images/dashboard-2-svgrepo-com (1).svg',
       iconWidth: 20,

@@ -613,7 +613,7 @@ export class HttpService implements OnInit {
     });
   }
 
-    getAdminAccessroiesCategoryGroups(): Observable<any> {
+  getAdminAccessroiesCategoryGroups(): Observable<any> {
     return this.http.get(`${this.apiUrl}/api/accessory-category-groups`, {
       headers: {
         Accept: "application/json",
@@ -621,6 +621,109 @@ export class HttpService implements OnInit {
       },
     });
   }
+
+   addAdminAccessroiesCategoryGroups(bodyData): Observable<any> {
+    return this.http.post(`${this.apiUrl}/api/accessory-category-groups`,bodyData, {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+  }
+
+   editAdminAccessroiesCategoryGroups(bodyData,ID): Observable<any> {
+      return this.http.put(`${this.apiUrl}/api/accessory-category-groups/${ID}`,bodyData, {
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${this.token}`,
+        },
+      });
+    }
+
+     deleteAdminAccessroiesCategoryGroups(ID): Observable<any> {
+      return this.http.delete(`${this.apiUrl}/api/accessory-category-groups/${ID}`, {
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${this.token}`,
+        },
+      });
+    }
+
+
+
+    getAdminAccessroiesSubCategoryGroups(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/api/accessory-category-sub-groups`, {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+  }
+
+   addAdminAccessroiesSubCategoryGroups(bodyData): Observable<any> {
+    return this.http.post(`${this.apiUrl}/api/accessory-category-sub-groups`,bodyData, {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+  }
+
+   editAdminAccessroiesSubCategoryGroups(bodyData,ID): Observable<any> {
+      return this.http.put(`${this.apiUrl}/api/accessory-category-sub-groups/${ID}`,bodyData, {
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${this.token}`,
+        },
+      });
+    }
+
+     deleteAdminAccessroiesSubCategoryGroups(ID): Observable<any> {
+      return this.http.delete(`${this.apiUrl}/api/accessory-category-sub-groups/${ID}`, {
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${this.token}`,
+        },
+      });
+    }
+
+
+    getAttributesType(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/api/attribute-types`, {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+  }
+
+   addAttributesType(bodyData): Observable<any> {
+    return this.http.post(`${this.apiUrl}/api/attribute-types`,bodyData, {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+  }
+
+   editAttributesType(bodyData,ID): Observable<any> {
+      return this.http.put(`${this.apiUrl}/api/attribute-types/${ID}`,bodyData, {
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${this.token}`,
+        },
+      });
+    }
+
+     deleteAttributesType(ID): Observable<any> {
+      return this.http.delete(`${this.apiUrl}/api/attribute-types/${ID}`, {
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${this.token}`,
+        },
+      });
+    }
+
 
   // ----------------------------------  create Listing start ------------------------------
 

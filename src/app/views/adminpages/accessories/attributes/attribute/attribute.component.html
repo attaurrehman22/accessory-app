@@ -2,9 +2,9 @@
   <div class="row">
     <div class="col-md-12">
       <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-10">
           <br />
-          <h1>Accessory Categories Group</h1>
+          <h1>Attributes Type</h1>
         </div>
         <div class="col-md-1"></div>
       </div>
@@ -26,7 +26,9 @@
                       #input
                     />
                   </mat-form-field>
+
                 </div>
+
                 <div
                   class="col-4 col-lg-4 col-md-4 col-sm-6 d-flex justify-content-end align-items-center"
                 >
@@ -51,76 +53,9 @@
                         {{ row.name }}
                       </td>
                     </ng-container>
-                    <!-- First Name Column -->
-                    <ng-container class="column" matColumnDef="slug">
-                      <th mat-header-cell class="column" *matHeaderCellDef>
-                        Slug
-                      </th>
-                      <td mat-cell class="column" *matCellDef="let row; in">
-                        {{ row.slug }}
-                      </td>
-                    </ng-container>
-
-                    <!-- Last Name Column -->
-                    <ng-container class="column" matColumnDef="description">
-                      <th mat-header-cell class="column" *matHeaderCellDef>
-                        Description
-                      </th>
-                      <td mat-cell class="column" *matCellDef="let row; in">
-                        {{ row.description }}
-                      </td>
-                    </ng-container>
-
-                    <ng-container class="column" matColumnDef="meta_title">
-                      <th mat-header-cell class="column" *matHeaderCellDef>
-                        Meta Title
-                      </th>
-                      <td mat-cell class="column" *matCellDef="let row; in">
-                        {{ row.meta_title }}
-                      </td>
-                    </ng-container>
-
-                    <ng-container
-                      class="column"
-                      matColumnDef="meta_description"
-                    >
-                      <th mat-header-cell class="column" *matHeaderCellDef>
-                        Meta Description
-                      </th>
-                      <td mat-cell class="column" *matCellDef="let row; in">
-                        {{ row.meta_description }}
-                      </td>
-                    </ng-container>
-
-                    <ng-container class="column" matColumnDef="active">
-                      <th mat-header-cell class="column" *matHeaderCellDef>
-                        Is Active
-                      </th>
-                      <td mat-cell class="column" *matCellDef="let row; in">
-                        {{ row.active === 0 ? 'No' : 'Yes'}}
-                      </td>
-                    </ng-container>
-
-                    <ng-container class="column" matColumnDef="featured">
-                      <th mat-header-cell class="column" *matHeaderCellDef>
-                       Featured
-                      </th>
-                      <td mat-cell class="column" *matCellDef="let row; in">
-                        {{ row.featured === 0 ? 'No' : 'Yes'}}
-                      </td>
-                    </ng-container>
-
-                      <ng-container class="column" matColumnDef="order">
-                      <th mat-header-cell class="column" *matHeaderCellDef>
-                       Order
-                      </th>
-                      <td mat-cell class="column" *matCellDef="let row; in">
-                        {{ row.order}}
-                      </td>
-                    </ng-container>
 
                     <!-- Status Column -->
-                    <ng-container class="column" matColumnDef="edit">
+                    <ng-container class="column" matColumnDef="action">
                       <th mat-header-cell class="column" *matHeaderCellDef>
                         Action
                       </th>
