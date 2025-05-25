@@ -7,7 +7,7 @@
         <div class="col-md-6">
           <div class="img-div">
             <img
-              [src]="'https://api.chronosouq.com/' + selectedImage"
+              [src]="apipath + selectedImage"
               style="
                 object-fit: scale-down;
                 height: 485px;
@@ -27,7 +27,7 @@
               *ngFor="let image of thumbnails"
             >
               <img
-                [src]="'https://api.chronosouq.com/' + image"
+                [src]="apipath + image"
                 style="
                   background: #f8f8f8;
                   object-fit: scale-down;
@@ -205,7 +205,7 @@
             "
           >
             <img
-              [src]="'https://api.chronosouq.com/' + productMainImage"
+              [src]="apipath + productMainImage"
               style="
                 object-fit: scale-down;
                 height: 100%;
@@ -439,7 +439,7 @@
               >
                 <h4>Proof Image Time 1 : {{ product.proof_time_text_1 }}</h4>
                 <img
-                  [src]="'https://api.chronosouq.com/' + product.proof_image_1"
+                  [src]="apipath + product.proof_image_1"
                   style="
                     background: #f8f8f8;
                     object-fit: contain;
@@ -456,7 +456,7 @@
               >
                 <h4>Proof Image Time 2 : {{ product.proof_time_text_2 }}</h4>
                 <img
-                  [src]="'https://api.chronosouq.com/' + product.proof_image_2"
+                  [src]="apipath + product.proof_image_2"
                   style="
                     background: #f8f8f8;
                     object-fit: contain;

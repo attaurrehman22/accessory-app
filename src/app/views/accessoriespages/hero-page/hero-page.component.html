@@ -6,7 +6,7 @@
                 class="d-flex global-main-wraper w-100"
                 [ngClass]="{ 'rtl-reverse': isRtl }"
               >
-                
+
                 <div class="query w-100" [ngClass]="{ 'rtl-layout-reverse': isRtl }">
                   <div [ngClass]="{ 'lag-logo-stl': isRtl }" class="logo">
                     <a href="/">
@@ -26,12 +26,12 @@
                       'position-absolute search-box-small-screen': isSmallScreen
                     }"
                   >
-                  
+
                   </div>
                   <div class="header-contact header-contact-lg gap-4 mat-menu-nav">
                      <img
                       src="./assets/images/white-search-icon.svg"
-                     
+
                       (click)="isShowSearchForm()"
                       style="cursor: pointer"
                     />
@@ -59,7 +59,7 @@
                           <button class="search-btn" type="submit">Search</button>
                         </div>
                       </form>
-                      
+
                     <!-- </mat-menu> -->
                   </div>
                     <mat-menu #profileMenu="matMenu">
@@ -70,22 +70,22 @@
                       >
                         {{ "header.Login" | translate }}
                       </button>
-          
+
                       <p style="padding: 10px 10px 0 10px;" *ngIf="userDetails?.name && selectedLang == 'en'">{{ "header.wellCome" | translate }} {{userDetails.name}}</p>
-          
+
                       <p style="padding: 10px 10px 0 10px;" *ngIf="userDetails?.name && selectedLang == 'ar'"> {{userDetails.name}} {{ "header.wellCome" | translate }}</p>
-          
-          
-                      <a routerLink="/myListing"  mat-menu-item  *ngIf="isUserLogin === 'true'"> 
+
+
+                      <a routerLink="/myListing"  mat-menu-item  *ngIf="isUserLogin === 'true'">
                         {{ "header.settings" | translate }}
                       </a>
-          
-          
+
+
                       <a class="custom-btn" *ngIf="isUserLogin === 'true'"  mat-menu-item routerLink="/chat">
                         {{ "header.Chat" | translate }}
                       </a>
-          
-          
+
+
                       <a style="padding: 10px 10px 0 10px;"
                          mat-menu-item
                         class="custom-btn"
@@ -102,7 +102,7 @@
                         {{ "header.Logout" | translate }}
                       </button>
                     </mat-menu>
-          
+
                     <img
                       src="./assets/images/white-profile-icon.svg"
                       alt="Profile"
@@ -115,7 +115,7 @@
                       style="cursor: pointer"
                       (click)="openCart()"
                     />
-          
+
                     <button
                       *ngIf="selectedLang === 'en'"
                       class="custom-btn"
@@ -132,7 +132,7 @@
                     </button>
                   </div>
                 </div>
-          
+
                 <button
                   class="navbar-toggler"
                   type="button"
@@ -156,8 +156,8 @@
                     />
                   </svg>
                 </button>
-          
-                
+
+
                 <div
                   class="nav-overlay"
                   [class.active]="isNavbarOpen"
@@ -190,12 +190,12 @@
                       {{ "header.buy_watch" | translate }}
                     </a>
                     <a
-                      class="custom-btn" 
+                      class="custom-btn"
                       routerLink="/new-product"
                     >
                       {{ "header.sell_watch" | translate }}
                     </a>
-          
+
                     <!-- <a
                       class="custom-btn"
                       *ngIf="showHideAdminUser === true"
@@ -217,7 +217,7 @@
                       'position-absolute search-box-small-screen': isSmallScreen
                     }"
                   >
-                 
+
                   </div>
                   <div class="header-contact sidebar-acions gap-4">
                     <img
@@ -254,11 +254,11 @@
                       >
                         {{ "header.Logout" | translate }}
                       </button>
-                      <a  mat-menu-item  *ngIf="isUserLogin === 'true'" routerLink="/myListing"> 
+                      <a  mat-menu-item  *ngIf="isUserLogin === 'true'" routerLink="/myListing">
                         {{ "header.settings" | translate }}
                       </a>
                     </mat-menu>
-          
+
                     <img
                       src="./assets/images/solar_bag-smile-linear.svg"
                       style="cursor: pointer"
@@ -271,7 +271,7 @@
                       [matMenuTriggerFor]="profileMenu"
                       style="cursor: pointer"
                     />
-          
+
                     <button
                       *ngIf="selectedLang === 'en'"
                       class="custom-btn"
@@ -319,12 +319,12 @@
                   <img
                     class="img-fluid"
                     style="object-fit: scale-down !important"
-                    [src]="'https://api.chronosouq.com/' + img.image"
+                    [src]="apipath + img.image"
                     alt="{{ 'find_dream.img_alt' | translate }}"
                   />
                 </div>
               </div>
-    
+
               <ol class="carousel-indicators">
                 <li
                   *ngFor="let img of homeData.slider; let i = index"

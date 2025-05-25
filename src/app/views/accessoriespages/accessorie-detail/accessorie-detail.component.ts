@@ -4,6 +4,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { AlertsServicesService } from 'src/services/alerts-service/alerts-services.service';
 import { HttpService } from 'src/services/http/http.service';
 import { LanguageService } from 'src/services/lang-service/language.service';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-accessorie-detail',
@@ -15,7 +16,7 @@ export class AccessorieDetailComponent implements OnInit {
   currentLanguage: string;
   productDetails: any;
   ProductID:any;
-  isDealer: any = "";  
+  isDealer: any = "";
   isReviewsCount: any;
   loggedUserType: any;
   productMainImage: any;
@@ -26,7 +27,7 @@ export class AccessorieDetailComponent implements OnInit {
   totalPages: number = 1;
   currentPage: number = 1;
   quantity = 1;
-
+  apipath = environment.apipath;
   increment() {
     this.quantity++;
   }
@@ -46,7 +47,7 @@ export class AccessorieDetailComponent implements OnInit {
     "18MM",
     "20MM",
     "22MM",
-    "24MM", 
+    "24MM",
     "26MM",
   ]
 
@@ -133,7 +134,7 @@ export class AccessorieDetailComponent implements OnInit {
   }
 
   async initializeComponent() {
-    try {    
+    try {
         await this.fetchProductDetails();
       this.productMainImage = this.productDetails.main_image;
       this.thumbnails = this.productDetails.additional_images.map((image) => ({
@@ -172,7 +173,7 @@ export class AccessorieDetailComponent implements OnInit {
       }
       if (
         this.isDealer === "dealer"
-     
+
       ) {
         if (this.productDetails.created_by.id && this.isReviewsCount) {
           // await this.fetchDealerDetails(this.productDetails.created_by.id);
@@ -182,7 +183,7 @@ export class AccessorieDetailComponent implements OnInit {
       // if (this.isUserLogin === "true") {
       //   this.getOrderandChatID();
       // }
-    
+
 
       await this.getAllSimilarProducts();
     } catch (err) {

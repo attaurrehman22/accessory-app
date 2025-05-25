@@ -10,6 +10,7 @@ import { DomSanitizer, SafeHtml } from "@angular/platform-browser";
 import { Router } from "@angular/router";
 import { AlertsServicesService } from "src/services/alerts-service/alerts-services.service";
 import { HttpService } from "src/services/http/http.service";
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: "app-admin-brands-product",
@@ -22,6 +23,7 @@ export class AdminBrandsProductComponent {
   selectedSvgFile: File | null = null;
   svgCode: string = '';
   svgFileName: string = '';
+  apipath = environment.apipath;
 
   data: any;
   paramVal: any;
@@ -58,7 +60,7 @@ export class AdminBrandsProductComponent {
   }
 
   ngOnInit(): void {
-   
+
   }
   images: string[] = [];
 
@@ -94,7 +96,7 @@ export class AdminBrandsProductComponent {
   populateForm(data: any) {
     const isActive = data.is_active === 1 ? true : false;
     const isTopBrand = data.top_brand === 1 ? true : false;
-    this.previewImage = "https://api.chronosouq.com/" + this.data.cover_image;
+    this.previewImage = this.apipath + this.data.cover_image;
     this.form.patchValue({
       name: data.name,
       slug: data.slug,

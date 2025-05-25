@@ -13,6 +13,7 @@ import { TranslateService } from "@ngx-translate/core";
 import { Subscription } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { ShoppingCartComponent } from '../../modal/shopping-cart/shopping-cart.component';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-hero-page',
@@ -20,30 +21,30 @@ import { ShoppingCartComponent } from '../../modal/shopping-cart/shopping-cart.c
   styleUrls: ['./hero-page.component.css']
 })
 export class HeroPageComponent {
-isSmallScreen: boolean = false;
+  isSmallScreen: boolean = false;
   isUserLogin: any = false;
   searchQuery: string = "";
   dropdownOpen = false;
   showHideAdminUser: any;
   showHideUser: any;
 
-      @Input() imageWidth: number = 300;
-      @Input() speed: number = 100;
-      @Input() coins: boolean = false;
-    
-      @ViewChild('container') containerRef!: ElementRef;
-      @ViewChild('slider') sliderRef!: ElementRef;
-    
-      visibleSlides: number = 3;
-      slideMargin: number = 20;
-    
-      images: string[] = []; // Store image URLs here
-      duplicatedImages: string[] = [];
-    
-      private animationFrame: any;
-      private position: number = 0;
-      private apiSubscription!: Subscription;
+  @Input() imageWidth: number = 300;
+  @Input() speed: number = 100;
+  @Input() coins: boolean = false;
 
+  @ViewChild('container') containerRef!: ElementRef;
+  @ViewChild('slider') sliderRef!: ElementRef;
+
+  visibleSlides: number = 3;
+  slideMargin: number = 20;
+
+  images: string[] = []; // Store image URLs here
+  duplicatedImages: string[] = [];
+
+  private animationFrame: any;
+  private position: number = 0;
+  private apiSubscription!: Subscription;
+  apipath = environment.apipath;
   homeData: any = { slider: [] }
 
   isAdminUser = computed(() => this.loginStateService.isAdminUser());
@@ -59,7 +60,7 @@ isSmallScreen: boolean = false;
       }
     );
   }
- 
+
   searchFilter: boolean = true;
   supportLanguages = [
     { name: "English", value: "en" },
@@ -71,8 +72,8 @@ isSmallScreen: boolean = false;
   isRtl: boolean = false;
   selectedLang: string = "en";
 
-  @ViewChild('drawer') drawer: MatSidenav; 
-  @ViewChild('header', { static: true }) headerRef: ElementRef; 
+  @ViewChild('drawer') drawer: MatSidenav;
+  @ViewChild('header', { static: true }) headerRef: ElementRef;
   @ViewChild('sidenav', { static: true }) sidenavRef: ElementRef;
 
   constructor(
@@ -82,7 +83,7 @@ isSmallScreen: boolean = false;
     private searchService: SearchServiceService,
     private loginStateService: LoginStateService,
     private cdRef: ChangeDetectorRef,
-     private dialog: MatDialog,private http:HttpService,private httpps: HttpClient
+    private dialog: MatDialog, private http: HttpService, private httpps: HttpClient
   ) {
     const languagevalues = this.supportLanguages.map((lang) => lang.value);
     this.translateService.addLangs(languagevalues);
@@ -117,7 +118,7 @@ isSmallScreen: boolean = false;
     if (this.search3MenuTrigger && this.search3MenuTrigger?.menuOpen) {
       this.search3MenuTrigger.closeMenu();
     }
-    
+
     if (this.search2MenuTrigger && this.search2MenuTrigger?.menuOpen) {
       this.search2MenuTrigger.closeMenu();
     }
@@ -126,35 +127,35 @@ isSmallScreen: boolean = false;
     }
   }
 
-  isShowSearchField:boolean=false;
+  isShowSearchField: boolean = false;
 
-  isShowSearchForm(){
-   this.isShowSearchField=!this.isShowSearchField
+  isShowSearchForm() {
+    this.isShowSearchField = !this.isShowSearchField
   }
 
-  userToken:any;
+  userToken: any;
 
   @HostListener('window:resize', ['$event'])
   // onResize(): void {
-    
+
   // }
 
   private getAllPopularModels(): void {
     // Assuming `http.getTopBrandsData()` returns the response you mentioned
-    this.apiSubscription = this.httpps.get<any>('https://api.chronosouq.com/api/get-top-brands-data').subscribe(
+    this.apiSubscription = this.httpps.get<any>(this.apipath + 'api/get-top-brands-data').subscribe(
       (res) => {
         if (res && res.top_brands) {
           // Process the response to extract cover_image URLs
           this.images = res.top_brands.map((product: any) => {
-              if(product?.svg){
-                return product.svg;
-              }
-           
-          }).filter(img => img); // Ensure we don't include empty strings if there's no cover_image
-     
-   
+            if (product?.svg) {
+              return product.svg;
+            }
 
-          this.duplicatedImages = [...this.images, ...this.images, ...this.images,...this.images,...this.images, ...this.images, ...this.images,...this.images,...this.images, ...this.images, ...this.images,...this.images,...this.images, ...this.images, ...this.images,...this.images, ...this.images, ...this.images,...this.images, ...this.images, ...this.images,...this.images, ...this.images, ...this.images,...this.images, ...this.images, ...this.images,...this.images, ...this.images, ...this.images,...this.images, ...this.images, ...this.images,...this.images, ...this.images, ...this.images];
+          }).filter(img => img); // Ensure we don't include empty strings if there's no cover_image
+
+
+
+          this.duplicatedImages = [...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images];
           this.animate(); // Start the animation after images are fetched
         }
       },
@@ -205,7 +206,7 @@ isSmallScreen: boolean = false;
   }
 
   ngOnDestroy(): void {
-     
+
     if (this.animationFrame) {
       cancelAnimationFrame(this.animationFrame);
     }
@@ -216,12 +217,12 @@ isSmallScreen: boolean = false;
 
   ngOnInit() {
     this.getAllPopularModels();
-      this.updateLayout();
+    this.updateLayout();
     this.isSmallScreen = window.innerWidth <= 1500;
     this.isUserLogin = localStorage.getItem("isLoggedIn");
-   
+
     this.userToken = localStorage.getItem("user_token");
-    if(this.userToken){
+    if (this.userToken) {
       this.getUserDetails()
     }
 
@@ -234,7 +235,7 @@ isSmallScreen: boolean = false;
       this.isNavbarOpen = false;
     });
 
-    
+
     if (this.isUserLoggedIn()) {
       this.showHideUser = this.isUserLoggedIn();
       if (this.isAdminUser()) {
@@ -247,13 +248,13 @@ isSmallScreen: boolean = false;
     }
   }
 
-  userDetails:any
+  userDetails: any
 
-  getUserDetails(){
+  getUserDetails() {
     this.http.gtUserDetails().subscribe(
-      (res)=>{
-      this.userDetails = res.user
-    })
+      (res) => {
+        this.userDetails = res.user
+      })
   }
 
   routeToAdminPannel() {
@@ -264,11 +265,11 @@ isSmallScreen: boolean = false;
     if (this.search3MenuTrigger && this.search3MenuTrigger.menuOpen) {
       this.search3MenuTrigger.closeMenu();
     }
-    this.searchService.changeSearchQuery(query);  
-    this.router.navigate(['/product-list'], { queryParams: { query } }); 
+    this.searchService.changeSearchQuery(query);
+    this.router.navigate(['/product-list'], { queryParams: { query } });
 
-    this.isShowSearchField=false;
-    this.searchQuery="";
+    this.isShowSearchField = false;
+    this.searchQuery = "";
   }
 
   onSearchChange() {
@@ -305,17 +306,17 @@ isSmallScreen: boolean = false;
     this.dropdownOpen = !this.dropdownOpen;
   }
 
-   loginFirst() {
-      const dialogRef = this.dialog.open(ModelLoginComponent, {
-        width: "600px",
-        data: { message: "header" },
-      });
-  
-      dialogRef.afterClosed().subscribe((result) => {
-        if (result) {
-        }
-      });
-    }
+  loginFirst() {
+    const dialogRef = this.dialog.open(ModelLoginComponent, {
+      width: "600px",
+      data: { message: "header" },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+      }
+    });
+  }
 
   routeToNewProduct() {
     let isUserLogin = localStorage.getItem("isLoggedIn");
@@ -324,11 +325,11 @@ isSmallScreen: boolean = false;
     }
 
     isUserLogin = localStorage.getItem("isLoggedIn");
-    if(isUserLogin != 'false'){
+    if (isUserLogin != 'false') {
       this.router.navigate(["/new-product"]);
     }
   }
-  
+
   isSearchForm: any = false;
   openSearchForm() {
     this.isSearchForm = !this.isSearchForm;
@@ -346,7 +347,7 @@ isSmallScreen: boolean = false;
     this.isNavbarOpen = false;
   }
 
-  userListing(){
+  userListing() {
     this.router.navigate(['/myListing'])
   }
 
@@ -362,10 +363,10 @@ isSmallScreen: boolean = false;
       },
       panelClass: 'custom-dialog-panel'
     });
-  
+
     dialogRef.afterClosed().subscribe((result) => {
       // handle result
     });
   }
-  
+
 }

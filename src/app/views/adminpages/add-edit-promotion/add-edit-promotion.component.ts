@@ -9,6 +9,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 import { AlertsServicesService } from "src/services/alerts-service/alerts-services.service";
 import { HttpService } from "src/services/http/http.service";
 import * as moment from "moment";
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: "app-add-edit-promotion",
@@ -19,6 +20,7 @@ export class AddEditPromotionComponent implements OnInit {
   promotionForm: FormGroup;
   labelMessage: any;
   selectedFile: File | null = null;
+  apipath = environment.apipath;
   previewImage: string | ArrayBuffer | null = null;
 promotionID:any;
   constructor(
@@ -65,7 +67,7 @@ promotionID:any;
 
       if (data?.data?.promotion_banner) {
         this.previewImage =
-          "https://api.chronosouq.com/" + data.data.promotion_banner;
+          this.apipath+ data.data.promotion_banner;
       }
     }
   }
@@ -86,7 +88,7 @@ promotionID:any;
       }else{
         this.selectedFile = file;
         this.promotionForm.get("promotion_banner")?.setValue(file);
-  
+
         // ✅ Preview image
         const reader = new FileReader();
         reader.onload = () => {
@@ -95,7 +97,7 @@ promotionID:any;
         reader.readAsDataURL(file);
       }
 
-      
+
     }
   }
 
@@ -184,7 +186,7 @@ promotionID:any;
   }
 
   cancel() {
-    
+
     this.dialogRef.close();
   }
 }

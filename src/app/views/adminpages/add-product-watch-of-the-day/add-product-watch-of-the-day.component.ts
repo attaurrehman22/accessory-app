@@ -20,6 +20,8 @@ import {
   MatDialog,
   MatDialogRef,
 } from "@angular/material/dialog";
+import { environment } from '../../../../environments/environment';
+
 @Component({
   selector: "app-add-product-watch-of-the-day",
   templateUrl: "./add-product-watch-of-the-day.component.html",
@@ -28,6 +30,7 @@ import {
 export class AddProductWatchOfTheDayComponent {
   allData: any;
   watchDayForm: FormGroup;
+  apipath = environment.apipath;
   product_id: FormControl = new FormControl("", [Validators.required]);
   // selectedLangtype: FormControl = new FormControl("eng", [Validators.required]);
   background_color: FormControl = new FormControl("#000000", [
@@ -45,7 +48,7 @@ export class AddProductWatchOfTheDayComponent {
     Validators.required,
     Validators.maxLength(500),
   ]);
- 
+
   coverImage: { file: File; url: string } | null = null;
   with_out_attribute: { file: File; url: string } | null = null;
   detailsofProduct: any;
@@ -102,12 +105,12 @@ export class AddProductWatchOfTheDayComponent {
       }
       this.coverImage = {
         file: null,
-        url: "https://api.chronosouq.com/" + this.detailsofProduct.banner_img,
+        url: this.apipath + this.detailsofProduct.banner_img,
       };
       this.with_out_attribute = {
         file: null,
         url:
-          "https://api.chronosouq.com/" +
+          this.apipath +
           this.detailsofProduct.with_out_attribute,
       };
     }
@@ -250,7 +253,7 @@ export class AddProductWatchOfTheDayComponent {
           formData.append("with_out_attribute", this.with_out_attribute.file);
         }
 
-       
+
           formData.append(
             "english_text",
             this.watchDayForm.get("english_text")?.value
@@ -260,7 +263,7 @@ export class AddProductWatchOfTheDayComponent {
             "arabic_text",
             this.watchDayForm.get("arabic_text")?.value
           );
-      
+
 
         this.http.saveWatchOfTheDay(formData).subscribe(
           (response) => {
@@ -308,17 +311,17 @@ export class AddProductWatchOfTheDayComponent {
         if (this.with_out_attribute.file) {
           formData.append("with_out_attribute", this.with_out_attribute.file);
         }
-       
+
           formData.append(
             "english_text",
             this.watchDayForm.get("english_text")?.value
           );
- 
+
           formData.append(
             "arabic_text",
             this.watchDayForm.get("arabic_text")?.value
           );
- 
+
 
         formData.append("id", this.detailsofProduct.id);
         this.http.updateWatchOfTheDay(formData).subscribe(
@@ -342,7 +345,7 @@ export class AddProductWatchOfTheDayComponent {
         );
       } else {
         this.alertService.showAlert("warning", "Add Form Values");
-        
+
       }
     }
   }

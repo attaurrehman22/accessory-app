@@ -6,7 +6,7 @@
     <div class="col-md-6">
       <img
         *ngIf="selectedType === 'image'"
-        [src]="'https://api.chronosouq.com/' + selectedImage"
+        [src]="apipath + selectedImage"
         style="
           object-fit: scale-down;
           height: 485px;
@@ -21,7 +21,7 @@
 
       <video
         *ngIf="selectedType === 'video'"
-        [src]="'https://api.chronosouq.com/' + selectedImage"
+        [src]="apipath + selectedImage"
         style="
           object-fit: scale-down;
           height: 485px;
@@ -86,7 +86,7 @@
           <!-- Display Image -->
           <img
             *ngIf="item.type === 'image'"
-            [src]="'https://api.chronosouq.com/' + item.url"
+            [src]="apipath + item.url"
             style="background: #f8f8f8; object-fit: scale-down"
             class="img-fluid"
             alt="thumbnail"
@@ -101,7 +101,7 @@
           <video
             *ngIf="item.type === 'video'"
             (click)="swapImages(item)"
-            [src]="'https://api.chronosouq.com/' + item.url"
+            [src]="apipath + item.url"
             style="background: #f8f8f8; object-fit: scale-down; height: 100%"
             class="img-fluid"
           ></video>
@@ -113,11 +113,11 @@
             <i class="bi bi-check-lg text-success"></i> About
           </div>
           <div class="text-muted mb-3">Usually delivers in 1-2 weeks</div>
-          
+
           <div class="fw-bold border-bottom pb-1 mb-2">
             Total Reviews
           </div>
-          
+
           <div class="d-flex align-items-center">
             <div class="text-warning me-2">
               <i class="bi bi-star-fill"></i>
@@ -128,7 +128,7 @@
             </div>
             <span class="text-muted">69 Reviews</span>
           </div>
-          
+
       </div>
     </div>
     <div
@@ -276,7 +276,7 @@
         <div class="d-flex flex-wrap gap-2" >
             <button *ngFor="let lug of lugWidth" class="condition-btn">{{ lug }}</button>
         </div>
-       
+
       </div>
 
       <div
@@ -331,7 +331,7 @@
                  }">
             </div>
           </div>
-          
+
       </div>
 
       <div class="d-flex flex-column mt-3">
@@ -348,7 +348,7 @@
             </div>
             <button class="btn btn-light border-start" (click)="increment()">+</button>
           </div>
-          
+
       </div>
       <div class="mt-4">
         <button
@@ -376,13 +376,13 @@
           [disabled]="routeFrom === 'listing-to-product'"
           class="buy-btn"
         >
-      
+
           View Order Status or Chat
         </button> -->
         <button
           class="make-offer-btn mt-2"
         >
-      
+
         Add to Cart
         </button>
       </div>
@@ -443,7 +443,7 @@
                 {{ productDetails?.condition }}
               </p>
             </div>
-  
+
             <div class="col-12">
               <div
                 *ngIf="productDetails?.meta_description"
@@ -463,7 +463,7 @@
                 </p>
               </div>
             </div>
-  
+
             <div class="col-12 d-flex flex-wrap justify-content-center">
               <div *ngFor="let image of productDetails?.additional_images"
                 class="col-md-6 d-flex flex-wrap"
@@ -473,7 +473,7 @@
                 "
               >
                 <img
-                  [src]="'https://api.chronosouq.com/' + image"
+                  [src]="apipath + image"
                   style="
                     object-fit: cover;
                     height: 100%;
@@ -489,7 +489,7 @@
 
           </div>
         </div>
-  
+
         <div
           class="tab-pane fade"
           id="security"
@@ -531,7 +531,7 @@
           (click)="viewProduct(watch.id)"
         >
           <img
-            [src]="'https://api.chronosouq.com/' + watch.main_image"
+            [src]="apipath + watch.main_image"
             class="card-img-top"
             alt="No Image Exist"
           />
@@ -540,9 +540,9 @@
             <p class="text-muted small mb-1">
               {{ watch.brand.name }} | {{ watch.model || "N/A" }}
             </p>
-  
+
             <h6 class="card-title fw-semibold mb-3">{{ watch.title }}</h6>
-  
+
             <div class="d-flex justify-content-between align-items-center">
               <div>
                 <small class="text-muted d-block">Exclusive Shipping</small>

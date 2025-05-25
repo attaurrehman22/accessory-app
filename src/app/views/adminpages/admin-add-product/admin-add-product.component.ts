@@ -7,6 +7,7 @@ import {
 } from "@angular/forms";
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from "@angular/material/dialog";
 import { AlertsServicesService } from "src/services/alerts-service/alerts-services.service";
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: "app-admin-add-product",
@@ -17,6 +18,7 @@ export class AdminAddProductComponent {
   product:any;
   productMainImage: any;
   thumbnails: string[] = [];
+  apipath = environment.apipath;
   selectedImage: string;
   constructor(
     private fb: FormBuilder,
@@ -29,7 +31,7 @@ export class AdminAddProductComponent {
 
     if (this.product) {
       this.productMainImage = this.product.main_image;
-    
+
       // Check if additional_images is a valid JSON string and parse it
       try {
         this.thumbnails = JSON.parse(this.product.additional_images);
@@ -37,31 +39,31 @@ export class AdminAddProductComponent {
         console.error("Error parsing additional_images:", error);
         this.thumbnails = []; // Default to an empty array if parsing fails
       }
-    
+
       if (!Array.isArray(this.thumbnails)) {
         this.thumbnails = []; // Ensure it's an array
       }
-    
+
       // Add proof images if they exist
       if (this.product?.proof_image_1) {
         this.thumbnails.push(this.product.proof_image_1);
       }
-    
+
       if (this.product?.proof_image_2) {
         this.thumbnails.push(this.product.proof_image_2);
       }
-    
+
       if (this.thumbnails.length > 0) {
         this.selectedImage = this.thumbnails[0];
       }
     }
-    
+
   }
   ngOnInit(): void {
-   
+
   }
   save(param:string) {
-    this.dialogRef.close(param);  
+    this.dialogRef.close(param);
   }
   cancel() {
     this.dialogRef.close()
