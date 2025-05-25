@@ -3,8 +3,8 @@
     height: 975px;
     margin: 0;
     padding: 0;
+    height: 945px;
 }
-
 
 .header-div {
     height: 73px;
@@ -106,6 +106,31 @@
     color: #030319;
   }
   
+  @media (max-width: 1200px){
+    .watch-straps-title {
+      font-size: 3vh !important;
+      font-weight: 300 !important;
+    }
+
+    .watch-straps-scond-title {
+      font-size: 4vh !important;
+      font-weight: 500 !important;
+    }
+
+    .watch-straps-para {
+      font-size: 2.5vh !important;
+      font-weight: 300 !important;
+      line-height: 3.5vh !important;
+    }
+
+    .explore-now-btn {
+      border-radius: 8px !important;
+      height: 45px !important;
+      width: 150px !important;
+      font-size: 3vh !important;
+      font-weight: 400 !important;
+    }
+  }
   
   @media (max-width: 768px) {
     .header-contact {
@@ -123,6 +148,10 @@
   
     .sidebar-logo-small-screen {
       height: 30px !important;
+    }
+
+    .hero-page {
+      height: auto !important;
     }
   }
   
@@ -503,7 +532,7 @@
 
 .slide img {
   width: 100%;
-  height: auto;
+  height: 100%;
 }
 
 

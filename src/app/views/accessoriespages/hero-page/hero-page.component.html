@@ -292,9 +292,9 @@
             </nav>
         </header>
     </div>
-    <div class="col-md-12 d-flex flex-wrap hero-page" style="height: 945px !important;">
+    <div class="col-md-12 d-flex flex-wrap hero-page">
         <div class="col-md-6 accessories-details-section" style="height: 945px !important;">
-           <div class="container">
+           <div [ngClass]="windowWidth >= 992 ? 'container' : 'container-fluid'">
             <p class="watch-straps-title">- Watch Straps</p>
             <p class="watch-straps-scond-title mt-4">Snake Skin Watch Straps</p>
             <p class="watch-straps-para mt-3">OUR SNAKE SKIN STRAPS ARE MADE WITH PURE SNAKE SKIN IMPORTED FROM REGISTERED FARMS OF CHINA AND VIETNAM. THESE ARE NOT PRINTED/EMBOSSED LEATHER. THIS IS 100% PURE EXOTIC LEATHER.</p>
@@ -325,7 +325,6 @@
 
                    <img
                     class="img-fluid"
-                    style="object-fit: cover !important"
                     src="../../../../assets/images/background.svg"
                     alt="{{ 'find_dream.img_alt' | translate }}"
                   />

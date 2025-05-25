@@ -20,8 +20,9 @@ import { ShoppingCartComponent } from '../../modal/shopping-cart/shopping-cart.c
   styleUrls: ['./hero-page.component.css']
 })
 export class HeroPageComponent {
-isSmallScreen: boolean = false;
+  isSmallScreen: boolean = false;
   isUserLogin: any = false;
+  windowWidth: number = window.innerWidth;
   searchQuery: string = "";
   dropdownOpen = false;
   showHideAdminUser: any;
@@ -216,7 +217,10 @@ isSmallScreen: boolean = false;
 
   ngOnInit() {
     this.getAllPopularModels();
-      this.updateLayout();
+    this.updateLayout();
+    window.addEventListener('resize', () => {
+      this.windowWidth = window.innerWidth;
+    });
     this.isSmallScreen = window.innerWidth <= 1500;
     this.isUserLogin = localStorage.getItem("isLoggedIn");
    
