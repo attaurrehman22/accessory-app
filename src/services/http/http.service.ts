@@ -725,6 +725,92 @@ export class HttpService implements OnInit {
     }
 
 
+    getAttributesValue(): Observable<any> {
+      return this.http.get(`${this.apiUrl}/api/attribute-values`, {
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${this.token}`,
+        },
+      });
+    }
+
+   addAttributesValue(bodyData): Observable<any> {
+    return this.http.post(`${this.apiUrl}/api/attribute-values`,bodyData, {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+  }
+
+   editAttributesValue(bodyData,ID): Observable<any> {
+      return this.http.put(`${this.apiUrl}/api/attribute-values/${ID}`,bodyData, {
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${this.token}`,
+        },
+      });
+    }
+
+     deleteAttributesValue(ID): Observable<any> {
+      return this.http.delete(`${this.apiUrl}/api/attribute-values/${ID}`, {
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${this.token}`,
+        },
+      });
+    }
+
+
+     getInventory(): Observable<any> {
+      return this.http.get(`${this.apiUrl}/api/inventories`, {
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${this.token}`,
+        },
+      });
+    }
+
+   addInventory(bodyData): Observable<any> {
+    return this.http.post(`${this.apiUrl}/api/inventories`,bodyData, {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+  }
+
+   editInventory(bodyData,ID): Observable<any> {
+      return this.http.put(`${this.apiUrl}/api/inventories/${ID}`,bodyData, {
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${this.token}`,
+        },
+      });
+    }
+
+     deleteInventory(ID): Observable<any> {
+      return this.http.delete(`${this.apiUrl}/api/inventories/${ID}`, {
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${this.token}`,
+        },
+      });
+    }
+
+     getAccessory(): Observable<any> {
+      return this.http.get(`${this.apiUrl}/api/accessories`, {
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${this.token}`,
+        },
+      });
+    }
+
+
+  // ----------------------------------  Admin Pannel Apis End Here ------------------------------
+
+
   // ----------------------------------  create Listing start ------------------------------
 
 

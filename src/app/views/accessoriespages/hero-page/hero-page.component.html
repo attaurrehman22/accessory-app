@@ -292,8 +292,8 @@
             </nav>
         </header>
     </div>
-    <div class="col-md-12 d-flex flex-wrap hero-page">
-        <div class="col-md-6 accessories-details-section">
+    <div class="col-md-12 d-flex flex-wrap hero-page" style="height: 945px !important;">
+        <div class="col-md-6 accessories-details-section" style="height: 945px !important;">
            <div class="container">
             <p class="watch-straps-title">- Watch Straps</p>
             <p class="watch-straps-scond-title mt-4">Snake Skin Watch Straps</p>
@@ -303,7 +303,7 @@
            </button>
           </div>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-6" style="padding: 0 !important;height: 945px !important;">
           <ng-container *ngIf="homeData?.slider?.length > 0">
             <div
               id="carouselExample"
@@ -316,10 +316,17 @@
                   *ngFor="let img of homeData.slider; let i = index"
                   [ngClass]="{ active: i === 0 }"
                 >
-                  <img
+                  <!-- <img
                     class="img-fluid"
                     style="object-fit: scale-down !important"
                     [src]="'https://api.chronosouq.com/' + img.image"
+                    alt="{{ 'find_dream.img_alt' | translate }}"
+                  /> -->
+
+                   <img
+                    class="img-fluid"
+                    style="object-fit: cover !important"
+                    src="../../../../assets/images/background.svg"
                     alt="{{ 'find_dream.img_alt' | translate }}"
                   />
                 </div>
@@ -342,7 +349,7 @@
     </div>
     <div class="col-md-8" style="position: absolute;z-index: 9999;background-color: #FFFFFF;bottom: 0;">
       <div class="marquee-container" #container>
-        <div class="marquee-track d-flex" #slider>
+        <div class="marquee-track d-flex" >
           <div
             *ngFor="let img of duplicatedImages; let index = index"
             class="slide"

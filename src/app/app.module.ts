@@ -125,6 +125,10 @@ import { AddAccessorySubCategoryGroupComponent } from './views/adminpages/add-ac
 import { AccessorySubCategoryGroupComponent } from './views/adminpages/accessory-sub-category-group/accessory-sub-category-group.component';
 import { AddAttributeComponent } from './views/adminpages/accessories/attributes/add-attribute/add-attribute.component';
 import { AttributeComponent } from './views/adminpages/accessories/attributes/attribute/attribute.component';
+import { AddAttributeValuesComponent } from './views/adminpages/accessories/attributes/add-attribute-values/add-attribute-values.component';
+import { AttributeValuesComponent } from './views/adminpages/accessories/attributes/attribute-values/attribute-values.component';
+import { AddInventoryComponent } from './views/adminpages/accessories/attributes/add-inventory/add-inventory.component';
+import { InventoriesComponent } from './views/adminpages/accessories/attributes/inventories/inventories.component';
 
 
 @NgModule({
@@ -196,7 +200,11 @@ import { AttributeComponent } from './views/adminpages/accessories/attributes/at
     AddAccessorySubCategoryGroupComponent,
     AccessorySubCategoryGroupComponent,
     AddAttributeComponent,
-    AttributeComponent
+    AttributeComponent,
+    AddAttributeValuesComponent,
+    AttributeValuesComponent,
+    AddInventoryComponent,
+    InventoriesComponent
   ],
   imports: [
     MatSortModule,

@@ -32,6 +32,8 @@ import { AccessoryCategoriesComponent } from './views/adminpages/accessory-categ
 import { AccessoryCategoryGroupComponent } from './views/adminpages/accessory-category-group/accessory-category-group.component';
 import { AccessorySubCategoryGroupComponent } from './views/adminpages/accessory-sub-category-group/accessory-sub-category-group.component';
 import { AttributeComponent } from './views/adminpages/accessories/attributes/attribute/attribute.component';
+import { AttributeValuesComponent } from './views/adminpages/accessories/attributes/attribute-values/attribute-values.component';
+import { InventoriesComponent } from './views/adminpages/accessories/attributes/inventories/inventories.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -60,6 +62,9 @@ const routes: Routes = [
   {  canActivate: [adminGuard],path: 'admin/group', component:  AccessoryCategoryGroupComponent},
   {  canActivate: [adminGuard],path: 'admin/sub-group', component:  AccessorySubCategoryGroupComponent},
   {  canActivate: [adminGuard],path: 'admin/attributes', component:  AttributeComponent},
+  {  canActivate: [adminGuard],path: 'admin/attribute-values', component:  AttributeValuesComponent},
+  {  canActivate: [adminGuard],path: 'admin/inventory', component:  InventoriesComponent},
+
 
   { path: 'accessories/home', component:  AccessoriesHomeComponent},
   { path: 'accessories/details', component:  AccessorieDetailComponent},

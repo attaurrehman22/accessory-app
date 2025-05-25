@@ -1,0 +1,195 @@
+<form [formGroup]="inventoryForm" class="mt-3">
+  <mat-dialog-content style="min-height: 520px">
+    <h2 class="d-flex justify-content-center">
+      {{ paramVal }} Inventory
+    </h2>
+     <mat-form-field class="full-width" appearance="outline">
+      <mat-label>Title</mat-label>
+      <input matInput formControlName="title" />
+      <mat-error *ngIf="inventoryForm.get('title')?.hasError('required')">
+        Title is required
+      </mat-error>
+      <mat-error *ngIf="inventoryForm.get('title')?.hasError('minlength')">
+        Minimum 3 characters
+      </mat-error>
+      <mat-error *ngIf="inventoryForm.get('title')?.hasError('maxlength')">
+        Maximum 50 characters
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Accessory ID -->
+    <mat-form-field class="full-width" appearance="outline">
+      <mat-label>Accessory ID</mat-label>
+      <!-- <input type="number" matInput formControlName="accessory_id" /> -->
+       <mat-select formControlName="accessory_id">
+         <mat-option *ngFor="let acc of accessoriesList" [value]="acc.id">{{acc.name}}</mat-option>
+       </mat-select>
+      <mat-error *ngIf="inventoryForm.get('accessory_id')?.hasError('required')">
+        Accessory ID is required
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Brand -->
+    <mat-form-field class="full-width" appearance="outline">
+      <mat-label>Brand</mat-label>
+      <input matInput formControlName="brand" />
+      <mat-error *ngIf="inventoryForm.get('brand')?.hasError('required')">
+        Brand is required
+      </mat-error>
+    </mat-form-field>
+
+    <!-- SKU -->
+    <mat-form-field class="full-width" appearance="outline">
+      <mat-label>SKU</mat-label>
+      <input matInput formControlName="sku" />
+    </mat-form-field>
+
+    <!-- Condition -->
+    <mat-form-field class="full-width" appearance="outline">
+      <mat-label>Condition</mat-label>
+      <mat-select formControlName="condition">
+        <mat-option value="New">New</mat-option>
+        <mat-option value="Used">Used</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <!-- Condition Note -->
+    <mat-form-field class="full-width" appearance="outline">
+      <mat-label>Condition Note</mat-label>
+      <textarea matInput formControlName="condition_note"></textarea>
+    </mat-form-field>
+
+    <!-- Description -->
+    <mat-form-field class="full-width" appearance="outline">
+      <mat-label>Description</mat-label>
+      <textarea matInput formControlName="description"></textarea>
+    </mat-form-field>
+
+    <!-- Key Features -->
+    <mat-form-field class="full-width" appearance="outline">
+      <mat-label>Key Features</mat-label>
+      <textarea matInput formControlName="key_features"></textarea>
+    </mat-form-field>
+
+    <!-- Stock Quantity -->
+    <mat-form-field class="full-width" appearance="outline">
+      <mat-label>Stock Quantity</mat-label>
+      <input type="number" matInput formControlName="stock_quantity" />
+    </mat-form-field>
+
+    <!-- Damaged Quantity -->
+    <mat-form-field class="full-width" appearance="outline">
+      <mat-label>Damaged Quantity</mat-label>
+      <input type="number" matInput formControlName="damaged_quantity" />
+    </mat-form-field>
+
+    <!-- User ID -->
+    <mat-form-field class="full-width" appearance="outline">
+      <mat-label>User ID</mat-label>
+      <input type="number" matInput formControlName="user_id" />
+    </mat-form-field>
+
+    <!-- Purchase Price -->
+    <mat-form-field class="full-width" appearance="outline">
+      <mat-label>Purchase Price</mat-label>
+      <input type="number" matInput formControlName="purchase_price" />
+    </mat-form-field>
+
+    <!-- Sale Price -->
+    <mat-form-field class="full-width" appearance="outline">
+      <mat-label>Sale Price</mat-label>
+      <input type="number" matInput formControlName="sale_price" />
+    </mat-form-field>
+
+    <!-- Offer Price -->
+    <mat-form-field class="full-width" appearance="outline">
+      <mat-label>Offer Price</mat-label>
+      <input type="number" matInput formControlName="offer_price" />
+    </mat-form-field>
+
+    <!-- Offer Start -->
+    <mat-form-field class="full-width" appearance="outline">
+      <mat-label>Offer Start</mat-label>
+      <input matInput [matDatepicker]="picker1" formControlName="offer_start" />
+      <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+      <mat-datepicker #picker1></mat-datepicker>
+    </mat-form-field>
+
+    <!-- Offer End -->
+    <mat-form-field class="full-width" appearance="outline">
+      <mat-label>Offer End</mat-label>
+      <input matInput [matDatepicker]="picker2" formControlName="offer_end" />
+      <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+      <mat-datepicker #picker2></mat-datepicker>
+    </mat-form-field>
+
+    <!-- Shipping Weight -->
+    <mat-form-field class="full-width" appearance="outline">
+      <mat-label>Shipping Weight</mat-label>
+      <input type="number" matInput formControlName="shipping_weight" />
+    </mat-form-field>
+
+    <!-- Free Shipping -->
+    <mat-checkbox formControlName="free_shipping">Free Shipping</mat-checkbox>
+
+    <!-- Available From -->
+    <mat-form-field class="full-width" appearance="outline">
+      <mat-label>Available From</mat-label>
+      <input matInput [matDatepicker]="picker3" formControlName="available_from" />
+      <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
+      <mat-datepicker #picker3></mat-datepicker>
+    </mat-form-field>
+
+    <!-- Min Order Quantity -->
+    <mat-form-field class="full-width" appearance="outline">
+      <mat-label>Min Order Quantity</mat-label>
+      <input type="number" matInput formControlName="min_order_quantity" />
+    </mat-form-field>
+
+    <!-- Slug -->
+    <mat-form-field class="full-width" appearance="outline">
+      <mat-label>Slug</mat-label>
+      <input matInput formControlName="slug" />
+    </mat-form-field>
+
+    <!-- Linked Items -->
+    <mat-form-field class="full-width" appearance="outline">
+      <mat-label>Linked Items</mat-label>
+      <textarea matInput formControlName="linked_items"></textarea>
+    </mat-form-field>
+
+    <!-- Meta Title -->
+    <mat-form-field class="full-width" appearance="outline">
+      <mat-label>Meta Title</mat-label>
+      <input matInput formControlName="meta_title" />
+    </mat-form-field>
+
+    <!-- Meta Description -->
+    <mat-form-field class="full-width" appearance="outline">
+      <mat-label>Meta Description</mat-label>
+      <textarea matInput formControlName="meta_description"></textarea>
+    </mat-form-field>
+
+    <!-- Staff Pick -->
+    <mat-checkbox formControlName="stuff_pick">Staff Pick</mat-checkbox>
+
+    <!-- Active -->
+    <mat-checkbox formControlName="active">Active</mat-checkbox>
+  </mat-dialog-content>
+  <mat-dialog-actions class="d-flex gap-2 justify-content-center">
+    <div class="button-group">
+      <button
+        class="save-btn"
+        *ngIf="paramVal === 'Create'"
+        (click)="onSubmit()"
+      >
+        Submit
+      </button>
+      <button class="save-btn" *ngIf="paramVal === 'Edit'" (click)="onSubmit()">
+        Update
+      </button>
+      <button class="cancel-btn" (click)="onCancel()">Cancel</button>
+    </div>
+  </mat-dialog-actions>
+</form>
+

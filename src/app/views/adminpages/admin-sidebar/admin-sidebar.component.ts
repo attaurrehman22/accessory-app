@@ -115,6 +115,22 @@ export class AdminSidebarComponent {
       iconWidth: 20,
       iconHeight: 20,
     },
+    AttributeValues: {
+      label: 'Attribute values',
+      router: '/admin/attribute-values',
+      routerActive: 'navbar-button-active',
+      icon: 'assets/images/dashboard-2-svgrepo-com (1).svg',
+      iconWidth: 20,
+      iconHeight: 20,
+    },
+     Inventory: {
+      label: 'Inventory',
+      router: '/admin/inventory',
+      routerActive: 'navbar-button-active',
+      icon: 'assets/images/dashboard-2-svgrepo-com (1).svg',
+      iconWidth: 20,
+      iconHeight: 20,
+    },
   };
 
   isActive(route: string): boolean {

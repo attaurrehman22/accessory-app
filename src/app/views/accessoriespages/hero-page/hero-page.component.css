@@ -419,19 +419,30 @@
 
 
 
+.carousel {
+  margin: 0 !important;
+  padding: 0 !important
+}
+
+.carousel.slide {
+  margin: 0 !important;
+}
+
 
 .carousel-inner img {
   width: 100%;
 }
 
 .carousel-item {
-  height: 945px;
+  height: 945px !important;
+  height: 100%;
+  width: 100%;
 }
 
 .img-fluid {
   height: 100%;
   width: 100%;
-  object-fit: fill;
+  object-fit: cover;
 }
 
 .carousel-control-prev,

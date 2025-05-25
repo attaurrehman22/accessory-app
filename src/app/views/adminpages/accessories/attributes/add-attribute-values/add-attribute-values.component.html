@@ -1,0 +1,93 @@
+<form [formGroup]="categoryForm" class="mt-3">
+  <mat-dialog-content style="min-height: 520px">
+    <h2 class="d-flex justify-content-center">
+      {{ paramVal }} Attribute Values
+    </h2>
+    
+    <mat-form-field class="full-width" appearance="outline">
+      <mat-label>Attribute Id</mat-label>
+      <input matInput type="number" formControlName="attribute_id" min="0" />
+      <mat-error *ngIf="categoryForm.get('attribute_id')?.hasError('required')">
+        Attribute Id is required
+      </mat-error>
+      <mat-error *ngIf="categoryForm.get('attribute_id')?.hasError('min')">
+        Minimum value is 0
+      </mat-error>
+      <mat-error *ngIf="categoryForm.get('attribute_id')?.hasError('max')">
+        Maximum value is 1000
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="full-width" appearance="outline">
+      <mat-label>Shop Id</mat-label>
+      <input matInput type="number" formControlName="shop_id" min="0" />
+      <mat-error *ngIf="categoryForm.get('shop_id')?.hasError('required')">
+        Shop Id is required
+      </mat-error>
+      <mat-error *ngIf="categoryForm.get('shop_id')?.hasError('min')">
+        Minimum value is 0
+      </mat-error>
+      <mat-error *ngIf="categoryForm.get('shop_id')?.hasError('max')">
+        Maximum value is 1000
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="full-width" appearance="outline">
+      <mat-label>Order</mat-label>
+      <input matInput type="number" formControlName="order" min="0" />
+      <mat-error *ngIf="categoryForm.get('order')?.hasError('required')">
+        Order is required
+      </mat-error>
+      <mat-error *ngIf="categoryForm.get('order')?.hasError('min')">
+        Minimum value is 0
+      </mat-error>
+      <mat-error *ngIf="categoryForm.get('order')?.hasError('max')">
+        Maximum value is 1000
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="full-width" appearance="outline">
+      <mat-label>Value</mat-label>
+      <input matInput formControlName="value" />
+      <mat-error *ngIf="categoryForm.get('value')?.hasError('required')">
+        Value is required
+      </mat-error>
+      <mat-error *ngIf="categoryForm.get('value')?.hasError('minlength')">
+        Minimum 3 characters
+      </mat-error>
+      <mat-error *ngIf="categoryForm.get('value')?.hasError('maxlength')">
+        Maximum 50 characters
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="full-width" appearance="outline">
+      <mat-label>Color</mat-label>
+      <input matInput formControlName="color" />
+      <mat-error *ngIf="categoryForm.get('color')?.hasError('required')">
+        Color is required
+      </mat-error>
+      <mat-error *ngIf="categoryForm.get('color')?.hasError('minlength')">
+        Minimum 3 characters
+      </mat-error>
+      <mat-error *ngIf="categoryForm.get('color')?.hasError('maxlength')">
+        Maximum 50 characters
+      </mat-error>
+    </mat-form-field>
+
+  </mat-dialog-content>
+  <mat-dialog-actions class="d-flex gap-2 justify-content-center">
+    <div class="button-group">
+      <button
+        class="save-btn"
+        *ngIf="paramVal === 'Create'"
+        (click)="onSubmit()"
+      >
+        Submit
+      </button>
+      <button class="save-btn" *ngIf="paramVal === 'Edit'" (click)="onSubmit()">
+        Update
+      </button>
+      <button class="cancel-btn" (click)="onCancel()">Cancel</button>
+    </div>
+  </mat-dialog-actions>
+</form>
