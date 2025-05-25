@@ -309,6 +309,10 @@
     .nav-overlay.active {
       transform: translateX(0);
     }
+
+    .custom-btn {
+      color: #000;
+    }
   }
   
   @media screen and (min-width: 992px) {

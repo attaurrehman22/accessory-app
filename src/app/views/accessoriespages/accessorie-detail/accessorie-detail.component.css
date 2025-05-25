@@ -214,9 +214,9 @@
     display: flex;
     justify-content: space-between;
     position: absolute;
-    width: 85%;
+    width: 100%;
     top: 18px;
-    right: 25px;
+    right: 0;
   }
   
   .heart-icon i {
@@ -278,4 +278,14 @@
   .bi-star-fill {
     color: gold;
   }
+
+  .custom-i-icon-position {
+    right: 5% !important;
+    top: 5% !important;
+    min-height: 40px;
+    min-width: 40px;
+    max-height: 50px;
+    max-width: 50px;
+  }
+  
   

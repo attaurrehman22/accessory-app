@@ -119,6 +119,7 @@
                     <button
                       *ngIf="selectedLang === 'en'"
                       class="custom-btn"
+                       style="color: #FFFFFF !important;"
                       (click)="useLang('ar')"
                     >
                       ARB
@@ -127,6 +128,7 @@
                       *ngIf="selectedLang === 'ar'"
                       class="custom-btn"
                       (click)="useLang('en')"
+                       style="color: #FFFFFF !important;"
                     >
                       EN
                     </button>
@@ -275,13 +277,15 @@
                     <button
                       *ngIf="selectedLang === 'en'"
                       class="custom-btn"
+                      style="color: #FFFFFF !important;"
                       (click)="useLang('ar')"
                     >
                       ARB
                     </button>
                     <button
                       *ngIf="selectedLang === 'ar'"
-                      class="custom-btn"
+                       class="custom-btn"
+                       style="color: #FFFFFF !important;"
                       (click)="useLang('en')"
                     >
                       EN
