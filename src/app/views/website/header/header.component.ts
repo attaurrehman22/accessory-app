@@ -299,7 +299,7 @@ onSearchInputClick() {
     openCart() {
       console.log("open cart");
       const dialogRef = this.dialog.open(ShoppingCartComponent, {
-        width: '400px', // Adjust as needed
+        width: '600px', // Adjust as needed
         height: '100vh',
         position: {
           right: '0',

@@ -4,11 +4,62 @@ img {
 
   .container {
     display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        height: 100%;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 89vh;
   }
 
   ::ng-deep .mat-mdc-dialog-surface mdc-dialog__surface {
     border-radius: 12px;
+  }
+
+  .shopping-cart-text {
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 28px;
+    font-family: 'Open Sans',unset;
+    color: #242424;
+  }
+
+  .shooping-des {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 100%;
+    font-family: 'Open Sans',unset;
+    color: #909090;
+  }
+
+  .img-title {
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 100%;
+    font-family: 'Open Sans',unset;
+    color: #242424;
+  }
+
+  .img-number {
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 100%;
+    font-family: 'Open Sans',unset;
+    color: #909090;
+  }
+
+  .label-title {
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 20px;
+    font-family: 'Open Sans',unset;
+    color: #242424;
+  }
+
+  .text-style {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 100%;
+    font-family: 'Open Sans',unset;
+    color: #FFFFFF;
+    width: fit-content;
+    height: 40px;
+
   }
