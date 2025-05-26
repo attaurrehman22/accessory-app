@@ -11,7 +11,7 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./new-arrivals.component.css']
 })
 export class NewArrivalsComponent {
-   apiUrl = environment.apiimagespath;
+  apiUrl = environment.apipath+ '/'
   supportLanguages = ["en", "ar", "fr", "ta", "hi"];
   currentLanguage: string;
   showList: any;

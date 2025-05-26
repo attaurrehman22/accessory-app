@@ -21,7 +21,7 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./hero-page.component.css']
 })
 export class HeroPageComponent {
-  apiUrl = environment.apiimagespath;
+   apiUrl = environment.apipath+ '/'
   isSmallScreen: boolean = false;
   isUserLogin: any = false;
   windowWidth: number = window.innerWidth;

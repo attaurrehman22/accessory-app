@@ -17,7 +17,7 @@ import { environment } from "src/environments/environment";
   styleUrls: ["./buy-product-component.component.css"],
 })
 export class BuyProductComponentComponent implements OnInit {
-  apiUrl = environment.apiimagespath;
+   apiUrl = environment.apipath+ '/'
   supportLanguages = ["en", "ar", "fr", "ta", "hi"];
   cosmeticCondition: number;
   satisfaction: number;

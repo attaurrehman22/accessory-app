@@ -16,7 +16,7 @@ import { environment } from "src/environments/environment";
   styleUrls: ["./my-listing-details.component.css"],
 })
 export class MyListingDetailsComponent implements OnInit {
-  apiUrl = environment.apiimagespath;
+   apiUrl = environment.apipath+ '/'
 
   supportLanguages = ["en", "ar", "fr", "ta", "hi"];
   currentLanguage: string;

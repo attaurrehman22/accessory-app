@@ -51,7 +51,7 @@ export class AccessoriesProductsComponent
     "popular_item",
     "action",
   ];
-   apiUrl = environment.apiimagespath;
+  apiUrl = environment.apipath+ '/'
   dataSource = new MatTableDataSource<any>();
   resultsLength = 0;
   pageSize = 5;

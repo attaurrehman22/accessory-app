@@ -58,7 +58,7 @@ export class AdminProductsComponent
     "isPromoteActive",
     "action",
   ];
-   apiUrl = environment.apiimagespath;
+  apiUrl = environment.apipath+ '/'
   dataSource = new MatTableDataSource<any>();
   resultsLength = 0;
   pageSize = 5;

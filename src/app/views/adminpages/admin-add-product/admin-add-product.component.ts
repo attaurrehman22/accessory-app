@@ -8,7 +8,6 @@ import {
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from "@angular/material/dialog";
 import { environment } from "src/environments/environment";
 import { AlertsServicesService } from "src/services/alerts-service/alerts-services.service";
-import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: "app-admin-add-product",
@@ -16,7 +15,7 @@ import { environment } from '../../../../environments/environment';
   styleUrls: ["./admin-add-product.component.css"],
 })
 export class AdminAddProductComponent {
-  apiUrl = environment.apiimagespath;
+   apiUrl = environment.apipath+ '/'
   product:any;
   productMainImage: any;
   thumbnails: string[] = [];

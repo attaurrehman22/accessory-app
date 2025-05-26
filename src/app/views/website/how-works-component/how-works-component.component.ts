@@ -8,7 +8,7 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./how-works-component.component.css']
 })
 export class HowWorksComponentComponent {
-    apiUrl = environment.apiimagespath;
+   apiUrl = environment.apipath+ '/'
   constructor(public translateService: TranslateService) {
     const supportedLanguages = ["en", "ar"]; // Add other languages if necessary
     this.translateService.addLangs(supportedLanguages);

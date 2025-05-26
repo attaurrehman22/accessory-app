@@ -27,7 +27,7 @@ interface MessageFormData {
   styleUrls: ["./chat.component.css"],
 })
 export class ChatComponent implements OnInit, AfterViewChecked {
-  apiUrl = environment.apiimagespath;
+   apiUrl = environment.apipath+ '/'
   supportLanguages = ["en", "ar", "fr", "ta", "hi"];
   currentLanguage: string;
   isActive: any = "All";

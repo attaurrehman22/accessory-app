@@ -11,7 +11,7 @@ import { environment } from "src/environments/environment";
   styleUrls: ["./chronosouq-buyer-protection-component.component.css"],
 })
 export class ChronosouqBuyerProtectionComponentComponent implements OnInit {
-    apiUrl = environment.apiimagespath;
+   apiUrl = environment.apipath+ '/'
   supportLanguages = ["en", "ar", "fr", "ta", "hi"];
   currentLanguage: string;
   selectedCategory: any;

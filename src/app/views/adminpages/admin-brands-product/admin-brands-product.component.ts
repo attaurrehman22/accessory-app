@@ -11,7 +11,6 @@ import { Router } from "@angular/router";
 import { environment } from "src/environments/environment";
 import { AlertsServicesService } from "src/services/alerts-service/alerts-services.service";
 import { HttpService } from "src/services/http/http.service";
-import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: "app-admin-brands-product",
@@ -19,7 +18,7 @@ import { environment } from '../../../../environments/environment';
   styleUrls: ["./admin-brands-product.component.css"],
 })
 export class AdminBrandsProductComponent {
-   apiUrl = environment.apiimagespath;
+  apiUrl = environment.apipath+ '/'
   form: FormGroup;
   selectedFile: File | null = null;
   selectedSvgFile: File | null = null;

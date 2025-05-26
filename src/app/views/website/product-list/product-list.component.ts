@@ -12,7 +12,7 @@ import { SearchServiceService } from "src/services/search-service/search-service
   styleUrls: ["./product-list.component.css"],
 })
 export class ProductListComponent implements OnInit {
-   apiUrl = environment.apiimagespath;
+  apiUrl = environment.apipath+ '/'
   supportLanguages = ["en", "ar", "fr", "ta", "hi"];
   currentLanguage: string;
   showList: any;

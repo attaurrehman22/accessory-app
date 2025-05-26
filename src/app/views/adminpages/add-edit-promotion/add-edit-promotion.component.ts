@@ -17,7 +17,7 @@ import { environment } from "src/environments/environment";
   styleUrls: ["./add-edit-promotion.component.css"],
 })
 export class AddEditPromotionComponent implements OnInit {
-   apiUrl = environment.apiimagespath;
+  apiUrl = environment.apipath+ '/'
   promotionForm: FormGroup;
   labelMessage: any;
   selectedFile: File | null = null;

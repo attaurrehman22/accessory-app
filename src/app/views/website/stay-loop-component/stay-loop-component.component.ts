@@ -9,7 +9,7 @@ import { HttpService } from "src/services/http/http.service";
   styleUrls: ["./stay-loop-component.component.css"],
 })
 export class StayLoopComponentComponent implements OnInit {
-    apiUrl = environment.apiimagespath;
+   apiUrl = environment.apipath+ '/'
   watchDetails: any = [];
   activeProductIndex: number = 0;
   activeProductDetails: any;

@@ -1,19 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import { environment } from 'src/environments/environment';
 import { AlertsServicesService } from 'src/services/alerts-service/alerts-services.service';
 import { HttpService } from 'src/services/http/http.service';
 import { LanguageService } from 'src/services/lang-service/language.service';
-import { environment } from '../../../../environments/environment';
-
+import { environment } from 'src/environments/environment';
 @Component({
   selector: 'app-accessorie-detail',
   templateUrl: './accessorie-detail.component.html',
   styleUrls: ['./accessorie-detail.component.css']
 })
 export class AccessorieDetailComponent implements OnInit {
-  apiUrl = environment.apiimagespath;
+   apiUrl = environment.apipath+ '/'
   supportLanguages = ["en", "ar", "fr", "ta", "hi"];
   currentLanguage: string;
   productDetails: any;

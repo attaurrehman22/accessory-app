@@ -51,7 +51,7 @@ export interface Category {
   styleUrls: ["./add-new-product.component.css"],
 })
 export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
-  apiUrl = environment.apiimagespath;
+   apiUrl = environment.apipath+ '/'
   nullImagePath = this.apiUrl + 'null'
   selectedSection: string = "listingDetails";
   selectedOptionsList: any = ["listingDetails"];

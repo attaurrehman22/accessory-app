@@ -11,7 +11,7 @@ import { LanguageService } from "src/services/lang-service/language.service";
   styleUrls: ["./find-dream-component.component.css"],
 })
 export class eamFindDreamComponentComponent implements OnInit {
-  apiUrl = environment.apiimagespath;
+   apiUrl = environment.apipath+ '/'
   supportLanguages = ["en", "ar", "fr", "ta", "hi"];
   currentLanguage: string;
   staticList: any;

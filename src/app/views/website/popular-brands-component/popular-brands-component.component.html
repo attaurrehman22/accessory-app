@@ -1,4 +1,4 @@
-<div class="container-div mb-3">
+<div class="container-div mb-3" *ngIf="sliderImages && sliderImages.length > 0">
   <div
     class="col-lg-12 col-md-12 col-sm-12 d-flex flex-wrap"
     [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }"

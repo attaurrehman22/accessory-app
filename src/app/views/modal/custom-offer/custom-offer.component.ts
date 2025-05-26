@@ -12,7 +12,7 @@ import { environment } from "src/environments/environment";
   styleUrls: ["./custom-offer.component.css"],
 })
 export class CustomOfferComponent {
-   apiUrl = environment.apiimagespath;
+  apiUrl = environment.apipath+ '/'
   offerForm: FormGroup;
   compoName: any;
   productPrice:any;

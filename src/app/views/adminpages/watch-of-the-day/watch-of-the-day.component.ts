@@ -31,7 +31,7 @@ export interface UserData {
   styleUrls: ['./watch-of-the-day.component.css']
 })
 export class WatchOfTheDayComponent implements OnInit, OnDestroy {
-   apiUrl = environment.apiimagespath;
+  apiUrl = environment.apipath+ '/'
  displayedColumns: string[] = [
     "name",
     "slug",

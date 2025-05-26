@@ -9,7 +9,7 @@ import { HttpService } from "src/services/http/http.service";
   styleUrls: ["./explore-chronosouq-component.component.css"],
 })
 export class ExploreChronosouqComponentComponent implements OnInit{
-    apiUrl = environment.apiimagespath;
+   apiUrl = environment.apipath+ '/'
   selectedStep: number = 1;
   isSmallScreen = false;
   selectStep(step: number) {
