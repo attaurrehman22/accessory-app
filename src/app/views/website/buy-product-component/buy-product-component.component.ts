@@ -29,7 +29,7 @@ export class BuyProductComponentComponent implements OnInit {
   scrollToTarget(): void {
     this.targetContainer.nativeElement.scrollIntoView({ behavior: "smooth" });
   }
-
+  apipath = environment.apipath;
   wishList: any;
   getWishList() {
     this.http.getWishList().subscribe((res) => {
@@ -51,7 +51,7 @@ export class BuyProductComponentComponent implements OnInit {
   getDealerSince(createdAt: string): string {
     if (!createdAt) return "";
     const year = new Date(createdAt).getFullYear();
- 
+
     if (this.translateService.currentLang == "en") {
       return `Since ${year}`;
     } else {
@@ -291,7 +291,7 @@ export class BuyProductComponentComponent implements OnInit {
       if (this.isUserLogin === "true") {
         this.getOrderandChatID();
       }
-    
+
 
       await this.getAllSimilarProducts();
     } catch (err) {
@@ -513,7 +513,7 @@ export class BuyProductComponentComponent implements OnInit {
     if (userLogin) {
       const dialogRef = this.dialog.open(ConfirmationModelComponent, {
         width: "600px",
-        data: { message: "Are you sure you want to buy this product ?"  },
+        data: { message: "Are you sure you want to buy this product ?" },
       });
 
       dialogRef.afterClosed().subscribe((result) => {
@@ -601,7 +601,7 @@ export class BuyProductComponentComponent implements OnInit {
     const userID = localStorage.getItem("userID");
     if (userLogin && userID) {
       if (userID != this.productDetails.created_by.id) {
-        if(this.chatID){
+        if (this.chatID) {
           this.router.navigate(["/chat"], {
             state: {
               data: this.productDetails,
@@ -609,7 +609,7 @@ export class BuyProductComponentComponent implements OnInit {
               fromRoute: "gotToChat",
             },
           });
-        }else{
+        } else {
           this.router.navigate(["/chat"], {
             state: { data: this.productDetails },
           });

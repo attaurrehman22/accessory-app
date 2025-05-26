@@ -30,23 +30,23 @@ export class HeroPageComponent {
   showHideAdminUser: any;
   showHideUser: any;
 
-      @Input() imageWidth: number = 300;
-      @Input() speed: number = 100;
-      @Input() coins: boolean = false;
-    
-      @ViewChild('container') containerRef!: ElementRef;
-      @ViewChild('slider') sliderRef!: ElementRef;
-    
-      visibleSlides: number = 3;
-      slideMargin: number = 20;
-    
-      images: string[] = []; // Store image URLs here
-      duplicatedImages: string[] = [];
-    
-      private animationFrame: any;
-      private position: number = 0;
-      private apiSubscription!: Subscription;
+  @Input() imageWidth: number = 300;
+  @Input() speed: number = 100;
+  @Input() coins: boolean = false;
 
+  @ViewChild('container') containerRef!: ElementRef;
+  @ViewChild('slider') sliderRef!: ElementRef;
+
+  visibleSlides: number = 3;
+  slideMargin: number = 20;
+
+  images: string[] = []; // Store image URLs here
+  duplicatedImages: string[] = [];
+
+  private animationFrame: any;
+  private position: number = 0;
+  private apiSubscription!: Subscription;
+  apipath = environment.apipath;
   homeData: any = { slider: [] }
 
   isAdminUser = computed(() => this.loginStateService.isAdminUser());
@@ -62,7 +62,7 @@ export class HeroPageComponent {
       }
     );
   }
- 
+
   searchFilter: boolean = true;
   supportLanguages = [
     { name: "English", value: "en" },
@@ -74,8 +74,8 @@ export class HeroPageComponent {
   isRtl: boolean = false;
   selectedLang: string = "en";
 
-  @ViewChild('drawer') drawer: MatSidenav; 
-  @ViewChild('header', { static: true }) headerRef: ElementRef; 
+  @ViewChild('drawer') drawer: MatSidenav;
+  @ViewChild('header', { static: true }) headerRef: ElementRef;
   @ViewChild('sidenav', { static: true }) sidenavRef: ElementRef;
 
   constructor(
@@ -85,7 +85,7 @@ export class HeroPageComponent {
     private searchService: SearchServiceService,
     private loginStateService: LoginStateService,
     private cdRef: ChangeDetectorRef,
-     private dialog: MatDialog,private http:HttpService,private httpps: HttpClient
+    private dialog: MatDialog, private http: HttpService, private httpps: HttpClient
   ) {
     const languagevalues = this.supportLanguages.map((lang) => lang.value);
     this.translateService.addLangs(languagevalues);
@@ -120,7 +120,7 @@ export class HeroPageComponent {
     if (this.search3MenuTrigger && this.search3MenuTrigger?.menuOpen) {
       this.search3MenuTrigger.closeMenu();
     }
-    
+
     if (this.search2MenuTrigger && this.search2MenuTrigger?.menuOpen) {
       this.search2MenuTrigger.closeMenu();
     }
@@ -129,17 +129,17 @@ export class HeroPageComponent {
     }
   }
 
-  isShowSearchField:boolean=false;
+  isShowSearchField: boolean = false;
 
-  isShowSearchForm(){
-   this.isShowSearchField=!this.isShowSearchField
+  isShowSearchForm() {
+    this.isShowSearchField = !this.isShowSearchField
   }
 
-  userToken:any;
+  userToken: any;
 
   @HostListener('window:resize', ['$event'])
   // onResize(): void {
-    
+
   // }
 
   private getAllPopularModels(): void {
@@ -149,15 +149,15 @@ export class HeroPageComponent {
         if (res && res.top_brands) {
           // Process the response to extract cover_image URLs
           this.images = res.top_brands.map((product: any) => {
-              if(product?.svg){
-                return product.svg;
-              }
-           
-          }).filter(img => img); // Ensure we don't include empty strings if there's no cover_image
-     
-   
+            if (product?.svg) {
+              return product.svg;
+            }
 
-          this.duplicatedImages = [...this.images, ...this.images, ...this.images,...this.images,...this.images, ...this.images, ...this.images,...this.images,...this.images, ...this.images, ...this.images,...this.images,...this.images, ...this.images, ...this.images,...this.images, ...this.images, ...this.images,...this.images, ...this.images, ...this.images,...this.images, ...this.images, ...this.images,...this.images, ...this.images, ...this.images,...this.images, ...this.images, ...this.images,...this.images, ...this.images, ...this.images,...this.images, ...this.images, ...this.images];
+          }).filter(img => img); // Ensure we don't include empty strings if there's no cover_image
+
+
+
+          this.duplicatedImages = [...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images];
           this.animate(); // Start the animation after images are fetched
         }
       },
@@ -208,7 +208,7 @@ export class HeroPageComponent {
   }
 
   ngOnDestroy(): void {
-     
+
     if (this.animationFrame) {
       cancelAnimationFrame(this.animationFrame);
     }
@@ -225,9 +225,9 @@ export class HeroPageComponent {
     });
     this.isSmallScreen = window.innerWidth <= 1500;
     this.isUserLogin = localStorage.getItem("isLoggedIn");
-   
+
     this.userToken = localStorage.getItem("user_token");
-    if(this.userToken){
+    if (this.userToken) {
       this.getUserDetails()
     }
 
@@ -240,7 +240,7 @@ export class HeroPageComponent {
       this.isNavbarOpen = false;
     });
 
-    
+
     if (this.isUserLoggedIn()) {
       this.showHideUser = this.isUserLoggedIn();
       if (this.isAdminUser()) {
@@ -253,13 +253,13 @@ export class HeroPageComponent {
     }
   }
 
-  userDetails:any
+  userDetails: any
 
-  getUserDetails(){
+  getUserDetails() {
     this.http.gtUserDetails().subscribe(
-      (res)=>{
-      this.userDetails = res.user
-    })
+      (res) => {
+        this.userDetails = res.user
+      })
   }
 
   routeToAdminPannel() {
@@ -270,11 +270,11 @@ export class HeroPageComponent {
     if (this.search3MenuTrigger && this.search3MenuTrigger.menuOpen) {
       this.search3MenuTrigger.closeMenu();
     }
-    this.searchService.changeSearchQuery(query);  
-    this.router.navigate(['/product-list'], { queryParams: { query } }); 
+    this.searchService.changeSearchQuery(query);
+    this.router.navigate(['/product-list'], { queryParams: { query } });
 
-    this.isShowSearchField=false;
-    this.searchQuery="";
+    this.isShowSearchField = false;
+    this.searchQuery = "";
   }
 
   onSearchChange() {
@@ -311,17 +311,17 @@ export class HeroPageComponent {
     this.dropdownOpen = !this.dropdownOpen;
   }
 
-   loginFirst() {
-      const dialogRef = this.dialog.open(ModelLoginComponent, {
-        width: "600px",
-        data: { message: "header" },
-      });
-  
-      dialogRef.afterClosed().subscribe((result) => {
-        if (result) {
-        }
-      });
-    }
+  loginFirst() {
+    const dialogRef = this.dialog.open(ModelLoginComponent, {
+      width: "600px",
+      data: { message: "header" },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+      }
+    });
+  }
 
   routeToNewProduct() {
     let isUserLogin = localStorage.getItem("isLoggedIn");
@@ -330,11 +330,11 @@ export class HeroPageComponent {
     }
 
     isUserLogin = localStorage.getItem("isLoggedIn");
-    if(isUserLogin != 'false'){
+    if (isUserLogin != 'false') {
       this.router.navigate(["/new-product"]);
     }
   }
-  
+
   isSearchForm: any = false;
   openSearchForm() {
     this.isSearchForm = !this.isSearchForm;
@@ -352,7 +352,7 @@ export class HeroPageComponent {
     this.isNavbarOpen = false;
   }
 
-  userListing(){
+  userListing() {
     this.router.navigate(['/myListing'])
   }
 
@@ -368,10 +368,10 @@ export class HeroPageComponent {
       },
       panelClass: 'custom-dialog-panel'
     });
-  
+
     dialogRef.afterClosed().subscribe((result) => {
       // handle result
     });
   }
-  
+
 }

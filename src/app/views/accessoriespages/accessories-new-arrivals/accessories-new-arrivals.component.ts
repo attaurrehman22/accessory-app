@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpService } from 'src/services/http/http.service';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-accessories-new-arrivals',
@@ -13,7 +14,7 @@ export class AccessoriesNewArrivalsComponent implements OnInit{
 
   constructor(private http: HttpService, private router: Router) {}
 
-  
+  apipath= environment.apipath;
   ngOnInit(): void {
     this.getProductsofnewArrivals();
   }

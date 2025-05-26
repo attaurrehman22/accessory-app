@@ -11,6 +11,7 @@ import { Router } from "@angular/router";
 import { environment } from "src/environments/environment";
 import { AlertsServicesService } from "src/services/alerts-service/alerts-services.service";
 import { HttpService } from "src/services/http/http.service";
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: "app-admin-brands-product",
@@ -24,6 +25,7 @@ export class AdminBrandsProductComponent {
   selectedSvgFile: File | null = null;
   svgCode: string = '';
   svgFileName: string = '';
+  apipath = environment.apipath;
 
   data: any;
   paramVal: any;
@@ -60,7 +62,7 @@ export class AdminBrandsProductComponent {
   }
 
   ngOnInit(): void {
-   
+
   }
   images: string[] = [];
 

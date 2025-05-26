@@ -65,9 +65,9 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
   isCoverImageUploading = false;
   productIDFromResponse: any;
   selectedVideo: File | null = null;
-  videoUrl: string | null = null; 
+  videoUrl: string | null = null;
   isAdminUser = computed(() => this.loginStateService.isAdminUser());
-
+apipath = environment.apipath
 
   onVideoSelected(event: any): void {
     const file = event.target.files[0];
@@ -205,7 +205,7 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
   ]);
   city = new FormControl("", [Validators.required]);
 
-  cities = ["City 1", "City 2", "City 3"]; 
+  cities = ["City 1", "City 2", "City 3"];
   supportLanguages = ["en", "ar", "fr", "ta", "hi"];
   currentLanguage: string;
 
@@ -269,7 +269,7 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
     if(this.shipping_type == 'inclusiveShipping'){
 
       if(this.shipping_charges){
-       
+
         this.estimatedPayoutwithShipping = Number(this.estimatedPayout) - Number(this.shipping_charges);
       }
     }else{
@@ -462,35 +462,35 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
     if (files && files.length > 0) {
       Array.from(files).forEach((file: File) => {
         const reader = new FileReader();
-  
+
         const newImage: ImageFile = { file, url: "", isUploading: true };
         this.allImages.push(newImage); // keep track of all selected images
-  
+
         reader.onload = () => {
           newImage.url = reader.result as string;
           newImage.isUploading = false;
         };
-  
+
         reader.readAsDataURL(file);
       });
     }
   }
-  
+
   setAsCoverImage(image: ImageFile) {
     // Set as cover image
     this.coverImage = { ...image };
-  
+
     // Remove from otherImages if already present
     this.otherImages = this.otherImages.filter(img => img.url !== image.url);
-  
+
     // Add all other images (excluding cover) into otherImages
     this.otherImages = this.allImages.filter(img => img.url !== image.url);
   }
-  
+
   removeImage(image: ImageFile) {
     this.allImages = this.allImages.filter(img => img.url !== image.url);
     this.otherImages = this.otherImages.filter(img => img.url !== image.url);
-  
+
     if (this.coverImage?.url === image.url) {
       this.coverImage = null;
     }
@@ -1055,15 +1055,15 @@ currentStepper:any='';
         .setValue(this.productDetails.clasp_material);
 
       // billingForm
-      
+
 
       let citval = this.billingForm.get("city")?.value;
       if (!citval) {
         this.billingForm.get("city").setValue(this.productDetails.city || "");
       }
-      
+
       if(this.billingForm.get("billing_address")?.value){
-        
+
       }else{
         this.billingForm
         .get("billing_address")
@@ -1071,7 +1071,7 @@ currentStepper:any='';
       }
 
       if(this.billingForm.get("first_name")?.value){
-        
+
       }else{
         this.billingForm
         .get("first_name")
@@ -1079,7 +1079,7 @@ currentStepper:any='';
       }
 
       if(this.billingForm.get("last_name")?.value){
-        
+
       }else{
         this.billingForm
         .get("last_name")
@@ -1087,15 +1087,15 @@ currentStepper:any='';
       }
 
       if(this.billingForm.get("street")?.value){
-        
+
       }else{
         this.billingForm
           .get("street")
           .setValue(this.productDetails.street || "");
       }
-       
+
       if(this.billingForm.get("street_line_2")?.value){
-        
+
       }else{
         this.billingForm
         .get("street_line_2")
@@ -1103,15 +1103,15 @@ currentStepper:any='';
       }
 
       if(this.billingForm.get("zip_code")?.value){
-        
+
       }else{
         this.billingForm
         .get("zip_code")
         .setValue(this.productDetails.zip_code || "");
       }
-        
 
-      
+
+
 
       // PriceandShipment
       this.watchPrice = this.productDetails.price;
@@ -1196,26 +1196,26 @@ currentStepper:any='';
         this.billingForm
           .get("billing_address")
           .setValue(this.billingInformationDetails.billing_address || "");
-  
+
         this.billingForm
           .get("first_name")
           .setValue(this.billingInformationDetails.first_name || "");
-  
+
         this.billingForm
           .get("last_name")
           .setValue(this.billingInformationDetails.last_name || "");
-  
+
         this.billingForm
           .get("street")
           .setValue(this.billingInformationDetails.street || "");
         this.billingForm
           .get("street_line_2")
           .setValue(this.billingInformationDetails.street_line_2 || "");
-  
+
         this.billingForm
           .get("zip_code")
           .setValue(this.billingInformationDetails.zip_code || "");
-  
+
         this.billingForm
           .get("city")
           .setValue(this.billingInformationDetails.city || "");
@@ -1263,7 +1263,7 @@ currentStepper:any='';
     if (this.isAdminUser() == true) {
       this.isAdminLogin = true;
     }
-    
+
     if (history?.state) {
       if (history?.state?.ID) {
         this.productIDFromResponse = history.state.ID;
@@ -1470,7 +1470,7 @@ currentStepper:any='';
           );
       }
       this.listingForm.markAllAsTouched();
-      
+
       if (this.listingForm.valid) {
         if (this.isFromMyListingComponent) {
           const formData = {
@@ -1531,11 +1531,11 @@ currentStepper:any='';
           const control = this.listingForm.get(key);
           return control && control.invalid;
         });
-      
+
         if (firstInvalidControl) {
-        
+
           const control = this.listingForm.get(firstInvalidControl);
-          
+
           if(firstInvalidControl == "brand_id"){
             this.alertService.showAlert('warning',  `Please select a brand.`);
           }else if(firstInvalidControl == "category_ids"){
@@ -1545,7 +1545,7 @@ currentStepper:any='';
           }
         } else {
           // console.log("Form is valid, proceed with submission.");
-          this.alertService.showAlert("warning", "Enter Form Values");  
+          this.alertService.showAlert("warning", "Enter Form Values");
         }
       }
     } else if (Param === "watchDetails") {
@@ -1644,7 +1644,7 @@ currentStepper:any='';
           } else {
             this.alertService.showAlert("warning", "Error in adding Images");
           }
-   
+
         }
       );
     } else if (Param === "conditionGrading") {

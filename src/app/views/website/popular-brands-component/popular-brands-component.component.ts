@@ -3,6 +3,7 @@ import { Router } from "@angular/router";
 import { TranslateService } from "@ngx-translate/core";
 import { NgImageSliderComponent } from "ng-image-slider";
 import { environment } from "src/environments/environment";
+import { environment } from "src/environments/environment";
 import { HttpService } from "src/services/http/http.service";
 
 @Component({
@@ -23,6 +24,7 @@ export class PopularBrandsComponentComponent implements OnInit {
 
   activePromotions: any[] = []; // Array to store active promotions
   countdownTimers: any[] = []; // Array for storing countdown intervals
+  apipath= environment.apipath;
 
   constructor(
     public translateService: TranslateService,
@@ -184,7 +186,7 @@ export class PopularBrandsComponentComponent implements OnInit {
   highlightFirstImage() {
     const selectedImages = document.querySelectorAll(".img-div.image-popup");
     selectedImages.forEach((el) => el.classList.remove("highlight-first"));
-  
+
     if (selectedImages.length > 1) {
       const highlightIndex = 1;
       selectedImages[highlightIndex].classList.add("highlight-first");

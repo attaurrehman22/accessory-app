@@ -93,9 +93,9 @@
           [ngClass]="{ 'blur-image': item.url !== selectedImage, 'hover-remove-blur': true }"
           (click)="swapImages(item)"
         />
-        
-        
-      
+
+
+
           <!-- Display Video -->
           <video
             *ngIf="item.type === 'video'"
@@ -106,7 +106,7 @@
           ></video>
         </div>
       </div>
-      
+
     </div>
     <div
       *ngIf="productDetails"
@@ -1161,7 +1161,7 @@
           <div class="row text-center">
             <div class="col-md-4 poor-excelent-style-label" style="padding: 0 5px 0 5px">
               <p class="font-wight-600 font-size-14 color-2c3e50 text-left-style">
-               
+
                 {{ "buy_product.Cosmetic_Condition" | translate }}
               </p>
               <div *ngIf="translateService.currentLang == 'en'" class="progress">
@@ -1236,14 +1236,14 @@
                   class="font-wight-400 font-size-14 color-2c3e50"
                   style="margin-top: 7px"
                 >
-                  
+
                   {{ "buy_product.Poor" | translate }}
                 </p>
                 <p
                   class="font-wight-400 font-size-14 color-2c3e50"
                   style="margin-top: 7px"
                 >
-                  
+
                   {{ "buy_product.Excellent" | translate }}
                 </p>
               </div>
@@ -1252,9 +1252,9 @@
             <div class="col-md-4 poor-excelent-style-label" style="padding: 0 5px 0 5px">
               <p
                 class="font-wight-600 font-size-14 color-2c3e50 text-left-style"
-               
+
               >
-                
+
                 {{ "buy_product.Satisfaction" | translate }}
               </p>
               <div *ngIf="translateService.currentLang == 'en'" class="progress">
@@ -1344,7 +1344,7 @@
             <div class="col-md-4 poor-excelent-style-label" style="padding: 0 5px 0 5px">
               <p
                 class="font-wight-600 font-size-14 color-2c3e50 text-left-style"
-           
+
               >
               {{ "buy_product.Experience" | translate }}
               </p>
@@ -1488,12 +1488,12 @@
               >
               + <img src="../../../../assets/images/Saudi_Riyal_Symbol-2.svg" class="sar-icon-style" alt="SAR"/>
 
-              {{ watch.shipping_charges }} 
+              {{ watch.shipping_charges }}
                Shipping</span
             >
             <span *ngIf="!watch.shipping_charges" class="price color-6a6a6a"
               >
-              {{ watch?.shipping_charges || 'Without' }} 
+              {{ watch?.shipping_charges || 'Without' }}
                Shipping</span
             >
             <div class="price color-6a6a6a">Location</div>

@@ -20,21 +20,21 @@
                       <mat-label>Search</mat-label>
                       <input matInput [(ngModel)]="name" placeholder="" #input />
                     </mat-form-field>
-  
+
                     <mat-form-field appearance="outline">
                       <mat-label>Category</mat-label>
                       <mat-select [(ngModel)]="category_ids" multiple>
                         <mat-option *ngFor="let cat of categoryList" [value]="cat.id">{{cat.name}}</mat-option>
                       </mat-select>
                     </mat-form-field>
-  
+
                     <mat-form-field appearance="outline">
                       <mat-label>Brand</mat-label>
                       <mat-select [(ngModel)]="brand_ids" multiple>
                         <mat-option *ngFor="let brand of brandsList" [value]="brand.id">{{brand.name}}</mat-option>
                       </mat-select>
                     </mat-form-field>
-  
+
                     <mat-form-field appearance="outline">
                       <mat-label>Gender</mat-label>
                       <mat-select [(ngModel)]="watch_gender">
@@ -43,7 +43,7 @@
                         <mat-option value="Womens watch">Womens Watch</mat-option>
                       </mat-select>
                     </mat-form-field>
-  
+
                     <mat-form-field appearance="outline">
                       <mat-label>Sort By</mat-label>
                       <mat-select [(ngModel)]="sort_by">
@@ -52,7 +52,7 @@
                         <mat-option value="price">Price</mat-option>
                       </mat-select>
                     </mat-form-field>
-  
+
                     <mat-form-field appearance="outline">
                       <mat-label>Order By</mat-label>
                       <mat-select [(ngModel)]="sort_order">
@@ -60,7 +60,7 @@
                         <mat-option value="desc">Descending</mat-option>
                       </mat-select>
                     </mat-form-field>
-  
+
                     <button class="apply-filter-btn" (click)="loadData()">Apply Filter</button>
                     <button class="clear-filter-btn" (click)="ClearFilter()">Clear Filter</button>
                   </div>
@@ -91,19 +91,19 @@
                           {{ row?.name }}
                         </td>
                       </ng-container>
-  
+
                       <!-- Watch Type Column -->
                       <ng-container matColumnDef="watch_type">
                         <th mat-header-cell *matHeaderCellDef mat-sort-header>Watch Type</th>
                         <td mat-cell *matCellDef="let row">{{ row?.watch_type }}</td>
                       </ng-container>
-  
+
                       <!-- Brand Name Column -->
                       <ng-container matColumnDef="brand">
                         <th mat-header-cell *matHeaderCellDef mat-sort-header>Brand Name</th>
                         <td mat-cell *matCellDef="let row">{{ row?.brand?.name }}</td>
                       </ng-container>
-  
+
                       <!-- Cover Image Column -->
                       <ng-container matColumnDef="cover_image">
                         <th mat-header-cell *matHeaderCellDef>Cover Image</th>
@@ -111,43 +111,43 @@
                           <img style="height: 60px; width: 70px; border-radius: 10px; object-fit: cover;" [src]="apiUrl + row?.main_image" />
                         </td>
                       </ng-container>
-  
+
                       <!-- Created By Column -->
                       <ng-container matColumnDef="created_by">
                         <th mat-header-cell *matHeaderCellDef mat-sort-header>Created By</th>
                         <td mat-cell *matCellDef="let row">{{ row?.created_by?.name }}</td>
                       </ng-container>
-  
+
                       <!-- Published Date Column -->
                       <ng-container matColumnDef="published_date">
                         <th mat-header-cell *matHeaderCellDef mat-sort-header>Published Date</th>
                         <td mat-cell *matCellDef="let row">{{ row?.published_date | date: 'dd/MM/yyyy' }}</td>
                       </ng-container>
-  
+
                       <!-- Sale Status Column -->
                       <ng-container matColumnDef="sale_status">
                         <th mat-header-cell *matHeaderCellDef mat-sort-header>Sale Status</th>
                         <td mat-cell *matCellDef="let row">{{ row?.sale_status === 'reserved' ? 'Reserved' : row?.sale_status === 'for_sale' ? 'For Sale' : 'Sold' }}</td>
                       </ng-container>
-  
+
                       <!-- Model Column -->
                       <ng-container matColumnDef="model">
                         <th mat-header-cell *matHeaderCellDef mat-sort-header>Model</th>
                         <td mat-cell *matCellDef="let row">{{ row?.model }}</td>
                       </ng-container>
-  
+
                       <!-- Is Active Column -->
                       <ng-container matColumnDef="is_active">
                         <th mat-header-cell *matHeaderCellDef mat-sort-header>Is Active</th>
                         <td mat-cell *matCellDef="let row">{{ row?.is_active === 0 ? 'No' : 'Yes' }}</td>
                       </ng-container>
-  
+
                       <!-- Is Popular Column -->
                       <ng-container matColumnDef="popular_item">
                         <th mat-header-cell *matHeaderCellDef mat-sort-header>Is Popular</th>
                         <td mat-cell *matCellDef="let row">{{ row?.popular_item }}</td>
                       </ng-container>
-  
+
                       <!-- Action Column -->
                       <ng-container matColumnDef="action">
                         <th mat-header-cell *matHeaderCellDef>Action</th>
@@ -173,7 +173,7 @@
                               <mat-icon>refresh</mat-icon>
                               <span>Add to Popular</span>
                             </button>
-  
+
                            <button mat-menu-item (click)="addFeatureProduct(row)">
                               <mat-icon>refresh</mat-icon>
                               <span>Add To Feature</span>
@@ -181,16 +181,16 @@
                           </mat-menu>
                         </td>
                       </ng-container>
-  
+
                       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                       <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-  
+
                       <!-- Row shown when there is no matching data. -->
                       <!-- <tr class="mat-row" *matNoDataRow>
                         <td class="mat-cell" colspan="4">No data matching the filter "{{ input.value }}"</td>
                       </tr> -->
                     </table>
-  
+
                     <mat-paginator
                     [length]="resultsLength"
                     [pageSize]="pageSize"

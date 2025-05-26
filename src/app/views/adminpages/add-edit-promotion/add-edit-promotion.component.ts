@@ -21,6 +21,7 @@ export class AddEditPromotionComponent implements OnInit {
   promotionForm: FormGroup;
   labelMessage: any;
   selectedFile: File | null = null;
+  apipath = environment.apipath;
   previewImage: string | ArrayBuffer | null = null;
 promotionID:any;
   constructor(
@@ -88,7 +89,7 @@ promotionID:any;
       }else{
         this.selectedFile = file;
         this.promotionForm.get("promotion_banner")?.setValue(file);
-  
+
         // ✅ Preview image
         const reader = new FileReader();
         reader.onload = () => {
@@ -97,7 +98,7 @@ promotionID:any;
         reader.readAsDataURL(file);
       }
 
-      
+
     }
   }
 
@@ -186,7 +187,7 @@ promotionID:any;
   }
 
   cancel() {
-    
+
     this.dialogRef.close();
   }
 }

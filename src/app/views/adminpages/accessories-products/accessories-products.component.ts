@@ -147,13 +147,13 @@ export class AccessoriesProductsComponent
    this.http.getAllAccesriesInformation().subscribe(
       (res) => {
         this.allData = res.data;
-        
+
         this.allData.forEach((item) => {
           if (item.additional_images && typeof item.additional_images === 'string') {
             try {
               // Parse the string into an array
               const parsedImages = JSON.parse(item.additional_images);
-        
+
               // Then remove the backslashes if needed (though JSON.parse handles them)
               item.additional_images = parsedImages.map((image: string) =>
                 image.replace(/\\/g, "")
@@ -164,7 +164,7 @@ export class AccessoriesProductsComponent
             }
           }
         });
-        
+
 
         this.dataSource = new MatTableDataSource(this.allData);
         this.dataSource.paginator = this.paginator;
