@@ -1502,7 +1502,7 @@
           </div>
           
           <!-- Optional Cover Image Preview Box -->
-          <div class="cover-preview mt-5" *ngIf="coverImage?.url !== 'https://api.chronosouq.com/null'">
+          <div class="cover-preview mt-5" *ngIf="coverImage?.url !== nullImagePath">
             <p>{{ "create_product_listing.cover_image" | translate }}</p>
             <img [src]="coverImage.url" style="max-height: 150px;" alt="Cover Image" />
           </div>
@@ -1516,14 +1516,14 @@
                     <ng-container
                       *ngIf="
                         coverImage?.url &&
-                          coverImage.url !== 'https://api.chronosouq.com/null';
+                          coverImage.url !== nullImagePath;
                         else uploadPlaceholder
                       "
                     >
                       <img
                         *ngIf="
                           coverImage?.url &&
-                          coverImage.url !== 'https://api.chronosouq.com/null'
+                          coverImage.url !== nullImagePath
                         "
                         style="height: 100%; width: 100%; object-fit: cover"
                         [src]="coverImage.url"
@@ -1532,7 +1532,7 @@
                       <button
                         *ngIf="
                           coverImage?.url &&
-                          coverImage.url !== 'https://api.chronosouq.com/null'
+                          coverImage.url !== nullImagePath
                         "
                         class="delete-btn"
                         (click)="removeCoverImage()"
@@ -4786,7 +4786,7 @@
           </div>
           
           <!-- Optional Cover Image Preview Box -->
-          <div class="cover-preview mt-5" *ngIf="coverImage?.url !== 'https://api.chronosouq.com/null'">
+          <div class="cover-preview mt-5" *ngIf="coverImage?.url !== nullImagePath">
             <p>{{ "create_product_listing.cover_image" | translate }}</p>
             <img [src]="coverImage.url" style="max-height: 150px;" alt="Cover Image" />
           </div>
@@ -4801,14 +4801,14 @@
                   <ng-container
                     *ngIf="
                       coverImage?.url &&
-                        coverImage.url !== 'https://api.chronosouq.com/null';
+                        coverImage.url !== nullImagePath;
                       else uploadPlaceholder
                     "
                   >
                     <img
                       *ngIf="
                         coverImage?.url &&
-                        coverImage.url !== 'https://api.chronosouq.com/null'
+                        coverImage.url !== nullImagePath
                       "
                       style="height: 100%; width: 100%; object-fit: cover"
                       [src]="coverImage.url"
@@ -4817,7 +4817,7 @@
                     <button
                       *ngIf="
                         coverImage?.url &&
-                        coverImage.url !== 'https://api.chronosouq.com/null'
+                        coverImage.url !== nullImagePath
                       "
                       class="delete-btn"
                       (click)="removeCoverImage()"

@@ -4,6 +4,7 @@
 
 export const environment = {
   apipath:"https://api.chronosouq.com",
+  apiimagespath:"https://api.chronosouq.com/",
   production: false,
   firebase: {
     apiKey: "YOUR_API_KEY",

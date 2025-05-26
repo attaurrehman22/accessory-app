@@ -1,5 +1,6 @@
 import { Component, HostListener , OnInit } from "@angular/core";
 import { TranslateService } from "@ngx-translate/core";
+import { environment } from "src/environments/environment";
 import { HttpService } from "src/services/http/http.service";
 
 @Component({
@@ -8,6 +9,7 @@ import { HttpService } from "src/services/http/http.service";
   styleUrls: ["./explore-chronosouq-component.component.css"],
 })
 export class ExploreChronosouqComponentComponent implements OnInit{
+    apiUrl = environment.apiimagespath;
   selectedStep: number = 1;
   isSmallScreen = false;
   selectStep(step: number) {

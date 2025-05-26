@@ -1,6 +1,7 @@
 import { Component, ElementRef, HostListener, OnInit, ViewChild } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { TranslateService } from "@ngx-translate/core";
+import { environment } from "src/environments/environment";
 import { HttpService } from "src/services/http/http.service";
 import { LanguageService } from "src/services/lang-service/language.service";
 import { SearchServiceService } from "src/services/search-service/search-service.service";
@@ -11,6 +12,7 @@ import { SearchServiceService } from "src/services/search-service/search-service
   styleUrls: ["./product-list.component.css"],
 })
 export class ProductListComponent implements OnInit {
+   apiUrl = environment.apiimagespath;
   supportLanguages = ["en", "ar", "fr", "ta", "hi"];
   currentLanguage: string;
   showList: any;

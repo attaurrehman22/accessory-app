@@ -385,7 +385,7 @@
                   <img
                     class="img-fluid"
                     style="object-fit: scale-down !important"
-                    [src]="'https://api.chronosouq.com/' + listing?.main_image"
+                    [src]="apiUrl + listing?.main_image"
                     alt="{{ 'find_dream.img_alt' | translate }}"
                   />
                 </div>
@@ -468,7 +468,7 @@
                     <img
                       class="img-fluid"
                       style="object-fit: scale-down !important"
-                      [src]="'https://api.chronosouq.com/' + listing?.product?.main_image"
+                      [src]="apiUrl + listing?.product?.main_image"
                       alt="{{ 'find_dream.img_alt' | translate }}"
                     />
                   </div>
@@ -543,7 +543,7 @@
                       <img
                         style="height: 64px; width: 64px; object-fit: contain"
                         [src]="
-                          'https://api.chronosouq.com/' +
+                          apiUrl +
                           productDetails.main_image
                         "
                         src="../../../../assets/images/apple-logo.png"
@@ -725,7 +725,7 @@
                     <img
                       class="img-fluid"
                       style="object-fit: scale-down !important"
-                      [src]="'https://api.chronosouq.com/' + listing?.product?.main_image"
+                      [src]="apiUrl + listing?.product?.main_image"
                       alt="{{ 'find_dream.img_alt' | translate }}"
                     />
                   </div>
@@ -806,7 +806,7 @@
                       <img
                         style="height: 64px; width: 64px; object-fit: contain"
                         [src]="
-                          'https://api.chronosouq.com/' +
+                          apiUrl +
                           productDetails.main_image
                         "
                         alt="img"
@@ -969,7 +969,7 @@
                   <img
                     class="img-fluid"
                     style="object-fit: scale-down !important"
-                    [src]="'https://api.chronosouq.com/' + listing.main_image"
+                    [src]="apiUrl + listing.main_image"
                     alt="{{ 'find_dream.img_alt' | translate }}"
                   />
                 </div>
@@ -1126,7 +1126,7 @@
         <img
           style="height: 64px; width: 64px; object-fit: contain"
           [src]="
-            'https://api.chronosouq.com/' + orderDetails?.product?.main_image
+            apiUrl + orderDetails?.product?.main_image
           "
           class="img-fluid rounded"
           alt="Product Image"
@@ -1208,7 +1208,7 @@
         <img
           style="height: 64px; width: 64px; object-fit: contain"
           [src]="
-            'https://api.chronosouq.com/' + orderDetails?.product?.main_image
+            apiUrl + orderDetails?.product?.main_image
           "
           class="img-fluid rounded"
           alt="Product Image"

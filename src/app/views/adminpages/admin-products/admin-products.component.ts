@@ -18,6 +18,7 @@ import { SidebarService } from "src/services/sidebar.service";
 import { AddEditPromotionComponent } from "../add-edit-promotion/add-edit-promotion.component";
 import { ConfirmationModelComponent } from "../../modal/confirmation-model/confirmation-model.component";
 import { RejectProductModalComponent } from "../../modal/reject-product-modal/reject-product-modal.component";
+import { environment } from "src/environments/environment";
 
 export interface UserData {
   name: any;
@@ -57,6 +58,7 @@ export class AdminProductsComponent
     "isPromoteActive",
     "action",
   ];
+   apiUrl = environment.apiimagespath;
   dataSource = new MatTableDataSource<any>();
   resultsLength = 0;
   pageSize = 5;

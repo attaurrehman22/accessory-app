@@ -59,7 +59,7 @@
             <div *ngIf="noMessageDetails; else noImage">
               <img
                 [src]="
-                  'https://api.chronosouq.com/' + productDeatils.main_image
+                  apiUrl + productDeatils.main_image
                 "
                 alt="chat image"
                 class="img-thumbnail"
@@ -148,7 +148,7 @@
           >
             <div *ngIf="chat.product.main_image; else noImage">
               <img
-                [src]="'https://api.chronosouq.com/' + chat.product.main_image"
+                [src]="apiUrl + chat.product.main_image"
                 alt="chat image"
                 class="img-thumbnail"
                 style="width: 90px; height: 90px"
@@ -252,7 +252,7 @@
                   >
                     <img
                       [src]="
-                        'https://api.chronosouq.com/' +
+                        apiUrl +
                         getProductDetails.created_by.user_image
                       "
                       alt="chat image"
@@ -307,7 +307,7 @@
                   >
                     <img
                       [src]="
-                        'https://api.chronosouq.com/' +
+                        apiUrl +
                         getProductDetails.main_image
                       "
                       alt="chat image"
@@ -404,7 +404,7 @@
                           <img
                             *ngIf="!isArray(message.attachments)"
                             [src]="
-                              'https://api.chronosouq.com/' +
+                              apiUrl +
                               message.attachments
                             "
                             class="attachment-stl"
@@ -414,7 +414,7 @@
                           <div *ngIf="isArray(message.attachments)">
                             <img
                               *ngFor="let attachment of message.attachments"
-                              [src]="'https://api.chronosouq.com/' + attachment"
+                              [src]="apiUrl + attachment"
                               class="attachment-stl"
                               alt="Attachment"
                             />
@@ -450,7 +450,7 @@
                               >
                                 <img
                                   [src]="
-                                    'https://api.chronosouq.com/' +
+                                    apiUrl +
                                     customOfferDetails?.sender.img
                                   "
                                   alt="IMG"
@@ -804,7 +804,7 @@
                     >
                       <img
                         [src]="
-                          'https://api.chronosouq.com/' +
+                          apiUrl +
                           getProductDetails.main_image
                         "
                         alt="chat image"
@@ -953,7 +953,7 @@
               >
                 <img
                   [src]="
-                    'https://api.chronosouq.com/' +
+                    apiUrl +
                     getProductDetails.created_by.user_image
                   "
                   alt="chat image"
@@ -1008,7 +1008,7 @@
               >
                 <img
                   [src]="
-                    'https://api.chronosouq.com/' + getProductDetails.main_image
+                    apiUrl + getProductDetails.main_image
                   "
                   alt="chat image"
                   class="img-thumbnail"
@@ -1097,7 +1097,7 @@
                       <img
                         *ngIf="!isArray(message.attachments)"
                         [src]="
-                          'https://api.chronosouq.com/' + message.attachments
+                          apiUrl + message.attachments
                         "
                         class="attachment-stl"
                         alt="Attachment"
@@ -1106,7 +1106,7 @@
                       <div *ngIf="isArray(message.attachments)">
                         <img
                           *ngFor="let attachment of message.attachments"
-                          [src]="'https://api.chronosouq.com/' + attachment"
+                          [src]="apiUrl + attachment"
                           class="attachment-stl"
                           alt="Attachment"
                         />
@@ -1142,7 +1142,7 @@
                           >
                             <img
                               [src]="
-                                'https://api.chronosouq.com/' +
+                                apiUrl +
                                 customOfferDetails?.sender.img
                               "
                               alt="IMG"
@@ -1441,7 +1441,7 @@
                 >
                   <img
                     [src]="
-                      'https://api.chronosouq.com/' +
+                      apiUrl +
                       getProductDetails.main_image
                     "
                     alt="chat image"

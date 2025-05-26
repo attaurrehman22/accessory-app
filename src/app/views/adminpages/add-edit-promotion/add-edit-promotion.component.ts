@@ -9,6 +9,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 import { AlertsServicesService } from "src/services/alerts-service/alerts-services.service";
 import { HttpService } from "src/services/http/http.service";
 import * as moment from "moment";
+import { environment } from "src/environments/environment";
 
 @Component({
   selector: "app-add-edit-promotion",
@@ -16,6 +17,7 @@ import * as moment from "moment";
   styleUrls: ["./add-edit-promotion.component.css"],
 })
 export class AddEditPromotionComponent implements OnInit {
+   apiUrl = environment.apiimagespath;
   promotionForm: FormGroup;
   labelMessage: any;
   selectedFile: File | null = null;
@@ -65,7 +67,7 @@ promotionID:any;
 
       if (data?.data?.promotion_banner) {
         this.previewImage =
-          "https://api.chronosouq.com/" + data.data.promotion_banner;
+          this.apiUrl + data.data.promotion_banner;
       }
     }
   }

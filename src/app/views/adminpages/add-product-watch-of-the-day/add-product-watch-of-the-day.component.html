@@ -100,14 +100,14 @@
           <ng-container
             *ngIf="
               with_out_attribute?.url &&
-                with_out_attribute.url !== 'https://api.chronosouq.com/null';
+                with_out_attribute.url !== nullimagesUrl;
               else uploadPlaceholderOne
             "
           >
             <img
               *ngIf="
                 with_out_attribute?.url &&
-                with_out_attribute.url !== 'https://api.chronosouq.com/null'
+                with_out_attribute.url !== nullimagesUrl
               "
               style="height: 100%; width: 100%; object-fit: cover"
               [src]="with_out_attribute.url"
@@ -117,7 +117,7 @@
             <button
               *ngIf="
                 with_out_attribute?.url &&
-                with_out_attribute.url !== 'https://api.chronosouq.com/null'
+                with_out_attribute.url !== nullimagesUrl
               "
               class="delete-btn"
               (click)="removewithOutAttributeImage()"
@@ -144,14 +144,14 @@
           <ng-container
             *ngIf="
               coverImage?.url &&
-                coverImage.url !== 'https://api.chronosouq.com/null';
+                coverImage.url !== nullimagesUrl;
               else uploadPlaceholder
             "
           >
             <img
               *ngIf="
                 coverImage?.url &&
-                coverImage.url !== 'https://api.chronosouq.com/null'
+                coverImage.url !== nullimagesUrl
               "
               style="height: 100%; width: 100%; object-fit: cover"
               [src]="coverImage.url"
@@ -161,7 +161,7 @@
             <button
               *ngIf="
                 coverImage?.url &&
-                coverImage.url !== 'https://api.chronosouq.com/null'
+                coverImage.url !== nullimagesUrl
               "
               class="delete-btn-two"
               (click)="removeCoverImage()"

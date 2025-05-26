@@ -2,6 +2,7 @@ import { HttpClient } from "@angular/common/http";
 import { Component, ElementRef, HostListener, Input, OnInit,ViewChild,ViewEncapsulation } from "@angular/core";
 import { TranslateService } from "@ngx-translate/core";
 import { Subscription } from "rxjs";
+import { environment } from "src/environments/environment";
 import { HttpService } from "src/services/http/http.service";
 
 @Component({
@@ -10,6 +11,7 @@ import { HttpService } from "src/services/http/http.service";
   styleUrls: ["./most-popular-models-component.component.css"]
 })
 export class MostPopularModelsComponentComponent implements OnInit {
+  apiUrl = environment.apiimagespath;
     @Input() imageWidth: number = 300;
     @Input() speed: number = 100;
     @Input() coins: boolean = false;
@@ -53,7 +55,7 @@ export class MostPopularModelsComponentComponent implements OnInit {
   
     private getAllPopularModels(): void {
       // Assuming `http.getTopBrandsData()` returns the response you mentioned
-      this.apiSubscription = this.http.get<any>('https://api.chronosouq.com/api/get-top-brands-data').subscribe(
+      this.apiSubscription = this.http.get<any>(`${this.apiUrl}api/get-top-brands-data`).subscribe(
         (res) => {
           if (res && res.top_brands) {
             // Process the response to extract cover_image URLs

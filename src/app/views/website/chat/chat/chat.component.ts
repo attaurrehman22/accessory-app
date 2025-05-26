@@ -11,6 +11,7 @@ import { ConfirmationModelComponent } from "src/app/views/modal/confirmation-mod
 import { ModelLoginComponent } from "src/app/views/auth/model-login/model-login.component";
 import { TranslateService } from "@ngx-translate/core";
 import { LanguageService } from "src/services/lang-service/language.service";
+import { environment } from "src/environments/environment";
 
 interface MessageFormData {
   product_id?: any;
@@ -26,6 +27,7 @@ interface MessageFormData {
   styleUrls: ["./chat.component.css"],
 })
 export class ChatComponent implements OnInit, AfterViewChecked {
+  apiUrl = environment.apiimagespath;
   supportLanguages = ["en", "ar", "fr", "ta", "hi"];
   currentLanguage: string;
   isActive: any = "All";

@@ -10,6 +10,7 @@ import { AddProductWatchOfTheDayComponent } from '../add-product-watch-of-the-da
 import { Subscription } from 'rxjs';
 import { SidebarService } from 'src/services/sidebar.service';
 import { ConfirmationModelComponent } from '../../modal/confirmation-model/confirmation-model.component';
+import { environment } from 'src/environments/environment';
 
 export interface UserData {
   name: any;
@@ -30,6 +31,7 @@ export interface UserData {
   styleUrls: ['./watch-of-the-day.component.css']
 })
 export class WatchOfTheDayComponent implements OnInit, OnDestroy {
+   apiUrl = environment.apiimagespath;
  displayedColumns: string[] = [
     "name",
     "slug",

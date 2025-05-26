@@ -4,6 +4,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 import { AlertsServicesService } from "src/services/alerts-service/alerts-services.service";
 import { HttpService } from "src/services/http/http.service";
 import { priceValidator } from "../../validator/string.validator";
+import { environment } from "src/environments/environment";
 
 @Component({
   selector: "app-custom-offer",
@@ -11,6 +12,7 @@ import { priceValidator } from "../../validator/string.validator";
   styleUrls: ["./custom-offer.component.css"],
 })
 export class CustomOfferComponent {
+   apiUrl = environment.apiimagespath;
   offerForm: FormGroup;
   compoName: any;
   productPrice:any;

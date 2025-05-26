@@ -20,12 +20,15 @@ import {
   MatDialog,
   MatDialogRef,
 } from "@angular/material/dialog";
+import { environment } from "src/environments/environment";
 @Component({
   selector: "app-add-product-watch-of-the-day",
   templateUrl: "./add-product-watch-of-the-day.component.html",
   styleUrls: ["./add-product-watch-of-the-day.component.css"],
 })
 export class AddProductWatchOfTheDayComponent {
+  apiUrl = environment.apiimagespath;
+  nullimagesUrl = this.apiUrl + 'null'
   allData: any;
   watchDayForm: FormGroup;
   product_id: FormControl = new FormControl("", [Validators.required]);
@@ -102,12 +105,12 @@ export class AddProductWatchOfTheDayComponent {
       }
       this.coverImage = {
         file: null,
-        url: "https://api.chronosouq.com/" + this.detailsofProduct.banner_img,
+        url: this.apiUrl + this.detailsofProduct.banner_img,
       };
       this.with_out_attribute = {
         file: null,
         url:
-          "https://api.chronosouq.com/" +
+          this.apiUrl +
           this.detailsofProduct.with_out_attribute,
       };
     }

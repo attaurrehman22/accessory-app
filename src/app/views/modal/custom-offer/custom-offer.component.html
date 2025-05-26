@@ -33,7 +33,7 @@
     <div class="">
       <ng-container *ngIf="getProductDetails.main_image; else fallbackImage">
         <img
-          [src]="'https://api.chronosouq.com/' + getProductDetails?.main_image"
+          [src]="apiUrl + getProductDetails?.main_image"
           alt="chat image"
           class="img-thumbnail"
           style="width: 48px; height: 48px; border-radius: 30px"

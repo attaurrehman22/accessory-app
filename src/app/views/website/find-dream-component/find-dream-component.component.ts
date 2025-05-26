@@ -1,6 +1,7 @@
 import { Component, HostListener, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { TranslateService } from "@ngx-translate/core";
+import { environment } from "src/environments/environment";
 import { HttpService } from "src/services/http/http.service";
 import { LanguageService } from "src/services/lang-service/language.service";
 
@@ -10,6 +11,7 @@ import { LanguageService } from "src/services/lang-service/language.service";
   styleUrls: ["./find-dream-component.component.css"],
 })
 export class eamFindDreamComponentComponent implements OnInit {
+  apiUrl = environment.apiimagespath;
   supportLanguages = ["en", "ar", "fr", "ta", "hi"];
   currentLanguage: string;
   staticList: any;

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
+import { environment } from 'src/environments/environment';
 import { AlertsServicesService } from 'src/services/alerts-service/alerts-services.service';
 import { HttpService } from 'src/services/http/http.service';
 import { LanguageService } from 'src/services/lang-service/language.service';
@@ -11,6 +12,7 @@ import { LanguageService } from 'src/services/lang-service/language.service';
   styleUrls: ['./accessorie-detail.component.css']
 })
 export class AccessorieDetailComponent implements OnInit {
+  apiUrl = environment.apiimagespath;
   supportLanguages = ["en", "ar", "fr", "ta", "hi"];
   currentLanguage: string;
   productDetails: any;

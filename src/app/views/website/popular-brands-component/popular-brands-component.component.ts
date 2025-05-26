@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from "@angular/core";
 import { Router } from "@angular/router";
 import { TranslateService } from "@ngx-translate/core";
 import { NgImageSliderComponent } from "ng-image-slider";
+import { environment } from "src/environments/environment";
 import { HttpService } from "src/services/http/http.service";
 
 @Component({
@@ -10,6 +11,7 @@ import { HttpService } from "src/services/http/http.service";
   styleUrls: ["./popular-brands-component.component.css"],
 })
 export class PopularBrandsComponentComponent implements OnInit {
+    apiUrl = environment.apiimagespath;
   products: any[] = [];
   responsiveOptions: any[] = [];
   targetDate: Date;
@@ -155,10 +157,10 @@ export class PopularBrandsComponentComponent implements OnInit {
           .filter((product: any) => product?.promotion_banner) // Filter products with promotion_banner
           .map((product: any) => ({
             image:
-              "https://api.chronosouq.com/" +
+              this.apiUrl +
               product.promotion_banner.replace(/\\/g, ""),
             thumbImage:
-              "https://api.chronosouq.com/" +
+              this.apiUrl +
               product.promotion_banner.replace(/\\/g, ""),
             title: product.promotion_type,
             alt: product.name,

@@ -8,6 +8,7 @@ import { AlertsServicesService } from "src/services/alerts-service/alerts-servic
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { TranslateService } from "@ngx-translate/core";
 import { LanguageService } from "src/services/lang-service/language.service";
+import { environment } from "src/environments/environment";
 
 @Component({
   selector: "app-my-listing-details",
@@ -15,6 +16,7 @@ import { LanguageService } from "src/services/lang-service/language.service";
   styleUrls: ["./my-listing-details.component.css"],
 })
 export class MyListingDetailsComponent implements OnInit {
+  apiUrl = environment.apiimagespath;
 
   supportLanguages = ["en", "ar", "fr", "ta", "hi"];
   currentLanguage: string;

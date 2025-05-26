@@ -8,6 +8,7 @@ import {
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from "@angular/material/dialog";
 import { DomSanitizer, SafeHtml } from "@angular/platform-browser";
 import { Router } from "@angular/router";
+import { environment } from "src/environments/environment";
 import { AlertsServicesService } from "src/services/alerts-service/alerts-services.service";
 import { HttpService } from "src/services/http/http.service";
 
@@ -17,6 +18,7 @@ import { HttpService } from "src/services/http/http.service";
   styleUrls: ["./admin-brands-product.component.css"],
 })
 export class AdminBrandsProductComponent {
+   apiUrl = environment.apiimagespath;
   form: FormGroup;
   selectedFile: File | null = null;
   selectedSvgFile: File | null = null;
@@ -94,7 +96,7 @@ export class AdminBrandsProductComponent {
   populateForm(data: any) {
     const isActive = data.is_active === 1 ? true : false;
     const isTopBrand = data.top_brand === 1 ? true : false;
-    this.previewImage = "https://api.chronosouq.com/" + this.data.cover_image;
+    this.previewImage = this.apiUrl + this.data.cover_image;
     this.form.patchValue({
       name: data.name,
       slug: data.slug,

@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { HttpService } from 'src/services/http/http.service';
 import { LanguageService } from "src/services/lang-service/language.service";
 import { TranslateService } from "@ngx-translate/core";
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-new-arrivals',
@@ -10,6 +11,7 @@ import { TranslateService } from "@ngx-translate/core";
   styleUrls: ['./new-arrivals.component.css']
 })
 export class NewArrivalsComponent {
+   apiUrl = environment.apiimagespath;
   supportLanguages = ["en", "ar", "fr", "ta", "hi"];
   currentLanguage: string;
   showList: any;

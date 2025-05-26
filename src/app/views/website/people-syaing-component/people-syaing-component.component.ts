@@ -9,12 +9,14 @@ import { TranslateService } from "@ngx-translate/core";
 import { HttpService } from "src/services/http/http.service";
 import { LanguageService } from "src/services/lang-service/language.service";
 import { Carousel } from 'bootstrap';
+import { environment } from "src/environments/environment";
 @Component({
   selector: "app-people-syaing-component",
   templateUrl: "./people-syaing-component.component.html",
   styleUrls: ["./people-syaing-component.component.css"],
 })
 export class PeopleSyaingComponentComponent implements AfterViewInit, OnInit {
+    apiUrl = environment.apiimagespath;
   @ViewChild("testimonialCarousel", { static: false }) carousel!: ElementRef;
   carouselInstance: any;
   supportLanguages = ["en", "ar", "fr", "ta", "hi"];

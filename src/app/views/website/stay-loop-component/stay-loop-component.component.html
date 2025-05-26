@@ -6,7 +6,7 @@
         <div class="carousel-item" *ngFor="let product of watchDetails; let i = index" [class.active]="i === 0">
           <div class="row w-100" [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }">
             <div [ngClass]="{ 'reverse-order-res-img': translateService.currentLang !== 'en' }">
-              <img [src]="'https://api.chronosouq.com/' + product?.banner_img" alt="" style="width: 100%; height: 500px; object-fit: scale-down" />
+              <img [src]="apiUrl + product?.banner_img" alt="" style="width: 100%; height: 500px; object-fit: scale-down" />
             </div>
           </div>
         </div>

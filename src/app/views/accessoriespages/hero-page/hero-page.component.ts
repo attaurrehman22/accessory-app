@@ -13,6 +13,7 @@ import { TranslateService } from "@ngx-translate/core";
 import { Subscription } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { ShoppingCartComponent } from '../../modal/shopping-cart/shopping-cart.component';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-hero-page',
@@ -20,6 +21,7 @@ import { ShoppingCartComponent } from '../../modal/shopping-cart/shopping-cart.c
   styleUrls: ['./hero-page.component.css']
 })
 export class HeroPageComponent {
+  apiUrl = environment.apiimagespath;
   isSmallScreen: boolean = false;
   isUserLogin: any = false;
   windowWidth: number = window.innerWidth;
@@ -142,7 +144,7 @@ export class HeroPageComponent {
 
   private getAllPopularModels(): void {
     // Assuming `http.getTopBrandsData()` returns the response you mentioned
-    this.apiSubscription = this.httpps.get<any>('https://api.chronosouq.com/api/get-top-brands-data').subscribe(
+    this.apiSubscription = this.httpps.get<any>(`${this.apiUrl}api/get-top-brands-data`).subscribe(
       (res) => {
         if (res && res.top_brands) {
           // Process the response to extract cover_image URLs

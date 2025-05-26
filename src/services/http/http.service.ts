@@ -157,7 +157,7 @@ export class HttpService implements OnInit {
     page: number = 1
   ): Observable<any> {
     return this.http.get(
-      `https://api.chronosouq.com/api/products/${productId}/similar?page=${page}`
+      `${this.apiUrl}/api/products/${productId}/similar?page=${page}`
     );
   }
 

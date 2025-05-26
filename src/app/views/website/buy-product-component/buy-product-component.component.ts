@@ -9,6 +9,7 @@ import { LanguageService } from "src/services/lang-service/language.service";
 import { CustomOfferComponent } from "../../modal/custom-offer/custom-offer.component";
 import { ConfirmationModelComponent } from "../../modal/confirmation-model/confirmation-model.component";
 import { OrderInitiatedModelComponent } from "../../modal/order-initiated-model/order-initiated-model.component";
+import { environment } from "src/environments/environment";
 
 @Component({
   selector: "app-buy-product-component",
@@ -16,6 +17,7 @@ import { OrderInitiatedModelComponent } from "../../modal/order-initiated-model/
   styleUrls: ["./buy-product-component.component.css"],
 })
 export class BuyProductComponentComponent implements OnInit {
+  apiUrl = environment.apiimagespath;
   supportLanguages = ["en", "ar", "fr", "ta", "hi"];
   cosmeticCondition: number;
   satisfaction: number;

@@ -108,7 +108,7 @@
                       <ng-container matColumnDef="cover_image">
                         <th mat-header-cell *matHeaderCellDef>Cover Image</th>
                         <td mat-cell *matCellDef="let row">
-                          <img style="height: 60px; width: 70px; border-radius: 10px; object-fit: cover;" [src]="'https://api.chronosouq.com/' + row?.main_image" />
+                          <img style="height: 60px; width: 70px; border-radius: 10px; object-fit: cover;" [src]="apiUrl + row?.main_image" />
                         </td>
                       </ng-container>
   

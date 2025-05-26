@@ -6,6 +6,7 @@ import {
   Validators,
 } from "@angular/forms";
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from "@angular/material/dialog";
+import { environment } from "src/environments/environment";
 import { AlertsServicesService } from "src/services/alerts-service/alerts-services.service";
 
 @Component({
@@ -14,6 +15,7 @@ import { AlertsServicesService } from "src/services/alerts-service/alerts-servic
   styleUrls: ["./admin-add-product.component.css"],
 })
 export class AdminAddProductComponent {
+  apiUrl = environment.apiimagespath;
   product:any;
   productMainImage: any;
   thumbnails: string[] = [];

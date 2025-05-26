@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { TranslateService } from "@ngx-translate/core";
+import { environment } from "src/environments/environment";
 import { HttpService } from "src/services/http/http.service";
 @Component({
   selector: "app-stay-loop-component",
@@ -8,6 +9,7 @@ import { HttpService } from "src/services/http/http.service";
   styleUrls: ["./stay-loop-component.component.css"],
 })
 export class StayLoopComponentComponent implements OnInit {
+    apiUrl = environment.apiimagespath;
   watchDetails: any = [];
   activeProductIndex: number = 0;
   activeProductDetails: any;

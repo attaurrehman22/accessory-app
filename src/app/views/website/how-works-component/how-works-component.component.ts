@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-how-works-component',
@@ -7,6 +8,7 @@ import { TranslateService } from '@ngx-translate/core';
   styleUrls: ['./how-works-component.component.css']
 })
 export class HowWorksComponentComponent {
+    apiUrl = environment.apiimagespath;
   constructor(public translateService: TranslateService) {
     const supportedLanguages = ["en", "ar"]; // Add other languages if necessary
     this.translateService.addLangs(supportedLanguages);

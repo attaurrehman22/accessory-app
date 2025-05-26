@@ -27,6 +27,7 @@ import { CanComponentDeactivate } from "src/app/can-deactivate-form.guard";
 import { LoginStateService } from "src/services/login-service/login-state.service";
 import { Observable } from "rxjs";
 import { map, startWith } from "rxjs/operators";
+import { environment } from "src/environments/environment";
 
 interface ImageFile {
   file: File;
@@ -50,6 +51,8 @@ export interface Category {
   styleUrls: ["./add-new-product.component.css"],
 })
 export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
+  apiUrl = environment.apiimagespath;
+  nullImagePath = this.apiUrl + 'null'
   selectedSection: string = "listingDetails";
   selectedOptionsList: any = ["listingDetails"];
   formDirty = false;
@@ -1148,19 +1151,19 @@ currentStepper:any='';
       this.selectedOptions = scopeofDelivery;
 
       if(this.productDetails?.video){
-        this.videoUrl="https://api.chronosouq.com/" + this.productDetails.video
+        this.videoUrl=this.apiUrl + this.productDetails.video
       }
 
       this.coverImage = {
         file: null,
-        url: "https://api.chronosouq.com/" + this.productDetails.main_image,
+        url: this.apiUrl + this.productDetails.main_image,
       };
 
       if (this.productDetails.additional_images) {
         this.otherImages = this.productDetails.additional_images.map(
           (img: { url: string }) => ({
             file: null,
-            url: "https://api.chronosouq.com/" + img,
+            url: this.apiUrl + img,
             isUploading: false,
           })
         );
@@ -1173,12 +1176,12 @@ currentStepper:any='';
       if (this.productDetails?.proof_image_1) {
         this.isEnableProofofOwnerShip = true;
         this.imagePreviews[0] =
-          "https://api.chronosouq.com/" + this.productDetails.proof_image_1;
+          this.apiUrl + this.productDetails.proof_image_1;
       }
       if (this.productDetails?.proof_image_2) {
         this.isEnableProofofOwnerShip = true;
         this.imagePreviews[1] =
-          "https://api.chronosouq.com/" + this.productDetails.proof_image_2;
+          this.apiUrl + this.productDetails.proof_image_2;
       }
     }
   }
