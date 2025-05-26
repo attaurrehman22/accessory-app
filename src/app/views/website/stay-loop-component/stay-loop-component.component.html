@@ -1,12 +1,15 @@
-<div *ngIf="watchDetails && activeProductDetails" class="col-md-12 d-flex flex-wrap"
+<div class="col-md-12 d-flex flex-wrap"
      [ngClass]="{ 'reverse-order-top': translateService.currentLang !== 'en' }">
   <div class="col-md-5 bg-left">
     <div id="productCarousel" class="carousel slide" data-bs-ride="carousel" (slide.bs.carousel)="onSlide($event.to)">
       <div class="carousel-inner">
         <div class="carousel-item" *ngFor="let product of watchDetails; let i = index" [class.active]="i === 0">
           <div class="row w-100" [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }">
-            <div [ngClass]="{ 'reverse-order-res-img': translateService.currentLang !== 'en' }">
+            <div *ngIf="!dummyRecord" [ngClass]="{ 'reverse-order-res-img': translateService.currentLang !== 'en' }">
               <img [src]="apiUrl + product?.banner_img" alt="" style="width: 100%; height: 500px; object-fit: scale-down" />
+            </div>
+             <div *ngIf="dummyRecord" [ngClass]="{ 'reverse-order-res-img': translateService.currentLang !== 'en' }">
+              <img [src]="product?.banner_img" alt="" style="width: 100%; height: 500px; object-fit: scale-down" />
             </div>
           </div>
         </div>
@@ -42,7 +45,7 @@
           {{ activeProductDetails?.product?.price }}
         </h4>
 
-        <a class="buy-btn" [routerLink]="['/buy-product']" [queryParams]="{ id: activeProductDetails?.product?.id, name: 'featured' }">
+        <a *ngIf="!dummyRecord" class="buy-btn" [routerLink]="['/buy-product']" [queryParams]="{ id: activeProductDetails?.product?.id, name: 'featured' }">
           Buy Now
         </a>
       </div>

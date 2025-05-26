@@ -13,15 +13,37 @@ export class StayLoopComponentComponent implements OnInit {
   watchDetails: any = [];
   activeProductIndex: number = 0;
   activeProductDetails: any;
+  dummyRecord:boolean = false;
 
   ngOnInit(): void {
     this.getWatchOftheDay();
+
+    if(this.watchDetails.length == 0){
+      this.watchDetails = [
+        {
+          banner_img: "assets/images/dummy-watch-of-the-day.svg",
+          background_color: "#1a1a1a",
+          arabic_text: "هذه ساعة أنيقة مصممة خصيصًا لعشاق الأناقة. تأتي مع تصميم كلاسيكي وميزات حديثة.",
+          english_text: "A stunning blend of precision and artistry with a 43mm case, 150m water resistance, and automatic movement. Its titanium world map dial features intricate textures and colors, with 24-hour and time zone indicators.",
+          type: "Luxury Watch",
+          product: {
+            id: 101,
+            name: "Omega Seamaster",
+            price: 15499
+          }
+        }
+      ];
+      this.dummyRecord =true
+      // Set first product as active
+      this.activeProductDetails = this.watchDetails[0];
+    }
   }
 
   getWatchOftheDay() {
     this.http.getWatchOfTheDay().subscribe(
       (res) => {
         if(res?.data){
+          this.dummyRecord =false;
           this.watchDetails = res.data;
           this.watchDetails.map((item: any) => {
             if (item.banner_img) {

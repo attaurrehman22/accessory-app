@@ -1,6 +1,7 @@
 <div
   class="global-main-wraper d-flex flex-wrap justify-content-between mt-5 mb-5"
   [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }"
+  *ngIf="allProducts.length > 0"
 >
   <div class="container d-flex flex-wrap justify-content-center small-screen-margin">
     <div class="col-lg-8 col-md-10 col-sm-12">
