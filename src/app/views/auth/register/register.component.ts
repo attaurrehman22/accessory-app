@@ -123,7 +123,11 @@ export class RegisterComponent implements OnInit {
           }
         );
     } else {
-      this.alertService.showAlert("warning", "Enter Valid Form Values");
+      if (this.translateService.currentLang == "en") {
+        this.alertService.showAlert("warning", "Please Enter Valid Form Values");
+      }else{
+           this.alertService.showAlert("warning", "يرجى إدخال قيم صحيحة في النموذج");
+      }
     }
   }
 }

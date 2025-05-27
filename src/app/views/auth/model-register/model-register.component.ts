@@ -132,12 +132,20 @@ export class ModelRegisterComponent implements OnInit {
           this.dialogRef.close();
         },
         (error) => {
-          this.alertService.showAlert("warning", "Enter Form Values");
+           if (this.translateService.currentLang == "en") {
+        this.alertService.showAlert("warning", "Please Enter Valid Form Values");
+      }else{
+           this.alertService.showAlert("warning", "يرجى إدخال قيم صحيحة في النموذج");
+      }
           console.error("Registration error", error);
         }
       );
     } else {
-      this.alertService.showAlert("warning", "Enter Form Values");
+       if (this.translateService.currentLang == "en") {
+        this.alertService.showAlert("warning", "Please Enter Valid Form Values");
+      }else{
+           this.alertService.showAlert("warning", "يرجى إدخال قيم صحيحة في النموذج");
+      }
     }
   }
 

@@ -1388,10 +1388,17 @@ currentStepper:any='';
       const fileExtension = file.name.split(".").pop()?.toLowerCase();
 
       if (!fileExtension || !allowedExtensions.includes(fileExtension)) {
+        if (this.translateService.currentLang == "en") {
+          this.alertService.showAlert(
+            "warning",
+            "Invalid file type. Please select an image with one of the following extensions: jpeg, png, jpg, gif, svg."
+          );
+        }else{
         this.alertService.showAlert(
-          "warning",
-          "Invalid file type. Please select an image with one of the following extensions: jpeg, png, jpg, gif, svg."
-        );
+            "warning",
+            "نوع الملف غير صالح. يرجى اختيار صورة بإحدى الصيغ التالية: jpeg، png، jpg، gif، svg."
+          );
+        }
         return;
       }
 
@@ -1481,10 +1488,17 @@ currentStepper:any='';
             (res) => {
               this.productIDFromResponse = res.data.id;
               localStorage.setItem("productID", res.data.id);
+              if (this.translateService.currentLang == "en") {
+                this.alertService.showAlert(
+                  "success",
+                  "Listing Details Add Successfully"
+                );
+              }else{
               this.alertService.showAlert(
-                "success",
-                "Listing Details Add Successfully"
-              );
+                  "success",
+                  "تمت إضافة تفاصيل القائمة بنجاح"
+                );
+              }
 
               this.formDirty = true;
               this.selectedOptionsList.push("watchDetails");
@@ -1495,10 +1509,17 @@ currentStepper:any='';
               this.selectSection("watchDetails");
             },
             (err) => {
-              this.alertService.showAlert(
-                "danger",
-                "Error in adding listing details"
-              );
+               if (this.translateService.currentLang == "en") {
+                 this.alertService.showAlert(
+                   "warning",
+                   "Error in adding listing details"
+                 );
+               }else{
+                this.alertService.showAlert(
+                   "warning",
+                   "حدث خطأ أثناء إضافة تفاصيل القائمة"
+                 );
+               }
             }
           );
         } else {
@@ -1506,10 +1527,17 @@ currentStepper:any='';
             (res) => {
               this.productIDFromResponse = res.id;
               localStorage.setItem("productID", res.id);
-              this.alertService.showAlert(
-                "success",
-                "Listing Details Add Successfully"
-              );
+               if (this.translateService.currentLang == "en") {
+                 this.alertService.showAlert(
+                   "success",
+                   "Listing Details Add Successfully"
+                 );
+               }else{
+                 this.alertService.showAlert(
+                   "success",
+                   "تم إضافة تفاصيل القائمة بنجاح"
+                 );
+               }
               this.formDirty = true;
               this.selectedOptionsList.push("watchDetails");
               localStorage.setItem(
@@ -1519,10 +1547,17 @@ currentStepper:any='';
               this.selectSection("watchDetails");
             },
             (err) => {
-              this.alertService.showAlert(
-                "danger",
-                "Error in adding listing details"
-              );
+              if (this.translateService.currentLang == "en") {
+                this.alertService.showAlert(
+                  "warning",
+                  "Error in adding listing details"
+                );
+              }else{
+                 this.alertService.showAlert(
+                  "warning",
+                  "حدث خطأ أثناء إضافة تفاصيل القائمة"
+                );
+              }
             }
           );
         }
@@ -1537,15 +1572,31 @@ currentStepper:any='';
           const control = this.listingForm.get(firstInvalidControl);
 
           if(firstInvalidControl == "brand_id"){
-            this.alertService.showAlert('warning',  `Please select a brand.`);
+            if (this.translateService.currentLang == "en") {
+              this.alertService.showAlert('warning',  `Please select a brand.`);
+            }else{
+              this.alertService.showAlert('warning',  `يرجى اختيار علامة تجارية.`);
+            }
           }else if(firstInvalidControl == "category_ids"){
-            this.alertService.showAlert('warning',  `Please select a category.`);
+            if (this.translateService.currentLang == "en") {
+              this.alertService.showAlert('warning',  `Please select a category.`);
+            }else{
+              this.alertService.showAlert('warning',  `يرجى اختيار فئة.`);
+            }
           }else{
-            this.alertService.showAlert('warning',  `${firstInvalidControl}" is invalid.`);
+             if (this.translateService.currentLang == "en") {
+               this.alertService.showAlert('warning',  `${firstInvalidControl}" is invalid.`);
+             }else{
+              this.alertService.showAlert('warning',  ` ${firstInvalidControl}" غير صالح.`);
+             }
           }
         } else {
           // console.log("Form is valid, proceed with submission.");
-          this.alertService.showAlert("warning", "Enter Form Values");
+          if (this.translateService.currentLang == "en") {
+            this.alertService.showAlert("warning", "Enter Form Values");
+          }else{
+            this.alertService.showAlert("warning", "أدخل قيم النموذج");
+          }
         }
       }
     } else if (Param === "watchDetails") {
@@ -1564,10 +1615,17 @@ currentStepper:any='';
 
         this.http.addWatchDetails(formDataWithProductID).subscribe(
           (res) => {
-            this.alertService.showAlert(
-              "success",
-              "Watch Details Add Successfully"
-            );
+            if (this.translateService.currentLang == "en") {
+              this.alertService.showAlert(
+                "success",
+                "Watch Details Add Successfully"
+              );
+            }else{
+               this.alertService.showAlert(
+                "success",
+                "تمت إضافة تفاصيل الساعة بنجاح"
+              );
+            }
             this.selectedOptionsList.push("uploadImages");
             localStorage.setItem(
               "selectedOptionsList",
@@ -1576,10 +1634,17 @@ currentStepper:any='';
             this.selectSection("uploadImages");
           },
           (err) => {
-            this.alertService.showAlert(
-              "danger",
-              "Error in adding listing details"
-            );
+            if (this.translateService.currentLang == "en") {
+              this.alertService.showAlert(
+                "warning",
+                "Error in adding listing details"
+              );
+            }else{
+               this.alertService.showAlert(
+                "warning",
+                "حدث خطأ أثناء إضافة تفاصيل القائمة"
+              );
+            }
           }
         );
       } else {
@@ -1633,7 +1698,11 @@ currentStepper:any='';
 
       this.http.addUploadImages(formData).subscribe(
         (res) => {
-          this.alertService.showAlert("success", "Images Add Successfully");
+          if (this.translateService.currentLang == "en") {
+            this.alertService.showAlert("success", "Images Add Successfully");
+          }else{
+            this.alertService.showAlert("success", "تمت إضافة الصور بنجاح");
+          }
           this.selectedOptionsList.push("conditionGrading");
           localStorage.setItem("selectedOptionsList", this.selectedOptionsList);
           this.selectSection("conditionGrading");
@@ -1642,7 +1711,11 @@ currentStepper:any='';
           if (err && err.error) {
             this.alertService.showAlert("warning", `${err.error.error}`);
           } else {
-            this.alertService.showAlert("warning", "Error in adding Images");
+             if (this.translateService.currentLang == "en") {
+               this.alertService.showAlert("warning", "Error in adding Images");
+             }else{
+              this.alertService.showAlert("warning", "حدث خطأ أثناء إضافة الصور");
+             }
           }
 
         }
@@ -1664,10 +1737,17 @@ currentStepper:any='';
 
         this.http.addCondition(formData).subscribe(
           (res) => {
-            this.alertService.showAlert(
-              "success",
-              "Condition Add Successfully"
-            );
+             if (this.translateService.currentLang == "en") {
+               this.alertService.showAlert(
+                 "success",
+                 "Condition Add Successfully"
+               );
+             }else{
+                this.alertService.showAlert(
+                 "success",
+                 "تمت إضافة الحالة بنجاح"
+               );
+             }
             this.selectedOptionsList.push("scopeofdelivery");
             localStorage.setItem(
               "selectedOptionsList",
@@ -1676,11 +1756,19 @@ currentStepper:any='';
             this.selectSection("scopeofdelivery");
           },
           (err) => {
-            this.alertService.showAlert("danger", "Error in adding Condition");
+                 if (this.translateService.currentLang == "en") {
+                   this.alertService.showAlert("warning", "Error in adding Condition");
+                 }else{
+                    this.alertService.showAlert("warning", "حدث خطأ أثناء إضافة الحالة");
+                 }
           }
         );
       } else {
-        this.alertService.showAlert("warning", "Select any Option");
+        if (this.translateService.currentLang == "en") {
+          this.alertService.showAlert("warning", "Select any Option");
+        }else{
+           this.alertService.showAlert("warning", "اختر أي خيار");
+        }
       }
     } else if (Param === "scopeofdelivery") {
       if (this.selectedOptions) {
@@ -1698,7 +1786,11 @@ currentStepper:any='';
         };
         this.http.addScopeOfDelivery(formData).subscribe(
           (res) => {
-            this.alertService.showAlert("success", "Scope Add Successfully");
+            if (this.translateService.currentLang == "en") {
+              this.alertService.showAlert("success", "Scope Add Successfully");
+            }else{
+               this.alertService.showAlert("success", "تمت إضافة النطاق بنجاح");
+            }
             this.selectedOptionsList.push("proofofownership");
             this.selectSection("proofofownership");
             localStorage.setItem(
@@ -1707,11 +1799,19 @@ currentStepper:any='';
             );
           },
           (err) => {
-            this.alertService.showAlert("danger", "Error in adding Scope");
+            if (this.translateService.currentLang == "en") {
+              this.alertService.showAlert("warning", "Error in adding Scope");
+            }else{
+this.alertService.showAlert("warning", "حدث خطأ أثناء إضافة النطاق");
+            }
           }
         );
       } else {
-        this.alertService.showAlert("warning", "Select any Option");
+        if (this.translateService.currentLang == "en") {
+          this.alertService.showAlert("warning", "Select any Option");
+        }else{
+           this.alertService.showAlert("warning", "اختر أي خيار");
+        }
       }
     } else if (Param === "proofofownership") {
       if (!this.productIDFromResponse) {
@@ -1719,7 +1819,11 @@ currentStepper:any='';
       }
 
       if (!this.selectedFiles[0] || !this.selectedFiles[1]) {
-        this.alertService.showAlert("warning", "Add Images");
+               if (this.translateService.currentLang == "en") {
+                 this.alertService.showAlert("warning", "Add Images");
+               }else{
+                this.alertService.showAlert("warning", "إضافة صور");
+               }
       } else {
         const formData = new FormData();
         formData.append("product_id", this.productIDFromResponse);
@@ -1751,7 +1855,11 @@ currentStepper:any='';
         formData.append("isUpdate", isUpdate)
         this.http.addProffofOwnerShip(formData).subscribe(
           (res) => {
-            this.alertService.showAlert("success", "Images Added Successfully");
+                   if (this.translateService.currentLang == "en") {
+                     this.alertService.showAlert("success", "Images Added Successfully");
+                   }else{
+                      this.alertService.showAlert("success", "تمت إضافة الصور بنجاح");
+                   }
             this.selectedOptionsList.push("priceshipment");
             localStorage.setItem(
               "selectedOptionsList",
@@ -1760,7 +1868,11 @@ currentStepper:any='';
             this.selectSection("priceshipment");
           },
           (err) => {
-            this.alertService.showAlert("danger", "Error in adding Images");
+                   if (this.translateService.currentLang == "en") {
+                     this.alertService.showAlert("warning", "Error in adding Images");
+                   }else{
+                      this.alertService.showAlert("warning", "حدث خطأ أثناء إضافة الصور");
+                   }
           }
         );
       }
@@ -1785,14 +1897,22 @@ currentStepper:any='';
         };
       } else {
         if (!this.watchPrice || !this.shipping_type) {
-          this.alertService.showAlert("info", "Enter Form Values");
+                 if (this.translateService.currentLang == "en") {
+                   this.alertService.showAlert("info", "Enter Form Values");
+                 }else{
+                   this.alertService.showAlert("info", "أدخل قيم النموذج");
+                 }
           return;
         } else {
           if (
             this.shipping_type === "inclusiveShipping" &&
             !this.shipping_charges
           ) {
-            this.alertService.showAlert("info", "Enter Form Values");
+              if (this.translateService.currentLang == "en") {
+                   this.alertService.showAlert("info", "Enter Form Values");
+                 }else{
+                   this.alertService.showAlert("info", "أدخل قيم النموذج");
+                 }
             return;
           } else {
             // const isUpdate = this.selectedOptionsList.includes("priceshipment") ? "1" : "0";
@@ -1819,10 +1939,17 @@ currentStepper:any='';
       if (FormData) {
         this.http.addpriceAndShipment(formData).subscribe(
           (res) => {
-            this.alertService.showAlert(
-              "success",
-              "Price and Shipment Add Successfully"
-            );
+                   if (this.translateService.currentLang == "en") {
+                     this.alertService.showAlert(
+                       "success",
+                       "Price and Shipment Add Successfully"
+                     );
+                   }else{
+                    this.alertService.showAlert(
+                       "success",
+                       "تمت إضافة السعر والشحن بنجاح"
+                     );
+                   }
             // const isUpdate = this.selectedOptionsList.includes("priceshipment") ? "1" : "0";
             let isUpdate;
             if(this.currentStepper == 'priceAndShipment'){
@@ -1848,10 +1975,17 @@ currentStepper:any='';
             this.selectSection("billinginformation");
           },
           (err) => {
-            this.alertService.showAlert(
-              "danger",
-              "Error in adding Price and Shipment"
-            );
+            if (this.translateService.currentLang == "en") {
+              this.alertService.showAlert(
+                "warning",
+                "Error in adding Price and Shipment"
+              );
+            }else{
+               this.alertService.showAlert(
+                "warning",
+                "حدث خطأ أثناء إضافة السعر والشحن"
+              );
+            }
           }
         );
       }
@@ -1872,10 +2006,17 @@ currentStepper:any='';
 
         this.http.addbillingInformation(formDataWithProductID).subscribe(
           (res) => {
-            this.alertService.showAlert(
-              "success",
-              "Billing Info Add Successfully"
-            );
+            if (this.translateService.currentLang == "en") {
+              this.alertService.showAlert(
+                "success",
+                "Billing Info Add Successfully"
+              );
+            }else{
+               this.alertService.showAlert(
+                "success",
+                "تمت إضافة معلومات الفوترة بنجاح"
+              );
+            }
             this.matchBrandname();
             this.selectedOptionsList.push("summary");
             localStorage.setItem(
@@ -1885,14 +2026,25 @@ currentStepper:any='';
             this.selectSection("summary");
           },
           (err) => {
-            this.alertService.showAlert(
-              "danger",
-              "Error in adding Billing Info"
-            );
+            if (this.translateService.currentLang == "en") {
+              this.alertService.showAlert(
+                "warning",
+                "Error in adding Billing Info"
+              );
+            }else{
+               this.alertService.showAlert(
+                "warning",
+                "حدث خطأ أثناء إضافة معلومات الفوترة"
+              );
+            }
           }
         );
       } else {
-        this.alertService.showAlert("warning", "Add Form Values");
+        if (this.translateService.currentLang == "en") {
+          this.alertService.showAlert("warning", "Add Form Values");
+        }else{
+          this.alertService.showAlert("warning", "إضافة قيم النموذج");
+        }
       }
     } else if (Param === "summary") {
       const formProductID = {
@@ -1900,15 +2052,26 @@ currentStepper:any='';
       };
       this.http.addbpublishListing(formProductID).subscribe(
         (res) => {
-          this.alertService.showAlert(
-            "success",
-            "Product Publish Successfully"
-          );
+          if (this.translateService.currentLang == "en") {
+            this.alertService.showAlert(
+              "success",
+              "Product Publish Successfully"
+            );
+          }else{
+            this.alertService.showAlert(
+              "success",
+              "تم نشر المنتج بنجاح"
+            );
+          }
           this.formDirty = false;
           this.router.navigate(["/"]);
         },
         (err) => {
-          this.alertService.showAlert("danger", "Error in Product Publishing");
+          if (this.translateService.currentLang == "en") {
+            this.alertService.showAlert("warning", "Error in Product Publishing");
+          }else{
+               this.alertService.showAlert("warning", "حدث خطأ أثناء نشر المنتج");
+          }
         }
       );
     }
