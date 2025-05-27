@@ -1,8 +1,6 @@
 <div class="sidebar">
   <nav class="mt-2">
     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-      <!-- Add icons to the links using the .nav-icon class
-         with font-awesome or any other icon font library -->
       <li class="nav-item menu-open">
         <ul class="nav nav-treeview">
           <li class="nav-item">
@@ -44,60 +42,62 @@
           </li>
 
           <li class="nav-item">
-            <a routerLink="/admin/accessories" routerLinkActive="active" class="nav-link" (click)="onMenuItemClick()">
+            <a routerLink="/admin/accessories" routerLinkActive="active" class="nav-link" (click)="onMenuItemClickOfAccee()">
               <i class="far fa-circle nav-icon"></i>
               <p>Accessories</p>
             </a>
           </li>
+          
+          <div class="d-flex flex-column" *ngIf="isAccRoutShow" style="padding: 0 0 0 35px;">
+            <li class="nav-item">
+              <a routerLink="/admin/accessories" routerLinkActive="active" class="nav-link" (click)="onMenuItemClick()">
+              
+                <p>Accessories</p>
+              </a>
+            </li>
 
-          <li class="nav-item">
-            <a routerLink="/admin/accessory/categories" routerLinkActive="active" class="nav-link" (click)="onMenuItemClick()">
-              <i class="far fa-circle nav-icon"></i>
-              <p>Accessory Categories</p>
-            </a>
-          </li>
+            <li class="nav-item">
+              <a routerLink="/admin/accessory/categories" routerLinkActive="active" class="nav-link" (click)="onMenuItemClick()">
+              
+                <p>Categories</p>
+              </a>
+            </li>
 
-           <li class="nav-item">
-            <a routerLink="/admin/group" routerLinkActive="active" class="nav-link" (click)="onMenuItemClick()">
-              <i class="far fa-circle nav-icon"></i>
-              <p>Accessory Categories Group</p>
-            </a>
-          </li>
+            <li class="nav-item">
+              <a routerLink="/admin/group" routerLinkActive="active" class="nav-link" (click)="onMenuItemClick()">
+              
+                <p>Categories Group</p>
+              </a>
+            </li>
 
-           <li class="nav-item">
-            <a routerLink="/admin/sub-group" routerLinkActive="active" class="nav-link" (click)="onMenuItemClick()">
-              <i class="far fa-circle nav-icon"></i>
-              <p>Accessory Sub Categories Group</p>
-            </a>
-          </li>
+            <li class="nav-item">
+              <a routerLink="/admin/sub-group" routerLinkActive="active" class="nav-link" (click)="onMenuItemClick()">
+              
+                <p>Sub Categories Group</p>
+              </a>
+            </li>
 
-          <li class="nav-item">
-            <a routerLink="/admin/attributes" routerLinkActive="active" class="nav-link" (click)="onMenuItemClick()">
-              <i class="far fa-circle nav-icon"></i>
-              <p>Atrributes</p>
-            </a>
-          </li>
+            <li class="nav-item">
+              <a routerLink="/admin/attributes" routerLinkActive="active" class="nav-link" (click)="onMenuItemClick()">
+              
+                <p>Atrributes</p>
+              </a>
+            </li>
 
-           <li class="nav-item">
-            <a routerLink="/admin/attribute-values" routerLinkActive="active" class="nav-link" (click)="onMenuItemClick()">
-              <i class="far fa-circle nav-icon"></i>
-              <p>Atrribute Values</p>
-            </a>
-          </li>
+            <li class="nav-item">
+              <a routerLink="/admin/attribute-values" routerLinkActive="active" class="nav-link" (click)="onMenuItemClick()">
+              
+                <p>Atrribute Values</p>
+              </a>
+            </li>
 
-           <li class="nav-item">
-            <a routerLink="/admin/inventory" routerLinkActive="active" class="nav-link" (click)="onMenuItemClick()">
-              <i class="far fa-circle nav-icon"></i>
-              <p>Inventory</p>
-            </a>
-          </li>
-
-          <!-- <li class="nav-item">
-            <a routerLink="/admin/top/brands" routerLinkActive="active" class="nav-link" (click)="onMenuItemClick()">
-              <i class="far fa-circle nav-icon"></i>
-              <p>Top Brands</p>
-            </a>
-          </li> -->
+            <li class="nav-item">
+              <a routerLink="/admin/inventory" routerLinkActive="active" class="nav-link" (click)="onMenuItemClick()">
+              
+                <p>Inventory</p>
+              </a>
+            </li>
+          </div>
         </ul>
       </li>
     </ul>

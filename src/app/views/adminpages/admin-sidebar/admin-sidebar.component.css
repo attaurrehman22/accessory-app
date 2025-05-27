@@ -81,22 +81,6 @@
     background-color: darkslategray;
   }
   
-  /* @media screen and (max-width: 575px) {
-    .largeSize {
-      display: none;
-    }
-  } */
-  /*
-  @media screen and (min-width: 576px) {
-    .smallSize {
-      display: none;
-    }
-  }
-  @media screen and (max-width: 480px) {
-    .smallSize {
-      width: 100%;
-    }
-  } */
   .active,
   .btn:hover {
     background-color: aqua;

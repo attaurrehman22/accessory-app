@@ -133,6 +133,8 @@ export class AdminSidebarComponent {
     },
   };
 
+  accessoriesRoutes:any;
+
   isActive(route: string): boolean {
     return this.route.url.includes(route);
   }
@@ -147,6 +149,18 @@ export class AdminSidebarComponent {
 
   ngOnInit(): void {
     this.checkScreenSize();
+
+    this.accessoriesRoutes = [
+    '/admin/accessories',
+    '/admin/accessory/categories',
+    '/admin/group',
+    '/admin/sub-group',
+    '/admin/attributes',
+    '/admin/attribute-values',
+    '/admin/inventory'
+  ];
+
+     this.updateAccRouteVisibility();
   }
 
   checkScreenSize() {
@@ -174,7 +188,25 @@ export class AdminSidebarComponent {
     this.toogle = !this.toogle;
   }
 
-  onMenuItemClick() {
-    this.sidebarService.emitSidebarClick();
-  }
+  isAccRoutShow:boolean=false;
+
+onMenuItemClick() {
+  this.sidebarService.emitSidebarClick();
+  this.updateAccRouteVisibility();
+}
+
+updateAccRouteVisibility(): void {
+  // console.log("this.router.url",this.router.url)
+  // console.log("this.router",this.router)
+  // console.log("!this.accessoriesRoutes.some(route => this.router.url.includes(route))",this.accessoriesRoutes.some(route => this.router.url.includes(route)))
+  this.isAccRoutShow = this.accessoriesRoutes.some(route => this.router.url.includes(route));
+}
+
+
+onMenuItemClickOfAccee() {
+  this.isAccRoutShow = true; // because it's an accessories route
+  this.sidebarService.emitSidebarClick();
+  this.router.navigate(['/admin/accessories']);
+}
+
 }
