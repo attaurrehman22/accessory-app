@@ -28,6 +28,7 @@ import { LoginStateService } from "src/services/login-service/login-state.servic
 import { Observable } from "rxjs";
 import { map, startWith } from "rxjs/operators";
 import { environment } from "src/environments/environment";
+import { CdkDragDrop, moveItemInArray } from "@angular/cdk/drag-drop";
 
 interface ImageFile {
   file: File;
@@ -465,10 +466,10 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
     this.imagesInput.nativeElement.click();
   }
 
-  onImagesSelected(event: Event) {
+ onImagesSelected(event: Event) {
     const files = (event.target as HTMLInputElement).files;
     if (files && files.length > 0) {
-      Array.from(files).forEach((file: File, index: number) => {
+      Array.from(files).forEach((file: File) => {
         const reader = new FileReader();
         const newImage: ImageFile = { file, url: "", isUploading: true };
 
@@ -491,19 +492,14 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
   }
 
   setAsCoverImage(image: ImageFile) {
-    // Update isCover flags
     this.allImages.forEach((img) => {
       img.isCover = img.url === image.url;
     });
 
-    // Move the cover image to the first index
     const cover = this.allImages.find((img) => img.url === image.url);
     if (cover) {
       this.coverImage = cover;
-      this.allImages = [
-        cover,
-        ...this.allImages.filter((img) => img.url !== image.url),
-      ];
+      this.allImages = [cover, ...this.allImages.filter((img) => img.url !== image.url)];
     }
   }
 
@@ -515,6 +511,18 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
       this.setAsCoverImage(this.allImages[0]);
     }
   }
+
+  onImageDrop(event: CdkDragDrop<ImageFile[]>) {
+    moveItemInArray(this.allImages, event.previousIndex, event.currentIndex);
+
+    // Recalculate cover image
+    this.allImages.forEach((img, index) => {
+      img.isCover = index === 0;
+    });
+
+    this.coverImage = this.allImages[0];
+  }
+
 
   selectedCondition = null;
 
@@ -1179,10 +1187,15 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
           })
         );
 
-        if (this.otherImages.length > 0) {
-          this.allImages = this.otherImages;
-          this.allImages = [this.coverImage, ...this.allImages];
-        }
+      }
+      if (this.otherImages.length > 0 || this.coverImage) {
+
+        this.allImages = this.otherImages;
+        this.allImages = [this.coverImage, ...this.allImages];
+        this.allImages = this.allImages.map((img, index) => ({
+          ...img,
+          isCover: index === 0
+        }));
       }
       if (this.productDetails?.proof_image_1) {
         this.isEnableProofofOwnerShip = true;
@@ -1746,6 +1759,8 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
           }
         });
       formData.forEach((value, key) => console.log(key, value));
+
+      console.log("FormData",formData)
 
       this.http.addUploadImages(formData).subscribe(
         (res) => {

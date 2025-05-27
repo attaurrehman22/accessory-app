@@ -129,7 +129,7 @@ import { AddAttributeValuesComponent } from './views/adminpages/accessories/attr
 import { AttributeValuesComponent } from './views/adminpages/accessories/attributes/attribute-values/attribute-values.component';
 import { AddInventoryComponent } from './views/adminpages/accessories/attributes/add-inventory/add-inventory.component';
 import { InventoriesComponent } from './views/adminpages/accessories/attributes/inventories/inventories.component';
-
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 @NgModule({
   declarations: [
@@ -204,7 +204,8 @@ import { InventoriesComponent } from './views/adminpages/accessories/attributes/
     AddAttributeValuesComponent,
     AttributeValuesComponent,
     AddInventoryComponent,
-    InventoriesComponent
+    InventoriesComponent,
+
   ],
   imports: [
     MatSortModule,
@@ -245,6 +246,7 @@ import { InventoriesComponent } from './views/adminpages/accessories/attributes/
     ColorPickerModule,
     BidiModule,HighchartsChartModule,
     MatTabsModule,
+    DragDropModule,
     BidiModule, HighchartsChartModule,MatOptionModule,MatAutocompleteModule,
     // MatExpansionModule,
     TranslateModule.forRoot({

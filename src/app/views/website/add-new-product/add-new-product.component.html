@@ -1449,50 +1449,50 @@
                   translateService.currentLang !== 'en'
               }"
             >
-              <!-- All images preview -->
-              <div class="content-two mt-3">
-                <p>{{ "create_product_listing.other_images" | translate }}</p>
-                <div class="d-flex flex-wrap align-items-center gap-5">
-                  <div class="image-preview" *ngFor="let image of allImages">
-                    <img [src]="image.url" alt="Preview" />
+               <!-- All images preview -->
+            <div class="content-two mt-3">
+              <p>{{ "create_product_listing.Images" | translate }}</p>
+              <div
+                cdkDropList
+                [cdkDropListData]="allImages"
+                class="d-flex flex-wrap align-items-center gap-5"
+                (cdkDropListDropped)="onImageDrop($event)"
+              >
+                <!-- Upload Box -->
+                <div class="upload-box" (click)="selectImages()">
+                  <span>+</span>
+                </div>
 
-                    <!-- Mark as cover button -->
-                    <button
-                      class="mark-cover-btn set-as-cover-btn"
-                      [class.active]="coverImage?.url === image.url"
-                      (click)="setAsCoverImage(image)"
-                    >
-                      <!-- <mat-icon>photo_camera</mat-icon> -->
-                      <small>Set as Cover Image</small>
-                    </button>
+                <input
+                  type="file"
+                  #imagesInput
+                  (change)="onImagesSelected($event)"
+                  accept="image/*"
+                  multiple
+                  hidden
+                />
 
-                    <!-- Delete button -->
-                    <button class="delete-btn" (click)="removeImage(image)">
-                      <mat-icon>delete</mat-icon>
-                    </button>
-                  </div>
+                <!-- Image Previews -->
+                <div
+                  class="image-preview"
+                  *ngFor="let image of allImages"
+                  cdkDrag
+                >
+                  <img [src]="image.url" alt="Preview" />
 
-                  <div class="content-one">
-                    <!-- <p>{{ "create_product_listing.cover_image" | translate }}</p> -->
-                    <div class="d-flex flex-wrap">
-                      <div class="upload-box" (click)="selectImages()">
-                        <span>+</span>
-                      </div>
-                      <input
-                        type="file"
-                        #imagesInput
-                        (change)="onImagesSelected($event)"
-                        accept="image/*"
-                        multiple
-                        hidden
-                      />
-                    </div>
-                  </div>
+                  <!-- Show "Cover Image" overlay if image is the cover -->
+                  <div *ngIf="image.isCover" class="cover-label">Cover Image</div>
+
+                  <button class="delete-btn" (click)="removeImage(image)">
+                    <mat-icon>delete</mat-icon>
+                  </button>
                 </div>
               </div>
+            </div>
+
 
               <!-- Optional Cover Image Preview Box -->
-              <div
+              <!-- <div
                 class="cover-preview mt-5"
                 *ngIf="coverImage?.url !== nullImagePath"
               >
@@ -1502,7 +1502,7 @@
                   style="max-height: 150px"
                   alt="Cover Image"
                 />
-              </div>
+              </div> -->
 
               <!-- Cover Image -->
               <!-- <div class="content-one">
@@ -4828,11 +4828,17 @@
            <!-- All images preview -->
             <div class="content-two mt-3">
               <p>{{ "create_product_listing.Images" | translate }}</p>
-              <div class="d-flex flex-wrap align-items-center gap-5">
-                <!-- Upload Button -->
+              <div
+                cdkDropList
+                [cdkDropListData]="allImages"
+                class="d-flex flex-wrap align-items-center gap-5"
+                (cdkDropListDropped)="onImageDrop($event)"
+              >
+                <!-- Upload Box -->
                 <div class="upload-box" (click)="selectImages()">
                   <span>+</span>
                 </div>
+
                 <input
                   type="file"
                   #imagesInput
@@ -4843,26 +4849,20 @@
                 />
 
                 <!-- Image Previews -->
-               <div class="image-preview" *ngFor="let image of allImages">
+                <div
+                  class="image-preview"
+                  *ngFor="let image of allImages"
+                  cdkDrag
+                >
                   <img [src]="image.url" alt="Preview" />
 
                   <!-- Show "Cover Image" overlay if image is the cover -->
                   <div *ngIf="image.isCover" class="cover-label">Cover Image</div>
 
-                  <!-- Button to set as cover -->
-                  <button
-                    class="cover-set-btn"
-                    [class.active]="image.isCover"
-                    (click)="setAsCoverImage(image)"
-                  >
-                    <small>Set as Cover Image</small>
-                  </button>
-
                   <button class="delete-btn" (click)="removeImage(image)">
                     <mat-icon>delete</mat-icon>
                   </button>
                 </div>
-
               </div>
             </div>
 
