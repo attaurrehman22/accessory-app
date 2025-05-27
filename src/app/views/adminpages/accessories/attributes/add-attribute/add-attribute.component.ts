@@ -28,7 +28,7 @@ export class AddAttributeComponent implements OnInit{
     console.log("Data", data);
 
     this.categoryForm = this.fb.group({
-      name: [
+      type: [
         "",
         [
           Validators.required,
@@ -42,7 +42,7 @@ export class AddAttributeComponent implements OnInit{
       this.paramVal = "Edit";
       this.categoryID = data?.data?.id;
       this.categoryForm.patchValue({
-        name: data.data.name
+        type: data.data.type
       });
     } else {
       this.paramVal = "Create";

@@ -86,4 +86,19 @@
     background-color: aqua;
     color: white;
   }
+
+  .acc-li-style > .nav-item > .nav-link.active {
+    background-color: #ffffffe6;
+    color: #343a40;
+    width: calc(250px - 3.4rem);
+  }
+
+   .acc-li-style > .nav-item > .nav-link.active:hover {
+    background-color: #ffffffe6;
+    color: #343a40;
+  }
+
+  .acc-li-style > .nav-item > .nav-link:hover {
+     color: #ffffffe6;
+  }
   

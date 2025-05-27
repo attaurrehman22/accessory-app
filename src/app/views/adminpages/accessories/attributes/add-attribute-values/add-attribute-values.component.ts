@@ -13,6 +13,7 @@ export class AddAttributeValuesComponent implements OnInit {
   categoryForm: FormGroup;
   paramVal: any;
   categoryID: any;
+  accessoryCategoryList:any;
   constructor(
     private http: HttpService,
     private dialog: MatDialog,
@@ -28,10 +29,10 @@ export class AddAttributeValuesComponent implements OnInit {
         0,
         [Validators.minLength(0), Validators.maxLength(1000)],
       ],
-       shop_id: [
-        0,
-        [Validators.minLength(0), Validators.maxLength(1000)],
-      ],
+      //  shop_id: [
+      //   0,
+      //   [Validators.minLength(0), Validators.maxLength(1000)],
+      // ],
       value: [
         "",
         [
@@ -59,7 +60,7 @@ export class AddAttributeValuesComponent implements OnInit {
       this.categoryID = data?.data?.id;
       this.categoryForm.patchValue({
         attribute_id: data.data.attribute_id,
-        shop_id: data.data.shop_id,
+        // shop_id: data.data.shop_id,
         value: data.data.value,
         color: data.data.color,
         order: data.data.order,
@@ -70,7 +71,14 @@ export class AddAttributeValuesComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.getAllAttributes()
       // this.getAllAccessoryCategoryGroups()
+  }
+
+  getAllAttributes(){
+    this.http.getAttributesType().subscribe((res) => {
+        this.accessoryCategoryList = res;
+      });
   }
 
   // accessroiesCategoryGroupList:any;

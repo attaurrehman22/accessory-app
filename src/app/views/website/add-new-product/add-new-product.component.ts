@@ -1181,7 +1181,7 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
 
         if (this.otherImages.length > 0) {
           this.allImages = this.otherImages;
-          this.allImages = [this.coverImage,...this.allImages];
+          this.allImages = [this.coverImage, ...this.allImages];
         }
       }
       if (this.productDetails?.proof_image_1) {
@@ -1680,17 +1680,14 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
       }
     } else if (Param === "uploadImages") {
       if (!this.coverImage) {
-       if (this.translateService.currentLang == "en") {
-  this.alertService.showAlert(
-    "warning",
-    "Please upload a cover image."
-  );
-} else {
-  this.alertService.showAlert(
-    "warning",
-    "يرجى تحميل صورة الغلاف."
-  );
-}
+        if (this.translateService.currentLang == "en") {
+          this.alertService.showAlert(
+            "warning",
+            "Please upload a cover image."
+          );
+        } else {
+          this.alertService.showAlert("warning", "يرجى تحميل صورة الغلاف.");
+        }
 
         return;
       }
@@ -1738,7 +1735,7 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
       formData.append("isUpdate", isUpdate);
 
       this.otherImages
-        .filter((item:ImageFile) => !item.isCover)
+        .filter((item: ImageFile) => !item.isCover)
         .forEach((image, index) => {
           if (image.file) {
             formData.append(

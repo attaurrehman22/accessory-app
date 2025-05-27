@@ -37,7 +37,7 @@
                     color="primary"
                     (click)="openModal()"
                   >
-                    <mat-icon>add_circle_outline</mat-icon>Add Category
+                    <mat-icon>add_circle_outline</mat-icon>Add Attribute
                   </button>
                 </div>
               </div>
@@ -47,10 +47,10 @@
                     <!-- ID Column -->
                     <ng-container class="column" matColumnDef="name">
                       <th mat-header-cell class="column" *matHeaderCellDef>
-                        Name
+                        Type
                       </th>
                       <td mat-cell class="column" *matCellDef="let row">
-                        {{ row.name }}
+                        {{ row.type }}
                       </td>
                     </ng-container>
 

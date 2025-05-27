@@ -38,7 +38,7 @@ export class AttributeComponent {
   
     getAllAccessoryCategories() {
       this.http.getAttributesType().subscribe((res) => {
-        this.accessoryCategoryList = res.data;
+        this.accessoryCategoryList = res;
         this.dataSource = new MatTableDataSource(this.accessoryCategoryList);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;

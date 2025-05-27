@@ -4,15 +4,15 @@
       {{ paramVal }} Attribute Type
     </h2>
     <mat-form-field class="full-width" appearance="outline">
-      <mat-label>Name</mat-label>
-      <input matInput formControlName="name" />
-      <mat-error *ngIf="categoryForm.get('name')?.hasError('required')">
+      <mat-label>Type</mat-label>
+      <input matInput formControlName="type" />
+      <mat-error *ngIf="categoryForm.get('type')?.hasError('required')">
         Name is required
       </mat-error>
-      <mat-error *ngIf="categoryForm.get('name')?.hasError('minlength')">
+      <mat-error *ngIf="categoryForm.get('type')?.hasError('minlength')">
         Minimum 3 characters
       </mat-error>
-      <mat-error *ngIf="categoryForm.get('name')?.hasError('maxlength')">
+      <mat-error *ngIf="categoryForm.get('type')?.hasError('maxlength')">
         Maximum 50 characters
       </mat-error>
     </mat-form-field>

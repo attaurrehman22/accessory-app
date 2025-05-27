@@ -1,6 +1,7 @@
-import { Component, HostListener } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, HostListener, OnInit } from '@angular/core';
+import { NavigationEnd, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
+import { filter } from 'rxjs/operators';
 import { AlertsServicesService } from 'src/services/alerts-service/alerts-services.service';
 import { SidebarService } from 'src/services/sidebar.service';
 
@@ -9,7 +10,7 @@ import { SidebarService } from 'src/services/sidebar.service';
   templateUrl: './admin-sidebar.component.html',
   styleUrls: ['./admin-sidebar.component.css']
 })
-export class AdminSidebarComponent {
+export class AdminSidebarComponent implements OnInit{
   toogle: boolean = true;
   navItems = {
     dashboard: {
@@ -150,6 +151,12 @@ export class AdminSidebarComponent {
   ngOnInit(): void {
     this.checkScreenSize();
 
+     this.router.events
+      .pipe(filter(event => event instanceof NavigationEnd))
+      .subscribe((event: NavigationEnd) => {
+        this.updateAccRouteVisibility(event.urlAfterRedirects);
+      });
+
     this.accessoriesRoutes = [
     '/admin/accessories',
     '/admin/accessory/categories',
@@ -160,7 +167,7 @@ export class AdminSidebarComponent {
     '/admin/inventory'
   ];
 
-     this.updateAccRouteVisibility();
+    //  this.updateAccRouteVisibility();
   }
 
   checkScreenSize() {
@@ -192,21 +199,26 @@ export class AdminSidebarComponent {
 
 onMenuItemClick() {
   this.sidebarService.emitSidebarClick();
-  this.updateAccRouteVisibility();
+  // this.updateAccRouteVisibility();
 }
 
-updateAccRouteVisibility(): void {
-  // console.log("this.router.url",this.router.url)
-  // console.log("this.router",this.router)
-  // console.log("!this.accessoriesRoutes.some(route => this.router.url.includes(route))",this.accessoriesRoutes.some(route => this.router.url.includes(route)))
-  this.isAccRoutShow = this.accessoriesRoutes.some(route => this.router.url.includes(route));
-}
+// updateAccRouteVisibility(): void {
+//   console.log("this.router.url",this.router.url)
+//   console.log("this.router",this.router)
+//   console.log("!this.accessoriesRoutes.some(route => this.router.url.includes(route))",this.accessoriesRoutes.some(route => this.router.url.includes(route)))
+//   this.isAccRoutShow = this.accessoriesRoutes.some(route => this.router.url.includes(route));
+// }
+
+ updateAccRouteVisibility(currentUrl: string): void {
+    console.log('currentUrl:', currentUrl);
+    this.isAccRoutShow = this.accessoriesRoutes.some(route => currentUrl.includes(route));
+  }
 
 
 onMenuItemClickOfAccee() {
   this.isAccRoutShow = true; // because it's an accessories route
   this.sidebarService.emitSidebarClick();
-  this.router.navigate(['/admin/accessories']);
+  // this.updateAccRouteVisibility()
 }
 
 }
