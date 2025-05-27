@@ -419,7 +419,11 @@ export class BuyProductComponentComponent implements OnInit {
       .writeText(currentUrl)
       .then(() => {
         // Optionally, you can show a success message or notification
-        this.alertService.showAlert("success", "Url copy Successfully");
+        if (this.translateService.currentLang == "en") {
+          this.alertService.showAlert("success", "Url copy Successfully");
+        }else{
+             this.alertService.showAlert("success", "تم نسخ الرابط بنجاح");
+        }
       })
       .catch((err) => {
         console.error("Could not copy the URL: ", err);
@@ -522,10 +526,18 @@ export class BuyProductComponentComponent implements OnInit {
             .buyNowFromDetailsProduct(this.productDetails.id, bodyData)
             .subscribe(
               (res) => {
-                this.alertService.showAlert(
-                  "success",
-                  "Message send to Seller."
-                );
+                if (this.translateService.currentLang == "en") {
+                  this.alertService.showAlert(
+                    "success",
+                    "Message send to Seller."
+                  );
+                }else{
+                  this.alertService.showAlert(
+                    "success",
+                    "تم إرسال الرسالة إلى البائع."
+                  );
+                }
+
 
                 let OrderTypeval;
                 if (
@@ -615,7 +627,11 @@ export class BuyProductComponentComponent implements OnInit {
           });
         }
       } else {
-        this.alertService.showAlert("warning", "You can't chat with yourself");
+        if (this.translateService.currentLang == "en") {
+          this.alertService.showAlert("warning", "You can't chat with yourself");
+        }else{
+              this.alertService.showAlert("warning", `تم إرسال الرسالة إلى البائع.`);
+        }
       }
     } else {
       this.loginFirst();

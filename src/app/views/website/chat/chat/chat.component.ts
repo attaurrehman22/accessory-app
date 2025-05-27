@@ -152,10 +152,17 @@ if (filteredChats.length > 0) {
           if (err && err.error) {
             this.alertService.showAlert("warning", `${err.error.message}`);
           } else {
-            this.alertService.showAlert(
-              "warning",
-              "Error in getting message Please try again"
-            );
+            if (this.translateService.currentLang == "en") {
+              this.alertService.showAlert(
+                "warning",
+                "Error in getting message Please try again"
+              );
+            }else{
+               this.alertService.showAlert(
+    "warning",
+    "حدث خطأ أثناء جلب الرسالة، يرجى المحاولة مرة أخرى"
+  );
+            }
           }
         }
       );
@@ -295,10 +302,18 @@ if (filteredChats.length > 0) {
         if (err && err.error) {
           this.alertService.showAlert("warning", `${err.error.message}`);
         } else {
-          this.alertService.showAlert(
-            "warning",
-            "Error in getting chat Details Please try again"
-          );
+         if (this.translateService.currentLang == "en") {
+  this.alertService.showAlert(
+    "warning",
+    "Error in getting chat Details. Please try again"
+  );
+} else {
+  this.alertService.showAlert(
+    "warning",
+    "حدث خطأ أثناء جلب تفاصيل الدردشة، يرجى المحاولة مرة أخرى"
+  );
+}
+
         }
       }
     );
@@ -333,10 +348,18 @@ if (filteredChats.length > 0) {
             if (err && err.error) {
               this.alertService.showAlert("warning", `${err.error.message}`);
             } else {
-              this.alertService.showAlert(
-                "warning",
-                "Error in sending message Please try again"
-              );
+             if (this.translateService.currentLang == "en") {
+  this.alertService.showAlert(
+    "warning",
+    "Error in sending message. Please try again"
+  );
+} else {
+  this.alertService.showAlert(
+    "warning",
+    "حدث خطأ أثناء إرسال الرسالة، يرجى المحاولة مرة أخرى"
+  );
+}
+
             }
           }
         );
@@ -391,10 +414,18 @@ if (filteredChats.length > 0) {
         if (err && err.error) {
           this.alertService.showAlert("warning", `${err.error.message}`);
         } else {
-          this.alertService.showAlert(
-            "warning",
-            "Error in getting product details"
-          );
+         if (this.translateService.currentLang == "en") {
+  this.alertService.showAlert(
+    "warning",
+    "Error in getting product details"
+  );
+} else {
+  this.alertService.showAlert(
+    "warning",
+    "حدث خطأ أثناء جلب تفاصيل المنتج"
+  );
+}
+
         }
       }
     );
@@ -417,10 +448,17 @@ if (filteredChats.length > 0) {
     }
 
     if (this.chats.length === 0) {
-      this.alertService.showAlert(
-        "warning",
-        "No Chats Available for this filter"
-      );
+      if (this.translateService.currentLang == "en") {
+  this.alertService.showAlert(
+    "warning",
+    "No Chats Available for this filter"
+  );
+} else {
+  this.alertService.showAlert(
+    "warning",
+    "لا توجد محادثات متاحة لهذا الفلتر"
+  );
+}
     }
   }
 
@@ -483,10 +521,18 @@ if (filteredChats.length > 0) {
         if (err && err.error) {
           this.alertService.showAlert("warning", `${err.error.message}`);
         } else {
-          this.alertService.showAlert(
-            "warning",
-            "Error in sending message Please try again"
-          );
+         if (this.translateService.currentLang == "en") {
+  this.alertService.showAlert(
+    "warning",
+    "Error in sending message. Please try again"
+  );
+} else {
+  this.alertService.showAlert(
+    "warning",
+    "حدث خطأ أثناء إرسال الرسالة، يرجى المحاولة مرة أخرى"
+  );
+}
+
         }
       }
     );
@@ -573,10 +619,18 @@ if (filteredChats.length > 0) {
       if (result == true) {
         this.http.editOfferStatus(formData).subscribe(
           (res) => {
-            this.alertService.showAlert(
-              "success",
-              "Offer Canceled Succesfully"
-            );
+           if (this.translateService.currentLang == "en") {
+  this.alertService.showAlert(
+    "success",
+    "Offer Canceled Successfully"
+  );
+} else {
+  this.alertService.showAlert(
+    "success",
+    "تم إلغاء العرض بنجاح"
+  );
+}
+
             this.getChatDetails();
             this.getLatestMessage();
           },
@@ -584,7 +638,18 @@ if (filteredChats.length > 0) {
             if (err && err.error) {
               this.alertService.showAlert("warning", `${err.error.message}`);
             } else {
-              this.alertService.showAlert("danger", "Error in Offer Canceling");
+              if (this.translateService.currentLang == "en") {
+  this.alertService.showAlert(
+    "warning",
+    "Error in Offer Canceling"
+  );
+} else {
+  this.alertService.showAlert(
+    "warning",
+    "حدث خطأ أثناء إلغاء العرض"
+  );
+}
+
             }
           }
         );
@@ -603,7 +668,18 @@ if (filteredChats.length > 0) {
 
     this.http.editOfferStatus(formData).subscribe(
       (res) => {
-        this.alertService.showAlert("success", "Product Sold Succesfully");
+    if (this.translateService.currentLang == "en") {
+  this.alertService.showAlert(
+    "success",
+    "Product Sold Successfully"
+  );
+} else {
+  this.alertService.showAlert(
+    "success",
+    "تم بيع المنتج بنجاح"
+  );
+}
+
         this.isOfferStatusAccepted=true;
         this.getChatDetails();
         this.getLatestMessage();
@@ -612,7 +688,18 @@ if (filteredChats.length > 0) {
         if (err && err.error) {
           this.alertService.showAlert("warning", `${err.error.message}`);
         } else {
-          this.alertService.showAlert("danger", "Error in Product Sold");
+        if (this.translateService.currentLang == "en") {
+  this.alertService.showAlert(
+    "warning",
+    "Error in Product Sold"
+  );
+} else {
+  this.alertService.showAlert(
+    "warning",
+    "حدث خطأ في بيع المنتج"
+  );
+}
+
         }
       }
     );
@@ -690,10 +777,18 @@ if (filteredChats.length > 0) {
             if (err && err.error) {
               this.alertService.showAlert("warning", `${err.error.message}`);
             } else {
-              this.alertService.showAlert(
-                "warning",
-                "Error in add Shipment Please try again with correct form data"
-              );
+             if (this.translateService.currentLang == "en") {
+  this.alertService.showAlert(
+    "warning",
+    "Error in adding shipment. Please try again with correct form data"
+  );
+} else {
+  this.alertService.showAlert(
+    "warning",
+    "حدث خطأ أثناء إضافة الشحنة. يرجى المحاولة مرة أخرى مع بيانات النموذج الصحيحة"
+  );
+}
+
             }
           }
         );
@@ -742,10 +837,18 @@ if (filteredChats.length > 0) {
           if (err && err.error) {
             this.alertService.showAlert("warning", `${err.error.message}`);
           } else {
-            this.alertService.showAlert(
-              "warning",
-              "Error in Cancel Order Please try again"
-            );
+           if (this.translateService.currentLang == "en") {
+  this.alertService.showAlert(
+    "warning",
+    "Error in Cancel Order. Please try again"
+  );
+} else {
+  this.alertService.showAlert(
+    "warning",
+    "حدث خطأ أثناء إلغاء الطلب. يرجى المحاولة مرة أخرى"
+  );
+}
+
           }
         }
       );
@@ -770,10 +873,18 @@ if (filteredChats.length > 0) {
         if (err && err.error) {
           this.alertService.showAlert("warning", `${err.error.message}`);
         } else {
-          this.alertService.showAlert(
-            "warning",
-            "Error in Making payment Please try again"
-          );
+        if (this.translateService.currentLang == "en") {
+  this.alertService.showAlert(
+    "warning",
+    "Error in Making payment. Please try again"
+  );
+} else {
+  this.alertService.showAlert(
+    "warning",
+    "حدث خطأ أثناء إجراء الدفع. يرجى المحاولة مرة أخرى"
+  );
+}
+
         }
       }
     );
