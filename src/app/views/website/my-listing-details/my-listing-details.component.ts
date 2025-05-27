@@ -116,10 +116,18 @@ export class MyListingDetailsComponent implements OnInit {
         });
       },
       (err) => {
-        this.alertService.showAlert(
-          "warning",
-          "Error in Fetching Billing Information"
-        );
+       if (this.translateService.currentLang == "en") {
+  this.alertService.showAlert(
+    "warning",
+    "Error in Fetching Billing Information"
+  );
+} else {
+  this.alertService.showAlert(
+    "warning",
+    "حدث خطأ أثناء جلب معلومات الفوترة"
+  );
+}
+
       }
     );
   }
@@ -130,16 +138,32 @@ export class MyListingDetailsComponent implements OnInit {
     } else {
       this.http.saveBillingInformation(this.billingForm.value).subscribe(
         (res) => {
-          this.alertService.showAlert(
-            "success",
-            "Billing Information Saved Successfully"
-          );
+          if (this.translateService.currentLang == "en") {
+  this.alertService.showAlert(
+    "success",
+    "Billing Information Saved Successfully"
+  );
+} else {
+  this.alertService.showAlert(
+    "success",
+    "تم حفظ معلومات الفوترة بنجاح"
+  );
+}
+
         },
         (err) => {
-          this.alertService.showAlert(
-            "warning",
-            "Error in Saving Billing Information"
-          );
+         if (this.translateService.currentLang == "en") {
+  this.alertService.showAlert(
+    "warning",
+    "Error in Saving Billing Information"
+  );
+} else {
+  this.alertService.showAlert(
+    "warning",
+    "حدث خطأ أثناء حفظ معلومات الفوترة"
+  );
+}
+
         }
       );
     }
@@ -552,10 +576,32 @@ export class MyListingDetailsComponent implements OnInit {
   deleteListing(listing) {
     this.http.removeProduct(listing.id).subscribe(
       (res)=>{
-        this.alertService.showAlert('success','Product Delete Successfully')
+      if (this.translateService.currentLang == "en") {
+  this.alertService.showAlert(
+    "success",
+    "Product Delete Successfully"
+  );
+} else {
+  this.alertService.showAlert(
+    "success",
+    "تم حذف المنتج بنجاح"
+  );
+}
+
         this.fetchListings();
       },(err)=>{
-        this.alertService.showAlert('warning','Error in Deleting Product')
+       if (this.translateService.currentLang == "en") {
+  this.alertService.showAlert(
+    "warning",
+    "Error in Deleting Product"
+  );
+} else {
+  this.alertService.showAlert(
+    "warning",
+    "حدث خطأ أثناء حذف المنتج"
+  );
+}
+
       }
     )
   }
@@ -597,7 +643,18 @@ export class MyListingDetailsComponent implements OnInit {
 
     this.http.sendOffer(formData).subscribe(
       (res) => {
-        this.alertService.showAlert("success", "offer Send Succesfully");
+       if (this.translateService.currentLang == "en") {
+  this.alertService.showAlert(
+    "success",
+    "Offer Sent Successfully"
+  );
+} else {
+  this.alertService.showAlert(
+    "success",
+    "تم إرسال العرض بنجاح"
+  );
+}
+
       },
       (err) => {
         const errorMessage = err.error?.message || "Something went wrong!";
@@ -624,7 +681,7 @@ export class MyListingDetailsComponent implements OnInit {
     //     // this.dialogRef.close(this.offerForm.value);
     //   },
     //   (err) => {
-    //     this.alertService.showAlert("danger", "Error in Product Mark as Sold");
+    //     this.alertService.showAlert("warning", "Error in Product Mark as Sold");
     //   }
     // );
   }
@@ -688,10 +745,18 @@ export class MyListingDetailsComponent implements OnInit {
         this.showSellerProofofShipping = false;
       },
       (err) => {
-        this.alertService.showAlert(
-          "warning",
-          "Error in sending Proof of owner ship"
-        );
+       if (this.translateService.currentLang == "en") {
+  this.alertService.showAlert(
+    "warning",
+    "Error in sending Proof of ownership"
+  );
+} else {
+  this.alertService.showAlert(
+    "warning",
+    "حدث خطأ أثناء إرسال إثبات الملكية"
+  );
+}
+
       }
     );
 

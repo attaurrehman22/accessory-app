@@ -80,7 +80,7 @@ export class AdminCategoryComponent {
         this.allUser();
       },
       (err) => {
-        this.toast.showAlert("danger", "Error in removing Category");
+        this.toast.showAlert("warning", "Error in removing Category");
       }
     );
   }
@@ -96,7 +96,7 @@ export class AdminCategoryComponent {
         this.allUser();
       },
       (err) => {
-        this.toast.showAlert("danger", "Error in Updating Active Status");
+        this.toast.showAlert("warning", "Error in Updating Active Status");
       }
     );
   }

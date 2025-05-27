@@ -263,12 +263,12 @@ export class CustomOfferComponent {
       (err) => {
         if (this.translateService.currentLang == "en") {
           this.alertService.showAlert(
-            "danger",
+            "warning",
             "Error in Product Mark as Sold"
           );
         } else {
           this.alertService.showAlert(
-            "danger",
+            "warning",
             `حدث خطأ في وضع علامة "تم البيع" على المنتج`
           );
         }

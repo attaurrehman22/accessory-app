@@ -206,7 +206,7 @@ export class AccessoriesProductsComponent
         this.loadData();
       },
       (err) => {
-        this.toast.showAlert("danger", "Error in removing Product");
+        this.toast.showAlert("warning", "Error in removing Product");
       }
     );
   }
@@ -222,7 +222,7 @@ export class AccessoriesProductsComponent
         this.loadData();
       },
       (err) => {
-        this.toast.showAlert("danger", "Error in Updating Active Status");
+        this.toast.showAlert("warning", "Error in Updating Active Status");
       }
     );
   }
@@ -234,7 +234,7 @@ export class AccessoriesProductsComponent
         this.loadData();
       },
       (err) => {
-        this.toast.showAlert("danger", "Error in updating top status");
+        this.toast.showAlert("warning", "Error in updating top status");
       }
     );
   }
@@ -247,7 +247,7 @@ export class AccessoriesProductsComponent
         this.loadData();
       },
       (err) => {
-        this.toast.showAlert("danger", "Error in Featuring");
+        this.toast.showAlert("warning", "Error in Featuring");
       }
     );
   }

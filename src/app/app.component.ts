@@ -155,15 +155,34 @@ export class AppComponent implements OnInit {
   }
 
   triggerSuccessAlert() {
-    this.alertService.showAlert("success", "Your operation was successful.");
+   if (this.translateService.currentLang == "en") {
+  this.alertService.showAlert(
+    "success",
+    "Your operation was successful."
+  );
+} else {
+  this.alertService.showAlert(
+    "success",
+    "تمت العملية بنجاح."
+  );
+}
+
   }
 
   // Method to trigger danger alert
   triggerDangerAlert() {
-    this.alertService.showAlert(
-      "danger",
-      "Something went wrong. Please try again."
-    );
+   if (this.translateService.currentLang == "en") {
+  this.alertService.showAlert(
+    "warning",
+    "Something went wrong. Please try again."
+  );
+} else {
+  this.alertService.showAlert(
+    "warning",
+    "حدث خطأ ما. يرجى المحاولة مرة أخرى."
+  );
+}
+
   }
 
   // Method to clear alert

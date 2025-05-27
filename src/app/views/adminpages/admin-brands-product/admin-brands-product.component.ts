@@ -137,7 +137,7 @@ export class AdminBrandsProductComponent {
     const file = event.target.files[0];
     if (file) {
       if (file.type !== 'image/svg+xml') {
-        this.toast.showAlert("danger", "Only SVG files are allowed");
+        this.toast.showAlert("warning", "Only SVG files are allowed");
         return;
       }
 
@@ -155,7 +155,7 @@ export class AdminBrandsProductComponent {
           // ✅ Display SVG preview
           this.svgPreview = this.sanitizer.bypassSecurityTrustHtml(content);
         } else {
-          this.toast.showAlert("danger", "Invalid SVG code");
+          this.toast.showAlert("warning", "Invalid SVG code");
           this.selectedSvgFile = null;
           this.svgFileName = '';
           this.svgPreview = null;
@@ -199,7 +199,7 @@ export class AdminBrandsProductComponent {
             this.dialog.closeAll()
           },
           (err) => {
-            this.toast.showAlert("danger", "Error Updating Brand");
+            this.toast.showAlert("warning", "Error Updating Brand");
           }
         );
       } else {
@@ -213,7 +213,7 @@ export class AdminBrandsProductComponent {
             this.dialog.closeAll()
           },
           (err) => {
-            this.toast.showAlert("danger", "Error Creating Brand");
+            this.toast.showAlert("warning", "Error Creating Brand");
           }
         );
       }

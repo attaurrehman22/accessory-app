@@ -27,27 +27,28 @@ interface MessageFormData {
   styleUrls: ["./chat.component.css"],
 })
 export class ChatComponent implements OnInit, AfterViewChecked {
-   apiUrl = environment.apipath+ '/'
+  apiUrl = environment.apipath + "/";
   supportLanguages = ["en", "ar", "fr", "ta", "hi"];
   currentLanguage: string;
   isActive: any = "All";
   newMessage: string = "";
   productDeatils: any;
   detailsWithLatestMessages: any;
-  messages: any;a
+  messages: any;
+  a;
   chats: any;
   getProductDetails: any;
   chat_id: any;
   noImageName: any = "Kamran Ghulam";
   noMessageDetails: any;
-  
+
   constructor(
     private http: HttpService,
     private router: Router,
     private dialog: MatDialog,
     private alertService: AlertsServicesService,
-       public translateService: TranslateService,
-       private languageService:LanguageService
+    public translateService: TranslateService,
+    private languageService: LanguageService
   ) {
     this.translateService.addLangs(this.supportLanguages);
     const savedLang = this.languageService.getCurrentLanguage();
@@ -64,38 +65,34 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     }
   }
 
-  loginFirst(){
-      const dialogRef = this.dialog.open(ModelLoginComponent, {
-            width: "600px",
-            data: { message: "dialog-box" },
-          
-          });
-    
-          dialogRef.afterClosed().subscribe((result) => {
-           
-          });
+  loginFirst() {
+    const dialogRef = this.dialog.open(ModelLoginComponent, {
+      width: "600px",
+      data: { message: "dialog-box" },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {});
   }
 
   ngOnInit(): void {
     this.user_id = localStorage.getItem("userID");
-    if(!this.user_id){
-      this.loginFirst()
+    if (!this.user_id) {
+      this.loginFirst();
     }
 
-
-    if(history?.state?.chatID){
+    if (history?.state?.chatID) {
       this.getLatestMessage();
 
-      if(history?.state?.fromRoute == 'gotToChat'){
+      if (history?.state?.fromRoute == "gotToChat") {
         this.getDetailsofProduct(history?.state?.data.id);
-      }else{
+      } else {
         this.getDetailsofProduct(history?.state?.productID);
       }
 
       this.chat_id = history?.state?.chatID;
       this.getChatDetails();
     }
-    if (history?.state?.data && history?.state?.fromRoute != 'gotToChat') {
+    if (history?.state?.data && history?.state?.fromRoute != "gotToChat") {
       this.productDeatils = history.state.data;
       this.noMessageDetails = this.productDeatils.created_by;
     }
@@ -107,7 +104,6 @@ export class ChatComponent implements OnInit, AfterViewChecked {
       this.getChatDetails();
     }
 
-   
     if (this.productDeatils) {
       this.getLatestMessage();
       this.getDetailsofProduct(this.productDeatils.id);
@@ -131,12 +127,14 @@ export class ChatComponent implements OnInit, AfterViewChecked {
 
   unreadFilter() {
     // this.chats = this.chats.filter((item: any) => item.unread_count > 0);
-    const filteredChats = this.chats.filter((item: any) => item.unread_count > 0);
+    const filteredChats = this.chats.filter(
+      (item: any) => item.unread_count > 0
+    );
 
-// Only update this.chats if filteredChats has at least one item
-if (filteredChats.length > 0) {
-  this.chats = [...this.chats, ...filteredChats];
-}
+    // Only update this.chats if filteredChats has at least one item
+    if (filteredChats.length > 0) {
+      this.chats = [...this.chats, ...filteredChats];
+    }
   }
 
   filteredChats: any[] = [];
@@ -157,16 +155,16 @@ if (filteredChats.length > 0) {
                 "warning",
                 "Error in getting message Please try again"
               );
-            }else{
-               this.alertService.showAlert(
-    "warning",
-    "حدث خطأ أثناء جلب الرسالة، يرجى المحاولة مرة أخرى"
-  );
+            } else {
+              this.alertService.showAlert(
+                "warning",
+                "حدث خطأ أثناء جلب الرسالة، يرجى المحاولة مرة أخرى"
+              );
             }
           }
         }
       );
-      this.filteredChats=this.chats;
+      this.filteredChats = this.chats;
     });
   }
 
@@ -205,9 +203,8 @@ if (filteredChats.length > 0) {
   isExistMakePayment: boolean = true;
   isActionTypeMakePaymentToHideCustomOffer: boolean = false;
 
-
   getChatDetails() {
-    let actionTypeforCallingCustomOffer=false;
+    let actionTypeforCallingCustomOffer = false;
     if (history?.state?.data) {
       history.replaceState({ data: null }, document.title);
     }
@@ -235,7 +232,7 @@ if (filteredChats.length > 0) {
             }
           }
 
-          if(message.action_type == 'offer'){
+          if (message.action_type == "offer") {
             actionTypeforCallingCustomOffer = true;
           }
 
@@ -246,7 +243,6 @@ if (filteredChats.length > 0) {
           if (message.valid_until) {
             this.isCancelOfferBuyer = true;
           }
-
 
           if (message.offer_price >= 1) {
             this.isOfferShowToUserandDealer = true;
@@ -286,49 +282,47 @@ if (filteredChats.length > 0) {
           }
         });
 
-        if (this.messages[0]?.message == 'Buyer have start the Order Process'){
+        if (this.messages[0]?.message == "Buyer have start the Order Process") {
           count_sen_rec++;
         }
         if (count_sen_rec >= 2) {
           this.isShowBuyNowOffer = true;
         }
 
-        if(actionTypeforCallingCustomOffer == true){
+        if (actionTypeforCallingCustomOffer == true) {
           this.getCustomOffer();
         }
-
       },
       (err) => {
         if (err && err.error) {
           this.alertService.showAlert("warning", `${err.error.message}`);
         } else {
-         if (this.translateService.currentLang == "en") {
-  this.alertService.showAlert(
-    "warning",
-    "Error in getting chat Details. Please try again"
-  );
-} else {
-  this.alertService.showAlert(
-    "warning",
-    "حدث خطأ أثناء جلب تفاصيل الدردشة، يرجى المحاولة مرة أخرى"
-  );
-}
-
+          if (this.translateService.currentLang == "en") {
+            this.alertService.showAlert(
+              "warning",
+              "Error in getting chat Details. Please try again"
+            );
+          } else {
+            this.alertService.showAlert(
+              "warning",
+              "حدث خطأ أثناء جلب تفاصيل الدردشة، يرجى المحاولة مرة أخرى"
+            );
+          }
         }
       }
     );
   }
 
   editOffer(customOfferDetails: any) {
-
     const dialogRef = this.dialog.open(CustomOfferComponent, {
       width: "600px",
-      data: { customOfferDetails: customOfferDetails,
-         param: "editComp" ,userCategory: this.isBuyerUser,
-           header:'Edit Offer',
-         headerPara:'Edit custom offer.',
-         },
-      
+      data: {
+        customOfferDetails: customOfferDetails,
+        param: "editComp",
+        userCategory: this.isBuyerUser,
+        header: "Edit Offer",
+        headerPara: "Edit custom offer.",
+      },
     });
 
     dialogRef.afterClosed().subscribe((result) => {
@@ -348,18 +342,17 @@ if (filteredChats.length > 0) {
             if (err && err.error) {
               this.alertService.showAlert("warning", `${err.error.message}`);
             } else {
-             if (this.translateService.currentLang == "en") {
-  this.alertService.showAlert(
-    "warning",
-    "Error in sending message. Please try again"
-  );
-} else {
-  this.alertService.showAlert(
-    "warning",
-    "حدث خطأ أثناء إرسال الرسالة، يرجى المحاولة مرة أخرى"
-  );
-}
-
+              if (this.translateService.currentLang == "en") {
+                this.alertService.showAlert(
+                  "warning",
+                  "Error in sending message. Please try again"
+                );
+              } else {
+                this.alertService.showAlert(
+                  "warning",
+                  "حدث خطأ أثناء إرسال الرسالة، يرجى المحاولة مرة أخرى"
+                );
+              }
             }
           }
         );
@@ -393,8 +386,7 @@ if (filteredChats.length > 0) {
           this.isProductReserved = false;
         }
       },
-      (err) => {
-      }
+      (err) => {}
     );
   }
 
@@ -414,18 +406,17 @@ if (filteredChats.length > 0) {
         if (err && err.error) {
           this.alertService.showAlert("warning", `${err.error.message}`);
         } else {
-         if (this.translateService.currentLang == "en") {
-  this.alertService.showAlert(
-    "warning",
-    "Error in getting product details"
-  );
-} else {
-  this.alertService.showAlert(
-    "warning",
-    "حدث خطأ أثناء جلب تفاصيل المنتج"
-  );
-}
-
+          if (this.translateService.currentLang == "en") {
+            this.alertService.showAlert(
+              "warning",
+              "Error in getting product details"
+            );
+          } else {
+            this.alertService.showAlert(
+              "warning",
+              "حدث خطأ أثناء جلب تفاصيل المنتج"
+            );
+          }
         }
       }
     );
@@ -434,31 +425,29 @@ if (filteredChats.length > 0) {
   activeOption(option: any) {
     this.isActive = option;
     if (option === "All") {
-      this.filteredChats=this.chats;
-    }else if(option == "Buy") {
+      this.filteredChats = this.chats;
+    } else if (option == "Buy") {
       this.filteredChats = this.chats.filter((item: any) => {
-
         return item.product.created_by.id != localStorage.getItem("userID");
       });
-    }else if(option == "Sell") {
+    } else if (option == "Sell") {
       this.filteredChats = this.chats.filter((item: any) => {
-       return  item.product.created_by.id == localStorage.getItem("userID");
-      }
-      ); 
+        return item.product.created_by.id == localStorage.getItem("userID");
+      });
     }
 
     if (this.chats.length === 0) {
       if (this.translateService.currentLang == "en") {
-  this.alertService.showAlert(
-    "warning",
-    "No Chats Available for this filter"
-  );
-} else {
-  this.alertService.showAlert(
-    "warning",
-    "لا توجد محادثات متاحة لهذا الفلتر"
-  );
-}
+        this.alertService.showAlert(
+          "warning",
+          "No Chats Available for this filter"
+        );
+      } else {
+        this.alertService.showAlert(
+          "warning",
+          "لا توجد محادثات متاحة لهذا الفلتر"
+        );
+      }
     }
   }
 
@@ -470,12 +459,11 @@ if (filteredChats.length > 0) {
   }
 
   sendMessage(): void {
-
     const trimmedMessage = this.newMessage?.trim();
     if (!trimmedMessage) {
       return; // Don't send API request if message is only spaces or empty
     }
-    console.log('Sending message:', trimmedMessage);
+    console.log("Sending message:", trimmedMessage);
     const formData = new FormData();
     if (this.newMessage.trim()) {
       formData.append("message", this.newMessage);
@@ -521,18 +509,17 @@ if (filteredChats.length > 0) {
         if (err && err.error) {
           this.alertService.showAlert("warning", `${err.error.message}`);
         } else {
-         if (this.translateService.currentLang == "en") {
-  this.alertService.showAlert(
-    "warning",
-    "Error in sending message. Please try again"
-  );
-} else {
-  this.alertService.showAlert(
-    "warning",
-    "حدث خطأ أثناء إرسال الرسالة، يرجى المحاولة مرة أخرى"
-  );
-}
-
+          if (this.translateService.currentLang == "en") {
+            this.alertService.showAlert(
+              "warning",
+              "Error in sending message. Please try again"
+            );
+          } else {
+            this.alertService.showAlert(
+              "warning",
+              "حدث خطأ أثناء إرسال الرسالة، يرجى المحاولة مرة أخرى"
+            );
+          }
         }
       }
     );
@@ -587,13 +574,15 @@ if (filteredChats.length > 0) {
       reciever_ID: this.reciever_ID,
       chat_ID: this.chat_id,
       product_ID: this.messages[0].product_id,
-      
     };
 
     const dialogRef = this.dialog.open(CustomOfferComponent, {
       width: "600px",
-      data: { datawithChat_ID: datawithChat_ID, param: "chatComp" ,
-        productDetailsfromChat: this.getProductDetails,},
+      data: {
+        datawithChat_ID: datawithChat_ID,
+        param: "chatComp",
+        productDetailsfromChat: this.getProductDetails,
+      },
     });
 
     dialogRef.afterClosed().subscribe((result) => {
@@ -613,23 +602,19 @@ if (filteredChats.length > 0) {
     const dialogRef = this.dialog.open(ConfirmationModelComponent, {
       width: "700px",
       data: { message: "Are you sure you want to cancel offer" },
-      
     });
     dialogRef.afterClosed().subscribe((result) => {
       if (result == true) {
         this.http.editOfferStatus(formData).subscribe(
           (res) => {
-           if (this.translateService.currentLang == "en") {
-  this.alertService.showAlert(
-    "success",
-    "Offer Canceled Successfully"
-  );
-} else {
-  this.alertService.showAlert(
-    "success",
-    "تم إلغاء العرض بنجاح"
-  );
-}
+            if (this.translateService.currentLang == "en") {
+              this.alertService.showAlert(
+                "success",
+                "Offer Canceled Successfully"
+              );
+            } else {
+              this.alertService.showAlert("success", "تم إلغاء العرض بنجاح");
+            }
 
             this.getChatDetails();
             this.getLatestMessage();
@@ -639,17 +624,16 @@ if (filteredChats.length > 0) {
               this.alertService.showAlert("warning", `${err.error.message}`);
             } else {
               if (this.translateService.currentLang == "en") {
-  this.alertService.showAlert(
-    "warning",
-    "Error in Offer Canceling"
-  );
-} else {
-  this.alertService.showAlert(
-    "warning",
-    "حدث خطأ أثناء إلغاء العرض"
-  );
-}
-
+                this.alertService.showAlert(
+                  "warning",
+                  "Error in Offer Canceling"
+                );
+              } else {
+                this.alertService.showAlert(
+                  "warning",
+                  "حدث خطأ أثناء إلغاء العرض"
+                );
+              }
             }
           }
         );
@@ -668,19 +652,13 @@ if (filteredChats.length > 0) {
 
     this.http.editOfferStatus(formData).subscribe(
       (res) => {
-    if (this.translateService.currentLang == "en") {
-  this.alertService.showAlert(
-    "success",
-    "Product Sold Successfully"
-  );
-} else {
-  this.alertService.showAlert(
-    "success",
-    "تم بيع المنتج بنجاح"
-  );
-}
+        if (this.translateService.currentLang == "en") {
+          this.alertService.showAlert("success", "Product Sold Successfully");
+        } else {
+          this.alertService.showAlert("success", "تم بيع المنتج بنجاح");
+        }
 
-        this.isOfferStatusAccepted=true;
+        this.isOfferStatusAccepted = true;
         this.getChatDetails();
         this.getLatestMessage();
       },
@@ -688,18 +666,11 @@ if (filteredChats.length > 0) {
         if (err && err.error) {
           this.alertService.showAlert("warning", `${err.error.message}`);
         } else {
-        if (this.translateService.currentLang == "en") {
-  this.alertService.showAlert(
-    "warning",
-    "Error in Product Sold"
-  );
-} else {
-  this.alertService.showAlert(
-    "warning",
-    "حدث خطأ في بيع المنتج"
-  );
-}
-
+          if (this.translateService.currentLang == "en") {
+            this.alertService.showAlert("warning", "Error in Product Sold");
+          } else {
+            this.alertService.showAlert("warning", "حدث خطأ في بيع المنتج");
+          }
         }
       }
     );
@@ -715,8 +686,7 @@ if (filteredChats.length > 0) {
       receiver_id: this.reciever_ID,
       action_type: "buy_now",
     };
-    this.http.sendMessage(formData).subscribe(
-      (res) => {
+    this.http.sendMessage(formData).subscribe((res) => {
       this.chat_id = res.data.chat_id;
       if (res.data.action_type === "buy_now") {
         this.isBuyNowFromChatCheck = true;
@@ -777,22 +747,21 @@ if (filteredChats.length > 0) {
             if (err && err.error) {
               this.alertService.showAlert("warning", `${err.error.message}`);
             } else {
-             if (this.translateService.currentLang == "en") {
-  this.alertService.showAlert(
-    "warning",
-    "Error in adding shipment. Please try again with correct form data"
-  );
-} else {
-  this.alertService.showAlert(
-    "warning",
-    "حدث خطأ أثناء إضافة الشحنة. يرجى المحاولة مرة أخرى مع بيانات النموذج الصحيحة"
-  );
-}
-
+              if (this.translateService.currentLang == "en") {
+                this.alertService.showAlert(
+                  "warning",
+                  "Error in adding shipment. Please try again with correct form data"
+                );
+              } else {
+                this.alertService.showAlert(
+                  "warning",
+                  "حدث خطأ أثناء إضافة الشحنة. يرجى المحاولة مرة أخرى مع بيانات النموذج الصحيحة"
+                );
+              }
             }
           }
         );
-        if(result?.soldMark == true){ 
+        if (result?.soldMark == true) {
           const formData = {
             product_id: this.messages[0].product_id,
             chat_id: this.chat_id,
@@ -804,7 +773,7 @@ if (filteredChats.length > 0) {
             this.getChatDetails();
             this.getLatestMessage();
           });
-        }else{
+        } else {
           this.getChatDetails();
           this.getLatestMessage();
         }
@@ -821,38 +790,36 @@ if (filteredChats.length > 0) {
     const dialogRef = this.dialog.open(ConfirmationModelComponent, {
       width: "700px",
       data: { message: "Are you sure you want to cancel offer" },
-      
     });
     dialogRef.afterClosed().subscribe((result) => {
-      if(result == true){
-      this.http.sendMessage(formData).subscribe(
-        (res) => {
-          this.chat_id = res?.data?.chat_id;
-          if (this.chat_id) {
-            this.getChatDetails();
-            this.getLatestMessage();
+      if (result == true) {
+        this.http.sendMessage(formData).subscribe(
+          (res) => {
+            this.chat_id = res?.data?.chat_id;
+            if (this.chat_id) {
+              this.getChatDetails();
+              this.getLatestMessage();
+            }
+          },
+          (err) => {
+            if (err && err.error) {
+              this.alertService.showAlert("warning", `${err.error.message}`);
+            } else {
+              if (this.translateService.currentLang == "en") {
+                this.alertService.showAlert(
+                  "warning",
+                  "Error in Cancel Order. Please try again"
+                );
+              } else {
+                this.alertService.showAlert(
+                  "warning",
+                  "حدث خطأ أثناء إلغاء الطلب. يرجى المحاولة مرة أخرى"
+                );
+              }
+            }
           }
-        },
-        (err) => {
-          if (err && err.error) {
-            this.alertService.showAlert("warning", `${err.error.message}`);
-          } else {
-           if (this.translateService.currentLang == "en") {
-  this.alertService.showAlert(
-    "warning",
-    "Error in Cancel Order. Please try again"
-  );
-} else {
-  this.alertService.showAlert(
-    "warning",
-    "حدث خطأ أثناء إلغاء الطلب. يرجى المحاولة مرة أخرى"
-  );
-}
-
-          }
-        }
-      );
-    }
+        );
+      }
     });
   }
 
@@ -873,18 +840,17 @@ if (filteredChats.length > 0) {
         if (err && err.error) {
           this.alertService.showAlert("warning", `${err.error.message}`);
         } else {
-        if (this.translateService.currentLang == "en") {
-  this.alertService.showAlert(
-    "warning",
-    "Error in Making payment. Please try again"
-  );
-} else {
-  this.alertService.showAlert(
-    "warning",
-    "حدث خطأ أثناء إجراء الدفع. يرجى المحاولة مرة أخرى"
-  );
-}
-
+          if (this.translateService.currentLang == "en") {
+            this.alertService.showAlert(
+              "warning",
+              "Error in Making payment. Please try again"
+            );
+          } else {
+            this.alertService.showAlert(
+              "warning",
+              "حدث خطأ أثناء إجراء الدفع. يرجى المحاولة مرة أخرى"
+            );
+          }
         }
       }
     );

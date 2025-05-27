@@ -162,7 +162,7 @@ export class TopBrandsLogosComponent implements OnInit, AfterViewInit, OnDestroy
         this.allUser();
       },
       (err) => {
-        this.toast.showAlert("danger", "Error in removing Brand");
+        this.toast.showAlert("warning", "Error in removing Brand");
       }
     );
   }
@@ -178,7 +178,7 @@ export class TopBrandsLogosComponent implements OnInit, AfterViewInit, OnDestroy
         this.allUser();
       },
       (err) => {
-        this.toast.showAlert("danger", "Error in Updating Active Status");
+        this.toast.showAlert("warning", "Error in Updating Active Status");
       }
     );
   }
@@ -194,7 +194,7 @@ export class TopBrandsLogosComponent implements OnInit, AfterViewInit, OnDestroy
         this.allUser();
       },
       (err) => {
-        this.toast.showAlert("danger", "Error in updating top status");
+        this.toast.showAlert("warning", "Error in updating top status");
       }
     );
   }

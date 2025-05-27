@@ -105,7 +105,7 @@ export class AdminCategoryProductComponent {
   save() {
     if (this.form.invalid) {
       this.toast.showAlert(
-        "danger",
+        "warning",
         "Please fill all required fields correctly."
       );
       return;
@@ -147,7 +147,7 @@ export class AdminCategoryProductComponent {
         },
         (err) => {
           this.toast.showAlert(
-            "danger",
+            "warning",
             "Error creating category. Please try again."
           );
         }
@@ -162,7 +162,7 @@ export class AdminCategoryProductComponent {
         },
         (err) => {
           this.toast.showAlert(
-            "danger",
+            "warning",
             "Error Updating category. Please try again."
           );
         }

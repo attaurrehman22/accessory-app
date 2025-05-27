@@ -170,12 +170,12 @@ export class LoginComponent implements OnInit {
       //     }
       //   },
       //   (error) => {
-      //     this.alertService.showAlert("danger", "Google sign-in failed");
+      //     this.alertService.showAlert("warning", "Google sign-in failed");
       //     console.error(error);
       //   }
       // );
     } catch (error) {
-      this.alertService.showAlert("danger", "Google sign-in failed");
+      this.alertService.showAlert("warning", "Google sign-in failed");
       console.error(error);
     }
   }
