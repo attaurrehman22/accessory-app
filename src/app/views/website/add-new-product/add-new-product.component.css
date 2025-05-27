@@ -237,12 +237,65 @@ background: none;
 
 .image-preview {
   position: relative;
-  width: 80px;
-  height: 80px;
-  margin-top: 10px;
+  width: 100px;
+  height: 100px;
   margin-right: 10px;
-  display: inline-block;
+  border-radius: 8px;
+  overflow: hidden;
 }
+
+.image-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.image-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.cover-label {
+  position: absolute;
+  top: 45px;
+  left: 35px;
+  background:none;
+  color: white;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 16px;
+  font-weight: 400;
+}
+
+
+.upload-progress {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 5px;
+  background-color: rgba(255, 255, 255, 0.2);
+  width: 100%;
+}
+
+.progress-bar {
+  height: 100%;
+  background-color: #4caf50;
+  transition: width 0.3s;
+}
+
+/* .delete-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: rgba(255, 255, 255, 0.8);
+  border: none;
+  border-radius: 50%;
+  padding: 4px;
+  cursor: pointer;
+} */
+
 
 .image-preview img {
   width: 100%;
@@ -266,8 +319,8 @@ background: none;
 
 .delete-btn {
   position: absolute;
-  top: 35px;
-  right: 32px;
+  top: 45px;
+  right: 55px;
   background: #fff;
   border-radius: 50%;
   width: 35px;
@@ -283,9 +336,37 @@ background: none;
   transition: opacity 0.3s ease;
   padding: 0 !important;
 }
+
+.delete-btn:hover {
+   background: #fff;
+}
+
 .upload-progress mat-progress-bar {
   width: 80%;
   margin-top: 10px;
+}
+
+.cover-set-btn {
+  position: absolute;
+  top: 88px;
+  right: 10px;
+  background: none;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #FFF;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  transition: opacity 0.3s ease;
+  padding: 0 !important;
+  font-size: 16px;
+  font-weight: 400;
+}
+
+.cover-set-btn:hover {
+  background: none !important;
 }
 
 
@@ -418,8 +499,8 @@ background: none;
 }
 
 .image-preview {
-  width: 100px;
-  height: 100px;
+  width: 144px;
+  height: 120px;
   object-fit: cover;
   border-radius: 8px;
 }

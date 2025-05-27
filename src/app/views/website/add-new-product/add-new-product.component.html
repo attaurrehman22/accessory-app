@@ -221,7 +221,6 @@
                     'create_product_listing.enter_model_name' | translate
                   }}"
                   formControlName="model"
-                  
                   appFieldLimitIntoHundered
                 />
                 <mat-error
@@ -251,7 +250,6 @@
                   }}"
                   [readonly]="productDetails?.title ? true : false"
                   formControlName="title"
-                  
                   appFieldLimitIntoHundered
                 />
                 <mat-error
@@ -361,7 +359,6 @@
                   formControlName="year_of_production"
                   [readonly]="productDetails?.year_of_production ? true : false"
                   appPositiveNumber
-                  
                 />
                 <mat-error
                   [ngClass]="{
@@ -466,7 +463,7 @@
           >
             ✓
           </div>
-          <div class="step-content" style="width: 90%;">
+          <div class="step-content" style="width: 90%">
             <strong
               style="cursor: pointer"
               (click)="moveToForm('watchDetails')"
@@ -502,7 +499,6 @@
                     'create_product_listing.refrence_number_placeHolder'
                       | translate
                   }}"
-              
                 />
                 <mat-error
                   [ngClass]="{
@@ -539,7 +535,6 @@
                         'create_product_listing.serial_no_placeHolder'
                           | translate
                       }}"
-                     
                     />
                     <mat-error
                       [ngClass]="{
@@ -706,7 +701,6 @@
                         'create_product_listing.other_diameter_placeholder'
                           | translate
                       }}"
-                      
                     />
                     <span
                       style="
@@ -1455,58 +1449,60 @@
                   translateService.currentLang !== 'en'
               }"
             >
+              <!-- All images preview -->
+              <div class="content-two mt-3">
+                <p>{{ "create_product_listing.other_images" | translate }}</p>
+                <div class="d-flex flex-wrap align-items-center gap-5">
+                  <div class="image-preview" *ngFor="let image of allImages">
+                    <img [src]="image.url" alt="Preview" />
 
+                    <!-- Mark as cover button -->
+                    <button
+                      class="mark-cover-btn set-as-cover-btn"
+                      [class.active]="coverImage?.url === image.url"
+                      (click)="setAsCoverImage(image)"
+                    >
+                      <!-- <mat-icon>photo_camera</mat-icon> -->
+                      <small>Set as Cover Image</small>
+                    </button>
 
-             <!-- All images preview -->
-          <div class="content-two mt-3">
-            <p>{{ "create_product_listing.other_images" | translate }}</p>
-            <div class="d-flex flex-wrap align-items-center gap-5">
-          
-              <div class="image-preview" *ngFor="let image of allImages">
-                <img [src]="image.url" alt="Preview" />
-          
-                <!-- Mark as cover button -->
-                <button
-                  class="mark-cover-btn set-as-cover-btn"
-                  [class.active]="coverImage?.url === image.url"
-                  (click)="setAsCoverImage(image)"
-                >
-                  <!-- <mat-icon>photo_camera</mat-icon> -->
-                  <small>Set as Cover Image</small>
-                </button>
-          
-                <!-- Delete button -->
-                <button class="delete-btn" (click)="removeImage(image)">
-                  <mat-icon>delete</mat-icon>
-                </button>
-              </div>
-          
-              <div class="content-one">
-                <!-- <p>{{ "create_product_listing.cover_image" | translate }}</p> -->
-                <div class="d-flex flex-wrap">
-                  <div class="upload-box" (click)="selectImages()">
-                    <span>+</span>
+                    <!-- Delete button -->
+                    <button class="delete-btn" (click)="removeImage(image)">
+                      <mat-icon>delete</mat-icon>
+                    </button>
                   </div>
-                  <input
-                    type="file"
-                    #imagesInput
-                    (change)="onImagesSelected($event)"
-                    accept="image/*"
-                    multiple
-                    hidden
-                  />
+
+                  <div class="content-one">
+                    <!-- <p>{{ "create_product_listing.cover_image" | translate }}</p> -->
+                    <div class="d-flex flex-wrap">
+                      <div class="upload-box" (click)="selectImages()">
+                        <span>+</span>
+                      </div>
+                      <input
+                        type="file"
+                        #imagesInput
+                        (change)="onImagesSelected($event)"
+                        accept="image/*"
+                        multiple
+                        hidden
+                      />
+                    </div>
+                  </div>
                 </div>
               </div>
 
-            </div>
-          </div>
-          
-          <!-- Optional Cover Image Preview Box -->
-          <div class="cover-preview mt-5" *ngIf="coverImage?.url !== nullImagePath">
-            <p>{{ "create_product_listing.cover_image" | translate }}</p>
-            <img [src]="coverImage.url" style="max-height: 150px;" alt="Cover Image" />
-          </div>
-
+              <!-- Optional Cover Image Preview Box -->
+              <div
+                class="cover-preview mt-5"
+                *ngIf="coverImage?.url !== nullImagePath"
+              >
+                <p>{{ "create_product_listing.cover_image" | translate }}</p>
+                <img
+                  [src]="coverImage.url"
+                  style="max-height: 150px"
+                  alt="Cover Image"
+                />
+              </div>
 
               <!-- Cover Image -->
               <!-- <div class="content-one">
@@ -1558,31 +1554,33 @@
                 </div>
               </div> -->
 
-
               <div class="content-one mt-3">
                 <p>{{ "create_product_listing.upload_video" | translate }}</p>
-                  <div class="d-flex flex-wrap">
-                    <div class="upload-box" (click)="selectVideoFile()">
-                      <ng-container *ngIf="videoUrl ;else uploadPlaceholderVideo">
-                          <video *ngIf="videoUrl" controls [src]="videoUrl"  style="height: 100%; width: 100%; object-fit: cover"></video>
-                          <button
-                            class="delete-btn"
-                            (click)="removeVideo()"
-                          >
-                            <mat-icon>delete</mat-icon>
-                          </button>
-                      </ng-container>
-                      <ng-template #uploadPlaceholderVideo>
-                        <span>+</span>
-                      </ng-template>
-                      <input 
+                <div class="d-flex flex-wrap">
+                  <div class="upload-box" (click)="selectVideoFile()">
+                    <ng-container *ngIf="videoUrl; else uploadPlaceholderVideo">
+                      <video
+                        *ngIf="videoUrl"
+                        controls
+                        [src]="videoUrl"
+                        style="height: 100%; width: 100%; object-fit: cover"
+                      ></video>
+                      <button class="delete-btn" (click)="removeVideo()">
+                        <mat-icon>delete</mat-icon>
+                      </button>
+                    </ng-container>
+                    <ng-template #uploadPlaceholderVideo>
+                      <span>+</span>
+                    </ng-template>
+                    <input
                       #videoInput
-                      type="file" 
-                      hidden 
-                      (change)="onVideoSelected($event)" 
-                      accept="video/*" />
-                    </div>
+                      type="file"
+                      hidden
+                      (change)="onVideoSelected($event)"
+                      accept="video/*"
+                    />
                   </div>
+                </div>
               </div>
 
               <!-- Other Images -->
@@ -1927,19 +1925,19 @@
                           [src]="option.icon"
                           alt="{{ option.title }}"
                           class="icon mb-3"
-                          style="align-self: center;"
+                          style="align-self: center"
                         />
                         <h6
                           *ngIf="translateService.currentLang === 'en'"
                           class="card-title"
-                          style="align-self: center;"
+                          style="align-self: center"
                         >
                           {{ option.title }}
                         </h6>
                         <h6
                           *ngIf="translateService.currentLang != 'en'"
                           class="card-title"
-                          style="align-self: center;"
+                          style="align-self: center"
                         >
                           {{ option.arabictitle }}
                         </h6>
@@ -1971,7 +1969,6 @@
                   Save
                 </button> -->
                 <button
-                  
                   class="save-can-btn save-btn-bg"
                   (click)="onSubmit('scopeofdelivery')"
                 >
@@ -2236,11 +2233,12 @@
                 class="container-fluid mt-4"
                 style="padding-left: 0; padding-right: 0"
               >
-                <div class="help-card d-flex flex-wrap align-items-center" 
-                [ngClass]="{
-                  'reverse-order-helpp-card':
-                    translateService.currentLang !== 'en'
-                }"
+                <div
+                  class="help-card d-flex flex-wrap align-items-center"
+                  [ngClass]="{
+                    'reverse-order-helpp-card':
+                      translateService.currentLang !== 'en'
+                  }"
                 >
                   <div class="icon-placeholder">
                     <img
@@ -2416,19 +2414,41 @@
                       translateService.currentLang !== 'en'
                   }"
                 >
-                  <p style="font-size: 18px !important;font-weight:700 !important;color:#132138 !important" class="font-size-18 font-wight-700 color-132138">
+                  <p
+                    style="
+                      font-size: 18px !important;
+                      font-weight: 700 !important;
+                      color: #132138 !important;
+                    "
+                    class="font-size-18 font-wight-700 color-132138"
+                  >
                     {{ "create_product_listing.payout_info" | translate }}
                   </p>
                   <div class="info-row d-flex justify-content-between">
-                    <p style="font-size: 16px !important;font-weight:400 !important;color:#909090 !important" 
-                     class="font-size-16 font-wight-400 color-909090">
+                    <p
+                      style="
+                        font-size: 16px !important;
+                        font-weight: 400 !important;
+                        color: #909090 !important;
+                      "
+                      class="font-size-16 font-wight-400 color-909090"
+                    >
                       {{ "create_product_listing.watch_price" | translate }}
                     </p>
-                    <p style="font-size: 16px !important;font-weight:600 !important;color:#0F172A !important"  class="font-size-16 font-wight-600 color-0F172A">
-                      <img src="../../../../assets/images/Saudi_Riyal_Symbol-2.svg" class="sar-icon-style" alt="SAR"/>
-                      {{
-                        watchPriceDisplay 
-                      }}
+                    <p
+                      style="
+                        font-size: 16px !important;
+                        font-weight: 600 !important;
+                        color: #0f172a !important;
+                      "
+                      class="font-size-16 font-wight-600 color-0F172A"
+                    >
+                      <img
+                        src="../../../../assets/images/Saudi_Riyal_Symbol-2.svg"
+                        class="sar-icon-style"
+                        alt="SAR"
+                      />
+                      {{ watchPriceDisplay }}
                     </p>
                   </div>
                   <div class="info-row d-flex justify-content-between">
@@ -2436,8 +2456,12 @@
                       "create_product_listing.platform_fees" | translate
                     }}</span>
                     <span class="font-size-16 font-wight-600 color-0F172A">
-                      <img src="../../../../assets/images/Saudi_Riyal_Symbol-2.svg" class="sar-icon-style" alt="SAR"/>
-                      - {{ platformFee  }}
+                      <img
+                        src="../../../../assets/images/Saudi_Riyal_Symbol-2.svg"
+                        class="sar-icon-style"
+                        alt="SAR"
+                      />
+                      - {{ platformFee }}
                     </span>
                   </div>
                   <mat-divider></mat-divider>
@@ -2446,11 +2470,13 @@
                       "create_product_listing.estimated_payout" | translate
                     }}</span>
                     <span class="font-size-16 font-wight-600 color-0F172A">
-                      <img src="../../../../assets/images/Saudi_Riyal_Symbol-2.svg" class="sar-icon-style" alt="SAR"/>
+                      <img
+                        src="../../../../assets/images/Saudi_Riyal_Symbol-2.svg"
+                        class="sar-icon-style"
+                        alt="SAR"
+                      />
 
-                      {{
-                        estimatedPayout 
-                      }}
+                      {{ estimatedPayout }}
                     </span>
                   </div>
                 </mat-card>
@@ -2601,22 +2627,42 @@
                 </div>
                 <div class="col-md-6 for-reverse">
                   <mat-card class="info-card">
-                    <p style="font-size: 18px !important;font-weight:700 !important;color:#132138 !important"
-                     class="font-size-18 font-wight-700 color-132138">
+                    <p
+                      style="
+                        font-size: 18px !important;
+                        font-weight: 700 !important;
+                        color: #132138 !important;
+                      "
+                      class="font-size-18 font-wight-700 color-132138"
+                    >
                       {{ "create_product_listing.payout_info" | translate }}
                     </p>
                     <div class="info-row d-flex justify-content-between">
-                      <p style="font-size: 16px !important;font-weight:400 !important;color:#909090 !important" class="font-size-16 font-wight-400 color-909090">
+                      <p
+                        style="
+                          font-size: 16px !important;
+                          font-weight: 400 !important;
+                          color: #909090 !important;
+                        "
+                        class="font-size-16 font-wight-400 color-909090"
+                      >
                         {{ "create_product_listing.watch_price" | translate }}
                       </p>
-                      <p style="font-size: 16px !important;font-weight:600 !important;color:#0F172A !important"
-                       class="font-size-16 font-wight-600 color-0F172A">
-                       <img src="../../../../assets/images/Saudi_Riyal_Symbol-2.svg" class="sar-icon-style" alt="SAR"/>
+                      <p
+                        style="
+                          font-size: 16px !important;
+                          font-weight: 600 !important;
+                          color: #0f172a !important;
+                        "
+                        class="font-size-16 font-wight-600 color-0F172A"
+                      >
+                        <img
+                          src="../../../../assets/images/Saudi_Riyal_Symbol-2.svg"
+                          class="sar-icon-style"
+                          alt="SAR"
+                        />
 
-                        {{
-                          watchPriceDisplay
-                            
-                        }}
+                        {{ watchPriceDisplay }}
                       </p>
                     </div>
                     <div class="info-row d-flex justify-content-between">
@@ -2625,9 +2671,13 @@
                       }}</span>
                       <span class="font-size-16 font-wight-600 color-0F172A">
                         -
-                        <img src="../../../../assets/images/Saudi_Riyal_Symbol-2.svg" class="sar-icon-style" alt="SAR"/>
+                        <img
+                          src="../../../../assets/images/Saudi_Riyal_Symbol-2.svg"
+                          class="sar-icon-style"
+                          alt="SAR"
+                        />
 
-                        {{ platformFee  }}
+                        {{ platformFee }}
                       </span>
                     </div>
                     <mat-divider></mat-divider>
@@ -2636,11 +2686,13 @@
                         "create_product_listing.payout" | translate
                       }}</span>
                       <span class="font-size-16 font-wight-600 color-0F172A">
-                        <img src="../../../../assets/images/Saudi_Riyal_Symbol-2.svg" class="sar-icon-style" alt="SAR"/>
+                        <img
+                          src="../../../../assets/images/Saudi_Riyal_Symbol-2.svg"
+                          class="sar-icon-style"
+                          alt="SAR"
+                        />
 
-                        {{
-                          estimatedPayout 
-                        }}
+                        {{ estimatedPayout }}
                       </span>
                     </div>
 
@@ -2653,27 +2705,33 @@
                       }}</span>
                       <span class="font-size-16 font-wight-600 color-0F172A">
                         -
-                        <img src="../../../../assets/images/Saudi_Riyal_Symbol-2.svg" class="sar-icon-style" alt="SAR"/>
+                        <img
+                          src="../../../../assets/images/Saudi_Riyal_Symbol-2.svg"
+                          class="sar-icon-style"
+                          alt="SAR"
+                        />
 
-                        {{
-                          shipping_charges
-                            ? shipping_charges
-                            : (0 )
-                        }}
+                        {{ shipping_charges ? shipping_charges : 0 }}
                       </span>
                     </div>
-                    <mat-divider *ngIf="estimatedPayoutwithShipping"></mat-divider>
-                    <div *ngIf="estimatedPayoutwithShipping" class="info-row d-flex justify-content-between">
+                    <mat-divider
+                      *ngIf="estimatedPayoutwithShipping"
+                    ></mat-divider>
+                    <div
+                      *ngIf="estimatedPayoutwithShipping"
+                      class="info-row d-flex justify-content-between"
+                    >
                       <span class="font-size-16 font-wight-400 color-909090">{{
                         "create_product_listing.estimated_payout" | translate
                       }}</span>
                       <span class="font-size-16 font-wight-600 color-0F172A">
-                        <img src="../../../../assets/images/Saudi_Riyal_Symbol-2.svg" class="sar-icon-style" alt="SAR"/>
+                        <img
+                          src="../../../../assets/images/Saudi_Riyal_Symbol-2.svg"
+                          class="sar-icon-style"
+                          alt="SAR"
+                        />
 
-                        {{
-                          estimatedPayoutwithShipping
-                            
-                        }}
+                        {{ estimatedPayoutwithShipping }}
                       </span>
                     </div>
                   </mat-card>
@@ -3043,7 +3101,7 @@
             ✓
           </div>
           <!-- <div class="step-circle">9</div> -->
-          <div class="step-content" style="width: 90%;">
+          <div class="step-content" style="width: 90%">
             <strong style="cursor: pointer" (click)="moveToForm('summary')">{{
               "create_product_listing.summary" | translate
             }}</strong>
@@ -3098,16 +3156,23 @@
                             {{ productDetails.title }}
                           </p>
                           <p class="text-primary font-weight-bold mb-0">
-                            <img src="../../../../assets/images/Saudi_Riyal_Symbol-2.svg" class="sar-icon-style" alt="SAR"/>
+                            <img
+                              src="../../../../assets/images/Saudi_Riyal_Symbol-2.svg"
+                              class="sar-icon-style"
+                              alt="SAR"
+                            />
 
-                            {{
-                              productDetails.price
-                                
-                            }}
+                            {{ productDetails.price }}
                           </p>
                           <small class="text-muted">{{
-                                                       productDetails.shipping_type == 'inclusiveShipping' ? 'Inclusive Shipping' : productDetails.shipping_type == 'exclusiveShipping' ? 'Exclusive Shipping' : productDetails.shipping_type == 'freeCharge' ? 'Free Charge' : productDetails.shipping_type
-
+                            productDetails.shipping_type == "inclusiveShipping"
+                              ? "Inclusive Shipping"
+                              : productDetails.shipping_type ==
+                                "exclusiveShipping"
+                              ? "Exclusive Shipping"
+                              : productDetails.shipping_type == "freeCharge"
+                              ? "Free Charge"
+                              : productDetails.shipping_type
                           }}</small>
                         </div>
                       </div>
@@ -3128,7 +3193,11 @@
                           'reverse-order-upload-images-labels':
                             translateService.currentLang !== 'en'
                         }"
-                        style="font-size: 18px !important;font-weight:700 !important;color:#132138 !important"
+                        style="
+                          font-size: 18px !important;
+                          font-weight: 700 !important;
+                          color: #132138 !important;
+                        "
                         class="font-size-18 font-wight-700 color-132138"
                       >
                         {{
@@ -3137,16 +3206,30 @@
                         }}
                       </p>
                       <div class="info-row d-flex justify-content-between">
-                        <p style="font-size: 16px !important;font-weight:600 !important;color:#909090 !important"  class="font-size-16 font-wight-400 color-909090">
+                        <p
+                          style="
+                            font-size: 16px !important;
+                            font-weight: 600 !important;
+                            color: #909090 !important;
+                          "
+                          class="font-size-16 font-wight-400 color-909090"
+                        >
                           {{ "create_product_listing.watch_price" | translate }}
                         </p>
-                        <p style="font-size: 16px !important;font-weight:600 !important;color:#0F172A !important" 
-                         class="font-size-16 font-wight-600 color-0F172A">
-                         <img src="../../../../assets/images/Saudi_Riyal_Symbol-2.svg" class="sar-icon-style" alt="SAR"/>
-                          {{
-                            watchPriceDisplay
-                              
-                          }}
+                        <p
+                          style="
+                            font-size: 16px !important;
+                            font-weight: 600 !important;
+                            color: #0f172a !important;
+                          "
+                          class="font-size-16 font-wight-600 color-0F172A"
+                        >
+                          <img
+                            src="../../../../assets/images/Saudi_Riyal_Symbol-2.svg"
+                            class="sar-icon-style"
+                            alt="SAR"
+                          />
+                          {{ watchPriceDisplay }}
                         </p>
                       </div>
                       <div class="info-row d-flex justify-content-between">
@@ -3157,11 +3240,13 @@
                         >
                         <span class="font-size-16 font-wight-600 color-0F172A">
                           -
-                          <img src="../../../../assets/images/Saudi_Riyal_Symbol-2.svg" class="sar-icon-style" alt="SAR"/>
+                          <img
+                            src="../../../../assets/images/Saudi_Riyal_Symbol-2.svg"
+                            class="sar-icon-style"
+                            alt="SAR"
+                          />
 
-                          {{
-                            platformFee 
-                          }}
+                          {{ platformFee }}
                         </span>
                       </div>
                       <mat-divider></mat-divider>
@@ -3172,12 +3257,13 @@
                           }}</span
                         >
                         <span class="font-size-16 font-wight-600 color-0F172A">
-                          <img src="../../../../assets/images/Saudi_Riyal_Symbol-2.svg" class="sar-icon-style" alt="SAR"/>
+                          <img
+                            src="../../../../assets/images/Saudi_Riyal_Symbol-2.svg"
+                            class="sar-icon-style"
+                            alt="SAR"
+                          />
 
-                          {{
-                            estimatedPayout
-                              
-                          }}
+                          {{ estimatedPayout }}
                         </span>
                       </div>
 
@@ -3191,16 +3277,22 @@
                         >
                         <span class="font-size-16 font-wight-600 color-0F172A">
                           +
-                          <img src="../../../../assets/images/Saudi_Riyal_Symbol-2.svg" class="sar-icon-style" alt="SAR"/>
+                          <img
+                            src="../../../../assets/images/Saudi_Riyal_Symbol-2.svg"
+                            class="sar-icon-style"
+                            alt="SAR"
+                          />
 
-                          {{
-                            shipping_charges
-                              
-                          }}
+                          {{ shipping_charges }}
                         </span>
                       </div>
-                      <mat-divider *ngIf="estimatedPayoutwithShipping"></mat-divider>
-                      <div *ngIf="estimatedPayoutwithShipping" class="info-row d-flex justify-content-between">
+                      <mat-divider
+                        *ngIf="estimatedPayoutwithShipping"
+                      ></mat-divider>
+                      <div
+                        *ngIf="estimatedPayoutwithShipping"
+                        class="info-row d-flex justify-content-between"
+                      >
                         <span
                           class="font-size-16 font-wight-400 color-909090"
                           >{{
@@ -3209,12 +3301,13 @@
                           }}</span
                         >
                         <span class="font-size-16 font-wight-600 color-0F172A">
-                          <img src="../../../../assets/images/Saudi_Riyal_Symbol-2.svg" class="sar-icon-style" alt="SAR"/>
+                          <img
+                            src="../../../../assets/images/Saudi_Riyal_Symbol-2.svg"
+                            class="sar-icon-style"
+                            alt="SAR"
+                          />
 
-                          {{
-                            estimatedPayoutwithShipping
-                              
-                          }}
+                          {{ estimatedPayoutwithShipping }}
                         </span>
                       </div>
                     </mat-card>
@@ -3315,7 +3408,7 @@
               >
                 <button
                   class="save-can-btn canc-bg-color"
-                  style="width: 170px !important;"
+                  style="width: 170px !important"
                   (click)="routeToProductDetail()"
                 >
                   {{ "create_product_listing.Preview_your_Ad" | translate }}
@@ -3521,7 +3614,6 @@
                   'create_product_listing.enter_model_name' | translate
                 }}"
                 formControlName="model"
-                
                 appFieldLimitIntoHundered
               />
               <mat-error
@@ -3551,7 +3643,6 @@
                 }}"
                 [readonly]="productDetails?.title ? true : false"
                 formControlName="title"
-                
                 appFieldLimitIntoHundered
               />
               <mat-error
@@ -3660,7 +3751,6 @@
                 formControlName="year_of_production"
                 [readonly]="productDetails?.year_of_production ? true : false"
                 appPositiveNumber
-                
               />
               <mat-error
                 [ngClass]="{
@@ -3781,7 +3871,6 @@
                       'create_product_listing.refrence_number_placeHolder'
                         | translate
                     }}"
-                   
                   />
                   <mat-error
                     [ngClass]="{
@@ -3818,7 +3907,6 @@
                           'create_product_listing.serial_no_placeHolder'
                             | translate
                         }}"
-                        
                       />
                       <mat-error
                         [ngClass]="{
@@ -4737,181 +4825,74 @@
             }"
             class="image-upload-container"
           >
-
-
-       
-          
-          <!-- All images preview -->
-          <div class="content-two mt-3">
-            <p>{{ "create_product_listing.other_images" | translate }}</p>
-            <div class="d-flex flex-wrap align-items-center gap-5">
-          
-              <div class="image-preview" *ngFor="let image of allImages">
-                <img [src]="image.url" alt="Preview" />
-          
-                <!-- Mark as cover button -->
-                <button
-                  class="mark-cover-btn set-as-cover-btn"
-                  [class.active]="coverImage?.url === image.url"
-                  (click)="setAsCoverImage(image)"
-                >
-                  <!-- <mat-icon>photo_camera</mat-icon> -->
-                  <small>Set as Cover Image</small>
-                </button>
-          
-                <!-- Delete button -->
-                <button class="delete-btn" (click)="removeImage(image)">
-                  <mat-icon>delete</mat-icon>
-                </button>
-              </div>
-          
-              <div class="content-one">
-                <!-- <p>{{ "create_product_listing.cover_image" | translate }}</p> -->
-                <div class="d-flex flex-wrap">
-                  <div class="upload-box" (click)="selectImages()">
-                    <span>+</span>
-                  </div>
-                  <input
-                    type="file"
-                    #imagesInput
-                    (change)="onImagesSelected($event)"
-                    accept="image/*"
-                    multiple
-                    hidden
-                  />
-                </div>
-              </div>
-
-            </div>
-          </div>
-          
-          <!-- Optional Cover Image Preview Box -->
-          <div class="cover-preview mt-5" *ngIf="coverImage?.url !== nullImagePath">
-            <p>{{ "create_product_listing.cover_image" | translate }}</p>
-            <img [src]="coverImage.url" style="max-height: 150px;" alt="Cover Image" />
-          </div>
-          
-
-
-            <!-- Cover Image -->
-            <!-- <div class="content-one">
-              <p>{{ "create_product_listing.cover_image" | translate }}</p>
-              <div class="d-flex flex-wrap">
-                <div class="upload-box" (click)="selectCoverImage()">
-                  <ng-container
-                    *ngIf="
-                      coverImage?.url &&
-                        coverImage.url !== nullImagePath;
-                      else uploadPlaceholder
-                    "
-                  >
-                    <img
-                      *ngIf="
-                        coverImage?.url &&
-                        coverImage.url !== nullImagePath
-                      "
-                      style="height: 100%; width: 100%; object-fit: cover"
-                      [src]="coverImage.url"
-                      alt="Cover Image"
-                    />
-                    <button
-                      *ngIf="
-                        coverImage?.url &&
-                        coverImage.url !== nullImagePath
-                      "
-                      class="delete-btn"
-                      (click)="removeCoverImage()"
-                    >
-                      <mat-icon>delete</mat-icon>
-                    </button>
-                  </ng-container>
-                  <ng-template #uploadPlaceholder>
-                    <span>+</span>
-                  </ng-template>
-                  <div *ngIf="isCoverImageUploading" class="upload-progress">
-                    <p>Uploading</p>
-                    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
-                  </div>
-                </div>
-                <input
-                  type="file"
-                  #coverImageInput
-                  (change)="onCoverImageSelected($event)"
-                  accept="image/*"
-                  hidden
-                />
-              </div>
-            </div> -->
-
-            <div class="content-one mt-3">
-              <p>{{ "create_product_listing.upload_video" | translate }}</p>
-                <div class="d-flex flex-wrap">
-                  <div class="upload-box" (click)="selectVideoFile()">
-                    <ng-container *ngIf="videoUrl ;else uploadPlaceholderVideo">
-                        <video *ngIf="videoUrl" controls [src]="videoUrl"  style="height: 100%; width: 100%; object-fit: cover"></video>
-                        <button
-                          class="delete-btn"
-                          (click)="removeVideo()"
-                        >
-                          <mat-icon>delete</mat-icon>
-                        </button>
-                    </ng-container>
-                    <ng-template #uploadPlaceholderVideo>
-                      <span>+</span>
-                    </ng-template>
-                    <input 
-                    #videoInput
-                    type="file" 
-                    hidden 
-                    (change)="onVideoSelected($event)" 
-                    accept="video/*" />
-                  </div>
-                </div>
-            </div>
-
-            <!-- Other Images -->
-            <!-- <div class="content-two">
-              <p>{{ "create_product_listing.other_images" | translate }}</p>
-              <div class="d-flex flex-wrap align-items-center gap-3">
-                <div class="upload-box" (click)="selectOtherImages()">
+           <!-- All images preview -->
+            <div class="content-two mt-3">
+              <p>{{ "create_product_listing.Images" | translate }}</p>
+              <div class="d-flex flex-wrap align-items-center gap-5">
+                <!-- Upload Button -->
+                <div class="upload-box" (click)="selectImages()">
                   <span>+</span>
                 </div>
                 <input
                   type="file"
-                  #otherImagesInput
-                  (change)="onOtherImagesSelected($event)"
+                  #imagesInput
+                  (change)="onImagesSelected($event)"
                   accept="image/*"
                   multiple
                   hidden
                 />
 
-                <div class="image-preview" *ngFor="let image of otherImages">
-                  <img
-                    [src]="image.url"
-                    *ngIf="!image.isUploading"
-                    alt="Preview"
-                  />
+                <!-- Image Previews -->
+               <div class="image-preview" *ngFor="let image of allImages">
+                  <img [src]="image.url" alt="Preview" />
 
-                  <div *ngIf="image.isUploading" class="upload-progress">
-                    <p>Uploading</p>
-                    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
-                  </div>
+                  <!-- Show "Cover Image" overlay if image is the cover -->
+                  <div *ngIf="image.isCover" class="cover-label">Cover Image</div>
 
+                  <!-- Button to set as cover -->
                   <button
-                    *ngIf="!image.isUploading"
-                    class="delete-btn"
-                    (click)="removeImage(image)"
+                    class="cover-set-btn"
+                    [class.active]="image.isCover"
+                    (click)="setAsCoverImage(image)"
                   >
+                    <small>Set as Cover Image</small>
+                  </button>
+
+                  <button class="delete-btn" (click)="removeImage(image)">
                     <mat-icon>delete</mat-icon>
                   </button>
                 </div>
+
               </div>
-            </div> -->
+            </div>
 
-           
-            
-        
-
+            <div class="content-one mt-3">
+              <p>{{ "create_product_listing.upload_video" | translate }}</p>
+              <div class="d-flex flex-wrap">
+                <div class="upload-box" (click)="selectVideoFile()">
+                  <ng-container *ngIf="videoUrl; else uploadPlaceholderVideo">
+                    <video
+                      controls
+                      [src]="videoUrl"
+                      style="height: 100%; width: 100%; object-fit: cover"
+                    ></video>
+                    <button class="delete-btn" (click)="removeVideo()">
+                      <mat-icon>delete</mat-icon>
+                    </button>
+                  </ng-container>
+                  <ng-template #uploadPlaceholderVideo>
+                    <span>+</span>
+                  </ng-template>
+                  <input
+                    #videoInput
+                    type="file"
+                    hidden
+                    (change)="onVideoSelected($event)"
+                    accept="video/*"
+                  />
+                </div>
+              </div>
+            </div>
           </div>
 
           <div
@@ -5190,7 +5171,6 @@
               Save
             </button> -->
             <button
-           
               class="save-can-btn save-btn-bg"
               (click)="onSubmit('scopeofdelivery')"
             >
@@ -5573,19 +5553,42 @@
                       translateService.currentLang !== 'en'
                   }"
                 >
-                  <p style="font-size: 18px !important;font-weight:700 !important;color:#132138 !important" class="font-size-18 font-wight-700 color-132138">
+                  <p
+                    style="
+                      font-size: 18px !important;
+                      font-weight: 700 !important;
+                      color: #132138 !important;
+                    "
+                    class="font-size-18 font-wight-700 color-132138"
+                  >
                     {{ "create_product_listing.payout_info" | translate }}
                   </p>
                   <div class="info-row d-flex justify-content-between">
-                    <p style="font-size: 16px !important;font-weight:600 !important;color:#909090 !important"  class="font-size-16 font-wight-400 color-909090">
+                    <p
+                      style="
+                        font-size: 16px !important;
+                        font-weight: 600 !important;
+                        color: #909090 !important;
+                      "
+                      class="font-size-16 font-wight-400 color-909090"
+                    >
                       {{ "create_product_listing.watch_price" | translate }}
                     </p>
-                    <p style="font-size: 16px !important;font-weight:600 !important;color:#0F172A !important"  class="font-size-16 font-wight-600 color-0F172A">
-                      <img src="../../../../assets/images/Saudi_Riyal_Symbol-2.svg" class="sar-icon-style" alt="SAR"/>
+                    <p
+                      style="
+                        font-size: 16px !important;
+                        font-weight: 600 !important;
+                        color: #0f172a !important;
+                      "
+                      class="font-size-16 font-wight-600 color-0F172A"
+                    >
+                      <img
+                        src="../../../../assets/images/Saudi_Riyal_Symbol-2.svg"
+                        class="sar-icon-style"
+                        alt="SAR"
+                      />
 
-                      {{
-                        watchPriceDisplay 
-                      }}
+                      {{ watchPriceDisplay }}
                     </p>
                   </div>
                   <div class="info-row d-flex justify-content-between">
@@ -5593,9 +5596,14 @@
                       "create_product_listing.platform_fees" | translate
                     }}</span>
                     <span class="font-size-16 font-wight-600 color-0F172A">
-                      -                    <img src="../../../../assets/images/Saudi_Riyal_Symbol-2.svg" class="sar-icon-style" alt="SAR"/>
+                      -
+                      <img
+                        src="../../../../assets/images/Saudi_Riyal_Symbol-2.svg"
+                        class="sar-icon-style"
+                        alt="SAR"
+                      />
 
-                      {{ platformFee  }}
+                      {{ platformFee }}
                     </span>
                   </div>
                   <mat-divider></mat-divider>
@@ -5604,11 +5612,13 @@
                       "create_product_listing.estimated_payout" | translate
                     }}</span>
                     <span class="font-size-16 font-wight-600 color-0F172A">
-                      <img src="../../../../assets/images/Saudi_Riyal_Symbol-2.svg" class="sar-icon-style" alt="SAR"/>
+                      <img
+                        src="../../../../assets/images/Saudi_Riyal_Symbol-2.svg"
+                        class="sar-icon-style"
+                        alt="SAR"
+                      />
 
-                      {{
-                        estimatedPayout 
-                      }}
+                      {{ estimatedPayout }}
                     </span>
                   </div>
                 </mat-card>
@@ -5754,19 +5764,42 @@
               </div>
               <div class="col-md-6 for-reverse" style="padding-left: 0">
                 <mat-card class="info-card">
-                  <p style="font-size: 18px !important;font-weight:700 !important;color:#132138 !important" class="font-size-18 font-wight-700 color-132138">
+                  <p
+                    style="
+                      font-size: 18px !important;
+                      font-weight: 700 !important;
+                      color: #132138 !important;
+                    "
+                    class="font-size-18 font-wight-700 color-132138"
+                  >
                     {{ "create_product_listing.payout_info" | translate }}
                   </p>
                   <div class="info-row d-flex justify-content-between">
-                    <p style="font-size: 16px !important;font-weight:600 !important;color:#909090 !important"  class="font-size-16 font-wight-400 color-909090">
+                    <p
+                      style="
+                        font-size: 16px !important;
+                        font-weight: 600 !important;
+                        color: #909090 !important;
+                      "
+                      class="font-size-16 font-wight-400 color-909090"
+                    >
                       {{ "create_product_listing.watch_price" | translate }}
                     </p>
-                    <p style="font-size: 16px !important;font-weight:600 !important;color:#0F172A !important"  class="font-size-16 font-wight-600 color-0F172A">
-                      <img src="../../../../assets/images/Saudi_Riyal_Symbol-2.svg" class="sar-icon-style" alt="SAR"/>
+                    <p
+                      style="
+                        font-size: 16px !important;
+                        font-weight: 600 !important;
+                        color: #0f172a !important;
+                      "
+                      class="font-size-16 font-wight-600 color-0F172A"
+                    >
+                      <img
+                        src="../../../../assets/images/Saudi_Riyal_Symbol-2.svg"
+                        class="sar-icon-style"
+                        alt="SAR"
+                      />
 
-                      {{
-                        watchPriceDisplay 
-                      }}
+                      {{ watchPriceDisplay }}
                     </p>
                   </div>
                   <div class="info-row d-flex justify-content-between">
@@ -5774,8 +5807,13 @@
                       "create_product_listing.platform_fees" | translate
                     }}</span>
                     <span class="font-size-16 font-wight-600 color-0F172A">
-                      -                   <img src="../../../../assets/images/Saudi_Riyal_Symbol-2.svg" class="sar-icon-style" alt="SAR"/>
-                      {{ platformFee  }}
+                      -
+                      <img
+                        src="../../../../assets/images/Saudi_Riyal_Symbol-2.svg"
+                        class="sar-icon-style"
+                        alt="SAR"
+                      />
+                      {{ platformFee }}
                     </span>
                   </div>
                   <mat-divider></mat-divider>
@@ -5784,11 +5822,13 @@
                       "create_product_listing.payout" | translate
                     }}</span>
                     <span class="font-size-16 font-wight-600 color-0F172A">
-                      <img src="../../../../assets/images/Saudi_Riyal_Symbol-2.svg" class="sar-icon-style" alt="SAR"/>
+                      <img
+                        src="../../../../assets/images/Saudi_Riyal_Symbol-2.svg"
+                        class="sar-icon-style"
+                        alt="SAR"
+                      />
 
-                      {{
-                        estimatedPayout 
-                      }}
+                      {{ estimatedPayout }}
                     </span>
                   </div>
 
@@ -5800,27 +5840,34 @@
                       "create_product_listing.shipping_charges" | translate
                     }}</span>
                     <span class="font-size-16 font-wight-600 color-0F172A">
-                      -                   <img src="../../../../assets/images/Saudi_Riyal_Symbol-2.svg" class="sar-icon-style" alt="SAR"/>
+                      -
+                      <img
+                        src="../../../../assets/images/Saudi_Riyal_Symbol-2.svg"
+                        class="sar-icon-style"
+                        alt="SAR"
+                      />
 
-                      {{
-                        shipping_charges
-          ? shipping_charges
-                          : (0 )
-                      }}
+                      {{ shipping_charges ? shipping_charges : 0 }}
                     </span>
                   </div>
-                  <mat-divider *ngIf="estimatedPayoutwithShipping"></mat-divider>
-                  <div *ngIf="estimatedPayoutwithShipping" class="info-row d-flex justify-content-between">
+                  <mat-divider
+                    *ngIf="estimatedPayoutwithShipping"
+                  ></mat-divider>
+                  <div
+                    *ngIf="estimatedPayoutwithShipping"
+                    class="info-row d-flex justify-content-between"
+                  >
                     <span class="font-size-16 font-wight-400 color-909090">{{
                       "create_product_listing.estimated_payout" | translate
                     }}</span>
                     <span class="font-size-16 font-wight-600 color-0F172A">
-                      <img src="../../../../assets/images/Saudi_Riyal_Symbol-2.svg" class="sar-icon-style" alt="SAR"/>
+                      <img
+                        src="../../../../assets/images/Saudi_Riyal_Symbol-2.svg"
+                        class="sar-icon-style"
+                        alt="SAR"
+                      />
 
-                      {{
-                        estimatedPayoutwithShipping
-                          
-                      }}
+                      {{ estimatedPayoutwithShipping }}
                     </span>
                   </div>
                 </mat-card>
@@ -6167,7 +6214,7 @@
                     [ngClass]="{
                       'reverse-order': translateService.currentLang !== 'en'
                     }"
-                    class="d-flex "
+                    class="d-flex"
                   >
                     <img
                       [src]="coverImage.url"
@@ -6187,16 +6234,22 @@
                         {{ productDetails.title }}
                       </p>
                       <p class="text-primary font-weight-bold mb-0">
-                        <img src="../../../../assets/images/Saudi_Riyal_Symbol-2.svg" class="sar-icon-style" alt="SAR"/>
+                        <img
+                          src="../../../../assets/images/Saudi_Riyal_Symbol-2.svg"
+                          class="sar-icon-style"
+                          alt="SAR"
+                        />
 
-                        {{
-                          productDetails.price
-                            
-                        }}
+                        {{ productDetails.price }}
                       </p>
                       <small class="text-muted">{{
-                                                   productDetails.shipping_type == 'inclusiveShipping' ? 'Inclusive Shipping' : productDetails.shipping_type == 'exclusiveShipping' ? 'Exclusive Shipping' : productDetails.shipping_type == 'freeCharge' ? 'Free Charge' : productDetails.shipping_type
-
+                        productDetails.shipping_type == "inclusiveShipping"
+                          ? "Inclusive Shipping"
+                          : productDetails.shipping_type == "exclusiveShipping"
+                          ? "Exclusive Shipping"
+                          : productDetails.shipping_type == "freeCharge"
+                          ? "Free Charge"
+                          : productDetails.shipping_type
                       }}</small>
                     </div>
                   </div>
@@ -6210,7 +6263,11 @@
                     'reverse-order-upload-images-labels':
                       translateService.currentLang !== 'en'
                   }"
-                  style="font-size: 18px !important;font-weight:700 !important;color:#132138 !important"
+                  style="
+                    font-size: 18px !important;
+                    font-weight: 700 !important;
+                    color: #132138 !important;
+                  "
                   class="font-size-18 font-wight-700 color-132138 margin-0"
                 >
                   {{ "create_product_listing.Payout_Information" | translate }}
@@ -6227,12 +6284,20 @@
                     <p class="font-size-16 font-wight-400 color-909090">
                       {{ "create_product_listing.watch_price" | translate }}
                     </p>
-                    <p style="font-size: 16px !important;font-weight:600 !important;color:#0F172A !important" 
-                    class="font-size-16 font-wight-600 color-0F172A">
-                    <img src="../../../../assets/images/Saudi_Riyal_Symbol-2.svg" class="sar-icon-style" alt="SAR"/>
-                    {{
-                        watchPriceDisplay 
-                      }}
+                    <p
+                      style="
+                        font-size: 16px !important;
+                        font-weight: 600 !important;
+                        color: #0f172a !important;
+                      "
+                      class="font-size-16 font-wight-600 color-0F172A"
+                    >
+                      <img
+                        src="../../../../assets/images/Saudi_Riyal_Symbol-2.svg"
+                        class="sar-icon-style"
+                        alt="SAR"
+                      />
+                      {{ watchPriceDisplay }}
                     </p>
                   </div>
                   <div class="info-row d-flex justify-content-between">
@@ -6242,8 +6307,13 @@
                       }}</span
                     >
                     <span class="font-size-16 font-wight-600 color-0F172A">
-                      -                   <img src="../../../../assets/images/Saudi_Riyal_Symbol-2.svg" class="sar-icon-style" alt="SAR"/>
-                      {{ platformFee  }}
+                      -
+                      <img
+                        src="../../../../assets/images/Saudi_Riyal_Symbol-2.svg"
+                        class="sar-icon-style"
+                        alt="SAR"
+                      />
+                      {{ platformFee }}
                     </span>
                   </div>
                   <mat-divider></mat-divider>
@@ -6252,11 +6322,13 @@
                       {{ "create_product_listing.payout" | translate }}</span
                     >
                     <span class="font-size-16 font-wight-600 color-0F172A">
-                      <img src="../../../../assets/images/Saudi_Riyal_Symbol-2.svg" class="sar-icon-style" alt="SAR"/>
+                      <img
+                        src="../../../../assets/images/Saudi_Riyal_Symbol-2.svg"
+                        class="sar-icon-style"
+                        alt="SAR"
+                      />
 
-                      {{
-                        estimatedPayout 
-                      }}
+                      {{ estimatedPayout }}
                     </span>
                   </div>
 
@@ -6266,23 +6338,31 @@
                     }}</span>
                     <span class="font-size-16 font-wight-600 color-0F172A">
                       -
-                      <img src="../../../../assets/images/Saudi_Riyal_Symbol-2.svg" class="sar-icon-style" alt="SAR"/>
-                      {{
-                        shipping_charges 
-                      }}
+                      <img
+                        src="../../../../assets/images/Saudi_Riyal_Symbol-2.svg"
+                        class="sar-icon-style"
+                        alt="SAR"
+                      />
+                      {{ shipping_charges }}
                     </span>
                   </div>
-                  <mat-divider *ngIf="estimatedPayoutwithShipping"></mat-divider>
-                  <div *ngIf="estimatedPayoutwithShipping" class="info-row d-flex justify-content-between">
+                  <mat-divider
+                    *ngIf="estimatedPayoutwithShipping"
+                  ></mat-divider>
+                  <div
+                    *ngIf="estimatedPayoutwithShipping"
+                    class="info-row d-flex justify-content-between"
+                  >
                     <span class="font-size-16 font-wight-400 color-909090">{{
                       "create_product_listing.estimated_payout" | translate
                     }}</span>
                     <span class="font-size-16 font-wight-600 color-0F172A">
-                      <img src="../../../../assets/images/Saudi_Riyal_Symbol-2.svg" class="sar-icon-style" alt="SAR"/>
-                      {{
-                        estimatedPayoutwithShipping
-                         
-                      }}
+                      <img
+                        src="../../../../assets/images/Saudi_Riyal_Symbol-2.svg"
+                        class="sar-icon-style"
+                        alt="SAR"
+                      />
+                      {{ estimatedPayoutwithShipping }}
                     </span>
                   </div>
                 </mat-card>
@@ -6369,7 +6449,7 @@
           >
             <button
               class="save-can-btn canc-bg-color"
-              style="width: 170px;"
+              style="width: 170px"
               (click)="routeToProductDetail()"
             >
               {{ "create_product_listing.Preview_your_Ad" | translate }}

@@ -33,6 +33,7 @@ interface ImageFile {
   file: File;
   url: string;
   isUploading: boolean;
+  isCover?: boolean;
 }
 
 export interface Brand {
@@ -51,8 +52,8 @@ export interface Category {
   styleUrls: ["./add-new-product.component.css"],
 })
 export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
-   apiUrl = environment.apipath+ '/'
-  nullImagePath = this.apiUrl + 'null'
+  apiUrl = environment.apipath + "/";
+  nullImagePath = this.apiUrl + "null";
   selectedSection: string = "listingDetails";
   selectedOptionsList: any = ["listingDetails"];
   formDirty = false;
@@ -67,20 +68,20 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
   selectedVideo: File | null = null;
   videoUrl: string | null = null;
   isAdminUser = computed(() => this.loginStateService.isAdminUser());
-apipath = environment.apipath
+  apipath = environment.apipath;
 
   onVideoSelected(event: any): void {
     const file = event.target.files[0];
-    if (file && file.type.startsWith('video/')) {
+    if (file && file.type.startsWith("video/")) {
       this.selectedVideo = file;
-      this.videoUrl = URL.createObjectURL(file);  // Create a URL for video preview
+      this.videoUrl = URL.createObjectURL(file); // Create a URL for video preview
     } else {
-      alert('Please select a valid video file');
+      alert("Please select a valid video file");
       this.videoUrl = null; // Clear the video URL if invalid file
     }
   }
 
-  removeVideo(){
+  removeVideo() {
     this.selectedVideo = null;
     this.videoUrl = null;
   }
@@ -91,14 +92,12 @@ apipath = environment.apipath
 
   uploadVideo(): void {
     if (!this.selectedVideo) {
-      alert('Please select a video file first');
+      alert("Please select a video file first");
       return;
     }
     const formData = new FormData();
-    formData.append('video', this.selectedVideo, this.selectedVideo.name);
+    formData.append("video", this.selectedVideo, this.selectedVideo.name);
   }
-
-
 
   @ViewChild("coverImageInput") coverImageInput!: ElementRef<HTMLInputElement>;
   @ViewChild("videoInput") videoInput!: ElementRef<HTMLInputElement>;
@@ -216,7 +215,7 @@ apipath = environment.apipath
     private loginStateService: LoginStateService,
     private dialog: MatDialog,
     public translateService: TranslateService,
-    private languageService:LanguageService
+    private languageService: LanguageService
   ) {
     this.translateService.addLangs(this.supportLanguages);
     const savedLang = this.languageService.getCurrentLanguage();
@@ -249,31 +248,31 @@ apipath = environment.apipath
   estimatedPayoutwithShipping: number = 0;
   calculatePayout() {
     this.watchPriceDisplay = this.watchPrice;
-    if(this.userType == "dealer"){
+    if (this.userType == "dealer") {
       this.platformFee = this.watchPrice * this.configureableUserPlatFormFees;
-    }else{
+    } else {
       this.platformFee = this.watchPrice * this.configureableDealerPlatFormFees;
     }
     this.estimatedPayout = this.watchPrice - this.platformFee;
-    if(this.shipping_charges){
-      this.estimatedPayoutwithShipping = this.estimatedPayout - this.shipping_charges
+    if (this.shipping_charges) {
+      this.estimatedPayoutwithShipping =
+        this.estimatedPayout - this.shipping_charges;
     }
   }
 
   Payoutaftershippingcharges() {
-    this.estimatedPayoutwithShipping = this.estimatedPayout - this.shipping_charges;
+    this.estimatedPayoutwithShipping =
+      this.estimatedPayout - this.shipping_charges;
   }
 
-  countShipping(){
-
-    if(this.shipping_type == 'inclusiveShipping'){
-
-      if(this.shipping_charges){
-
-        this.estimatedPayoutwithShipping = Number(this.estimatedPayout) - Number(this.shipping_charges);
+  countShipping() {
+    if (this.shipping_type == "inclusiveShipping") {
+      if (this.shipping_charges) {
+        this.estimatedPayoutwithShipping =
+          Number(this.estimatedPayout) - Number(this.shipping_charges);
       }
-    }else{
-      if(this.shipping_charges){
+    } else {
+      if (this.shipping_charges) {
         this.estimatedPayoutwithShipping = Number(this.estimatedPayout);
       }
     }
@@ -334,22 +333,22 @@ apipath = environment.apipath
     {
       title: "Original Box & Original Papers",
       icon: "../assets/images/original-box-papers.png",
-      arabictitle: "الصندوق الأصلي والأوراق الأصلية"
+      arabictitle: "الصندوق الأصلي والأوراق الأصلية",
     },
     {
       title: "Original Box",
       icon: "../assets/images/original-box.png",
-      arabictitle: "الصندوق الأصلي"
+      arabictitle: "الصندوق الأصلي",
     },
     {
       title: "Original Papers",
       icon: "/assets/images/original-papers.png",
-      arabictitle: "الأوراق الأصلية"
+      arabictitle: "الأوراق الأصلية",
     },
     {
       title: "Watch Only",
       icon: "/assets/images/watch-only.png",
-      arabictitle: "الساعة فقط"
+      arabictitle: "الساعة فقط",
     },
   ];
 
@@ -372,42 +371,47 @@ apipath = environment.apipath
       title: "New",
       description:
         "The item has no signs of wear such as scratches or dents and is unworn. The item has not been polished.",
-        arabictitle: "جديد",
-        arabicdescription: "العنصر ليس به أي علامات تآكل مثل الخدوش أو الانبعاجات ولم يُستخدم. لم يتم تلميع العنصر."
+      arabictitle: "جديد",
+      arabicdescription:
+        "العنصر ليس به أي علامات تآكل مثل الخدوش أو الانبعاجات ولم يُستخدم. لم يتم تلميع العنصر.",
     },
     {
       title: "Like new and unworn",
       description:
         "The item shows minor signs of wear, such as small but physically imperceptible scratches.",
-         arabictitle: "كالجديد وغير مُستخدم",
-         arabicdescription: "يظهر العنصر علامات تآكل طفيفة، مثل خدوش صغيرة لكنها غير محسوسة جسديًا."
+      arabictitle: "كالجديد وغير مُستخدم",
+      arabicdescription:
+        "يظهر العنصر علامات تآكل طفيفة، مثل خدوش صغيرة لكنها غير محسوسة جسديًا.",
     },
     {
       title: "Used",
       description:
         "The item shows visible and physically perceptible signs of wear such as scratches, scuffs or small dents.",
-        arabictitle: "مُستخدم",
-        arabicdescription: "يظهر العنصر علامات تآكل مرئية ومحسوسة جسديًا مثل الخدوش أو الحكات أو الانبعاجات الصغيرة."
+      arabictitle: "مُستخدم",
+      arabicdescription:
+        "يظهر العنصر علامات تآكل مرئية ومحسوسة جسديًا مثل الخدوش أو الحكات أو الانبعاجات الصغيرة.",
     },
     {
       title: "Very good (minor signs of wear)",
       description:
         "The item shows major, visible signs of wear like scratches and dents.",
-         arabictitle: "جيد جدًا (علامات تآكل طفيفة)",
-         arabicdescription: "يظهر العنصر علامات تآكل كبيرة ومرئية مثل الخدوش والانبعاجات."
+      arabictitle: "جيد جدًا (علامات تآكل طفيفة)",
+      arabicdescription:
+        "يظهر العنصر علامات تآكل كبيرة ومرئية مثل الخدوش والانبعاجات.",
     },
     {
       title: "Good (moderate signs of wear)",
       description:
         "The item shows major, visible signs of wear like scratches and dents.",
-        arabictitle: "جيد (علامات تآكل متوسطة)",
-        arabicdescription: "يظهر العنصر علامات تآكل كبيرة ومرئية مثل الخدوش والانبعاجات."
+      arabictitle: "جيد (علامات تآكل متوسطة)",
+      arabicdescription:
+        "يظهر العنصر علامات تآكل كبيرة ومرئية مثل الخدوش والانبعاجات.",
     },
     {
       title: "Incomplete",
       description: "The item is missing some parts and is not functional.",
       arabictitle: "غير مكتمل",
-      arabicdescription: "العنصر يفتقد بعض الأجزاء وغير قابل للاستخدام."
+      arabicdescription: "العنصر يفتقد بعض الأجزاء وغير قابل للاستخدام.",
     },
   ];
 
@@ -416,40 +420,44 @@ apipath = environment.apipath
       title: "Like New & Unworn",
       description:
         "The item has no signs of wear such as scraches or dents and is unworn. The item has not been polished.",
-          arabictitle: "كالجديد وغير مُستخدم",
-  arabicdescription: "العنصر ليس به أي علامات تآكل مثل الخدوش أو الانبعاجات ولم يُستخدم. لم يتم تلميع العنصر."
+      arabictitle: "كالجديد وغير مُستخدم",
+      arabicdescription:
+        "العنصر ليس به أي علامات تآكل مثل الخدوش أو الانبعاجات ولم يُستخدم. لم يتم تلميع العنصر.",
     },
     {
       title: "Very Good",
       description:
         "The item shows minor signs of wear, such as small but physically imperceptible scratches.",
-          arabictitle: "جيد جدًا",
-  arabicdescription: "يظهر العنصر علامات تآكل طفيفة، مثل خدوش صغيرة لكنها غير محسوسة جسديًا."
+      arabictitle: "جيد جدًا",
+      arabicdescription:
+        "يظهر العنصر علامات تآكل طفيفة، مثل خدوش صغيرة لكنها غير محسوسة جسديًا.",
     },
     {
       title: "Good",
       description:
         "The item shows visible and physically perceptible signs of wear such as scratches, scuffs or small dents.",
-        arabictitle: "جيد",
-  arabicdescription: "يظهر العنصر علامات تآكل مرئية ومحسوسة جسديًا مثل الخدوش أو الحكات أو الانبعاجات الصغيرة."
+      arabictitle: "جيد",
+      arabicdescription:
+        "يظهر العنصر علامات تآكل مرئية ومحسوسة جسديًا مثل الخدوش أو الحكات أو الانبعاجات الصغيرة.",
     },
     {
       title: "Fair",
       description:
         "The item shows major, visible signs of wear like scratches and dents.",
-         arabictitle: "مقبول",
-  arabicdescription: "يظهر العنصر علامات تآكل كبيرة ومرئية مثل الخدوش والانبعاجات."
+      arabictitle: "مقبول",
+      arabicdescription:
+        "يظهر العنصر علامات تآكل كبيرة ومرئية مثل الخدوش والانبعاجات.",
     },
     {
       title: "Incomplete",
       description: "The item is missing some parts and is not functional.",
-        arabictitle: "غير مكتمل",
-  arabicdescription: "العنصر يفتقد بعض الأجزاء وغير قابل للاستخدام."
+      arabictitle: "غير مكتمل",
+      arabicdescription: "العنصر يفتقد بعض الأجزاء وغير قابل للاستخدام.",
     },
   ];
 
   allImages: any[] = [];
-// coverImage: any = null;
+  // coverImage: any = null;
 
   @ViewChild("imagesInput") imagesInput!: ElementRef<HTMLInputElement>;
 
@@ -460,15 +468,21 @@ apipath = environment.apipath
   onImagesSelected(event: Event) {
     const files = (event.target as HTMLInputElement).files;
     if (files && files.length > 0) {
-      Array.from(files).forEach((file: File) => {
+      Array.from(files).forEach((file: File, index: number) => {
         const reader = new FileReader();
-
         const newImage: ImageFile = { file, url: "", isUploading: true };
-        this.allImages.push(newImage); // keep track of all selected images
+
+        this.allImages.push(newImage);
 
         reader.onload = () => {
           newImage.url = reader.result as string;
           newImage.isUploading = false;
+
+          // If no cover image is selected, set the first image as cover
+          const hasCover = this.allImages.some((img) => img.isCover);
+          if (!hasCover) {
+            this.setAsCoverImage(newImage);
+          }
         };
 
         reader.readAsDataURL(file);
@@ -477,25 +491,30 @@ apipath = environment.apipath
   }
 
   setAsCoverImage(image: ImageFile) {
-    // Set as cover image
-    this.coverImage = { ...image };
+    // Update isCover flags
+    this.allImages.forEach((img) => {
+      img.isCover = img.url === image.url;
+    });
 
-    // Remove from otherImages if already present
-    this.otherImages = this.otherImages.filter(img => img.url !== image.url);
-
-    // Add all other images (excluding cover) into otherImages
-    this.otherImages = this.allImages.filter(img => img.url !== image.url);
-  }
-
-  removeImage(image: ImageFile) {
-    this.allImages = this.allImages.filter(img => img.url !== image.url);
-    this.otherImages = this.otherImages.filter(img => img.url !== image.url);
-
-    if (this.coverImage?.url === image.url) {
-      this.coverImage = null;
+    // Move the cover image to the first index
+    const cover = this.allImages.find((img) => img.url === image.url);
+    if (cover) {
+      this.coverImage = cover;
+      this.allImages = [
+        cover,
+        ...this.allImages.filter((img) => img.url !== image.url),
+      ];
     }
   }
 
+  removeImage(image: ImageFile) {
+    const wasCover = image.isCover;
+    this.allImages = this.allImages.filter((img) => img.url !== image.url);
+
+    if (wasCover && this.allImages.length > 0) {
+      this.setAsCoverImage(this.allImages[0]);
+    }
+  }
 
   selectedCondition = null;
 
@@ -579,7 +598,7 @@ apipath = environment.apipath
     if (
       this.selectedCategories.controls.length >= this.MAX_CATEGORY_SELECTION
     ) {
-      this.myCategoryControl.setValue('')
+      this.myCategoryControl.setValue("");
       this.filteredCategoryOptions = this.myCategoryControl.valueChanges.pipe(
         startWith(""),
         map((value) => {
@@ -597,8 +616,7 @@ apipath = environment.apipath
         (ctrl) => ctrl.value.id === category.id
       )
     ) {
-
-      this.myCategoryControl.setValue('')
+      this.myCategoryControl.setValue("");
       this.filteredCategoryOptions = this.myCategoryControl.valueChanges.pipe(
         startWith(""),
         map((value) => {
@@ -614,7 +632,7 @@ apipath = environment.apipath
     this.selectedCategories.push(new FormControl(category));
     // this.myCategoryControl = new FormControl<string | Category>("");
     // this.filteredCategoryOptions=this.categoryList;
-    this.myCategoryControl.setValue('')
+    this.myCategoryControl.setValue("");
     // this.filteredCategoryOptions = this.myCategoryControl.valueChanges.pipe(
     //   startWith(''),
     //   map(value => this._filterCategories(value)) // Reapply the filter
@@ -691,7 +709,6 @@ apipath = environment.apipath
     const dialogRef = this.dialog.open(ModelLoginComponent, {
       width: "600px",
       data: { message: "dialog-box" },
-
     });
 
     dialogRef.afterClosed().subscribe((result) => {
@@ -724,17 +741,17 @@ apipath = environment.apipath
   }
 
   isListingCompleted: boolean = false;
-  isPublishedProduct:Boolean=false;
-currentStepper:any='';
+  isPublishedProduct: Boolean = false;
+  currentStepper: any = "";
 
   getOnlyDetails() {
     this.http
       .getProductDetailsByID(this.productIDFromResponse)
       .subscribe((res) => {
-        this.currentStepper=res.step;
+        this.currentStepper = res.step;
         this.productDetails = res.product;
-        if(res?.product?.published_date){
-          this.isPublishedProduct=true;
+        if (res?.product?.published_date) {
+          this.isPublishedProduct = true;
         }
         this.latestActiveForm = res.step;
         if (res.is_listing_completed === 1) {
@@ -746,8 +763,10 @@ currentStepper:any='';
         }
 
         if (this.productDetails?.video) {
-          this.productDetails.video =
-            this.productDetails.video.replace(/\\/g, "");
+          this.productDetails.video = this.productDetails.video.replace(
+            /\\/g,
+            ""
+          );
         }
 
         if (this.productDetails?.additional_images) {
@@ -788,8 +807,10 @@ currentStepper:any='';
         }
 
         if (this.productDetails?.video) {
-          this.productDetails.video =
-            this.productDetails.video.replace(/\\/g, "");
+          this.productDetails.video = this.productDetails.video.replace(
+            /\\/g,
+            ""
+          );
         }
 
         if (this.productDetails.additional_images) {
@@ -1056,62 +1077,52 @@ currentStepper:any='';
 
       // billingForm
 
-
       let citval = this.billingForm.get("city")?.value;
       if (!citval) {
         this.billingForm.get("city").setValue(this.productDetails.city || "");
       }
 
-      if(this.billingForm.get("billing_address")?.value){
-
-      }else{
+      if (this.billingForm.get("billing_address")?.value) {
+      } else {
         this.billingForm
-        .get("billing_address")
-        .setValue(this.productDetails.billing_address || "");
+          .get("billing_address")
+          .setValue(this.productDetails.billing_address || "");
       }
 
-      if(this.billingForm.get("first_name")?.value){
-
-      }else{
+      if (this.billingForm.get("first_name")?.value) {
+      } else {
         this.billingForm
-        .get("first_name")
-        .setValue(this.productDetails.first_name || "");
+          .get("first_name")
+          .setValue(this.productDetails.first_name || "");
       }
 
-      if(this.billingForm.get("last_name")?.value){
-
-      }else{
+      if (this.billingForm.get("last_name")?.value) {
+      } else {
         this.billingForm
-        .get("last_name")
-        .setValue(this.productDetails.last_name || "");
+          .get("last_name")
+          .setValue(this.productDetails.last_name || "");
       }
 
-      if(this.billingForm.get("street")?.value){
-
-      }else{
+      if (this.billingForm.get("street")?.value) {
+      } else {
         this.billingForm
           .get("street")
           .setValue(this.productDetails.street || "");
       }
 
-      if(this.billingForm.get("street_line_2")?.value){
-
-      }else{
+      if (this.billingForm.get("street_line_2")?.value) {
+      } else {
         this.billingForm
-        .get("street_line_2")
-        .setValue(this.productDetails.street_line_2 || "");
+          .get("street_line_2")
+          .setValue(this.productDetails.street_line_2 || "");
       }
 
-      if(this.billingForm.get("zip_code")?.value){
-
-      }else{
+      if (this.billingForm.get("zip_code")?.value) {
+      } else {
         this.billingForm
-        .get("zip_code")
-        .setValue(this.productDetails.zip_code || "");
+          .get("zip_code")
+          .setValue(this.productDetails.zip_code || "");
       }
-
-
-
 
       // PriceandShipment
       this.watchPrice = this.productDetails.price;
@@ -1150,8 +1161,8 @@ currentStepper:any='';
 
       this.selectedOptions = scopeofDelivery;
 
-      if(this.productDetails?.video){
-        this.videoUrl=this.apiUrl + this.productDetails.video
+      if (this.productDetails?.video) {
+        this.videoUrl = this.apiUrl + this.productDetails.video;
       }
 
       this.coverImage = {
@@ -1168,20 +1179,18 @@ currentStepper:any='';
           })
         );
 
-        if(this.otherImages.length > 0) {
-          this.allImages = this.otherImages
-          this.allImages =[...this.allImages, this.coverImage]
+        if (this.otherImages.length > 0) {
+          this.allImages = this.otherImages;
+          this.allImages = [this.coverImage,...this.allImages];
         }
       }
       if (this.productDetails?.proof_image_1) {
         this.isEnableProofofOwnerShip = true;
-        this.imagePreviews[0] =
-          this.apiUrl + this.productDetails.proof_image_1;
+        this.imagePreviews[0] = this.apiUrl + this.productDetails.proof_image_1;
       }
       if (this.productDetails?.proof_image_2) {
         this.isEnableProofofOwnerShip = true;
-        this.imagePreviews[1] =
-          this.apiUrl + this.productDetails.proof_image_2;
+        this.imagePreviews[1] = this.apiUrl + this.productDetails.proof_image_2;
       }
     }
   }
@@ -1189,7 +1198,7 @@ currentStepper:any='';
   getBillingInformation() {
     let userID: any = localStorage.getItem("userID");
     let userTokken: any = localStorage.getItem("user_token");
-    if(userTokken){
+    if (userTokken) {
       this.http.getBillingInformation().subscribe((res) => {
         // billingForm
         this.billingInformationDetails = res?.data;
@@ -1250,7 +1259,7 @@ currentStepper:any='';
 
     let userID: any = localStorage.getItem("userID");
     // if (userID) {
-      this.getBillingInformation();
+    this.getBillingInformation();
     // }
 
     this.router.events.subscribe((event) => {
@@ -1393,8 +1402,8 @@ currentStepper:any='';
             "warning",
             "Invalid file type. Please select an image with one of the following extensions: jpeg, png, jpg, gif, svg."
           );
-        }else{
-        this.alertService.showAlert(
+        } else {
+          this.alertService.showAlert(
             "warning",
             "نوع الملف غير صالح. يرجى اختيار صورة بإحدى الصيغ التالية: jpeg، png، jpg، gif، svg."
           );
@@ -1467,7 +1476,13 @@ currentStepper:any='';
     }
     if (Param === "listingDetails") {
       if (this.myControl.value) {
-        this.listingForm.get("brand_id").setValue(this.myControl.value && typeof this.myControl.value !== "string" ? this.myControl.value.id : null);
+        this.listingForm
+          .get("brand_id")
+          .setValue(
+            this.myControl.value && typeof this.myControl.value !== "string"
+              ? this.myControl.value.id
+              : null
+          );
       }
       if (this.selectedCategories.value.length > 0) {
         this.listingForm
@@ -1493,8 +1508,8 @@ currentStepper:any='';
                   "success",
                   "Listing Details Add Successfully"
                 );
-              }else{
-              this.alertService.showAlert(
+              } else {
+                this.alertService.showAlert(
                   "success",
                   "تمت إضافة تفاصيل القائمة بنجاح"
                 );
@@ -1509,17 +1524,17 @@ currentStepper:any='';
               this.selectSection("watchDetails");
             },
             (err) => {
-               if (this.translateService.currentLang == "en") {
-                 this.alertService.showAlert(
-                   "warning",
-                   "Error in adding listing details"
-                 );
-               }else{
+              if (this.translateService.currentLang == "en") {
                 this.alertService.showAlert(
-                   "warning",
-                   "حدث خطأ أثناء إضافة تفاصيل القائمة"
-                 );
-               }
+                  "warning",
+                  "Error in adding listing details"
+                );
+              } else {
+                this.alertService.showAlert(
+                  "warning",
+                  "حدث خطأ أثناء إضافة تفاصيل القائمة"
+                );
+              }
             }
           );
         } else {
@@ -1527,17 +1542,17 @@ currentStepper:any='';
             (res) => {
               this.productIDFromResponse = res.id;
               localStorage.setItem("productID", res.id);
-               if (this.translateService.currentLang == "en") {
-                 this.alertService.showAlert(
-                   "success",
-                   "Listing Details Add Successfully"
-                 );
-               }else{
-                 this.alertService.showAlert(
-                   "success",
-                   "تم إضافة تفاصيل القائمة بنجاح"
-                 );
-               }
+              if (this.translateService.currentLang == "en") {
+                this.alertService.showAlert(
+                  "success",
+                  "Listing Details Add Successfully"
+                );
+              } else {
+                this.alertService.showAlert(
+                  "success",
+                  "تم إضافة تفاصيل القائمة بنجاح"
+                );
+              }
               this.formDirty = true;
               this.selectedOptionsList.push("watchDetails");
               localStorage.setItem(
@@ -1552,8 +1567,8 @@ currentStepper:any='';
                   "warning",
                   "Error in adding listing details"
                 );
-              }else{
-                 this.alertService.showAlert(
+              } else {
+                this.alertService.showAlert(
                   "warning",
                   "حدث خطأ أثناء إضافة تفاصيل القائمة"
                 );
@@ -1562,39 +1577,52 @@ currentStepper:any='';
           );
         }
       } else {
-        const firstInvalidControl = Object.keys(this.listingForm.controls).find(key => {
-          const control = this.listingForm.get(key);
-          return control && control.invalid;
-        });
+        const firstInvalidControl = Object.keys(this.listingForm.controls).find(
+          (key) => {
+            const control = this.listingForm.get(key);
+            return control && control.invalid;
+          }
+        );
 
         if (firstInvalidControl) {
-
           const control = this.listingForm.get(firstInvalidControl);
 
-          if(firstInvalidControl == "brand_id"){
+          if (firstInvalidControl == "brand_id") {
             if (this.translateService.currentLang == "en") {
-              this.alertService.showAlert('warning',  `Please select a brand.`);
-            }else{
-              this.alertService.showAlert('warning',  `يرجى اختيار علامة تجارية.`);
+              this.alertService.showAlert("warning", `Please select a brand.`);
+            } else {
+              this.alertService.showAlert(
+                "warning",
+                `يرجى اختيار علامة تجارية.`
+              );
             }
-          }else if(firstInvalidControl == "category_ids"){
+          } else if (firstInvalidControl == "category_ids") {
             if (this.translateService.currentLang == "en") {
-              this.alertService.showAlert('warning',  `Please select a category.`);
-            }else{
-              this.alertService.showAlert('warning',  `يرجى اختيار فئة.`);
+              this.alertService.showAlert(
+                "warning",
+                `Please select a category.`
+              );
+            } else {
+              this.alertService.showAlert("warning", `يرجى اختيار فئة.`);
             }
-          }else{
-             if (this.translateService.currentLang == "en") {
-               this.alertService.showAlert('warning',  `${firstInvalidControl}" is invalid.`);
-             }else{
-              this.alertService.showAlert('warning',  ` ${firstInvalidControl}" غير صالح.`);
-             }
+          } else {
+            if (this.translateService.currentLang == "en") {
+              this.alertService.showAlert(
+                "warning",
+                `${firstInvalidControl}" is invalid.`
+              );
+            } else {
+              this.alertService.showAlert(
+                "warning",
+                ` ${firstInvalidControl}" غير صالح.`
+              );
+            }
           }
         } else {
           // console.log("Form is valid, proceed with submission.");
           if (this.translateService.currentLang == "en") {
             this.alertService.showAlert("warning", "Enter Form Values");
-          }else{
+          } else {
             this.alertService.showAlert("warning", "أدخل قيم النموذج");
           }
         }
@@ -1602,10 +1630,10 @@ currentStepper:any='';
     } else if (Param === "watchDetails") {
       if (this.watchDetailsForm.valid) {
         let isUpdate;
-        if(this.currentStepper == 'listingDetails'){
-          isUpdate=0
-        }else{
-          isUpdate=1
+        if (this.currentStepper == "listingDetails") {
+          isUpdate = 0;
+        } else {
+          isUpdate = 1;
         }
         const formDataWithProductID = {
           ...this.watchDetailsForm.value,
@@ -1620,8 +1648,8 @@ currentStepper:any='';
                 "success",
                 "Watch Details Add Successfully"
               );
-            }else{
-               this.alertService.showAlert(
+            } else {
+              this.alertService.showAlert(
                 "success",
                 "تمت إضافة تفاصيل الساعة بنجاح"
               );
@@ -1639,8 +1667,8 @@ currentStepper:any='';
                 "warning",
                 "Error in adding listing details"
               );
-            }else{
-               this.alertService.showAlert(
+            } else {
+              this.alertService.showAlert(
                 "warning",
                 "حدث خطأ أثناء إضافة تفاصيل القائمة"
               );
@@ -1652,12 +1680,37 @@ currentStepper:any='';
       }
     } else if (Param === "uploadImages") {
       if (!this.coverImage) {
-        alert("Please upload a cover image.");
+       if (this.translateService.currentLang == "en") {
+  this.alertService.showAlert(
+    "warning",
+    "Please upload a cover image."
+  );
+} else {
+  this.alertService.showAlert(
+    "warning",
+    "يرجى تحميل صورة الغلاف."
+  );
+}
+
         return;
       }
 
+      if (this.allImages.length > 0) {
+        this.otherImages = this.allImages;
+      }
+
       if (this.otherImages.length === 0) {
-        alert("Please upload at least one other image.");
+        if (this.translateService.currentLang == "en") {
+          this.alertService.showAlert(
+            "warning",
+            "Please upload at least one other image."
+          );
+        } else {
+          this.alertService.showAlert(
+            "warning",
+            "يرجى تحميل صورة واحدة على الأقل إضافية."
+          );
+        }
         return;
       }
       const formData = new FormData();
@@ -1671,36 +1724,37 @@ currentStepper:any='';
       }
 
       if (this.selectedVideo) {
-        formData.append("video",this.selectedVideo || "main_image.jpg");
-     }
-    //  const isUpdate = this.selectedOptionsList.includes("uploadImages") ? "1" : "0";
-    //  formData.append("isUpdate", isUpdate);
+        formData.append("video", this.selectedVideo || "main_image.jpg");
+      }
+      //  const isUpdate = this.selectedOptionsList.includes("uploadImages") ? "1" : "0";
+      //  formData.append("isUpdate", isUpdate);
 
-    let isUpdate;
-    if(this.currentStepper == 'uploadImages'){
-      isUpdate=0
-    }else{
-      isUpdate=1
-    }
-    formData.append("isUpdate", isUpdate);
+      let isUpdate;
+      if (this.currentStepper == "uploadImages") {
+        isUpdate = 0;
+      } else {
+        isUpdate = 1;
+      }
+      formData.append("isUpdate", isUpdate);
 
-
-      this.otherImages.forEach((image, index) => {
-        if (image.file) {
-          formData.append(
-            `additional_images[]`,
-            image.file,
-            image.file.name || `additional_image_${index}.jpg`
-          );
-        }
-      });
+      this.otherImages
+        .filter((item:ImageFile) => !item.isCover)
+        .forEach((image, index) => {
+          if (image.file) {
+            formData.append(
+              `additional_images[]`,
+              image.file,
+              image.file.name || `additional_image_${index}.jpg`
+            );
+          }
+        });
       formData.forEach((value, key) => console.log(key, value));
 
       this.http.addUploadImages(formData).subscribe(
         (res) => {
           if (this.translateService.currentLang == "en") {
             this.alertService.showAlert("success", "Images Add Successfully");
-          }else{
+          } else {
             this.alertService.showAlert("success", "تمت إضافة الصور بنجاح");
           }
           this.selectedOptionsList.push("conditionGrading");
@@ -1711,23 +1765,25 @@ currentStepper:any='';
           if (err && err.error) {
             this.alertService.showAlert("warning", `${err.error.error}`);
           } else {
-             if (this.translateService.currentLang == "en") {
-               this.alertService.showAlert("warning", "Error in adding Images");
-             }else{
-              this.alertService.showAlert("warning", "حدث خطأ أثناء إضافة الصور");
-             }
+            if (this.translateService.currentLang == "en") {
+              this.alertService.showAlert("warning", "Error in adding Images");
+            } else {
+              this.alertService.showAlert(
+                "warning",
+                "حدث خطأ أثناء إضافة الصور"
+              );
+            }
           }
-
         }
       );
     } else if (Param === "conditionGrading") {
       if (this.selectedCondition) {
         // const isUpdate = this.selectedOptionsList.includes("conditionGrading") ? "1" : "0";
         let isUpdate;
-        if(this.currentStepper == 'conditionGrading'){
-          isUpdate=0
-        }else{
-          isUpdate=1
+        if (this.currentStepper == "conditionGrading") {
+          isUpdate = 0;
+        } else {
+          isUpdate = 1;
         }
         const formData = {
           product_id: this.productIDFromResponse,
@@ -1737,17 +1793,14 @@ currentStepper:any='';
 
         this.http.addCondition(formData).subscribe(
           (res) => {
-             if (this.translateService.currentLang == "en") {
-               this.alertService.showAlert(
-                 "success",
-                 "Condition Add Successfully"
-               );
-             }else{
-                this.alertService.showAlert(
-                 "success",
-                 "تمت إضافة الحالة بنجاح"
-               );
-             }
+            if (this.translateService.currentLang == "en") {
+              this.alertService.showAlert(
+                "success",
+                "Condition Add Successfully"
+              );
+            } else {
+              this.alertService.showAlert("success", "تمت إضافة الحالة بنجاح");
+            }
             this.selectedOptionsList.push("scopeofdelivery");
             localStorage.setItem(
               "selectedOptionsList",
@@ -1756,28 +1809,34 @@ currentStepper:any='';
             this.selectSection("scopeofdelivery");
           },
           (err) => {
-                 if (this.translateService.currentLang == "en") {
-                   this.alertService.showAlert("warning", "Error in adding Condition");
-                 }else{
-                    this.alertService.showAlert("warning", "حدث خطأ أثناء إضافة الحالة");
-                 }
+            if (this.translateService.currentLang == "en") {
+              this.alertService.showAlert(
+                "warning",
+                "Error in adding Condition"
+              );
+            } else {
+              this.alertService.showAlert(
+                "warning",
+                "حدث خطأ أثناء إضافة الحالة"
+              );
+            }
           }
         );
       } else {
         if (this.translateService.currentLang == "en") {
           this.alertService.showAlert("warning", "Select any Option");
-        }else{
-           this.alertService.showAlert("warning", "اختر أي خيار");
+        } else {
+          this.alertService.showAlert("warning", "اختر أي خيار");
         }
       }
     } else if (Param === "scopeofdelivery") {
       if (this.selectedOptions) {
         // const isUpdate = this.selectedOptionsList.includes("scopeofdelivery") ? "1" : "0";
         let isUpdate;
-        if(this.currentStepper == 'scopeOfDelivery'){
-          isUpdate=0
-        }else{
-          isUpdate=1
+        if (this.currentStepper == "scopeOfDelivery") {
+          isUpdate = 0;
+        } else {
+          isUpdate = 1;
         }
         const formData = {
           product_id: this.productIDFromResponse,
@@ -1788,8 +1847,8 @@ currentStepper:any='';
           (res) => {
             if (this.translateService.currentLang == "en") {
               this.alertService.showAlert("success", "Scope Add Successfully");
-            }else{
-               this.alertService.showAlert("success", "تمت إضافة النطاق بنجاح");
+            } else {
+              this.alertService.showAlert("success", "تمت إضافة النطاق بنجاح");
             }
             this.selectedOptionsList.push("proofofownership");
             this.selectSection("proofofownership");
@@ -1801,16 +1860,19 @@ currentStepper:any='';
           (err) => {
             if (this.translateService.currentLang == "en") {
               this.alertService.showAlert("warning", "Error in adding Scope");
-            }else{
-this.alertService.showAlert("warning", "حدث خطأ أثناء إضافة النطاق");
+            } else {
+              this.alertService.showAlert(
+                "warning",
+                "حدث خطأ أثناء إضافة النطاق"
+              );
             }
           }
         );
       } else {
         if (this.translateService.currentLang == "en") {
           this.alertService.showAlert("warning", "Select any Option");
-        }else{
-           this.alertService.showAlert("warning", "اختر أي خيار");
+        } else {
+          this.alertService.showAlert("warning", "اختر أي خيار");
         }
       }
     } else if (Param === "proofofownership") {
@@ -1819,11 +1881,11 @@ this.alertService.showAlert("warning", "حدث خطأ أثناء إضافة ال
       }
 
       if (!this.selectedFiles[0] || !this.selectedFiles[1]) {
-               if (this.translateService.currentLang == "en") {
-                 this.alertService.showAlert("warning", "Add Images");
-               }else{
-                this.alertService.showAlert("warning", "إضافة صور");
-               }
+        if (this.translateService.currentLang == "en") {
+          this.alertService.showAlert("warning", "Add Images");
+        } else {
+          this.alertService.showAlert("warning", "إضافة صور");
+        }
       } else {
         const formData = new FormData();
         formData.append("product_id", this.productIDFromResponse);
@@ -1847,19 +1909,22 @@ this.alertService.showAlert("warning", "حدث خطأ أثناء إضافة ال
         );
         // const isUpdate = this.selectedOptionsList.includes("proofofownership") ? "1" : "0";
         let isUpdate;
-        if(this.currentStepper == 'proofOfOwnership'){
-          isUpdate=0
-        }else{
-          isUpdate=1
+        if (this.currentStepper == "proofOfOwnership") {
+          isUpdate = 0;
+        } else {
+          isUpdate = 1;
         }
-        formData.append("isUpdate", isUpdate)
+        formData.append("isUpdate", isUpdate);
         this.http.addProffofOwnerShip(formData).subscribe(
           (res) => {
-                   if (this.translateService.currentLang == "en") {
-                     this.alertService.showAlert("success", "Images Added Successfully");
-                   }else{
-                      this.alertService.showAlert("success", "تمت إضافة الصور بنجاح");
-                   }
+            if (this.translateService.currentLang == "en") {
+              this.alertService.showAlert(
+                "success",
+                "Images Added Successfully"
+              );
+            } else {
+              this.alertService.showAlert("success", "تمت إضافة الصور بنجاح");
+            }
             this.selectedOptionsList.push("priceshipment");
             localStorage.setItem(
               "selectedOptionsList",
@@ -1868,11 +1933,14 @@ this.alertService.showAlert("warning", "حدث خطأ أثناء إضافة ال
             this.selectSection("priceshipment");
           },
           (err) => {
-                   if (this.translateService.currentLang == "en") {
-                     this.alertService.showAlert("warning", "Error in adding Images");
-                   }else{
-                      this.alertService.showAlert("warning", "حدث خطأ أثناء إضافة الصور");
-                   }
+            if (this.translateService.currentLang == "en") {
+              this.alertService.showAlert("warning", "Error in adding Images");
+            } else {
+              this.alertService.showAlert(
+                "warning",
+                "حدث خطأ أثناء إضافة الصور"
+              );
+            }
           }
         );
       }
@@ -1884,10 +1952,10 @@ this.alertService.showAlert("warning", "حدث خطأ أثناء إضافة ال
       ) {
         // const isUpdate = this.selectedOptionsList.includes("priceshipment") ? "1" : "0";
         let isUpdate;
-        if(this.currentStepper == 'priceAndShipment'){
-          isUpdate=0
-        }else{
-          isUpdate=1
+        if (this.currentStepper == "priceAndShipment") {
+          isUpdate = 0;
+        } else {
+          isUpdate = 1;
         }
         formData = {
           product_id: this.productIDFromResponse,
@@ -1897,30 +1965,30 @@ this.alertService.showAlert("warning", "حدث خطأ أثناء إضافة ال
         };
       } else {
         if (!this.watchPrice || !this.shipping_type) {
-                 if (this.translateService.currentLang == "en") {
-                   this.alertService.showAlert("info", "Enter Form Values");
-                 }else{
-                   this.alertService.showAlert("info", "أدخل قيم النموذج");
-                 }
+          if (this.translateService.currentLang == "en") {
+            this.alertService.showAlert("info", "Enter Form Values");
+          } else {
+            this.alertService.showAlert("info", "أدخل قيم النموذج");
+          }
           return;
         } else {
           if (
             this.shipping_type === "inclusiveShipping" &&
             !this.shipping_charges
           ) {
-              if (this.translateService.currentLang == "en") {
-                   this.alertService.showAlert("info", "Enter Form Values");
-                 }else{
-                   this.alertService.showAlert("info", "أدخل قيم النموذج");
-                 }
+            if (this.translateService.currentLang == "en") {
+              this.alertService.showAlert("info", "Enter Form Values");
+            } else {
+              this.alertService.showAlert("info", "أدخل قيم النموذج");
+            }
             return;
           } else {
             // const isUpdate = this.selectedOptionsList.includes("priceshipment") ? "1" : "0";
             let isUpdate;
-            if(this.currentStepper == 'priceAndShipment'){
-              isUpdate=0
-            }else{
-              isUpdate=1
+            if (this.currentStepper == "priceAndShipment") {
+              isUpdate = 0;
+            } else {
+              isUpdate = 1;
             }
             formData = {
               product_id: this.productIDFromResponse,
@@ -1939,23 +2007,23 @@ this.alertService.showAlert("warning", "حدث خطأ أثناء إضافة ال
       if (FormData) {
         this.http.addpriceAndShipment(formData).subscribe(
           (res) => {
-                   if (this.translateService.currentLang == "en") {
-                     this.alertService.showAlert(
-                       "success",
-                       "Price and Shipment Add Successfully"
-                     );
-                   }else{
-                    this.alertService.showAlert(
-                       "success",
-                       "تمت إضافة السعر والشحن بنجاح"
-                     );
-                   }
+            if (this.translateService.currentLang == "en") {
+              this.alertService.showAlert(
+                "success",
+                "Price and Shipment Add Successfully"
+              );
+            } else {
+              this.alertService.showAlert(
+                "success",
+                "تمت إضافة السعر والشحن بنجاح"
+              );
+            }
             // const isUpdate = this.selectedOptionsList.includes("priceshipment") ? "1" : "0";
             let isUpdate;
-            if(this.currentStepper == 'priceAndShipment'){
-              isUpdate=0
-            }else{
-              isUpdate=1
+            if (this.currentStepper == "priceAndShipment") {
+              isUpdate = 0;
+            } else {
+              isUpdate = 1;
             }
             const priceandShipment = {
               price: this.watchPrice,
@@ -1980,8 +2048,8 @@ this.alertService.showAlert("warning", "حدث خطأ أثناء إضافة ال
                 "warning",
                 "Error in adding Price and Shipment"
               );
-            }else{
-               this.alertService.showAlert(
+            } else {
+              this.alertService.showAlert(
                 "warning",
                 "حدث خطأ أثناء إضافة السعر والشحن"
               );
@@ -1993,10 +2061,10 @@ this.alertService.showAlert("warning", "حدث خطأ أثناء إضافة ال
       if (this.billingForm.valid) {
         // const isUpdate = this.selectedOptionsList.includes("billinginformation") ? "1" : "0";
         let isUpdate;
-        if(this.currentStepper == 'billingInformation'){
-          isUpdate=0
-        }else{
-          isUpdate=1
+        if (this.currentStepper == "billingInformation") {
+          isUpdate = 0;
+        } else {
+          isUpdate = 1;
         }
         const formDataWithProductID = {
           ...this.billingForm.value,
@@ -2011,8 +2079,8 @@ this.alertService.showAlert("warning", "حدث خطأ أثناء إضافة ال
                 "success",
                 "Billing Info Add Successfully"
               );
-            }else{
-               this.alertService.showAlert(
+            } else {
+              this.alertService.showAlert(
                 "success",
                 "تمت إضافة معلومات الفوترة بنجاح"
               );
@@ -2031,8 +2099,8 @@ this.alertService.showAlert("warning", "حدث خطأ أثناء إضافة ال
                 "warning",
                 "Error in adding Billing Info"
               );
-            }else{
-               this.alertService.showAlert(
+            } else {
+              this.alertService.showAlert(
                 "warning",
                 "حدث خطأ أثناء إضافة معلومات الفوترة"
               );
@@ -2042,7 +2110,7 @@ this.alertService.showAlert("warning", "حدث خطأ أثناء إضافة ال
       } else {
         if (this.translateService.currentLang == "en") {
           this.alertService.showAlert("warning", "Add Form Values");
-        }else{
+        } else {
           this.alertService.showAlert("warning", "إضافة قيم النموذج");
         }
       }
@@ -2057,20 +2125,20 @@ this.alertService.showAlert("warning", "حدث خطأ أثناء إضافة ال
               "success",
               "Product Publish Successfully"
             );
-          }else{
-            this.alertService.showAlert(
-              "success",
-              "تم نشر المنتج بنجاح"
-            );
+          } else {
+            this.alertService.showAlert("success", "تم نشر المنتج بنجاح");
           }
           this.formDirty = false;
           this.router.navigate(["/"]);
         },
         (err) => {
           if (this.translateService.currentLang == "en") {
-            this.alertService.showAlert("warning", "Error in Product Publishing");
-          }else{
-               this.alertService.showAlert("warning", "حدث خطأ أثناء نشر المنتج");
+            this.alertService.showAlert(
+              "warning",
+              "Error in Product Publishing"
+            );
+          } else {
+            this.alertService.showAlert("warning", "حدث خطأ أثناء نشر المنتج");
           }
         }
       );
@@ -2126,7 +2194,7 @@ this.alertService.showAlert("warning", "حدث خطأ أثناء إضافة ال
         this.selectedOptionsList.includes("listingDetails") &&
         this.selectedSection !== "listingDetails"
       ) {
-            this.getOnlyDetails();
+        this.getOnlyDetails();
         this.selectSection("listingDetails");
       }
     } else if (formName === "watchDetails") {
@@ -2134,7 +2202,7 @@ this.alertService.showAlert("warning", "حدث خطأ أثناء إضافة ال
         this.selectedOptionsList.includes("watchDetails") &&
         this.selectedSection !== "watchDetails"
       ) {
-            this.getOnlyDetails();
+        this.getOnlyDetails();
         this.selectSection("watchDetails");
       }
     } else if (formName === "uploadImages") {
@@ -2142,7 +2210,7 @@ this.alertService.showAlert("warning", "حدث خطأ أثناء إضافة ال
         this.selectedOptionsList.includes("uploadImages") &&
         this.selectedSection !== "uploadImages"
       ) {
-            this.getOnlyDetails();
+        this.getOnlyDetails();
         this.selectSection("uploadImages");
       }
     } else if (formName === "conditionGrading") {
@@ -2150,7 +2218,7 @@ this.alertService.showAlert("warning", "حدث خطأ أثناء إضافة ال
         this.selectedOptionsList.includes("conditionGrading") &&
         this.selectedSection !== "conditionGrading"
       ) {
-            this.getOnlyDetails();
+        this.getOnlyDetails();
         this.selectSection("conditionGrading");
       }
     } else if (formName === "scopeofdelivery") {
@@ -2158,7 +2226,7 @@ this.alertService.showAlert("warning", "حدث خطأ أثناء إضافة ال
         this.selectedOptionsList.includes("scopeofdelivery") &&
         this.selectedSection !== "scopeofdelivery"
       ) {
-            this.getOnlyDetails();
+        this.getOnlyDetails();
         this.selectSection("scopeofdelivery");
       }
     } else if (formName === "proofofownership") {
@@ -2166,7 +2234,7 @@ this.alertService.showAlert("warning", "حدث خطأ أثناء إضافة ال
         this.selectedOptionsList.includes("proofofownership") &&
         this.selectedSection !== "proofofownership"
       ) {
-            this.getOnlyDetails();
+        this.getOnlyDetails();
         this.selectSection("proofofownership");
       }
     } else if (formName === "priceshipment") {
@@ -2174,7 +2242,7 @@ this.alertService.showAlert("warning", "حدث خطأ أثناء إضافة ال
         this.selectedOptionsList.includes("priceshipment") &&
         this.selectedSection !== "priceshipment"
       ) {
-            this.getOnlyDetails();
+        this.getOnlyDetails();
         this.selectSection("priceshipment");
       }
     } else if (formName === "billinginformation") {
@@ -2182,7 +2250,7 @@ this.alertService.showAlert("warning", "حدث خطأ أثناء إضافة ال
         this.selectedOptionsList.includes("billinginformation") &&
         this.selectedSection !== "billinginformation"
       ) {
-            this.getOnlyDetails();
+        this.getOnlyDetails();
         this.selectSection("billinginformation");
       }
     } else if (formName === "summary") {
@@ -2190,7 +2258,7 @@ this.alertService.showAlert("warning", "حدث خطأ أثناء إضافة ال
         this.selectedOptionsList.includes("summary") &&
         this.selectedSection !== "summary"
       ) {
-            this.getOnlyDetails();
+        this.getOnlyDetails();
         this.selectSection("summary");
       }
     }

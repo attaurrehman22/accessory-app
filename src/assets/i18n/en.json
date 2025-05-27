@@ -336,6 +336,7 @@
     "accept_details_and_continue": "Accept Details and Continue"
   },
   "create_product_listing": {
+    "Images":"Images",
     "label": "Create Product Listing",
     "listing_details": "Listing Details",
     "listing_details_para_one": "Provide basic information about your watch to start the listing process.",

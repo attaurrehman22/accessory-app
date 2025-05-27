@@ -283,6 +283,7 @@
     "reference_number": "رقم المرجع"
   },
   "create_product_listing":{
+    "Images": "الصور",
     "label": "إنشاء قائمة المنتج",
     "listing_details_para_one": "قدّم معلومات أساسية عن ساعتك لبدء عملية الإدراج.",
     "listing_details_para": "قدّم معلومات أساسية عن ساعتك لبدء عملية الإدراج.",
