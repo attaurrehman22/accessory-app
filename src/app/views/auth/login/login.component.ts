@@ -88,16 +88,23 @@ export class LoginComponent implements OnInit {
       this.http.login(this.loginForm.value).subscribe(
         (response) => {
           if (response.errorMessage || response.status === "failure") {
-            this.alertService.showAlert(
-              "danger",
-              "Enter valid username/email and password"
-            );
+            if (this.translateService.currentLang == "en") {
+              this.alertService.showAlert(
+                "warning",
+                "Please Enter your Email and Password"
+              );
+            } else {
+              this.alertService.showAlert(
+                "warning",
+                "يرجى إدخال بريدك الإلكتروني وكلمة المرور"
+              );
+            }
           } else {
             localStorage.setItem("user_token", response.authorization.token);
             localStorage.setItem("isLoggedIn", "true");
             localStorage.setItem("userID", response.user.id);
             const isAdmin = response.user.type === "admin";
-            localStorage.setItem('userType',response.user.type)
+            localStorage.setItem("userType", response.user.type);
             if (isAdmin) {
               localStorage.setItem("isAdmin", "true");
             }
@@ -108,18 +115,34 @@ export class LoginComponent implements OnInit {
           }
         },
         (error) => {
-          this.alertService.showAlert(
-            "danger",
-            "Enter Valid Email and Password"
-          );
+          if (this.translateService.currentLang == "en") {
+            this.alertService.showAlert(
+              "warning",
+              "You entered an incorrect email or password"
+            );
+          } else {
+            this.alertService.showAlert(
+              "warning",
+              "لقد أدخلت بريدًا إلكترونيًا أو كلمة مرور غير صحيحة"
+            );
+          }
           console.error("Login error", error);
         }
       );
     } else {
-      this.alertService.showAlert("info", "Enter UserName/Email and Password");
+      if (this.translateService.currentLang == "en") {
+        this.alertService.showAlert(
+          "warning",
+          "Please Enter your Email and Password"
+        );
+      } else {
+        this.alertService.showAlert(
+          "warning",
+          "يرجى إدخال بريدك الإلكتروني وكلمة المرور"
+        );
+      }
     }
   }
-
 
   async signInWithGoogle() {
     const auth = getAuth();
@@ -129,8 +152,6 @@ export class LoginComponent implements OnInit {
       const credential = GoogleAuthProvider.credentialFromResult(result);
       const token = credential?.accessToken;
       const user = result.user;
-
-   
 
       // ✅ Send Google token to your backend for verification
       // this.http.googleLogin({ token }).subscribe(
@@ -158,7 +179,6 @@ export class LoginComponent implements OnInit {
       console.error(error);
     }
   }
-
 
   gotoRegister() {
     this.router.navigateByUrl("register");

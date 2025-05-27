@@ -81,10 +81,17 @@ export class ModelLoginComponent implements OnInit {
       this.http.login(this.loginForm.value).subscribe(
         (response) => {
           if (response.message === "" || response.status === "failure") {
-            this.alertService.showAlert(
-              "danger",
-              "Enter valid username/email and password"
-            );
+            if(this.translateService.currentLang == 'en'){
+              this.alertService.showAlert(
+                "warning",
+                "Please Enter your Email and Password"
+              );
+            }else{
+               this.alertService.showAlert(
+                "warning",
+                "يرجى إدخال بريدك الإلكتروني وكلمة المرور"
+              );
+            }
           } else {
             localStorage.setItem("isLoggedIn", "true");
             localStorage.setItem("user_token", response.authorization.token);
@@ -106,16 +113,33 @@ export class ModelLoginComponent implements OnInit {
         },
         (error) => {
           if (error.message === "Unauthorized") {
-            this.alertService.showAlert(
-              "danger",
-              "Enter Valid Email and Password"
-            );
+             if(this.translateService.currentLang == 'en'){
+              this.alertService.showAlert(
+                "warning",
+                "You entered an incorrect email or password"
+              );
+            }else{
+              this.alertService.showAlert(
+                "warning",
+                "لقد أدخلت بريدًا إلكترونيًا أو كلمة مرور غير صحيحة"
+              );
+            }
           }
           console.error("Login error", error);
         }
       );
     } else {
-      this.alertService.showAlert("info", "Enter UserName/Email and Password");
+       if (this.translateService.currentLang == "en") {
+        this.alertService.showAlert(
+          "warning",
+          "Please Enter your Email and Password"
+        );
+      } else {
+        this.alertService.showAlert(
+          "warning",
+          "يرجى إدخال بريدك الإلكتروني وكلمة المرور"
+        );
+      }
     }
   }
   gotoRegister() {

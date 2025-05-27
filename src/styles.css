@@ -574,3 +574,50 @@ td {
 }
 
 /* --------------------------------------- Admin Table Style End here -------------------- */
+
+ /* ----------------------------------  Alert Styles start here ------------------------------ */
+
+ .custom-alert {
+  padding: 1rem;
+  border-radius: 12px;
+  margin-bottom: 1rem;
+  font-weight: 500;
+  position: relative;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  opacity: 0.95; /* 👈 Slight transparency */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* 👈 Subtle shadow */
+  transition: opacity 0.3s ease-in-out; /* 👈 Smooth transition */
+}
+
+.custom-alert:hover {
+  opacity: 1;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+}
+
+.custom-success {
+ background-color: #e6ffed !important;
+  color: #5ea96f !important;
+  border-color: #c3e6cb !important;
+}
+
+.custom-danger {
+   background-color: #ffe5e5 !important;
+  color: #a45860 !important;
+  border-color: #f5c6cb !important;
+}
+
+.custom-warning {
+  background-color: #fff8e1 !important;
+  color: #9c8c59 !important;
+  border-color: #ffeeba !important;
+}
+
+.custom-info {
+   background-color: #e1f5fe !important;
+  color: #0c5460 !important;
+  border-color: #bee5eb !important;
+}
+
+
+ /* ----------------------------------  Alert Styles End here ------------------------------ */

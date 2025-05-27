@@ -17,10 +17,20 @@
   class="container mt-4 alert-cont-style"
   [ngStyle]="alertPositionStyle"
   style="width: auto;">
-  <div [ngClass]="'alert alert-' + alert.type + ' alert-dismissible fade show'" role="alert">
-    <strong>{{ alert.type | titlecase }}!</strong> {{ alert.message }}
+  <div
+    class="custom-alert"
+    [ngClass]="{
+      'custom-success': alert.type === 'success',
+      'custom-danger': alert.type === 'danger',
+      'custom-warning': alert.type === 'warning',
+      'custom-info': alert.type === 'info'
+    }"
+    role="alert"
+  >
+    {{ alert.message }}
     <button type="button" class="btn-close" (click)="closeAlert()" aria-label="Close"></button>
   </div>
 </div>
+
 
 <router-outlet></router-outlet>
