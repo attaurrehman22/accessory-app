@@ -1,4 +1,12 @@
 {
+  "form_validation": {
+    "required": "هذا الحقل مطلوب",
+    "invalid_phone": "أدخل رقم هاتف سعودي صالح (مثال: 5XXXXXXXX)",
+    "min_2_chars": "الحد الأدنى حرفان",
+    "max_50_chars": "الحد الأقصى 50 حرفًا",
+    "max_300_chars": "الحد الأقصى 300 حرف",
+    "invalid_email": "أدخل عنوان بريد إلكتروني صالح"
+  },
   "header": {
     "new_arrivals": "الوافدون الجدد",
     "admin_pannel": "لوحة الإدارة",

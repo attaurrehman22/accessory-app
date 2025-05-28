@@ -1,4 +1,12 @@
 {
+  "form_validation": {
+    "required": "This field is requireda",
+    "invalid_phone": "Enter a valid KSA phone number (e.g., 5XXXXXXXX)",
+    "min_2_chars": "Minimum 2 characters",
+    "max_50_chars": "Maximum 50 characters",
+    "max_300_chars": "Maximum 300 characters",
+    "invalid_email": "Enter a valid email address"
+  },
   "header": {
     "new_arrivals":"New Arrivals",
     "buy_watch": "Buy Watch",

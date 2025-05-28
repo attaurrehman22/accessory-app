@@ -1190,6 +1190,24 @@ export class HttpService implements OnInit {
       },
     });
   }
+
+   getProfilingInformation(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/api/profile`, {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+  }
+
+   saveProfilingInformation(formData): Observable<any> {
+    return this.http.post(`${this.apiUrl}/api/profile`, formData, {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+  }
   // -------------------------------------------- My Listing Module APIs end --------------------------
 
 

@@ -35,138 +35,127 @@
     <div class="col-md-9" style="min-height: 85vh;" [ngClass]="{ 'reverse-order-details': translateService.currentLang !== 'en' }">
       <!-- if "Personal Info" is Active -->
       <div *ngIf="activeIndex === 0" class="container">
-        <form class="arabic-style-form">
-          <h3>{{ "my_Listing.Personal_Information" | translate }}</h3>
-          <div class="row">
-            <div class="col-md-6 mb-3" [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'">
-              <label for="firstName" class="form-label">{{ "my_Listing.First_Name" | translate }}</label>
-              <input
-                type="text"
-                id="firstName"
-                class="form-control"
-                placeholder='{{ "my_Listing.First_Name_place" | translate }}'
-              />
-            </div>
-            <div class="col-md-6 mb-3" [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'">
-              <label for="lastName" class="form-label">{{ "my_Listing.Last_Name" | translate }}</label>
-              <input
-                type="text"
-                id="lastName"
-                class="form-control"
-                placeholder='{{ "my_Listing.Last_Name_place" | translate }}'
-              />
+      <form class="arabic-style-form" [formGroup]="profileForm" (ngSubmit)="profileFormSubmit()">
+        <!-- Personal Information -->
+        <h3>{{ "my_Listing.Personal_Information" | translate }}</h3>
+        <div class="row">
+          <div class="col-md-6 mb-3" [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'">
+            <label for="first_name" class="form-label">{{ "my_Listing.First_Name" | translate }}</label>
+            <input type="text" id="first_name" class="form-control" formControlName="first_name" placeholder='{{ "my_Listing.First_Name_place" | translate }}' />
+            <div *ngIf="profileForm.get('first_name')?.touched && profileForm.get('first_name')?.invalid" class="text-danger">
+              <small *ngIf="profileForm.get('first_name')?.hasError('required')">{{ "form_validation.required" | translate }}</small>
+              <small *ngIf="profileForm.get('first_name')?.hasError('minlength')">{{ "form_validation.min_2_chars" | translate }}</small>
+              <small *ngIf="profileForm.get('first_name')?.hasError('maxlength')">{{ "form_validation.max_50_chars" | translate }}</small>
             </div>
           </div>
-
-          <div class="row">
-            <div class="col-md-6 mb-3" [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'">
-              <label for="gender" class="form-label">{{ "my_Listing.Gender" | translate }}</label>
-              <select id="gender" class="form-select">
-                <option selected>{{ "my_Listing.select_gender" | translate }}</option>
-                <option value="male">{{ "my_Listing.Male" | translate }}</option>
-                <option value="female">{{ "my_Listing.Female" | translate }}</option>
-                <option value="other">{{ "my_Listing.Other" | translate }}</option>
-              </select>
-            </div>
-            <div class="col-md-6 mb-3" [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'">
-              <label for="dob" class="form-label">{{ "my_Listing.Date_of_Birth" | translate }}</label>
-              <input type="date" id="dob" class="form-control" />
+          <div class="col-md-6 mb-3" [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'">
+            <label for="last_name" class="form-label">{{ "my_Listing.Last_Name" | translate }}</label>
+            <input type="text" id="last_name" class="form-control" formControlName="last_name" placeholder='{{ "my_Listing.Last_Name_place" | translate }}' />
+            <div *ngIf="profileForm.get('last_name')?.touched && profileForm.get('last_name')?.invalid" class="text-danger">
+              <small *ngIf="profileForm.get('last_name')?.hasError('required')">{{ "form_validation.required" | translate }}</small>
+              <small *ngIf="profileForm.get('last_name')?.hasError('minlength')">{{ "form_validation.min_2_chars" | translate }}</small>
+              <small *ngIf="profileForm.get('last_name')?.hasError('maxlength')">{{ "form_validation.max_50_chars" | translate }}</small>
             </div>
           </div>
+        </div>
 
-          <div class="row">
-            <div class="col-md-6 mb-3" [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'">
-              <label for="phone" class="form-label">{{ "my_Listing.Phone" | translate }}</label>
-              <div class="input-group">
-                <select class="form-select" style="max-width: 100px">
-                  <option value="KSA">KSA</option>
-                  <!-- Add more options as needed -->
-                </select>
-                <input
-                  type="text"
-                  id="phone"
-                  class="form-control"
-                  placeholder="+966 55 000 0000"
-                />
+        <div class="row">
+          <div class="col-md-6 mb-3" [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'">
+            <label for="gender" class="form-label">{{ "my_Listing.Gender" | translate }}</label>
+            <select id="gender" class="form-select" formControlName="gender">
+              <option selected disabled>{{ "my_Listing.select_gender" | translate }}</option>
+              <option value="Male">{{ "my_Listing.Male" | translate }}</option>
+              <option value="Female">{{ "my_Listing.Female" | translate }}</option>
+              <option value="Other">{{ "my_Listing.Other" | translate }}</option>
+              <div *ngIf="profileForm.get('gender')?.touched && profileForm.get('gender')?.invalid" class="text-danger">
+                <small *ngIf="profileForm.get('gender')?.hasError('required')">{{ "form_validation.required" | translate }}</small>
               </div>
+            </select>
+          </div>
+          <div class="col-md-6 mb-3" [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'">
+            <label for="date_of_birth" class="form-label">{{ "my_Listing.Date_of_Birth" | translate }}</label>
+            <input type="date" id="date_of_birth" class="form-control" formControlName="date_of_birth" />
+            <div *ngIf="profileForm.get('date_of_birth')?.touched && profileForm.get('date_of_birth')?.invalid" class="text-danger">
+              <small *ngIf="profileForm.get('date_of_birth')?.hasError('required')">{{ "form_validation.required" | translate }}</small>
             </div>
-            <div class="col-md-6 mb-3" [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'">
-              <label for="language" class="form-label">{{ "my_Listing.Language" | translate }}</label>
-              <select id="language" class="form-select">
-                <option selected>{{ "my_Listing.English" | translate }}</option>
-                <option value="arabic">{{ "my_Listing.Arabic" | translate }}</option>
-                <!-- Add more languages -->
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6 mb-3" [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'">
+            <label for="phone_number" class="form-label">{{ "my_Listing.Phone" | translate }}</label>
+            <div class="input-group">
+              <select class="form-select" formControlName="countryCode" style="max-width: 100px">
+                <option value="KSA">KSA</option>
               </select>
+              <input type="text" id="phone_number" class="form-control" formControlName="phone_number" placeholder="+966 55 000 0000" />
+            </div>
+            <div *ngIf="profileForm.get('phone_number')?.touched && profileForm.get('phone_number')?.invalid" class="text-danger">
+              <small *ngIf="profileForm.get('phone_number')?.hasError('required')">{{ "form_validation.required" | translate }}</small>
+              <small *ngIf="profileForm.get('phone_number')?.hasError('pattern')">{{ "form_validation.invalid_phone" | translate }}</small>
             </div>
           </div>
-
-          <div class="row">
-            <div class="col-md-6 mb-3" [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'">
-              <label for="occupation" class="form-label">{{ "my_Listing.Occupation" | translate }}</label>
-              <input
-                type="text"
-                id="occupation"
-                class="form-control"
-                placeholder='{{ "my_Listing.Occupation" | translate }}'
-              />
-            </div>
-            <div class="col-md-6 mb-3" [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'">
-              <label for="aboutMe" class="form-label">{{ "my_Listing.About_Me" | translate }}</label>
-              <textarea
-                id="aboutMe"
-                class="form-control"
-                rows="2"
-                placeholder='{{ "my_Listing.Description" | translate }}'
-              ></textarea>
-            </div>
+          <div class="col-md-6 mb-3" [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'">
+            <label for="language" class="form-label">{{ "my_Listing.Language" | translate }}</label>
+            <select id="language" class="form-select" formControlName="language">
+              <option value="english">{{ "my_Listing.English" | translate }}</option>
+              <option value="arabic">{{ "my_Listing.Arabic" | translate }}</option>
+              <div *ngIf="profileForm.get('language')?.touched && profileForm.get('language')?.invalid" class="text-danger">
+                <small *ngIf="profileForm.get('language')?.hasError('required')">{{ "form_validation.required" | translate }}</small>
+              </div>
+            </select>
           </div>
+        </div>
 
-          <h3>{{ "my_Listing.Login_Information" | translate }}</h3>
-          <div class="row">
-            <div class="col-md-6 mb-3" [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'">
-              <label for="email" class="form-label">{{ "my_Listing.Email_Address" | translate }}</label>
-              <input
-                type="email"
-                id="email"
-                class="form-control"
-                placeholder='{{ "my_Listing.Email_Address_place" | translate }}'
-              />
-            </div>
-            <div class="col-md-6 mb-3" [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'">
-              <label for="password" class="form-label">{{ "my_Listing.Password" | translate }}</label>
-              <a href="#" class="d-block text-decoration-none"
-                >{{ "my_Listing.Change_password" | translate }}</a
-              >
+        <div class="row">
+          <div class="col-md-6 mb-3" [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'">
+            <label for="occupation" class="form-label">{{ "my_Listing.Occupation" | translate }}</label>
+            <input type="text" id="occupation" class="form-control" formControlName="occupation" placeholder='{{ "my_Listing.Occupation" | translate }}' />
+            <div *ngIf="profileForm.get('occupation')?.touched && profileForm.get('occupation')?.invalid" class="text-danger">
+              <small *ngIf="profileForm.get('occupation')?.hasError('required')">{{ "form_validation.required" | translate }}</small>
+              <small *ngIf="profileForm.get('occupation')?.hasError('minlength')">{{ "form_validation.min_2_chars" | translate }}</small>
             </div>
           </div>
-
-          <h3>{{ "my_Listing.Login_with" | translate }}</h3>
-          <div class="d-flex gap-3 my-3 search-arabic-style">
-            <button type="button" class="btn btn-outline-secondary w-100">
-              <img
-                src="../assets/images/download.png"
-                alt="Google Logo"
-                class="me-2"
-                style="width: 20px"
-              />
-              {{ "my_Listing.Sign_in_Google" | translate }}
-            </button>
-            <button type="button" class="btn btn-outline-secondary w-100">
-              <img
-                src="../assets/images/apple-logo.png"
-                alt="Apple Logo"
-                class="me-2"
-                style="width: 20px"
-              />
-              {{ "my_Listing.Sign_in_Apple" | translate }}
-
-            </button>
+          <div class="col-md-6 mb-3" [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'">
+            <label for="about_me" class="form-label">{{ "my_Listing.About_Me" | translate }}</label>
+            <textarea id="about_me" class="form-control" rows="2" formControlName="about_me" placeholder='{{ "my_Listing.Description" | translate }}'></textarea>
+            <div *ngIf="profileForm.get('about_me')?.touched && profileForm.get('about_me')?.invalid" class="text-danger">
+              <small *ngIf="profileForm.get('about_me')?.hasError('maxlength')">{{ "form_validation.max_300_chars" | translate }}</small>
+            </div>
           </div>
+        </div>
 
-          <div class="text-end">
-            <button type="submit" class="submit-btn"> {{ "my_Listing.Save_Changes" | translate }}</button>
+        <!-- Login Information -->
+        <h3>{{ "my_Listing.Login_Information" | translate }}</h3>
+        <div class="row">
+          <div class="col-md-6 mb-3" [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'">
+            <label for="email" class="form-label">{{ "my_Listing.Email_Address" | translate }}</label>
+            <input type="email" id="email" class="form-control" formControlName="email" placeholder='{{ "my_Listing.Email_Address_place" | translate }}' />
           </div>
-        </form>
+          <div class="col-md-6 mb-3" [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'">
+            <label for="password" class="form-label">{{ "my_Listing.Password" | translate }}</label>
+            <a href="#" class="d-block text-decoration-none">{{ "my_Listing.Change_password" | translate }}</a>
+          </div>
+        </div>
+
+        <!-- Login with -->
+        <h3>{{ "my_Listing.Login_with" | translate }}</h3>
+        <div class="d-flex gap-3 my-3 search-arabic-style">
+          <button type="button" class="btn btn-outline-secondary w-100">
+            <img src="../assets/images/download.png" alt="Google Logo" class="me-2" style="width: 20px" />
+            {{ "my_Listing.Sign_in_Google" | translate }}
+          </button>
+          <button type="button" class="btn btn-outline-secondary w-100">
+            <img src="../assets/images/apple-logo.png" alt="Apple Logo" class="me-2" style="width: 20px" />
+            {{ "my_Listing.Sign_in_Apple" | translate }}
+          </button>
+        </div>
+
+        <div class="text-end">
+          <button type="submit" class="submit-btn">{{ "my_Listing.Save_Changes" | translate }}</button>
+        </div>
+      </form>
+
       </div>
       <!-- if "Shipping Address" is Active -->
       <div *ngIf="activeIndex === 1" class="container">

@@ -5,7 +5,7 @@ import { HttpService } from "src/services/http/http.service";
 import { ModelLoginComponent } from "../../auth/model-login/model-login.component";
 import { MatDialog } from "@angular/material/dialog";
 import { AlertsServicesService } from "src/services/alerts-service/alerts-services.service";
-import { FormControl, FormGroup, Validators } from "@angular/forms";
+import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
 import { TranslateService } from "@ngx-translate/core";
 import { LanguageService } from "src/services/lang-service/language.service";
 import { environment } from "src/environments/environment";
@@ -17,7 +17,7 @@ import { environment } from "src/environments/environment";
 })
 export class MyListingDetailsComponent implements OnInit {
    apiUrl = environment.apipath+ '/'
-
+ profileForm!: FormGroup;
   supportLanguages = ["en", "ar", "fr", "ta", "hi"];
   currentLanguage: string;
 
@@ -98,6 +98,61 @@ export class MyListingDetailsComponent implements OnInit {
       country: this.country,
       state: this.state,
     });
+    this.profileForm = this.fb.group({
+    first_name: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
+    last_name: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
+    gender: ['', Validators.required],
+    date_of_birth: ['', Validators.required],
+    countryCode: ['KSA'],
+    phone_number: ['', [Validators.required, Validators.pattern(/^5\d{8}$/)]], // Assuming KSA format without country code
+    language: ['english', Validators.required],
+    occupation: ['', [Validators.required, Validators.minLength(2)]],
+    about_me: ['', [Validators.maxLength(300)]],
+    email: ['', [Validators.required, Validators.email]],
+    password: [''],
+  });
+    this.fetchProfiling()
+  }
+
+  fetchProfiling(){
+    this.http.getProfilingInformation().subscribe(
+      (res)=>{
+         this.profileForm.patchValue({
+          first_name: res.first_name,
+          last_name: res.last_name,
+          gender: res.gender,
+          date_of_birth: res.date_of_birth,
+          phone_number: res.phone_number,
+          language: res?.language,
+          occupation: res?.occupation,
+          about_me: res?.about_me,
+          email: res?.email,
+          password: res?.password,
+        });
+      }
+    )
+  }
+
+  profileFormSubmit(){
+    this.profileForm.markAllAsTouched()
+      console.log('Form Values:', this.profileForm.value);
+      if(this.profileForm.valid){
+        this.http.saveProfilingInformation(this.profileForm.value).subscribe(
+          (res)=>{
+            if(this.translateService.currentLang == "en"){
+              this.alertService.showAlert('success','Profile Update Successfully')
+            }else{
+              this.alertService.showAlert('success','تم تحديث الملف الشخصي بنجاح')
+            }
+          }
+        )
+      }else{
+        if(this.translateService.currentLang == "en"){
+          this.alertService.showAlert('warning','Please add form values')
+        }else{
+          this.alertService.showAlert('warning','يرجى إضافة قيم النموذج')
+        }
+      }
   }
 
   getBillingInformation() {
@@ -117,10 +172,10 @@ export class MyListingDetailsComponent implements OnInit {
       },
       (err) => {
        if (this.translateService.currentLang == "en") {
-  this.alertService.showAlert(
-    "warning",
-    "Error in Fetching Billing Information"
-  );
+  // this.alertService.showAlert(
+  //   "warning",
+  //   "Error in Fetching Billing Information"
+  // );
 } else {
   this.alertService.showAlert(
     "warning",
@@ -244,7 +299,7 @@ export class MyListingDetailsComponent implements OnInit {
     private alertService: AlertsServicesService,
       public translateService: TranslateService,
        private languageService:LanguageService,
-  ) {
+  private fb: FormBuilder) {
     this.translateService.addLangs(this.supportLanguages);
     const savedLang = this.languageService.getCurrentLanguage();
     if (this.supportLanguages.includes(savedLang)) {
