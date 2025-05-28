@@ -12,127 +12,6 @@ import { SidebarService } from 'src/services/sidebar.service';
 })
 export class AdminSidebarComponent implements OnInit{
   toogle: boolean = true;
-  navItems = {
-    dashboard: {
-      label: 'Dashboard',
-      router: '/admin/dashboard',
-      routerActive: 'navbar-button-active',
-      icon: 'assets/images/dashboard-2-svgrepo-com (1).svg',
-      iconWidth: 20,
-      iconHeight: 20,
-    },
-    addProduct: {
-      router: '/admin/product/add',
-      routerActive: 'navbar-button-active',
-      icon: 'assets/images/dashboard-2-svgrepo-com (1).svg',
-      iconWidth: 20,
-      iconHeight: 20,
-    },
-    Products: {
-      label: 'Products',
-      router: '/admin/products',
-      routerActive: 'navbar-button-active',
-      icon: 'assets/images/dashboard-2-svgrepo-com (1).svg',
-      iconWidth: 20,
-      iconHeight: 20,
-    },
-    Brands: {
-      label: 'Brands',
-      router: '/admin/brands',
-      routerActive: 'navbar-button-active',
-      icon: 'assets/images/dashboard-2-svgrepo-com (1).svg',
-      iconWidth: 20,
-      iconHeight: 20,
-    },
-    Category: {
-      label: 'Category',
-      router: '/admin/category',
-      routerActive: 'navbar-button-active',
-      icon: 'assets/images/dashboard-2-svgrepo-com (1).svg',
-      iconWidth: 20,
-      iconHeight: 20,
-    },
-    Users: {
-      label: 'Users',
-      router: '/admin/users',
-      routerActive: 'navbar-button-active',
-      icon: 'assets/images/dashboard-2-svgrepo-com (1).svg',
-      iconWidth: 20,
-      iconHeight: 20,
-    },
-    WatchOfDay: {
-      label: 'WatchOfDay',
-      router: '/admin/watchOfDay',
-      routerActive: 'navbar-button-active',
-      icon: 'assets/images/dashboard-2-svgrepo-com (1).svg',
-      iconWidth: 20,
-      iconHeight: 20,
-    },
-    Accessories: {
-      label: 'Accessories',
-      router: '/admin/accessories',
-      routerActive: 'navbar-button-active',
-      icon: 'assets/images/dashboard-2-svgrepo-com (1).svg',
-      iconWidth: 20,
-      iconHeight: 20,
-    },
-    TopBrands: {
-      label: 'Accessories',
-      router: '/admin/top/brands',
-      routerActive: 'navbar-button-active',
-      icon: 'assets/images/dashboard-2-svgrepo-com (1).svg',
-      iconWidth: 20,
-      iconHeight: 20,
-    },
-     AccessoriesCategories: {
-      label: 'Accessoriy Categories',
-      router: '/admin/accessory/categories',
-      routerActive: 'navbar-button-active',
-      icon: 'assets/images/dashboard-2-svgrepo-com (1).svg',
-      iconWidth: 20,
-      iconHeight: 20,
-    },
-    Group: {
-      label: 'Accessoriy Categories Group',
-      router: '/admina/group',
-      routerActive: 'navbar-button-active',
-      icon: 'assets/images/dashboard-2-svgrepo-com (1).svg',
-      iconWidth: 20,
-      iconHeight: 20,
-    },
-    Sub: {
-      label: 'Accessoriy Categories Group',
-      router: '/admin/sub-group',
-      routerActive: 'navbar-button-active',
-      icon: 'assets/images/dashboard-2-svgrepo-com (1).svg',
-      iconWidth: 20,
-      iconHeight: 20,
-    },
-    Attributes: {
-      label: 'Attributes',
-      router: '/admin/attributes',
-      routerActive: 'navbar-button-active',
-      icon: 'assets/images/dashboard-2-svgrepo-com (1).svg',
-      iconWidth: 20,
-      iconHeight: 20,
-    },
-    AttributeValues: {
-      label: 'Attribute values',
-      router: '/admin/attribute-values',
-      routerActive: 'navbar-button-active',
-      icon: 'assets/images/dashboard-2-svgrepo-com (1).svg',
-      iconWidth: 20,
-      iconHeight: 20,
-    },
-     Inventory: {
-      label: 'Inventory',
-      router: '/admin/inventory',
-      routerActive: 'navbar-button-active',
-      icon: 'assets/images/dashboard-2-svgrepo-com (1).svg',
-      iconWidth: 20,
-      iconHeight: 20,
-    },
-  };
 
   accessoriesRoutes:any;
 
@@ -151,23 +30,24 @@ export class AdminSidebarComponent implements OnInit{
   ngOnInit(): void {
     this.checkScreenSize();
 
+    this.accessoriesRoutes = [
+        '/admin/accessories',
+        '/admin/accessory/categories',
+        '/admin/group',
+        '/admin/sub-group',
+        '/admin/attributes',
+        '/admin/attribute-values',
+        '/admin/inventory',
+        '/admin/attribute-listing'
+      ];
+
      this.router.events
       .pipe(filter(event => event instanceof NavigationEnd))
       .subscribe((event: NavigationEnd) => {
         this.updateAccRouteVisibility(event.urlAfterRedirects);
       });
 
-    this.accessoriesRoutes = [
-    '/admin/accessories',
-    '/admin/accessory/categories',
-    '/admin/group',
-    '/admin/sub-group',
-    '/admin/attributes',
-    '/admin/attribute-values',
-    '/admin/inventory'
-  ];
-
-    //  this.updateAccRouteVisibility();
+        
   }
 
   checkScreenSize() {

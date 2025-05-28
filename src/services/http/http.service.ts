@@ -807,6 +807,42 @@ export class HttpService implements OnInit {
       });
     }
 
+    getAttributes(): Observable<any> {
+      return this.http.get(`${this.apiUrl}/api/attributes`, {
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${this.token}`,
+        },
+      });
+    }
+
+    addAttributes(formData): Observable<any> {
+      return this.http.post(`${this.apiUrl}/api/attributes`,formData, {
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${this.token}`,
+        },
+      });
+    }
+
+     editAttributes(bodyData,ID): Observable<any> {
+      return this.http.put(`${this.apiUrl}/api/attributes/${ID}`,bodyData, {
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${this.token}`,
+        },
+      });
+    }
+
+     deleteAttributes(ID): Observable<any> {
+      return this.http.delete(`${this.apiUrl}/api/attributes/${ID}`, {
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${this.token}`,
+        },
+      });
+    }
+
 
   // ----------------------------------  Admin Pannel Apis End Here ------------------------------
 

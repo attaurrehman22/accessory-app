@@ -76,7 +76,7 @@ export class AddAttributeValuesComponent implements OnInit {
   }
 
   getAllAttributes(){
-    this.http.getAttributesType().subscribe((res) => {
+    this.http.getAttributes().subscribe((res) => {
         this.accessoryCategoryList = res;
       });
   }

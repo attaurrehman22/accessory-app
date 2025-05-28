@@ -7,20 +7,28 @@
   background-color: #F8F8F8;
 }
 
+.custom-height-labels {
+  height: 90px;
+}
+
 .product-card {
-  background-image: url('/assets/images/how-back-img.png');
   background-repeat: no-repeat;
   background-size: contain;
+  height: 500px;
 }
 
 .img-style {
-  width: 98%;
-  margin-top: 10px;
+  width: 100%;
+  object-fit: fill;
+  height: 100%;
+}
 
+.number-card {
+  min-width: 2.3rem !important; 
+  height: 2.2rem
 }
 
 .back-styl {
-  background-image: url('/assets/images/how-back-img.png');
   background-size: cover;
   min-height: 55vh;
   max-height: 55vh;
@@ -41,11 +49,15 @@
 }
 
 .label-style {
-  font-size: 2.5vh;
+  font-size: 22px;
+  font-weight: 700;
+  color: #313F5B;
 }
 
 .desc-style {
-  font-size: 1.7vh;
+  font-size: 18px;
+  font-weight: 400;
+  color: #636E82;
 }
 
 @media (max-width: 1565px) {
@@ -54,11 +66,11 @@
   }
 
   .label-style {
-    font-size: 1.5vh;
+    /* font-size: 1.5vh; */
   }
 
   .desc-style {
-    font-size: 1.2vh;
+    /* font-size: 1.2vh; */
   }
 }
 
@@ -91,6 +103,14 @@
   .res-img {
     min-height: auto !important;
   }
+
+  .custom-height-labels {
+    height: max-content;
+  }
+}
+
+.reverse-res-img {
+  justify-content: end;
 }
 
 @media (max-width: 424px) {

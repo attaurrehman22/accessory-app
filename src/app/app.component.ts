@@ -90,7 +90,8 @@ export class AppComponent implements OnInit {
     "/admin/sub-group",
     "/admin/attributes",
     "/admin/attribute-values",
-    "/admin/inventory"
+    "/admin/inventory",
+    "/admin/attribute-listing"
   ];
   routesToHideforAdmin = [
     "/login",

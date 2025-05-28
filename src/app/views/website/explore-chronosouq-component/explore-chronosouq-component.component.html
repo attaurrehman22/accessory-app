@@ -13,7 +13,7 @@
         <div class="col-md-12">
           <!-- Step 1 -->
           <div
-            class="d-flex flex-column align-items-start rounded mb-3 p-3" style="cursor: pointer;"
+            class="d-flex flex-column align-items-start rounded p-3 mb-3 custom-height-labels" style="cursor: pointer;"
             [ngClass]="{ 'bg-active-color ': selectedStep === 1 }"
             (click)="selectStep(1)"
           >
@@ -25,12 +25,11 @@
               style="width: 100%;"
             >
               <div
-                class="step-circle rounded-circle d-flex align-items-center justify-content-center me-3"
+                class="step-circle rounded-circle d-flex align-items-center justify-content-center me-3 number-card"
                 [ngClass]="{
                   'bg-dark text-white': selectedStep === 1,
                   'bg-active-color ': selectedStep !== 1
                 }"
-                style="min-width: 2.3rem !important; height: 2.2rem"
               >
                 1
               </div>
@@ -53,7 +52,7 @@
             <div *ngIf="selectedStep === 1 && isSmallScreen" class="mt-2">
               <img
                 class="res-img"
-                src="../../../../assets/images/browse-discover.png"
+                src="../../../../assets/images/browse-discover.svg"
                 alt="Browse Image"
               />
             </div>
@@ -61,7 +60,7 @@
 
           <!-- Step 2 -->
           <div
-            class="d-flex flex-column align-items-start rounded mb-3 p-3" style="cursor: pointer;"
+            class="d-flex flex-column align-items-start rounded p-3 mb-3 custom-height-labels" style="cursor: pointer;"
             [ngClass]="{ 'bg-active-color ': selectedStep === 2 }"
             (click)="selectStep(2)"
           >
@@ -73,12 +72,11 @@
               }"
             >
               <div
-                class="step-circle rounded-circle d-flex align-items-center justify-content-center me-3"
+                class="step-circle rounded-circle d-flex align-items-center justify-content-center me-3 number-card"
                 [ngClass]="{
                   'bg-dark text-white': selectedStep === 2,
                   'bg-active-color ': selectedStep !== 2
                 }"
-                style="min-width: 2.3rem !important; height: 2.2rem"
               >
                 2
               </div>
@@ -101,7 +99,7 @@
             <div *ngIf="selectedStep === 2 && isSmallScreen" class="mt-2">
               <img
                 class="res-img"
-                src="../../../../assets/images/deal-purchase.png"
+                src="../../../../assets/images/deal-purchase.svg"
                 alt="Secure Image"
               />
             </div>
@@ -109,7 +107,7 @@
 
           <!-- Repeat for Step 3 -->
           <div
-            class="d-flex flex-column align-items-start rounded mb-3 p-3" style="cursor: pointer;"
+            class="d-flex flex-column align-items-start rounded p-3 mb-3 custom-height-labels" style="cursor: pointer;"
             [ngClass]="{ 'bg-active-color ': selectedStep === 3 }"
             (click)="selectStep(3)"
           >
@@ -121,12 +119,11 @@
               }"
             >
               <div
-                class="step-circle rounded-circle d-flex align-items-center justify-content-center me-3"
+                class="step-circle rounded-circle d-flex align-items-center justify-content-center me-3 number-card"
                 [ngClass]="{
                   'bg-dark text-white': selectedStep === 3,
                   'bg-active-color ': selectedStep !== 3
                 }"
-                style="min-width: 2.3rem !important; height: 2.2rem"
               >
                 3
               </div>
@@ -148,7 +145,7 @@
             <div *ngIf="selectedStep === 3 && isSmallScreen" class="mt-2">
               <img
                 class="res-img"
-                src="../../../../assets/images/get-delivered-safely.png"
+                src="../../../../assets/images/get-delivered-safely.svg"
                 alt="Get Delivered Image"
               />
             </div>
@@ -156,7 +153,7 @@
 
           <!-- Step 4 -->
           <div
-            class="d-flex flex-column align-items-start rounded mb-3 p-3" style="cursor: pointer;"
+            class="d-flex flex-column align-items-start rounded p-3 mb-3 custom-height-labels" style="cursor: pointer;"
             [ngClass]="{ 'bg-active-color ': selectedStep === 4 }"
             (click)="selectStep(4)"
           >
@@ -168,12 +165,11 @@
               }"
             >
               <div
-                class="step-circle rounded-circle d-flex align-items-center justify-content-center me-3"
+                class="step-circle rounded-circle d-flex align-items-center justify-content-center me-3 number-card"
                 [ngClass]="{
                   'bg-dark text-white': selectedStep === 4,
                   'bg-active-color ': selectedStep !== 4
                 }"
-                style="min-width: 2.3rem !important; height: 2.2rem"
               >
                 4
               </div>
@@ -195,7 +191,7 @@
             <div *ngIf="selectedStep === 4 && isSmallScreen" class="mt-2">
               <img
                 class="res-img"
-                src="../../../../assets/images/sell-with-ease.png"
+                src="../../../../assets/images/sell-with-ease.svg"
                 alt="Sell Image"
               />
             </div>
@@ -211,42 +207,11 @@
     *ngIf="!isSmallScreen"
     [ngClass]="{ 'reverse-res-img': translateService.currentLang !== 'en' }"
   >
-    <!-- <div class="back-styl">
-      <div class="mt-4" *ngIf="selectedStep === 1">
-        <img
-          class="res-img"
-          src="../../../../assets/images/browse-discover.png"
-          alt="Browse Image"
-        />
-      </div>
-      <div class="mt-4" *ngIf="selectedStep === 2">
-        <img
-          class="res-img"
-          src="../../../../assets/images/deal-purchase.png"
-          alt="Secure Image"
-        />
-      </div>
-      <div class="mt-4" *ngIf="selectedStep === 3">
-        <img
-          class="res-img"
-          src="../../../../assets/images/get-delivered-safely.png"
-          alt="Get Delivered Image"
-        />
-      </div>
-      <div class="mt-4" *ngIf="selectedStep === 4">
-        <img
-          class="res-img"
-          src="../../../../assets/images/sell-with-ease.png"
-          alt="Sell Image"
-        />
-      </div>
-    </div> -->
-
     <div class="product-grid">
       <div class="product-card" *ngIf="selectedStep === 1">
         <img
           class="img-style"
-          src="../../../../assets/images/browse-discover.png"
+          src="../../../../assets/images/browse-discover.svg"
           alt="Browse Image"
         />
       </div>
@@ -254,7 +219,7 @@
       <div class="product-card" *ngIf="selectedStep === 2">
         <img
           class="img-style"
-          src="../../../../assets/images/deal-purchase.png"
+          src="../../../../assets/images/deal-purchase.svg"
           alt="Browse Image"
         />
       </div>
@@ -262,7 +227,7 @@
       <div class="product-card" *ngIf="selectedStep === 3">
         <img
           class="img-style"
-          src="../../../../assets/images/get-delivered-safely.png"
+          src="../../../../assets/images/get-delivered-safely.svg"
           alt="Browse Image"
         />
       </div>
@@ -270,7 +235,7 @@
       <div class="product-card" *ngIf="selectedStep === 4">
         <img
           class="img-style"
-          src="../../../../assets/images/sell-with-ease.png"
+          src="../../../../assets/images/sell-with-ease.svg"
           alt="Browse Image"
         />
       </div>
