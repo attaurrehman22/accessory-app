@@ -361,7 +361,6 @@ export class HeroPageComponent {
     console.log("open cart");
     const dialogRef = this.dialog.open(ShoppingCartComponent, {
       width: '600px', // Adjust as needed
-      height: '100vh',
       position: {
         right: '0',
         top: '0',

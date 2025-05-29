@@ -5,8 +5,6 @@ img {
   .container {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    height: 89vh;
   }
 
   ::ng-deep .mat-mdc-dialog-surface mdc-dialog__surface {
@@ -63,3 +61,10 @@ img {
     height: 40px;
 
   }
+
+ ::ng-deep .mat-mdc-dialog-surface.mdc-dialog__surface {
+    border-top-left-radius: 12px !important;
+    overflow: hidden !important;
+    border-bottom-left-radius: 12px !important;
+}
+

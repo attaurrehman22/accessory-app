@@ -360,3 +360,9 @@
   padding: 13vh 0vh 0 33vh; */
   width: 100%;
 }
+
+ ::ng-deep .mat-mdc-dialog-surface.mdc-dialog__surface {
+      border-top-left-radius: 12px !important;
+    overflow: hidden !important;
+    border-bottom-left-radius: 12px !important;
+}
