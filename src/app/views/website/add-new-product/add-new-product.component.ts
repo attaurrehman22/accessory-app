@@ -133,7 +133,6 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
   // Watch Form Details
 
   reference_number = new FormControl("", [
-    Validators.required, // Field must not be empty
     Validators.pattern("^[a-zA-Z0-9]*$"), // Only alphanumeric characters (letters and numbers)
     Validators.maxLength(30), // Maximum length of 30 characters
   ]);
@@ -141,19 +140,16 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
   decimalPattern = "^[0-9]{1,3}(.[0-9]{1,2})?$";
 
   serial_no = new FormControl("", [
-    Validators.required, // Field must not be empty
     Validators.pattern("^[a-zA-Z0-9]*$"), // Only alphanumeric characters (letters and numbers)
     Validators.maxLength(30),
   ]);
-  gender = new FormControl("", Validators.required);
-  movement = new FormControl("", Validators.required);
+  gender = new FormControl("");
+  movement = new FormControl("");
 
   case_diameter_value_1 = new FormControl(null, [
-    Validators.required,
     Validators.pattern(this.decimalPattern),
   ]);
   case_diameter_value_2 = new FormControl(null, [
-    Validators.required,
     Validators.pattern(this.decimalPattern),
   ]);
   dial_color = new FormControl("");

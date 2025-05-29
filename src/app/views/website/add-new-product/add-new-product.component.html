@@ -55,6 +55,7 @@
             <form
               [formGroup]="listingForm"
               (ngSubmit)="onSubmit('listing')"
+              class="mat-form-fields-custom-deisgn"
               *ngIf="selectedSection === 'listingDetails' && isSmallScreen"
             >
               <mat-form-field
@@ -97,7 +98,7 @@
               <mat-form-field
                 [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'"
                 appearance="outline"
-                class="w-100 mt-2"
+                class="w-100 mt-2 category-field"
               >
                 <mat-label class="label-header">{{
                   "create_product_listing.category" | translate
@@ -129,12 +130,14 @@
                   class="selected-categories"
                 >
                   <mat-chip-list
+                  class="d-flex gap-2 flex-wrap"
                     #chipList
                     aria-label="{{
                       'create_product_listing.category_selection' | translate
                     }}"
                   >
                     <mat-chip
+                      class="mat-chip-text"
                       *ngFor="let category of selectedCategories?.controls"
                       [removable]="true"
                       (click)="
@@ -473,6 +476,7 @@
               {{ "create_product_listing.watch_details_para" | translate }}
             </p>
             <form
+              class="mat-form-fields-custom-deisgn"
               [formGroup]="watchDetailsForm"
               *ngIf="selectedSection === 'watchDetails' && isSmallScreen"
             >
@@ -480,7 +484,6 @@
                 [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'"
                 appearance="outline"
                 class="w-100 mb-3"
-                [hideRequiredMarker]="true"
               >
                 <mat-label class="label-header">
                   {{
@@ -496,7 +499,7 @@
                       | translate
                   }}"
                 />
-                <mat-error
+                <!-- <mat-error
                   [ngClass]="{
                     'text-left': translateService.currentLang === 'en',
                     'text-right': translateService.currentLang !== 'en'
@@ -507,7 +510,7 @@
                     "create_product_listing.refrence_number_required"
                       | translate
                   }}
-                </mat-error>
+                </mat-error> -->
               </mat-form-field>
 
               <div class="row">
@@ -518,7 +521,6 @@
                     "
                     appearance="outline"
                     class="w-100"
-                    [hideRequiredMarker]="true"
                   >
                     <mat-label class="label-header">
                       {{ "create_product_listing.serial_no" | translate }}
@@ -532,7 +534,7 @@
                           | translate
                       }}"
                     />
-                    <mat-error
+                    <!-- <mat-error
                       [ngClass]="{
                         'text-left': translateService.currentLang === 'en',
                         'text-right': translateService.currentLang !== 'en'
@@ -542,7 +544,7 @@
                       {{
                         "create_product_listing.serial_no_required" | translate
                       }}
-                    </mat-error>
+                    </mat-error> -->
                   </mat-form-field>
                 </div>
 
@@ -553,7 +555,6 @@
                     "
                     appearance="outline"
                     class="w-100"
-                    [hideRequiredMarker]="true"
                   >
                     <mat-label class="label-header">
                       {{ "create_product_listing.gender" | translate }}
@@ -569,7 +570,7 @@
                         {{ data.value }}
                       </mat-option>
                     </mat-select>
-                    <mat-error
+                    <!-- <mat-error
                       [ngClass]="{
                         'text-left': translateService.currentLang === 'en',
                         'text-right': translateService.currentLang !== 'en'
@@ -577,7 +578,7 @@
                       *ngIf="gender.hasError('required')"
                     >
                       {{ "create_product_listing.gender_required" | translate }}
-                    </mat-error>
+                    </mat-error> -->
                   </mat-form-field>
                 </div>
 
@@ -588,7 +589,7 @@
                     "
                     appearance="outline"
                     class="w-100"
-                    [hideRequiredMarker]="true"
+                    
                   >
                     <mat-label class="label-header">
                       {{ "create_product_listing.movement" | translate }}
@@ -605,7 +606,7 @@
                         {{ data.value }}
                       </mat-option>
                     </mat-select>
-                    <mat-error
+                    <!-- <mat-error
                       [ngClass]="{
                         'text-left': translateService.currentLang === 'en',
                         'text-right': translateService.currentLang !== 'en'
@@ -615,7 +616,7 @@
                       {{
                         "create_product_listing.movement_required" | translate
                       }}
-                    </mat-error>
+                    </mat-error> -->
                   </mat-form-field>
                 </div>
               </div>
@@ -627,8 +628,8 @@
                       translateService.currentLang === 'en' ? 'ltr' : 'rtl'
                     "
                     appearance="outline"
-                    class="w-100"
-                    [hideRequiredMarker]="true"
+                    class="w-100 rtl-padding-fix"
+                  
                   >
                     <mat-label class="label-header">
                       {{ "create_product_listing.case_diameter" | translate }}
@@ -640,18 +641,14 @@
                         'create_product_listing.case_diameter_placeholder'
                           | translate
                       }}"
-                      required
+                      
                     />
                     <span
-                      style="
-                        padding: 17px 15px 17px 15px;
-                        background-color: #dbdbdb;
-                      "
                       matSuffix
                     >
-                      mm
+                      <p class="inpu-field-left-bar">mm</p>
                     </span>
-                    <mat-error
+                    <!-- <mat-error
                       [ngClass]="{
                         'text-left': translateService.currentLang === 'en',
                         'text-right': translateService.currentLang !== 'en'
@@ -662,7 +659,7 @@
                         "create_product_listing.case_diameter_required"
                           | translate
                       }}
-                    </mat-error>
+                    </mat-error> -->
                     <mat-error
                       [ngClass]="{
                         'text-left': translateService.currentLang === 'en',
@@ -684,8 +681,7 @@
                       translateService.currentLang === 'en' ? 'ltr' : 'rtl'
                     "
                     appearance="outline"
-                    class="w-100"
-                    [hideRequiredMarker]="true"
+                    class="w-100 rtl-padding-fix"
                   >
                     <mat-label class="label-header">
                       {{ "create_product_listing.other_diameter" | translate }}
@@ -699,15 +695,11 @@
                       }}"
                     />
                     <span
-                      style="
-                        padding: 17px 15px 17px 15px;
-                        background-color: #dbdbdb;
-                      "
                       matSuffix
                     >
-                      mm
+                      <p class="inpu-field-left-bar">mm</p>
                     </span>
-                    <mat-error
+                    <!-- <mat-error
                       [ngClass]="{
                         'text-left': translateService.currentLang === 'en',
                         'text-right': translateService.currentLang !== 'en'
@@ -718,7 +710,7 @@
                         "create_product_listing.other_diameter_required"
                           | translate
                       }}
-                    </mat-error>
+                    </mat-error> -->
                     <mat-error
                       [ngClass]="{
                         'text-left': translateService.currentLang === 'en',
@@ -740,7 +732,7 @@
                   <strong>{{
                     "create_product_listing.additional_information" | translate
                   }}</strong>
-                  ({{ "create_product_listing.optional" | translate }})
+                  <!-- ({{ "create_product_listing.optional" | translate }}) -->
                 </p>
                 <p class="font-weight-400 font-size-16 color-909090">
                   {{
@@ -932,12 +924,10 @@
                               }}"
                             />
                             <span
-                              style="
-                                padding: 17px 15px 17px 15px;
-                                background-color: #dbdbdb;
-                              "
+                              
                               matSuffix
-                              >hz</span
+                              >
+                              <p class="inpu-field-left-bar">hz</p></span
                             >
                             <mat-error
                               [ngClass]="{
@@ -1074,7 +1064,7 @@
                                 : 'rtl'
                             "
                             appearance="outline"
-                            class="w-100"
+                            class="w-100 rtl-padding-fix"
                           >
                             <mat-label class="label-header">{{
                               "create_product_listing.thickness" | translate
@@ -1088,12 +1078,8 @@
                               }}"
                             />
                             <span
-                              style="
-                                padding: 17px 15px 17px 15px;
-                                background-color: #dbdbdb;
-                              "
                               matSuffix
-                              >mm</span
+                              ><p class="inpu-field-left-bar">mm</p></span
                             >
                             <mat-error
                               [ngClass]="{
@@ -1179,7 +1165,7 @@
                                 : 'rtl'
                             "
                             appearance="outline"
-                            class="w-100"
+                            class="w-100 rtl-padding-fix"
                           >
                             <mat-label class="label-header">{{
                               "create_product_listing.dial_numerals" | translate
@@ -1193,12 +1179,9 @@
                               }}"
                             />
                             <span
-                              style="
-                                padding: 17px 15px 17px 15px;
-                                background-color: #dbdbdb;
-                              "
+                              
                               matSuffix
-                              >mm</span
+                              ><p class="inpu-field-left-bar">mm</p></span
                             >
                             <mat-error
                               [ngClass]="{
@@ -1303,7 +1286,7 @@
                                 : 'rtl'
                             "
                             appearance="outline"
-                            class="w-100"
+                            class="w-100 rtl-padding-fix"
                           >
                             <mat-label class="label-header">{{
                               "create_product_listing.type_of_clasp" | translate
@@ -1317,12 +1300,9 @@
                               }}"
                             />
                             <span
-                              style="
-                                padding: 17px 15px 17px 15px;
-                                background-color: #dbdbdb;
-                              "
+                              
                               matSuffix
-                              >mm</span
+                              ><p class="inpu-field-left-bar">mm</p></span
                             >
                             <mat-error
                               [ngClass]="{
@@ -3483,11 +3463,10 @@
                 {{ "create_product_listing.brand_required" | translate }}
               </mat-error>
             </mat-form-field>
-
             <mat-form-field
               [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'"
               appearance="outline"
-              class="w-100 mt-2"
+              class="w-100 mt-2 category-field"
             >
               <mat-label class="label-header">{{
                 "create_product_listing.category" | translate
@@ -3519,12 +3498,14 @@
                 class="selected-categories"
               >
                 <mat-chip-list
+                  class="d-flex gap-2 flex-wrap"
                   #chipList
                   aria-label="{{
                     'create_product_listing.category_selection' | translate
                   }}"
                 >
                   <mat-chip
+                    class="mat-chip-text"
                     *ngFor="let category of selectedCategories?.controls"
                     [removable]="true"
                     (click)="
@@ -3846,12 +3827,11 @@
               {{ "create_product_listing.watch_details_para_one" | translate }}
             </p>
             <div class="card-body">
-              <form [formGroup]="watchDetailsForm">
+              <form [formGroup]="watchDetailsForm" class="mat-form-fields-custom-deisgn">
                 <mat-form-field
                   [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'"
                   appearance="outline"
                   class="w-100 mb-3"
-                  [hideRequiredMarker]="true"
                 >
                   <mat-label class="label-header">
                     {{
@@ -3867,7 +3847,7 @@
                         | translate
                     }}"
                   />
-                  <mat-error
+                  <!-- <mat-error
                     [ngClass]="{
                       'text-left': translateService.currentLang === 'en',
                       'text-right': translateService.currentLang !== 'en'
@@ -3878,7 +3858,7 @@
                       "create_product_listing.refrence_number_required"
                         | translate
                     }}
-                  </mat-error>
+                  </mat-error> -->
                 </mat-form-field>
 
                 <div class="row">
@@ -3889,7 +3869,6 @@
                       "
                       appearance="outline"
                       class="w-100"
-                      [hideRequiredMarker]="true"
                     >
                       <mat-label class="label-header">
                         {{ "create_product_listing.serial_no" | translate }}
@@ -3903,7 +3882,7 @@
                             | translate
                         }}"
                       />
-                      <mat-error
+                      <!-- <mat-error
                         [ngClass]="{
                           'text-left': translateService.currentLang === 'en',
                           'text-right': translateService.currentLang !== 'en'
@@ -3914,7 +3893,7 @@
                           "create_product_listing.serial_no_required"
                             | translate
                         }}
-                      </mat-error>
+                      </mat-error> -->
                     </mat-form-field>
                   </div>
 
@@ -3925,7 +3904,6 @@
                       "
                       appearance="outline"
                       class="w-100"
-                      [hideRequiredMarker]="true"
                     >
                       <mat-label class="label-header">
                         {{ "create_product_listing.gender" | translate }}
@@ -3942,7 +3920,7 @@
                           {{ data.value }}
                         </mat-option>
                       </mat-select>
-                      <mat-error
+                      <!-- <mat-error
                         [ngClass]="{
                           'text-left': translateService.currentLang === 'en',
                           'text-right': translateService.currentLang !== 'en'
@@ -3952,7 +3930,7 @@
                         {{
                           "create_product_listing.gender_required" | translate
                         }}
-                      </mat-error>
+                      </mat-error> -->
                     </mat-form-field>
                   </div>
 
@@ -3963,7 +3941,6 @@
                       "
                       appearance="outline"
                       class="w-100"
-                      [hideRequiredMarker]="true"
                     >
                       <mat-label class="label-header">
                         {{ "create_product_listing.movement" | translate }}
@@ -3980,7 +3957,7 @@
                           {{ data.value }}
                         </mat-option>
                       </mat-select>
-                      <mat-error
+                      <!-- <mat-error
                         [ngClass]="{
                           'text-left': translateService.currentLang === 'en',
                           'text-right': translateService.currentLang !== 'en'
@@ -3990,7 +3967,7 @@
                         {{
                           "create_product_listing.movement_required" | translate
                         }}
-                      </mat-error>
+                      </mat-error> -->
                     </mat-form-field>
                   </div>
                 </div>
@@ -4015,18 +3992,15 @@
                           'create_product_listing.case_diameter_placeholder'
                             | translate
                         }}"
-                        required
                       />
                       <span
-                        style="
-                          padding: 17px 15px 17px 15px;
-                          background-color: #dbdbdb;
-                        "
                         matSuffix
                       >
+                      <p class="inpu-field-left-bar">
                         mm
+                      </p>
                       </span>
-                      <mat-error
+                      <!-- <mat-error
                         [ngClass]="{
                           'text-left': translateService.currentLang === 'en',
                           'text-right': translateService.currentLang !== 'en'
@@ -4037,7 +4011,7 @@
                           "create_product_listing.case_diameter_required"
                             | translate
                         }}
-                      </mat-error>
+                      </mat-error> -->
                       <mat-error
                         [ngClass]="{
                           'text-left': translateService.currentLang === 'en',
@@ -4060,7 +4034,6 @@
                       "
                       appearance="outline"
                       class="w-100"
-                      [hideRequiredMarker]="true"
                     >
                       <mat-label class="label-header">
                         {{
@@ -4074,18 +4047,16 @@
                           'create_product_listing.other_diameter_placeholder'
                             | translate
                         }}"
-                        required
+                        
                       />
                       <span
-                        style="
-                          padding: 17px 15px 17px 15px;
-                          background-color: #dbdbdb;
-                        "
                         matSuffix
                       >
+                      <p class="inpu-field-left-bar">
                         mm
+                      </p>
                       </span>
-                      <mat-error
+                      <!-- <mat-error
                         [ngClass]="{
                           'text-left': translateService.currentLang === 'en',
                           'text-right': translateService.currentLang !== 'en'
@@ -4096,7 +4067,7 @@
                           "create_product_listing.other_diameter_required"
                             | translate
                         }}
-                      </mat-error>
+                      </mat-error> -->
                       <mat-error
                         [ngClass]="{
                           'text-left': translateService.currentLang === 'en',
@@ -4125,7 +4096,7 @@
                       "create_product_listing.additional_information"
                         | translate
                     }}</strong>
-                    ({{ "create_product_listing.optional" | translate }})
+                    <!-- ({{ "create_product_listing.optional" | translate }}) -->
                   </p>
                   <p class="font-weight-400 font-size-16 color-909090">
                     {{
@@ -4322,12 +4293,10 @@
                                 }}"
                               />
                               <span
-                                style="
-                                  padding: 17px 15px 17px 15px;
-                                  background-color: #dbdbdb;
-                                "
                                 matSuffix
-                                >hz</span
+                                >
+                                <p class="inpu-field-left-bar">hz</p>
+                                </span
                               >
                               <mat-error
                                 [ngClass]="{
@@ -4466,7 +4435,7 @@
                                   : 'rtl'
                               "
                               appearance="outline"
-                              class="w-100"
+                              class="w-100 rtl-padding-fix"
                             >
                               <mat-label class="label-header">{{
                                 "create_product_listing.thickness" | translate
@@ -4480,12 +4449,10 @@
                                 }}"
                               />
                               <span
-                                style="
-                                  padding: 17px 15px 17px 15px;
-                                  background-color: #dbdbdb;
-                                "
                                 matSuffix
-                                >mm</span
+                                >
+                                <p class="inpu-field-left-bar">mm</p>
+                                </span
                               >
                               <mat-error
                                 [ngClass]="{
@@ -4571,7 +4538,7 @@
                                   : 'rtl'
                               "
                               appearance="outline"
-                              class="w-100"
+                              class="w-100 rtl-padding-fix"
                             >
                               <mat-label class="label-header">{{
                                 "create_product_listing.dial_numerals"
@@ -4586,12 +4553,10 @@
                                 }}"
                               />
                               <span
-                                style="
-                                  padding: 17px 15px 17px 15px;
-                                  background-color: #dbdbdb;
-                                "
                                 matSuffix
-                                >mm</span
+                                >
+                                <p class="inpu-field-left-bar">mm</p>
+                                </span
                               >
                               <mat-error
                                 [ngClass]="{
@@ -4696,7 +4661,7 @@
                                   : 'rtl'
                               "
                               appearance="outline"
-                              class="w-100"
+                              class="w-100 rtl-padding-fix"
                             >
                               <mat-label class="label-header">{{
                                 "create_product_listing.type_of_clasp"
@@ -4711,12 +4676,10 @@
                                 }}"
                               />
                               <span
-                                style="
-                                  padding: 17px 15px 17px 15px;
-                                  background-color: #dbdbdb;
-                                "
                                 matSuffix
-                                >mm</span
+                                >
+                                <p class="inpu-field-left-bar">mm</p>
+                                </span
                               >
                               <mat-error
                                 [ngClass]="{
