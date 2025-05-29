@@ -1148,11 +1148,10 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
       // Condition
       if (this.productDetails?.condition) {
         let selectedCondition;
-        if (this.userType == "dealer") {
+        if (this.userType == "dealer" || this.userType == "admin") {
           selectedCondition = this.dealerconditions.find(
             (condition) => condition.title == this.productDetails.condition
           );
-
           this.dealerconditions = [selectedCondition];
         } else {
           selectedCondition = this.conditions.find(

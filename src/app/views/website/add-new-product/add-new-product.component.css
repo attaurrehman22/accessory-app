@@ -817,6 +817,25 @@ background: none;
     text-align: end;
   }
 
+  .listing-details-checkboxes {
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    gap: 5px;
+  }
+
+   .reverse-order-listing-details-checkboxes {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: right;
+    gap: 5px;
+    align-items: center;
+  }
+
+  .reverse-order-upload-media {
+    flex-direction: row-reverse;
+  }
+
   .reverse-order-listing-details-btn-div {
     display: flex;
     justify-content: start !important;
@@ -882,6 +901,14 @@ background: none;
   display: flex;
   justify-content: end;
   flex-direction: row-reverse;
+}
+
+.reverse-order-condition-gradding-label-des > h5 {
+  text-align: end;
+}
+
+.reverse-order-condition-gradding-label-des > p {
+  text-align: end;
 }
 
 .reverse-order-condition-gradding {

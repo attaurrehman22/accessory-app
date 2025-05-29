@@ -1,16 +1,23 @@
 <div class="" style="margin-top: 45px">
   <div
-    class="col-md-12 d-flex" style="border-top: 1px solid #f3f3f3"
+    class="col-md-12 d-flex"
+    style="border-top: 1px solid #f3f3f3"
     [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }"
   >
     <div
       class="col-md-3 col-12"
-      style="border-right: 1px solid #f3f3f3;border-top: 1px solid #f3f3f3;padding: 25px 60px 0 60px;"
+      style="
+        border-right: 1px solid #f3f3f3;
+        border-top: 1px solid #f3f3f3;
+        padding: 40px 60px 0 60px;
+      "
       [ngClass]="{
         'reverse-order-of-desc-cont': translateService.currentLang !== 'en'
       }"
     >
-      <h5>{{ "create_product_listing.label" | translate }}</h5>
+      <p class="font-size-24 font-wight-700 margin-0">
+        {{ "create_product_listing.label" | translate }}
+      </p>
       <div class="sidebar-list">
         <!-- <-- Listing Details -- > -->
         <div
@@ -130,7 +137,7 @@
                   class="selected-categories"
                 >
                   <mat-chip-list
-                  class="d-flex gap-2 flex-wrap"
+                    class="d-flex gap-2 flex-wrap"
                     #chipList
                     aria-label="{{
                       'create_product_listing.category_selection' | translate
@@ -526,7 +533,6 @@
                     </mat-label>
                     <input
                       matInput
-                      
                       formControlName="serial_no"
                       placeholder="{{
                         'create_product_listing.serial_no_placeHolder'
@@ -588,7 +594,6 @@
                     "
                     appearance="outline"
                     class="w-100"
-                    
                   >
                     <mat-label class="label-header">
                       {{ "create_product_listing.movement" | translate }}
@@ -628,7 +633,6 @@
                     "
                     appearance="outline"
                     class="w-100 rtl-padding-fix"
-                  
                   >
                     <mat-label class="label-header">
                       {{ "create_product_listing.case_diameter" | translate }}
@@ -640,11 +644,8 @@
                         'create_product_listing.case_diameter_placeholder'
                           | translate
                       }}"
-                      
                     />
-                    <span
-                      matSuffix
-                    >
+                    <span matSuffix>
                       <p class="inpu-field-left-bar">mm</p>
                     </span>
                     <!-- <mat-error
@@ -693,9 +694,7 @@
                           | translate
                       }}"
                     />
-                    <span
-                      matSuffix
-                    >
+                    <span matSuffix>
                       <p class="inpu-field-left-bar">mm</p>
                     </span>
                     <!-- <mat-error
@@ -922,10 +921,7 @@
                                   | translate
                               }}"
                             />
-                            <span
-                              
-                              matSuffix
-                              >
+                            <span matSuffix>
                               <p class="inpu-field-left-bar">hz</p></span
                             >
                             <mat-error
@@ -1076,8 +1072,7 @@
                                   | translate
                               }}"
                             />
-                            <span
-                              matSuffix
+                            <span matSuffix
                               ><p class="inpu-field-left-bar">mm</p></span
                             >
                             <mat-error
@@ -1177,9 +1172,7 @@
                                   | translate
                               }}"
                             />
-                            <span
-                              
-                              matSuffix
+                            <span matSuffix
                               ><p class="inpu-field-left-bar">mm</p></span
                             >
                             <mat-error
@@ -1298,9 +1291,7 @@
                                   | translate
                               }}"
                             />
-                            <span
-                              
-                              matSuffix
+                            <span matSuffix
                               ><p class="inpu-field-left-bar">mm</p></span
                             >
                             <mat-error
@@ -1424,49 +1415,57 @@
                   translateService.currentLang !== 'en'
               }"
             >
-               <!-- All images preview -->
-            <div class="content-two mt-3">
-              <p>{{ "create_product_listing.Images" | translate }}</p>
-              <div
-                cdkDropList
-                [cdkDropListData]="allImages"
-                class="d-flex flex-wrap align-items-center gap-5"
-                (cdkDropListDropped)="onImageDrop($event)"
-              >
-                <!-- Upload Box -->
-                <div class="upload-box" (click)="selectImages()">
-                  <span>+</span>
-                </div>
+              <!-- All images preview -->
+              <div class="content-two mt-3">
+                <p>{{ "create_product_listing.Images" | translate }}</p>
+                <div
+                  cdkDropList
+                  [cdkDropListData]="allImages"
+                  class="d-flex flex-wrap align-items-center gap-5"
+                  (cdkDropListDropped)="onImageDrop($event)"
+                >
+                  <!-- Upload Box -->
+                  <div class="upload-box" (click)="selectImages()">
+                    <span>+</span>
+                  </div>
 
-                <input
-                  type="file"
-                  #imagesInput
-                  (change)="onImagesSelected($event)"
-                  accept="image/*"
-                  multiple
-                  hidden
-                />
+                  <input
+                    type="file"
+                    #imagesInput
+                    (change)="onImagesSelected($event)"
+                    accept="image/*"
+                    multiple
+                    hidden
+                  />
 
-                <!-- Image Previews -->
-                <div class="d-flex flex-wrap" *ngIf="allImages?.length > 0">
+                  <!-- Image Previews -->
                   <div
-                    class="image-preview"
-                    *ngFor="let image of allImages"
-                    cdkDrag
+                    class="d-flex flex-wrap"
+                    [ngClass]="{
+                      'reverse-order-upload-media':
+                        translateService.currentLang !== 'en'
+                    }"
+                    *ngIf="allImages?.length > 0"
                   >
-                    <img [src]="image.url" alt="Preview" />
+                    <div
+                      class="image-preview"
+                      *ngFor="let image of allImages"
+                      cdkDrag
+                    >
+                      <img [src]="image.url" alt="Preview" />
 
-                    <!-- Show "Cover Image" overlay if image is the cover -->
-                    <div *ngIf="image.isCover" class="cover-label">Cover Image</div>
+                      <!-- Show "Cover Image" overlay if image is the cover -->
+                      <div *ngIf="image.isCover" class="cover-label">
+                        Cover Image
+                      </div>
 
-                    <button class="delete-btn" (click)="removeImage(image)">
-                      <mat-icon>delete</mat-icon>
-                    </button>
+                      <button class="delete-btn" (click)="removeImage(image)">
+                        <mat-icon>delete</mat-icon>
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-
 
               <!-- Optional Cover Image Preview Box -->
               <!-- <div
@@ -1678,7 +1677,7 @@
                 }"
                 class="container-fluid my-4"
               >
-                <mat-form-field
+                <!-- <mat-form-field
                   [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'"
                   appearance="outline"
                   *ngIf="isAdminLogin"
@@ -1696,12 +1695,11 @@
                       "create_product_listing.dealer_type" | translate
                     }}</mat-option>
                   </mat-select>
-                </mat-form-field>
+                </mat-form-field> -->
 
                 <div
                   *ngIf="
-                    userType === 'user' ||
-                    selectedUserTypeofConditionGradingForAdmin === 'user'
+                    userType === 'user'
                   "
                   class="row"
                 >
@@ -1754,8 +1752,7 @@
 
                 <div
                   *ngIf="
-                    userType === 'dealer' ||
-                    selectedUserTypeofConditionGradingForAdmin === 'dealer'
+                    userType === 'dealer' || userType === 'admin'
                   "
                   class="row"
                 >
@@ -2336,7 +2333,7 @@
               class="image-upload-container mat-form-fields-custom-deisgn"
               *ngIf="selectedSection === 'priceshipment' && isSmallScreen"
             >
-              <mat-form-field
+              <!-- <mat-form-field
                 [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'"
                 appearance="outline"
                 *ngIf="isAdminLogin"
@@ -2354,7 +2351,7 @@
                     "create_product_listing.dealer_type" | translate
                   }}</mat-option>
                 </mat-select>
-              </mat-form-field>
+              </mat-form-field> -->
               <!-- this is for Seller -->
               <div
                 *ngIf="
@@ -2463,8 +2460,7 @@
 
               <div
                 *ngIf="
-                  userType === 'dealer' ||
-                  selectedUserTypeofConditionGradingForAdmin === 'dealer'
+                  userType === 'dealer' || userType === 'admin'
                 "
                 [ngClass]="{
                   'reverse-orderdealer-or-dealer-div':
@@ -2472,7 +2468,9 @@
                 }"
                 class="container-fluid mt-5 d-flex flex-wrap"
               >
-                <div class="col-md-6 shipping-changing-cont mat-form-fields-custom-deisgn">
+                <div
+                  class="col-md-6 shipping-changing-cont mat-form-fields-custom-deisgn"
+                >
                   <mat-form-field
                     style="width: 100%"
                     class="full-width"
@@ -2789,7 +2787,10 @@
               class="image-upload-container"
               *ngIf="selectedSection === 'billinginformation' && isSmallScreen"
             >
-              <form [formGroup]="billingForm" class="mat-form-fields-custom-deisgn">
+              <form
+                [formGroup]="billingForm"
+                class="mat-form-fields-custom-deisgn"
+              >
                 <mat-form-field
                   style="width: 100%; margin-top: 8px"
                   class="full-width"
@@ -3243,7 +3244,7 @@
                         </span>
                       </div>
 
-                      <div class="info-row d-flex justify-content-between">
+                      <!-- <div class="info-row d-flex justify-content-between">
                         <span
                           class="font-size-16 font-wight-400 color-909090"
                           >{{
@@ -3261,8 +3262,9 @@
 
                           {{ shipping_charges }}
                         </span>
-                      </div>
+                      </div> -->
                       <mat-divider
+                          class="mt-3"
                         *ngIf="estimatedPayoutwithShipping"
                       ></mat-divider>
                       <div
@@ -3410,9 +3412,16 @@
     </div>
 
     <div class="col-md-9" *ngIf="!isSmallScreen">
-      <div class="card" style="border: 1px solid #F3F3F3;
-    box-shadow: none !important;
-    border-radius: 24px;padding: 15px 30px 0 30px;">
+      <div
+        class="card"
+        style="
+          border: 1px solid #f3f3f3;
+          box-shadow: none !important;
+          border-radius: 24px;
+          padding: 0 30px 0 30px;
+          margin-top: 15px;
+        "
+      >
         <!-- <-- Listing Details -- > -->
         <div
           class="card-body"
@@ -3428,7 +3437,11 @@
           <p class="font-weight-400 font-size-16 color-909090">
             {{ "create_product_listing.listing_details_para_one" | translate }}
           </p>
-          <form [formGroup]="listingForm" (ngSubmit)="onSubmit('listing')" class="mat-form-fields-custom-deisgn">
+          <form
+            [formGroup]="listingForm"
+            (ngSubmit)="onSubmit('listing')"
+            class="mat-form-fields-custom-deisgn"
+          >
             <mat-form-field
               [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'"
               appearance="outline"
@@ -3610,7 +3623,6 @@
               [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'"
               appearance="outline"
               class="w-100 mt-2"
-         
             >
               <mat-label class="label-header">{{
                 "create_product_listing.title" | translate
@@ -3712,7 +3724,6 @@
               [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'"
               appearance="outline"
               class="w-100 mt-2"
-              
             >
               <mat-label class="label-header">
                 {{
@@ -3755,30 +3766,37 @@
                 }}
               </mat-error>
             </mat-form-field>
-
-            <mat-checkbox
-              [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'"
-              formControlName="approximation"
+            <div
+              [ngClass]="{
+                'reverse-order-listing-details-checkboxes':
+                  translateService.currentLang !== 'en'
+              }"
+              class="listing-details-checkboxes gap-2 mb-3 mt-3"
             >
-              <label
-                class="mdc-label"
-                style="margin-top: 13px; margin-bottom: 5px"
+              <mat-checkbox
+                [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'"
+                formControlName="approximation"
               >
-                {{ "create_product_listing.Approximation" | translate }}
-              </label>
-            </mat-checkbox>
+                <label
+                  class="mdc-label"
+                  style="margin-top: 13px; margin-bottom: 5px"
+                >
+                  {{ "create_product_listing.Approximation" | translate }}
+                </label>
+              </mat-checkbox>
 
-            <mat-checkbox
-              [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'"
-              formControlName="unknown"
-            >
-              <label
-                class="mdc-label"
-                style="margin-top: 13px; margin-bottom: 5px"
+              <mat-checkbox
+                [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'"
+                formControlName="unknown"
               >
-                {{ "create_product_listing.Unknown" | translate }}
-              </label>
-            </mat-checkbox>
+                <label
+                  class="mdc-label"
+                  style="margin-top: 13px; margin-bottom: 5px"
+                >
+                  {{ "create_product_listing.Unknown" | translate }}
+                </label>
+              </mat-checkbox>
+            </div>
 
             <div
               [ngClass]="{
@@ -3829,7 +3847,10 @@
               {{ "create_product_listing.watch_details_para_one" | translate }}
             </p>
             <div class="card-body">
-              <form [formGroup]="watchDetailsForm" class="mat-form-fields-custom-deisgn">
+              <form
+                [formGroup]="watchDetailsForm"
+                class="mat-form-fields-custom-deisgn"
+              >
                 <mat-form-field
                   [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'"
                   appearance="outline"
@@ -3857,10 +3878,9 @@
                     *ngIf="reference_number.hasError('pattern')"
                   >
                     {{
-                      "create_product_listing.ref_number_invalid"
-                        | translate
+                      "create_product_listing.ref_number_invalid" | translate
                     }}
-                </mat-error>
+                  </mat-error>
 
                   <!-- <mat-error
                     [ngClass]="{
@@ -3890,7 +3910,6 @@
                       </mat-label>
                       <input
                         matInput
-                        
                         formControlName="serial_no"
                         placeholder="{{
                           'create_product_listing.serial_no_placeHolder'
@@ -4008,12 +4027,8 @@
                             | translate
                         }}"
                       />
-                      <span
-                        matSuffix
-                      >
-                      <p class="inpu-field-left-bar">
-                        mm
-                      </p>
+                      <span matSuffix>
+                        <p class="inpu-field-left-bar">mm</p>
                       </span>
                       <!-- <mat-error
                         [ngClass]="{
@@ -4062,14 +4077,9 @@
                           'create_product_listing.other_diameter_placeholder'
                             | translate
                         }}"
-                        
                       />
-                      <span
-                        matSuffix
-                      >
-                      <p class="inpu-field-left-bar">
-                        mm
-                      </p>
+                      <span matSuffix>
+                        <p class="inpu-field-left-bar">mm</p>
                       </span>
                       <!-- <mat-error
                         [ngClass]="{
@@ -4307,12 +4317,9 @@
                                     | translate
                                 }}"
                               />
-                              <span
-                                matSuffix
-                                >
+                              <span matSuffix>
                                 <p class="inpu-field-left-bar">hz</p>
-                                </span
-                              >
+                              </span>
                               <mat-error
                                 [ngClass]="{
                                   'text-left':
@@ -4463,12 +4470,9 @@
                                     | translate
                                 }}"
                               />
-                              <span
-                                matSuffix
-                                >
+                              <span matSuffix>
                                 <p class="inpu-field-left-bar">mm</p>
-                                </span
-                              >
+                              </span>
                               <mat-error
                                 [ngClass]="{
                                   'text-left':
@@ -4567,12 +4571,9 @@
                                     | translate
                                 }}"
                               />
-                              <span
-                                matSuffix
-                                >
+                              <span matSuffix>
                                 <p class="inpu-field-left-bar">mm</p>
-                                </span
-                              >
+                              </span>
                               <mat-error
                                 [ngClass]="{
                                   'text-left':
@@ -4690,12 +4691,9 @@
                                     | translate
                                 }}"
                               />
-                              <span
-                                matSuffix
-                                >
+                              <span matSuffix>
                                 <p class="inpu-field-left-bar">mm</p>
-                                </span
-                              >
+                              </span>
                               <mat-error
                                 [ngClass]="{
                                   'text-left':
@@ -4798,7 +4796,7 @@
             }"
             class="image-upload-container"
           >
-           <!-- All images preview -->
+            <!-- All images preview -->
             <div class="content-two mt-3">
               <p>{{ "create_product_listing.Images" | translate }}</p>
               <div
@@ -4822,8 +4820,15 @@
                 />
 
                 <!-- Image Previews -->
-                 <div class="d-flex flex-wrap" *ngIf="allImages?.length > 0">
-                  <div 
+                <div
+                  class="d-flex flex-wrap"
+                  [ngClass]="{
+                    'reverse-order-upload-media':
+                      translateService.currentLang !== 'en'
+                  }"
+                  *ngIf="allImages?.length > 0"
+                >
+                  <div
                     class="image-preview"
                     *ngFor="let image of allImages"
                     cdkDrag
@@ -4831,7 +4836,9 @@
                     <img [src]="image.url" alt="Preview" />
 
                     <!-- Show "Cover Image" overlay if image is the cover -->
-                    <div *ngIf="image.isCover" class="cover-label">Cover Image</div>
+                    <div *ngIf="image.isCover" class="cover-label">
+                      Cover Image
+                    </div>
 
                     <button class="delete-btn" (click)="removeImage(image)">
                       <mat-icon>delete</mat-icon>
@@ -4895,7 +4902,12 @@
 
         <!-- <-- Condition Grading -- > -->
 
-        <div class="card-body" *ngIf="selectedSection === 'conditionGrading'">
+        <div class="card-body" *ngIf="selectedSection === 'conditionGrading'"
+         [ngClass]="{
+              'reverse-order-condition-gradding-label-des':
+                translateService.currentLang !== 'en'
+            }"
+        >
           <h5 class="font-weight-bold font-size-24 color-242424 margin-0">
             {{ "create_product_listing.condition_gradding_name" | translate }}
           </h5>
@@ -4910,9 +4922,9 @@
                 translateService.currentLang !== 'en'
             }"
             class="container-fluid my-4"
-            style="padding-left: 0 !important; padding-right: 0 !important"
+            style="padding-left: 0 !important; padding-right: 0 !important; max-width: 100% !important;"
           >
-            <mat-form-field
+            <!-- <mat-form-field
               [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'"
               appearance="outline"
               *ngIf="isAdminLogin"
@@ -4930,11 +4942,10 @@
                   "create_product_listing.dealer_type" | translate
                 }}</mat-option>
               </mat-select>
-            </mat-form-field>
+            </mat-form-field> -->
             <div
               *ngIf="
-                userType === 'user' ||
-                selectedUserTypeofConditionGradingForAdmin === 'user'
+                userType === 'user'
               "
               class="row"
             >
@@ -4987,8 +4998,7 @@
 
             <div
               *ngIf="
-                userType === 'dealer' ||
-                selectedUserTypeofConditionGradingForAdmin === 'dealer'
+                userType === 'dealer' || userType === 'admin'
               "
               class="row"
             >
@@ -5089,7 +5099,7 @@
               "create_product_listing.scope_of_delivery_para_two" | translate
             }}
           </p>
-          <div class="container-fluid my-4">
+          <div class="container-fluid my-4" style="max-width: 100% !important;">
             <div
               class="col-8 d-flex flex-wrap"
               style="padding-left: 0; padding-right: 0"
@@ -5433,7 +5443,7 @@
 
         <!-- <--Price & Shipment -- > -->
 
-        <div class="card-body" *ngIf="selectedSection === 'priceshipment'" >
+        <div class="card-body" *ngIf="selectedSection === 'priceshipment'">
           <h5
             [ngClass]="{
               'reverse-order-upload-images-labels':
@@ -5455,14 +5465,14 @@
             }}
           </p>
 
-          <div
+          <!-- <div
             [ngClass]="{
               'reverse-orderdealer-or-seller-div':
                 translateService.currentLang !== 'en'
             }"
             class="dealer-or-seller-div mat-form-fields-custom-deisgn"
-          >
-            <mat-form-field
+          > -->
+            <!-- <mat-form-field
               [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'"
               appearance="outline"
               *ngIf="isAdminLogin"
@@ -5480,14 +5490,13 @@
                   "create_product_listing.dealer_type" | translate
                 }}</mat-option>
               </mat-select>
-            </mat-form-field>
-          </div>
+            </mat-form-field> -->
+          <!-- </div> -->
 
           <!-- this is seller -->
           <div
             *ngIf="
-              userType === 'user' ||
-              selectedUserTypeofConditionGradingForAdmin === 'user'
+              userType === 'user'
             "
             class="col-md-12 d-flex flex-wrap"
             style="padding-left: 0"
@@ -5497,7 +5506,10 @@
             }"
           >
             <div class="col-md-8">
-              <div class="container-fluid mt-5 mat-form-fields-custom-deisgn" style="padding-left: 0">
+              <div
+                class="container-fluid mt-5 mat-form-fields-custom-deisgn"
+                style="padding-left: 0"
+              >
                 <mat-form-field
                   style="width: 100%"
                   class="full-width"
@@ -5606,8 +5618,7 @@
 
           <div
             *ngIf="
-              userType === 'dealer' ||
-              selectedUserTypeofConditionGradingForAdmin === 'dealer'
+              userType === 'dealer' || userType == 'admin'
             "
             class="col-md-12"
             style="padding-left: 0"
@@ -6306,7 +6317,7 @@
                     </span>
                   </div>
 
-                  <div class="info-row d-flex justify-content-between">
+                  <!-- <div class="info-row d-flex justify-content-between">
                     <span class="font-size-16 font-wight-400 color-909090">{{
                       "create_product_listing.shipping_charges" | translate
                     }}</span>
@@ -6319,8 +6330,9 @@
                       />
                       {{ shipping_charges }}
                     </span>
-                  </div>
+                  </div> -->
                   <mat-divider
+                    class="mt-3"
                     *ngIf="estimatedPayoutwithShipping"
                   ></mat-divider>
                   <div
