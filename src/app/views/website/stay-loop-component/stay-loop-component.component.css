@@ -114,11 +114,16 @@
   display: flex;
   height: 35px;
   min-width: 35px;
-  background: brown;
+  background-color: #242424; /* dark background */
+  color: white; /* text/icon color for contrast */
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.3), -4px -4px 8px rgba(0, 0, 0, 0.2); 
+  box-shadow: 
+    4px 4px 8px rgba(0, 0, 0, 0.3), 
+    -4px -4px 8px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.2); /* subtle white border */
+  z-index: 1;
 }
 
 .badge {

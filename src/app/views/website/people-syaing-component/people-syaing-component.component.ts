@@ -16,7 +16,7 @@ import { environment } from "src/environments/environment";
   styleUrls: ["./people-syaing-component.component.css"],
 })
 export class PeopleSyaingComponentComponent implements AfterViewInit, OnInit {
-   apiUrl = environment.apipath+ '/'
+  apiUrl = environment.apipath+ '/'
   @ViewChild("testimonialCarousel", { static: false }) carousel!: ElementRef;
   carouselInstance: any;
   supportLanguages = ["en", "ar", "fr", "ta", "hi"];
@@ -27,57 +27,33 @@ export class PeopleSyaingComponentComponent implements AfterViewInit, OnInit {
   ngOnInit(): void {
     this.testimonials=[];
     this.getAllStaticstestimonials();
-    if(this.testimonials.length == 0 || !this.testimonials){
-      this.testimonials = [
-            {
-              name: 'Suzan B.',
-              review_text: `“Items That I ordered were the best investment I ever made. I can't say enough about your quality service."`,
-              company_name: 'UI Designer',
-              profile_picture: 'assets/images/test-image-3.svg',
-              static:true
-            },
-            {
-              name: 'Megen W.',
-              review_text: `“Just what I was looking for. Thank you for making it painless, pleasant and most of all hassle free! All products are great.”`, // Arabic review
-              company_name: 'UI Designer',
-              profile_picture: 'assets/images/test-image-2.svg',
-              static:true
-            },
-            {
-              name: 'Osama AlRaee',
-              review_text: `"You won't regret it. I would like to personally thank you for your outstanding product. Absolutely wonderful!"`,
-              company_name: 'Entrepreneur',
-              profile_picture: 'assets/images/test-image-1.svg',
-              static:true
-            }
-          ];
-    }
-
   }
 
-  async getAllStaticstestimonials() {
-    try {
-      const res = await firstValueFrom(this.http.getAllStaticstestimonial());
-      this.testimonials = res.data.map((testimonial: any) => {
-        if (testimonial?.profile_picture) {
-          testimonial.profile_picture = testimonial.profile_picture.replace(/\\/g, '');
-        }
-        return testimonial;
-      });
-
-      setTimeout(() => {
-        if (this.carousel?.nativeElement) {
-          const carouselElement = this.carousel.nativeElement;
-          carouselElement.addEventListener("slid.bs.carousel", () => {
-            this.updateActiveIndex();
-          });
-        }
-      });
-    } catch (err) {
-      console.error('Error fetching testimonials:', err);
-    }
+  getAllStaticstestimonials() {
+    this.http.getAllStaticstestimonial().subscribe(
+      (res) => {
+        this.testimonials = res.data.map((testimonial: any) => {
+          if (testimonial?.profile_picture) {
+            testimonial.profile_picture = testimonial.profile_picture.replace(/\\/g, '');
+          }
+          return testimonial;
+        });
+  
+        // Wait for DOM to update
+        setTimeout(() => {
+          if (this.carousel?.nativeElement) {
+            const carouselElement = this.carousel.nativeElement;
+            carouselElement.addEventListener("slid.bs.carousel", () => {
+              this.updateActiveIndex();
+            });
+          }
+        });
+      },
+      (err) => {
+       
+      }
+    );
   }
-
   
 
   constructor(
@@ -101,6 +77,10 @@ export class PeopleSyaingComponentComponent implements AfterViewInit, OnInit {
   }
 
   ngAfterViewInit(): void {
+    // const carouselElement = this.carousel.nativeElement;
+    // carouselElement.addEventListener("slid.bs.carousel", () => {
+    //   this.updateActiveIndex();
+    // });
 
       if (this.carousel?.nativeElement) {
       this.carouselInstance = new Carousel(this.carousel.nativeElement, {
@@ -154,7 +134,3 @@ export class PeopleSyaingComponentComponent implements AfterViewInit, OnInit {
     return (this.activeIndex + offset + this.testimonials.length) % this.testimonials.length;
   }
 }
-function firstValueFrom(arg0: any): any {
-  throw new Error("Function not implemented.");
-}
-

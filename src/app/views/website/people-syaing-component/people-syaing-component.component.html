@@ -1,4 +1,4 @@
-<div class="global-main-wraper mt-5 mb-5 pt-3 pb-3" *ngIf="testimonials && testimonials.length > 0">
+<div class="global-main-wraper mt-5 mb-5 pt-3 pb-3">
   <div class="col-12 d-flex flex-column justify-content-center">
     <p class="text-center font-size-56 font-wight-700 color-484848 cormorant-styl">
       {{ "people_saying.label" | translate }}
@@ -25,17 +25,11 @@
                 <div class="col-4" style="min-width: 200px;">
                   <div class="image-container image-container-active">
                     <div class="bg-shadow-layer-active"></div>
-                    <img *ngIf="testimonial?.static == false || !testimonial?.static" [src]="
+                    <img [src]="
                           apiUrl +
                           testimonial?.profile_picture
                         " class="img-fluid main-image act-img" style="border: 2px solid #fff"
-                      alt="Testimonial Image {{ i + 1 }}" 
-                      />
-                       <img *ngIf="testimonial?.static == true" 
-                        [src]="testimonial?.profile_picture" 
-                        class="img-fluid main-image act-img" style="border: 2px solid #fff"
-                        alt="Testimonial Image {{ i + 1 }}" 
-                      />
+                      alt="Testimonial Image {{ i + 1 }}" />
                   </div>
                 </div>
                 <div class="col-8 reverse-text">
@@ -73,13 +67,8 @@
                 <div class="image-container">
                   <div class="bg-shadow-layer"></div>
 
-                  <img *ngIf="testimonials[getNextIndex(-1)]?.static == false || !testimonials[getNextIndex(-1)]?.static"
-                   [src]="
+                  <img [src]="
                       apiUrl +
-                      testimonials[getNextIndex(-1)]?.profile_picture
-                    " class="main-image img-fluid back_card" alt="Testimonial Image" />
-
-                        <img *ngIf="testimonials[getNextIndex(-1)]?.static == true"  [src]="
                       testimonials[getNextIndex(-1)]?.profile_picture
                     " class="main-image img-fluid back_card" alt="Testimonial Image" />
                 </div>
@@ -114,14 +103,8 @@
                 <div class="image-container">
                   <div class="bg-shadow-layer"></div>
 
-                  <img *ngIf="testimonials[getNextIndex(1)]?.static == false || !testimonials[getNextIndex(1)]?.static"
-                   [src]="
+                  <img [src]="
                       apiUrl +
-                      testimonials[getNextIndex(1)]?.profile_picture
-                    " class="main-image img-fluid back_card" alt="Testimonial Image" />
-
-                      <img *ngIf="testimonials[getNextIndex(1)]?.static == true"
-                   [src]="
                       testimonials[getNextIndex(1)]?.profile_picture
                     " class="main-image img-fluid back_card" alt="Testimonial Image" />
                 </div>
@@ -160,6 +143,6 @@
       </button>
       
     </div>
-  </div>  
+  </div>
   }
 </div>
