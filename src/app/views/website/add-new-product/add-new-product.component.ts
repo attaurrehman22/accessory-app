@@ -1168,13 +1168,13 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
       if (this.productDetails?.video) {
         this.videoUrl = this.apiUrl + this.productDetails.video;
       }
-
-      this.coverImage = {
-        file: null,
-        url: this.apiUrl + this.productDetails.main_image,
-      };
-
-      if (this.productDetails.additional_images) {
+      if(this.productDetails?.main_image){
+        this.coverImage = {
+          file: null,
+          url: this.apiUrl + this.productDetails.main_image,
+        };
+      }
+      if (this.productDetails?.additional_images) {
         this.otherImages = this.productDetails.additional_images.map(
           (img: { url: string }) => ({
             file: null,
@@ -1182,8 +1182,10 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
             isUploading: false,
           })
         );
-
       }
+
+      console.log("otherImages in Patch Form ",this.otherImages)
+      console.log("coverImage in Patch Form ",this.coverImage)
       if (this.otherImages.length > 0 || this.coverImage) {
 
         this.allImages = this.otherImages;
@@ -1192,6 +1194,8 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
           ...img,
           isCover: index === 0
         }));
+
+        console.log("ALL Images in Patch Form ",this.allImages)
       }
       if (this.productDetails?.proof_image_1) {
         this.isEnableProofofOwnerShip = true;
@@ -1741,6 +1745,21 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
       } else {
         isUpdate = 1;
       }
+
+      if(isUpdate == 1){
+        const mainImageURL = this.apiUrl + this.productDetails.main_image
+        console.log("main image url in Submit Form mainImageURL",mainImageURL)
+        console.log("allImages ",this.allImages)
+        console.log("allImages of first ",this.allImages[0])
+        if(mainImageURL == this.allImages[0].url){
+          console.log("WORKING OF MATCHING NAME IMAGEWS")
+        }else{
+          const url = this.allImages[0].url.replace('https://demo-api.chronosouq.com/', '');
+          formData.append('replaced_main_image', url);
+        }
+     
+      }
+
       formData.append("isUpdate", isUpdate);
 
       this.otherImages

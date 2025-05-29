@@ -1449,19 +1449,21 @@
                 />
 
                 <!-- Image Previews -->
-                <div
-                  class="image-preview"
-                  *ngFor="let image of allImages"
-                  cdkDrag
-                >
-                  <img [src]="image.url" alt="Preview" />
+                <div class="d-flex flex-wrap" *ngIf="allImages?.length > 0">
+                  <div
+                    class="image-preview"
+                    *ngFor="let image of allImages"
+                    cdkDrag
+                  >
+                    <img [src]="image.url" alt="Preview" />
 
-                  <!-- Show "Cover Image" overlay if image is the cover -->
-                  <div *ngIf="image.isCover" class="cover-label">Cover Image</div>
+                    <!-- Show "Cover Image" overlay if image is the cover -->
+                    <div *ngIf="image.isCover" class="cover-label">Cover Image</div>
 
-                  <button class="delete-btn" (click)="removeImage(image)">
-                    <mat-icon>delete</mat-icon>
-                  </button>
+                    <button class="delete-btn" (click)="removeImage(image)">
+                      <mat-icon>delete</mat-icon>
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
@@ -4807,19 +4809,21 @@
                 />
 
                 <!-- Image Previews -->
-                <div
-                  class="image-preview"
-                  *ngFor="let image of allImages"
-                  cdkDrag
-                >
-                  <img [src]="image.url" alt="Preview" />
+                 <div class="d-flex flex-wrap" *ngIf="allImages?.length > 0">
+                  <div 
+                    class="image-preview"
+                    *ngFor="let image of allImages"
+                    cdkDrag
+                  >
+                    <img [src]="image.url" alt="Preview" />
 
-                  <!-- Show "Cover Image" overlay if image is the cover -->
-                  <div *ngIf="image.isCover" class="cover-label">Cover Image</div>
+                    <!-- Show "Cover Image" overlay if image is the cover -->
+                    <div *ngIf="image.isCover" class="cover-label">Cover Image</div>
 
-                  <button class="delete-btn" (click)="removeImage(image)">
-                    <mat-icon>delete</mat-icon>
-                  </button>
+                    <button class="delete-btn" (click)="removeImage(image)">
+                      <mat-icon>delete</mat-icon>
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
