@@ -41,6 +41,10 @@ p, h1, h2, h3, h4, h5, h6, span, a {
   padding: 0 135px 0 135px;
 }
 
+.create-listing-main-wraper {
+  padding: 0 60px 0 60px;
+}
+
 @media (max-width: 1024px) {
   .global-main-wraper {
     padding: 0 10px 0 10px;
