@@ -132,12 +132,15 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
 
   // Watch Form Details
 
+   decimalPattern = "^[0-9]{1,3}(.[0-9]{1,2})?$";
+   refPattern = "^[0-9]{1,10}(\\.[0-9]{1,5})?$";
+
   reference_number = new FormControl("", [
-    Validators.pattern("^[a-zA-Z0-9]*$"), // Only alphanumeric characters (letters and numbers)
+    Validators.pattern(this.refPattern), // Only alphanumeric characters (letters and numbers)
     Validators.maxLength(30), // Maximum length of 30 characters
   ]);
 
-  decimalPattern = "^[0-9]{1,3}(.[0-9]{1,2})?$";
+ 
 
   serial_no = new FormControl("", [
     Validators.pattern("^[a-zA-Z0-9]*$"), // Only alphanumeric characters (letters and numbers)
@@ -499,7 +502,10 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
     }
   }
 
+  removedImagesUrl: string[] = [];
+
   removeImage(image: ImageFile) {
+    this.removedImagesUrl.push(image.url)
     const wasCover = image.isCover;
     this.allImages = this.allImages.filter((img) => img.url !== image.url);
 
@@ -1723,6 +1729,7 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
         }
         return;
       }
+
       const formData = new FormData();
       formData.append("product_id", this.productIDFromResponse);
       if (this.coverImage && this.coverImage.file) {
@@ -1736,8 +1743,6 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
       if (this.selectedVideo) {
         formData.append("video", this.selectedVideo || "main_image.jpg");
       }
-      //  const isUpdate = this.selectedOptionsList.includes("uploadImages") ? "1" : "0";
-      //  formData.append("isUpdate", isUpdate);
 
       let isUpdate;
       if (this.currentStepper == "uploadImages") {
@@ -1747,6 +1752,15 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
       }
 
       if(isUpdate == 1){
+
+        if(this.removedImagesUrl.length > 0){
+          this.removedImagesUrl.forEach((image) => {
+            if (image) {
+              formData.append(`deleted_images[]`,image.replace('https://demo-api.chronosouq.com/', ''));
+            }
+          });
+        }
+
         const mainImageURL = this.apiUrl + this.productDetails.main_image
         console.log("main image url in Submit Form mainImageURL",mainImageURL)
         console.log("allImages ",this.allImages)
@@ -1754,6 +1768,7 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
         if(mainImageURL == this.allImages[0].url){
           console.log("WORKING OF MATCHING NAME IMAGEWS")
         }else{
+          
           const url = this.allImages[0].url.replace('https://demo-api.chronosouq.com/', '');
           formData.append('replaced_main_image', url);
         }

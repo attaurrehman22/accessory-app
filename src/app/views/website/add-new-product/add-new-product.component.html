@@ -1,11 +1,11 @@
-<div class="create-listing-main-wraper" style="margin-top: 45px">
+<div class="" style="margin-top: 45px">
   <div
-    class="row"
+    class="col-md-12 d-flex" style="border-top: 1px solid #f3f3f3"
     [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }"
   >
     <div
       class="col-md-3 col-12"
-      style="border-right: 1px solid #f3f3f3"
+      style="border-right: 1px solid #f3f3f3;border-top: 1px solid #f3f3f3;padding: 25px 60px 0 60px;"
       [ngClass]="{
         'reverse-order-of-desc-cont': translateService.currentLang !== 'en'
       }"
@@ -492,7 +492,6 @@
                 >
                 <input
                   matInput
-                  [readonly]="productDetails?.reference_number ? true : false"
                   formControlName="reference_number"
                   placeholder="{{
                     'create_product_listing.refrence_number_placeHolder'
@@ -527,7 +526,7 @@
                     </mat-label>
                     <input
                       matInput
-                      [readonly]="productDetails?.serial_no ? true : false"
+                      
                       formControlName="serial_no"
                       placeholder="{{
                         'create_product_listing.serial_no_placeHolder'
@@ -2334,7 +2333,7 @@
               {{ "create_product_listing.price_shipment_para" | translate }}
             </p>
             <div
-              class="image-upload-container"
+              class="image-upload-container mat-form-fields-custom-deisgn"
               *ngIf="selectedSection === 'priceshipment' && isSmallScreen"
             >
               <mat-form-field
@@ -2362,7 +2361,7 @@
                   userType === 'user' ||
                   selectedUserTypeofConditionGradingForAdmin === 'user'
                 "
-                class="container-fluid mt-5"
+                class="container-fluid mt-5 mat-form-fields-custom-deisgn"
               >
                 <mat-form-field
                   style="width: 100%"
@@ -2473,7 +2472,7 @@
                 }"
                 class="container-fluid mt-5 d-flex flex-wrap"
               >
-                <div class="col-md-6 shipping-changing-cont">
+                <div class="col-md-6 shipping-changing-cont mat-form-fields-custom-deisgn">
                   <mat-form-field
                     style="width: 100%"
                     class="full-width"
@@ -2524,11 +2523,11 @@
                             | translate
                         }}g</mat-option
                       >
-                      <mat-option value="freeCharge">
+                      <!-- <mat-option value="freeCharge">
                         {{
                           "create_product_listing.free_of_charge" | translate
                         }}</mat-option
-                      >
+                      > -->
                       <mat-option value="inclusiveShipping">
                         {{
                           "create_product_listing.inclusive_shipping"
@@ -2768,7 +2767,6 @@
           >
             ✓
           </div>
-
           <div class="step-content">
             <strong
               style="cursor: pointer"
@@ -2791,7 +2789,7 @@
               class="image-upload-container"
               *ngIf="selectedSection === 'billinginformation' && isSmallScreen"
             >
-              <form [formGroup]="billingForm">
+              <form [formGroup]="billingForm" class="mat-form-fields-custom-deisgn">
                 <mat-form-field
                   style="width: 100%; margin-top: 8px"
                   class="full-width"
@@ -3412,7 +3410,9 @@
     </div>
 
     <div class="col-md-9" *ngIf="!isSmallScreen">
-      <div class="card">
+      <div class="card" style="border: 1px solid #F3F3F3;
+    box-shadow: none !important;
+    border-radius: 24px;padding: 15px 30px 0 30px;">
         <!-- <-- Listing Details -- > -->
         <div
           class="card-body"
@@ -3842,13 +3842,26 @@
                   >
                   <input
                     matInput
-                    [readonly]="productDetails?.reference_number ? true : false"
                     formControlName="reference_number"
                     placeholder="{{
                       'create_product_listing.refrence_number_placeHolder'
                         | translate
                     }}"
                   />
+
+                  <mat-error
+                    [ngClass]="{
+                      'text-left': translateService.currentLang === 'en',
+                      'text-right': translateService.currentLang !== 'en'
+                    }"
+                    *ngIf="reference_number.hasError('pattern')"
+                  >
+                    {{
+                      "create_product_listing.ref_number_invalid"
+                        | translate
+                    }}
+                </mat-error>
+
                   <!-- <mat-error
                     [ngClass]="{
                       'text-left': translateService.currentLang === 'en',
@@ -3877,7 +3890,7 @@
                       </mat-label>
                       <input
                         matInput
-                        [readonly]="productDetails?.serial_no ? true : false"
+                        
                         formControlName="serial_no"
                         placeholder="{{
                           'create_product_listing.serial_no_placeHolder'
@@ -5420,7 +5433,7 @@
 
         <!-- <--Price & Shipment -- > -->
 
-        <div class="card-body" *ngIf="selectedSection === 'priceshipment'">
+        <div class="card-body" *ngIf="selectedSection === 'priceshipment'" >
           <h5
             [ngClass]="{
               'reverse-order-upload-images-labels':
@@ -5447,7 +5460,7 @@
               'reverse-orderdealer-or-seller-div':
                 translateService.currentLang !== 'en'
             }"
-            class="dealer-or-seller-div"
+            class="dealer-or-seller-div mat-form-fields-custom-deisgn"
           >
             <mat-form-field
               [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'"
@@ -5484,7 +5497,7 @@
             }"
           >
             <div class="col-md-8">
-              <div class="container-fluid mt-5" style="padding-left: 0">
+              <div class="container-fluid mt-5 mat-form-fields-custom-deisgn" style="padding-left: 0">
                 <mat-form-field
                   style="width: 100%"
                   class="full-width"
@@ -5608,7 +5621,7 @@
               style="padding-left: 0"
             >
               <div
-                class="col-md-6 shipping-changing-cont"
+                class="col-md-6 shipping-changing-cont mat-form-fields-custom-deisgn"
                 style="padding-left: 0"
               >
                 <mat-form-field
@@ -5654,11 +5667,11 @@
                         "create_product_listing.exclusive_shipping" | translate
                       }}g</mat-option
                     >
-                    <mat-option value="freeCharge">
+                    <!-- <mat-option value="freeCharge">
                       {{
                         "create_product_listing.free_of_charge" | translate
                       }}</mat-option
-                    >
+                    > -->
                     <mat-option value="inclusiveShipping">
                       {{
                         "create_product_listing.inclusive_shipping" | translate
@@ -5859,7 +5872,6 @@
             </button>
           </div>
         </div>
-
         <!-- <--Billing Information -- > -->
 
         <div class="card-body" *ngIf="selectedSection === 'billinginformation'">
@@ -5883,7 +5895,7 @@
               "create_product_listing.billing_information_para_two" | translate
             }}
           </p>
-          <form [formGroup]="billingForm">
+          <form [formGroup]="billingForm" class="mat-form-fields-custom-deisgn">
             <mat-form-field
               style="width: 100%; margin-top: 8px"
               class="full-width"
