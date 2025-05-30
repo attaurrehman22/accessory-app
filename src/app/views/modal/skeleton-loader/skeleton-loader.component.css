@@ -6,6 +6,7 @@
     width: 25%;
     box-shadow: 0 .125rem .25rem #00000013 !important;
     border-radius: 7px;
+    width: 20vw;
   }
   
   .skeleton-box {
