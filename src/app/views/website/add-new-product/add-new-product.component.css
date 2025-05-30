@@ -759,6 +759,10 @@ background: none;
     text-align: end;
   }
 
+  .reverse-order-of-desc-cont > .create-prod-list-label {
+    padding-right: 25px;
+  }
+
   .reverse-order-of-desc-cont > h5 {
     margin: 0 20px 10px 0;
   }
