@@ -68,6 +68,17 @@
               {{ "header.settings" | translate }}
             </a>
 
+            <a (click)="goToBuyOrders()"  mat-menu-item  *ngIf="isUserLogin === 'true'"> 
+              {{ "header.buyOrders" | translate }}
+            </a>
+
+            <a (click)="goToSellOrders()"  mat-menu-item  *ngIf="isUserLogin === 'true'"> 
+              {{ "header.sellOrders" | translate }}
+            </a>
+
+            <a (click)="goToMyListings()"  mat-menu-item  *ngIf="isUserLogin === 'true'"> 
+              {{ "header.myListings" | translate }}
+            </a>
 
             <a class="custom-btn" *ngIf="isUserLogin === 'true'"  mat-menu-item routerLink="/chat">
               {{ "header.Chat" | translate }}

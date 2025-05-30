@@ -72,14 +72,29 @@ export class MyListingDetailsComponent implements OnInit {
     if (!this.userID) {
       this.loginFirst();
     }
-    if(history?.state?.Ordertype == 'buy'){
+
+    if(history?.state?.activeRouteType == 'myListings'){
+       this.activeIndex = 3;
+    }
+
+    if(history?.state?.activeRouteType == 'buyOrders'){
+      this.activeIndex = 4;
+      this.getOrderDetails();
+    }
+
+    if(history?.state?.activeRouteType == 'sellOrders'){
+      this.activeIndex = 5;
+      this.getOrderDetails();
+    }
+
+    if(history?.state?.Ordertype == 'buy' ){
       this.activeIndex = 4;
       this.isShowSellOrdersListngDetails = false;
       this.isShowBuyOrdersListngDetails = false;
       this.detailsBuyListing(history?.state?.data);
       this.getOrderDetails();
     }
-    if(history?.state?.Ordertype == 'sell'){
+    if(history?.state?.Ordertype == 'sell' ){
       this.activeIndex = 5;
       this.isShowSellOrdersListngDetails = false;
       this.isShowBuyOrdersListngDetails = false;

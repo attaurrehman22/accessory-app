@@ -22,7 +22,10 @@
     "Chat":"الدردشة",
     "settings": "الإعدادات",
     "wellCome":"أهلاً وسهلاً",
-    "accessories": "إكسسوارات"
+    "accessories": "إكسسوارات",
+    "buyOrders": "طلبات الشراء",
+    "sellOrders": "طلبات البيع",
+    "myListings": "قوائمي"
   },
   "product_listing":{
     "Watch_Listing": "قائمة المشاهدة",

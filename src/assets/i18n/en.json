@@ -22,7 +22,10 @@
     "Chat":"My Chat",
     "settings":"Settings",
     "wellCome":"Welcome",
-    "accessories":"Accessories"
+    "accessories":"Accessories",
+    "buyOrders":"Buy Orders",
+    "sellOrders":"Sell Orders",
+    "myListings":"My Listings"
   },
   "product_listing":{
     "Watch_Listing": "Watch Listing",

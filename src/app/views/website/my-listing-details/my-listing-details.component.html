@@ -10,7 +10,7 @@
 >
   <div class="col-12 d-flex flex-wrap mb-3"  [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }">
     <div class="col-md-3 arabic-style">
-      <div class="d-flex flex-column p-lg-3 p-md-1 p-sm-1 bg-light" style="height: 100%;">
+      <div class="d-flex flex-column p-lg-3 p-md-1 p-sm-1" style="height: 100%;background: none !important;">
         <ul class="nav nav-pills flex-column mb-auto">
           <li class="nav-item" *ngFor="let item of menuItems; let i = index">
             <a *ngIf="translateService.currentLang == 'en'"

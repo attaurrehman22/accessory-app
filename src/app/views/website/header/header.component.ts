@@ -311,4 +311,22 @@ onSearchInputClick() {
         // handle result
       });
     }
+
+    goToBuyOrders(){
+      this.router.navigate(['myListing'], {
+        state:{activeRouteType:'buyOrders'}
+      })
+    }
+
+     goToSellOrders(){
+      this.router.navigate(['myListing'], {
+        state:{activeRouteType:'sellOrders'}
+      })
+    }
+
+    goToMyListings(){
+      this.router.navigate(['myListing'], {
+        state:{activeRouteType:'myListings'}
+      })
+    }
 }
