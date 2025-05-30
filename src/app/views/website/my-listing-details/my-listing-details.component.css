@@ -693,5 +693,29 @@ text-align: end;
  .form-check-input {
   position: relative !important;
   margin-top: .3rem !important;
-    margin-left: auto !important;
+  margin-left: auto !important;
+ }
+
+ .listing-id-label {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 100%;
+  color: #6a6a6a;
+ }
+
+ .span-listing-id-label {
+  color: #242424;
+ }
+
+ .listing-concate-label{
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 100%;
+  color: #242424;
+ }
+
+ .custom-card-style {
+  background: none !important;
+  border: 1px solid #F3F3F3;
+  box-shadow: none !important;
  }

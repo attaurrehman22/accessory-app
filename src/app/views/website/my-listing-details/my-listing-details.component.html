@@ -381,7 +381,7 @@
           </div>
         </div>
         <div class="list-cards">
-          <div *ngFor="let listing of listings" class="card mb-3">
+          <div *ngFor="let listing of listings" class="card mb-3 custom-card-style">
             <div class="card-body d-flex align-items-center">
               <div class="col-11 d-flex align-items-center">
                 <div class="main_image_div">
@@ -393,17 +393,17 @@
                   />
                 </div>
                 <div class="main_image_content_div">
-                  <small *ngIf="translateService.currentLang == 'en'" class="text-muted mobile-label">
-                    Listing ID {{ listing.listing_code || "N/A" }} | Created
-                    {{ listing.created_at | date : "yyyy-MM-dd" }}
+                  <small *ngIf="translateService.currentLang == 'en'" class="text-muted mobile-label listing-id-label">
+                    Listing ID <span class="span-listing-id-label"> {{ listing.listing_code || "N/A" }} </span> | Created
+                   <span class="span-listing-id-label"> {{ listing.created_at | date : "yyyy-MM-dd" }} </span>
                   </small>
 
                   <small *ngIf="translateService.currentLang !== 'en'" class="text-muted mobile-label">
-                    Listing ID {{ listing.listing_code || "N/A" }} | Created
-                    {{ listing.created_at | date : "yyyy-MM-dd" }}
+                    Listing ID <span class="span-listing-id-label"> {{ listing.listing_code || "N/A" }} </span> | Created
+                    <span class="span-listing-id-label">  {{ listing.created_at | date : "yyyy-MM-dd" }} </span>
                   </small>
 
-                  <h6 class="mt-1 mb-1 mobile-label">
+                  <h6 class="mt-1 mb-1 mobile-label listing-concate-label">
                     {{ listing.brand.name }} {{ listing.model }}
                     {{ listing.title }}
                   </h6>
@@ -476,13 +476,14 @@
                     />
                   </div>
                   <div class="main_image_content_div">
-                    <small class="text-muted mobile-label mobile-label-arabic">
-                      Listing ID {{ listing.product.listing_code || "N/A" }}   |  
-                      Created
-                      {{ listing.product.created_at | date : "yyyy-MM-dd" }}
+                    <small class="text-muted mobile-label mobile-label-arabic listing-id-label">
+                       Listing ID <span class="span-listing-id-label"> {{ listing.product.listing_code || "N/A" }} </span> | Created
+                      <span class="span-listing-id-label">
+                       {{ listing.product.created_at | date : "yyyy-MM-dd" }}
+                      </span>
                     </small>
 
-                    <h6 class="mt-1 mb-1 mobile-label">
+                    <h6 class="mt-1 mb-1 mobile-label listing-concate-label">
                       {{ listing.product.brand.name }} {{ listing.product.model }}
                       {{ listing.product.title }}
                     </h6>
@@ -734,9 +735,10 @@
                   </div>
                   <div class="main_image_content_div">
                     <small class="text-muted mobile-label">
-                      Listing ID {{ listing.product.listing_code || "N/A" }}  |
-                      Created
+                       Listing ID <span class="span-listing-id-label">{{ listing.product.listing_code || "N/A" }} </span> | Created
+                     <span class="span-listing-id-label">
                       {{ listing.created_at | date : "yyyy-MM-dd" }}
+                      </span>
                     </small>
 
                     <h6 class="mt-1 mb-1 mobile-label">
@@ -978,11 +980,13 @@
                 </div>
                 <div class="main_image_content_div">
                   <small class="text-muted mobile-label">
-                    Listing ID {{ listing.listing_code || "N/A" }} | Created
+                    Listing ID <span class="span-listing-id-label"> {{ listing.listing_code || "N/A" }} </span> | Created
+                   <span class="span-listing-id-label">
                     {{ listing.created_at | date : "yyyy-MM-dd" }}
+                    </span>
                   </small>
 
-                  <h6 class="mt-1 mb-1 mobile-label">
+                  <h6 class="mt-1 mb-1 mobile-label listing-concate-label">
                     {{ listing.brand.name }} {{ listing.model }}
                     {{ listing.title }}
                   </h6>
