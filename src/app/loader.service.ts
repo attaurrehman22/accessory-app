@@ -20,7 +20,7 @@ export class LoaderService {
       console.log("currentRoute",currentRoute)
       console.log("currentRoute.includes('/register')",currentRoute.includes('/register'))
       // Skip loader for specific routes
-      if (currentRoute.includes('/product-list') || currentRoute.includes('/login') || currentRoute.includes('/register') || currentRoute.includes('/check-email-existence') || currentRoute.includes('/check-user-existence')) {
+      if (currentRoute.includes('/product-list') || currentRoute.includes('/login') || currentRoute.includes('/register') || currentRoute.includes('/forgotPassword') || currentRoute.includes('/check-user-existence')) {
       
         this.isLoadingSubject.next(false); // Set loader to false for /product-list
       } else {
