@@ -688,7 +688,13 @@
   "6_Weeks": "6 أسابيع",
   "My_Listings": "قوائمي",
   "Sell_Orders": "طلبات البيع",
-  "Favorites": "المفضلة"
+  "Favorites": "المفضلة",
+
+  "coutry": "الدولة",
+"country_place": "أدخل اسم الدولة",
+"city": "المدينة",
+"city_place": "أدخل اسم المدينة"
+
 }
 
 

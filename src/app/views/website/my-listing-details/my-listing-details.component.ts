@@ -118,6 +118,8 @@ export class MyListingDetailsComponent implements OnInit {
     last_name: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
     gender: ['', Validators.required],
     date_of_birth: ['', Validators.required],
+    country: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
+    city: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
     countryCode: ['KSA'],
     phone_number: ['', [Validators.required, Validators.pattern(/^5\d{8}$/)]], // Assuming KSA format without country code
     language: ['english', Validators.required],
@@ -136,6 +138,8 @@ export class MyListingDetailsComponent implements OnInit {
           first_name: res.first_name,
           last_name: res.last_name,
           gender: res.gender,
+          city:res.city,
+          country:res.country,
           date_of_birth: res.date_of_birth,
           phone_number: res.phone_number,
           language: res?.language,

@@ -736,7 +736,12 @@
    "6_Weeks":"6 Weeks",
    "My_Listings":"My Listings",
    "Sell_Orders":"Sell Orders",
-   "Favorites":"Favorites"
+   "Favorites":"Favorites",
+
+   "coutry":"Country",
+   "country_place":"Enter coutry name",
+   "city":"City",
+   "city_place":"Enter city name"
   }
   
 }

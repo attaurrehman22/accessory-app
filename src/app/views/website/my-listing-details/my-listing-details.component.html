@@ -83,6 +83,27 @@
 
         <div class="row">
           <div class="col-md-6 mb-3" [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'">
+            <label for="country" class="form-label">{{ "my_Listing.coutry" | translate }}</label>
+            <input type="text" id="country" class="form-control" formControlName="country" placeholder='{{ "my_Listing.country_place" | translate }}' />
+            <div *ngIf="profileForm.get('country')?.touched && profileForm.get('country')?.invalid" class="text-danger">
+              <small *ngIf="profileForm.get('country')?.hasError('required')">{{ "form_validation.required" | translate }}</small>
+              <small *ngIf="profileForm.get('country')?.hasError('minlength')">{{ "form_validation.min_2_chars" | translate }}</small>
+              <small *ngIf="profileForm.get('country')?.hasError('maxlength')">{{ "form_validation.max_50_chars" | translate }}</small>
+            </div>
+          </div>
+          <div class="col-md-6 mb-3" [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'">
+            <label for="city" class="form-label">{{ "my_Listing.city" | translate }}</label>
+            <input type="text" id="city" class="form-control" formControlName="city" placeholder='{{ "my_Listing.city_place" | translate }}' />
+            <div *ngIf="profileForm.get('city')?.touched && profileForm.get('city')?.invalid" class="text-danger">
+              <small *ngIf="profileForm.get('city')?.hasError('required')">{{ "form_validation.required" | translate }}</small>
+              <small *ngIf="profileForm.get('city')?.hasError('minlength')">{{ "form_validation.min_2_chars" | translate }}</small>
+              <small *ngIf="profileForm.get('city')?.hasError('maxlength')">{{ "form_validation.max_50_chars" | translate }}</small>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6 mb-3" [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'">
             <label for="phone_number" class="form-label">{{ "my_Listing.Phone" | translate }}</label>
             <div class="input-group" style="flex-wrap: nowrap !important;">
               <select class="form-select" formControlName="countryCode" style="max-width: 100px;min-width: 80px;">
