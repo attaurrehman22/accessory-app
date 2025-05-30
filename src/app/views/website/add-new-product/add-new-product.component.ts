@@ -29,6 +29,7 @@ import { Observable } from "rxjs";
 import { map, startWith } from "rxjs/operators";
 import { environment } from "src/environments/environment";
 import { CdkDragDrop, moveItemInArray } from "@angular/cdk/drag-drop";
+import { MatCheckboxChange } from "@angular/material/checkbox";
 
 interface ImageFile {
   file: File;
@@ -127,7 +128,7 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
     Validators.maxLength(4), // Maximum length of 4 digits
     Validators.pattern("^[0-9]{4}$"), // Ensures the value is a 4-digit number
   ]);
-  approximation = new FormControl(false);
+  approximate_year = new FormControl(true);
   unknown = new FormControl(false);
 
   // Watch Form Details
@@ -998,13 +999,42 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
         // this.listingForm.get("year_of_production").disable();
       }
 
-      this.listingForm
-        .get("approximation")
-        .setValue(this.productDetails.approximate_year);
-      if (this.productDetails.approximate_year) {
-        this.listingForm.get("approximation").disable();
+      // this.listingForm.get("approximate_year").setValue(this.productDetails.approximate_year);
+      this.listingForm.get("approximate_year")?.setValue(this.productDetails.approximate_year === 1);
+      // if (this.productDetails.approximate_year == 1 ) {
+      //   this.listingForm.get("year_of_production").enable();
+      //   this.listingForm.get("year_of_production").setValidators([
+      //     Validators.required,
+      //     Validators.minLength(4),
+      //     Validators.maxLength(4),
+      //     Validators.pattern("^[0-9]{4}$")
+      //   ]);
+      //   this.listingForm.get("year_of_production").updateValueAndValidity();
+      //   this.listingForm.get("unknown").disable();
+      //   // this.listingForm.get("approximate_year").disable();
+      // }
+
+      this.listingForm.get("unknown")?.setValue(this.productDetails.unknown === 1);
+
+      if(this.productDetails?.unknown == 1){
+        this.listingForm.get("year_of_production").disable();
+        this.listingForm.get("year_of_production").clearValidators();
+        this.listingForm.get("year_of_production").updateValueAndValidity();
+        this.listingForm.get("unknown").disable();
+        this.listingForm.get("approximate_year").disable();
       }
-      // this.listingForm.get('unknown').setValue(this.productDetails.)
+
+      if(this.productDetails?.approximate_year == 1){
+        this.listingForm.get("year_of_production").disable();
+        this.listingForm.get("unknown").disable();
+        this.listingForm.get("approximate_year").disable();
+      }
+
+      // if(this.productDetails.unknown === 1){
+      //   this.listingForm.get("year_of_production").disable();
+      //   this.listingForm.get("year_of_production").clearValidators();
+      //   this.listingForm.get("year_of_production").updateValueAndValidity();
+      // }
 
       // watchDetailsForm
       this.watchDetailsForm
@@ -1023,7 +1053,10 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
         // this.watchDetailsForm.get("serial_no").disable();
       }
 
-      this.watchDetailsForm.get("gender").setValue(this.productDetails.gender);
+      if(this.productDetails.gender){
+        this.watchDetailsForm.get("gender").setValue(this.productDetails.gender);
+      }
+
       this.watchDetailsForm
         .get("movement")
         .setValue(this.productDetails.movement);
@@ -1250,6 +1283,49 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
     }
   }
 
+onApproximateYearChange(event: MatCheckboxChange): void {
+  const unknownCtrl = this.listingForm.get('unknown');
+  const yearCtrl = this.listingForm.get('year_of_production');
+
+  if (event.checked) {
+    unknownCtrl?.setValue(false);
+    // unknownCtrl?.disable();
+
+    // Enable and add validators
+    yearCtrl?.enable();
+    yearCtrl?.setValidators([
+      Validators.required,
+      Validators.minLength(4),
+      Validators.maxLength(4),
+      Validators.pattern("^[0-9]{4}$")
+    ]);
+    yearCtrl?.updateValueAndValidity();
+  } else {
+    // unknownCtrl?.enable();
+  }
+}
+
+
+onUnknownChange(event: MatCheckboxChange): void {
+  const approxCtrl = this.listingForm.get('approximate_year');
+  const yearCtrl = this.listingForm.get('year_of_production');
+
+  if (event.checked) {
+    approxCtrl?.setValue(false);
+    // approxCtrl?.disable();
+
+    // Disable and remove validators
+    yearCtrl?.disable();
+    yearCtrl?.clearValidators();
+    yearCtrl?.updateValueAndValidity();
+  } else {
+    // approxCtrl?.enable();
+  }
+}
+
+
+
+
   isEnableProofofOwnerShip: boolean = false;
   billingInformationDetails: any;
   ngOnInit() {
@@ -1347,7 +1423,7 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
       description: this.description,
       watch_type: this.watch_type,
       year_of_production: this.year_of_production,
-      approximation: this.approximation,
+      approximate_year: this.approximate_year,
       unknown: this.unknown,
     });
 

@@ -394,7 +394,8 @@
 
               <mat-checkbox
                 [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'"
-                formControlName="approximation"
+                formControlName="approximate_year"
+                (change)="onApproximateYearChange($event)"
               >
                 <label
                   class="mdc-label"
@@ -407,6 +408,7 @@
               <mat-checkbox
                 [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'"
                 formControlName="unknown"
+                (change)="onUnknownChange($event)"
               >
                 <label
                   class="mdc-label"
@@ -565,9 +567,9 @@
                       {{ "create_product_listing.gender" | translate }}
                     </mat-label>
                     <mat-select formControlName="gender">
-                      <mat-option value="">{{
+                      <!-- <mat-option value="">{{
                         "create_product_listing.gender_placeHolder" | translate
-                      }}</mat-option>
+                      }}</mat-option> -->
                       <mat-option
                         *ngFor="let data of formdropdownListData?.gender"
                         [value]="data.key"
@@ -3775,7 +3777,8 @@
             >
               <mat-checkbox
                 [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'"
-                formControlName="approximation"
+                formControlName="approximate_year"
+                (change)="onApproximateYearChange($event)"
               >
                 <label
                   class="mdc-label"
@@ -3788,6 +3791,7 @@
               <mat-checkbox
                 [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'"
                 formControlName="unknown"
+                (change)="onUnknownChange($event)"
               >
                 <label
                   class="mdc-label"
@@ -3943,10 +3947,10 @@
                         {{ "create_product_listing.gender" | translate }}
                       </mat-label>
                       <mat-select formControlName="gender">
-                        <mat-option value="">{{
+                        <!-- <mat-option value="">{{
                           "create_product_listing.gender_placeHolder"
                             | translate
-                        }}</mat-option>
+                        }}</mat-option> -->
                         <mat-option
                           *ngFor="let data of formdropdownListData?.gender"
                           [value]="data.key"
