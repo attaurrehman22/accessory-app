@@ -863,16 +863,16 @@ export class MyListingDetailsComponent implements OnInit {
       description: "Click to track your order.",
       active: false,
     },
+     {
+      label: "Payout Confirmation",
+      description: "Your payment has been released.",
+      active: false,
+    },
     {
       label: "Order Delivered",
       description: "Authorize payout for your order.",
       active: false,
-    },
-    {
-      label: "Order Completed",
-      description: "Your order has been completed successfully.",
-      active: false,
-    },
+    }
   ];
 
   // for Seller
@@ -908,10 +908,10 @@ export class MyListingDetailsComponent implements OnInit {
       active: false,
     },
     {
-      label: "Payout Confirmation",
-      description: "Your payment has been released.",
+      label: "Order Completed",
+      description: "Your order has been completed successfully.",
       active: false,
-    },
+    }
   ];
 
   routeToChat() {

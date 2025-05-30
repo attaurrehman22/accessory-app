@@ -1,5 +1,6 @@
 import { Component, Inject, OnInit } from "@angular/core";
 import {
+  AbstractControl,
   FormBuilder,
   FormControl,
   FormGroup,
@@ -85,7 +86,7 @@ export class RegisterComponent implements OnInit {
         confirmpassword: this.confirmpassword
       },
       {
-        validators: notsame1(),
+        validators: this._passwordMatchValidator()
       }
     );
 
@@ -93,6 +94,31 @@ export class RegisterComponent implements OnInit {
       this.translateService.use(browserlang);
     }
   }
+
+  private _passwordMatchValidator() {
+      return (control: AbstractControl) => {
+        const password = control.get('password');
+        const confirmPassword = control.get('confirmpassword');
+  
+        if (!password || !confirmPassword) {
+          return null;
+        }
+  
+        if (confirmPassword.errors && !confirmPassword.errors['mismatch']) {
+          // If there's another error, skip overwriting it.
+          return null;
+        }
+  
+        if (password.value !== confirmPassword.value) {
+          confirmPassword.setErrors({ mismatch: true });
+        } else {
+          confirmPassword.setErrors(null);
+        }
+  
+        return null;
+      };
+    }
+  
 
   ngOnInit(): void {}
 

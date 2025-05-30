@@ -19,7 +19,7 @@
     "admin_pannel":"Admin Pannel",
     "Login":"Login",
     "Logout":"Logout",
-    "Chat":"My Chat",
+    "Chat":"Messages",
     "settings":"Settings",
     "wellCome":"Welcome",
     "accessories":"Accessories",
@@ -76,7 +76,10 @@
     "new_Password":"New Password",
     "changing_pass_label":"Change Password",
     "changin_pass_para_two":"Enter your current email and password to change password",
-    "update_pass_btn":"Update Password"
+    "update_pass_btn":"Reset Password",
+    "invalid_email": "Please enter a valid email address.",
+    "message_for_email_message": "Click the link to go to the password reset form. The email reset functionality will be available soon."
+
   },
   "login": {
     "hy_there": "Hey there!",

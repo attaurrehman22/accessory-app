@@ -118,8 +118,14 @@
           >
             {{ "register.confirm_password_required" | translate }}
           </mat-error>
-          <mat-error
+          <!-- <mat-error
             *ngIf="registerForm.get('confirmpassword')?.hasError('notsame1')"
+          >
+            {{ "register.password_mismatch" | translate }}
+          </mat-error> -->
+
+          <mat-error
+            *ngIf="registerForm.get('confirmpassword')?.hasError('mismatch')"
           >
             {{ "register.password_mismatch" | translate }}
           </mat-error>

@@ -54,6 +54,18 @@ export class HttpService implements OnInit {
     });
   }
 
+
+  sendEmail(formData: any): Observable<any> {
+    const url = `${this.apiUrl}/api/forgot-password`;
+    return this.http.post(url, formData);
+  }
+
+  resetPassword(formData: any): Observable<any> {
+    const url = `${this.apiUrl}/api/reset-password`;
+    return this.http.post(url, formData);
+  }
+
+
   getTopBrands(): Observable<any> {
     return this.http.get(`${this.apiUrl}/api/topBrands`);
   }

@@ -146,7 +146,7 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
     Validators.pattern("^[a-zA-Z0-9]*$"), // Only alphanumeric characters (letters and numbers)
     Validators.maxLength(30),
   ]);
-  gender = new FormControl("");
+  gender = new FormControl("Unisex");
   movement = new FormControl("");
 
   case_diameter_value_1 = new FormControl(null, [
