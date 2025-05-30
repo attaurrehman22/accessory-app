@@ -84,11 +84,25 @@
         <div class="row">
           <div class="col-md-6 mb-3" [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'">
             <label for="phone_number" class="form-label">{{ "my_Listing.Phone" | translate }}</label>
-            <div class="input-group">
-              <select class="form-select" formControlName="countryCode" style="max-width: 100px">
+            <div class="input-group" style="flex-wrap: nowrap !important;">
+              <select class="form-select" formControlName="countryCode" style="max-width: 100px;min-width: 80px;">
                 <option value="KSA">KSA</option>
               </select>
-              <input type="text" id="phone_number" class="form-control" formControlName="phone_number" placeholder="+966 55 000 0000" />
+              <div class="input-group" >
+                <span style="border: 1px solid #ced4da;background: none;border-right: none;"
+                 class="input-group-text" id="countryCode">
+                 +966
+                </span>
+                <input
+                  style="border-left:none !important"
+                  type="text"
+                  id="phone_number"
+                  class="form-control"
+                  formControlName="phone_number"
+                  placeholder="55 000 0000"
+                  aria-describedby="countryCode"
+                />
+              </div>
             </div>
             <div *ngIf="profileForm.get('phone_number')?.touched && profileForm.get('phone_number')?.invalid" class="text-danger">
               <small *ngIf="profileForm.get('phone_number')?.hasError('required')">{{ "form_validation.required" | translate }}</small>

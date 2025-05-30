@@ -555,9 +555,3 @@
   background-color: white;
   transition: transform 0.3s ease;
 }
-
- ::ng-deep .mat-mdc-dialog-surface.mdc-dialog__surface {
-    border-top-left-radius: 12px !important;
-    overflow: hidden !important;
-    border-bottom-left-radius: 12px !important;
-}
