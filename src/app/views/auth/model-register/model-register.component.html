@@ -1,10 +1,10 @@
 
 <div class="login-card" style="margin: 0 !important;max-width: -webkit-fill-available !important;">
   <button class="cross-btn" (click)="closeAndMoveToLoginComp()"><mat-icon>close</mat-icon></button>
-  <p class="font-size-14 font-wight-400 margin-0 color-242424">{{ "register.welcome" | translate }}</p>
+  <p class="font-size-14 font-wight-400 margin-0 color-242424 clash-display-font-family">{{ "register.welcome" | translate }}</p>
   <p class="font-size-28 font-wight-600 margin-0 color-242424">{{ "register.create_account" | translate }}</p>
 
-  <form [formGroup]="registerForm" class="mt-3">
+  <form [formGroup]="registerForm" class="custom-register-margin mat-form-fields-custom-deisgn">
     <div [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'">
       <mat-form-field appearance="outline" style="width: 100%">
         <mat-label>{{ 'register.username' | translate }}</mat-label>
@@ -115,11 +115,11 @@
   <div class="separator"> {{ 'register.or' | translate }}</div>
   
   <div class="social-login">
-    <button class="social-btn facebook"><mat-icon>facebook</mat-icon></button>
-    <button class="social-btn apple"><mat-icon>apple</mat-icon></button>
-    <button class="social-btn google">
-      <img alt="" style="height: 3vh;" src="./assets/images/google.png" />
-    </button>
+    <button class="social-btn facebook"><img src="../../../../assets/images/face-book.svg" alt="facebook"/></button>
+      <button class="social-btn apple"><img src="../../../../assets/images/apple-logo.svg" alt="facebook"/></button>
+      <button class="social-btn google">
+        <img style="height: 3vh" src="../../../../assets/images/google-log.svg" />
+      </button>
   </div>
 
   <div class="mt-5">

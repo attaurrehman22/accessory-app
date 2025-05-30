@@ -91,7 +91,7 @@
   font-weight: 400 !important;
   color: #909090 !important;
   line-height: 24px !important;
-  font-family: "Open Sans", serif;
+  /* font-family: "Open Sans", serif; */
 }
 
 ::ng-deep .mat-form-fields-custom-deisgn mat-form-field input::placeholder {
@@ -99,7 +99,7 @@
   font-weight: 400 !important;
   color: #909090 !important;
   line-height: 24px !important;
-  font-family: "Open Sans", serif;
+  /* font-family: "Open Sans", serif; */
 }
 
 .mat-chip-text {

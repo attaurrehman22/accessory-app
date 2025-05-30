@@ -15,6 +15,14 @@ body {
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Cormorant:wght@700&display=swap');
 
+@font-face {
+  font-family: 'Clash Display';
+  src: url('/path/to/ClashDisplay-Regular.woff2') format('woff2'),
+       url('/path/to/ClashDisplay-Regular.woff') format('woff'),
+       url('/path/to/ClashDisplay-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
 
 @font-face {
   font-family: 'Digital Numbers Regular';
@@ -26,6 +34,10 @@ body {
 
 p, h1, h2, h3, h4, h5, h6, span, a {
   font-family: 'Open Sans',unset;
+}
+
+.clash-display-font-family {
+  font-family: 'Clash Display', sans-serif;
 }
 
 .sar-icon-style {
@@ -264,6 +276,15 @@ mat-drawer-backdrop.mat-drawer-show{
   margin: 70px 0 70px 0;
 }
 
+.custom-margin {
+  margin-top: 70px;
+}
+
+.custom-register-margin {
+  margin-top: 45px;
+}
+
+
 h1,
 h2 {
   margin: 0;
@@ -312,7 +333,8 @@ h1 {
   cursor: pointer;
   border-radius: 8px;
   font-size: 16px;
-  width: 80px;
+  width: 75px;
+  height: 75px;
 }
 
 .facebook {

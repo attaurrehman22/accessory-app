@@ -32,7 +32,6 @@ export class ModelLoginComponent implements OnInit {
   ]);
   password: FormControl = new FormControl("", [
     Validators.required,
-    Validators.minLength(6),
     Validators.maxLength(30),
   ]);
   constructor(

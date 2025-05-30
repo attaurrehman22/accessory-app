@@ -66,7 +66,7 @@
     "confirm_password_required": "Enter Confirm Password",
     "password_mismatch": "Passwords do not match",
     "register_button": "Register",
-    "or": "OR",
+    "or": "or",
     "already_have_account": "Already have an account?",
     "login": "Login",
     "changing_pass":"Forgot your password?",
@@ -87,7 +87,7 @@
     "password_error_max": "Password cannot exceed 30 characters",
     "forgot_password": "Forgot Password ?",
     "login": "Login",
-    "or": "OR",
+    "or": "or",
     "do_not_acc": "Don't have an account?",
     "register": "Register Now"
   },
