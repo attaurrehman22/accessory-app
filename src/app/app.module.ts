@@ -132,6 +132,7 @@ import { InventoriesComponent } from './views/adminpages/accessories/attributes/
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { AddAttributeListingComponent } from './views/adminpages/accessories/attributes/add-attribute-listing/add-attribute-listing.component';
 import { AttributeListingComponent } from './views/adminpages/accessories/attributes/attribute-listing/attribute-listing.component';
+import { ChangePasswordComponent } from './views/auth/change-password/change-password.component';
 
 @NgModule({
   declarations: [
@@ -208,7 +209,8 @@ import { AttributeListingComponent } from './views/adminpages/accessories/attrib
     AddInventoryComponent,
     InventoriesComponent,
     AttributeListingComponent,
-    AddAttributeListingComponent
+    AddAttributeListingComponent,
+    ChangePasswordComponent
   ],
   imports: [
     MatSortModule,

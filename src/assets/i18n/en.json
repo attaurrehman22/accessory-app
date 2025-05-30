@@ -78,8 +78,13 @@
     "changin_pass_para_two":"Enter your current email and password to change password",
     "update_pass_btn":"Reset Password",
     "invalid_email": "Please enter a valid email address.",
-    "message_for_email_message": "Click the link to go to the password reset form. The email reset functionality will be available soon."
-
+    "message_for_email_message": "Click the link to go to the password reset form. The email reset functionality will be available soon.",
+    "new_password_label":"New Password",
+    "new_password_place":"Enter new password",
+    "old_password_label":"Old Password",
+    "old_password":"Enter old password",
+    "new_password_confirmation":"Confirm Password",
+    "change_pass_btn":"Update Password"
   },
   "login": {
     "hy_there": "Hey there!",

@@ -66,6 +66,16 @@ export class HttpService implements OnInit {
   }
 
 
+  changePassword(formData): Observable<any> {
+    const url = `${this.apiUrl}/api/profile/change-password`;
+    return this.http.post(url, formData, {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+  }
+
   getTopBrands(): Observable<any> {
     return this.http.get(`${this.apiUrl}/api/topBrands`);
   }

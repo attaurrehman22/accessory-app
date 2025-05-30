@@ -148,7 +148,7 @@
           </div>
           <div class="col-md-6 mb-3" [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'">
             <label for="password" class="form-label">{{ "my_Listing.Password" | translate }}</label>
-            <a href="#" class="d-block text-decoration-none">{{ "my_Listing.Change_password" | translate }}</a>
+            <a routerLink="/change-password"  class="d-block text-decoration-none a-style-forgot-pass">{{ "my_Listing.Change_password" | translate }}</a>
           </div>
         </div>
 

@@ -719,3 +719,10 @@ text-align: end;
   border: 1px solid #F3F3F3;
   box-shadow: none !important;
  }
+
+ .a-style-forgot-pass {
+  color: #242424;
+    font-weight: 400;
+    font-size: 16px;
+    text-decoration: underline !important;
+ }

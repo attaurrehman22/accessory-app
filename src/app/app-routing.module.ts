@@ -35,6 +35,7 @@ import { AttributeComponent } from './views/adminpages/accessories/attributes/at
 import { AttributeValuesComponent } from './views/adminpages/accessories/attributes/attribute-values/attribute-values.component';
 import { InventoriesComponent } from './views/adminpages/accessories/attributes/inventories/inventories.component';
 import { AttributeListingComponent } from './views/adminpages/accessories/attributes/attribute-listing/attribute-listing.component';
+import { ChangePasswordComponent } from './views/auth/change-password/change-password.component';
 
 
 const routes: Routes = [
@@ -73,7 +74,7 @@ const routes: Routes = [
   { path: 'accessories/home', component:  AccessoriesHomeComponent},
   { path: 'accessories/details', component:  AccessorieDetailComponent},
 
-
+ { path: 'change-password', component:  ChangePasswordComponent},
   { path: 'buy-now', component:  BuyNowComponent},
   { path: 'myListing', component:  MyListingDetailsComponent},
   { path: 'forgotPassword', component:  ForgotPasswordComponent},

@@ -25,9 +25,8 @@ export class ForgotPasswordComponent implements OnInit{
   }
 
   hideconfirmpass: boolean = true;
-
   toggleConfirmPassword(){
-this.hideconfirmpass = !this.hideconfirmpass;
+   this.hideconfirmpass = !this.hideconfirmpass;
   }
 
   ngOnInit(): void {
