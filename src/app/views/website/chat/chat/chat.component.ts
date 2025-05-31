@@ -212,7 +212,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     this.http.getChatsDetails(this.chat_id).subscribe(
       (res) => {
         this.messages = res.messages;
-        if (res.messages.length > 0 && !this.reciever_ID) {
+        if (res.messages.length > 0) {
           let useridd = localStorage.getItem("userID");
           // this.reciever_ID = res.messages[1]?.receiver_id;
           if (useridd == res.messages[0]?.sender_id) {
@@ -222,6 +222,8 @@ export class ChatComponent implements OnInit, AfterViewChecked {
           } else {
             this.reciever_ID = res.messages[0]?.sender_id;
           }
+
+          console.log("Reciever ID",this.reciever_ID)
         }
         let count_sen_rec = 0;
         this.messages.forEach((message) => {

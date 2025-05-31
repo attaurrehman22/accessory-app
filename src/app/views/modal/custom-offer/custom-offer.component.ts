@@ -8,6 +8,7 @@ import { environment } from "src/environments/environment";
 import { LoginStateService } from "src/services/login-service/login-state.service";
 import { TranslateService } from "@ngx-translate/core";
 
+
 @Component({
   selector: "app-custom-offer",
   templateUrl: "./custom-offer.component.html",
@@ -159,9 +160,10 @@ export class CustomOfferComponent {
     }
   }
 
-  onSendOffer(): void {
+   onSendOffer(): void {
     if (this.compoName === "editComp") {
       if (this.offerForm.valid) {
+        const res = 
         this.http.editOffer(this.offerForm.value).subscribe(
           (res) => {
             if (this.translateService.currentLang == "en") {
