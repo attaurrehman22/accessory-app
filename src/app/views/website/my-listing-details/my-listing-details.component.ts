@@ -379,6 +379,40 @@ export class MyListingDetailsComponent implements OnInit {
     } else if (this.activeIndex == 1) {
       this.getBillingInformation();
     }
+    else if (this.activeIndex == 2) {
+      this.getLatestMessages();
+    }
+  }
+
+  chats:any;
+  filteredChats:any;
+  getLatestMessages(){
+   this.http.getChatsWithLatestMessage().subscribe((res) => {
+      this.chats = res.chats.map(
+        (chat) => {
+          chat.product.main_image = chat.product.main_image.replace(/\\/g, "/");
+          return chat;
+        },
+        (err) => {
+          if (err && err.error) {
+            this.alertService.showAlert("warning", `${err.error.message}`);
+          } else {
+            if (this.translateService.currentLang == "en") {
+              this.alertService.showAlert(
+                "warning",
+                "Error in getting message Please try again"
+              );
+            } else {
+              this.alertService.showAlert(
+                "warning",
+                "حدث خطأ أثناء جلب الرسالة، يرجى المحاولة مرة أخرى"
+              );
+            }
+          }
+        }
+      );
+      this.filteredChats = this.chats;
+    });
   }
 
   buyOrdersListings: any[] = [];
@@ -840,6 +874,16 @@ export class MyListingDetailsComponent implements OnInit {
 
   cancelProofofShipMent() {
     this.showSellerProofofShipping = false;
+  }
+
+  getMesageDetails(chat){
+    const chatDetails ={
+        id:chat.chat_id,
+    }
+    this.router.navigate(['/chat'],
+      {
+      state:{fromRoute:'gotToChat',data:chatDetails,productID:chat.product_id,chatID:chat.chat_id}
+    })
   }
 
   // for buyer

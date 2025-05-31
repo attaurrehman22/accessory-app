@@ -749,3 +749,15 @@ text-align: end;
    background: #F7F7F8;
    cursor: pointer;
  }
+
+ .badge-styl {
+    background: #242424;
+    height: 20px;
+    width: 20px;
+    font-size: 12px;
+    color: #FFFFFF !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 20px !important;
+}

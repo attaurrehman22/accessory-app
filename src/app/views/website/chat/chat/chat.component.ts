@@ -76,13 +76,14 @@ export class ChatComponent implements OnInit, AfterViewChecked {
 
   ngOnInit(): void {
     this.user_id = localStorage.getItem("userID");
+    
     if (!this.user_id) {
       this.loginFirst();
     }
-
+    
     if (history?.state?.chatID) {
       this.getLatestMessage();
-
+      
       if (history?.state?.fromRoute == "gotToChat") {
         this.getDetailsofProduct(history?.state?.data.id);
       } else {
