@@ -741,7 +741,8 @@
    "coutry":"Country",
    "country_place":"Enter coutry name",
    "city":"City",
-   "city_place":"Enter city name"
+   "city_place":"Enter city name",
+   "no_image":"No Image"
   }
   
 }

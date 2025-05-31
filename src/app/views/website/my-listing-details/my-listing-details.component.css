@@ -726,3 +726,26 @@ text-align: end;
     font-size: 16px;
     text-decoration: underline !important;
  }
+
+
+
+ .no-image-styles-div {
+    background: #f7f7f8;
+    border-radius: 10%;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+ }
+
+ .no-image-styles-div > p {
+  font-size: 11px;
+  color: #242424;
+  font-weight: 400;
+ }
+
+ .card-hover-change-color:hover {
+   background: #F7F7F8;
+   cursor: pointer;
+ }

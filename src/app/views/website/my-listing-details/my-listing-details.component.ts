@@ -56,11 +56,11 @@ export class MyListingDetailsComponent implements OnInit {
     { label: "My Listings", arabicLabel: "قوائمي", icon: "bi bi-card-list" },
     { label: "Buy Orders", arabicLabel: "طلبات الشراء", icon: "bi bi-cart" },
     { label: "Sell Orders", arabicLabel: "طلبات البيع", icon: "bi bi-basket" },
+    { label: "Favorites", arabicLabel: "المفضلة", icon: "bi bi-heart" },
+    { label: "Cart Items", arabicLabel: "المفضلة", icon: "bi bi-heart" },
     // { label: "Security", arabicLabel: "الأمان", icon: "bi bi-shield-lock" },
     // { label: "Privacy", arabicLabel: "الخصوصية", icon: "bi bi-globe" },
     // { label: "My Subscriptions", arabicLabel: "اشتراكاتي", icon: "bi bi-box-arrow-in-right" },
-    { label: "Favorites", arabicLabel: "المفضلة", icon: "bi bi-heart" },
-    { label: "Cart Items", arabicLabel: "المفضلة", icon: "bi bi-heart" },
     // { label: "Feedback", arabicLabel: "التقييمات", icon: "bi bi-star" },
     // { label: "Help Center", arabicLabel: "مركز المساعدة", icon: "bi bi-question-circle" },
   ];
@@ -347,6 +347,7 @@ export class MyListingDetailsComponent implements OnInit {
 
   activeIndex: number = 0; // Default: First item is active
   setActive(index: number): void {
+    console.log("Active index",this.activeIndex)
     this.activeIndex = index;
     this.isShowSellOrdersListngDetails = false;
     this.isShowBuyOrdersListngDetails = false;
@@ -372,7 +373,8 @@ export class MyListingDetailsComponent implements OnInit {
       this.getBuyOrders();
     } else if (this.activeIndex == 5) {
       this.getSellOrders();
-    } else if (this.activeIndex == 9) {
+    } else if (this.activeIndex == 6) {
+      console.log("this.activeIndex == 9")
       this.getWishList();
     } else if (this.activeIndex == 1) {
       this.getBillingInformation();
