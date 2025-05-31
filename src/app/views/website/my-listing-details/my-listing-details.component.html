@@ -1,8 +1,8 @@
 <div
   [ngClass]="{
     'global-main-wraper':
-      isShowSellOrdersListngDetails || isShowBuyOrdersListngDetails || activeIndex === 10,
-    container: !(isShowSellOrdersListngDetails || isShowBuyOrdersListngDetails) && activeIndex !== 10,
+      isShowSellOrdersListngDetails || isShowBuyOrdersListngDetails || activeIndex === 7,
+    container: !(isShowSellOrdersListngDetails || isShowBuyOrdersListngDetails) && activeIndex !== 7,
     'blur-effect':
       showSellerConfirmOrderAvailability || showSellerProofofShipping
   }"
@@ -420,7 +420,7 @@
                 </div>
                 <div class="main_image_content_div pl-2 pr-2">
                   <small class="text-muted mobile-label listing-id-label">
-                    <span class="span-listing-id-label"> {{ chat.product.created_by.name || "N/A" }}</span> 
+                    <span class="span-listing-id-label"> {{ chat.product.created_by.name || "N/A" }}</span>  |
                    <span class="span-listing-id-label"> {{ chat.latest_chat_time | date : "yyyy-MM-dd" }} </span>
                   </small>
 
@@ -1147,13 +1147,13 @@
       </div>
       <!-- if "Cart Items" is Active -->
       <div *ngIf="activeIndex === 7" class="container-fluid">
-        <div class="d-flex justify-content-between align-items-center mb-3 filtered-div">
-          <h4 class="mobile-label">Cart Items</h4>
-           <h4 class="mobile-label">Remove Selected</h4>
+        <div class="d-flex justify-content-between align-items-center mb-1 filtered-div">
+          <h4 class="mobile-label font-size-28 font-wight-600 color-242424 margin-0">Cart Items</h4>
+           <h4 class="mobile-label font-size-14 font-wight-600 color-242424 margin-0">Remove Selected</h4>
         </div>
         <div class="list-cards">
           <div class="container-fluid my-4">
-            <div class="card mb-3" *ngFor="let item of cartItems">
+            <div class="card mb-3" *ngFor="let item of cartItems" style="box-shadow:none !important">
               <div class="row g-0 align-items-center p-2">
                 <div class="col-auto d-flex align-items-center gap-2">
                   <input type="checkbox" [(ngModel)]="item.selected" class="form-check-input" />
@@ -1162,19 +1162,29 @@
                 </div>
                 <div class="col">
                   <div class="card-body py-2 d-flex flex-column">
-                    <p class="mb-1 small text-muted">
-                      LUG Width Apple 38/40/41MM | Buckle/Connector Black | Length Small 115/75MM | Color {{ item.color }}
+                    <p class="mb-1 font-size-14 font-wight-400 color-6a6a6a">
+                      LUG Width <span class="color-242424">Apple 38/40/41MM</span>   |  Buckle/Connector <span class="color-242424"> Black </span>  |  Length <span class="color-242424"> Small 115/75MM | Color {{ item.color }} </span>
                     </p>
-                    <h6 class="card-title mb-1">{{ item.name }}</h6>
-                    <p class="mb-1"><strong>Total Price: ₦{{ item.price | number:'1.2-2' }}</strong></p>
+
+                    <p class="font-size-18 font-wight-600 color-242424 margin-0">{{ item.name }}</p>
+                    <p class="mb-1 font-size-14 font-wight-400 color-6a6a6a gap-2 d-flex">Total Price: <span class="color-242424">
+                      <img src="../../../../assets/images/Saudi_Riyal_Symbol-2.svg" class="sar-icon-style"
+                      style="    width: 12px;height: 12px;"
+                      alt="SAR"/>
+                      {{ item.price | number:'1.2-2' }}</span>
+                    </p>
                   </div>
                 </div>
                 <div class="col-auto d-flex gap-2 align-items-center justify-content-center mx-5">
-                  <label class="form-label mb-1 small">Quantity</label>
+                  <label class="" style="font-size: 14px;font-wight: 400 !important;color: #6a6a6a;">Quantity</label>
                   <div class="input-group input-group-sm">
-                    <button class="btn btn-outline-secondary" (click)="decrement(item)">–</button>
-                    <input type="text" class="form-control text-center" style="width: 35px;" [value]="item.quantity" readonly>
-                    <button class="btn btn-outline-secondary" (click)="increment(item)">+</button>
+                    <button class="btn btn-outline-secondary"
+                    style="border: 0.53px solid #6A6A6A;width: 36px;"
+                    (click)="decrement(item)">–</button>
+                    <input type="text"
+                    class="form-control text-center" style="border: 0.53px solid #6A6A6A;width: 36px;background:none !important" [value]="item.quantity" readonly>
+                    <button style="border: 0.53px solid #6A6A6A;width: 36px;"
+                     class="btn btn-outline-secondary" (click)="increment(item)">+</button>
                   </div>
                 </div>
                 <div class="col-auto d-flex align-items-center justify-content-center mx-2">
@@ -1187,19 +1197,25 @@
 
             <div class="col-md-12 d-flex justify-content-end mt-4">
               <div class="col-md-4 d-flex flex-column">
-                <ul class="list-group list-group-flush mb-3">
-                  <li class="list-group-item d-flex justify-content-between align-items-center">
-                    Total Items
-                    <span>{{ getTotalItems() }}</span>
-                  </li>
-                  <li class="list-group-item d-flex justify-content-between align-items-center">
-                    Sub Total
-                    <span>₦{{ getSubTotal() | number:'1.2-2' }}</span>
-                  </li>
-                  <li class="list-group-item d-flex justify-content-between align-items-center">
-                    Estimated Payout
-                    <span>₦{{ getSubTotal() | number:'1.2-2' }}</span>
-                  </li>
+                <ul class="list-group list-group-flush mb-3 card" style="box-shadow:none !important">
+                  <div class="card-body" style="border:none !important;display: flex;flex-direction: column;border-radius: 16px !important;">
+                    <li style="background: #F7F7F8 !important;border:none !important" class="list-group-item d-flex justify-content-between align-items-center">
+                      Total Items
+                      <span>{{ getTotalItems() }}</span>
+                    </li>
+                    <li style="background: #F7F7F8 !important;border:none !important"  class="list-group-item d-flex justify-content-between align-items-center">
+                      Sub Total
+                      <span>₦{{ getSubTotal() | number:'1.2-2' }}</span>
+                    </li>
+                    <li style="background: #F7F7F8 !important;border-top: 1px solid #E2E2E2 !important;
+                        border-bottom: 0 !important;
+    border-left: 0 !important;
+    border-right: 0 !important;
+                    "  class="list-group-item d-flex justify-content-between align-items-center">
+                      Estimated Payout
+                      <span>₦{{ getSubTotal() | number:'1.2-2' }}</span>
+                    </li>
+                  </div>
                 </ul>
                 <button class="btn btn-dark w-100">Checkout</button>
               </div>

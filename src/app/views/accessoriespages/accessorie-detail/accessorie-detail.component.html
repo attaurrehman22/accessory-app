@@ -23,7 +23,7 @@
         *ngIf="selectedType === 'image'"
         src="../../../../assets/images/accessory-details.svg"
         style="
-          object-fit: scale-down;
+          object-fit: cover;
           height: 485px;
           width: 100%;
           border: none !important;
@@ -38,7 +38,7 @@
         *ngIf="selectedType === 'video'"
         [src]="apiUrl + selectedImage"
         style="
-          object-fit: scale-down;
+          object-fit: cover;
           height: 485px;
           width: 100%;
           border: none !important;
