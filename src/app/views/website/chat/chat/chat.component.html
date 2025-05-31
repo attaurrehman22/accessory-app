@@ -182,7 +182,7 @@
                       : 'deactive-name-time'
                   "
                 >
-                  {{ chat.product.created_by.name || "N/A" }}
+                  {{ getNameOfMessenger(chat) }}
                 </p>
                 <p
                   class="smaall-screen-text"
@@ -276,14 +276,14 @@
                         font-size: 20px;
                       "
                     >
-                      {{ getProductDetails.created_by.name?.substring(0, 2) }}
+                      {{ UserNameOFMessenger?.substring(0, 2) }}
                     </div>
                   </ng-template>
                 </div>
 
                 <div class="d-flex flex-column mx-2">
                   <p class="font-size-20 font-wight-600 color-242424 margin-0">
-                    {{ getProductDetails.created_by.name }}
+                    {{ UserNameOFMessenger }}
                   </p>
                   <p class="font-size-16 font-wight-400 color-909090 margin-0">
                     {{ getProductDetails.created_by.city }}
@@ -331,7 +331,7 @@
                         font-size: 20px;
                       "
                     >
-                      {{ getProductDetails.name?.substring(0, 2) }}
+                      {{ getProductDetails.title?.substring(0, 2) }}
                     </div>
                   </ng-template>
                 </div>
@@ -387,8 +387,8 @@
                     <div
                       class="message-content-main small-screen-message-content"
                     >
-                      <div class="message-content">
-                        <p class="smaall-screen-text">{{ message.message }}</p>
+                      <div class="message-content" [ngClass]="{ 'no-background': message.attachments }">
+                      <p *ngIf="message?.message" [ngClass]="{ 'black-background-text': message.attachments }">{{ message.message }}</p>
                         <p
                           class="smaall-screen-text"
                           *ngIf="
@@ -401,24 +401,41 @@
                         </p>
 
                         <div class="d-flex gap-2" *ngIf="message.attachments">
-                          <img
-                            *ngIf="!isArray(message.attachments)"
-                            [src]="
-                              apiUrl +
-                              message.attachments
-                            "
-                            class="attachment-stl"
-                            alt="Attachment"
-                          />
+                          <ng-container *ngIf="!isArray(message.attachments)">
+                            <ng-container [ngSwitch]="getAttachmentType(message.attachments)">
+                              <img
+                                *ngSwitchCase="'image'"
+                                [src]="apiUrl + message.attachments"
+                                class="attachment-stl"
+                                alt="Attachment"
+                              />
+                              <video
+                                *ngSwitchCase="'video'"
+                                [src]="apiUrl + message.attachments"
+                                class="attachment-stl"
+                                controls
+                              ></video>
+                            </ng-container>
+                          </ng-container>
 
-                          <div *ngIf="isArray(message.attachments)">
-                            <img
-                              *ngFor="let attachment of message.attachments"
-                              [src]="apiUrl + attachment"
-                              class="attachment-stl"
-                              alt="Attachment"
-                            />
-                          </div>
+                          <ng-container *ngIf="isArray(message.attachments)">
+                            <ng-container *ngFor="let attachment of message.attachments">
+                              <ng-container [ngSwitch]="getAttachmentType(attachment)">
+                                <img
+                                  *ngSwitchCase="'image'"
+                                  [src]="apiUrl + attachment"
+                                  class="attachment-stl"
+                                  alt="Attachment"
+                                />
+                                <video
+                                  *ngSwitchCase="'video'"
+                                  [src]="apiUrl + attachment"
+                                  class="attachment-stl"
+                                  controls
+                                ></video>
+                              </ng-container>
+                            </ng-container>
+                          </ng-container>
                         </div>
 
                         <div
@@ -828,7 +845,7 @@
                           font-size: 20px;
                         "
                       >
-                        {{ getProductDetails.name?.substring(0, 2) }}
+                        {{ getProductDetails.title?.substring(0, 2) }}
                       </div>
                     </ng-template>
                   </div>
@@ -868,9 +885,7 @@
               <div style="width: 4%" class="d-flex">
                 <button
                   style="width: 0; height: 0; padding: 0"
-                  mat-icon-button
-                  [matMenuTriggerFor]="menu"
-                  (click)="$event.stopPropagation()"
+                  (click)="uploadImages()"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -883,19 +898,15 @@
                     <path d="M8 7V1h1v6h6v1H9v6H8V8H2V7h6z" />
                   </svg>
                 </button>
-                <mat-menu #menu="matMenu">
-                  <button
-                    class="smaall-screen-text"
-                    (click)="uploadImages()"
-                    mat-menu-item
-                  >
+                <!-- <mat-menu #menu="matMenu">
+                  <button (click)="uploadImages()" mat-menu-item>
                     <span>{{ "chat_com.Upload_Images" | translate }}</span>
                   </button>
-                </mat-menu>
+                </mat-menu> -->
                 <input
                   #fileInput
                   type="file"
-                  accept="image/*"
+                  accept="image/*,video/*"
                   (change)="onFileSelected($event)"
                   style="display: none"
                   multiple
@@ -977,14 +988,14 @@
                     font-size: 20px;
                   "
                 >
-                  {{ getProductDetails.created_by.name?.substring(0, 2) }}
+                  {{ UserNameOFMessenger.substring(0, 2) }}
                 </div>
               </ng-template>
             </div>
 
             <div class="d-flex flex-column mx-2">
               <p class="font-size-20 font-wight-600 color-242424 margin-0">
-                {{ getProductDetails.created_by.name }}
+                {{ UserNameOFMessenger }}
               </p>
               <p class="font-size-16 font-wight-400 color-909090 margin-0">
                 {{ getProductDetails.created_by.city }}
@@ -1031,7 +1042,7 @@
                     font-size: 20px;
                   "
                 >
-                  {{ getProductDetails.name?.substring(0, 2) }}
+                  {{ getProductDetails.title?.substring(0, 2) }}
                 </div>
               </ng-template>
             </div>
@@ -1040,7 +1051,7 @@
               <p
                 class="font-size-20 font-wight-600 color-242424 margin-0 d-flex align-items-center"
               >
-                {{ getProductDetails.name }} {{ getProductDetails.condition }}
+                {{ getProductDetails.title }} {{ getProductDetails.condition }}
                 <span
                   class="font-size-16 font-wight-400 color-909090 margin-0 mx-2"
                   >{{ getProductDetails.serial_no }}</span
@@ -1081,8 +1092,8 @@
                 }"
               >
                 <div class="message-content-main">
-                  <div class="message-content">
-                    <p>{{ message.message }}</p>
+                  <div class="message-content" [ngClass]="{ 'no-background': message.attachments }">
+                    <p *ngIf="message?.message" [ngClass]="{ 'black-background-text': message.attachments }">{{ message.message }}</p>
 
                     <div *ngIf="message?.ship_price && message?.valid_until && !isCustomOffer" class="shippment-and-validity-timr-div card">
                       <div class="card-body">
@@ -1108,24 +1119,43 @@
                     </p>
 
                     <div class="d-flex gap-2" *ngIf="message.attachments">
-                      <img
-                        *ngIf="!isArray(message.attachments)"
-                        [src]="
-                          apiUrl + message.attachments
-                        "
-                        class="attachment-stl"
-                        alt="Attachment"
-                      />
+                      <ng-container *ngIf="!isArray(message.attachments)">
+                        <ng-container [ngSwitch]="getAttachmentType(message.attachments)">
+                          <img
+                            *ngSwitchCase="'image'"
+                            [src]="apiUrl + message.attachments"
+                            class="attachment-stl"
+                            alt="Attachment"
+                          />
+                          <video
+                            *ngSwitchCase="'video'"
+                            [src]="apiUrl + message.attachments"
+                            class="attachment-stl"
+                            controls
+                          ></video>
+                        </ng-container>
+                      </ng-container>
 
-                      <div *ngIf="isArray(message.attachments)">
-                        <img
-                          *ngFor="let attachment of message.attachments"
-                          [src]="apiUrl + attachment"
-                          class="attachment-stl"
-                          alt="Attachment"
-                        />
-                      </div>
+                      <ng-container *ngIf="isArray(message.attachments)">
+                        <ng-container *ngFor="let attachment of message.attachments">
+                          <ng-container [ngSwitch]="getAttachmentType(attachment)">
+                            <img
+                              *ngSwitchCase="'image'"
+                              [src]="apiUrl + attachment"
+                              class="attachment-stl"
+                              alt="Attachment"
+                            />
+                            <video
+                              *ngSwitchCase="'video'"
+                              [src]="apiUrl + attachment"
+                              class="attachment-stl"
+                              controls
+                            ></video>
+                          </ng-container>
+                        </ng-container>
+                      </ng-container>
                     </div>
+
 
                     <div
                       *ngIf="
@@ -1479,7 +1509,7 @@
                       font-size: 20px;
                     "
                   >
-                    {{ getProductDetails.name?.substring(0, 2) }}
+                    {{ getProductDetails.title?.substring(0, 2) }}
                   </div>
                 </ng-template>
               </div>
@@ -1512,9 +1542,7 @@
           <div style="width: 4%" class="d-flex">
             <button
               style="width: 0; height: 0; padding: 0"
-              mat-icon-button
-              [matMenuTriggerFor]="menu"
-              (click)="$event.stopPropagation()"
+              (click)="uploadImages()"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -1527,15 +1555,15 @@
                 <path d="M8 7V1h1v6h6v1H9v6H8V8H2V7h6z" />
               </svg>
             </button>
-            <mat-menu #menu="matMenu">
+            <!-- <mat-menu #menu="matMenu">
               <button (click)="uploadImages()" mat-menu-item>
                 <span>{{ "chat_com.Upload_Images" | translate }}</span>
               </button>
-            </mat-menu>
+            </mat-menu> -->
             <input
               #fileInput
               type="file"
-              accept="image/*"
+               accept="image/*,video/*"
               (change)="onFileSelected($event)"
               style="display: none"
               multiple

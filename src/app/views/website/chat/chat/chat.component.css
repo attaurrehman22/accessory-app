@@ -3,6 +3,17 @@
     height: 800px;
 }
 
+.no-background {
+  background: none !important;
+}
+
+.black-background-text {
+  background-color: #242424 !important;
+  padding: 10px !important;
+  border-radius: 10px !important;
+  color: #FFFFFF;
+}
+
 .unread-btn {
     background: none;
     border: none;

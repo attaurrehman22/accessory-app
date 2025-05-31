@@ -35,7 +35,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
   productDeatils: any;
   detailsWithLatestMessages: any;
   messages: any;
-  a;
+    userID: string | null;
   chats: any;
   getProductDetails: any;
   chat_id: any;
@@ -65,6 +65,12 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     }
   }
 
+  UserNameOFMessenger:any;
+
+  getNameOfMessenger(chat){
+   return (chat.product.created_by.id == this.userID ? chat.buyer : chat.seller) || 'N/A'
+  }
+
   loginFirst() {
     const dialogRef = this.dialog.open(ModelLoginComponent, {
       width: "600px",
@@ -76,7 +82,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
 
   ngOnInit(): void {
     this.user_id = localStorage.getItem("userID");
-    
+    this.userID = localStorage.getItem('userID');
     if (!this.user_id) {
       this.loginFirst();
     }
@@ -180,6 +186,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
   chat_id_for_remove_unread_count: any;
 
   getMesageDetails(param: any) {
+    this.UserNameOFMessenger = (param.product.created_by.id == this.userID ? param.buyer : param.seller) || 'N/A'
     this.chat_id_for_remove_unread_count = param.chat_id;
     this.sellerProductID = param.product_id;
     this.sellerID = param.product.created_by.id;
@@ -461,9 +468,26 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     return this.messages ? [...this.messages].reverse() : [];
   }
 
+//  isArray(attachments: any): boolean {
+//     return Array.isArray(attachments);
+//   }
+
+  getAttachmentType(attachment: string): 'image' | 'video' | 'unknown' {
+    const lower = attachment.toLowerCase();
+    if (lower.endsWith('.jpg') || lower.endsWith('.jpeg') || lower.endsWith('.png') || lower.endsWith('.gif')) {
+      return 'image';
+    }
+    if (lower.endsWith('.mp4') || lower.endsWith('.webm') || lower.endsWith('.ogg')) {
+      return 'video';
+    }
+    return 'unknown';
+  }
+
+
+
   sendMessage(): void {
     const trimmedMessage = this.newMessage?.trim();
-    if (!trimmedMessage) {
+    if (!trimmedMessage && !this.selectedImages) {
       return; // Don't send API request if message is only spaces or empty
     }
     console.log("Sending message:", trimmedMessage);
@@ -540,8 +564,10 @@ export class ChatComponent implements OnInit, AfterViewChecked {
 
   onFileSelected(event: any): void {
     const files = event.target.files;
+    console.log("files",files)
     if (files && files.length > 0) {
       this.selectedImages = Array.from(files);
+      console.log("selectedImages",this.selectedImages)
       this.sendMessage();
     }
   }
