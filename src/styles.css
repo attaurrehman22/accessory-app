@@ -393,6 +393,7 @@ a {
 .featured-promoted-class-badge {
   background-color: #fff;
   padding: 0 5px 0 5px;
+  border-radius: 5px;
 }
 
 #mat-menu-panel-2 {

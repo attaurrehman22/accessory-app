@@ -446,8 +446,9 @@ mat-grid-list {
 
 .card-img-top {
   height: 260px;
-  object-fit: contain;
+  object-fit: cover;
   background: #F8F8F8;
+  border: none;
 }
 
 .watch-brand {
