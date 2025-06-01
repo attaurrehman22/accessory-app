@@ -25,7 +25,7 @@ export class AddAttributeComponent implements OnInit{
     public dialogRef: MatDialogRef<AddAttributeComponent>,
     @Inject(MAT_DIALOG_DATA) data: any
   ) {
-    console.log("Data", data);
+    // console.log("Data", data);
 
     this.categoryForm = this.fb.group({
       type: [
@@ -53,9 +53,9 @@ export class AddAttributeComponent implements OnInit{
   }
 
   onSubmit(): void {
-    console.log("this form", this.categoryForm.value);
+    // console.log("this form", this.categoryForm.value);
     if (this.categoryForm.valid) {
-      console.log("Form Values:", this.categoryForm.value);
+      // console.log("Form Values:", this.categoryForm.value);
       if (this.paramVal == "Create") {
         this.http.addAttributesType(this.categoryForm.value).subscribe(
           (res) => {
@@ -63,7 +63,7 @@ export class AddAttributeComponent implements OnInit{
             this.dialogRef.close(true);
           },
           (err) => {
-            console.log("Error", err.error.message);
+            // console.log("Error", err.error.message);
             if (err?.error?.message) {
               this.alertService.showAlert("warning", err.error.message);
             } else {
