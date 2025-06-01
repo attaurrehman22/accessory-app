@@ -806,7 +806,6 @@
                                 'create_product_listing.caliber_movement_placeHolder'
                                   | translate
                               }}"
-                              appOnlyCharacterLimitThirty
                             />
                           </mat-form-field>
                         </div>
@@ -1543,7 +1542,7 @@
                         [src]="videoUrl"
                         style="height: 100%; width: 100%; object-fit: cover"
                       ></video>
-                      <button class="delete-btn" (click)="removeVideo()">
+                      <button class="delete-btn" style="top: 35px;right: 35px;" (click)="removeVideo($event)">
                         <mat-icon>delete</mat-icon>
                       </button>
                     </ng-container>
@@ -4201,7 +4200,7 @@
                                   'create_product_listing.caliber_movement_placeHolder'
                                     | translate
                                 }}"
-                                appOnlyCharacterLimitThirty
+                                
                               />
                             </mat-form-field>
                           </div>
@@ -4862,7 +4861,7 @@
                       [src]="videoUrl"
                       style="height: 100%; width: 100%; object-fit: cover"
                     ></video>
-                    <button class="delete-btn" (click)="removeVideo()">
+                    <button class="delete-btn" style="top: 35px;right: 35px;" (click)="removeVideo($event)">
                       <mat-icon>delete</mat-icon>
                     </button>
                   </ng-container>

@@ -398,7 +398,7 @@ a {
 
 #mat-menu-panel-2 {
   max-width: 1000px !important;
-  min-width: 60vw !important;
+  min-width: 10vw !important;
   margin-top: 15px;
   margin-right: 7vw;
   margin-left: 10vw;

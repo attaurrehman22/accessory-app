@@ -83,8 +83,10 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
     }
   }
 
-  removeVideo() {
-    this.removedImagesUrl.push(this.videoUrl)
+  deleted_video:boolean=false;
+  removeVideo(event: MouseEvent) {
+    event.stopPropagation();
+    this.deleted_video = true;
     this.selectedVideo = null;
     this.videoUrl = null;
   }
@@ -1820,6 +1822,7 @@ onUnknownChange(event: MatCheckboxChange): void {
       }
 
       const formData = new FormData();
+
       formData.append("product_id", this.productIDFromResponse);
       if (this.coverImage && this.coverImage.file) {
         formData.append(
@@ -1831,6 +1834,10 @@ onUnknownChange(event: MatCheckboxChange): void {
 
       if (this.selectedVideo) {
         formData.append("video", this.selectedVideo || "main_image.jpg");
+      }
+
+      if (this.deleted_video && !this.videoUrl) {
+        formData.append("deleted_video", this.deleted_video.toString());
       }
 
       let isUpdate;
