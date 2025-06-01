@@ -276,9 +276,19 @@ export class BuyProductComponentComponent implements OnInit {
         this.thumbnails.push({ url: this.productDetails.video, type: "video" });
       }
 
+      if (this.productMainImage) {
+        this.productMainImage = this.productMainImage.replace(/\\/g, "");
+        this.thumbnails.unshift({
+          url: this.productMainImage,
+          type: "image",
+        });
+      }
+
       if (this.thumbnails.length > 0) {
         this.selectedImage = this.thumbnails[0].url; // Store only the URL
       }
+
+
       if (
         this.isDealer === "dealer" &&
         this.routeFrom !== "listing-to-product"
