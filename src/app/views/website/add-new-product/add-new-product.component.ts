@@ -1836,9 +1836,9 @@ onUnknownChange(event: MatCheckboxChange): void {
         formData.append("video", this.selectedVideo || "main_image.jpg");
       }
 
-      if (this.deleted_video && !this.videoUrl) {
-        formData.append("deleted_video", this.deleted_video.toString());
-      }
+      // if (this.deleted_video && !this.videoUrl) {
+      //   formData.append("deleted_video", this.deleted_video.toString());
+      // }
 
       let isUpdate;
       if (this.currentStepper == "uploadImages") {
