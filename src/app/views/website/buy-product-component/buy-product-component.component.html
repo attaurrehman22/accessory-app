@@ -87,7 +87,7 @@
           <img
           *ngIf="item.type === 'image'"
           [src]="apiUrl + item.url"
-          style="background: #f8f8f8; object-fit: scale-down"
+          style="background: #f8f8f8; object-fit: cover"
           class="img-fluid"
           alt="thumbnail"
           [ngClass]="{ 'blur-image': item.url !== selectedImage, 'hover-remove-blur': true }"
@@ -101,7 +101,7 @@
             *ngIf="item.type === 'video'"
             (click)="swapImages(item)"
             [src]="apiUrl + item.url"
-            style="background: #f8f8f8; object-fit: scale-down;height: 100%;"
+            style="background: #f8f8f8; object-fit: cover;height: 100%;"
             class="img-fluid"
           ></video>
         </div>

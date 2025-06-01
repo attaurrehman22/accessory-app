@@ -80,7 +80,7 @@
                   font-size: 20px;
                 "
               >
-                {{ noMessageDetails.name?.substring(0, 2) }}
+                {{ noMessageDetails.title?.substring(0, 2) }}
               </div>
             </ng-template>
 
@@ -94,7 +94,7 @@
                       : 'deactive-name-time'
                   "
                 >
-                  {{ productDeatils.name || "N/A" }}
+                  {{ productDeatils.title || "N/A" }}
                   {{ productDeatils.condition || "N/A" }}
                 </p>
                 <p
@@ -111,7 +111,7 @@
               <div class="d-flex flex-wrap justify-content-between w-100">
                 <div class="d-flex flex-column">
                   <p class="mb-1 font-size-16 font-weight-500 color-242424">
-                    {{ productDeatils.name || "N/A" }}
+                    {{ productDeatils.title || "N/A" }}
                     {{ productDeatils.condition || "N/A" }}
                   </p>
                   <p
@@ -286,7 +286,7 @@
                     {{ UserNameOFMessenger }}
                   </p>
                   <p class="font-size-16 font-wight-400 color-909090 margin-0">
-                    {{ getProductDetails.created_by.city }}
+                    {{ userCity }}
                   </p>
                 </div>
               </div>
@@ -988,7 +988,7 @@
                     font-size: 20px;
                   "
                 >
-                  {{ UserNameOFMessenger.substring(0, 2) }}
+                  {{ getInitialsofUsername(UserNameOFMessenger) }}
                 </div>
               </ng-template>
             </div>
@@ -998,7 +998,7 @@
                 {{ UserNameOFMessenger }}
               </p>
               <p class="font-size-16 font-wight-400 color-909090 margin-0">
-                {{ getProductDetails.created_by.city }}
+                {{ userCity }}
               </p>
             </div>
           </div>

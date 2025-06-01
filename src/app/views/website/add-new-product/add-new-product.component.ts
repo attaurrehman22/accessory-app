@@ -84,6 +84,7 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
   }
 
   removeVideo() {
+    this.removedImagesUrl.push(this.videoUrl)
     this.selectedVideo = null;
     this.videoUrl = null;
   }
@@ -1773,6 +1774,19 @@ onUnknownChange(event: MatCheckboxChange): void {
         this.alertService.showAlert("warning", "Enter Required Form Values");
       }
     } else if (Param === "uploadImages") {
+
+      if (this.allImages.length == 0 || this.allImages.length == 1) {
+        if (this.translateService.currentLang == "en") {
+          this.alertService.showAlert(
+            "warning",
+            "Please upload at leaset two images."
+          );
+        } else {
+          this.alertService.showAlert("warning","يرجى رفع صورتين على الأقل.");
+        }
+        return;
+      }
+
       if (!this.coverImage) {
         if (this.translateService.currentLang == "en") {
           this.alertService.showAlert(
@@ -1831,20 +1845,20 @@ onUnknownChange(event: MatCheckboxChange): void {
         if(this.removedImagesUrl.length > 0){
           this.removedImagesUrl.forEach((image) => {
             if (image) {
-              formData.append(`deleted_images[]`,image.replace('https://demo-api.chronosouq.com/', ''));
+              formData.append(`deleted_images[]`,image.replace(this.apiUrl, ''));
             }
           });
         }
 
         const mainImageURL = this.apiUrl + this.productDetails.main_image
-        console.log("main image url in Submit Form mainImageURL",mainImageURL)
-        console.log("allImages ",this.allImages)
-        console.log("allImages of first ",this.allImages[0])
+        // console.log("main image url in Submit Form mainImageURL",mainImageURL)
+        // console.log("allImages ",this.allImages)
+        // console.log("allImages of first ",this.allImages[0])
         if(mainImageURL == this.allImages[0].url){
-          console.log("WORKING OF MATCHING NAME IMAGEWS")
+          // console.log("WORKING OF MATCHING NAME IMAGEWS")
         }else{
           
-          const url = this.allImages[0].url.replace('https://demo-api.chronosouq.com/', '');
+          const url = this.allImages[0].url.replace(this.apiUrl, '');
           formData.append('replaced_main_image', url);
         }
      

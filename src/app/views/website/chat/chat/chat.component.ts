@@ -71,6 +71,10 @@ export class ChatComponent implements OnInit, AfterViewChecked {
    return (chat.product.created_by.id == this.userID ? chat.buyer : chat.seller) || 'N/A'
   }
 
+   getCityOfMessenger(chat){
+   return (chat.product.created_by.id == this.userID ? chat.buyer_city : chat.seller_city) || 'N/A'
+  }
+
   loginFirst() {
     const dialogRef = this.dialog.open(ModelLoginComponent, {
       width: "600px",
@@ -97,6 +101,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
       }
 
       this.chat_id = history?.state?.chatID;
+      this.chat_id_for_remove_unread_count = this.chat_id;
       this.getChatDetails();
     }
     if (history?.state?.data && history?.state?.fromRoute != "gotToChat") {
@@ -184,9 +189,25 @@ export class ChatComponent implements OnInit, AfterViewChecked {
 
   user_id: any;
   chat_id_for_remove_unread_count: any;
+  userCity:any;
+
+  getInitialsofUsername(name){
+    if (!name) {
+      return '';
+    }
+
+    const words = name.trim().split(' ');
+
+    if (words.length === 1) {
+      return words[0][0].toUpperCase();
+    } else {
+      return (words[0][0] + words[1][0]).toUpperCase();
+    }
+  }
 
   getMesageDetails(param: any) {
-    this.UserNameOFMessenger = (param.product.created_by.id == this.userID ? param.buyer : param.seller) || 'N/A'
+    this.UserNameOFMessenger = (param.product.created_by.id == this.userID ? param.buyer : param.seller)
+    this.userCity = (param.product.created_by.id == this.userID ? param.buyer_city : param.seller_city)
     this.chat_id_for_remove_unread_count = param.chat_id;
     this.sellerProductID = param.product_id;
     this.sellerID = param.product.created_by.id;

@@ -463,8 +463,11 @@ export class MyListingDetailsComponent implements OnInit {
   estimateDelivery: any;
   chat_ID: any;
   forSendingProductID: any;
+  SellerCityForDisplay:any;
 
   detailListing(listing: any): void {
+    this.SellerNameForDisplay = listing.buyer.name;
+    this.SellerCityForDisplay = listing.buyer.city;
     this.isShowSellOrdersListngDetails = true;
     this.orderID = listing?.id;
     this.forSendingProductID = listing?.product_id;
@@ -481,6 +484,23 @@ export class MyListingDetailsComponent implements OnInit {
 
     this.fetchOrderStatus(listing.id, "seller");
   }
+
+ getInitials(name: string | undefined | null): string {
+  if (!name) {
+    return '';
+  }
+
+  // Split name by space and get first letters
+  const words = name.trim().split(' ');
+  if (words.length === 1) {
+    return words[0][0].toUpperCase();
+  } else {
+    return (words[0][0] + words[1][0]).toUpperCase();
+  }
+}
+
+
+  SellerNameForDisplay:any;
 
   // existingProductUserID:any;
   detailsBuyListing(listing: any): void {
@@ -504,83 +524,7 @@ export class MyListingDetailsComponent implements OnInit {
   lengthTwoofSeller: boolean = false;
   isSellerDeliveryInprogress: boolean = false;
 
-  // fetchOrderStatus(orderID: number, type: "seller" | "buyer"): void {
-  //   this.getOrderStatus(orderID).subscribe(
-  //     (res) => {
-  //       if (type === "seller") {
-  //         if (
-  //           res?.status_flow?.initiated &&
-  //           res?.status_flow?.awaiting_confirmation &&
-  //           !res?.status_flow?.make_payment
-  //         ) {
-  //           this.lengthTwoofSeller = true;
-  //         }
 
-  //         if (
-  //           res?.status_flow?.delivery_in_progress &&
-  //           !res?.status_flow?.order_delivered
-  //         ) {
-  //           this.isSellerDeliveryInprogress = true;
-  //         }
-
-  //         this.sellerDetails = res;
-  //         this.orderID = res.order_id;
-  //         if (res?.status_flow) {
-  //           if (res?.status_flow?.initiated) {
-  //             this.sellerStatuses[0].active = true;
-  //           }
-  //           if (res?.status_flow?.awaiting_confirmation) {
-  //             this.sellerStatuses[1].active = true;
-  //           }
-  //           if (res?.status_flow?.make_payment) {
-  //             this.sellerStatuses[2].active = true;
-  //           }
-  //           if (res?.status_flow?.preparing_shipment) {
-  //             this.sellerStatuses[3].active = true;
-  //           }
-  //           if (res?.status_flow?.delivery_in_progress) {
-  //             this.sellerStatuses[4].active = true;
-  //           }
-  //           if (res?.status_flow?.order_delivered) {
-  //             this.sellerStatuses[5].active = true;
-  //           }
-  //           if (res?.status_flow?.order_completed) {
-  //             this.sellerStatuses[6].active = true;
-  //           }
-  //         }
-  //       } else if (type === "buyer") {
-  //         this.buyerDetails = res;
-  //         if (res?.status_flow) {
-  //           if (res?.status_flow?.initiated) {
-  //             this.statuses[0].active = true;
-  //           }
-  //           if (res?.status_flow?.awaiting_confirmation) {
-  //             this.statuses[1].active = true;
-  //           }
-  //           if (res?.status_flow?.make_payment) {
-  //             this.statuses[2].active = true;
-  //           }
-  //           if (res?.status_flow?.preparing_shipment) {
-  //             this.statuses[3].active = true;
-  //           }
-  //           if (res?.status_flow?.delivery_in_progress) {
-  //             this.statuses[4].active = true;
-  //           }
-  //           if (res?.status_flow?.order_delivered) {
-  //             this.statuses[5].active = true;
-  //           }
-  //           if (res?.status_flow?.order_completed) {
-  //             this.statuses[6].active = true;
-  //           }
-  //         }
-  //       }
-  //       this.getOrderDetails();
-  //     },
-  //     (error) => {
-  //       console.error("Error fetching order status:", error);
-  //     }
-  //   );
-  // }
 
   activeSellerStatuses:any
 
@@ -631,13 +575,16 @@ export class MyListingDetailsComponent implements OnInit {
             if (res?.status_flow?.order_completed) {
               this.sellerStatuses[6].active = true;
             }
+            if (res?.status_flow?.order_canceled) {
+              this.sellerStatuses[7].active = true;
+            }
           }
   
           // 🔥 Filter only active statuses for display
           this.activeSellerStatuses = this.sellerStatuses.filter((s) => s.active);
-        } else if (type === "buyer") {
+        } else if (type == "buyer") {
+          console.log("Type is Buyes")
           this.buyerDetails = res;
-        
           // Reset all to inactive
           this.statuses.forEach((s) => (s.active = false));
         
@@ -662,6 +609,9 @@ export class MyListingDetailsComponent implements OnInit {
             }
             if (res?.status_flow?.order_completed) {
               this.statuses[6].active = true;
+            }
+            if (res?.status_flow?.order_canceled) {
+              this.statuses[7].active = true;
             }
           }
         
@@ -922,13 +872,18 @@ export class MyListingDetailsComponent implements OnInit {
       label: "Order Delivered",
       description: "Authorize payout for your order.",
       active: false,
+    },
+    {
+      label: "Order canceled",
+      description: "Your order has been canceled.",
+      active: false,
     }
   ];
 
   // for Seller
   sellerStatuses = [
     {
-      label: "Order Received",
+      label: "Order Initiated",
       description: "Buyer has initiated the order.",
       active: false,
     },
@@ -960,6 +915,11 @@ export class MyListingDetailsComponent implements OnInit {
     {
       label: "Order Completed",
       description: "Your order has been completed successfully.",
+      active: false,
+    },
+    {
+      label: "Order canceled",
+      description: "The order was canceled by the buyer.",
       active: false,
     }
   ];
