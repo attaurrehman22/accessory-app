@@ -16,7 +16,7 @@ export class StayLoopComponentComponent implements OnInit {
   dummyRecord:boolean = false;
 
   ngOnInit(): void {
-    // this.getWatchOftheDay();
+    this.getWatchOftheDay();
 
     if(this.watchDetails.length == 0){
       this.watchDetails = [
