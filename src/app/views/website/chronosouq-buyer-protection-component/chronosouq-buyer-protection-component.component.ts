@@ -80,7 +80,7 @@ export class ChronosouqBuyerProtectionComponentComponent implements OnInit {
         this.categoryNames = res.data; 
         this.allProducts = res.allProducts || []; // Store all products
         // Add 'All Products' category to the category list
-        this.categoryNames.push({ name: 'All Products', products: this.allProducts });
+        this.categoryNames.unshift({ name: 'All Products', products: this.allProducts });
         this.selectedCategory = this.categoryNames[0]; // Default to the first category
         this.showList = this.selectedCategory.products || [];
       },

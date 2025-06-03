@@ -3,71 +3,68 @@
   [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }"
   *ngIf="allProducts.length > 0"
 >
-  <div class="container d-flex flex-wrap justify-content-center small-screen-margin">
+  <div
+    class="container d-flex flex-wrap justify-content-center small-screen-margin"
+  >
     <div class="col-lg-8 col-md-10 col-sm-12">
-      <p class="text-center cormorant-styl font-size-64 font-wight-700 color-484848" style="line-height: 70px;">
+      <p
+        class="text-center cormorant-styl font-size-64 font-wight-700 color-484848"
+        style="line-height: 70px"
+      >
         {{ "chrono_buyer.label" | translate }}
       </p>
     </div>
     <div class="col-lg-8 col-md-10 col-sm-12">
-      <p
-        class="text-center mt-2 font-size-18 font-wight-400 color-6a6a6a"
-      >
+      <p class="text-center mt-2 font-size-18 font-wight-400 color-6a6a6a">
         {{ "chrono_buyer.paragraph" | translate }}
       </p>
     </div>
     <div
       class="col-lg-12 col-md-12 col-sm-12 d-flex flex-wrap justify-content-center gap-2 mt-3"
     >
-      <!-- Button for All Products category -->
-<!-- <button
-(click)="changeCategory({name: 'All Products', products: allProducts})"
-class="category_btn"
-[ngClass]="{ 'selected-category': selectedCategory.name === 'All Products' }"
->
-All Products
-</button> -->
-
-<!-- Buttons for other categories -->
-<button
-*ngFor="let category of categoryNames"
-(click)="changeCategory(category)"
-class="category_btn"
-[ngClass]="{ 'selected-category': selectedCategory === category }"
->
-{{ category.name }}
-</button>
-
+      <!-- Buttons for other categories -->
+      <button
+        *ngFor="let category of categoryNames"
+        (click)="changeCategory(category)"
+        class="category_btn"
+        [ngClass]="{ 'selected-category': selectedCategory === category }"
+      >
+        {{ category.name }}
+      </button>
     </div>
 
     <div class="container mt-5">
       <div class="row">
-        <div [ngClass]="{ 'reverse-order-products': translateService.currentLang !== 'en' }" class="col-md-4 col-sm-6 mb-4" *ngFor="let watch of showList">
+        <div
+          [ngClass]="{
+            'reverse-order-products': translateService.currentLang !== 'en'
+          }"
+          class="col-md-4 col-sm-6 mb-4"
+          *ngFor="let watch of showList"
+        >
           <div class="card h-100 shadow-sm">
             <a
               [routerLink]="['/buy-product']"
               [queryParams]="{ id: watch.id }"
-                class="card-img-link"
+              class="card-img-link"
             >
-            <img
-              style="cursor: pointer;"
-           
-              [src]="apiUrl + watch.main_image"
-              class="card-img-top"
-              alt="watch image"
-            />
+              <img
+                style="cursor: pointer"
+                [src]="apiUrl + watch.main_image"
+                class="card-img-top"
+                alt="watch image"
+              />
             </a>
             <div class="card-body">
               <div
                 class="d-flex justify-content-between align-items-center mb-2"
               >
                 <div>
-                  <p class="font-size-16 font-wight-400 color-6a6a6a"
-                    style="
-                      margin: 0 !important;
-                    "
+                  <p
+                    class="font-size-16 font-wight-400 color-6a6a6a"
+                    style="margin: 0 !important"
                   >
-                    {{ watch?.brand?.name }} | {{watch?.model || 'N/A'}}
+                    {{ watch?.brand?.name }} | {{ watch?.model || "N/A" }}
                   </p>
                 </div>
                 <div>
@@ -85,19 +82,24 @@ class="category_btn"
                 class="d-flex justify-content-between align-items-center mt-3"
               >
                 <p *ngIf="watch?.shipping_charges" class="price">
-                  + <img src="../../../../assets/images/Saudi_Riyal_Symbol-2.svg" class="sar-icon-style" alt="SAR"/>
-                  {{ watch?.shipping_charges || 'Without' }} 
-              
-                   <!-- {{ watch?.currency }} -->
-                    Shipping
+                  +
+                  <img
+                    src="../../../../assets/images/Saudi_Riyal_Symbol-2.svg"
+                    class="sar-icon-style"
+                    alt="SAR"
+                  />
+                  {{ watch?.shipping_charges || "Without" }}
+
+                  <!-- {{ watch?.currency }} -->
+                  Shipping
                 </p>
 
                 <p *ngIf="!watch.shipping_charges" class="price">
                   <!-- <img src="../../../../assets/images/Saudi_Riyal_Symbol-2.svg" class="sar-icon-style" alt="SAR"/> -->
-                  {{ watch?.shipping_charges || 'Without' }} 
-              
-                   <!-- {{ watch?.currency }} -->
-                    Shipping
+                  {{ watch?.shipping_charges || "Without" }}
+
+                  <!-- {{ watch?.currency }} -->
+                  Shipping
                 </p>
 
                 <div>
@@ -105,41 +107,70 @@ class="category_btn"
                 </div>
               </div>
               <div class="d-flex justify-content-between align-items-center">
-                <p class="card-title-two">                 
-                   <img *ngIf="watch?.price" src="../../../../assets/images/Saudi_Riyal_Symbol-2.svg" class="sar-icon-style" alt="SAR"/>
+                <p class="card-title-two">
+                  <img
+                    *ngIf="watch?.price"
+                    src="../../../../assets/images/Saudi_Riyal_Symbol-2.svg"
+                    class="sar-icon-style"
+                    alt="SAR"
+                  />
 
-                  {{ watch.price }}</p>
-                <p class="card-title-two">{{ watch.created_by.city || 'N/A' }}</p>
+                  {{ watch.price }}
+                </p>
+                <p class="card-title-two">
+                  {{ watch.created_by.city || "N/A" }}
+                </p>
               </div>
-              <div *ngIf="watch?.created_by?.type === 'user'" class="d-flex mt-2">
-                <p class="seller-chip"> Private Seller </p>
+              <div
+                *ngIf="watch?.created_by?.type === 'user'"
+                class="d-flex mt-2"
+              >
+                <p class="seller-chip">Private Seller</p>
               </div>
-              <div *ngIf="watch.created_by.type === 'dealer'" class="d-flex mt-2">
-                <p class="seller-chip">  Dealer </p>
+              <div
+                *ngIf="watch.created_by.type === 'dealer'"
+                class="d-flex mt-2"
+              >
+                <p class="seller-chip">Dealer</p>
               </div>
             </div>
           </div>
           <div class="heart-icon">
             <div class="featured-icon">
-              <div *ngIf="watch?.feature_item === 1" class="featured-promoted-class-badge">
+              <div
+                *ngIf="watch?.feature_item === 1"
+                class="featured-promoted-class-badge"
+              >
                 Featured
               </div>
-          
-              <div *ngIf="watch?.feature_item !== 1 && watch.is_promoted === 1" class="featured-promoted-class-badge">
+
+              <div
+                *ngIf="watch?.feature_item !== 1 && watch.is_promoted === 1"
+                class="featured-promoted-class-badge"
+              >
                 Promoted
               </div>
             </div>
-            <div class="" style="background-color: #FFF;
-            padding: 5px 5px 5px 5px;
-            border-radius: 25px;
-            display: flex;
-            align-items: center;
-            justify-content: center;">
+            <div
+              class=""
+              style="
+                background-color: #fff;
+                padding: 5px 5px 5px 5px;
+                border-radius: 25px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+              "
+            >
               <i
-                *ngIf="isUserLogin ==='true'"
+                *ngIf="isUserLogin === 'true'"
                 (click)="addWishList(watch)"
                 class="fa"
-                [ngClass]="wishList?.includes(watch.id) ? 'fa-heart' : 'fa-heart fa-heart-o'"
+                [ngClass]="
+                  wishList?.includes(watch.id)
+                    ? 'fa-heart'
+                    : 'fa-heart fa-heart-o'
+                "
                 aria-hidden="true"
               ></i>
             </div>
