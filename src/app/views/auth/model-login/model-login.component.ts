@@ -73,6 +73,7 @@ export class ModelLoginComponent implements OnInit {
     });
   }
   gotoHome() {
+    console.log("LOG CALLING")
     this.loginForm.markAllAsTouched();
     localStorage.removeItem("isLoggedIn");
     localStorage.removeItem("user_token");
