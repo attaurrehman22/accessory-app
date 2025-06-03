@@ -725,8 +725,25 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
       data: { message: "dialog-box" },
     });
 
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result) {
+    dialogRef.afterClosed().subscribe((result: any) => {
+      console.log("Modal closed with result:", result);
+
+      if (result == true) {
+        // Do something when user confirms action
+
+      } else if (!result) {
+        // Do something else or skip action
+        console.log("User closed the modal or undefined the action");
+        this.router.navigateByUrl("/login");
+      } else if (result == 'register') {
+        // Do something else or skip action
+        console.log("User closed the modal or register the action");
+        this.router.navigateByUrl("/register");
+      }
+      else if (result == false) {
+        // Do something else or skip action
+        console.log("User closed the modal or canceled the action");
+        this.router.navigateByUrl("/login");
       }
     });
   }

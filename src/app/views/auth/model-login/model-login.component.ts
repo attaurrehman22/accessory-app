@@ -142,22 +142,24 @@ export class ModelLoginComponent implements OnInit {
     }
   }
   gotoRegister() {
-    this.dialogRef.close();
-    const dialogRef = this.dialog.open(ModelRegisterComponent, {
-      width: "600px",
-      data: { message: "dialog-box" },
-    });
+    // this.dialogRef.close();
+    // const dialogRef = this.dialog.open(ModelRegisterComponent, {
+    //   width: "600px",
+    //   data: { message: "dialog-box" },
+    // });
 
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result) {
-        this.dialogRef.close();
-      }
-    });
+    // dialogRef.afterClosed().subscribe((result) => {
+    //   if (result) {
+    //     this.dialogRef.close();
+    //   }
+    // });
+    // this.router.navigate(['register'])
+    this.dialogRef.close('register');
   }
 
   closeAndMoveToLoginComp(){
     // this.router.navigate['/login']
     this.router.navigateByUrl("/login");
-    this.dialogRef.close();
+    this.dialogRef.close(false);
   }
 }

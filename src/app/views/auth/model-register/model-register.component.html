@@ -4,7 +4,7 @@
   <p class="font-size-14 font-wight-400 margin-0 color-242424 clash-display-font-family">{{ "register.welcome" | translate }}</p>
   <p class="font-size-28 font-wight-600 margin-0 color-242424">{{ "register.create_account" | translate }}</p>
 
-  <form [formGroup]="registerForm" class="custom-register-margin mat-form-fields-custom-deisgn">
+  <form [formGroup]="registerForm" class="custom-register-margin mat-form-fields-custom-deisgn" (keydown.enter)="register()">
     <div [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'">
       <mat-form-field appearance="outline" style="width: 100%">
         <mat-label>{{ 'register.username' | translate }}</mat-label>
@@ -110,7 +110,7 @@
     </div>
   </form>
 
-  <button class="login-btn mt-1" type="submit" (click)="register()">
+  <button class="login-btn mt-1" type="submit">
     {{ 'register.register_button' | translate }}
   </button>
 

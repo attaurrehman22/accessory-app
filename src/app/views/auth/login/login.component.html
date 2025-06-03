@@ -3,8 +3,8 @@
   <div class="login-card">
     <p class="font-size-14 font-wight-400 margin-0 color-242424">{{ "login.hy_there" | translate }}</p>
     <p class="font-size-28 font-wight-600 margin-0 color-242424">{{ "login.well_come" | translate }}</p>
-    <form [formGroup]="loginForm" class="custom-margin mat-form-fields-custom-deisgn">
-      <div [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'">
+    <form [formGroup]="loginForm" class="custom-margin mat-form-fields-custom-deisgn" (keydown.enter)="gotoHome()">
+      <div [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'" >
         <mat-form-field appearance="outline" style="width: 100%">
           <mat-label>{{ "login.email" | translate }}</mat-label>
           <input type="email" placeholder="{{ 'login.email' | translate }}" required matInput formControlName="email" />
@@ -50,7 +50,7 @@
         <a class="font-size-14 font-wight-400 margin-0 color-242424" routerLink="/forgotPassword">{{ "login.forgot_password" | translate }}</a>
       </div>
     </form>
-    <button class="login-btn mt-3" type="submit" (click)="gotoHome()">
+    <button class="login-btn mt-3" type="submit">
       {{ "login.login" | translate }}
     </button>
     <div class="separator">{{ "login.or" | translate }}</div>
