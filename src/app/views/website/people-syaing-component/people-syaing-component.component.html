@@ -69,23 +69,23 @@
 
                   <img [src]="
                       apiUrl +
-                      testimonials[getNextIndex(-1)]?.profile_picture
+                      testimonials[getNextIndex(1)]?.profile_picture
                     " class="main-image img-fluid back_card" alt="Testimonial Image" />
                 </div>
               </div>
               <div class="col-md-8 reverse-text">
                 <div class="card-body d-flex flex-column">
                   <p class="card-text font-size-12 font-wight-400 color-484848">
-                    {{ testimonials[getNextIndex(-1)].review_text }}
+                    {{ testimonials[getNextIndex(1)].review_text }}
                   </p>
                   <div class="mb-2">
                   </div>
                   <div class="horizontal-line"></div>
                   <p class="card-title mb-0 font-size-24 color-484848" style="font-weight: 400 !important">
-                    {{ testimonials[getNextIndex(-1)].name }}
+                    {{ testimonials[getNextIndex(1)].name }}
                   </p>
                   <p class="card-subtitle text-muted font-size-12 font-wight-400 color-484848">
-                    {{ testimonials[getNextIndex(-1)].company_name }}
+                    {{ testimonials[getNextIndex(1)].company_name }}
                   </p>
                 </div>
               </div>
@@ -105,23 +105,23 @@
 
                   <img [src]="
                       apiUrl +
-                      testimonials[getNextIndex(1)]?.profile_picture
+                      testimonials[getNextIndex(-1)]?.profile_picture
                     " class="main-image img-fluid back_card" alt="Testimonial Image" />
                 </div>
               </div>
               <div class="col-md-8 reverse-text">
                 <div class="card-body d-flex flex-column">
                   <p class="card-text font-size-12 font-wight-400 color-484848">
-                    {{ testimonials[getNextIndex(1)].review_text }}
+                    {{ testimonials[getNextIndex(-1)].review_text }}
                   </p>
                   <div class="mb-2">
                   </div>
                   <div class="horizontal-line"></div>
                   <p class="card-title mb-0 font-size-24 color-484848" style="font-weight: 400 !important">
-                    {{ testimonials[getNextIndex(1)].name }}
+                    {{ testimonials[getNextIndex(-1)].name }}
                   </p>
                   <p class="card-subtitle text-muted font-size-12 font-wight-400 color-484848">
-                    {{ testimonials[getNextIndex(1)].company_name }}
+                    {{ testimonials[getNextIndex(-1)].company_name }}
                   </p>
                 </div>
               </div>
