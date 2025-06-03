@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { AlertsServicesService } from 'src/services/alerts-service/alerts-services.service';
 import { AdminSidebarComponent } from '../admin-sidebar/admin-sidebar.component';
+import { LoginStateService } from 'src/services/login-service/login-state.service';
 
 @Component({
   selector: 'app-admin-page-header',
@@ -13,12 +14,21 @@ export class AdminPageHeaderComponent {
   constructor(
     private translateService: TranslateService,
     private router: Router,
-    public alertService: AlertsServicesService
+    public alertService: AlertsServicesService,
+    private loginStateService: LoginStateService,
   ) {}
+
   gotoLogin() {
-    localStorage.removeItem('Logged')
-    localStorage.removeItem('user_token')
-    localStorage.removeItem('isAdminUser')
-    this.router.navigate(['/login'])
+    localStorage.removeItem("isLoggedIn");
+    localStorage.removeItem("user_token");
+    localStorage.removeItem("isLoggedIn");
+    localStorage.removeItem("userID");
+    localStorage.removeItem("isAdmin");
+    localStorage.removeItem("userType");
+    this.loginStateService.updateLoginStatus(false);
+    localStorage.setItem("isAdmin", "false");
+    this.router.navigateByUrl("login").then(() => {
+      window.location.reload();
+    });
   }
 }

@@ -141,6 +141,7 @@ export class HeaderComponent {
   }
 
   ngOnInit() {
+    console.log("showHideAdminUser",this.showHideAdminUser)
     this.isSmallScreen = window.innerWidth <= 1500;
    
     // if(this.isManuallyToggled && this.isShowSearchField){

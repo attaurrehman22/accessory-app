@@ -50,7 +50,7 @@
         <a class="font-size-14 font-wight-400 margin-0 color-242424" routerLink="/forgotPassword">{{ "login.forgot_password" | translate }}</a>
       </div>
     </form>
-    <button class="login-btn mt-3" type="submit">
+    <button class="login-btn mt-3" type="submit" (click)="gotoHome()">
       {{ "login.login" | translate }}
     </button>
     <div class="separator">{{ "login.or" | translate }}</div>
