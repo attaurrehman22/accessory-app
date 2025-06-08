@@ -34,25 +34,6 @@ export class AdminBrandsComponent implements OnInit, AfterViewInit, OnDestroy {
     "meta_description",
     "is_active",
     "top_brand",
-
-    "is_active",
-    "top_brand",
-
-    "is_active",
-    "top_brand",
-
-    "is_active",
-    "top_brand",
-
-     "is_active",
-    "top_brand",
-
-     "is_active",
-    "top_brand",
-
-     "is_active",
-    "top_brand",
-
     "edit",
   ];
   dataSource: MatTableDataSource<UserData>;

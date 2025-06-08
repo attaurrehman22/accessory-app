@@ -552,6 +552,13 @@ a {
   padding: 0 15px 0 15px;
 }
 
+.admin-clear-filter-btn {
+    border: 1px solid grey;
+    height: 48px;
+    padding: 0 15px 0 15px;
+    border-radius: 8px;
+}
+
 .table-conatiner {
   height: 60vh !important;
   overflow-y: auto;
@@ -580,10 +587,6 @@ a {
   background-color: white;
   z-index: 2;
   padding-top: 4px;
-}
-
-.table {
-  /* min-width: 100% !important; */
 }
 
 .first-column-head {
@@ -619,7 +622,7 @@ a {
 .admin-table tr.mat-row {
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
   border-radius: 4px;
-  background: #fff; /* to separate it from the background */
+  background: #fff; 
 }
 
 .admin-table tr.mat-row + tr.mat-row {
@@ -631,10 +634,17 @@ a {
   background: #242424 !important;
 }
 
+.admin-table > tbody > tr {
+   transition: 
+    background-color 0.3s ease,
+    box-shadow 0.3s ease,
+    transform 0.3s ease;
+}
+
 .admin-table > tbody > tr:hover {
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  cursor: pointer; 
-  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15); /* soft shadow all around */
+  transform: scale(-1px); /* slight scaling for 'pop' effect */
+  cursor: pointer;
 }
 
 .admin-table > thead > tr > th {

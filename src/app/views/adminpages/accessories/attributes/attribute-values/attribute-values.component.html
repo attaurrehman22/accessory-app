@@ -1,154 +1,123 @@
 <div class="">
   <div class="row">
     <div class="col-md-12">
-      <div class="row">
-        <div class="col-md-10">
-          <br />
-          <h1>Attributes Value</h1>
-        </div>
-        <div class="col-md-1"></div>
-      </div>
-      <!-- <div class="col-10"></div> -->
+      <h1>Attributes Value</h1>
     </div>
     <div class="row g-0">
       <div class="col-lg-12 col-md-12 col-sm-12">
-        <div class="table">
-          <mat-card class="mt card-class">
-            <mat-card-content>
-              <div class="row">
-                <div class="col-8 col-lg-8 col-md-8 col-sm-6 d-flex gap-2">
-                  <mat-form-field appearance="outline">
-                    <mat-label>Search</mat-label>
-                    <input
-                      matInput
-                      (keyup)="applyFilter($event)"
-                      placeholder="Search"
-                      #input
-                    />
-                  </mat-form-field>
+        <div class="row">
+          <div class="col-8 col-lg-8 col-md-8 col-sm-6 d-flex gap-2 mat-form-fields-custom-deisgn">
+            <mat-form-field appearance="outline">
+              <mat-label>Search</mat-label>
+              <input
+                matInput
+                (keyup)="applyFilter($event)"
+                placeholder="Search"
+                #input
+              />
+            </mat-form-field>
+          </div>
+          <div
+            class="col-4 col-lg-4 col-md-4 col-sm-6 d-flex justify-content-end align-items-center"
+          >
+            <button
+               class="admin-add-btn"
+              (click)="openModal()"
+            >
+              Add Attribute Value
+            </button>
+          </div>
+        </div>
+        <div class="table-conatiner">
+          <table class="table admin-table" mat-table [dataSource]="dataSource">
+            <!-- ID Column -->
+            <ng-container class="column" matColumnDef="attribute_id">
+              <th mat-header-cell class="column" *matHeaderCellDef>
+                Attribute Id
+              </th>
+              <td mat-cell class="column" *matCellDef="let row">
+                {{ row.attribute_id }}
+              </td>
+            </ng-container>
 
-                </div>
+            <!-- First Name Column -->
+            <ng-container class="column" matColumnDef="shop_id">
+              <th mat-header-cell class="column" *matHeaderCellDef>
+                Shop Id
+              </th>
+              <td mat-cell class="column" *matCellDef="let row; in">
+                {{ row.shop_id }}
+              </td>
+            </ng-container>
 
-                <div
-                  class="col-4 col-lg-4 col-md-4 col-sm-6 d-flex justify-content-end align-items-center"
-                >
-                  <button
-                    mat-raised-button
-                    color="primary"
-                    (click)="openModal()"
-                  >
-                    <mat-icon>add_circle_outline</mat-icon>Add Attribute Value
-                  </button>
-                </div>
-              </div>
-              <mat-card class="card-class">
-                <div class="mat-elevation-z8">
-                  <table class="table" mat-table [dataSource]="dataSource">
-                    <!-- ID Column -->
-                    <ng-container class="column" matColumnDef="attribute_id">
-                      <th mat-header-cell class="column" *matHeaderCellDef>
-                        Attribute Id
-                      </th>
-                      <td mat-cell class="column" *matCellDef="let row">
-                        {{ row.attribute_id }}
-                      </td>
-                    </ng-container>
+            <!-- Last Name Column -->
+            <ng-container class="column" matColumnDef="value">
+              <th mat-header-cell class="column" *matHeaderCellDef>
+                Value
+              </th>
+              <td mat-cell class="column" *matCellDef="let row; in">
+                {{ row.value }}
+              </td>
+            </ng-container>
 
-                    <!-- First Name Column -->
-                    <ng-container class="column" matColumnDef="shop_id">
-                      <th mat-header-cell class="column" *matHeaderCellDef>
-                        Shop Id
-                      </th>
-                      <td mat-cell class="column" *matCellDef="let row; in">
-                        {{ row.shop_id }}
-                      </td>
-                    </ng-container>
+            <ng-container class="column" matColumnDef="color">
+              <th mat-header-cell class="column" *matHeaderCellDef>
+                Color
+              </th>
+              <td mat-cell class="column" *matCellDef="let row; in">
+                {{ row.color }}
+              </td>
+            </ng-container>
 
-                    <!-- Last Name Column -->
-                    <ng-container class="column" matColumnDef="value">
-                      <th mat-header-cell class="column" *matHeaderCellDef>
-                        Value
-                      </th>
-                      <td mat-cell class="column" *matCellDef="let row; in">
-                        {{ row.value }}
-                      </td>
-                    </ng-container>
+            <ng-container
+              class="column"
+              matColumnDef="order"
+            >
+              <th mat-header-cell class="column" *matHeaderCellDef>
+                Order
+              </th>
+              <td mat-cell class="column" *matCellDef="let row; in">
+                {{ row.order }}
+              </td>
+            </ng-container>
 
-                    <ng-container class="column" matColumnDef="color">
-                      <th mat-header-cell class="column" *matHeaderCellDef>
-                        Color
-                      </th>
-                      <td mat-cell class="column" *matCellDef="let row; in">
-                        {{ row.color }}
-                      </td>
-                    </ng-container>
+            <!-- Status Column -->
+            <ng-container class="column" matColumnDef="action">
+              <th mat-header-cell class="column" *matHeaderCellDef>
+                Action
+              </th>
+              <td mat-cell class="column" *matCellDef="let row; in">
+                <button  matTooltip="Edit Attribute" mat-icon-button color="primary" (click)="editCategory(row)">
+                  <mat-icon>edit</mat-icon>
+                </button>
+                <button  matTooltip="Delete Attribute" mat-icon-button color="warn" (click)="deleteCategory(row)">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </td>
+            </ng-container>
 
-                    <ng-container
-                      class="column"
-                      matColumnDef="order"
-                    >
-                      <th mat-header-cell class="column" *matHeaderCellDef>
-                        Order
-                      </th>
-                      <td mat-cell class="column" *matCellDef="let row; in">
-                        {{ row.order }}
-                      </td>
-                    </ng-container>
+            <tr
+              mat-header-row
+              *matHeaderRowDef="displayedColumns; sticky: true"
+            ></tr>
+            <tr
+              mat-row
+              *matRowDef="let row; columns: displayedColumns"
+            ></tr>
 
-                    <!-- Status Column -->
-                    <ng-container class="column" matColumnDef="action">
-                      <th mat-header-cell class="column" *matHeaderCellDef>
-                        Action
-                      </th>
-                      <td mat-cell class="column" *matCellDef="let row; in">
+            <!-- Row shown when there is no matching data. -->
+            <tr class="mat-row" *matNoDataRow>
+              <td class="mat-cell" colspan="4">
+                No data matching the filter "{{ input.value }}"
+              </td>
+            </tr>
+          </table>
 
-                        <button
-                        style="width: 0; height: 0; padding: 0"
-                        mat-icon-button
-                        [matMenuTriggerFor]="menu"
-                        (click)="$event.stopPropagation()"
-                      >
-                        <mat-icon>info</mat-icon>
-                      </button>
-                      <mat-menu #menu="matMenu">
-                        <button mat-menu-item (click)="editCategory(row)">
-                          <mat-icon>edit</mat-icon>
-                          <span>Edit</span>
-                        </button>
-                        <button mat-menu-item (click)="deleteCategory(row)">
-                          <mat-icon>delete</mat-icon>
-                          <span>Delete</span>
-                        </button>
-                      </mat-menu>
-                      </td>
-                    </ng-container>
-
-                    <tr
-                      mat-header-row
-                      *matHeaderRowDef="displayedColumns; sticky: true"
-                    ></tr>
-                    <tr
-                      mat-row
-                      *matRowDef="let row; columns: displayedColumns"
-                    ></tr>
-
-                    <!-- Row shown when there is no matching data. -->
-                    <tr class="mat-row" *matNoDataRow>
-                      <td class="mat-cell" colspan="4">
-                        No data matching the filter "{{ input.value }}"
-                      </td>
-                    </tr>
-                  </table>
-
-                  <mat-paginator
-                    #paginator
-                    [pageSizeOptions]="[5, 10, 20]"
-                    showFirstLastButtons
-                  ></mat-paginator>
-                </div>
-              </mat-card>
-            </mat-card-content>
-          </mat-card>
+          <mat-paginator
+            #paginator
+            [pageSizeOptions]="[5, 10, 20]"
+            showFirstLastButtons
+          ></mat-paginator>
         </div>
       </div>
     </div>

@@ -21,14 +21,13 @@ import { RejectProductModalComponent } from "../../modal/reject-product-modal/re
 import { environment } from "src/environments/environment";
 
 export interface UserData {
-  name: any;
+  // name: any;
   slug: any;
   brand: any;
   cover_image: any;
   created_by: any;
   price: any;
   model: any;
-  a;
   is_active: any;
   top_brand: any;
   published_date: any;
@@ -43,7 +42,7 @@ export class AdminProductsComponent
   implements OnInit, AfterViewInit, OnDestroy
 {
   displayedColumns: string[] = [
-    "name",
+    // "name",
     "watch_type",
     "brand",
     "cover_image",
@@ -53,7 +52,6 @@ export class AdminProductsComponent
     "model",
     "is_active",
     "popular_item",
-
     "isPromoted",
     "isPromoteActive",
     "action",
