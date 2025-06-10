@@ -68,7 +68,7 @@
           class="col-4 col-lg-4 col-md-4 col-sm-6 d-flex justify-content-end align-items-center"
         ></div>
       </div>
-        <div class="mat-elevation-z8">
+        <div class="table-container">
           <table
             mat-table
             [dataSource]="dataSource"
@@ -306,7 +306,6 @@
           </table>
 
           <mat-paginator
-            [length]="resultsLength"
             [pageSize]="pageSize"
             [pageSizeOptions]="[5, 10, 25, 100]"
             showFirstLastButtons

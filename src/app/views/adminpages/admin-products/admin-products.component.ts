@@ -225,10 +225,18 @@ export class AdminProductsComponent
           return product;
         });
 
-        // ✅ Set DataSource
-        this.dataSource.data = formattedData;
+        const total = data.data.total;
 
-        this.resultsLength = data.data.total;
+        const dummyArray = Array.from({ length: total - formattedData.length }, (_, i) => ({
+          __isDummy: true,
+          id: `dummy-${i + formattedData.length}`, // Optional unique ID
+          // You can add other placeholder fields if needed
+        }));
+
+        // ✅ Set DataSource
+        this.dataSource.data = [...formattedData, ...dummyArray];
+        // this.resultsLength = data.data.total;
+
         // ✅ Bind paginator and sort explicitly after setting the data source
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
@@ -236,6 +244,10 @@ export class AdminProductsComponent
     } catch (error) {
       console.error("Error loading data:", error);
     }
+  }
+
+  isDummy(record: any): boolean {
+    return record.__isDummy === true;
   }
 
   // ✅ Handle Page Change
