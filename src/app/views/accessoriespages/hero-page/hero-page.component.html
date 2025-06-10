@@ -62,45 +62,115 @@
 
                     <!-- </mat-menu> -->
                   </div>
-                    <mat-menu #profileMenu="matMenu">
-                      <button
-                        mat-menu-item
-                        *ngIf="isUserLogin === 'false' || isUserLogin === null"
-                        (click)="goToRegister()"
-                      >
-                        {{ "header.Login" | translate }}
-                      </button>
+                    <mat-menu #profileMenu="matMenu" class="custom-profile-menu">
+                   <button
+              mat-menu-item
+              *ngIf="isUserLogin === 'false' || isUserLogin === null"
+              (click)="goToRegister()"
+            >
+              {{ "header.Login" | translate }}
+            </button>
 
-                      <p style="padding: 10px 10px 0 10px;" *ngIf="userDetails?.name && selectedLang == 'en'">{{ "header.wellCome" | translate }} {{userDetails.name}}</p>
+            <div class="route-groups">
+              <div class="d-flex gap-2 align-items-center">
+                <div class="">
+                  <div *ngIf="userDetails?.main_image; else noImage">
+                    <img
+                      [src]="
+                        apiUrl + userDetails.main_image
+                      "
+                      alt="chat image"
+                      class="img-thumbnail"
+                      style="width: 32px; height: 32px;border-radius: 50%;"
+                    />
+                  </div>
+                  <ng-template #noImage>
+                    <div
+                      class="img-thumbnail"
+                      style="
+                        width: 32px;
+                        height: 32px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        background-color: #ccc;
+                        color: white;
+                        font-size: 16px;
+                        font-weight: 400;
+                        border-radius: 50%;
+                      "
+                    >
+                      {{ userDetails.name?.substring(0, 2) }}
+                    </div>
+                  </ng-template>
+                </div>
+                <div class="d-flex flex-column">
+                  <p class="margin-0 font-weight-600 font-size-18 color-242424" *ngIf="userDetails?.name"> {{userDetails.name}} </p>
+                  <p class="margin-0 font-weight-600 font-size-12 color-909090" *ngIf="userDetails?.name"> {{userDetails.name}} </p>
+                </div>
+              </div>
+            </div>
 
-                      <p style="padding: 10px 10px 0 10px;" *ngIf="userDetails?.name && selectedLang == 'ar'"> {{userDetails.name}} {{ "header.wellCome" | translate }}</p>
+            <div class="route-groups" *ngIf="showHideAdminUser === true"   routerLink="/admin/dashboard">
+              <div class="d-flex gap-2 align-items-center cursor-pointer">
+                <img src="assets/images/black_profile.svg" alt="Profile" />
+                <a [disableRipple]="true" mat-menu-item class="custom-btn a-custom-style">
+                  {{ "header.admin_pannel" | translate }}
+                </a>
+              </div>
+            </div>
 
-
-                      <a routerLink="/myListing"  mat-menu-item  *ngIf="isUserLogin === 'true'">
-                        {{ "header.settings" | translate }}
-                      </a>
-          
-          
-                      <a style="color: #000;" class="custom-btn" *ngIf="isUserLogin === 'true'"  mat-menu-item routerLink="/chat">
-                        {{ "header.Chat" | translate }}
-                      </a>
-          
-          
-                      <a style="padding: 10px 10px 0 10px;color: #000;"
-                         mat-menu-item
-                        class="custom-btn"
-                        *ngIf="showHideAdminUser === true"
-                        routerLink="/admin/dashboard"
-                      >
-                        {{ "header.admin_pannel" | translate }}
-                      </a>
-                      <button
-                        mat-menu-item
-                        *ngIf="isUserLogin === 'true'"
-                        (click)="logout()"
-                      >
-                        {{ "header.Logout" | translate }}
-                      </button>
+            <div class="route-groups">
+              <div routerLink="/myListing" *ngIf="isUserLogin === 'true'" class="d-flex gap-2 align-items-center cursor-pointer">
+                <img src="assets/images/black_profile.svg" alt="Profile" />
+                <a [disableRipple]="true"  mat-menu-item class="a-custom-style"> 
+                  {{ "my_Listing.Personal_Information" | translate }}
+                </a>
+              </div>
+              <div class="d-flex gap-2 align-items-center cursor-pointer" *ngIf="isUserLogin === 'true'" routerLink="/chat">
+                <img src="assets/images/black_chat.svg" alt="Profile" />
+                <a class="a-custom-style" [disableRipple]="true" mat-menu-item > 
+                  {{ "header.Chat" | translate }}
+                </a>
+              </div>
+              <div (click)="goToFavorites()" class="d-flex gap-2 align-items-center cursor-pointer custom-border-bottom">
+                <img src="assets/images/black_favourites.svg" alt="Profile" />
+                <a class="a-custom-style" [disableRipple]="true" mat-menu-item > 
+                  {{ "my_Listing.Favorites" | translate }}
+                </a>
+              </div>
+            </div>
+            <div class="route-groups">
+              <div (click)="goToMyListings()" *ngIf="isUserLogin === 'true'" class="d-flex gap-2 align-items-center cursor-pointer">
+                <img src="assets/images/black_buy_sell.svg" alt="Listing" />
+                <a [disableRipple]="true" mat-menu-item class="a-custom-style"> 
+                  {{ "header.myListings" | translate }}
+                </a>
+              </div>
+              <div class="d-flex gap-2 align-items-center cursor-pointer" *ngIf="isUserLogin === 'true'" (click)="goToBuyOrders()">
+                <img src="assets/images/black_buy_sell.svg" alt="Listing" />
+                <a [disableRipple]="true" mat-menu-item class="a-custom-style"> 
+                  {{ "header.buyOrders" | translate }}
+                </a>
+              </div>
+              <div class="d-flex gap-2 align-items-center cursor-pointer" *ngIf="isUserLogin === 'true'" (click)="goToSellOrders()">
+                <img src="assets/images/black_buy_sell.svg" alt="Listing" />
+                <a [disableRipple]="true" mat-menu-item class="a-custom-style"> 
+                  {{ "header.sellOrders" | translate }}
+                </a>
+              </div>
+            </div>
+            <div class="route-groups" style="border-bottom: none !important;">
+              <div class="d-flex gap-2 align-items-center cursor-pointer" *ngIf="isUserLogin === 'true'" (click)="logout()">
+                <img src="assets/images/black_sign_out.svg" alt="Listing" />
+                <button [disableRipple]="true" mat-menu-item class="a-custom-style">
+                  {{ "header.Sign_Out" | translate }}
+                </button>
+              </div>
+            </div>
+            <!-- <a class="custom-btn" *ngIf="isUserLogin === 'true'"  mat-menu-item>
+              {{ "header.Chat" | translate }}
+            </a> -->
                     </mat-menu>
 
                     <img
@@ -118,19 +188,18 @@
 
                     <button
                       *ngIf="selectedLang === 'en'"
-                      class="custom-btn"
-                       style="color: #FFFFFF !important;"
+                      class="custom-en-ar-btn"
                       (click)="useLang('ar')"
                     >
-                      ARB
+                    EN - <span [ngStyle]="{'color': selectedLang == 'en' ? '#6A6A6A' : '#242424'}"> AR </span>  
+                      
                     </button>
                     <button
                       *ngIf="selectedLang === 'ar'"
-                      class="custom-btn"
+                      class="custom-en-ar-btn"
                       (click)="useLang('en')"
-                       style="color: #FFFFFF !important;"
                     >
-                      EN
+                      <span [ngStyle]="{'color': selectedLang == 'ar' ? '#6A6A6A' : '#242424'}"> En </span> - AR
                     </button>
                   </div>
                 </div>
@@ -249,16 +318,107 @@
                       >
                         {{ "header.Login" | translate }}
                       </button>
-                      <button
-                        mat-menu-item
-                        *ngIf="isUserLogin === 'true'"
-                        (click)="logout()"
-                      >
-                        {{ "header.Logout" | translate }}
-                      </button>
-                      <a  mat-menu-item  *ngIf="isUserLogin === 'true'" routerLink="/myListing">
-                        {{ "header.settings" | translate }}
-                      </a>
+
+                      <div class="route-groups">
+                        <div class="d-flex gap-2 align-items-center">
+                          <div class="">
+                            <div *ngIf="userDetails?.main_image; else noImage">
+                              <img
+                                [src]="
+                                  apiUrl + userDetails.main_image
+                                "
+                                alt="chat image"
+                                class="img-thumbnail"
+                                style="width: 32px; height: 32px;border-radius: 50%;"
+                              />
+                            </div>
+                            <ng-template #noImage>
+                              <div
+                                class="img-thumbnail"
+                                style="
+                                  width: 32px;
+                                  height: 32px;
+                                  display: flex;
+                                  align-items: center;
+                                  justify-content: center;
+                                  background-color: #ccc;
+                                  color: white;
+                                  font-size: 16px;
+                                  font-weight: 400;
+                                  border-radius: 50%;
+                                "
+                              >
+                                {{ userDetails.name?.substring(0, 2) }}
+                              </div>
+                            </ng-template>
+                          </div>
+                          <div class="d-flex flex-column">
+                            <p class="margin-0 font-weight-600 font-size-18 color-242424" *ngIf="userDetails?.name"> {{userDetails.name}} </p>
+                            <p class="margin-0 font-weight-600 font-size-12 color-909090" *ngIf="userDetails?.name"> {{userDetails.name}} </p>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="route-groups" *ngIf="showHideAdminUser === true"   routerLink="/admin/dashboard">
+                        <div class="d-flex gap-2 align-items-center cursor-pointer">
+                          <img src="assets/images/black_profile.svg" alt="Profile" />
+                          <a [disableRipple]="true" mat-menu-item class="custom-btn a-custom-style">
+                            {{ "header.admin_pannel" | translate }}
+                          </a>
+                        </div>
+                      </div>
+
+                      <div class="route-groups">
+                        <div routerLink="/myListing" *ngIf="isUserLogin === 'true'" class="d-flex gap-2 align-items-center cursor-pointer">
+                          <img src="assets/images/black_profile.svg" alt="Profile" />
+                          <a [disableRipple]="true"  mat-menu-item class="a-custom-style"> 
+                            {{ "my_Listing.Personal_Information" | translate }}
+                          </a>
+                        </div>
+                        <div class="d-flex gap-2 align-items-center cursor-pointer" *ngIf="isUserLogin === 'true'" routerLink="/chat">
+                          <img src="assets/images/black_chat.svg" alt="Profile" />
+                          <a class="a-custom-style" [disableRipple]="true" mat-menu-item > 
+                            {{ "header.Chat" | translate }}
+                          </a>
+                        </div>
+                        <div (click)="goToFavorites()" class="d-flex gap-2 align-items-center cursor-pointer custom-border-bottom">
+                          <img src="assets/images/black_favourites.svg" alt="Profile" />
+                          <a class="a-custom-style" [disableRipple]="true" mat-menu-item > 
+                            {{ "my_Listing.Favorites" | translate }}
+                          </a>
+                        </div>
+                      </div>
+                      <div class="route-groups">
+                        <div (click)="goToMyListings()" *ngIf="isUserLogin === 'true'" class="d-flex gap-2 align-items-center cursor-pointer">
+                          <img src="assets/images/black_buy_sell.svg" alt="Listing" />
+                          <a [disableRipple]="true" mat-menu-item class="a-custom-style"> 
+                            {{ "header.myListings" | translate }}
+                          </a>
+                        </div>
+                        <div class="d-flex gap-2 align-items-center cursor-pointer" *ngIf="isUserLogin === 'true'" (click)="goToBuyOrders()">
+                          <img src="assets/images/black_buy_sell.svg" alt="Listing" />
+                          <a [disableRipple]="true" mat-menu-item class="a-custom-style"> 
+                            {{ "header.buyOrders" | translate }}
+                          </a>
+                        </div>
+                        <div class="d-flex gap-2 align-items-center cursor-pointer" *ngIf="isUserLogin === 'true'" (click)="goToSellOrders()">
+                          <img src="assets/images/black_buy_sell.svg" alt="Listing" />
+                          <a [disableRipple]="true" mat-menu-item class="a-custom-style"> 
+                            {{ "header.sellOrders" | translate }}
+                          </a>
+                        </div>
+                      </div>
+                      <div class="route-groups" style="border-bottom: none !important;">
+                        <div class="d-flex gap-2 align-items-center cursor-pointer" *ngIf="isUserLogin === 'true'" (click)="logout()">
+                          <img src="assets/images/black_sign_out.svg" alt="Listing" />
+                          <button [disableRipple]="true" mat-menu-item class="a-custom-style">
+                            {{ "header.Sign_Out" | translate }}
+                          </button>
+                        </div>
+                      </div>
+                      <!-- <a class="custom-btn" *ngIf="isUserLogin === 'true'"  mat-menu-item>
+                        {{ "header.Chat" | translate }}
+                      </a> -->
                     </mat-menu>
 
                     <img
@@ -274,22 +434,21 @@
                       style="cursor: pointer"
                     />
 
-                    <button
-                      *ngIf="selectedLang === 'en'"
-                      class="custom-btn"
-                      style="color: #FFFFFF !important;"
-                      (click)="useLang('ar')"
-                    >
-                      ARB
-                    </button>
-                    <button
-                      *ngIf="selectedLang === 'ar'"
-                       class="custom-btn"
-                       style="color: #FFFFFF !important;"
-                      (click)="useLang('en')"
-                    >
-                      EN
-                    </button>
+                <button
+                  *ngIf="selectedLang === 'en'"
+                  class="custom-en-ar-btn"
+                  (click)="useLang('ar')"
+                >
+                EN - <span [ngStyle]="{'color': selectedLang == 'en' ? '#6A6A6A' : '#242424'}"> AR </span>  
+                  
+                </button>
+                <button
+                  *ngIf="selectedLang === 'ar'"
+                  class="custom-en-ar-btn"
+                  (click)="useLang('en')"
+                >
+                  <span [ngStyle]="{'color': selectedLang == 'ar' ? '#6A6A6A' : '#242424'}"> En </span> - AR
+                </button>
                   </div>
                 </div>
               </div>

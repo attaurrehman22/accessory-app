@@ -555,3 +555,38 @@
   background-color: white;
   transition: transform 0.3s ease;
 }
+
+::ng-deep .mat-mdc-menu-panel {
+  background-color: #ffffff !important; 
+  box-shadow: 0px 30px 40px 0px #00000026 !important;
+  border-radius: 16px !important; 
+  padding: 0px;
+  min-width: 293px !important; 
+  margin-top: 8px;
+}
+
+.route-groups {
+  padding: 6px 12px;
+  border-bottom: 1px solid #EEEEEE;
+}
+
+.a-custom-style {
+  padding: 0;
+  font-size: 14px !important;
+  font-weight: 400 !important;
+  color: #242424 !important;
+}
+
+.a-custom-style:hover {
+  color: #242424;
+  background-color: none !important;
+  background: none !important;
+}
+
+.custom-en-ar-btn {
+  border: none;
+  background: none;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 19.68px;
+}

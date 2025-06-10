@@ -119,6 +119,11 @@ export class MyListingDetailsComponent implements OnInit {
       this.loginFirst();
     }
 
+    if (history?.state?.activeRouteType == "Favorites") {
+      this.activeIndex = 6;
+      this.setActive(this.activeIndex)
+    }
+
     if (history?.state?.activeRouteType == "myListings") {
       this.activeIndex = 3;
     }

@@ -22,6 +22,7 @@ import { HttpService } from "src/services/http/http.service";
 import { filter } from "rxjs/operators";
 import { ShoppingCartComponent } from "../../modal/shopping-cart/shopping-cart.component";
 import { MessageServiceService } from "src/services/search-show-hide/message-service.service";
+import { environment } from "src/environments/environment";
 
 
 
@@ -31,6 +32,7 @@ import { MessageServiceService } from "src/services/search-show-hide/message-ser
   styleUrls: ["./header.component.css"],
 })
 export class HeaderComponent {
+  apiUrl = environment.apipath + "/";
   isSmallScreen: boolean = false;
   isUserLogin: any = false;
   searchQuery: string = "";
@@ -311,6 +313,12 @@ onSearchInputClick() {
       dialogRef.afterClosed().subscribe((result) => {
         // handle result
       });
+    }
+
+    goToFavorites(){
+      this.router.navigate(['myListing'], {
+        state:{activeRouteType:'Favorites'}
+      })
     }
 
     goToBuyOrders(){

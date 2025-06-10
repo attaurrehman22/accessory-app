@@ -25,7 +25,8 @@
     "accessories": "إكسسوارات",
     "buyOrders": "طلبات الشراء",
     "sellOrders": "طلبات البيع",
-    "myListings": "قوائمي"
+    "myListings": "قوائمي",
+    "Sign_Out": "تسجيل الخروج"
   },
   "product_listing":{
     "Watch_Listing": "قائمة المشاهدة",

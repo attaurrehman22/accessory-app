@@ -25,7 +25,8 @@
     "accessories":"Accessories",
     "buyOrders":"Buy Orders",
     "sellOrders":"Sell Orders",
-    "myListings":"My Listings"
+    "myListings":"My Listings",
+    "Sign_Out":"Sign Out"
   },
   "product_listing":{
     "Watch_Listing": "Watch Listing",

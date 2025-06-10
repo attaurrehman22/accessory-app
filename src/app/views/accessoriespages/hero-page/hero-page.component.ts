@@ -21,7 +21,7 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./hero-page.component.css']
 })
 export class HeroPageComponent {
-   apiUrl = environment.apipath+ '/'
+  apiUrl = environment.apipath+ '/'
   isSmallScreen: boolean = false;
   isUserLogin: any = false;
   windowWidth: number = window.innerWidth;
@@ -355,6 +355,30 @@ export class HeroPageComponent {
   userListing() {
     this.router.navigate(['/myListing'])
   }
+
+   goToFavorites(){
+      this.router.navigate(['myListing'], {
+        state:{activeRouteType:'Favorites'}
+      })
+    }
+
+     goToBuyOrders(){
+      this.router.navigate(['myListing'], {
+        state:{activeRouteType:'buyOrders'}
+      })
+    }
+
+     goToSellOrders(){
+      this.router.navigate(['myListing'], {
+        state:{activeRouteType:'sellOrders'}
+      })
+    }
+
+    goToMyListings(){
+      this.router.navigate(['myListing'], {
+        state:{activeRouteType:'myListings'}
+      })
+    }
 
 
   openCart() {
