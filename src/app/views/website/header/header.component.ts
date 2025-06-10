@@ -251,17 +251,17 @@ onSearchInputClick() {
     this.dropdownOpen = !this.dropdownOpen;
   }
 
-   loginFirst() {
-      const dialogRef = this.dialog.open(ModelLoginComponent, {
-        width: "600px",
-        data: { message: "header" },
-      });
-  
-      dialogRef.afterClosed().subscribe((result) => {
-        if (result) {
-        }
-      });
-    }
+  loginFirst() {
+    const dialogRef = this.dialog.open(ModelLoginComponent, {
+      width: "600px",
+      data: { message: "header" },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+      }
+    });
+  }
 
   routeToNewProduct() {
     let isUserLogin = localStorage.getItem("isLoggedIn");

@@ -50,7 +50,7 @@
           </div>
           <!-- Small Screen SearchForm End Here  -->
           <!-- </mat-menu> -->
-          <mat-menu #profileMenu="matMenu">
+          <mat-menu #profileMenu="matMenu" class="custom-profile-menu">
             <button
               mat-menu-item
               *ngIf="isUserLogin === 'false' || isUserLogin === null"
@@ -229,7 +229,7 @@
             style="cursor: pointer"
           />
              <!-- Search for Large Screen End Here -->
-          <mat-menu #profileMenu="matMenu">
+          <mat-menu #profileMenu="matMenu" class="custom-profile-menu">
             <button
               mat-menu-item
               *ngIf="isUserLogin === 'false' || isUserLogin === null"

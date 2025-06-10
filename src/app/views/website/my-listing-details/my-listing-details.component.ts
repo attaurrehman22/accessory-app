@@ -5,7 +5,12 @@ import { HttpService } from "src/services/http/http.service";
 import { ModelLoginComponent } from "../../auth/model-login/model-login.component";
 import { MatDialog } from "@angular/material/dialog";
 import { AlertsServicesService } from "src/services/alerts-service/alerts-services.service";
-import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from "@angular/forms";
 import { TranslateService } from "@ngx-translate/core";
 import { LanguageService } from "src/services/lang-service/language.service";
 import { environment } from "src/environments/environment";
@@ -16,10 +21,11 @@ import { environment } from "src/environments/environment";
   styleUrls: ["./my-listing-details.component.css"],
 })
 export class MyListingDetailsComponent implements OnInit {
-   apiUrl = environment.apipath+ '/'
- profileForm!: FormGroup;
+  apiUrl = environment.apipath + "/";
+  profileForm!: FormGroup;
   supportLanguages = ["en", "ar", "fr", "ta", "hi"];
   currentLanguage: string;
+  maxDate: string = new Date().toISOString().split('T')[0];
 
   billing_address = new FormControl(null, [
     Validators.required,
@@ -50,21 +56,61 @@ export class MyListingDetailsComponent implements OnInit {
   billingForm: FormGroup;
 
   menuItems = [
-    { label: "Personal Info", arabicLabel: "المعلومات الشخصية", icon: "bi bi-person" },
-    { label: "Shipping Address", arabicLabel: "عنوان الشحن", icon: "bi bi-credit-card" },
-    { label: "Messages", arabicLabel: "الرسائل", icon: "bi bi-chat" },
-    { label: "My Listings", arabicLabel: "قوائمي", icon: "bi bi-card-list" },
-    { label: "Buy Orders", arabicLabel: "طلبات الشراء", icon: "bi bi-cart" },
-    { label: "Sell Orders", arabicLabel: "طلبات البيع", icon: "bi bi-basket" },
-    { label: "Favorites", arabicLabel: "المفضلة", icon: "bi bi-heart" },
-    { label: "Cart Items", arabicLabel: "المفضلة", icon: "bi bi-heart" },
+    {
+      label: "Personal Info",
+      arabicLabel: "المعلومات الشخصية",
+      white_icon: "assets/images/white_profile.svg",
+      black_icon: "assets/images/black_profile.svg",
+    },
+    {
+      label: "Shipping Address",
+      arabicLabel: "عنوان الشحن",
+      black_icon: "assets/images/black_shipping_address.svg",
+      white_icon: "assets/images/white_shipping_address.svg",
+    },
+    {
+      label: "Messages",
+      arabicLabel: "الرسائل",
+      black_icon: "assets/images/black_chat.svg",
+      white_icon: "assets/images/white_chat.svg",
+    },
+    {
+      label: "My Listings",
+      arabicLabel: "قوائمي",
+      black_icon: "assets/images/black_mylisting.svg",
+      white_icon: "assets/images/white_buy_sell.svg",
+    },
+    {
+      label: "Buy Orders",
+      arabicLabel: "طلبات الشراء",
+      black_icon: "assets/images/black_buy_sell.svg",
+      white_icon: "assets/images/white_buy_sell.svg",
+    },
+    {
+      label: "Sell Orders",
+      arabicLabel: "طلبات البيع",
+      black_icon: "assets/images/black_buy_sell.svg",
+      white_icon: "assets/images/white_buy_sell.svg",
+    },
+    {
+      label: "Favorites",
+      arabicLabel: "المفضلة",
+      black_icon: "assets/images/black_favourites.svg",
+      white_icon: "assets/images/white_favourites.svg",
+    },
+    {
+      label: "Cart Items",
+      arabicLabel: "المفضلة",
+      black_icon: "assets/images/black_cartitems.svg",
+      white_icon: "assets/images/white_cartitems.svg",
+    },
     // { label: "Security", arabicLabel: "الأمان", icon: "bi bi-shield-lock" },
     // { label: "Privacy", arabicLabel: "الخصوصية", icon: "bi bi-globe" },
     // { label: "My Subscriptions", arabicLabel: "اشتراكاتي", icon: "bi bi-box-arrow-in-right" },
     // { label: "Feedback", arabicLabel: "التقييمات", icon: "bi bi-star" },
     // { label: "Help Center", arabicLabel: "مركز المساعدة", icon: "bi bi-question-circle" },
   ];
-  
+
   listings: any[] = [];
   userID: any;
   ngOnInit(): void {
@@ -73,28 +119,28 @@ export class MyListingDetailsComponent implements OnInit {
       this.loginFirst();
     }
 
-    if(history?.state?.activeRouteType == 'myListings'){
-       this.activeIndex = 3;
+    if (history?.state?.activeRouteType == "myListings") {
+      this.activeIndex = 3;
     }
 
-    if(history?.state?.activeRouteType == 'buyOrders'){
+    if (history?.state?.activeRouteType == "buyOrders") {
       this.activeIndex = 4;
       this.getOrderDetails();
     }
 
-    if(history?.state?.activeRouteType == 'sellOrders'){
+    if (history?.state?.activeRouteType == "sellOrders") {
       this.activeIndex = 5;
       this.getOrderDetails();
     }
 
-    if(history?.state?.Ordertype == 'buy' ){
+    if (history?.state?.Ordertype == "buy") {
       this.activeIndex = 4;
       this.isShowSellOrdersListngDetails = false;
       this.isShowBuyOrdersListngDetails = false;
       this.detailsBuyListing(history?.state?.data);
       this.getOrderDetails();
     }
-    if(history?.state?.Ordertype == 'sell' ){
+    if (history?.state?.Ordertype == "sell") {
       this.activeIndex = 5;
       this.isShowSellOrdersListngDetails = false;
       this.isShowBuyOrdersListngDetails = false;
@@ -114,64 +160,82 @@ export class MyListingDetailsComponent implements OnInit {
       state: this.state,
     });
     this.profileForm = this.fb.group({
-    first_name: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
-    last_name: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
-    gender: ['', Validators.required],
-    date_of_birth: ['', Validators.required],
-    // country: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
-    // city: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
-    countryCode: ['KSA'],
-    phone_number: ['', [Validators.required, Validators.pattern(/^5\d{8}$/)]], // Assuming KSA format without country code
-    language: ['english', Validators.required],
-    occupation: ['', [Validators.required, Validators.minLength(2)]],
-    about_me: ['', [Validators.maxLength(300)]],
-    email: ['', [Validators.required, Validators.email]],
-    password: [''],
-  });
-    this.fetchProfiling()
+      first_name: [
+        "",
+        [
+          Validators.required,
+          Validators.minLength(2),
+          Validators.maxLength(50),
+        ],
+      ],
+      last_name: [
+        "",
+        [
+          Validators.required,
+          Validators.minLength(2),
+          Validators.maxLength(50),
+        ],
+      ],
+      gender: ["", Validators.required],
+      date_of_birth: ["", Validators.required],
+      // country: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
+      // city: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
+      countryCode: ["KSA"],
+      phone_number: ["", [Validators.required, Validators.pattern(/^5\d{8}$/)]], // Assuming KSA format without country code
+      language: ["english", Validators.required],
+      occupation: ["", [Validators.required, Validators.minLength(2)]],
+      about_me: ["", [Validators.maxLength(300)]],
+      email: ["", [Validators.required, Validators.email]],
+      password: [""],
+    });
+    this.fetchProfiling();
   }
 
-  fetchProfiling(){
-    this.http.getProfilingInformation().subscribe(
-      (res)=>{
-         this.profileForm.patchValue({
-          first_name: res.first_name,
-          last_name: res.last_name,
-          gender: res.gender,
-          city:res.city,
-          country:res.country,
-          date_of_birth: res.date_of_birth,
-          phone_number: res.phone_number,
-          language: res?.language,
-          occupation: res?.occupation,
-          about_me: res?.about_me,
-          email: res?.email,
-          password: res?.password,
-        });
-      }
-    )
+  fetchProfiling() {
+    this.http.getProfilingInformation().subscribe((res) => {
+      this.profileForm.patchValue({
+        first_name: res.first_name,
+        last_name: res.last_name,
+        gender: res.gender,
+        city: res.city,
+        country: res.country,
+        date_of_birth: res.date_of_birth,
+        phone_number: res.phone_number,
+        language: res?.language,
+        occupation: res?.occupation,
+        about_me: res?.about_me,
+        email: res?.email,
+        password: res?.password,
+      });
+    });
   }
 
-  profileFormSubmit(){
-    this.profileForm.markAllAsTouched()
-      console.log('Form Values:', this.profileForm.value);
-      if(this.profileForm.valid){
-        this.http.saveProfilingInformation(this.profileForm.value).subscribe(
-          (res)=>{
-            if(this.translateService.currentLang == "en"){
-              this.alertService.showAlert('success','Profile Update Successfully')
-            }else{
-              this.alertService.showAlert('success','تم تحديث الملف الشخصي بنجاح')
-            }
+  profileFormSubmit() {
+    this.profileForm.markAllAsTouched();
+    console.log("Form Values:", this.profileForm.value);
+    if (this.profileForm.valid) {
+      this.http
+        .saveProfilingInformation(this.profileForm.value)
+        .subscribe((res) => {
+          if (this.translateService.currentLang == "en") {
+            this.alertService.showAlert(
+              "success",
+              "Profile Update Successfully"
+            );
+          } else {
+            this.alertService.showAlert(
+              "success",
+              "تم تحديث الملف الشخصي بنجاح"
+            );
           }
-        )
-      }else{
-        if(this.translateService.currentLang == "en"){
-          this.alertService.showAlert('warning','Please add form values')
-        }else{
-          this.alertService.showAlert('warning','يرجى إضافة قيم النموذج')
-        }
+        });
+    } else {
+      if (this.translateService.currentLang == "en") {
+        this.alertService.showAlert("warning", "Please add form values");
+      } else {
+        this.alertService.showAlert("warning", "يرجى إضافة قيم النموذج");
       }
+    }
   }
 
   getBillingInformation() {
@@ -190,18 +254,17 @@ export class MyListingDetailsComponent implements OnInit {
         });
       },
       (err) => {
-       if (this.translateService.currentLang == "en") {
-  // this.alertService.showAlert(
-  //   "warning",
-  //   "Error in Fetching Billing Information"
-  // );
-} else {
-  this.alertService.showAlert(
-    "warning",
-    "حدث خطأ أثناء جلب معلومات الفوترة"
-  );
-}
-
+        if (this.translateService.currentLang == "en") {
+          // this.alertService.showAlert(
+          //   "warning",
+          //   "Error in Fetching Billing Information"
+          // );
+        } else {
+          this.alertService.showAlert(
+            "warning",
+            "حدث خطأ أثناء جلب معلومات الفوترة"
+          );
+        }
       }
     );
   }
@@ -213,31 +276,29 @@ export class MyListingDetailsComponent implements OnInit {
       this.http.saveBillingInformation(this.billingForm.value).subscribe(
         (res) => {
           if (this.translateService.currentLang == "en") {
-  this.alertService.showAlert(
-    "success",
-    "Billing Information Saved Successfully"
-  );
-} else {
-  this.alertService.showAlert(
-    "success",
-    "تم حفظ معلومات الفوترة بنجاح"
-  );
-}
-
+            this.alertService.showAlert(
+              "success",
+              "Billing Information Saved Successfully"
+            );
+          } else {
+            this.alertService.showAlert(
+              "success",
+              "تم حفظ معلومات الفوترة بنجاح"
+            );
+          }
         },
         (err) => {
-         if (this.translateService.currentLang == "en") {
-  this.alertService.showAlert(
-    "warning",
-    "Error in Saving Billing Information"
-  );
-} else {
-  this.alertService.showAlert(
-    "warning",
-    "حدث خطأ أثناء حفظ معلومات الفوترة"
-  );
-}
-
+          if (this.translateService.currentLang == "en") {
+            this.alertService.showAlert(
+              "warning",
+              "Error in Saving Billing Information"
+            );
+          } else {
+            this.alertService.showAlert(
+              "warning",
+              "حدث خطأ أثناء حفظ معلومات الفوترة"
+            );
+          }
         }
       );
     }
@@ -316,9 +377,10 @@ export class MyListingDetailsComponent implements OnInit {
     private router: Router,
     private dialog: MatDialog,
     private alertService: AlertsServicesService,
-      public translateService: TranslateService,
-       private languageService:LanguageService,
-  private fb: FormBuilder) {
+    public translateService: TranslateService,
+    private languageService: LanguageService,
+    private fb: FormBuilder
+  ) {
     this.translateService.addLangs(this.supportLanguages);
     const savedLang = this.languageService.getCurrentLanguage();
     if (this.supportLanguages.includes(savedLang)) {
@@ -347,7 +409,7 @@ export class MyListingDetailsComponent implements OnInit {
 
   activeIndex: number = 0; // Default: First item is active
   setActive(index: number): void {
-    console.log("Active index",this.activeIndex)
+    console.log("Active index", this.activeIndex);
     this.activeIndex = index;
     this.isShowSellOrdersListngDetails = false;
     this.isShowBuyOrdersListngDetails = false;
@@ -374,20 +436,19 @@ export class MyListingDetailsComponent implements OnInit {
     } else if (this.activeIndex == 5) {
       this.getSellOrders();
     } else if (this.activeIndex == 6) {
-      console.log("this.activeIndex == 9")
+      console.log("this.activeIndex == 9");
       this.getWishList();
     } else if (this.activeIndex == 1) {
       this.getBillingInformation();
-    }
-    else if (this.activeIndex == 2) {
+    } else if (this.activeIndex == 2) {
       this.getLatestMessages();
     }
   }
 
-  chats:any;
-  filteredChats:any;
-  getLatestMessages(){
-   this.http.getChatsWithLatestMessage().subscribe((res) => {
+  chats: any;
+  filteredChats: any;
+  getLatestMessages() {
+    this.http.getChatsWithLatestMessage().subscribe((res) => {
       this.chats = res.chats.map(
         (chat) => {
           chat.product.main_image = chat.product.main_image.replace(/\\/g, "/");
@@ -463,7 +524,7 @@ export class MyListingDetailsComponent implements OnInit {
   estimateDelivery: any;
   chat_ID: any;
   forSendingProductID: any;
-  SellerCityForDisplay:any;
+  SellerCityForDisplay: any;
 
   detailListing(listing: any): void {
     this.SellerNameForDisplay = listing.buyer.name;
@@ -485,22 +546,21 @@ export class MyListingDetailsComponent implements OnInit {
     this.fetchOrderStatus(listing.id, "seller");
   }
 
- getInitials(name: string | undefined | null): string {
-  if (!name) {
-    return '';
+  getInitials(name: string | undefined | null): string {
+    if (!name) {
+      return "";
+    }
+
+    // Split name by space and get first letters
+    const words = name.trim().split(" ");
+    if (words.length === 1) {
+      return words[0][0].toUpperCase();
+    } else {
+      return (words[0][0] + words[1][0]).toUpperCase();
+    }
   }
 
-  // Split name by space and get first letters
-  const words = name.trim().split(' ');
-  if (words.length === 1) {
-    return words[0][0].toUpperCase();
-  } else {
-    return (words[0][0] + words[1][0]).toUpperCase();
-  }
-}
-
-
-  SellerNameForDisplay:any;
+  SellerNameForDisplay: any;
 
   // existingProductUserID:any;
   detailsBuyListing(listing: any): void {
@@ -524,9 +584,7 @@ export class MyListingDetailsComponent implements OnInit {
   lengthTwoofSeller: boolean = false;
   isSellerDeliveryInprogress: boolean = false;
 
-
-
-  activeSellerStatuses:any
+  activeSellerStatuses: any;
 
   fetchOrderStatus(orderID: number, type: "seller" | "buyer"): void {
     this.getOrderStatus(orderID).subscribe(
@@ -539,20 +597,20 @@ export class MyListingDetailsComponent implements OnInit {
           ) {
             this.lengthTwoofSeller = true;
           }
-  
+
           if (
             res?.status_flow?.delivery_in_progress &&
             !res?.status_flow?.order_delivered
           ) {
             this.isSellerDeliveryInprogress = true;
           }
-  
+
           this.sellerDetails = res;
           this.orderID = res.order_id;
-  
+
           // Reset all to inactive
           this.sellerStatuses.forEach((s) => (s.active = false));
-  
+
           if (res?.status_flow) {
             if (res?.status_flow?.initiated) {
               this.sellerStatuses[0].active = true;
@@ -579,15 +637,17 @@ export class MyListingDetailsComponent implements OnInit {
               this.sellerStatuses[7].active = true;
             }
           }
-  
+
           // 🔥 Filter only active statuses for display
-          this.activeSellerStatuses = this.sellerStatuses.filter((s) => s.active);
+          this.activeSellerStatuses = this.sellerStatuses.filter(
+            (s) => s.active
+          );
         } else if (type == "buyer") {
-          console.log("Type is Buyes")
+          console.log("Type is Buyes");
           this.buyerDetails = res;
           // Reset all to inactive
           this.statuses.forEach((s) => (s.active = false));
-        
+
           if (res?.status_flow) {
             if (res?.status_flow?.initiated) {
               this.statuses[0].active = true;
@@ -614,11 +674,11 @@ export class MyListingDetailsComponent implements OnInit {
               this.statuses[7].active = true;
             }
           }
-        
+
           // 🔥 Filter only active buyer statuses
           this.activeBuyerStatuses = this.statuses.filter((s) => s.active);
         }
-  
+
         this.getOrderDetails();
       },
       (error) => {
@@ -626,7 +686,7 @@ export class MyListingDetailsComponent implements OnInit {
       }
     );
   }
-  
+
   activeBuyerStatuses: any[] = [];
 
   getOrderStatus(orderID: number): Observable<any> {
@@ -635,35 +695,23 @@ export class MyListingDetailsComponent implements OnInit {
 
   deleteListing(listing) {
     this.http.removeProduct(listing.id).subscribe(
-      (res)=>{
-      if (this.translateService.currentLang == "en") {
-  this.alertService.showAlert(
-    "success",
-    "Product Delete Successfully"
-  );
-} else {
-  this.alertService.showAlert(
-    "success",
-    "تم حذف المنتج بنجاح"
-  );
-}
+      (res) => {
+        if (this.translateService.currentLang == "en") {
+          this.alertService.showAlert("success", "Product Delete Successfully");
+        } else {
+          this.alertService.showAlert("success", "تم حذف المنتج بنجاح");
+        }
 
         this.fetchListings();
-      },(err)=>{
-       if (this.translateService.currentLang == "en") {
-  this.alertService.showAlert(
-    "warning",
-    "Error in Deleting Product"
-  );
-} else {
-  this.alertService.showAlert(
-    "warning",
-    "حدث خطأ أثناء حذف المنتج"
-  );
-}
-
+      },
+      (err) => {
+        if (this.translateService.currentLang == "en") {
+          this.alertService.showAlert("warning", "Error in Deleting Product");
+        } else {
+          this.alertService.showAlert("warning", "حدث خطأ أثناء حذف المنتج");
+        }
       }
-    )
+    );
   }
 
   showSellerConfirmOrderAvailability: boolean = false;
@@ -700,21 +748,13 @@ export class MyListingDetailsComponent implements OnInit {
       validity_days: this.offerValidity || 0,
     };
 
-
     this.http.sendOffer(formData).subscribe(
       (res) => {
-       if (this.translateService.currentLang == "en") {
-  this.alertService.showAlert(
-    "success",
-    "Offer Sent Successfully"
-  );
-} else {
-  this.alertService.showAlert(
-    "success",
-    "تم إرسال العرض بنجاح"
-  );
-}
-
+        if (this.translateService.currentLang == "en") {
+          this.alertService.showAlert("success", "Offer Sent Successfully");
+        } else {
+          this.alertService.showAlert("success", "تم إرسال العرض بنجاح");
+        }
       },
       (err) => {
         const errorMessage = err.error?.message || "Something went wrong!";
@@ -805,35 +845,37 @@ export class MyListingDetailsComponent implements OnInit {
         this.showSellerProofofShipping = false;
       },
       (err) => {
-       if (this.translateService.currentLang == "en") {
-  this.alertService.showAlert(
-    "warning",
-    "Error in sending Proof of ownership"
-  );
-} else {
-  this.alertService.showAlert(
-    "warning",
-    "حدث خطأ أثناء إرسال إثبات الملكية"
-  );
-}
-
+        if (this.translateService.currentLang == "en") {
+          this.alertService.showAlert(
+            "warning",
+            "Error in sending Proof of ownership"
+          );
+        } else {
+          this.alertService.showAlert(
+            "warning",
+            "حدث خطأ أثناء إرسال إثبات الملكية"
+          );
+        }
       }
     );
-
   }
 
   cancelProofofShipMent() {
     this.showSellerProofofShipping = false;
   }
 
-  getMesageDetails(chat){
-    const chatDetails ={
-        id:chat.chat_id,
-    }
-    this.router.navigate(['/chat'],
-      {
-      state:{fromRoute:'gotToChat',data:chatDetails,productID:chat.product_id,chatID:chat.chat_id}
-    })
+  getMesageDetails(chat) {
+    const chatDetails = {
+      id: chat.chat_id,
+    };
+    this.router.navigate(["/chat"], {
+      state: {
+        fromRoute: "gotToChat",
+        data: chatDetails,
+        productID: chat.product_id,
+        chatID: chat.chat_id,
+      },
+    });
   }
 
   // for buyer
@@ -863,7 +905,7 @@ export class MyListingDetailsComponent implements OnInit {
       description: "Click to track your order.",
       active: false,
     },
-     {
+    {
       label: "Payout Confirmation",
       description: "Your payment has been released.",
       active: false,
@@ -877,7 +919,7 @@ export class MyListingDetailsComponent implements OnInit {
       label: "Order canceled",
       description: "Your order has been canceled.",
       active: false,
-    }
+    },
   ];
 
   // for Seller
@@ -921,7 +963,7 @@ export class MyListingDetailsComponent implements OnInit {
       label: "Order canceled",
       description: "The order was canceled by the buyer.",
       active: false,
-    }
+    },
   ];
 
   routeToChat() {
@@ -930,32 +972,30 @@ export class MyListingDetailsComponent implements OnInit {
     });
   }
 
-
-
-// Cart Items Details
+  // Cart Items Details
 
   cartItems = [
     {
-      image: 'assets/images/grey.png',
-      name: 'Python Skin - Slate Grey',
-      color: 'Slate Grey',
-      price: 150.50,
+      image: "assets/images/grey.png",
+      name: "Python Skin - Slate Grey",
+      color: "Slate Grey",
+      price: 150.5,
       quantity: 1,
       selected: false,
     },
     {
-      image: 'assets/images/copper.png',
-      name: 'Python Skin - Copper Brown',
-      color: 'Copper Brown',
-      price: 150.50,
+      image: "assets/images/copper.png",
+      name: "Python Skin - Copper Brown",
+      color: "Copper Brown",
+      price: 150.5,
       quantity: 1,
       selected: false,
     },
     {
-      image: 'assets/images/green.png',
-      name: 'Python Skin - Juniper Green',
-      color: 'Juniper Green',
-      price: 150.50,
+      image: "assets/images/green.png",
+      name: "Python Skin - Juniper Green",
+      color: "Juniper Green",
+      price: 150.5,
       quantity: 1,
       selected: true,
     },
@@ -970,7 +1010,7 @@ export class MyListingDetailsComponent implements OnInit {
   }
 
   removeItem(item: any) {
-    this.cartItems = this.cartItems.filter(i => i !== item);
+    this.cartItems = this.cartItems.filter((i) => i !== item);
   }
 
   getTotalItems() {
@@ -978,6 +1018,9 @@ export class MyListingDetailsComponent implements OnInit {
   }
 
   getSubTotal() {
-    return this.cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
+    return this.cartItems.reduce(
+      (total, item) => total + item.price * item.quantity,
+      0
+    );
   }
 }

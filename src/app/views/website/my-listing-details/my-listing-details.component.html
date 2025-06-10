@@ -14,20 +14,25 @@
         <ul class="nav nav-pills flex-column mb-auto">
           <li class="nav-item" *ngFor="let item of menuItems; let i = index">
             <a *ngIf="translateService.currentLang == 'en'"
-              class="nav-link"
+              class="nav-link d-flex align-items-center gap-2"
               [ngClass]="{ active: activeIndex === i }"
               (click)="setActive(i)"
             >
-              <i class="{{ item.icon }}"></i> {{ item.label }}
+              <!-- <i class="{{ item.icon }}"></i>  -->
+              <img *ngIf="activeIndex == i" [src]="item.white_icon" alt="Item" />
+              <img *ngIf="activeIndex != i" [src]="item.black_icon" alt="Item" />
+              {{ item.label }}
             </a>
 
             <a *ngIf="translateService.currentLang !== 'en'"
-            class="nav-link"
-            [ngClass]="{ active: activeIndex === i }"
-            (click)="setActive(i)"
-          >
-          {{ item.arabicLabel }} <i class="{{ item.icon }}"></i> 
-          </a>
+              class="nav-link d-flex align-items-center gap-2"
+              [ngClass]="{ active: activeIndex === i }"
+              (click)="setActive(i)"
+            >
+              {{ item.arabicLabel }} 
+              <img *ngIf="activeIndex == i" [src]="item.white_icon" alt="Item" />
+              <img *ngIf="activeIndex != i" [src]="item.black_icon" alt="Item" />
+            </a>
           </li>
         </ul>
       </div>
@@ -74,7 +79,7 @@
           </div>
           <div class="col-md-6 mb-3" [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'">
             <label for="date_of_birth" class="form-label">{{ "my_Listing.Date_of_Birth" | translate }}</label>
-            <input type="date" id="date_of_birth" class="form-control" formControlName="date_of_birth" />
+            <input [attr.max]="maxDate"  type="date" id="date_of_birth" class="form-control" formControlName="date_of_birth" />
             <div *ngIf="profileForm.get('date_of_birth')?.touched && profileForm.get('date_of_birth')?.invalid" class="text-danger">
               <small *ngIf="profileForm.get('date_of_birth')?.hasError('required')">{{ "form_validation.required" | translate }}</small>
             </div>
@@ -106,16 +111,24 @@
           <div class="col-md-6 mb-3" [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'">
             <label for="phone_number" class="form-label">{{ "my_Listing.Phone" | translate }}</label>
             <div class="input-group" style="flex-wrap: nowrap !important;">
-              <select class="form-select" formControlName="countryCode" style="max-width: 100px;min-width: 80px;">
-                <option value="KSA">KSA</option>
+              <select class="form-select" formControlName="countryCode" style="max-width: 180px;min-width: 120px;border-right: none !important;">
+                <option value="KSA">KSA
+                  <span 
+                    style="border: 1px solid #909090;
+                    background: none;border-right: none;
+                    color: #909090;font-size: 16px;font-weight: 400;"
+                    class="input-group-text" id="countryCode">
+                      +966
+                  </span>
+                </option>
               </select>
               <div class="input-group" >
-                <span style="border: 1px solid #ced4da;background: none;border-right: none;"
+                <!-- <span style="border: 1px solid #ced4da;background: none;border-right: none;"
                  class="input-group-text" id="countryCode">
-                 +966
-                </span>
+                 KSA +966
+                </span> -->
                 <input
-                  style="border-left:none !important"
+                  style="border-left:none !important;border-top-left-radius: 0 !important;border-bottom-left-radius: 0 !important;"
                   type="text"
                   id="phone_number"
                   class="form-control"
