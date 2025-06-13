@@ -509,18 +509,38 @@
           </ng-container>
         </div>
     </div>
-    <div class="col-md-8" style="position: absolute;z-index: 9999;background-color: #FFFFFF;bottom: 0;">
-      <div class="marquee-container" #container>
-        <div class="marquee-track d-flex" >
-          <div
-            *ngFor="let img of duplicatedImages; let index = index"
-            class="slide"
-            [style.width.px]="imageWidth"
-            [style.margin.px]="slideMargin"
-            [innerHTML]="img | safeHtml"
-          >
-          </div>
-        </div>
+    <!-- <div class="position-relative">
+
+      <div 
+        class="scroll-icon left"
+        (click)="scrollLeft()"
+      >
+       <img src="../../../../assets/images/less_arrow.svg" alt="alt" />
+
       </div>
-    </div>
+
+ 
+      <div 
+        #scrollContainer 
+        class="col-md-12 d-flex align-items-center mt-3 global-main-wraper" 
+        style="overflow-x: auto; scroll-behavior: smooth;"
+      >
+        <div 
+          *ngFor="let img of duplicatedImages; let index = index"
+          [style.width.px]="imageWidth"
+          [style.margin.px]="slideMargin"
+          [innerHTML]="img | safeHtml"
+        ></div>
+      </div>
+
+
+      <div 
+        class="scroll-icon right"
+        (click)="scrollRight()"
+      >
+      <img src="../../../../assets/images/great_arrow.svg" alt="alt" />
+ 
+      </div>
+    </div> -->
+
 </div>

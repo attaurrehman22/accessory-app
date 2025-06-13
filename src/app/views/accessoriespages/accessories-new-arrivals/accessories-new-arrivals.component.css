@@ -73,3 +73,37 @@
     width: 100%;
   }
 }
+
+
+.filtered-btn {
+  height: 60px;
+  padding: 20px 60px 20px 60px;
+  background: #FAFAFA;
+  border: 1px solid #F3F3F3;
+  border-radius: 10px;
+  width: max-content;
+}
+
+.filtered-btn.active {
+  background-color: #242424;
+  color: white;
+  border: none !important;
+}
+
+.position-relative {
+  position: relative;
+}
+
+.scroll-icon {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.scroll-icon.left {
+  left: -75px;
+}
+
+.scroll-icon.right {
+  right: -75px;
+}

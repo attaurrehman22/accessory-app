@@ -41,7 +41,7 @@ export class HeroPageComponent {
   slideMargin: number = 20;
 
   images: string[] = []; // Store image URLs here
-  duplicatedImages: string[] = [];
+  // duplicatedImages: string[] = [];
 
   private animationFrame: any;
   private position: number = 0;
@@ -140,32 +140,32 @@ export class HeroPageComponent {
   @HostListener('window:resize', ['$event'])
   // onResize(): void {
 
+  // 
+
+  // private getAllPopularModels(): void {
+  //   // Assuming `http.getTopBrandsData()` returns the response you mentioned
+  //   this.apiSubscription = this.httpps.get<any>(`${this.apiUrl}api/get-top-brands-data`).subscribe(
+  //     (res) => {
+  //       if (res && res.top_brands) {
+  //         // Process the response to extract cover_image URLs
+  //         this.images = res.top_brands.map((product: any) => {
+  //           if (product?.svg) {
+  //             return product.svg;
+  //           }
+
+  //         }).filter(img => img); // Ensure we don't include empty strings if there's no cover_image
+
+
+
+  //         this.duplicatedImages = [...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images];
+  //         this.animate(); // Start the animation after images are fetched
+  //       }
+  //     },
+  //     (err) => {
+  //       console.error('Error loading popular models:', err);
+  //     }
+  //   );
   // }
-
-  private getAllPopularModels(): void {
-    // Assuming `http.getTopBrandsData()` returns the response you mentioned
-    this.apiSubscription = this.httpps.get<any>(`${this.apiUrl}api/get-top-brands-data`).subscribe(
-      (res) => {
-        if (res && res.top_brands) {
-          // Process the response to extract cover_image URLs
-          this.images = res.top_brands.map((product: any) => {
-            if (product?.svg) {
-              return product.svg;
-            }
-
-          }).filter(img => img); // Ensure we don't include empty strings if there's no cover_image
-
-
-
-          this.duplicatedImages = [...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images];
-          this.animate(); // Start the animation after images are fetched
-        }
-      },
-      (err) => {
-        console.error('Error loading popular models:', err);
-      }
-    );
-  }
 
   private updateLayout(): void {
     if (window.innerWidth < 768) {
@@ -195,17 +195,17 @@ export class HeroPageComponent {
     }
   }
 
-  private animate(): void {
-    const slideWidth = this.imageWidth + this.slideMargin * 2;
-    this.position -= this.speed / 60;
+  // private animate(): void {
+  //   const slideWidth = this.imageWidth + this.slideMargin * 2;
+  //   this.position -= this.speed / 60;
 
-    if (-this.position >= slideWidth * this.duplicatedImages.length) {
-      this.position += slideWidth * this.duplicatedImages.length;
-    }
+  //   if (-this.position >= slideWidth * this.duplicatedImages.length) {
+  //     this.position += slideWidth * this.duplicatedImages.length;
+  //   }
 
-    this.sliderRef.nativeElement.style.transform = `translateX(${this.position}px)`;
-    this.animationFrame = requestAnimationFrame(() => this.animate());
-  }
+  //   this.sliderRef.nativeElement.style.transform = `translateX(${this.position}px)`;
+  //   this.animationFrame = requestAnimationFrame(() => this.animate());
+  // }
 
   ngOnDestroy(): void {
 
@@ -218,7 +218,7 @@ export class HeroPageComponent {
   }
 
   ngOnInit() {
-    this.getAllPopularModels();
+    // this.getAllPopularModels();
     this.updateLayout();
     window.addEventListener('resize', () => {
       this.windowWidth = window.innerWidth;

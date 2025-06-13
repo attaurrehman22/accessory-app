@@ -111,6 +111,20 @@ export class MyListingDetailsComponent implements OnInit {
     // { label: "Help Center", arabicLabel: "مركز المساعدة", icon: "bi bi-question-circle" },
   ];
 
+   getInitialsofUsername(name){
+    if (!name) {
+      return '';
+    }
+
+    const words = name.trim().split(' ');
+
+    if (words.length === 1) {
+      return words[0][0].toUpperCase();
+    } else {
+      return (words[0][0] + words[1][0]).toUpperCase();
+    }
+  }
+
   listings: any[] = [];
   userID: any;
   ngOnInit(): void {

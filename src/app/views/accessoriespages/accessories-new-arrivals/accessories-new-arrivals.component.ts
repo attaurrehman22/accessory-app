@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpService } from 'src/services/http/http.service';
 import { environment } from '../../../../environments/environment';
@@ -13,6 +13,51 @@ export class AccessoriesNewArrivalsComponent implements OnInit{
   showList: any;
 
   constructor(private http: HttpService, private router: Router) {}
+
+  filterBtn = [
+    "All",
+    "Snake",
+    "Python",
+    "Leather",
+    "Leather two",
+      "All",
+    "Snake",
+    "Python",
+    "Leather",
+    "Leather two",
+      "All",
+    "Snake",
+    "Python",
+    "Leather",
+    "Leather two",
+      "All",
+    "Snake",
+    "Python",
+    "Leather",
+    "Leather two",
+  ]
+
+  selectedBtn: string | null = 'All';
+
+  selectBtn(btn: string) {
+    this.selectedBtn = btn;
+  }
+
+  @ViewChild('scrollContainer', { static: false }) scrollContainer!: ElementRef;
+    scrollLeft() {
+      this.scrollContainer.nativeElement.scrollBy({
+        left: -200,
+        behavior: 'smooth'
+      });
+    }
+  
+    scrollRight() {
+      this.scrollContainer.nativeElement.scrollBy({
+        left: 200,
+        behavior: 'smooth'
+      });
+    }
+  
 
   apipath= environment.apipath;
   ngOnInit(): void {

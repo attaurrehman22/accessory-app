@@ -43,6 +43,68 @@
       <form class="arabic-style-form" [formGroup]="profileForm" (ngSubmit)="profileFormSubmit()">
         <!-- Personal Information -->
         <h3>{{ "my_Listing.Personal_Information" | translate }}</h3>
+
+        <div class="row">
+          <div class="col-md-12 mb-3 d-flex align-items-center">
+            <div class="">
+              <!-- <ng-container
+                *ngIf="
+                  profileForm.get('profileImage').value;
+                  else fallbackImage
+                "
+              >
+                <img
+                  [src]="
+                    apiUrl +
+                    profileForm.get('profileImage').value
+                  "
+                  alt="chat image"
+                  style="width: 48px; height: 48px; border-radius: 30px;border:none"
+                />
+              </ng-container>
+
+              <ng-template #fallbackImage>
+                <div
+                  style="
+                    width: 48px;
+                    height: 48px;
+                    border-radius: 30px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    background-color: #ccc;
+                    color: white;
+                    font-size: 20px;
+                    border:none;
+                  "
+                >
+                  {{ getInitialsofUsername('Demo') }}
+                </div>
+              </ng-template> -->
+                <div
+                  style="
+                    width: 48px;
+                    height: 48px;
+                    border-radius: 30px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    background-color: #ccc;
+                    color: white;
+                    font-size: 20px;
+                    border:none;
+                  "
+                >
+                  {{ getInitialsofUsername('Muhammad Kamran') }}
+                </div>
+            </div>
+            <div class="">
+              <p class="font-size-20 font-weight-600 color-242424 margin-0">Muhammad Kamran</p>
+              <p class="font-size-16 font-weight-400 color-909090 margin-0">muhammad.kamrangmail.com</p>
+            </div>
+          </div>
+        </div>
+
         <div class="row">
           <div class="col-md-6 mb-3" [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'">
             <label for="first_name" class="form-label">{{ "my_Listing.First_Name" | translate }}</label>
