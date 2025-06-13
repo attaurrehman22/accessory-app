@@ -163,8 +163,12 @@ export class BuyProductComponentComponent implements OnInit {
 
   getOrderandChatID() {
     this.http.getOrderandChatIDDetails(this.productDetails.id).subscribe((res) => {
-      this.orderID = res.order.id;
-      this.chatID = res.chats.chat_id;
+      if(res?.order?.id){
+        this.orderID = res?.order?.id;
+      }
+      if(res?.chats?.chat_id){
+        this.chatID = res?.chats?.chat_id;
+      }
     });
   }
 
@@ -627,6 +631,7 @@ export class BuyProductComponentComponent implements OnInit {
           this.router.navigate(["/chat"], {
             state: {
               data: this.productDetails,
+              productID: this.productDetails.id,
               chatID: this.chatID,
               fromRoute: "gotToChat",
             },

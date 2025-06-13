@@ -35,7 +35,8 @@ export class ChatComponent implements OnInit, AfterViewChecked {
   productDeatils: any;
   detailsWithLatestMessages: any;
   messages: any;
-    userID: string | null;
+  userID: string | null;
+  filteredChats: any[] = [];
   chats: any;
   getProductDetails: any;
   chat_id: any;
@@ -95,14 +96,47 @@ export class ChatComponent implements OnInit, AfterViewChecked {
       this.getLatestMessage();
       
       if (history?.state?.fromRoute == "gotToChat") {
-        this.getDetailsofProduct(history?.state?.data.id);
-      } else {
-        this.getDetailsofProduct(history?.state?.productID);
+        // this.getDetailsofProduct(history?.state?.data.id);
+        if(history?.state?.chatID){
+          this.chat_id = history?.state?.chatID;
+          this.chat_id_for_remove_unread_count = this.chat_id; 
+        }
+        if(history?.state?.data?.id){
+          console.log("Calling 1 line 105")
+          this.getDetailsofProduct(history.state.data.id);
+        }if(history?.state?.productID){
+          console.log("Calling 2 line 107")
+          this.getDetailsofProduct(history?.state?.productID);
+        }
+        if(history?.state?.chatDetails){
+          console.log("Calling 3 line 110")
+          this.getMesageDetails(history?.state?.chatDetails)
+        } 
+        if(!history?.state?.chatDetails && history?.state?.data && history?.state?.chatID){
+          let getFilterdChat
+          this.http.getChatsWithLatestMessage().subscribe((res) => {
+            const chatList = res.chats.map(
+              (chat) => {
+                chat.product.main_image = chat.product.main_image.replace(/\\/g, "/");
+                return chat;
+              }
+            );
+            console.log("history?.state?.chatID",history?.state?.chatID)
+            console.log("chatList",chatList)
+            getFilterdChat = chatList.filter(
+              (chat:any)=> chat.chat_id == history?.state?.chatID)
+            console.log("getFilterdChat",getFilterdChat)
+            if(getFilterdChat){
+              console.log("this.filteredChats",this.filteredChats)
+              this.getMesageDetails(getFilterdChat[0])
+            }
+          });
+        }
+        else{
+          console.log("Calling chat Details",this.chat_id)
+          this.getChatDetails();
+        }
       }
-
-      this.chat_id = history?.state?.chatID;
-      this.chat_id_for_remove_unread_count = this.chat_id;
-      this.getChatDetails();
     }
     if (history?.state?.data && history?.state?.fromRoute != "gotToChat") {
       this.productDeatils = history.state.data;
@@ -149,36 +183,28 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     }
   }
 
-  filteredChats: any[] = [];
 
-  getLatestMessage() {
-    this.http.getChatsWithLatestMessage().subscribe((res) => {
-      this.chats = res.chats.map(
-        (chat) => {
-          chat.product.main_image = chat.product.main_image.replace(/\\/g, "/");
-          return chat;
-        },
-        (err) => {
-          if (err && err.error) {
-            this.alertService.showAlert("warning", `${err.error.message}`);
-          } else {
-            if (this.translateService.currentLang == "en") {
-              this.alertService.showAlert(
-                "warning",
-                "Error in getting message Please try again"
-              );
-            } else {
-              this.alertService.showAlert(
-                "warning",
-                "حدث خطأ أثناء جلب الرسالة، يرجى المحاولة مرة أخرى"
-              );
-            }
-          }
-        }
-      );
-      this.filteredChats = this.chats;
+ async getLatestMessage() {
+  try {
+    const res: any = await this.http.getChatsWithLatestMessage().toPromise();
+    this.chats = res.chats.map((chat) => {
+      chat.product.main_image = chat.product.main_image.replace(/\\/g, "/");
+      return chat;
     });
+    this.filteredChats = this.chats;
+  } catch (err: any) {
+    if (err && err.error) {
+      this.alertService.showAlert("warning", `${err.error.message}`);
+    } else {
+      if (this.translateService.currentLang == "en") {
+        this.alertService.showAlert("warning", "Error in getting message. Please try again");
+      } else {
+        this.alertService.showAlert("warning", "حدث خطأ أثناء جلب الرسالة، يرجى المحاولة مرة أخرى");
+      }
+    }
   }
+}
+
 
   reciever_ID: any;
   isShowBuyNowOffer: boolean = false;

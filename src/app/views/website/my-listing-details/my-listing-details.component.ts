@@ -887,10 +887,16 @@ export class MyListingDetailsComponent implements OnInit {
     const chatDetails = {
       id: chat.chat_id,
     };
+
+    const productDetails = {
+      id: chat.product_id,
+    };
+
     this.router.navigate(["/chat"], {
       state: {
         fromRoute: "gotToChat",
-        data: chatDetails,
+        data: productDetails,
+        chatDetails:chat,
         productID: chat.product_id,
         chatID: chat.chat_id,
       },
