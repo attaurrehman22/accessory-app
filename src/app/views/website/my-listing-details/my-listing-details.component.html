@@ -46,25 +46,27 @@
 
         <div class="row">
           <div class="col-md-12 mb-3 gap-2 d-flex align-items-center">
-            <div class="">
-              <!-- <ng-container
+            <div class="position-relative profile-image-container">
+              <ng-container
                 *ngIf="
-                  profileForm.get('profileImage').value;
+                  profileForm.get('profile_image').value || profileImagePreview;
                   else fallbackImage
                 "
               >
                 <img
-                  [src]="
-                    apiUrl +
-                    profileForm.get('profileImage').value
-                  "
-                  alt="chat image"
-                  style="width: 48px; height: 48px; border-radius: 30px;border:none"
+                  [src]="profileImagePreview || (apiUrl + profileForm.get('profile_image').value)"
+                  alt="Profile Image"
+                  style="width: 48px; height: 48px; border-radius: 30px;border:none;object-fit: cover;"
                 />
+                <label for="profileImageUpload" class="position-absolute camera-icon" style="bottom: 1px; right: 14px; cursor: pointer; color: #242424; border-radius: 50%; padding: 2px; opacity: 0; transition: opacity 0.3s ease;">
+                  <i class="bi bi-camera-fill"></i>
+                </label>
+                <input type="file" id="profileImageUpload" (change)="onProfileImageSelect($event)" accept="image/*" style="display: none;">
               </ng-container>
 
               <ng-template #fallbackImage>
                 <div
+                  class="profile-image-container"
                   style="
                     width: 48px;
                     height: 48px;
@@ -76,31 +78,20 @@
                     color: white;
                     font-size: 20px;
                     border:none;
+                    position: relative;
                   "
                 >
-                  {{ getInitialsofUsername('Demo') }}
+                  {{ getInitialsofUsername(profileForm.get('first_name').value + ' ' + profileForm.get('last_name').value) }}
+                  <label for="profileImageUpload" class="position-absolute camera-icon" style="bottom: 1px; right: 14px; cursor: pointer; color: #242424; border-radius: 50%; padding: 2px; opacity: 0; transition: opacity 0.3s ease;">
+                    <i class="bi bi-camera-fill"></i>
+                  </label>
+                  <input type="file" id="profileImageUpload" (change)="onProfileImageSelect($event)" accept="image/*" style="display: none;">
                 </div>
-              </ng-template> -->
-                <div
-                  style="
-                    width: 48px;
-                    height: 48px;
-                    border-radius: 30px;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    background-color: #ccc;
-                    color: white;
-                    font-size: 20px;
-                    border:none;
-                  "
-                >
-                  {{ getInitialsofUsername('Muhammad Kamran') }}
-                </div>
+              </ng-template>
             </div>
-            <div class="">
-              <p class="font-size-20 font-weight-600 color-242424 margin-0">Muhammad Kamran</p>
-              <p class="font-size-16 font-weight-400 color-909090 margin-0">muhammad.kamrangmail.com</p>
+            <div>
+              <p class="font-size-20 font-weight-600 color-242424 margin-0">{{profileForm.get('first_name').value}} {{profileForm.get('last_name').value}}</p>
+              <p class="font-size-16 font-weight-400 color-909090 margin-0">{{profileForm.get('email').value}}</p>
             </div>
           </div>
         </div>
@@ -392,8 +383,9 @@
         
             <div class="col-md-6 mb-3 d-flex flex-column" [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'">
               <label for="country" class="form-label">{{ "my_Listing.Country" | translate }}</label>
-                <select disabled class="form-control" formControlName="country" (selectionChange)="getCountryName(country)">
-                    <option *ngFor="let country of countryLists" [value]="country.name">{{country.name}}</option>
+                <!-- <select disabled class="form-control" formControlName="country" (selectionChange)="getCountryName(country)"> -->
+                <select disabled class="form-control" formControlName="country">
+                  <option>{{this.billingForm.get('country').value}}</option>
                 </select>
               <div class="" *ngIf="billingForm.get('country').hasError('required') && billingForm.get('country').touched">
                 <small class="text-danger">{{ "my_Listing.Country_is_required" | translate }}</small>

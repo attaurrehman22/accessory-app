@@ -775,3 +775,12 @@ text-align: end;
     justify-content: center;
     border-radius: 20px !important;
 }
+
+.profile-image-container:hover .camera-icon {
+  opacity: 1 !important;
+}
+
+.profile-image-container {
+  position: relative;
+  display: inline-block;
+}

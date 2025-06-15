@@ -26,6 +26,8 @@ export class MyListingDetailsComponent implements OnInit {
   supportLanguages = ["en", "ar", "fr", "ta", "hi"];
   currentLanguage: string;
   maxDate: string = new Date().toISOString().split('T')[0];
+  selectedProfileImage: File | null = null;
+  profileImagePreview: string | null = null;
 
   billing_address = new FormControl(null, [
     Validators.required,
@@ -117,11 +119,14 @@ export class MyListingDetailsComponent implements OnInit {
     }
 
     const words = name.trim().split(' ');
-
-    if (words.length === 1) {
+    console.log("words", words);
+    if (words?.length === 1 && words[0] !== "") {
       return words[0][0].toUpperCase();
     } else {
-      return (words[0][0] + words[1][0]).toUpperCase();
+      const emailWord =this.profileForm.get('email').value;
+      return emailWord[0][0].toUpperCase();
+      // return (emailWord[0][0].toUpperCase());
+      // return 'EM';
     }
   }
 
@@ -197,15 +202,14 @@ export class MyListingDetailsComponent implements OnInit {
       ],
       gender: ["", Validators.required],
       date_of_birth: ["", Validators.required],
-      // country: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
-      // city: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
       countryCode: ["KSA"],
-      phone_number: ["", [Validators.required, Validators.pattern(/^5\d{8}$/)]], // Assuming KSA format without country code
+      phone_number: ["", [Validators.required, Validators.pattern(/^5\d{8}$/)]],
       language: ["english", Validators.required],
       occupation: ["", [Validators.required, Validators.minLength(2)]],
       about_me: ["", [Validators.maxLength(300)]],
       email: ["", [Validators.required, Validators.email]],
       password: [""],
+      profile_image: [""]
     });
     this.fetchProfiling();
   }
@@ -224,30 +228,48 @@ export class MyListingDetailsComponent implements OnInit {
         occupation: res?.occupation,
         about_me: res?.about_me,
         email: res?.email,
+        profile_image: res?.profile_image.replace(/\\/g, ""),
         password: res?.password,
       });
     });
   }
 
+  onProfileImageSelect(event: any) {
+    const file = event.target.files[0];
+    if (file) {
+      this.selectedProfileImage = file;
+      // Create preview
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        this.profileImagePreview = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+
   profileFormSubmit() {
     this.profileForm.markAllAsTouched();
-    console.log("Form Values:", this.profileForm.value);
     if (this.profileForm.valid) {
-      this.http
-        .saveProfilingInformation(this.profileForm.value)
-        .subscribe((res) => {
-          if (this.translateService.currentLang == "en") {
-            this.alertService.showAlert(
-              "success",
-              "Profile Update Successfully"
-            );
-          } else {
-            this.alertService.showAlert(
-              "success",
-              "تم تحديث الملف الشخصي بنجاح"
-            );
-          }
-        });
+      const formData = new FormData();
+      
+      // Append all form fields to FormData
+      Object.keys(this.profileForm.value).forEach(key => {
+        if (key === 'profile_image' && this.selectedProfileImage) {
+          formData.append('profile_image', this.selectedProfileImage);
+        } else {
+          formData.append(key, this.profileForm.get(key).value);
+        }
+      });
+
+      this.http.saveProfilingInformation(formData).subscribe((res) => {
+        if (this.translateService.currentLang == "en") {
+          this.alertService.showAlert("success", "Profile Update Successfully");
+        } else {
+          this.alertService.showAlert("success", "تم تحديث الملف الشخصي بنجاح");
+        }
+        // Reset image selection after successful upload
+        this.selectedProfileImage = null;
+      });
     } else {
       if (this.translateService.currentLang == "en") {
         this.alertService.showAlert("warning", "Please add form values");
@@ -268,7 +290,7 @@ export class MyListingDetailsComponent implements OnInit {
           zip_code: res.data.zip_code,
           city: res.data.city,
           billing_address: res.data.billing_address,
-          country: res?.data?.country,
+          country: res.data.country ? res.data.country : 'Saudi Arabia',
           state: res?.data?.state,
         });
       },
@@ -278,6 +300,7 @@ export class MyListingDetailsComponent implements OnInit {
           //   "warning",
           //   "Error in Fetching Billing Information"
           // );
+          
         } else {
           this.alertService.showAlert(
             "warning",
@@ -458,7 +481,7 @@ export class MyListingDetailsComponent implements OnInit {
       console.log("this.activeIndex == 9");
       this.getWishList();
     } else if (this.activeIndex == 1) {
-      this.getCountryLists();
+      // this.getCountryLists();
       this.getCityLists('Saudi Arabia');
       this.getBillingInformation();
     } else if (this.activeIndex == 2) {
@@ -469,15 +492,15 @@ export class MyListingDetailsComponent implements OnInit {
   countryLists: any;
   cityLists: any;
 
-  getCountryLists() {
-    this.http.getCountryLists().subscribe((res) => {
-      this.countryLists = res.data;
-    });
-  }
+  // getCountryLists() {
+  //   this.http.getCountryLists().subscribe((res) => {
+  //     this.countryLists = res.data;
+  //   });
+  // }
 
-  getCountryName(country) {
-    this.getCityLists(country.value)
-  }
+  // getCountryName(country) {
+  //   this.getCityLists(country.value)
+  // }
 
   getCityLists(country) {
     const formData = {
@@ -593,13 +616,17 @@ export class MyListingDetailsComponent implements OnInit {
     if (!name) {
       return "";
     }
-
+    console.log("name", name);
     // Split name by space and get first letters
     const words = name.trim().split(" ");
-    if (words.length === 1) {
+    console.log("words", words);
+    if (words?.length === 1 && words[0] !== "") {
       return words[0][0].toUpperCase();
     } else {
-      return (words[0][0] + words[1][0]).toUpperCase();
+      const emailWord =this.profileForm.get('email').value
+      return emailWord[0][0].toUpperCase();
+      // return (emailWord[0][0].toUpperCase());
+      // return 'EM';
     }
   }
 
