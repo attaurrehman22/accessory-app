@@ -47,7 +47,7 @@ export class MyListingDetailsComponent implements OnInit {
     Validators.maxLength(9),
   ]);
   city = new FormControl("", [Validators.required, Validators.maxLength(50)]);
-  country = new FormControl("", [
+  country = new FormControl({value: "Saudi Arabia", disabled: true}, [
     Validators.required,
     Validators.maxLength(50),
   ]);
@@ -458,10 +458,34 @@ export class MyListingDetailsComponent implements OnInit {
       console.log("this.activeIndex == 9");
       this.getWishList();
     } else if (this.activeIndex == 1) {
+      this.getCountryLists();
+      this.getCityLists('Saudi Arabia');
       this.getBillingInformation();
     } else if (this.activeIndex == 2) {
       this.getLatestMessages();
     }
+  }
+
+  countryLists: any;
+  cityLists: any;
+
+  getCountryLists() {
+    this.http.getCountryLists().subscribe((res) => {
+      this.countryLists = res.data;
+    });
+  }
+
+  getCountryName(country) {
+    this.getCityLists(country.value)
+  }
+
+  getCityLists(country) {
+    const formData = {
+      country: country,
+    }
+    this.http.getCityLists(formData).subscribe((res) => {
+      this.cityLists = res.data;
+    });
   }
 
   chats: any;

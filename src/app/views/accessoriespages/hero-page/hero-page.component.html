@@ -178,7 +178,17 @@
                       alt="Profile"
                       [matMenuTriggerFor]="profileMenu"
                       style="cursor: pointer"
+                      *ngIf="isUserLogin === 'true'"
                     />
+
+                    <button
+                      mat-menu-item
+                      *ngIf="isUserLogin === 'false' || isUserLogin === null"
+                      (click)="goToRegister()"
+                      class="login-hover-btn"
+                    >
+                      {{ "header.Login" | translate }}
+                    </button>
 
                     <img
                       src="./assets/images/solar_bag-smile-linear.svg"
@@ -311,13 +321,13 @@
                       </form>
                      </div>
                     <mat-menu #profileMenu="matMenu">
-                      <button
+                      <!-- <button
                         mat-menu-item
                         *ngIf="isUserLogin === 'false' || isUserLogin === null"
                         (click)="goToRegister()"
                       >
                         {{ "header.Login" | translate }}
-                      </button>
+                      </button> -->
 
                       <div class="route-groups">
                         <div class="d-flex gap-2 align-items-center">
@@ -431,24 +441,32 @@
                       src="./assets/images/white-profile-icon.svg"
                       alt="Profile"
                       [matMenuTriggerFor]="profileMenu"
-                      style="cursor: pointer"
+                      *ngIf="isUserLogin === 'true'"
                     />
+                    <button
+                      mat-menu-item
+                      *ngIf="isUserLogin === 'false' || isUserLogin === null"
+                      (click)="goToRegister()"
+                      class="login-hover-btn"
+                    >
+                      {{ "header.Login" | translate }}
+                    </button>
 
-                <button
-                  *ngIf="selectedLang === 'en'"
-                  class="custom-en-ar-btn"
-                  (click)="useLang('ar')"
-                >
-                EN - <span [ngStyle]="{'color': selectedLang == 'en' ? '#6A6A6A' : '#242424'}"> AR </span>  
-                  
-                </button>
-                <button
-                  *ngIf="selectedLang === 'ar'"
-                  class="custom-en-ar-btn"
-                  (click)="useLang('en')"
-                >
-                  <span [ngStyle]="{'color': selectedLang == 'ar' ? '#6A6A6A' : '#242424'}"> En </span> - AR
-                </button>
+                    <button
+                      *ngIf="selectedLang === 'en'"
+                      class="custom-en-ar-btn"
+                      (click)="useLang('ar')"
+                    >
+                    EN - <span [ngStyle]="{'color': selectedLang == 'en' ? '#6A6A6A' : '#242424'}"> AR </span>  
+                      
+                    </button>
+                    <button
+                      *ngIf="selectedLang === 'ar'"
+                      class="custom-en-ar-btn"
+                      (click)="useLang('en')"
+                    >
+                      <span [ngStyle]="{'color': selectedLang == 'ar' ? '#6A6A6A' : '#242424'}"> En </span> - AR
+                    </button>
                   </div>
                 </div>
               </div>

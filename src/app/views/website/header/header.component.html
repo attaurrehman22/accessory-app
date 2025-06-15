@@ -26,11 +26,12 @@
         >
         
         </div>
-        <div class="header-contact header-contact-lg gap-4 mat-menu-nav">
+        <div class="header-contact header-contact-lg mat-menu-nav">
           <!-- Small Screen SearchForm Start Here  -->
           <img
             src="./assets/images/search-icon.svg"
             (click)="isShowSearchForm()"
+            class="search-icon-for-mobile"
             style="cursor: pointer"
           />
           <div *ngIf="isShowSearchField" class="small-screen-search-Box">
@@ -51,14 +52,6 @@
           <!-- Small Screen SearchForm End Here  -->
           <!-- </mat-menu> -->
           <mat-menu #profileMenu="matMenu" class="custom-profile-menu">
-            <button
-              mat-menu-item
-              *ngIf="isUserLogin === 'false' || isUserLogin === null"
-              (click)="goToRegister()"
-            >
-              {{ "header.Login" | translate }}
-            </button>
-
             <div class="route-groups" *ngIf="isUserLogin === 'true'" >
               <div class="d-flex gap-2 align-items-center">
                 <!-- <div class="">
@@ -165,8 +158,16 @@
             alt="Profile"
             [matMenuTriggerFor]="profileMenu"
             style="cursor: pointer"
+            *ngIf="isUserLogin === 'true'"
           />
-
+          <button
+            mat-menu-item
+            *ngIf="isUserLogin === 'false' || isUserLogin === null"
+            (click)="goToRegister()"
+            class="login-hover-btn"
+          >
+            {{ "header.Login" | translate }}
+          </button>
           <button
             *ngIf="selectedLang === 'en'"
             class="custom-en-ar-btn"
@@ -286,6 +287,7 @@
           <img
             src="./assets/images/search-icon.svg"
            (click)="isShowSearchForm()"
+           class="search-icon-for-mobile"
             style="cursor: pointer"
           />
              <!-- Search for Large Screen End Here -->
@@ -320,7 +322,17 @@
             alt="Profile"
             [matMenuTriggerFor]="profileMenu"
             style="cursor: pointer"
+            *ngIf="isUserLogin === 'true'"
           />
+
+           <button
+              mat-menu-item
+              *ngIf="isUserLogin === 'false' || isUserLogin === null"
+              (click)="goToRegister()"
+              class="login-hover-btn"
+            >
+              {{ "header.Login" | translate }}
+            </button>
 
           <button
             *ngIf="selectedLang === 'en'"

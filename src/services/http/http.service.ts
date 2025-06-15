@@ -154,6 +154,26 @@ export class HttpService implements OnInit {
     });
   }
 
+  getCountryLists(): Observable<any> {
+    const url = `${this.apiUrl}/api/get-countries`;
+    return this.http.get(url, {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+  }
+
+  getCityLists(formData): Observable<any> {
+    const url = `${this.apiUrl}/api/get-cities`;
+    return this.http.post(url, formData, {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+  }
+
   getProducts(): Observable<any> {
     return this.http.get(`${this.apiUrl}/api/products`);
   }

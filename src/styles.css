@@ -932,3 +932,35 @@ td {
   }
 
   /* ----------------------------------  Global Product Cards Styles End here ------------------------------ */
+
+  .login-hover-btn {
+    width: auto !important;
+    padding: 0 !important;
+  }
+
+  @media screen and (max-width: 767px) {
+    .login-hover-btn {
+      font-size: 12px !important;
+    }
+
+    .custom-en-ar-btn {
+      font-size: 12px !important;
+    }
+
+    .search-icon-for-mobile {
+      width: 20px !important;
+    }
+  }
+
+  .login-hover-btn:hover {
+    background-color: none !important;
+    background: none !important;
+  }
+
+  .custom-en-ar-btn {
+    border: none;
+    background: none;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 19.68px;
+  }

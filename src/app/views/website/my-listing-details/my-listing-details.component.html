@@ -368,27 +368,7 @@
                 <small class="text-danger">{{ "my_Listing.Only_numeric_values_allowed_zip_code" | translate }}</small>
               </div>
             </div>
-            <div class="col-md-6 mb-3" [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'">
-              <label for="city" class="form-label">{{ "my_Listing.City" | translate }}</label>
-              <input
-                type="text"
-                id="city"
-                class="form-control"
-                placeholder='{{ "my_Listing.Enter_city_pace" | translate }}'
-                formControlName="city"
-              />
-              <div class="" *ngIf="billingForm.get('city').hasError('required') && billingForm.get('city').touched">
-                <small class="text-danger">{{ "my_Listing.City_required" | translate }}</small>
-              </div>
 
-              <div class="" *ngIf="billingForm.get('city').hasError('maxlength')">
-                <small class="text-danger">{{ "my_Listing.First_name_exceed_limit" | translate }}</small>
-              </div>
-            </div>
-          </div>
-
-          <div class="row">
-            
             <div class="col-md-6 mb-3" [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'">
               <label for="billing_address" class="form-label">{{ "my_Listing.Billing_Address" | translate }}</label>
               <input
@@ -406,16 +386,15 @@
                 <small class="text-danger">{{ "my_Listing.Cannot_exceed_limit_120_character" | translate }}</small>
               </div>
             </div>
+          </div>
 
-            <div class="col-md-6 mb-3" [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'">
+          <div class="row">
+        
+            <div class="col-md-6 mb-3 d-flex flex-column" [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'">
               <label for="country" class="form-label">{{ "my_Listing.Country" | translate }}</label>
-              <input
-                type="text"
-                id="country"
-                class="form-control"
-                placeholder='{{ "my_Listing.Country_place" | translate }}'
-                formControlName="country"
-              />
+                <select disabled class="form-control" formControlName="country" (selectionChange)="getCountryName(country)">
+                    <option *ngFor="let country of countryLists" [value]="country.name">{{country.name}}</option>
+                </select>
               <div class="" *ngIf="billingForm.get('country').hasError('required') && billingForm.get('country').touched">
                 <small class="text-danger">{{ "my_Listing.Country_is_required" | translate }}</small>
               </div>
@@ -423,6 +402,25 @@
               <div class="" *ngIf="billingForm.get('country').hasError('maxlength')">
                 <small class="text-danger"> {{ "my_Listing.First_name_exceed_limit" | translate }}
                   </small>
+              </div>
+            </div>
+
+            <div class="col-md-6 mb-3 d-flex flex-column" [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'">
+              <label for="city" class="form-label">{{ "my_Listing.City" | translate }}</label>
+                <div class="position-relative">
+                  <select class="form-control" formControlName="city">
+                    <option *ngFor="let city of cityLists" [value]="city">{{city}}</option>
+                  </select>
+                  <div class="position-absolute" style="right: 10px; top: 50%; transform: translateY(-50%); pointer-events: none;">
+                    <i class="bi bi-chevron-down"></i>
+                  </div>
+                </div>
+              <div class="" *ngIf="billingForm.get('city').hasError('required') && billingForm.get('city').touched">
+                <small class="text-danger">{{ "my_Listing.City_required" | translate }}</small>
+              </div>
+
+              <div class="" *ngIf="billingForm.get('city').hasError('maxlength')">
+                <small class="text-danger">{{ "my_Listing.First_name_exceed_limit" | translate }}</small>
               </div>
             </div>
           </div>
