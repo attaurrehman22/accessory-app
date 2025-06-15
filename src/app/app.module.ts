@@ -133,6 +133,8 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { AddAttributeListingComponent } from './views/adminpages/accessories/attributes/add-attribute-listing/add-attribute-listing.component';
 import { AttributeListingComponent } from './views/adminpages/accessories/attributes/attribute-listing/attribute-listing.component';
 import { ChangePasswordComponent } from './views/auth/change-password/change-password.component';
+import { AccessoryImagesListingComponent } from './views/adminpages/accessories/accessory-images-listing/accessory-images-listing.component';
+import { AddAccessoryImagesListingComponent } from './views/adminpages/accessories/add-accessory-images-listing/add-accessory-images-listing.component';
 
 @NgModule({
   declarations: [
@@ -210,7 +212,9 @@ import { ChangePasswordComponent } from './views/auth/change-password/change-pas
     InventoriesComponent,
     AttributeListingComponent,
     AddAttributeListingComponent,
-    ChangePasswordComponent
+    ChangePasswordComponent,
+    AccessoryImagesListingComponent,
+    AddAccessoryImagesListingComponent
   ],
   imports: [
     MatSortModule,

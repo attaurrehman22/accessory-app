@@ -27,7 +27,7 @@ import { environment } from "src/environments/environment";
   styleUrls: ["./add-product-watch-of-the-day.component.css"],
 })
 export class AddProductWatchOfTheDayComponent {
-   apiUrl = environment.apipath+ '/'
+  apiUrl = environment.apipath+ '/'
   nullimagesUrl = this.apiUrl + 'null'
   allData: any;
   watchDayForm: FormGroup;

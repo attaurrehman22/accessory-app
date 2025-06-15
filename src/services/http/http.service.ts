@@ -731,13 +731,13 @@ export class HttpService implements OnInit {
 
 
     getAttributesType(): Observable<any> {
-    return this.http.get(`${this.apiUrl}/api/attribute-types`, {
-      headers: {
-        Accept: "application/json",
-        Authorization: `Bearer ${this.token}`,
-      },
-    });
-  }
+      return this.http.get(`${this.apiUrl}/api/attribute-types`, {
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${this.token}`,
+        },
+      });
+    }
 
    addAttributesType(bodyData): Observable<any> {
     return this.http.post(`${this.apiUrl}/api/attribute-types`,bodyData, {
@@ -878,6 +878,43 @@ export class HttpService implements OnInit {
 
      deleteAttributes(ID): Observable<any> {
       return this.http.delete(`${this.apiUrl}/api/attributes/${ID}`, {
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${this.token}`,
+        },
+      });
+    }
+
+    getAllAccessoryImages(): Observable<any> {
+      return this.http.get(`${this.apiUrl}/api/admin/accessory-images`, {
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${this.token}`,
+        },
+      });
+    }
+
+
+    addAccessoryImage(formData): Observable<any> {
+      return this.http.post(`${this.apiUrl}/api/admin/accessory-images`,formData, {
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${this.token}`,
+        },
+      });
+    }
+
+     editAccessoryImage(bodyData,ID): Observable<any> {
+      return this.http.post(`${this.apiUrl}/api/admin/accessory-images/${ID}`,bodyData, {
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${this.token}`,
+        },
+      });
+    }
+
+    deleteAccessoryImage(ID): Observable<any> {
+      return this.http.delete(`${this.apiUrl}/api/admin/accessory-images/${ID}`, {
         headers: {
           Accept: "application/json",
           Authorization: `Bearer ${this.token}`,

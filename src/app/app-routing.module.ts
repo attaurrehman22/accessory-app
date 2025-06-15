@@ -36,6 +36,7 @@ import { AttributeValuesComponent } from './views/adminpages/accessories/attribu
 import { InventoriesComponent } from './views/adminpages/accessories/attributes/inventories/inventories.component';
 import { AttributeListingComponent } from './views/adminpages/accessories/attributes/attribute-listing/attribute-listing.component';
 import { ChangePasswordComponent } from './views/auth/change-password/change-password.component';
+import { AccessoryImagesListingComponent } from './views/adminpages/accessories/accessory-images-listing/accessory-images-listing.component';
 
 
 const routes: Routes = [
@@ -68,7 +69,7 @@ const routes: Routes = [
   {  canActivate: [adminGuard],path: 'admin/attribute-values', component:  AttributeValuesComponent},
   {  canActivate: [adminGuard],path: 'admin/inventory', component:  InventoriesComponent},
   {  canActivate: [adminGuard],path: 'admin/attribute-listing', component:  AttributeListingComponent},
-
+  {  canActivate: [adminGuard],path: 'admin/images-listing', component:  AccessoryImagesListingComponent},
 
 
   { path: 'accessories/home', component:  AccessoriesHomeComponent},

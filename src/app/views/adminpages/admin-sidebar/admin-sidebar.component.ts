@@ -38,7 +38,8 @@ export class AdminSidebarComponent implements OnInit{
         '/admin/attributes',
         '/admin/attribute-values',
         '/admin/inventory',
-        '/admin/attribute-listing'
+        '/admin/attribute-listing',
+        '/admin/images-listing'
       ];
 
      this.router.events

@@ -1,0 +1,71 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12 pt-5">
+            <h1 *ngIf="param == 'Create'" class="text-center">Add Accessories Images</h1>
+            <h1 *ngIf="param == 'Edit'" class="text-center">Edit Accessories Images</h1>
+            <form [formGroup]="accessoryImagesForm">
+
+                <mat-form-field appearance="outline" style="width: 100%;">
+                    <mat-label>Title (EN)</mat-label>
+                    <input matInput formControlName="title_en" />
+                    <mat-error *ngIf="title_en.invalid && (title_en.dirty || title_en.touched)">
+                        <mat-error *ngIf="title_en.errors.required">Title (EN) is required</mat-error>
+                        <mat-error *ngIf="title_en.errors.maxlength">Title (EN) must be less than 150
+                            characters</mat-error>
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" style="width: 100%;">
+                    <mat-label>Title (AR)</mat-label>
+                    <input matInput formControlName="title_ar" />
+                    <mat-error *ngIf="title_ar.invalid && (title_ar.dirty || title_ar.touched)">
+                        <mat-error *ngIf="title_ar.errors.required">Title (AR) is required</mat-error>
+                        <mat-error *ngIf="title_ar.errors.maxlength">Title (AR) must be less than 150
+                            characters</mat-error>
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" style="width: 100%;">
+                    <mat-label>Description (EN)</mat-label>
+                    <input matInput formControlName="description_en" />
+                    <mat-error *ngIf="description_en.invalid && (description_en.dirty || description_en.touched)">
+                        <mat-error *ngIf="description_en.errors.required">Description (EN) is required</mat-error>
+                        <mat-error *ngIf="description_en.errors.maxlength">Description (EN) must be less than 500
+                            characters</mat-error>
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" style="width: 100%;">
+                    <mat-label>Description (AR)</mat-label>
+                    <input matInput formControlName="description_ar" />
+                    <mat-error *ngIf="description_ar.invalid && (description_ar.dirty || description_ar.touched)">
+                        <mat-error *ngIf="description_ar.errors.required">Description (AR) is required</mat-error>
+                        <mat-error *ngIf="description_ar.errors.maxlength">Description (AR) must be less than 500
+                            characters</mat-error>
+                    </mat-error>
+                </mat-form-field>
+
+                <div class="form-group">
+                    <label for="image">Image</label>
+                    <input 
+                        type="file" 
+                        class="form-control" 
+                        id="image" 
+                        accept="image/*"
+                        (change)="onFileSelected($event)"
+                        [required]="param === 'Create'"
+                    >
+                    <div *ngIf="imagePreview" class="mt-2">
+                        <img [src]="imagePreview" alt="Preview" style="max-width: 200px; max-height: 200px;">
+                    </div>
+                </div>
+
+                <div class="col-md-12 d-flex gap-2 justify-content-center pb-3">
+                    <button *ngIf="param == 'Create'" class="save-btn" (click)="saveData()">Save</button>
+                    <button *ngIf="param == 'Edit'" class="save-btn" (click)="saveData()">Edit</button>
+                    <button class="cancel-btn" (click)="cancelForm()">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
