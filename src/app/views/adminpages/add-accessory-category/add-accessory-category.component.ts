@@ -106,7 +106,7 @@ export class AddAccessoryCategoryComponent implements OnInit {
   accessroiesCategoryGroupList:any;
 
   getAllAccessoryCategoryGroups(){
-    this.http.getAdminAccessroiesCategoryGroups().subscribe(
+    this.http.getAdminAccessroiesSubCategoryGroups().subscribe(
       (res)=>{
         this.accessroiesCategoryGroupList = res.data
       }

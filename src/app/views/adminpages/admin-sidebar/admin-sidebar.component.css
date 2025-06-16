@@ -1,104 +1,128 @@
-.sideBar {
-    text-align: center;
-    padding: 0 20px;
-    margin-top: 3.9rem;
-    transition: all ease-in-out 200ms;
-  }
-  .card {
-    position: relative;
-    background-color: inherit;
-    border: none;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    padding: 10px 0;
+.sidebar {
+  background-color: #343a40;
+  height: 100vh;
+  box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+  height: 100%;
+  overflow-y: auto;
+}
+
+.nav-sidebar .nav-item {
+  margin: 4px 0;
+}
+
+.nav-sidebar .nav-link {
+  display: flex;
+  align-items: center;
+  padding: 12px 15px;
+  color: #ffffff;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+
+.nav-sidebar .nav-link:hover {
+  background-color: #ffffff;
+  color: #343a40;
+}
+
+.nav-sidebar .nav-link:hover mat-icon,
+.nav-sidebar .nav-link:hover p {
+  color: #343a40;
+}
+
+.nav-sidebar .nav-link.active {
+  background-color: #ffffff;
+  color: #343a40;
+}
+
+.nav-sidebar .nav-link.active mat-icon,
+.nav-sidebar .nav-link.active p {
+  color: #343a40;
+}
+
+.nav-sidebar .nav-link mat-icon {
+  margin-right: 10px;
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+  color: #ffffff;
+}
+
+.nav-sidebar .nav-link p {
+  margin: 0;
+  font-size: 14px;
+  color: #ffffff;
+}
+
+.acc-li-style .nav-link {
+  padding-left: 20px;
+}
+
+.acc-li-style .nav-link mat-icon {
+  font-size: 18px;
+  width: 18px;
+  height: 18px;
+  color: #ffffff;
+}
+
+.nav-link {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  color: #333;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.nav-link:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.nav-link.active {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.nav-link mat-icon {
+  margin-right: 10px;
+}
+
+.dropdown-icon {
+  margin-left: auto;
+  transition: transform 0.3s ease;
+}
+
+.dropdown-icon.rotated {
+  transform: rotate(180deg);
+}
+
+.accessories-submenu {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease-out;
+  background-color: rgba(0, 0, 0, 0.02);
+}
+
+.accessories-submenu.show {
+  max-height: 1000px; /* Adjust this value based on your content */
+  transition: max-height 0.5s ease-in;
+  margin: 0 0 0 15px;
+  width: calc(250px - 2rem);
+}
+
+.accessories-submenu .nav-link {
+  padding-left: 0.5rem;
+}
+
+/* Responsive styles */
+@media (max-width: 660px) {
+  .sidebar {
     width: 100%;
   }
   
-  .card .toogle-menu {
-    position: absolute;
-    right: -2px;
-    top: -50px;
-    z-index: 10;
-  }
-  .card .toogle-menu1 {
-    position: absolute;
-    right: -200px;
-    top: -50px;
-    z-index: 10;
+  .nav-link {
+    padding: 0.75rem 1rem;
   }
   
-  @media screen and (max-width: 768px) {
-    .toogle-menu1 {
-      display: none;
-    }
+  .accessories-submenu .nav-link {
+    padding-left: 3rem;
   }
-  
-  .toogle-menu1 {
-    color: white;
-    font-size: 40px;
-    height: 40px;
-  }
-  
-  .toogle-menu mat-icon {
-    color: white;
-    font-size: 40px;
-    height: 40px;
-    width: 40px;
-  }
-  .btn2 {
-    background-color: transparent;
-    color: white;
-    border: transparent;
-    display: flex;
-    justify-content: flex-start;
-    align-items: flex-start;
-    gap: 15px;
-    padding: 10px;
-    border-radius: 10px;
-    transition: all ease-in-out 200ms;
-  }
-  
-  .btn2:hover {
-    cursor: pointer;
-    background-color: darkslategray;
-  }
-  .btn1 {
-    width: 100%;
-    background-color: transparent;
-    color: white;
-    padding: 1px 3px;
-  }
-  
-  .largeSize {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    gap: 12px;
-  }
-  
-  .navbar-button-active {
-    background-color: darkslategray;
-  }
-  
-  .active,
-  .btn:hover {
-    background-color: aqua;
-    color: white;
-  }
-
-  .acc-li-style > .nav-item > .nav-link.active {
-    background-color: #ffffffe6;
-    color: #343a40;
-    width: calc(250px - 3.4rem);
-  }
-
-   .acc-li-style > .nav-item > .nav-link.active:hover {
-    background-color: #ffffffe6;
-    color: #343a40;
-  }
-
-  .acc-li-style > .nav-item > .nav-link:hover {
-     color: #ffffffe6;
-  }
-  
+}

@@ -147,7 +147,6 @@ export class AccessoriesProductsComponent
    this.http.getAllAccessories().subscribe(
       (res) => {
         this.allData = res.data;
-
         this.allData.forEach((item) => {
           if (item.additional_images && typeof item.additional_images === 'string') {
             try {
