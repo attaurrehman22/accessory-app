@@ -904,7 +904,7 @@ export class HttpService implements OnInit {
       });
     }
 
-     editAccessoryImage(bodyData,ID): Observable<any> {
+    editAccessoryImage(bodyData,ID): Observable<any> {
       return this.http.post(`${this.apiUrl}/api/admin/accessory-images/${ID}`,bodyData, {
         headers: {
           Accept: "application/json",
@@ -915,6 +915,33 @@ export class HttpService implements OnInit {
 
     deleteAccessoryImage(ID): Observable<any> {
       return this.http.delete(`${this.apiUrl}/api/admin/accessory-images/${ID}`, {
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${this.token}`,
+        },
+      });
+    }
+
+    getAllAccessories(): Observable<any> {
+      return this.http.get(`${this.apiUrl}/api/accessories`, {
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${this.token}`,
+        },
+      });
+    }
+
+    addAccessory(bodyData): Observable<any> {
+      return this.http.post(`${this.apiUrl}/api/accessories`,bodyData, {
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${this.token}`,
+        },
+      });
+    }
+
+    editAccessory(bodyData,ID): Observable<any> {
+      return this.http.put(`${this.apiUrl}/api/accessories/${ID}`,bodyData, {
         headers: {
           Accept: "application/json",
           Authorization: `Bearer ${this.token}`,

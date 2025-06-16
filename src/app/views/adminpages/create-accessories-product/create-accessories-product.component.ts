@@ -25,7 +25,8 @@ interface ColorOption {
 export class CreateAccessoriesProductComponent implements OnInit {
   accessoryForm!: FormGroup;
   showSuccessModal = false;
-  uploadedImages: string[] = [];
+  uploadedImages: { file: File; preview: string }[] = [];
+  mainImage: { file: File; preview: string } | null = null;
   submitting = false;
   displayPriceValue = '$39.99';
   
@@ -90,33 +91,88 @@ export class CreateAccessoriesProductComponent implements OnInit {
     { id: 'reflective', label: 'Reflective Elements' },
     { id: 'wirelessCharging', label: 'Wireless Charging Compatible' },
   ];
-  constructor(private fb: FormBuilder, private http: HttpClient) {}
+  constructor(private fb: FormBuilder, private http: HttpClient,private httpService:HttpService,private router:Router) {}
   ngOnInit(): void {
+    this.getCategories();
     this.initForm();
+    if(this.router.getCurrentNavigation()?.extras.state?.param == "Edit"){
+      this.accessoryForm.patchValue(this.router.getCurrentNavigation()?.extras.state?.data);
+    }
+  }
+
+  categories:any[] = [];
+
+  getCategories(){
+    this.httpService.getAdminAccessroiesCategory().subscribe((res:any)=>{
+      this.categories = res.data;
+    })
   }
   initForm(): void {
     this.accessoryForm = this.fb.group({
-      accessoryType: ['', Validators.required],
-      compatibleModels: this.fb.array([], [Validators.required, Validators.minLength(1)]),
-      material: ['', Validators.required],
+      name: ['', Validators.required],
+      slug: ['', Validators.required],
       brand: ['', Validators.required],
-      colors: this.fb.array([], [Validators.required, Validators.minLength(1)]),
-      price: [39.99, [Validators.required, Validators.min(0)]],
       description: ['', [Validators.required, Validators.maxLength(500)]],
-      dimensions: [''],
-      weight: [''],
-      warranty: [''],
-      waterResistance: ['none'],
-      features: this.fb.array([])
+      meta_title: ['', Validators.required],
+      meta_description: ['', Validators.required],
+      mpn: ['', Validators.required],
+      model_number: ['', Validators.required],
+      category_id: [0, Validators.required],
+      min_price: [0, [Validators.required, Validators.min(0)]],
+      max_price: [0, [Validators.required, Validators.min(0)]],
+      has_variant: [0],
+      popular_item: ['no'],
+      is_active: [1],
+      requires_shipping: [1],
+      views_count: [0],
+      main_image: [null],
+      additional_images: this.fb.array([])
     });
   }
   onSubmit(): void {
+    
     if (this.accessoryForm.valid) {
       this.submitting = true;
-      this.http.post('/api/accessories', this.accessoryForm.value)
+      
+      // Create FormData object
+      const formData = new FormData();
+      
+      // Get form values and convert boolean fields to 0/1
+      const formValues = this.accessoryForm.value;
+      const booleanFields = ['has_variant', 'is_active', 'requires_shipping'];
+      
+      // Convert boolean fields to 0/1
+      booleanFields.forEach(field => {
+        formValues[field] = formValues[field] ? 1 : 0;
+      });
+
+      // Append all form values to FormData
+      Object.keys(formValues).forEach(key => {
+        if (key === 'additional_images') {
+          // Skip additional_images as we'll handle it separately
+          return;
+        } else if (key === 'main_image') {
+          // Skip main_image as we'll handle it separately
+          return;
+        } else {
+          formData.append(key, formValues[key]);
+        }
+      });
+
+      // Append main image if exists
+      if (this.mainImage) {
+        formData.append('main_image', this.mainImage.file);
+      }
+
+      // Append additional images
+      this.uploadedImages.forEach((image, index) => {
+        formData.append('additional_images[]', image.file);
+      });
+
+      this.httpService.addAccessory(formData)
         .subscribe({
           next: () => {
-            this.showSuccessModal = true;
+            this.router.navigate(['/admin/accessories']);
             this.submitting = false;
           },
           error: (error) => {
@@ -161,32 +217,38 @@ export class CreateAccessoriesProductComponent implements OnInit {
   }
   // Image upload functionality
   handleImageChange(event: any): void {
+    // Prevent form submission
+    event.preventDefault();
+    event.stopPropagation();
+    
     const files = event.target.files;
     
     if (!files || files.length === 0) return;
     
-    const newImages: string[] = [];
-    const remainingFiles = files.length;
-    let processedFiles = 0;
-    
-    Array.from(files).forEach((file: any) => {
+    Array.from(files).forEach((file: File) => {
       if (file.type.startsWith('image/')) {
         const reader = new FileReader();
         
         reader.onload = (e: any) => {
           if (e.target?.result) {
-            newImages.push(e.target.result);
-          }
-          
-          processedFiles++;
-          if (processedFiles === remainingFiles) {
-            this.uploadedImages = [...this.uploadedImages, ...newImages];
+            if (!this.mainImage) {
+              this.mainImage = {
+                file: file,
+                preview: e.target.result
+              };
+              this.accessoryForm.patchValue({ main_image: file });
+            } else {
+              this.uploadedImages.push({
+                file: file,
+                preview: e.target.result
+              });
+              const additionalImagesArray = this.accessoryForm.get('additional_images') as FormArray;
+              additionalImagesArray.push(this.fb.control(file));
+            }
           }
         };
         
         reader.readAsDataURL(file);
-      } else {
-        processedFiles++;
       }
     });
     
@@ -196,9 +258,20 @@ export class CreateAccessoriesProductComponent implements OnInit {
   
   handleRemoveImage(index: number): void {
     this.uploadedImages.splice(index, 1);
+    const additionalImagesArray = this.accessoryForm.get('additional_images') as FormArray;
+    additionalImagesArray.removeAt(index);
+  }
+  
+  handleRemoveMainImage(): void {
+    this.mainImage = null;
+    this.accessoryForm.patchValue({ main_image: null });
   }
   
   openFileSelector(): void {
+    // Prevent form submission
+    event?.preventDefault();
+    event?.stopPropagation();
+    
     // You'd typically use ViewChild to get this reference
     // For simplicity in this single-file example, we're using a DOM query
     const fileInput = document.querySelector('input[type="file"]') as HTMLInputElement;

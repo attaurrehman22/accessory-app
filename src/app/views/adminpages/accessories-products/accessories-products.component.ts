@@ -84,7 +84,7 @@ export class AccessoriesProductsComponent
         this.dialog.closeAll();
       }
     );
-
+    this.loadData();
     // this.getAllCategory();
     // this.getAllBrands();
   }
@@ -144,7 +144,7 @@ export class AccessoriesProductsComponent
   }
 
   async loadData() {
-   this.http.getAllAccesriesInformation().subscribe(
+   this.http.getAllAccessories().subscribe(
       (res) => {
         this.allData = res.data;
 
