@@ -127,7 +127,6 @@ export class AdminCategoryComponent {
         this.dataSource.paginator = this.paginator;
       }
     )
-
   }
 
   isMeOrAdminOrDeveloper(id: any): boolean {

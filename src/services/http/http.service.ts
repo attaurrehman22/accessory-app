@@ -949,6 +949,42 @@ export class HttpService implements OnInit {
       });
     }
 
+    getAdminAttributesInventory(): Observable<any> {
+      return this.http.get(`${this.apiUrl}/api/attribute-inventory`, {
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${this.token}`,
+        },
+      });
+    }
+
+    addAdminAttributesInventory(bodyData): Observable<any> {
+      return this.http.post(`${this.apiUrl}/api/attribute-inventory`,bodyData, {
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${this.token}`,
+        },
+      });
+    }
+
+    editAdminAttributesInventory(bodyData,ID): Observable<any> {
+      return this.http.put(`${this.apiUrl}/api/attribute-inventory/${ID}`,bodyData, {
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${this.token}`,
+        },
+      });
+    }
+
+    deleteAdminAttributesInventory(ID): Observable<any> {
+      return this.http.delete(`${this.apiUrl}/api/attribute-inventory/${ID}`, {
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${this.token}`,
+        },
+      });
+    }
+
 
   // ----------------------------------  Admin Pannel Apis End Here ------------------------------
 

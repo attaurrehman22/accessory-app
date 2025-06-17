@@ -135,6 +135,8 @@ import { AttributeListingComponent } from './views/adminpages/accessories/attrib
 import { ChangePasswordComponent } from './views/auth/change-password/change-password.component';
 import { AccessoryImagesListingComponent } from './views/adminpages/accessories/accessory-images-listing/accessory-images-listing.component';
 import { AddAccessoryImagesListingComponent } from './views/adminpages/accessories/add-accessory-images-listing/add-accessory-images-listing.component';
+import { AttributeInventoryComponent } from './views/adminpages/attribute-inventory/attribute-inventory.component';
+import { AddAttributeInventoryComponent } from './views/adminpages/add-attribute-inventory/add-attribute-inventory.component';
 
 @NgModule({
   declarations: [
@@ -214,7 +216,9 @@ import { AddAccessoryImagesListingComponent } from './views/adminpages/accessori
     AddAttributeListingComponent,
     ChangePasswordComponent,
     AccessoryImagesListingComponent,
-    AddAccessoryImagesListingComponent
+    AddAccessoryImagesListingComponent,
+    AttributeInventoryComponent,
+    AddAttributeInventoryComponent
   ],
   imports: [
     MatSortModule,

@@ -40,7 +40,8 @@ export class AdminSidebarComponent implements OnInit {
       '/admin/attribute-values',
       '/admin/inventory',
       '/admin/attribute-listing',
-      '/admin/images-listing'
+      '/admin/images-listing',
+      '/admin/attribute-inventory'
     ];
   }
 

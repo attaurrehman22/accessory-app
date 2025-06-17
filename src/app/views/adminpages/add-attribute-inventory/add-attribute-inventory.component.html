@@ -1,0 +1,62 @@
+<div class="container-fluid p-3">
+    <h3 class="text-center">{{ isEditMode ? 'Edit' : 'Add' }} Attribute Inventory</h3>
+    <form [formGroup]="attributeInventoryForm" (ngSubmit)="onSubmit()">
+        <!-- Attribute Selection -->
+        <div class="form-group mb-3">
+            <label for="attribute_id">Attribute</label>
+            <select class="form-control" id="attribute_id" formControlName="attribute_id"
+                [ngClass]="{'is-invalid': attribute_id?.invalid && attribute_id?.touched}">
+                <option value="">Select Attribute</option>
+                <option *ngFor="let attr of attributesList" [value]="attr.id">
+                    {{attr.name}}
+                </option>
+            </select>
+            <div class="invalid-feedback" *ngIf="attribute_id?.invalid && attribute_id?.touched">
+                Please select an attribute
+            </div>
+        </div>
+
+        <!-- Inventory Selection -->
+        <div class="form-group mb-3">
+            <label for="inventory_id">Inventory</label>
+            <select class="form-control" id="inventory_id" formControlName="inventory_id"
+                [ngClass]="{'is-invalid': inventory_id?.invalid && inventory_id?.touched}">
+                <option value="">Select Inventory</option>
+                <option *ngFor="let inv of InventoriesList" [value]="inv.id">
+                    {{inv.value}}
+                </option>
+            </select>
+            <div class="invalid-feedback" *ngIf="inventory_id?.invalid && inventory_id?.touched">
+                Please select an inventory
+            </div>
+        </div>
+
+        <!-- Accessory Category Selection -->
+        <div class="form-group mb-3">
+            <label for="attribute_value_id">Attribute Value</label>
+            <select class="form-control" id="attribute_value_id" formControlName="attribute_value_id"
+                [ngClass]="{'is-invalid': attribute_value_id?.invalid && attribute_value_id?.touched}">
+                <option value="">Select Accessory Category</option>
+                
+                <option *ngFor="let cat of accessoryCategoryList" [value]="cat.id">
+                    {{cat.value}}
+                </option>
+            </select>
+            <div class="invalid-feedback"
+                *ngIf="attribute_value_id?.invalid && attribute_value_id?.touched">
+                Please select an accessory category
+            </div>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="form-group d-flex justify-content-center gap-2">
+            <button type="submit" class="save-btn" [disabled]="attributeInventoryForm.invalid">
+                {{ isEditMode ? 'Update' : 'Submit' }}
+            </button>
+            <button type="button" class="cancel-btn"
+                (click)="router.navigate(['/admin/attribute-inventory'])">
+                Cancel
+            </button>
+        </div>
+    </form>
+</div>

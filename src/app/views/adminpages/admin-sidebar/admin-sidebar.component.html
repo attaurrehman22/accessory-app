@@ -45,7 +45,7 @@
           <li class="nav-item">
             <a class="nav-link" (click)="toggleAccessoriesMenu()" [class.active]="isAccRoutShow">
               <mat-icon>style</mat-icon>
-              <p>
+              <p class="d-flex align-items-center justify-content-between">
                 Accessories
                 <mat-icon class="dropdown-icon" [class.rotated]="isAccRoutShow">
                   expand_more
@@ -92,16 +92,16 @@
             </li>
 
             <li class="nav-item">
-              <a routerLink="/admin/attribute-listing" routerLinkActive="active" class="nav-link" (click)="onMenuItemClick()">
-                <mat-icon>list_alt</mat-icon>
-                <p>Attribute</p>
+              <a routerLink="/admin/attributes" routerLinkActive="active" class="nav-link" (click)="onMenuItemClick()">
+                <mat-icon>format_list_bulleted</mat-icon>
+                <p>Attribute Types</p>
               </a>
             </li>
 
             <li class="nav-item">
-              <a routerLink="/admin/attributes" routerLinkActive="active" class="nav-link" (click)="onMenuItemClick()">
-                <mat-icon>format_list_bulleted</mat-icon>
-                <p>Attribute Types</p>
+              <a routerLink="/admin/attribute-listing" routerLinkActive="active" class="nav-link" (click)="onMenuItemClick()">
+                <mat-icon>list_alt</mat-icon>
+                <p>Attribute</p>
               </a>
             </li>
 
@@ -118,6 +118,14 @@
                 <p>Inventory</p>
               </a>
             </li>
+
+            <li class="nav-item">
+              <a routerLink="/admin/attribute-inventory" routerLinkActive="active" class="nav-link" (click)="onMenuItemClick()">
+                <mat-icon>inventory</mat-icon>
+                <p>Attribute Inventory</p>
+              </a>
+            </li>
+
           </div>
         </ul>
       </li>

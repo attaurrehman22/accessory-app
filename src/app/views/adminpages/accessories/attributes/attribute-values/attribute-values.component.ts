@@ -8,8 +8,8 @@ import { AlertsServicesService } from "src/services/alerts-service/alerts-servic
 import { AddAttributeValuesComponent } from "../add-attribute-values/add-attribute-values.component";
 
 export interface AttributeData {
-  attribute_id: any;
-  shop_id: any;
+  // attribute_id: any;
+  // shop_id: any;
   value: any;
   color: any;
   order: any;
@@ -24,8 +24,8 @@ export interface AttributeData {
 export class AttributeValuesComponent implements OnInit {
 
   displayedColumns: string[] = [
-    "attribute_id",
-    "shop_id",
+    // "attribute_id",
+    // "shop_id",
     "value",
     "color",
     "order",
@@ -46,7 +46,7 @@ export class AttributeValuesComponent implements OnInit {
 
   getAllAccessoryCategories() {
     this.http.getAttributesValue().subscribe((res) => {
-      this.accessoryCategoryList = res.data;
+      this.accessoryCategoryList = res;
       this.dataSource = new MatTableDataSource(this.accessoryCategoryList);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
