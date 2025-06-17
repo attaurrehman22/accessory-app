@@ -137,6 +137,7 @@ import { AccessoryImagesListingComponent } from './views/adminpages/accessories/
 import { AddAccessoryImagesListingComponent } from './views/adminpages/accessories/add-accessory-images-listing/add-accessory-images-listing.component';
 import { AttributeInventoryComponent } from './views/adminpages/attribute-inventory/attribute-inventory.component';
 import { AddAttributeInventoryComponent } from './views/adminpages/add-attribute-inventory/add-attribute-inventory.component';
+import { NgxImageZoomModule } from 'ngx-image-zoom';
 
 @NgModule({
   declarations: [
@@ -260,6 +261,7 @@ import { AddAttributeInventoryComponent } from './views/adminpages/add-attribute
     BidiModule,HighchartsChartModule,
     MatTabsModule,
     DragDropModule,
+    NgxImageZoomModule,
     BidiModule, HighchartsChartModule,MatOptionModule,MatAutocompleteModule,
     // MatExpansionModule,
     TranslateModule.forRoot({

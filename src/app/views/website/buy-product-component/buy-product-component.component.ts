@@ -10,6 +10,8 @@ import { CustomOfferComponent } from "../../modal/custom-offer/custom-offer.comp
 import { ConfirmationModelComponent } from "../../modal/confirmation-model/confirmation-model.component";
 import { OrderInitiatedModelComponent } from "../../modal/order-initiated-model/order-initiated-model.component";
 import { environment } from "src/environments/environment";
+import mediumZoom from 'medium-zoom';
+import { NgxImageZoomModule } from 'ngx-image-zoom';
 
 @Component({
   selector: "app-buy-product-component",
@@ -17,7 +19,7 @@ import { environment } from "src/environments/environment";
   styleUrls: ["./buy-product-component.component.css"],
 })
 export class BuyProductComponentComponent implements OnInit {
-   apiUrl = environment.apipath+ '/'
+   apiUrl = environment.apipath+ '/';
   supportLanguages = ["en", "ar", "fr", "ta", "hi"];
   cosmeticCondition: number;
   satisfaction: number;
@@ -25,6 +27,17 @@ export class BuyProductComponentComponent implements OnInit {
   productMainImage: any;
   currentLanguage: string;
   @ViewChild("targetContainer") targetContainer!: ElementRef;
+
+  myThumbnail:any;
+  myFullresImage:any;
+
+  ngAfterViewInit() {
+
+    mediumZoom('[data-zoomable]', {
+      background: '#000',
+      scrollOffset: 0,
+    });
+  }
 
   scrollToTarget(): void {
     this.targetContainer.nativeElement.scrollIntoView({ behavior: "smooth" });
@@ -126,6 +139,12 @@ export class BuyProductComponentComponent implements OnInit {
     if (clickedItem.type === "image") {
       this.selectedImage = clickedItem.url; // Extract only the URL
       this.selectedType = "image"; // Set the selected type to 'image'
+      this.myThumbnail = this.apiUrl + clickedItem.url;
+      this.myFullresImage = this.apiUrl + clickedItem.url;
+      if (this.myThumbnail === this.myFullresImage) {
+        // Add a timestamp or random parameter to force a new image load
+        this.myThumbnail = this.myThumbnail + '?t=' + new Date().getTime();
+      }
     }
     if (clickedItem.type === "video") {
 
@@ -290,6 +309,12 @@ export class BuyProductComponentComponent implements OnInit {
 
       if (this.thumbnails.length > 0) {
         this.selectedImage = this.thumbnails[0].url; // Store only the URL
+        this.myThumbnail = this.apiUrl + this.selectedImage;
+        this.myFullresImage = this.apiUrl + this.selectedImage;
+        if (this.myThumbnail === this.myFullresImage) {
+          // Add a timestamp or random parameter to force a new image load
+          this.myThumbnail = this.myThumbnail + '?t=' + new Date().getTime();
+        }
       }
 
 

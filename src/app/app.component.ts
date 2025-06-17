@@ -6,7 +6,7 @@ import { AlertsServicesService } from "src/services/alerts-service/alerts-servic
 import { LoaderService } from "./loader.service";
 import { SearchServiceService } from "src/services/search-service/search-service.service";
 import { MessageServiceService } from "src/services/search-show-hide/message-service.service";
-
+import mediumZoom from 'medium-zoom';
 @Component({
   selector: "app-root",
   templateUrl: "./app.component.html",
@@ -15,12 +15,20 @@ import { MessageServiceService } from "src/services/search-show-hide/message-ser
 export class AppComponent implements OnInit {
 
   routeToCom:any='dashboard';
-
+  myThumbnail="https://wittlock.github.io/ngx-image-zoom/assets/thumb.jpg";
+  myFullresImage="https://wittlock.github.io/ngx-image-zoom/assets/fullres.jpg";
   alertPositionStyle: any = {};
 
   @HostListener('window:scroll', [])
   onWindowScroll() {
     this.updateAlertPosition();
+  }
+
+  ngAfterViewInit() {
+    mediumZoom('[data-zoomable]', {
+      background: '#000',
+      scrollOffset: 0,
+    });
   }
 
   // Update alert position dynamically based on screen visibility

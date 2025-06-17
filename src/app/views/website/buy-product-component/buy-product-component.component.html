@@ -10,7 +10,7 @@
     [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }"
   >
     <div class="col-md-6">
-      <img *ngIf="selectedType === 'image'"
+      <!-- <img *ngIf="selectedType === 'image'"
         [src]="apiUrl + selectedImage"
         style="
           object-fit: cover;
@@ -22,7 +22,22 @@
         "
         class="img-fluid"
         alt="Selected Watch"
-      />
+      /> -->
+      <div class="zoom-container custom-zoom">
+        <lib-ngx-image-zoom
+            [thumbImage]=myThumbnail
+            [fullImage]=myFullresImage
+            [enableScrollZoom]="true"
+            [enableLens]="true"
+            [lensWidth]="200"
+            [lensHeight]="200"
+            [lensBorder]="2"
+            [lensBorderColor]="'#ccc'"
+            [magnification]="2"
+            [minZoomRatio]="1"
+            [maxZoomRatio]="4"
+        ></lib-ngx-image-zoom>
+      </div>
 
       <video *ngIf="selectedType === 'video'"
       [src]="apiUrl + selectedImage"
