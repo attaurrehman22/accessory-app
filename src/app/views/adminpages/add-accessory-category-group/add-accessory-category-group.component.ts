@@ -116,19 +116,15 @@ export class AddAccessoryCategoryGroupComponent implements OnInit {
   console.log("this form", this.categoryForm.value);
 
   if (this.categoryForm.valid) {
-    const formValue = this.categoryForm.value;
-    const formData = new FormData();
-
-    // Append each field with proper type conversion
-    Object.keys(formValue).forEach((key) => {
-      // if (key === 'active') {
-      //   formData.append(key, formValue[key] ? 'true' : 'false'); // Explicit boolean string
-      // } else {
-        formData.append(key, formValue[key]);
-      // }
-    });
-
     if (this.paramVal === "Create") {
+      const formValue = this.categoryForm.value;
+      const formData = new FormData();
+
+      // Append each field with proper type conversion
+      Object.keys(formValue).forEach((key) => {
+        formData.append(key, formValue[key]);
+      });
+
       this.http.addAdminAccessroiesCategoryGroups(formData).subscribe(
         (res) => {
           this.alertService.showAlert("success", "Category added successfully");
@@ -144,7 +140,18 @@ export class AddAccessoryCategoryGroupComponent implements OnInit {
         }
       );
     } else {
-      this.http.editAdminAccessroiesCategoryGroups(formData, this.categoryID).subscribe(
+      // For Edit case, send JSON data in request body
+      const bodyData = {
+        name: this.categoryForm.value.name,
+        slug: this.categoryForm.value.slug,
+        description: this.categoryForm.value.description,
+        icon: this.categoryForm.value.icon,
+        order: this.categoryForm.value.order,
+        meta_title: this.categoryForm.value.meta_title,
+        meta_description: this.categoryForm.value.meta_description
+      };
+
+      this.http.editAdminAccessroiesCategoryGroups(bodyData, this.categoryID).subscribe(
         (res) => {
           this.alertService.showAlert("success", "Category updated successfully");
           this.dialogRef.close(true);

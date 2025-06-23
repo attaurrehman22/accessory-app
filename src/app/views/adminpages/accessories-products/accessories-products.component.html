@@ -29,15 +29,15 @@
               </ng-container>
 
               <!-- Watch Type Column -->
-              <ng-container matColumnDef="watch_type">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header>Watch Type</th>
-                <td mat-cell *matCellDef="let row">{{ row?.watch_type }}</td>
+              <ng-container matColumnDef="brand_name">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Brand Name</th>
+                <td mat-cell *matCellDef="let row">{{ row?.brand }}</td>
               </ng-container>
 
               <!-- Brand Name Column -->
-              <ng-container matColumnDef="brand">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header>Brand Name</th>
-                <td mat-cell *matCellDef="let row">{{ row?.brand?.name }}</td>
+              <ng-container matColumnDef="model_number">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Model Number</th>
+                <td mat-cell *matCellDef="let row">{{ row?.model_number}}</td>
               </ng-container>
 
               <!-- Cover Image Column -->
@@ -49,15 +49,16 @@
               </ng-container>
 
               <!-- Created By Column -->
-              <ng-container matColumnDef="created_by">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header>Created By</th>
-                <td mat-cell *matCellDef="let row">{{ row?.created_by?.name }}</td>
+              <ng-container matColumnDef="min_price">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Min Price</th>
+                <td mat-cell *matCellDef="let row">{{ row?.min_price }}</td>
               </ng-container>
 
               <!-- Published Date Column -->
-              <ng-container matColumnDef="published_date">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header>Published Date</th>
-                <td mat-cell *matCellDef="let row">{{ row?.published_date | date: 'dd/MM/yyyy' }}</td>
+              <ng-container matColumnDef="max_price">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Max Price</th>
+                <!-- <td mat-cell *matCellDef="let row">{{ row?.published_date | date: 'dd/MM/yyyy' }}</td> -->
+                <td mat-cell *matCellDef="let row">{{ row?.max_price }}</td>
               </ng-container>
 
               <!-- Sale Status Column -->
@@ -67,10 +68,10 @@
               </ng-container>
 
               <!-- Model Column -->
-              <ng-container matColumnDef="model">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header>Model</th>
-                <td mat-cell *matCellDef="let row">{{ row?.model }}</td>
-              </ng-container>
+              <!-- <ng-container matColumnDef="model">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Active</th>
+                <td mat-cell *matCellDef="let row">{{ row?.is_active === true ? 'Yes' : 'No' }}</td>
+              </ng-container> -->
 
               <!-- Is Active Column -->
               <ng-container matColumnDef="is_active">
@@ -88,25 +89,28 @@
               <ng-container matColumnDef="action">
                 <th mat-header-cell *matHeaderCellDef>Action</th>
                 <td mat-cell *matCellDef="let row">
-                  <button mat-icon-button (click)="deleteProduct(row)" matTooltip="Delete">
-                    <mat-icon>delete</mat-icon>
-                  </button>
-
+                  
                   <button mat-icon-button (click)="editProduct(row)" matTooltip="Edit">
                     <mat-icon>edit</mat-icon>
                   </button>
+                  <button mat-icon-button (click)="deleteProduct(row)" matTooltip="Delete">
+                    <mat-icon>delete</mat-icon>
+                  </button>
+                  <button mat-icon-button (click)="attachImages(row)" matTooltip="Attach Images">
+                    <mat-icon>attach_file</mat-icon>
+                  </button>
 
-                  <button mat-icon-button (click)="activateProduct(row)" matTooltip="Activate Accessory">
+                  <!-- <button mat-icon-button (click)="activateProduct(row)" matTooltip="Activate Accessory">
                     <mat-icon>play_circle_filled</mat-icon>
-                  </button>
+                  </button> -->
 
-                  <button mat-icon-button (click)="addPopularProduct(row)" matTooltip="Add to Popular">
+                  <!-- <button mat-icon-button (click)="addPopularProduct(row)" matTooltip="Add to Popular">
                     <mat-icon>star</mat-icon>
-                  </button>
+                  </button> -->
 
-                  <button mat-icon-button (click)="addFeatureProduct(row)" matTooltip="Add To Feature">
+                  <!-- <button mat-icon-button (click)="addFeatureProduct(row)" matTooltip="Add To Feature">
                     <mat-icon>star_border</mat-icon>
-                  </button>
+                  </button> -->
                 </td>
               </ng-container>
 

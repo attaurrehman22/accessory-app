@@ -16,6 +16,7 @@ import { HttpService } from "src/services/http/http.service";
 import { SidebarService } from "src/services/sidebar.service";
 import { AdminAddProductComponent } from "../admin-add-product/admin-add-product.component";
 import { environment } from "src/environments/environment";
+import { AccessoryAttachImagesComponent } from "../accessory-attach-images/accessory-attach-images.component";
 
 export interface UserData {
   name: any;
@@ -40,13 +41,13 @@ export class AccessoriesProductsComponent
 {
   displayedColumns: string[] = [
     "name",
-    "watch_type",
-    "brand",
+    "brand_name",
+    "model_number",
     "cover_image",
-    "created_by",
-    "published_date",
+    "min_price",
+    "max_price",
     "sale_status",
-    "model",
+    // "model",
     "is_active",
     "popular_item",
     "action",
@@ -146,7 +147,7 @@ export class AccessoriesProductsComponent
   async loadData() {
    this.http.getAllAccessories().subscribe(
       (res) => {
-        this.allData = res.data;
+        this.allData = res;
         this.allData.forEach((item) => {
           if (item.additional_images && typeof item.additional_images === 'string') {
             try {
@@ -199,7 +200,7 @@ export class AccessoriesProductsComponent
   }
 
   deleteProduct(data) {
-    this.http.deleteAccesriesStepper(data.id).subscribe(
+    this.http.deleteAccessoriesById(data.id).subscribe(
       (res) => {
         this.toast.showAlert("success", "Product Delete Susseccfully");
         this.loadData();
@@ -303,21 +304,19 @@ export class AccessoriesProductsComponent
     this.router.navigate(["/admin/accessories/add"], {
       state: { param: "Edit", data: data },
     });
+  }
 
-    // const dialogRef = this.dialog.open(AdminAddProductComponent, {
-    //   width: "1000px",
-    //   height: "auto",
-    //   data: { param: "Edit", data: data },
-    // });
+  attachImages(data) {
+    const dialogRef = this.dialog.open(AccessoryAttachImagesComponent, {
+      width: "1000px",
+      height: "auto",
+      data: {data:data },
+    });
 
-    // dialogRef.afterClosed().subscribe((param) => {
-    //   if (param) {
-    //     if (param === "approved" || param === "reject") {
-    //       this.activateProduct(data);
-    //     } else {
-    //       this.loadData();
-    //     }
-    //   }
-    // });
+    dialogRef.afterClosed().subscribe((result: any) => {
+      if (result == true) {
+        this.loadData();
+      }
+    });
   }
 }

@@ -138,6 +138,7 @@ import { AddAccessoryImagesListingComponent } from './views/adminpages/accessori
 import { AttributeInventoryComponent } from './views/adminpages/attribute-inventory/attribute-inventory.component';
 import { AddAttributeInventoryComponent } from './views/adminpages/add-attribute-inventory/add-attribute-inventory.component';
 import { NgxImageZoomModule } from 'ngx-image-zoom';
+import { AccessoryAttachImagesComponent } from './views/adminpages/accessory-attach-images/accessory-attach-images.component';
 
 @NgModule({
   declarations: [
@@ -219,7 +220,8 @@ import { NgxImageZoomModule } from 'ngx-image-zoom';
     AccessoryImagesListingComponent,
     AddAccessoryImagesListingComponent,
     AttributeInventoryComponent,
-    AddAttributeInventoryComponent
+    AddAttributeInventoryComponent,
+    AccessoryAttachImagesComponent
   ],
   imports: [
     MatSortModule,

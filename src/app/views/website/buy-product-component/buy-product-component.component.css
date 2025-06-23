@@ -57,6 +57,7 @@ img {
   max-height: 485px !important;
   object-fit: cover;
   border-radius: 16px;
+  width: 100%;
 }
 
 .custom-zoom lib-ngx-image-zoom .ngxImageZoomThumbnail {
@@ -67,7 +68,7 @@ img {
 }
 
 ::ng-deep .ngxImageZoomContainer {
-  width: 555px !important;   /* your custom width */
+  width: auto !important;   /* your custom width */
   height: 485px !important;  /* your custom height */
 }
 

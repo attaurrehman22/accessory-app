@@ -1,0 +1,30 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12 pt-5">
+            <h1 class="text-center">Accessory Attach Images</h1>
+            <form [formGroup]="accessoryImagesForm" class="mt-3 p-3">
+                <div class="row">
+                    <div class="col-md-12 d-flex align-items-center custom-card" *ngFor="let image of imagesList">
+                        <div class="col-md-1">
+                            <mat-checkbox 
+                                [checked]="isImageSelected(image.id)"
+                                (change)="onCheckboxChange(image.id, $event.checked)">
+                            </mat-checkbox>
+                        </div>
+                        <div class="col-md-2">
+                            <img [src]="apiUrl + image.image" alt="image" class="img-fluid custom-image-size">
+                        </div>
+                        <div class="col-md-9">
+                            <p class="font-size-18 font-wight-600 color-242424 margin-0">{{image.title_en}}</p>
+                            <p class="mb-1 font-size-14 font-wight-400 color-6a6a6a gap-2 d-flex">{{image.description_en}}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 d-flex justify-content-center gap-2">
+                    <button class="save-btn" (click)="attachImages()">Attach Images</button>
+                    <button class="cancel-btn" type="button" (click)="cancelForm()">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

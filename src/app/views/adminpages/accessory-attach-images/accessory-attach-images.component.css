@@ -1,0 +1,131 @@
+
+  /* Optional: customize the input text color */
+  ::ng-deep .mat-form-fields-custom-deisgn mat-form-field > .mat-mdc-text-field-wrapper {
+    height: 48px;
+    border-radius: 6px !important;
+    border: 1px solid #2424;
+  }
+
+  ::ng-deep .mat-form-fields-custom-deisgn mat-form-field > .mat-mdc-text-field-wrapper > .mat-mdc-form-field-flex > .mat-mdc-form-field-infix > .mat-mdc-select > .mat-mdc-select-trigger > .mat-mdc-select-value > .mat-mdc-select-value-text {
+    font-size: 16px !important;
+    font-weight: 400 !important;
+    color: #909090 !important;
+    line-height: 24px !important;
+  }
+
+  ::ng-deep .mat-form-fields-custom-deisgn mat-form-field > .mat-mdc-text-field-wrapper > .mat-mdc-form-field-flex > .mdc-notched-outline > .mat-mdc-notch-piece > .mdc-floating-label {
+    padding-bottom: 13px !important;
+  }
+
+  ::ng-deep .mat-form-fields-custom-deisgn mat-form-field > .mat-mdc-text-field-wrapper > .mat-mdc-form-field-flex > .mdc-notched-outline > .mdc-floating-label > .label-header {
+    font-size: 16px !important;
+    font-weight: 400 !important;
+    color: #242424 !important;
+    line-height: 100% !important;
+    font-family: "Open Sans", serif;
+  }
+
+  ::ng-deep .mat-form-fields-custom-deisgn mat-form-field > .mat-mdc-form-field-subscript-wrapper > .mat-mdc-form-field-error-wrapper > .mat-mdc-form-field-error {
+    font-size: 13px !important;
+    font-weight: 400 !important;
+    line-height: 100% !important;
+  }
+
+   ::ng-deep .mat-form-fields-custom-deisgn mat-form-field > .mat-mdc-form-field-subscript-wrapper {
+    display: none !important;
+  }
+
+
+  ::ng-deep .mat-form-fields-custom-deisgn mat-form-field > .mat-mdc-text-field-wrapper > .mat-mdc-form-field-flex > .mdc-notched-outline > .mat-mdc-notch-piece {
+    border: none !important;
+    border-color: none !important;
+  }
+
+  ::ng-deep .mat-form-fields-custom-deisgn mat-form-field > .mat-mdc-text-field-wrapper > .mat-mdc-form-field-flex > .mat-mdc-form-field-infix > .mat-mdc-input-element {
+    font-size: 16px !important;
+    font-weight: 400 !important;
+    color: #909090 !important;
+    line-height: 24px !important;
+  }
+
+  ::ng-deep .mat-form-fields-custom-deisgn mat-form-field input::placeholder {
+    font-size: 16px !important;
+    font-weight: 400 !important;
+    color: #909090 !important;
+    line-height: 24px !important;
+  }
+
+  ::ng-deep .mat-form-fields-custom-deisgn mat-form-field textarea::placeholder {
+    font-size: 16px !important;
+    font-weight: 400 !important;
+    color: #909090 !important;
+    line-height: 24px !important;
+    font-family: "Open Sans", serif;
+  }
+
+
+
+  ::ng-deep .mat-form-fields-custom-deisgn mat-form-field .mat-input-element::placeholder {
+  font-size: 16px !important;
+    font-weight: 400 !important;
+    color: #909090 !important;
+    line-height: 24px !important;
+    font-family: "Open Sans", serif;       
+  }
+
+  ::ng-deep .mat-form-fields-custom-deisgn mat-checkbox > .mdc-form-field > .mdc-checkbox > .mdc-checkbox__background {
+    border: 1px solid #E5E7EB !important;
+    border-radius: 2px !important;
+  }
+
+  ::ng-deep .mat-form-fields-custom-deisgn mat-checkbox .mdc-label {
+    font-size: 14px !important;
+    font-weight: 400 !important;
+    line-height: 14px !important;
+    color: #909090 !important;
+  }
+
+  ::ng-deep .mat-form-fields-custom-deisgn mat-form-field .mat-input-element:-ms-input-placeholder {
+    font-size: 16px;          
+    font-weight: 400;        
+    color: #909090;          
+  }
+
+  .custom-card {
+    border: 1px solid #E5E7EB;
+    border-radius: 10px;
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+
+  .custom-card:hover {
+    border: 1px solid #242424;
+    cursor: pointer;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    transform: translateY(-5px);
+    background-color: #f5f5f5;
+  }
+
+  .custom-image-size {
+    width: 70px;
+    height: 70px;
+    object-fit: cover;
+    border-radius: 10px;
+  }
+
+  .save-btn {
+    background-color: #242424;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+  }
+
+  .cancel-btn {
+    background-color: #fff;
+    color: #000;
+    border: 1px solid #000;
+    padding: 10px 20px;
+    border-radius: 5px;
+  }

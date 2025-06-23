@@ -2,7 +2,7 @@
   <div class="card shadow-lg overflow-hidden">
     <!-- Header -->
     <div class="p-3 text-center" style="background-color: #242424;">
-      <h1 class="text-2xl font-semibold text-white">Watch Accessory Submission Form</h1>
+      <h1 class="text-2xl font-semibold text-white">{{paramValue}} Accessories Product</h1>
       <p class="text-primary-100 mt-1">Complete the form below to submit your watch accessory details</p>
     </div>
     
@@ -162,8 +162,11 @@
 
             <!-- Submit Button -->
             <div class="form-actions d-flex gap-2 justify-content-center">
-              <button class="save-btn" type="submit" [disabled]="submitting">
+              <button *ngIf="paramValue == 'Create'"   class="save-btn" type="submit" [disabled]="submitting">
                 {{ submitting ? 'Submitting...' : 'Create Product' }}
+              </button>
+              <button *ngIf="paramValue == 'Edit'" class="save-btn" type="submit" [disabled]="submitting">
+                {{ submitting ? 'Submitting...' : 'Update Product' }}
               </button>
               <button class="cancel-btn" type="button" (click)="resetForm()">Reset</button>
             </div>

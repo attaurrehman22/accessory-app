@@ -6,6 +6,7 @@ import { NavigationStart, Router } from "@angular/router";
 import { TranslateService } from "@ngx-translate/core";
 import { Observable, Subscription } from "rxjs";
 import { map, startWith } from "rxjs/operators";
+import { environment } from "src/environments/environment";
 import { AlertsServicesService } from "src/services/alerts-service/alerts-services.service";
 import { HttpService } from "src/services/http/http.service";
 import { LanguageService } from "src/services/lang-service/language.service";
@@ -23,12 +24,15 @@ interface ColorOption {
   styleUrls: ["./create-accessories-product.component.css"],
 })
 export class CreateAccessoriesProductComponent implements OnInit {
+  apiUrl = environment.apipath+ '/'
   accessoryForm!: FormGroup;
   showSuccessModal = false;
   uploadedImages: { file: File; preview: string }[] = [];
   mainImage: { file: File; preview: string } | null = null;
   submitting = false;
   displayPriceValue = '$39.99';
+  paramValue:any;
+  labelMessage:any;
   
   // Define accessory type options
   accessoryTypes = [
@@ -95,9 +99,76 @@ export class CreateAccessoriesProductComponent implements OnInit {
   ngOnInit(): void {
     this.getCategories();
     this.initForm();
-    if(this.router.getCurrentNavigation()?.extras.state?.param == "Edit"){
-      this.accessoryForm.patchValue(this.router.getCurrentNavigation()?.extras.state?.data);
+    if(history?.state?.data){
+      this.paramValue = "Edit";
+      this.labelMessage = "Edit Accessories Product";
+      this.getAccessoriesById(history?.state?.data.id);
+    }else{
+      this.paramValue = "Create";
+      this.labelMessage = "Add Accessories Product";
     }
+  }
+
+  getAccessoriesById(ID:any){
+    this.httpService.getAccessoriesById(ID).subscribe(
+      (res:any)=>{
+        this.patchForm(res);
+    }
+    )
+  }
+
+  patchForm(res:any){
+    this.accessoryForm.get('name')?.setValue(res.name);
+    this.accessoryForm.get('slug')?.setValue(res.slug);
+    this.accessoryForm.get('brand')?.setValue(res.brand);
+    this.accessoryForm.get('description')?.setValue(res.description);
+    this.accessoryForm.get('meta_title')?.setValue(res.meta_title);
+    this.accessoryForm.get('meta_description')?.setValue(res.meta_description);
+    this.accessoryForm.get('mpn')?.setValue(res.mpn);
+    this.accessoryForm.get('model_number')?.setValue(res.model_number);
+    this.accessoryForm.get('min_price')?.setValue(res.min_price);
+    this.accessoryForm.get('max_price')?.setValue(res.max_price);
+    this.accessoryForm.get('has_variant')?.setValue(res.has_variant);
+    this.accessoryForm.get('popular_item')?.setValue(res.popular_item);
+    this.accessoryForm.get('is_active')?.setValue(res.is_active);
+    this.accessoryForm.get('requires_shipping')?.setValue(res.requires_shipping);
+    this.accessoryForm.get('views_count')?.setValue(res.views_count);
+    this.accessoryForm.get('main_image')?.setValue(res.main_image);
+    // this.accessoryForm.get('additional_images')?.setValue(res.additional_images);
+    this.mainImage = {
+      file: new File([], res.main_image),
+      preview: this.apiUrl+ res.main_image.replace(/\\/g, "")
+    };
+    console.log("res.additional_images",res.additional_images)
+
+    let additionalImages = res.additional_images;
+    if (typeof additionalImages === 'string') {
+      try {
+        // Parse the string into an array
+        additionalImages = JSON.parse(additionalImages);
+      } catch (error) {
+        console.error("Failed to parse additional_images:", error);
+        additionalImages = []; // Fallback to an empty array on error
+      }
+    }
+
+    // Ensure it's an array before mapping
+    if (Array.isArray(additionalImages)) {
+      this.uploadedImages = additionalImages.map((image: string) => ({
+        file: new File([], image),
+        preview: this.apiUrl+ image.replace(/\\/g, "")
+      }));
+    } else {
+      this.uploadedImages = [];
+    }
+    
+    this.accessoryForm.get('category_id')?.setValue(res.categories[0].id);
+    this.accessoryForm.get('compatibleModels')?.setValue(res.compatible_models);
+    this.accessoryForm.get('colors')?.setValue(res.colors);
+    this.accessoryForm.get('features')?.setValue(res.features);
+    this.accessoryForm.get('accessoryType')?.setValue(res.accessory_type);
+    this.accessoryForm.get('material')?.setValue(res.material);
+    this.accessoryForm.get('price')?.setValue(res.price);
   }
 
   categories:any[] = [];
@@ -117,7 +188,7 @@ export class CreateAccessoriesProductComponent implements OnInit {
       meta_description: ['', Validators.required],
       mpn: ['', Validators.required],
       model_number: ['', Validators.required],
-      category_id: [0, Validators.required],
+      category_id: ['', Validators.required],
       min_price: [0, [Validators.required, Validators.min(0)]],
       max_price: [0, [Validators.required, Validators.min(0)]],
       has_variant: [0],
@@ -134,53 +205,97 @@ export class CreateAccessoriesProductComponent implements OnInit {
     if (this.accessoryForm.valid) {
       this.submitting = true;
       
-      // Create FormData object
-      const formData = new FormData();
-      
-      // Get form values and convert boolean fields to 0/1
-      const formValues = this.accessoryForm.value;
-      const booleanFields = ['has_variant', 'is_active', 'requires_shipping'];
-      
-      // Convert boolean fields to 0/1
-      booleanFields.forEach(field => {
-        formValues[field] = formValues[field] ? 1 : 0;
-      });
+      if(this.paramValue == "Create"){
+        // Create case - use FormData for file uploads
+        const formData = new FormData();
+        
+        // Get form values and convert boolean fields to 0/1
+        const formValues = this.accessoryForm.value;
+        const booleanFields = ['has_variant', 'is_active', 'requires_shipping'];
+        
+        // Convert boolean fields to 0/1
+        booleanFields.forEach(field => {
+          formValues[field] = formValues[field] ? 1 : 0;
+        });
 
-      // Append all form values to FormData
-      Object.keys(formValues).forEach(key => {
-        if (key === 'additional_images') {
-          // Skip additional_images as we'll handle it separately
-          return;
-        } else if (key === 'main_image') {
-          // Skip main_image as we'll handle it separately
-          return;
-        } else {
-          formData.append(key, formValues[key]);
-        }
-      });
-
-      // Append main image if exists
-      if (this.mainImage) {
-        formData.append('main_image', this.mainImage.file);
-      }
-
-      // Append additional images
-      this.uploadedImages.forEach((image, index) => {
-        formData.append('additional_images[]', image.file);
-      });
-
-      this.httpService.addAccessory(formData)
-        .subscribe({
-          next: () => {
-            this.router.navigate(['/admin/accessories']);
-            this.submitting = false;
-          },
-          error: (error) => {
-            console.error('Error submitting form:', error);
-            this.submitting = false;
-            // Add error handling logic here
+        // Append all form values to FormData
+        Object.keys(formValues).forEach(key => {
+          if (key === 'additional_images') {
+            // Skip additional_images as we'll handle it separately
+            return;
+          } else if (key === 'main_image') {
+            return;
+          } 
+           else {
+            formData.append(key, formValues[key]);
           }
         });
+
+        // Append main image if exists
+        if (this.mainImage) {
+          formData.append('main_image', this.mainImage.file);
+        }
+
+        // Append additional images
+        this.uploadedImages.forEach((image, index) => {
+          formData.append('additional_images[]', image.file);
+        });
+
+        this.httpService.addAccessory(formData)
+          .subscribe({
+            next: () => {
+              this.router.navigate(['/admin/accessories']);
+              this.submitting = false;
+            },
+            error: (error) => {
+              console.error('Error submitting form:', error);
+              this.submitting = false;
+              // Add error handling logic here
+            }
+          });
+      } else {
+        // Edit case - use bodyData object
+        const formValues = this.accessoryForm.value;
+        const booleanFields = ['has_variant', 'is_active', 'requires_shipping'];
+        
+        // Convert boolean fields to 0/1
+        booleanFields.forEach(field => {
+          formValues[field] = formValues[field] ? 1 : 0;
+        });
+
+        // Create bodyData object
+        const bodyData = {
+          name: formValues.name,
+          slug: formValues.slug,
+          brand: formValues.brand,
+          description: formValues.description,
+          meta_title: formValues.meta_title,
+          meta_description: formValues.meta_description,
+          mpn: formValues.mpn,
+          model_number: formValues.model_number,
+          category_id: formValues.category_id,
+          min_price: formValues.min_price,
+          max_price: formValues.max_price,
+          has_variant: formValues.has_variant,
+          popular_item: formValues.popular_item,
+          is_active: formValues.is_active,
+          requires_shipping: formValues.requires_shipping,
+          views_count: formValues.views_count
+        };
+
+        this.httpService.editAccessory(bodyData, history?.state?.data.id)
+          .subscribe({
+            next: () => {
+              this.router.navigate(['/admin/accessories']);
+              this.submitting = false;
+            },
+            error: (error) => {
+              console.error('Error updating form:', error);
+              this.submitting = false;
+              // Add error handling logic here
+            }
+          });
+      }
     } else {
       this.markFormGroupTouched(this.accessoryForm);
     }
