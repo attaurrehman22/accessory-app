@@ -23,7 +23,7 @@
                 [ngClass]="{'is-invalid': inventory_id?.invalid && inventory_id?.touched}">
                 <option value="">Select Inventory</option>
                 <option *ngFor="let inv of InventoriesList" [value]="inv.id">
-                    {{inv.value}}
+                    {{inv.title}}
                 </option>
             </select>
             <div class="invalid-feedback" *ngIf="inventory_id?.invalid && inventory_id?.touched">
@@ -54,7 +54,7 @@
                 {{ isEditMode ? 'Update' : 'Submit' }}
             </button>
             <button type="button" class="cancel-btn"
-                (click)="router.navigate(['/admin/attribute-inventory'])">
+                (click)="cancelForm()">
                 Cancel
             </button>
         </div>

@@ -1524,6 +1524,27 @@ export class HttpService implements OnInit {
         // ----------------------------------  create Accesries end ------------------------------
 
 
+
+
+        // ------------------------------ Public Accessories APIs Start here ------------------------------
+
+        getPublicAccessories(queryString: any): Observable<any> {
+          return this.http.get(`${this.apiUrl}/api/accessories-by-groups?${queryString}`, {
+            headers: {
+              Accept: "application/json",
+            },
+          });
+        }
+
+        getPublicAccessoriesByID(ID: any): Observable<any> {
+          return this.http.get(`${this.apiUrl}/api/accessories-product-by-id/${ID}`, {
+            headers: {
+              Accept: "application/json",
+            },
+          });
+        }
+
+      // ------------------------------ Public Accessories APIs End here ------------------------------
 }
 
 

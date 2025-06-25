@@ -63,9 +63,8 @@ export class AddAttributeComponent implements OnInit{
             this.dialogRef.close(true);
           },
           (err) => {
-            // console.log("Error", err.error.message);
-            if (err?.error?.message) {
-              this.alertService.showAlert("warning", err.error.message);
+            if (err?.error?.errors) {
+              this.alertService.showAlert("warning", err.error.errors.type[0]);
             } else {
               this.alertService.showAlert(
                 "warning",
@@ -86,8 +85,8 @@ export class AddAttributeComponent implements OnInit{
               this.dialogRef.close(true);
             },
             (err) => {
-              if (err?.error?.message) {
-                this.alertService.showAlert("warning", err.error.message);
+              if (err?.error?.errors) {
+                this.alertService.showAlert("warning", err.error.errors.type[0]);
               } else {
                 this.alertService.showAlert(
                   "warning",

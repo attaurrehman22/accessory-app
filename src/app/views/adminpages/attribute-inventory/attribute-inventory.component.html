@@ -35,7 +35,7 @@
                 Attribute
               </th>
               <td mat-cell class="column" *matCellDef="let row">
-                {{ row.attribute_id }}
+                {{ row.attribute.name }}
               </td>
             </ng-container>
 
@@ -45,7 +45,7 @@
                 Inventory
               </th>
               <td mat-cell class="column" *matCellDef="let row; in">
-                {{ row.inventory_id }}
+                {{ row.inventory.title }}
               </td>
             </ng-container>
 
@@ -55,7 +55,7 @@
                 Attribute value
               </th>
               <td mat-cell class="column" *matCellDef="let row; in">
-                {{ row.meta_title }}
+                {{ row.attribute_value.value }}
               </td>
             </ng-container>
 

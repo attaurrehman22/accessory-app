@@ -288,4 +288,14 @@
     max-width: 50px;
   }
   
-  
+  .text-div {
+    position: absolute;
+    bottom: 10px;
+    left: 20px;
+    right: 20px;
+    color: white;
+    padding: 10px;
+    border-radius: 12px;
+    background: #2424240D;
+    backdrop-filter: blur(264px)
+  }

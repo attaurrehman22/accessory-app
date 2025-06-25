@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { AlertsServicesService } from 'src/services/alerts-service/alerts-services.service';
 import { HttpService } from 'src/services/http/http.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -24,9 +24,22 @@ export class AddAttributeInventoryComponent implements OnInit {
     private alertService: AlertsServicesService,
     private fb: FormBuilder,
     private route: ActivatedRoute,
-    public router: Router
+    public router: Router,
+    public dialogRef: MatDialogRef<AddAttributeInventoryComponent>,
+    @Inject(MAT_DIALOG_DATA) data: any
   ) {
     this.initForm();
+    if(data.param == "Edit"){
+      this.isEditMode = true;
+      this.editId = data.data.inventory_id;
+      console.log("data", data.data);
+      this.attributeInventoryForm.patchValue({
+        attribute_id: data.data.attribute_id,
+        inventory_id: data.data.inventory_id,
+        attribute_value_id: data.data.attribute_value_id
+      });
+      // this.loadAttributeInventoryData(this.editId);
+    }
   }
 
   ngOnInit(): void {
@@ -35,13 +48,13 @@ export class AddAttributeInventoryComponent implements OnInit {
     this.getAllInventories();
     
     // Check if we're in edit mode
-    this.route.params.subscribe(params => {
-      if (params['id']) {
-        this.isEditMode = true;
-        this.editId = params['id'];
-        this.loadAttributeInventoryData(this.editId);
-      }
-    });
+    // this.route.params.subscribe(params => {
+    //   if (params['id']) {
+    //     this.isEditMode = true;
+    //     this.editId = params['id'];
+    //     this.loadAttributeInventoryData(this.editId);
+    //   }
+    // });
   }
 
   initForm() {
@@ -111,7 +124,8 @@ export class AddAttributeInventoryComponent implements OnInit {
         this.http.editAdminAttributesInventory(formData, this.editId).subscribe(
           (res) => {
             this.alertService.showAlert('success', 'Attribute inventory updated successfully');
-            this.router.navigate(['/admin/attribute-inventory']);
+            this.dialogRef.close(true);
+            // this.router.navigate(['/admin/attribute-inventory']);
           },
           (error) => {
             this.alertService.showAlert('danger', 'Error updating attribute inventory');
@@ -122,7 +136,8 @@ export class AddAttributeInventoryComponent implements OnInit {
           (res) => {
             this.alertService.showAlert('success', 'Attribute inventory added successfully');
             this.attributeInventoryForm.reset();
-            this.router.navigate(['/admin/attribute-inventory']);
+            this.dialogRef.close(true);
+            // this.router.navigate(['/admin/attribute-inventory']);
           },
           (error) => {
             this.alertService.showAlert('danger', 'Error adding attribute inventory');
@@ -141,6 +156,10 @@ export class AddAttributeInventoryComponent implements OnInit {
         this.markFormGroupTouched(control as FormGroup);
       }
     });
+  }
+
+  cancelForm() {
+    this.dialogRef.close(false);
   }
 
   // Helper methods for form validation

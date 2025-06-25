@@ -1,5 +1,5 @@
 <div class="global-main-wraper mt-5">
-  <div class="position-relative">
+  <div class="position-relative" style="display: flex; align-items: center; justify-content: center;">
     <!-- Left Scroll Icon -->
     <div class="scroll-icon left" (click)="scrollLeft()">
       <img src="../../../../assets/images/less_arrow.svg" alt="alt" />
@@ -9,7 +9,7 @@
     <!-- Scrollable Container -->
     <div
       #scrollContainer
-      class="col-md-12 d-flex align-items-center mt-3 global-main-wraper"
+      class="col-md-11 d-flex align-items-center mt-3 global-main-wraper"
       style="overflow-x: hidden; scroll-behavior: smooth"
     >
       <div class="d-flex gap-2">
@@ -31,37 +31,147 @@
   <div class="col-md-12 mt-5">
     <div class="row d-flex justify-content-between align-items-center mt-3">
       <p class="font-size-28 font-wight-600 color-242424" style="width: 25%">
-        New Arrivals
+        All
       </p>
 
-      <button class="custom-filter-btn">
+      <button class="custom-filter-btn" (click)="openFilters()">
         <img src="../assets/images/hugeicons_filter.png" />
         {{ "product_listing.filters" | translate }}
         <img src="../assets/images/FiChevronDown.png" />
       </button>
     </div>
 
+    <div [ngClass]="{ 'reverse-filter-order': translateService.currentLang !== 'en' }"
+     *ngIf="isShowFilters" class="filter-Div p-3 border rounded">
+      <div class="filters-top-header">
+        <h5 class="mb-3">{{ "product_listing.filters" | translate }}</h5>
+        <button
+          style="border: none; background: none; color: #242424"
+          (click)="clearFilters()"
+        >
+          {{ "product_listing.cleaer_filter" | translate }}
+        </button>
+      </div>
+      <!-- Categories Section -->
+      <div class="mb-4 border-bottom-color">
+        <p
+          [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }"
+          class="font-size-16 font-wight-600 color-242424 margin-0"
+        >
+          {{ "product_listing.categories" | translate }}
+        </p>
+        <div class="row mt-2">
+          <div
+            class="col-md-4 d-flex flex-wrap"
+            *ngFor="let category of categories | slice : 0 : 8"
+          >
+            <div class="form-check d-flex flex-wrap">
+              <input
+                type="checkbox"
+                class="form-check-input"
+                [id]="'category-' + category.id"
+                [(ngModel)]="category.selected"
+              />
+              <label class="form-check-label" [for]="'category-' + category.id">
+                {{ category.name }}
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Price Range Section -->
+      <div class="mb-4">
+        <p
+          [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }"
+          class="font-size-16 font-wight-600 color-242424 margin-0"
+        >
+          {{ "product_listing.price_range" | translate }}
+        </p>
+        <div class="range-container mt-3" #range>
+          <!-- Track -->
+          <div class="range-track"></div>
+        
+          <!-- Min (Left) Thumb -->
+          <span
+            class="range-thumb first-thumb"
+            [style.left.%]="minPercentage"
+            (mousedown)="startDragging($event, 'min')"
+          >
+            <img class="first-imggg" src="../assets/images/price-range-lessthen-icon.png" />
+            <img class="second-imggg" style="margin-top: 5px;" src="../assets/images/price-range-icon.png" />
+          </span>
+        
+          <!-- Max (Right) Thumb -->
+          <span
+            class="range-thumb"
+            [style.left.%]="maxPercentage"
+            (mousedown)="startDragging($event, 'max')"
+          >
+            <img class="first-img"  style="margin-top: 5px;" src="../assets/images/price-range-icon.png" />
+            <img class="second-img" src="../assets/images/price-range-lessthen-icon.png" />
+          </span>
+        </div>
+    
+        <div class="d-flex align-items-center justify-content-between mt-4">
+          <div style="display: flex; flex-direction: column">
+            <p class="font-size-14 font-wight-400 color-969696 margin-0">
+              {{ "product_listing.from" | translate }}
+            </p>
+            <p class="font-size-16 font-wight-700 color-242424 margin-0">
+              <img src="../../../../assets/images/Saudi_Riyal_Symbol-2.svg" class="sar-icon-style" alt="SAR"/> {{ currentValue }}
+            </p>
+          </div>
+          <div style="display: flex; flex-direction: column">
+            <p class="font-size-14 font-wight-400 color-969696 margin-0">
+              {{ "product_listing.to" | translate }}
+            </p>
+            <p class="font-size-16 font-wight-700 color-242424 margin-0">
+              <img src="../../../../assets/images/Saudi_Riyal_Symbol-2.svg" class="sar-icon-style" alt="SAR"/> {{max}}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Apply Filters Button -->
+      <button
+        class="btn btn-dark w-100 custom-apply-filter-btn"
+        (click)="applyFilters()"
+      >
+        Apply Filters
+      </button>
+    </div>
+
+    <!-- Loading State -->
+    <div *ngIf="loading" class="row d-flex justify-content-center align-items-center mt-5">
+      <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
+
+    <!-- Error State -->
+    <div *ngIf="error" class="row d-flex justify-content-center align-items-center mt-5">
+      <div class="alert alert-danger" role="alert">
+        {{ error }}
+      </div>
+    </div>
+
+    <!-- Products Grid -->
     <div
-      *ngIf="showList.length > 0"
-      class="row d-flex flex-wrap justify-content-between align-items-center"
+      *ngIf="!loading && !error && filteredList.length > 0"
+      class="row d-flex flex-wrap align-items-center"
     >
-      <div class="custom-col" *ngFor="let watch of showList">
+      <div class="custom-col" *ngFor="let accessory of filteredList">
         <div class="card shadow-sm rounded-4 border-0 h-100">
           <div class="position-relative card-img-div">
             <a
               [routerLink]="['/accessories/details']"
-              [queryParams]="{ id: watch.id }"
+              [queryParams]="{ id: accessory.id }"
               class="card-img-link"
             >
-              <!-- <img
-                    [src]="'https://api.chronosouq.com/' + watch.main_image"
-                    class="card-img-top rounded-top-4"
-                    alt="Python Skin - Cerulean Blue Strap"
-                /> -->
               <img
-                src="../../../../assets/images/accesory-dummy-image.svg"
+                [src]="getMainImage(accessory)"
                 class="rounded-top-4 card-img-styl"
-                alt="Python Skin - Cerulean Blue Strap"
+                [alt]="getDisplayTitle(accessory)"
               />
             </a>
             <button
@@ -72,10 +182,10 @@
           </div>
           <div class="card-body">
             <p class="text-muted small mb-1">
-              {{ watch.brand.name }} | {{ watch.model || "N/A" }}
+              {{ getDisplayBrand(accessory) }} | {{ accessory.model_number || "N/A" }}
             </p>
 
-            <h6 class="card-title fw-semibold mb-3">{{ watch.title }}</h6>
+            <h6 class="card-title fw-semibold mb-3">{{ getDisplayTitle(accessory) }}</h6>
 
             <div class="d-flex justify-content-between align-items-center">
               <div>
@@ -86,7 +196,7 @@
                     class="sar-icon-style"
                     alt="SAR"
                   />
-                  {{ watch.price || "123" }}</span
+                  {{ getDisplayPrice(accessory) }}</span
                 >
                 <!-- Change currency if needed -->
               </div>
@@ -102,8 +212,10 @@
         </div>
       </div>
     </div>
+
+    <!-- No Records State -->
     <div
-      *ngIf="showList.length == 0"
+      *ngIf="!loading && !error && filteredList.length === 0"
       class="row d-flex flex-wrap justify-content-center align-items-center mt-5 mb-5"
       style="font-size: 34px; font-weight: 500"
     >

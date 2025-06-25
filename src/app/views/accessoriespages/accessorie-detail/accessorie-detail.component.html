@@ -4,7 +4,7 @@
     [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }"
   >
     <div class="col-md-6">
-      <!-- <img
+      <img
         *ngIf="selectedType === 'image'"
         [src]="apiUrl + selectedImage"
         style="
@@ -17,9 +17,9 @@
         "
         class="img-fluid"
         alt="Selected Watch"
-      /> -->
+      />
 
-      <img
+      <!-- <img
         *ngIf="selectedType === 'image'"
         src="../../../../assets/images/accessory-details.svg"
         style="
@@ -32,7 +32,7 @@
         "
         class="img-fluid"
         alt="Selected Watch"
-      />
+      /> -->
 
       <video
         *ngIf="selectedType === 'video'"
@@ -99,7 +99,7 @@
           *ngFor="let item of thumbnails"
         >
           <!-- Display Image -->
-          <!-- <img
+          <img
             *ngIf="item.type === 'image'"
             [src]="apiUrl + item.url"
             style="background: #f8f8f8; object-fit: cover"
@@ -110,9 +110,9 @@
               'hover-remove-blur': true
             }"
             (click)="swapImages(item)"
-          /> -->
+          />
 
-          <img
+          <!-- <img
             *ngIf="item.type === 'image'"
             src="../../../../assets/images/card-acc-det-1.svg"
             style="background: #f8f8f8; object-fit: cover"
@@ -123,7 +123,7 @@
               'hover-remove-blur': true
             }"
             (click)="swapImages(item)"
-          />
+          /> -->
 
           <!-- Display Video -->
           <video
@@ -165,20 +165,20 @@
     >
       <div class="routes-div">
         <p class="routes-styl" style="cursor: pointer" routerLink="/">
-          Homepage /
+          Home /
         </p>
-        <p *ngIf="productDetails?.category" class="routes-styl-active">
-          {{ productDetails?.category?.name }} /
+        <p *ngIf="productDetails?.categories" class="routes-styl-active">
+          {{ productDetails?.categories[0]?.name }} /
         </p>
-        <p *ngIf="productDetails?.brand?.name" class="routes-styl-active">
-          {{ productDetails?.brand?.name }} /
+        <p *ngIf="productDetails?.inventories" class="routes-styl-active">
+          {{ productDetails?.inventories[0]?.title }} /
         </p>
-        <p *ngIf="productDetails?.listing_code" class="routes-styl-active">
-          {{ productDetails?.listing_code }}
+        <p *ngIf="productDetails?.name" class="routes-styl-active">
+          {{ productDetails?.name }}
         </p>
       </div>
 
-      <div
+      <!-- <div
         *ngIf="productDetails?.created_by?.city"
         class="d-flex gap-2 align-items-baseline"
       >
@@ -190,12 +190,12 @@
           {{ "buy_product.Published_At" | translate }} :
           {{ productDetails?.published_date | date : "yyyy-MM-dd" }}
         </p>
-      </div>
+      </div> -->
 
       <div class="d-flex flex-wrap">
         <p class="brand-name-title margin-0">
-          {{ productDetails?.brand?.name }} {{ productDetails?.model }}
-          {{ productDetails?.title }}
+          {{ productDetails?.name }} - {{ productDetails?.brand }}
+          <!-- {{ productDetails?.title }} -->
         </p>
       </div>
 
@@ -255,7 +255,7 @@
         </div>
       </div> -->
 
-      <div class="d-flex mt-4 gap-3">
+      <div class="d-flex flex-column mt-4 gap-3">
         <p class="header-highligted-color brand-name-title margin-0">
           <img
             src="../../../../assets/images/Saudi_Riyal_Symbol-2.svg"
@@ -263,9 +263,9 @@
             class="sar-icon-style"
             alt="SAR"
           />
-          {{ productDetails?.price }}
+          {{ productDetails?.min_price }}
         </p>
-        <p class="color-666666 font-wight-400 font-size-14 margin-0">
+        <!-- <p class="color-666666 font-wight-400 font-size-14 margin-0">
           {{
             productDetails?.shipping_type == "inclusiveShipping"
               ? "Inclusive Shipping"
@@ -275,9 +275,9 @@
               ? "Free Charge"
               : productDetails?.shipping_type
           }}
-        </p>
+        </p> -->
 
-        <p
+        <!-- <p
           *ngIf="productDetails?.discount_price"
           class="color-666666 font-wight-400 font-size-14 margin-0"
           style="margin: 15px 0 0 0"
@@ -290,25 +290,24 @@
           />
           {{ productDetails?.discount_price }}
         </p>
-      </div>
+      </div> -->
 
       <div class="d-flex flex-column mt-3">
         <p
           class="header-highligted-color font-wight-400 font-size-16 margin-0"
           style="padding-bottom: 7px"
         >
-          <!-- {{ "buy_product.condition" | translate }} -->
           LUG Width:
         </p>
         <div class="d-flex flex-wrap gap-2">
-          <button *ngFor="let lug of lugWidth" class="condition-btn">
+          <button class="condition-btn" *ngFor="let lug of lugWidth">
             {{ lug }}
           </button>
         </div>
       </div>
 
       <div
-        *ngIf="productDetails?.scope_of_delivery"
+        *ngIf="productDetails?.inventories?.attribute_values"
         class="d-flex flex-column mt-3"
       >
         <p
@@ -319,8 +318,8 @@
           Buckle/Connector:
         </p>
         <div class="d-flex flex-wrap gap-2">
-          <button *ngFor="let buckle of Buckle_Connector" class="condition-btn">
-            {{ buckle }}
+          <button *ngFor="let buckle of productDetails?.inventories?.attribute_values" class="condition-btn">
+            {{ buckle.value }}
           </button>
         </div>
       </div>
@@ -350,13 +349,13 @@
         </p>
         <div class="d-flex flex-wrap gap-2">
           <div
-            *ngFor="let c of color"
+            *ngFor="let c of productDetails?.inventories?.attribute_values"
             [ngStyle]="{
-              'background-color': c,
+              'background-color': c.color,
               width: '50px',
               height: '30px',
               'border-radius': '5px',
-              border: c === 'Black' ? '1px solid #333' : 'none'
+              border: c.color == '#000' ? '1px solid #333' : 'none'
             }"
           ></div>
         </div>
@@ -467,39 +466,40 @@
           <div class="row">
             <div class="col-12 d-flex flex-wrap justify-content-center">
               <p class="brand-name-title margin-0">
-                {{ productDetails?.brand?.name }} {{ productDetails?.name }}
-                {{ productDetails?.condition }}
+                {{ productDetails?.name }} 
+                <!-- {{ productDetails?.description }} -->
+                <!-- {{ productDetails?.condition }} -->
               </p>
             </div>
 
             <div class="col-12">
               <div
-                *ngIf="productDetails?.meta_description"
+                *ngIf="productDetails?.description"
                 class="col-12 d-flex flex-wrap justify-content-center"
               >
                 <p
                   class="font-size-20 font-wight-600 color-242424 margin-0 text-center"
                 >
-                  {{ productDetails?.meta_description || "N/A" }}
+                  {{ productDetails?.description || "N/A" }}
                 </p>
               </div>
-              <div *ngIf="productDetails?.description" class="col-12">
+              <div *ngIf="productDetails?.meta_description" class="col-12">
                 <p
                   class="font-size-16 font-wight-400 color-666666 margin-0 text-center"
                 >
-                  {{ productDetails?.description || "N/A" }}
+                  {{ productDetails?.meta_description || "N/A" }}
                 </p>
               </div>
             </div>
 
-            <div class="col-12 d-flex flex-wrap justify-content-center">
+            <div class="col-12 d-flex flex-wrap">
               <div
-                *ngFor="let image of productDetails?.additional_images"
+                *ngFor="let image of productDetails?.images"
                 class="col-md-6 d-flex flex-wrap mb-2"
                 style="border-radius: 16px"
               >
-                <!-- <img
-                  [src]="apiUrl + image"
+                <img
+                  [src]="apiUrl + image.url"
                   style="
                     object-fit: cover;
                     height: 100%;
@@ -509,20 +509,14 @@
                   "
                   class="img-fluid"
                   alt="Selected Watch"
-                /> -->
-
-                <img
-                  src="../../../../assets/images/acc-product-des.svg"
-                  style="
-                    object-fit: fill; 
-                    height: 100%;
-                    width: 100%;
-                    border: none;
-                    border-radius: 16px;
-                  "
-                  class="img-fluid"
-                  alt="Selected Watch"
                 />
+
+                <div class="text-div">
+                  <p *ngIf="translateService.currentLang === 'en'" class="font-size-16 font-wight-700 margin-0">{{ image.title_en }}</p>
+                  <p *ngIf="translateService.currentLang === 'ar'" class="font-size-16 font-wight-700 margin-0">{{ image.title_ar }}</p>
+                  <p *ngIf="translateService.currentLang === 'en'" class="font-size-14 font-wight-400 margin-0">{{ image.description_en }}</p>
+                  <p *ngIf="translateService.currentLang === 'ar'" class="font-size-14 font-wight-400 margin-0">{{ image.description_ar }}</p>
+                </div>
               </div>
             </div>
           </div>

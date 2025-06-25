@@ -38,18 +38,7 @@ export class AccessorieDetailComponent implements OnInit {
     }
   }
 
-  lugWidth = [
-    "Apple 38/40/41MM",
-    "Apple 42/44/45MM",
-    "Apple 42/44/45MM",
-    "Apple 49MM",
-    "16MM",
-    "18MM",
-    "20MM",
-    "22MM",
-    "24MM",
-    "26MM",
-  ]
+  lugWidth = []
 
   Buckle_Connector = [
      "Black",
@@ -106,28 +95,61 @@ export class AccessorieDetailComponent implements OnInit {
 
   async fetchProductDetails() {
     try {
-      const res = await this.http.getProductsByID(this.ProductID).toPromise();
-      this.isDealer = res.typeOfProduct;
-      this.productDetails = res.data;
-      this.isReviewsCount = res.reviewsCount;
-      if (this.productDetails.additional_images) {
+      const res = await this.http.getPublicAccessoriesByID(this.ProductID).toPromise();
+      // this.isDealer = res.typeOfProduct;
+      this.productDetails = res.accessory;
+      this.isReviewsCount = res.accessory.views_count;
+      if (this.productDetails?.additional_images) {
         this.productDetails.additional_images = JSON.parse(
           this.productDetails.additional_images
         );
       }
 
-      if (this.productDetails.main_image) {
+      if (this.productDetails?.main_image) {
         this.productDetails.main_image = this.productDetails.main_image.replace(
           /\\/g,
           ""
         );
       }
 
-      if (this.productDetails.created_by.id == localStorage.getItem("userID")) {
-        this.loggedUserType = "seller";
-      } else {
-        this.loggedUserType = "buyer";
+      // "images": [
+      //       {
+      //           "id": 5,
+      //           "title_en": "Brown Leather Strap",
+      //           "title_ar": "Brown Leather Strap",
+      //           "image": "accessory_images\/accessory_images\/20250624113201\/1750764721_685a8cb18e92c.jpeg"
+      //       },
+      //       {
+      //           "id": 6,
+      //           "title_en": "Brown Leather Strap",
+      //           "title_ar": "Brown Leather Strap",
+      //           "image": "accessory_images\/accessory_images\/20250624113211\/1750764731_685a8cbb4460c.jpeg"
+      //       },
+      //       {
+      //           "id": 7,
+      //           "title_en": "Brown Leather Strap",
+      //           "title_ar": "Brown Leather Strap",
+      //           "image": "accessory_images\/accessory_images\/20250624113221\/1750764741_685a8cc5c21b7.jpeg"
+      //       }
+      //   ]
+      console.log("productDetails.images",this.productDetails.images);
+
+      if(this.productDetails?.images){
+       this.productDetails.images = this.productDetails.images.map((image) => ({
+        url: image.image.replace(/\\/g, ""),
+        type: "image",
+        title_en: image.title_en,
+        title_ar: image.title_ar,
+        description_en: image.description_en,
+        description_ar: image.description_ar,
+       }))
       }
+      console.log("productDetails.images",this.productDetails.images);
+      // if (this.productDetails.created_by.id == localStorage.getItem("userID")) {
+      //   this.loggedUserType = "seller";
+      // } else {
+      //   this.loggedUserType = "buyer";
+      // }
     } catch (err) {
       console.error("Error fetching product details:", err);
     }
@@ -136,54 +158,34 @@ export class AccessorieDetailComponent implements OnInit {
   async initializeComponent() {
     try {
         await this.fetchProductDetails();
-      this.productMainImage = this.productDetails.main_image;
-      this.thumbnails = this.productDetails.additional_images.map((image) => ({
-        url: image.replace(/\\/g, ""),
-        type: "image",
-      }));
+        if(this.productDetails){
+          if(this.productDetails?.main_image){
+            this.productMainImage = this.productDetails.main_image;
+          }
+          if(this.productDetails?.additional_images){
+            this.thumbnails = this.productDetails.additional_images.map((image) => ({
+              url: image.replace(/\\/g, ""),
+              type: "image",
+            }));
+          }
+          // if(this.productDetails?.images){
+          //   this.thumbnails = this.productDetails.images.map((image) => ({
+          //     url: image.replace(/\\/g, ""),
+          //     type: "image",
+          //   }));
+          // }
 
-      if (this.productDetails?.proof_image_1) {
-        this.productDetails.proof_image_1 =
-          this.productDetails.proof_image_1.replace(/\\/g, "");
-        this.thumbnails.push({
-          url: this.productDetails.proof_image_1,
-          type: "image",
+        this.lugWidth = [];
+        Object.values(this.productDetails?.attributes || {}).forEach(attrObj => {
+          if (attrObj && typeof attrObj === 'object') {
+            this.lugWidth.push(...Object.keys(attrObj));
+          }
         });
-      }
-
-      if (this.productDetails?.proof_image_2) {
-        this.productDetails.proof_image_2 =
-          this.productDetails.proof_image_2.replace(/\\/g, "");
-        this.thumbnails.push({
-          url: this.productDetails.proof_image_2,
-          type: "image",
-        });
-      }
-
-      if (this.productDetails?.video) {
-        this.productDetails.video = this.productDetails.video.replace(
-          /\\/g,
-          ""
-        );
-        this.thumbnails.push({ url: this.productDetails.video, type: "video" });
-      }
+        }
 
       if (this.thumbnails.length > 0) {
         this.selectedImage = this.thumbnails[0].url; // Store only the URL
       }
-      if (
-        this.isDealer === "dealer"
-
-      ) {
-        if (this.productDetails.created_by.id && this.isReviewsCount) {
-          // await this.fetchDealerDetails(this.productDetails.created_by.id);
-          // await this.fetchDealerUserDetails(this.productDetails.created_by.id);
-        }
-      }
-      // if (this.isUserLogin === "true") {
-      //   this.getOrderandChatID();
-      // }
-
 
       await this.getAllSimilarProducts();
     } catch (err) {

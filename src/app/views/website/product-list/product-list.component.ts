@@ -140,7 +140,6 @@ export class ProductListComponent implements OnInit {
   }
 
   clearFilters(){
-
     this.isFiltereredOptionIsShow=false
     this.categories.forEach(category => (category.selected = false));
     this.watchTypes.forEach(type => (type.selected = false));
