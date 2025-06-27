@@ -18,6 +18,7 @@ export class AddAccessoryImagesListingComponent {
    title_en: FormControl = new FormControl("", [Validators.required, Validators.maxLength(150)])
    title_ar: FormControl = new FormControl("", [Validators.required, Validators.maxLength(150)])
    description_en: FormControl = new FormControl("", [Validators.required, Validators.maxLength(500)])
+   background_color: FormControl = new FormControl("", [Validators.required, Validators.maxLength(50),Validators.pattern(/^#([0-9a-fA-F]{6})$/i)])
    description_ar: FormControl = new FormControl("", [Validators.required, Validators.maxLength(500)])
    image: FormControl = new FormControl("", [Validators.required])
    imagePreview: string | ArrayBuffer | null = null;
@@ -35,6 +36,7 @@ export class AddAccessoryImagesListingComponent {
     this.param = data.param;
     this.accessoryImagesForm = this.fb.group({
       title_en: this.title_en,
+      background_color: this.background_color,
       title_ar: this.title_ar,
       description_en: this.description_en,
       description_ar: this.description_ar,
@@ -74,6 +76,7 @@ export class AddAccessoryImagesListingComponent {
     if(this.accessoryImagesForm.valid){
       const formData = new FormData();
       formData.append('title_en', this.accessoryImagesForm.get('title_en')?.value);
+      formData.append('background_color', this.accessoryImagesForm.get('background_color')?.value);
       formData.append('title_ar', this.accessoryImagesForm.get('title_ar')?.value);
       formData.append('description_en', this.accessoryImagesForm.get('description_en')?.value);
       formData.append('description_ar', this.accessoryImagesForm.get('description_ar')?.value);

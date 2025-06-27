@@ -1,71 +1,46 @@
 <div class="container mt-5">
-  <div
-    class="row"
-    [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }"
-  >
+  <div class="row" [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }">
     <div class="col-md-6">
-      <img
-        *ngIf="selectedType === 'image'"
-        [src]="apiUrl + selectedImage"
-        style="
+      <!-- <img *ngIf="selectedType === 'image'" [src]="apiUrl + selectedImage" style="
           object-fit: scale-down;
           height: 485px;
           width: 100%;
           border: none !important;
           border-radius: 16px;
           background: #f8f8f8;
-        "
-        class="img-fluid"
-        alt="Selected Watch"
-      />
+        " class="img-fluid" alt="Selected Watch" /> -->
 
-      <!-- <img
-        *ngIf="selectedType === 'image'"
-        src="../../../../assets/images/accessory-details.svg"
-        style="
+        <div class="zoom-container custom-zoom">
+          <lib-ngx-image-zoom
+              [thumbImage]=myThumbnail
+              [fullImage]=myFullresImage
+              [enableScrollZoom]="true"
+              [enableLens]="true"
+              [lensWidth]="200"
+              [lensHeight]="200"
+              [lensBorder]="2"
+              [lensBorderColor]="'#ccc'"
+              [magnification]="2"
+              [minZoomRatio]="1"
+              [maxZoomRatio]="4"
+          ></lib-ngx-image-zoom>
+        </div>
+
+      <video *ngIf="selectedType === 'video'" [src]="apiUrl + selectedImage" style="
           object-fit: cover;
           height: 485px;
           width: 100%;
           border: none !important;
           border-radius: 16px;
           background: #f8f8f8;
-        "
-        class="img-fluid"
-        alt="Selected Watch"
-      /> -->
-
-      <video
-        *ngIf="selectedType === 'video'"
-        [src]="apiUrl + selectedImage"
-        style="
-          object-fit: cover;
-          height: 485px;
-          width: 100%;
-          border: none !important;
-          border-radius: 16px;
-          background: #f8f8f8;
-        "
-        class="img-fluid"
-        alt="Selected Watch"
-        controls
-      ></video>
-      <div
-        [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }"
-        class="featured-card"
-      >
-        <div
-          *ngIf="productDetails?.feature_item === 1"
-          class="featured-card-featred"
-        >
+        " class="img-fluid" alt="Selected Watch" controls></video>
+      <div [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }" class="featured-card">
+        <div *ngIf="productDetails?.feature_item === 1" class="featured-card-featred">
           <p style="margin: 0">Featured</p>
         </div>
         <div class="featured-card-heart-sec">
-          <!-- <div
-            class="heart-icon-one"
-            *ngIf="isUserLogin === 'true'"
-            (click)="addWishList(productDetails.id)"
-          >
-            <i
+          <div class="heart-icon-one" *ngIf="isUserLogin == 'true'" (click)="addWishList(productDetails.id)">
+            <!-- <i
               class="fa"
               [ngClass]="
                 wishList?.includes(productDetails.id)
@@ -73,19 +48,17 @@
                   : 'fa-heart fa-heart-o'
               "
               aria-hidden="true"
-            ></i>
+            ></i> -->
+            <i class="fa fa-heart fa-heart-o" aria-hidden="true"></i>
           </div>
           <div (click)="copyCurrentUrl()">
             <i class="fas fa-share-alt share-icon"></i>
-          </div> -->
+          </div>
         </div>
       </div>
 
-      <div
-        [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }"
-        *ngIf="productDetails && productDetails?.views_count"
-        class="featured-bottom"
-      >
+      <div [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }"
+        *ngIf="productDetails && productDetails?.views_count" class="featured-bottom">
         <i class="fas fa-eye"></i>
         <p style="margin: 0">
           {{ productDetails?.views_count }}
@@ -93,24 +66,15 @@
       </div>
 
       <div class="mt-3" style="display: flex; overflow-x: auto">
-        <div
-          class="col-3"
-          style="height: 135px"
-          *ngFor="let item of thumbnails"
-        >
+        <div class="col-3" style="height: 110px" *ngFor="let item of thumbnails">
           <!-- Display Image -->
-          <img
-            *ngIf="item.type === 'image'"
-            [src]="apiUrl + item.url"
-            style="background: #f8f8f8; object-fit: cover"
-            class="img-fluid"
-            alt="thumbnail"
-            [ngClass]="{
+          <img *ngIf="item.type === 'image'" [src]="apiUrl + item.url"
+           style="background: #f8f8f8; object-fit: cover;height: -webkit-fill-available !important;"
+            class="img-fluid" 
+            alt="thumbnail" [ngClass]="{
               'blur-image': item.url !== selectedImage,
               'hover-remove-blur': true
-            }"
-            (click)="swapImages(item)"
-          />
+            }" (click)="swapImages(item)" />
 
           <!-- <img
             *ngIf="item.type === 'image'"
@@ -126,13 +90,8 @@
           /> -->
 
           <!-- Display Video -->
-          <video
-            *ngIf="item.type === 'video'"
-            (click)="swapImages(item)"
-            [src]="apiUrl + item.url"
-            style="background: #f8f8f8; object-fit: scale-down; height: 100%"
-            class="img-fluid"
-          ></video>
+          <video *ngIf="item.type === 'video'" (click)="swapImages(item)" [src]="apiUrl + item.url"
+            style="background: #f8f8f8; object-fit: scale-down; height: 100%" class="img-fluid"></video>
         </div>
       </div>
 
@@ -156,13 +115,9 @@
         </div>
       </div>
     </div>
-    <div
-      *ngIf="productDetails"
-      class="col-md-6"
-      [ngClass]="{
+    <div *ngIf="productDetails" class="col-md-6" [ngClass]="{
         'reverse-order-prod-price-des': translateService.currentLang !== 'en'
-      }"
-    >
+      }">
       <div class="routes-div">
         <p class="routes-styl" style="cursor: pointer" routerLink="/">
           Home /
@@ -199,70 +154,10 @@
         </p>
       </div>
 
-      <!-- <div class="watch-brand-details-div">
-        <div class="brand-sec">
-          <div>
-            <img
-              class="watch-brand-details-img"
-              src="../../../../assets/images/brand-icon.png"
-              alt="brand"
-            />
-          </div>
-          <div style="display: flex; flex-direction: column">
-            <p class="margin-0 small-screen-text">
-              {{ "buy_product.Brand" | translate }}
-            </p>
-            <p class="margin-0 small-screen-text">
-              {{ productDetails?.brand?.name }}
-            </p>
-          </div>
-        </div>
-
-        <div class="brand-sec">
-          <div>
-            <img
-              class="watch-brand-details-img"
-              src="../../../../assets/images/model-icon.png"
-              alt="brand"
-            />
-          </div>
-          <div style="display: flex; flex-direction: column">
-            <p class="margin-0 small-screen-text">
-              {{ "buy_product.model" | translate }}
-            </p>
-            <p class="margin-0 small-screen-text">
-              {{ productDetails?.model }}
-            </p>
-          </div>
-        </div>
-
-        <div class="time-sec">
-          <div>
-            <img
-              class="watch-brand-details-img"
-              src="../../../../assets/images/watch-icon.png"
-              alt="brand"
-            />
-          </div>
-          <div style="display: flex; flex-direction: column">
-            <p class="margin-0 small-screen-text">
-              {{ "buy_product.year_of_production" | translate }}
-            </p>
-            <p class="margin-0 small-screen-text">
-              {{ productDetails?.year_of_production }}
-            </p>
-          </div>
-        </div>
-      </div> -->
-
       <div class="d-flex flex-column mt-4 gap-3">
         <p class="header-highligted-color brand-name-title margin-0">
-          <img
-            src="../../../../assets/images/Saudi_Riyal_Symbol-2.svg"
-            style="height: 30px !important"
-            class="sar-icon-style"
-            alt="SAR"
-          />
+          <img src="../../../../assets/images/Saudi_Riyal_Symbol-2.svg" style="height: 30px !important"
+            class="sar-icon-style" alt="SAR" />
           {{ productDetails?.min_price }}
         </p>
         <!-- <p class="color-666666 font-wight-400 font-size-14 margin-0">
@@ -277,120 +172,76 @@
           }}
         </p> -->
 
-        <!-- <p
-          *ngIf="productDetails?.discount_price"
-          class="color-666666 font-wight-400 font-size-14 margin-0"
-          style="margin: 15px 0 0 0"
-        >
-          <b style="font-size: 17px; color: black"> Discount </b>:
-          <img
-            src="../../../../assets/images/Saudi_Riyal_Symbol-2.svg"
-            class="sar-icon-style"
-            alt="SAR"
-          />
-          {{ productDetails?.discount_price }}
-        </p>
-      </div> -->
-
-      <div class="d-flex flex-column mt-3">
-        <p
-          class="header-highligted-color font-wight-400 font-size-16 margin-0"
-          style="padding-bottom: 7px"
-        >
-          LUG Width:
-        </p>
-        <div class="d-flex flex-wrap gap-2">
-          <button class="condition-btn" *ngFor="let lug of lugWidth">
-            {{ lug }}
-          </button>
+        <div class="d-flex flex-column mt-3">
+          <p class="header-highligted-color font-wight-400 font-size-16 margin-0" style="padding-bottom: 7px">
+            LUG Width:
+          </p>
+          <div class="d-flex flex-wrap gap-2">
+            <button class="condition-btn" *ngFor="let lug of lugWidth">
+              {{ lug }}
+            </button>
+          </div>
         </div>
-      </div>
 
-      <div
-        *ngIf="productDetails?.inventories?.attribute_values"
-        class="d-flex flex-column mt-3"
-      >
-        <p
-          class="header-highligted-color font-wight-400 font-size-16 margin-0"
-          style="padding-bottom: 7px"
-        >
-          <!-- {{ "buy_product.Scope_of_Delivery" | translate }} -->
-          Buckle/Connector:
-        </p>
-        <div class="d-flex flex-wrap gap-2">
-          <button *ngFor="let buckle of productDetails?.inventories?.attribute_values" class="condition-btn">
-            {{ buckle.value }}
-          </button>
+        <div *ngIf="productDetails?.inventories" class="d-flex flex-column mt-3">
+          <p class="header-highligted-color font-wight-400 font-size-16 margin-0" style="padding-bottom: 7px">
+            Buckle/Connector:
+          </p>
+          <div class="d-flex flex-wrap gap-2">
+            <button *ngFor="let buckle of productDetails?.inventories[0].attribute_values" class="condition-btn">
+              {{ buckle.value }}
+            </button>
+          </div>
         </div>
-      </div>
 
-      <div class="d-flex flex-column mt-3">
-        <p
-          class="header-highligted-color font-wight-400 font-size-16 margin-0"
-          style="padding-bottom: 7px"
-        >
-          <!-- {{ "buy_product.Est_Delivery" | translate }} -->
-          Length:
-        </p>
-        <div class="d-flex flex-wrap gap-2">
-          <button *ngFor="let length of Length" class="condition-btn">
-            {{ length }}
-          </button>
+        <div class="d-flex flex-column mt-3">
+          <p class="header-highligted-color font-wight-400 font-size-16 margin-0" style="padding-bottom: 7px">
+            <!-- {{ "buy_product.Est_Delivery" | translate }} -->
+            Length:
+          </p>
+          <div class="d-flex flex-wrap gap-2">
+            <button *ngFor="let length of Length" class="condition-btn">
+              {{ length }}
+            </button>
+          </div>
         </div>
-      </div>
 
-      <div class="d-flex flex-column mt-3">
-        <p
-          class="header-highligted-color font-wight-400 font-size-16 margin-0"
-          style="padding-bottom: 7px"
-        >
-          <!-- {{ "buy_product.Est_Delivery" | translate }} -->
-          Color:
-        </p>
-        <div class="d-flex flex-wrap gap-2">
-          <div
-            *ngFor="let c of productDetails?.inventories?.attribute_values"
-            [ngStyle]="{
+        <div class="d-flex flex-column mt-3">
+          <p class="header-highligted-color font-wight-400 font-size-16 margin-0" style="padding-bottom: 7px">
+            Color:
+          </p>
+          <div class="d-flex flex-wrap gap-2">
+            <div *ngFor="let c of productDetails?.inventories[0]?.attribute_values" [ngStyle]="{
               'background-color': c.color,
               width: '50px',
               height: '30px',
               'border-radius': '5px',
               border: c.color == '#000' ? '1px solid #333' : 'none'
-            }"
-          ></div>
-        </div>
-      </div>
-
-      <div class="d-flex flex-column mt-3">
-        <p
-          class="header-highligted-color font-wight-400 font-size-16 margin-0"
-          style="padding-bottom: 7px"
-        >
-          Quantity:
-        </p>
-        <div
-          class="d-flex border rounded overflow-hidden"
-          style="width: fit-content"
-        >
-          <button class="btn btn-light border-end" (click)="decrement()">
-            −
-          </button>
-          <div
-            class="d-flex align-items-center justify-content-center px-3"
-            style="min-width: 60px"
-          >
-            {{ quantity }}
+            }"></div>
           </div>
-          <button class="btn btn-light border-start" (click)="increment()">
-            +
-          </button>
         </div>
-      </div>
-      <div class="mt-4">
-        <button class="buy-btn">
-          {{ "buy_product.buy" | translate }}
-        </button>
-        <!-- <button
+
+        <div class="d-flex flex-column mt-3">
+          <p class="header-highligted-color font-wight-400 font-size-16 margin-0" style="padding-bottom: 7px">
+            Quantity:
+          </p>
+          <div class="d-flex border rounded overflow-hidden" style="width: fit-content">
+            <button class="btn btn-light border-end" style="background-color: none !important;" (click)="decrement()">
+              −
+            </button>
+            <div class="d-flex align-items-center justify-content-center px-3" style="min-width: 60px">
+              {{ quantity }}
+            </div>
+            <button class="btn btn-light border-start" style="background-color: none !important;" (click)="increment()">
+              +
+            </button>
+          </div>
+        </div>
+        <div class="mt-4">
+          <button class="buy-btn" (click)="goToOrderDetails()">
+            {{ "buy_product.buy" | translate }}
+          </button>
+          <!-- <button
           *ngIf="
             loggedUserType && loggedUserType == 'seller' && orderID && chatID
           "
@@ -402,7 +253,7 @@
           Oder Status
         </button> -->
 
-        <!-- <button
+          <!-- <button
           *ngIf="
             loggedUserType && loggedUserType == 'buyer' && orderID && chatID
           "
@@ -413,223 +264,146 @@
 
           View Order Status or Chat
         </button> -->
-        <button class="make-offer-btn mt-2">Add to Cart</button>
+          <button class="make-offer-btn mt-2">Add to Cart</button>
+        </div>
       </div>
     </div>
-  </div>
 
-  <div class="container mt-5">
-    <div class="card-body d-flex flex-column">
-      <ul
-        class="nav nav-tabs"
-        style="display: flex; justify-content: center"
-        id="myTab"
-        role="tablist"
-        [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }"
-      >
-        <li class="nav-item" role="presentation">
-          <button
-            class="nav-link active"
-            id="details-tab"
-            data-bs-toggle="tab"
-            data-bs-target="#details"
-            type="button"
-            role="tab"
-            aria-controls="details"
-            aria-selected="true"
-          >
-            {{ "product_details.product_des" | translate }}
-          </button>
-        </li>
-        <li class="nav-item" role="presentation">
-          <button
-            class="nav-link"
-            id="security-tab"
-            data-bs-toggle="tab"
-            data-bs-target="#security"
-            type="button"
-            role="tab"
-            aria-controls="security"
-            aria-selected="false"
-          >
-            {{ "product_details.warrenty_det" | translate }}
-          </button>
-        </li>
-      </ul>
-      <div class="tab-content mt-3" id="myTabContent">
-        <div
-          class="tab-pane fade show active"
-          id="details"
-          role="tabpanel"
-          aria-labelledby="details-tab"
-        >
-          <div class="row">
-            <div class="col-12 d-flex flex-wrap justify-content-center">
-              <p class="brand-name-title margin-0">
-                {{ productDetails?.name }} 
-                <!-- {{ productDetails?.description }} -->
-                <!-- {{ productDetails?.condition }} -->
-              </p>
-            </div>
+    <div class="container mt-5">
+      <div class="card-body d-flex flex-column">
+        <ul class="nav nav-tabs" style="display: flex; justify-content: center" id="myTab" role="tablist"
+          [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }">
+          <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="details-tab" data-bs-toggle="tab" data-bs-target="#details"
+              type="button" role="tab" aria-controls="details" aria-selected="true">
+              {{ "product_details.product_des" | translate }}
+            </button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" id="security-tab" data-bs-toggle="tab" data-bs-target="#security" type="button"
+              role="tab" aria-controls="security" aria-selected="false">
+              {{ "product_details.warrenty_det" | translate }}
+            </button>
+          </li>
+        </ul>
+        <div class="tab-content mt-3" id="myTabContent">
+          <div class="tab-pane fade show active" id="details" role="tabpanel" aria-labelledby="details-tab">
+            <div class="row">
 
-            <div class="col-12">
-              <div
-                *ngIf="productDetails?.description"
-                class="col-12 d-flex flex-wrap justify-content-center"
-              >
-                <p
-                  class="font-size-20 font-wight-600 color-242424 margin-0 text-center"
-                >
-                  {{ productDetails?.description || "N/A" }}
-                </p>
+              <div class="col-12">
+                <div *ngIf="productDetails?.description" class="col-12 d-flex flex-wrap justify-content-center">
+                  <p class="font-size-20 font-wight-600 color-242424 margin-0 text-center">
+                    {{ productDetails?.description || "N/A" }}
+                  </p>
+                </div>
+                <div *ngIf="productDetails?.meta_description" class="col-12">
+                  <p class="font-size-16 font-wight-400 color-666666 margin-0 text-center">
+                    {{ productDetails?.meta_description || "N/A" }}
+                  </p>
+                </div>
               </div>
-              <div *ngIf="productDetails?.meta_description" class="col-12">
-                <p
-                  class="font-size-16 font-wight-400 color-666666 margin-0 text-center"
-                >
-                  {{ productDetails?.meta_description || "N/A" }}
-                </p>
-              </div>
-            </div>
 
-            <div class="col-12 d-flex flex-wrap">
-              <div
-                *ngFor="let image of productDetails?.images"
-                class="col-md-6 d-flex flex-wrap mb-2"
-                style="border-radius: 16px"
-              >
-                <img
-                  [src]="apiUrl + image.url"
-                  style="
+              <div class="col-12 d-flex flex-wrap">
+                <div *ngFor="let image of productDetails?.images" class="col-md-6 d-flex flex-wrap mb-2"
+                  style="border-radius: 16px">
+                  <img [src]="apiUrl + image.url" style="
                     object-fit: cover;
                     height: 100%;
                     width: 100%;
                     border: none;
                     border-radius: 16px;
-                  "
-                  class="img-fluid"
-                  alt="Selected Watch"
-                />
+                  " class="img-fluid" alt="Selected Watch" />
 
-                <div class="text-div">
-                  <p *ngIf="translateService.currentLang === 'en'" class="font-size-16 font-wight-700 margin-0">{{ image.title_en }}</p>
-                  <p *ngIf="translateService.currentLang === 'ar'" class="font-size-16 font-wight-700 margin-0">{{ image.title_ar }}</p>
-                  <p *ngIf="translateService.currentLang === 'en'" class="font-size-14 font-wight-400 margin-0">{{ image.description_en }}</p>
-                  <p *ngIf="translateService.currentLang === 'ar'" class="font-size-14 font-wight-400 margin-0">{{ image.description_ar }}</p>
+                  <div class="text-div" [ngStyle]="{'background-color': image.background_color}">
+                    <p *ngIf="translateService.currentLang === 'en'" class="font-size-16 font-wight-700 margin-0">{{
+                      image.title_en }}</p>
+                    <p *ngIf="translateService.currentLang === 'ar'" class="font-size-16 font-wight-700 margin-0">{{
+                      image.title_ar }}</p>
+                    <p *ngIf="translateService.currentLang === 'en'" class="font-size-14 font-wight-400 margin-0">{{
+                      image.description_en }}</p>
+                    <p *ngIf="translateService.currentLang === 'ar'" class="font-size-14 font-wight-400 margin-0">{{
+                      image.description_ar }}</p>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
 
-        <div
-          class="tab-pane fade"
-          id="security"
-          role="tabpanel"
-          aria-labelledby="security-tab"
-        >
-          <div class="container mt-4">
-            <h5 class="mb-4"></h5>
-            <div class="row"></div>
+          <div class="tab-pane fade" id="security" role="tabpanel" aria-labelledby="security-tab">
+            <div class="container mt-4">
+              <h5 class="mb-4"></h5>
+              <div class="row"></div>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <div *ngIf="similarWatchesList?.length > 0" class="container mt-3">
-    <p
-      class="font-wight-700 font-size-64 color-484848 text-center cormorant-styl"
-    >
-      {{ "product_details.similar_prod" | translate }}
-    </p>
-    <div class="row">
-      <div
-        class="col-md-3 col-sm-6 mb-4"
-        *ngFor="let watch of similarWatchesList; let i = index"
-      >
-        <div class="card custom-card h-100 shadow-sm">
-          <a
-            [routerLink]="['/accessories/details']"
-            [queryParams]="{ id: watch.id }"
-            class="card-img-link"
-            (click)="viewProduct(watch.id)"
-          >
-            <!-- <img
+    <div *ngIf="similarWatchesList?.length > 0" class="container mt-3">
+      <p class="font-wight-700 font-size-64 color-484848 text-center cormorant-styl">
+        {{ "product_details.similar_prod" | translate }}
+      </p>
+      <div class="row">
+        <div class="col-md-3 col-sm-6 mb-4" *ngFor="let watch of similarWatchesList; let i = index">
+          <div class="card custom-card h-100 shadow-sm">
+            <a [routerLink]="['/accessories/details']" [queryParams]="{ id: watch.id }" class="card-img-link"
+              (click)="viewProduct(watch.id)">
+              <!-- <img
             [src]="apiUrl + watch.main_image"
             class="card-img-top"
             alt="No Image Exist"
           /> -->
 
-            <img
-              src="../../../../assets/images/accss-sim-prod.svg"
-              class="card-img-top"
-              alt="No Image Exist"
-            />
-          </a>
-          <div class="card-body d-flex flex-column">
-            <p class="text-muted small mb-1">
-              {{ watch.brand.name }} | {{ watch.model || "N/A" }}
-            </p>
+              <img src="../../../../assets/images/accss-sim-prod.svg" class="card-img-top" alt="No Image Exist" />
+            </a>
+            <div class="card-body d-flex flex-column">
+              <p class="text-muted small mb-1">
+                {{ watch.brand.name }} | {{ watch.model || "N/A" }}
+              </p>
 
-            <h6 class="card-title fw-semibold mb-3">{{ watch.title }}</h6>
+              <h6 class="card-title fw-semibold mb-3">{{ watch.title }}</h6>
 
-            <div class="d-flex justify-content-between align-items-center">
-              <div>
-                <small class="text-muted d-block">Exclusive Shipping</small>
-                <span class="fw-bold"
-                  ><img
-                    src="../../../../assets/images/Saudi_Riyal_Symbol-2.svg"
-                    class="sar-icon-style"
-                    alt="SAR"
-                  />
-                  {{ watch.price || "123" }}</span
-                >
-                <!-- Change currency if needed -->
-              </div>
-              <div class="d-flex flex-column align-items-center">
-                <small class="text-muted d-block">Reviews</small>
-                <div class="d-flex align-items-center gap-2">
-                  <small class="text-muted me-1">4.1</small>
-                  <i class="bi bi-star-fill text-warning"></i>
+              <div class="d-flex justify-content-between align-items-center">
+                <div>
+                  <small class="text-muted d-block">Exclusive Shipping</small>
+                  <span class="fw-bold"><img src="../../../../assets/images/Saudi_Riyal_Symbol-2.svg"
+                      class="sar-icon-style" alt="SAR" />
+                    {{ watch.price || "123" }}</span>
+                  <!-- Change currency if needed -->
+                </div>
+                <div class="d-flex flex-column align-items-center">
+                  <small class="text-muted d-block">Reviews</small>
+                  <div class="d-flex align-items-center gap-2">
+                    <small class="text-muted me-1">4.1</small>
+                    <i class="bi bi-star-fill text-warning"></i>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-        <div class="heart-icon">
-          <div class="featured-icon">
-            <div
-              *ngIf="watch?.feature_item === 1"
-              class="featured-promoted-class-badge"
-            >
-              <!-- Featured -->
-            </div>
+          <div class="heart-icon">
+            <div class="featured-icon">
+              <div *ngIf="watch?.feature_item === 1" class="featured-promoted-class-badge">
+                <!-- Featured -->
+              </div>
 
-            <div
-              *ngIf="watch?.feature_item !== 1 && watch.is_promoted === 1"
-              class="featured-promoted-class-badge"
-            >
-              <!-- Promoted -->
+              <div *ngIf="watch?.feature_item !== 1 && watch.is_promoted === 1" class="featured-promoted-class-badge">
+                <!-- Promoted -->
+              </div>
             </div>
-          </div>
-          <div
-            class=""
-            style="
+            <div class="" style="
               background-color: #fff;
               padding: 5px 5px 5px 5px;
               border-radius: 25px;
               display: flex;
               align-items: center;
               justify-content: center;
-            "
-          >
-            <button
-                class="btn btn-light rounded-circle position-absolute top-0 end-0 m-2 p-2 i-icon-style custom-i-icon-position"
-              >
+            ">
+              <button
+                class="btn btn-light rounded-circle position-absolute top-0 end-0 m-2 p-2 i-icon-style custom-i-icon-position">
                 <i class="bi bi-heart-fill text-danger"></i>
               </button>
-            <!-- <i
+              <!-- <i
             *ngIf="isUserLogin === 'true'"
             (click)="addWishList(watch.id)"
             class="fa"
@@ -638,15 +412,15 @@
             "
             aria-hidden="true"
           ></i> -->
+            </div>
           </div>
         </div>
       </div>
-    </div>
 
-    <div class="text-center mb-4" *ngIf="totalPages !== currentPage">
-      <button class="view_btn" (click)="loadMoreWatches()">
-        {{ "chrono_buyer.view_more" | translate }}
-      </button>
+      <div class="text-center mb-4" *ngIf="totalPages !== currentPage">
+        <button class="view_btn" (click)="loadMoreWatches()">
+          {{ "chrono_buyer.view_more" | translate }}
+        </button>
+      </div>
     </div>
   </div>
-</div>

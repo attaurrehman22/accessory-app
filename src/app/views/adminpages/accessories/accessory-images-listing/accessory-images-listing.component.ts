@@ -13,6 +13,7 @@ export interface ImagesData {
   title_ar: any;
   description_en: any;
   description_ar: any;
+  background_color: any;
   image:any;
   action: any;
 }
@@ -40,6 +41,7 @@ export class AccessoryImagesListingComponent implements OnInit{
     "title_ar",
     "description_en",
     "description_ar",
+    "background_color",
     "image",
     "action",
   ];

@@ -296,6 +296,79 @@
     color: white;
     padding: 10px;
     border-radius: 12px;
-    background: #2424240D;
+    /* background: #2424240D; */
     backdrop-filter: blur(264px)
+  }
+
+  .zoom-container {
+    object-fit: cover;
+    height: 485px;
+    width: 100%;
+    border: none !important;
+    border-radius: 16px;
+    background: #f8f8f8;
+  }
+  
+  .zoom-container > lib-ngx-image-zoom > .ngxImageZoomContainer > img {
+    height: 485px;
+    width: 555px;
+  }
+  .custom-zoom ib-ngx-image-zoom {
+    display: block;
+    max-width: 555px;
+    max-height: 485px;
+    border-radius: 16px;
+    background: #f8f8f8;
+    overflow: hidden;
+  }
+  
+  .custom-zoom lib-ngx-image-zoom .ngxImageZoomContainer {
+    width: auto !important;
+    height: auto !important;
+  }
+  
+  .custom-zoom lib-ngx-image-zoom ngxImageZoomContainer {
+    width: auto !important;
+    height: auto !important;
+  }
+  
+  .custom-zoom lib-ngx-image-zoom > ngxImageZoomContainer {
+    width: auto !important;
+    height: auto !important;
+  }
+  
+  .custom-zoom lib-ngx-image-zoom > .ngxImageZoomContainer {
+    width: auto !important;
+    height: auto !important;
+  }
+  
+  ::ng-deep lib-ngx-image-zoom .ngxImageZoomThumbnail {
+    max-width: 555px !important;   
+    max-height: 485px !important;
+    object-fit: cover;
+    border-radius: 16px;
+    width: 100%;
+  }
+  
+  .custom-zoom lib-ngx-image-zoom .ngxImageZoomThumbnail {
+    object-fit: cover;
+    max-width: 555px;
+    max-height: 485px;
+    border-radius: 16px;
+  }
+  
+  ::ng-deep .ngxImageZoomContainer {
+    width: auto !important;   /* your custom width */
+    height: 485px !important;  /* your custom height */
+  }
+  
+  .ngxImageZoomContainer {
+    width: 600px !important;
+    height: 400px !important;
+  }
+  
+  
+  .ngxImageZoomContainer {
+    width: auto;
+    height: auto;
   }

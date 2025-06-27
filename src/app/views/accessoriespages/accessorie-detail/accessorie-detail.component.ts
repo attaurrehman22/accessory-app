@@ -1,10 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { AlertsServicesService } from 'src/services/alerts-service/alerts-services.service';
 import { HttpService } from 'src/services/http/http.service';
 import { LanguageService } from 'src/services/lang-service/language.service';
 import { environment } from 'src/environments/environment';
+import mediumZoom from 'medium-zoom';
+import { NgxImageZoomModule } from 'ngx-image-zoom';
+import { ModelLoginComponent } from '../../auth/model-login/model-login.component';
+import { MatDialog } from '@angular/material/dialog';
 @Component({
   selector: 'app-accessorie-detail',
   templateUrl: './accessorie-detail.component.html',
@@ -28,6 +32,9 @@ export class AccessorieDetailComponent implements OnInit {
   currentPage: number = 1;
   quantity = 1;
   apipath = environment.apipath;
+  myThumbnail:any;
+  myFullresImage:any;
+
   increment() {
     this.quantity++;
   }
@@ -60,6 +67,8 @@ export class AccessorieDetailComponent implements OnInit {
   constructor( private route: ActivatedRoute,private http: HttpService,private alertService: AlertsServicesService,
       public translateService: TranslateService,
         private languageService: LanguageService,
+        private router: Router,
+        private dialog: MatDialog,
   ){
     this.translateService.addLangs(this.supportLanguages);
     const savedLang = this.languageService.getCurrentLanguage();
@@ -82,7 +91,11 @@ export class AccessorieDetailComponent implements OnInit {
     this.initializeComponent();
   }
 
+  isUserLogin: any;
+
   ngOnInit(): void {
+    this.isUserLogin = localStorage.getItem("isLoggedIn");
+    console.log("isUserLogin",this.isUserLogin);
     const watchId = this.route.snapshot.queryParamMap.get("id");
     if (watchId) {
       this.ProductID = watchId;
@@ -112,28 +125,6 @@ export class AccessorieDetailComponent implements OnInit {
         );
       }
 
-      // "images": [
-      //       {
-      //           "id": 5,
-      //           "title_en": "Brown Leather Strap",
-      //           "title_ar": "Brown Leather Strap",
-      //           "image": "accessory_images\/accessory_images\/20250624113201\/1750764721_685a8cb18e92c.jpeg"
-      //       },
-      //       {
-      //           "id": 6,
-      //           "title_en": "Brown Leather Strap",
-      //           "title_ar": "Brown Leather Strap",
-      //           "image": "accessory_images\/accessory_images\/20250624113211\/1750764731_685a8cbb4460c.jpeg"
-      //       },
-      //       {
-      //           "id": 7,
-      //           "title_en": "Brown Leather Strap",
-      //           "title_ar": "Brown Leather Strap",
-      //           "image": "accessory_images\/accessory_images\/20250624113221\/1750764741_685a8cc5c21b7.jpeg"
-      //       }
-      //   ]
-      console.log("productDetails.images",this.productDetails.images);
-
       if(this.productDetails?.images){
        this.productDetails.images = this.productDetails.images.map((image) => ({
         url: image.image.replace(/\\/g, ""),
@@ -142,14 +133,9 @@ export class AccessorieDetailComponent implements OnInit {
         title_ar: image.title_ar,
         description_en: image.description_en,
         description_ar: image.description_ar,
+        background_color: image.background_color,
        }))
       }
-      console.log("productDetails.images",this.productDetails.images);
-      // if (this.productDetails.created_by.id == localStorage.getItem("userID")) {
-      //   this.loggedUserType = "seller";
-      // } else {
-      //   this.loggedUserType = "buyer";
-      // }
     } catch (err) {
       console.error("Error fetching product details:", err);
     }
@@ -185,6 +171,12 @@ export class AccessorieDetailComponent implements OnInit {
 
       if (this.thumbnails.length > 0) {
         this.selectedImage = this.thumbnails[0].url; // Store only the URL
+        this.myThumbnail = this.apiUrl + this.selectedImage;
+        this.myFullresImage = this.apiUrl + this.selectedImage;
+        if (this.myThumbnail === this.myFullresImage) {
+          // Add a timestamp or random parameter to force a new image load
+          this.myThumbnail = this.myThumbnail + '?t=' + new Date().getTime();
+        }
       }
 
       await this.getAllSimilarProducts();
@@ -198,6 +190,12 @@ export class AccessorieDetailComponent implements OnInit {
     if (clickedItem.type === "image") {
       this.selectedImage = clickedItem.url; // Extract only the URL
       this.selectedType = "image"; // Set the selected type to 'image'
+      this.myThumbnail = this.apiUrl + clickedItem.url;
+      this.myFullresImage = this.apiUrl + clickedItem.url;
+      if (this.myThumbnail === this.myFullresImage) {
+        // Add a timestamp or random parameter to force a new image load
+        this.myThumbnail = this.myThumbnail + '?t=' + new Date().getTime();
+      }
     }
     if (clickedItem.type === "video") {
 
@@ -246,6 +244,39 @@ export class AccessorieDetailComponent implements OnInit {
         console.error("Error loading more watches:", err);
       }
     }
+  }
+
+  addWishList(productID: any) {
+    // this.http.addWishList(productID).subscribe((res: any) => {
+    //   console.log("res",res);
+    // });
+  }
+
+  copyCurrentUrl() {
+    const url = window.location.href;
+    navigator.clipboard.writeText(url);
+  }
+
+  goToOrderDetails() {
+    const userLogin = localStorage.getItem("user_token");
+    if(userLogin && this.isUserLogin == 'true'){
+      this.router.navigate(['/order-details'], { queryParams: { id: this.ProductID } });
+    }else{
+      this.loginFirst();
+    }
+  }
+
+  loginFirst() {
+    const dialogRef = this.dialog.open(ModelLoginComponent, {
+      backdropClass: "hello",
+      width: "600px",
+      data: { message: "header" },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+      }
+    });
   }
 
 }

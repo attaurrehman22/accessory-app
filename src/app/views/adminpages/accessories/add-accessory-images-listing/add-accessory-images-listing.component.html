@@ -45,6 +45,17 @@
                     </mat-error>
                 </mat-form-field>
 
+                <mat-form-field appearance="outline" style="width: 100%;">
+                    <mat-label>Background Color</mat-label>
+                    <input matInput formControlName="background_color" />
+                    <mat-error *ngIf="background_color.invalid && (background_color.dirty || background_color.touched)">
+                        <mat-error *ngIf="background_color.errors.required">Background Color is required</mat-error>
+                        <mat-error *ngIf="background_color.errors.maxlength">Background Color must be less than 50
+                            characters</mat-error>
+                        <mat-error *ngIf="background_color.errors.pattern">Background Color must be a valid hex color</mat-error>
+                    </mat-error>
+                </mat-form-field>
+
                 <div class="form-group">
                     <label for="image">Image</label>
                     <input 

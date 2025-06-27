@@ -69,6 +69,15 @@
                 </td>
               </ng-container>
 
+              <ng-container class="column" matColumnDef="background_color">
+                <th mat-header-cell class="column" *matHeaderCellDef>
+                  Background Color
+                </th>
+                <td mat-cell class="column" *matCellDef="let row">
+                  {{ row.background_color }}
+                </td>
+              </ng-container>
+
               <ng-container class="column" matColumnDef="image">
                 <th mat-header-cell class="column" *matHeaderCellDef>
                   Image
