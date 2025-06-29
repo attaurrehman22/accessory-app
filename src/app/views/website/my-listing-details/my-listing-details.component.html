@@ -1220,7 +1220,7 @@
       <div *ngIf="activeIndex === 7" class="container-fluid">
         <div class="d-flex justify-content-between align-items-center mb-1 filtered-div">
           <h4 class="mobile-label font-size-28 font-wight-600 color-242424 margin-0">Cart Items</h4>
-           <h4 class="mobile-label font-size-14 font-wight-600 color-242424 margin-0">Remove Selected</h4>
+           <h4 class="mobile-label font-size-14 font-wight-600 color-242424 margin-0" *ngIf="cartItems.length > 0">Remove Selected</h4>
         </div>
         <div class="list-cards">
           <div class="container-fluid my-4">
