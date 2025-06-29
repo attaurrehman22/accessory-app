@@ -1227,17 +1227,21 @@
             <div class="card mb-3" *ngFor="let item of cartItems" style="box-shadow:none !important">
               <div class="row g-0 align-items-center p-2">
                 <div class="col-auto d-flex align-items-center gap-2">
-                  <input type="checkbox" [(ngModel)]="item.selected" class="form-check-input" />
-                  <!-- <img [src]="item.image" alt="{{ item.name }}" class="img-thumbnail" style="width: 80px; height: auto;"> -->
-                   <img src="../../../../assets/images/cart-access.svg" alt="{{ item.name }}" class="img-thumbnail" style="width: 80px; height: auto;border: none !important;">
+                  <input type="checkbox" *ngIf="item.accessory.additional_images.length > 0" [(ngModel)]="item.selected" class="form-check-input" />
+                  <img [src]="apiUrl + item.accessory.main_image" alt="{{ item.name }}" class="img-thumbnail" style="width: 80px; height: auto;">
+                   <!-- <img src="../../../../assets/images/cart-access.svg" alt="{{ item.name }}" class="img-thumbnail" style="width: 80px; height: auto;border: none !important;"> -->
                 </div>
                 <div class="col">
                   <div class="card-body py-2 d-flex flex-column">
                     <p class="mb-1 font-size-14 font-wight-400 color-6a6a6a">
-                      LUG Width <span class="color-242424">Apple 38/40/41MM</span>   |  Buckle/Connector <span class="color-242424"> Black </span>  |  Length <span class="color-242424"> Small 115/75MM | Color {{ item.color }} </span>
+                      LUG Width <span class="color-242424">Apple 38/40/41MM</span>   
+                      |  Buckle/Connector <span class="color-242424"> Black </span>  
+                      |  Length 
+                      <span class="color-242424"> Small 115/75MM 
+                      | Color {{ item.color }} </span>
                     </p>
 
-                    <p class="font-size-18 font-wight-600 color-242424 margin-0">{{ item.name }}</p>
+                    <p class="font-size-18 font-wight-600 color-242424 margin-0">{{ item.accessory.name }}</p>
                     <p class="mb-1 font-size-14 font-wight-400 color-6a6a6a gap-2 d-flex">Total Price: <span class="color-242424">
                       <img src="../../../../assets/images/Saudi_Riyal_Symbol-2.svg" class="sar-icon-style"
                       style="    width: 12px;height: 12px;"
@@ -1266,7 +1270,7 @@
               </div>
             </div>
 
-            <div class="col-md-12 d-flex justify-content-end mt-4">
+            <div class="col-md-12 d-flex justify-content-end mt-4" *ngIf="cartItems.length > 0">
               <div class="col-md-4 d-flex flex-column">
                 <ul class="list-group list-group-flush mb-3 card" style="box-shadow:none !important">
                   <div class="card-body" style="border:none !important;display: flex;flex-direction: column;border-radius: 16px !important;">
@@ -1288,7 +1292,7 @@
                     </li>
                   </div>
                 </ul>
-                <button class="btn btn-dark w-100">Checkout</button>
+                <button class="btn btn-dark w-100" (click)="goToCheckout()">Checkout</button>
               </div>
             </div>
           </div>

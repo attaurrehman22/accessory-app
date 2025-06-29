@@ -497,18 +497,17 @@
                   *ngFor="let img of homeData.slider; let i = index"
                   [ngClass]="{ active: i === 0 }"
                 >
-                  <!-- <img
+                  <img
                     class="img-fluid"
-                    style="object-fit: scale-down !important"
-                    [src]="apipath + img.image"
+                    [src]="img.image"
                     alt="{{ 'find_dream.img_alt' | translate }}"
-                  /> -->
+                  />
 
-                   <img
+                   <!-- <img
                     class="img-fluid"
                     src="../../../../assets/images/background.svg"
                     alt="{{ 'find_dream.img_alt' | translate }}"
-                  />
+                  /> -->
                 </div>
               </div>
 

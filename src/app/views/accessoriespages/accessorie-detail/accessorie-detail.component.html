@@ -238,7 +238,7 @@
           </div>
         </div>
         <div class="mt-4">
-          <button class="buy-btn" (click)="goToOrderDetails()">
+          <button class="buy-btn" (click)="buyandGoToOrderDetails()">
             {{ "buy_product.buy" | translate }}
           </button>
           <!-- <button
@@ -264,7 +264,7 @@
 
           View Order Status or Chat
         </button> -->
-          <button class="make-offer-btn mt-2">Add to Cart</button>
+          <button class="make-offer-btn mt-2" (click)="addtoCart()">Add to Cart</button>
         </div>
       </div>
     </div>

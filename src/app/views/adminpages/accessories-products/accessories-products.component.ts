@@ -211,6 +211,19 @@ export class AccessoriesProductsComponent
     );
   }
 
+  toggleActiveandDeactive(data) {
+    this.http.toggleActiveAccessories(data.id).subscribe(
+      (res) => {
+        if (res.data.is_active === true) {
+          this.toast.showAlert("success", "Accessory Activate Susseccfully");
+        } else {
+          this.toast.showAlert("success", "Accessory De-activate Susseccfully");
+        }
+        this.loadData();
+      },
+    );
+  }
+
   activateProduct(data) {
     this.http.toogleActiveAccesriesInformation(data.id).subscribe(
       (res) => {

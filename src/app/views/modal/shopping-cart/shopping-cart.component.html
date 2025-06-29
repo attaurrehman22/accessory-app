@@ -39,7 +39,7 @@
 
       <div class="mb-4">
         <label class="label-title">Quantity</label>
-        <input type="number" class="form-control w-25" min="1" value="1">
+        <input type="text" class="form-control w-25" min="1" value="1" readonly="true">
       </div>
     </div>
   </div>
@@ -47,8 +47,8 @@
   <!-- Bottom Section -->
   <div class="col-md-12 d-flex flex-column pb-4">
     <div class="d-grid gap-2">
-      <button class="btn btn-dark" style="height: 55px; font-size: 18px; font-weight: 400;">Checkout</button>
-      <button class="btn btn-outline-dark" style="height: 55px; font-size: 18px; font-weight: 400;">View Cart</button>
+      <button class="btn btn-dark" style="height: 55px; font-size: 18px; font-weight: 400;" (click)="goToCheckout()">Checkout</button>
+      <button class="btn btn-outline-dark" style="height: 55px; font-size: 18px; font-weight: 400;" (click)="goToCart()">View Cart</button>
     </div>
   </div>
 </div>

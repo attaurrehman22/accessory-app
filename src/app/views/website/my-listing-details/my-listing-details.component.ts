@@ -171,6 +171,14 @@ export class MyListingDetailsComponent implements OnInit {
       this.detailListing(history?.state?.data);
       this.getOrderDetails();
     }
+
+    if (history?.state?.activeRouteType == "cart") {
+      console.log(" --------------------- this.activeIndex == 7 ---------------------");
+      this.activeIndex = 7;
+      this.setActive(this.activeIndex)
+      // this.getCartList();
+    }
+
     this.fetchListings();
     this.billingForm = new FormGroup({
       billing_address: this.billing_address,
@@ -486,7 +494,28 @@ export class MyListingDetailsComponent implements OnInit {
       this.getBillingInformation();
     } else if (this.activeIndex == 2) {
       this.getLatestMessages();
+    }else if (this.activeIndex == 7) {
+      console.log(" --------------------- this.activeIndex == 7 ---------------------");
+      this.getCartList();
     }
+  }
+
+  getCartList() {
+    this.http.getCartList().subscribe((res) => {
+      this.cartItems = res.items;
+      this.cartItems = this.cartItems.map((item: any) => {
+        item.accessory.main_image = item.accessory.main_image.replace(/\\/g, "");
+        return item;
+      });
+
+      this.cartItems = this.cartItems.map((item: any) => {
+        item.accessory.additional_images = item.accessory.additional_images.map((image: any) => {
+          image.image = image.image.replace(/\\/g, "");
+          return image;
+        });
+        return item;
+      });
+    });
   }
 
   countryLists: any;
@@ -620,7 +649,9 @@ export class MyListingDetailsComponent implements OnInit {
     // Split name by space and get first letters
     const words = name.trim().split(" ");
     console.log("words", words);
-    if (words?.length === 1 && words[0] !== "") {
+    // words ['']0: ""length: 1[[Prototype]]: Array(0)
+
+    if (words?.length === 1 && words[0] !== "" && words[0] !== undefined && words[0] !== null ) {
       return words[0][0].toUpperCase();
     } else {
       const emailWord =this.profileForm.get('email').value
@@ -1050,43 +1081,35 @@ export class MyListingDetailsComponent implements OnInit {
 
   // Cart Items Details
 
-  cartItems = [
-    {
-      image: "assets/images/grey.png",
-      name: "Python Skin - Slate Grey",
-      color: "Slate Grey",
-      price: 150.5,
-      quantity: 1,
-      selected: false,
-    },
-    {
-      image: "assets/images/copper.png",
-      name: "Python Skin - Copper Brown",
-      color: "Copper Brown",
-      price: 150.5,
-      quantity: 1,
-      selected: false,
-    },
-    {
-      image: "assets/images/green.png",
-      name: "Python Skin - Juniper Green",
-      color: "Juniper Green",
-      price: 150.5,
-      quantity: 1,
-      selected: true,
-    },
-  ];
+  cartItems:any;
 
   increment(item: any) {
     item.quantity++;
+    this.updateCart(item);
+  }
+
+  updateCart(item: any) {
+    const formData = {
+      accessory_id: item.accessory_id,
+      quantity: item.quantity
+    }
+    this.http.updateCart(formData).subscribe((res) => {
+      console.log("res",res);
+    });
   }
 
   decrement(item: any) {
     if (item.quantity > 1) item.quantity--;
+    this.updateCart(item);
   }
 
   removeItem(item: any) {
     this.cartItems = this.cartItems.filter((i) => i !== item);
+    console.log("item",item);
+    this.http.deleteCart(item.accessory_id).subscribe((res) => {
+      this.alertService.showAlert("success", "Item removed from cart");
+      this.getCartList();
+    });
   }
 
   getTotalItems() {
@@ -1099,4 +1122,11 @@ export class MyListingDetailsComponent implements OnInit {
       0
     );
   }
+
+  goToCheckout() {
+    this.http.confirmCartOrder().subscribe((res) => {
+      this.alertService.showAlert("success", "Order confirmed");
+    });
+  }
+
 }

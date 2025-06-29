@@ -958,6 +958,15 @@ export class HttpService implements OnInit {
       });
     }
 
+    toggleActiveAccessories(ID): Observable<any> {
+      return this.http.post(`${this.apiUrl}/api/accessories/${ID}/toggle-status`, {
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${this.token}`,
+        },
+      });
+    }
+
     deleteAccessoriesById(ID): Observable<any> {
       return this.http.delete(`${this.apiUrl}/api/accessories/${ID}`, {
         headers: {
@@ -1003,8 +1012,8 @@ export class HttpService implements OnInit {
       });
     }
 
-    deleteAdminAttributesInventory(ID): Observable<any> {
-      return this.http.delete(`${this.apiUrl}/api/attribute-inventory/${ID}`, {
+    deleteAdminAttributesInventory(attributeID,InventoryID,attributeValueID): Observable<any> {
+      return this.http.delete(`${this.apiUrl}/api/attribute-inventory/${attributeID}/${InventoryID}/${attributeValueID}`, {
         headers: {
           Accept: "application/json",
           Authorization: `Bearer ${this.token}`,
@@ -1545,6 +1554,55 @@ export class HttpService implements OnInit {
         }
 
       // ------------------------------ Public Accessories APIs End here ------------------------------
+
+      // ------------------------------ Public Accessories Cart APIs Start here ------------------------------
+
+      addtoCart(formData): Observable<any> {
+        return this.http.post(`${this.apiUrl}/api/accessory-cart/add`, formData, {
+          headers: {
+            Accept: "application/json",
+            Authorization: `Bearer ${this.token}`,
+          },
+        });
+      }
+
+      getCartList(): Observable<any> {
+        return this.http.get(`${this.apiUrl}/api/accessory-cart`, {
+          headers: {
+            Accept: "application/json",
+            Authorization: `Bearer ${this.token}`,
+          },
+        });
+      }
+
+      updateCart(formData): Observable<any> {
+        return this.http.put(`${this.apiUrl}/api/accessory-cart/update`, formData, {
+          headers: {
+            Accept: "application/json",
+            Authorization: `Bearer ${this.token}`,
+          },
+        });
+      }
+
+      deleteCart(ID): Observable<any> {
+        return this.http.delete(`${this.apiUrl}/api/accessory-cart/item/${ID}`, {
+          headers: {
+            Accept: "application/json",
+            Authorization: `Bearer ${this.token}`,
+          },
+        });
+      }
+
+      confirmCartOrder(): Observable<any> {
+        return this.http.post(`${this.apiUrl}/api/accessory-cart/confirm`,{}, {
+          headers: {
+            Accept: "application/json",
+            Authorization: `Bearer ${this.token}`,
+          },
+        });
+      }
+
+      // ------------------------------ Public Accessories Cart APIs End here ------------------------------
 }
 
 

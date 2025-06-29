@@ -63,7 +63,7 @@ export class AttributeInventoryComponent {
   }
 
   deleteAttribute(data) {
-    this.http.deleteAdminAttributesInventory(data.id).subscribe(
+    this.http.deleteAdminAttributesInventory(data.attribute_id,data.inventory_id,data.attribute_value_id).subscribe(
       (res) => {
         this.toast.showAlert("success", "Attribute Delete Susseccfully");
         this.allUser();

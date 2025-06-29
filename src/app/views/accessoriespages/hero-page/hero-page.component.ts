@@ -52,10 +52,61 @@ export class HeroPageComponent {
   isAdminUser = computed(() => this.loginStateService.isAdminUser());
   isUserLoggedIn = computed(() => this.loginStateService.isUserLoggedIn());
 
+  apiData = {
+    "success": true,
+    "data": {
+        "title": "Welcome to Chronosouq \u2013 The Premier Platform for Luxury Watches in Saudi Arabia",
+        "introduction": "Discover a world of timeless elegance and precision craftsmanship. At Chronosouq, we bring together luxury watch enthusiasts, collectors, and sellers in one trusted marketplace, dedicated to the finest timepieces from around the globe. Whether you're looking to buy or sell, we offer an exclusive range of watches from top-tier brands such as Rolex, Omega, Patek Philippe, and more. With our platform, you can browse with confidence, knowing that every transaction is secure, transparent, and backed by our expert verification process. Start your journey today\u2014where luxury meets trust.Start your journey today\u2014where luxury meets trust",
+        "vision_title": "Your Trusted Source for Authentic Luxury Watches.",
+        "vision": "ChronoSouq is Saudi Arabia\u2019s premier marketplace for luxury watches, connecting buyers and sellers with ease. We bring authenticity, style, and prestige to your wrist with a trusted selection of the world\u2019s finest timepieces",
+        "description": {
+            "overview": "Whether you're looking to buy or sell, we offer an exclusive range of watches from top-tier brands such as Rolex, Omega, Patek Philippe, and more. With our platform, you can browse with confidence, knowing that every transaction is secure, transparent, and backed by our expert verification process.",
+            "protection_plan": {
+                "title": "ChronoSouq Protection Plan",
+                "items": [
+                    "Secure\/safe Payment via Escrow Service",
+                    "Worldwide Money-Back Guarantee",
+                    "Authenticity Guarantee",
+                    "Safe and Insured Delivery",
+                    "Chronosouq Quality Assurance Team",
+                    "24\/7 Customer Support"
+                ]
+            }
+        },
+        "slider": [
+            {
+                "step": 1,
+                "title": "Welcome",
+                "description": "Explore our wide range of products and select the ones you are interested in.",
+                "image": "assets/images/background.svg"
+            },
+            {
+                "step": 2,
+                "title": "Second Slide",
+                "description": "Add the selected products to your cart for easy checkout.",
+                "image": "assets/images/background_1.svg"
+            },
+            {
+                "step": 3,
+                "title": "Third Slide",
+                "description": "Add the selected products to your cart for easy checkout.",
+                "image": "assets/images/background_2.svg"
+            },
+            {
+                "step": 4,
+                "title": "Fourth Slide",
+                "description": "Add the selected products to your cart for easy checkout.",
+                "image": "assets/images/background_3.svg"
+            }
+        ],
+        "footer": "Explore, buy, and sell the world's most coveted watches at Chronosouq Marketplace"
+    }
+}
+
   getSlideData() {
     this.http.getHomeData().subscribe(
       (res) => {
-        this.homeData = res.data || { slider: [] };
+        this.homeData = this.apiData.data;
       },
       (err) => {
         this.homeData = { slider: [] };

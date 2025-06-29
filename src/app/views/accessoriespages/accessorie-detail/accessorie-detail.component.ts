@@ -257,7 +257,7 @@ export class AccessorieDetailComponent implements OnInit {
     navigator.clipboard.writeText(url);
   }
 
-  goToOrderDetails() {
+  buyandGoToOrderDetails() {
     const userLogin = localStorage.getItem("user_token");
     if(userLogin && this.isUserLogin == 'true'){
       this.router.navigate(['/order-details'], { queryParams: { id: this.ProductID } });
@@ -277,6 +277,29 @@ export class AccessorieDetailComponent implements OnInit {
       if (result) {
       }
     });
+  }
+
+  addtoCart() {
+    const userLogin = localStorage.getItem("user_token");
+    if(userLogin && this.isUserLogin == 'true'){
+      console.log("this.ProductID",this.ProductID);
+      const formData = {
+        items: [
+          {
+            accessory_id: this.ProductID,
+            quantity: this.quantity
+          }
+        ]
+      }
+      this.http.addtoCart(formData).subscribe(
+        (res: any) => {
+          this.alertService.showAlert('success', 'Accessory added to cart successfully');
+      },(err: any) => {
+        this.alertService.showAlert('warning', 'Something went wrong');
+      });
+    }else{
+      this.loginFirst();
+    }
   }
 
 }
