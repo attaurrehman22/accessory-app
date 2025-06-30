@@ -38,6 +38,8 @@ import { AttributeListingComponent } from './views/adminpages/accessories/attrib
 import { ChangePasswordComponent } from './views/auth/change-password/change-password.component';
 import { AccessoryImagesListingComponent } from './views/adminpages/accessories/accessory-images-listing/accessory-images-listing.component';
 import { AttributeInventoryComponent } from './views/adminpages/attribute-inventory/attribute-inventory.component';
+import { PayoutConfirmationComponent } from './views/website/payout-confirmation/payout-confirmation.component';
+import { AccessorySummaryComponent } from './views/website/accessory-summary/accessory-summary.component';
 
 
 const routes: Routes = [
@@ -82,7 +84,9 @@ const routes: Routes = [
   { path: 'myListing', component:  MyListingDetailsComponent},
   { path: 'forgotPassword', component:  ForgotPasswordComponent},
   { path: 'payment-callback', component:  MyListingDetailsComponent},
-  {path:'chat',component:ChatComponent}
+  {path:'payment-confirmation',component:PayoutConfirmationComponent},
+  {path:'myListing/summary',component:AccessorySummaryComponent},
+  {path:'chat',component:ChatComponent},
 ];
 
 @NgModule({

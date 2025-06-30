@@ -1,0 +1,26 @@
+ <div style="min-height: 60vh;">
+    <div class="payment-status-container" *ngIf="status" >
+        <div class="status-content">
+        <!-- Success -->
+        <div *ngIf="status === 'success'" class="status success">
+            <i class="fas fa-check-circle icon"></i>
+            <h2>Payment Successful</h2>
+            <p>Your payment has been completed successfully.</p>
+        </div>
+    
+        <!-- Failed -->
+        <div *ngIf="status === 'failed'" class="status failed">
+            <i class="fas fa-times-circle icon"></i>
+            <h2>Payment Failed</h2>
+            <p>Unfortunately, your payment could not be processed.</p>
+        </div>
+    
+        <!-- Pending / Other -->
+        <div *ngIf="status !== 'success' && status !== 'failed'" class="status pending">
+            <i class="fas fa-info-circle icon"></i>
+            <h2>Payment Status: {{ status | titlecase }}</h2>
+            <p>{{ message || 'Please wait while we confirm your payment status.' }}</p>
+        </div>
+        </div>
+    </div>
+</div>
