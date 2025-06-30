@@ -18,7 +18,10 @@ export class ShoppingCartComponent implements OnInit{
   }
 
   cartItems:any[] = [];
-
+  lugWidth=[];
+  Buckle=[];
+  Length=[];
+  Color:any;
   getCartList() {
     this.http.getCartList().subscribe((res) => {
       if(res?.items?.length > 0){
@@ -28,13 +31,26 @@ export class ShoppingCartComponent implements OnInit{
           return item;
         });
 
-        this.cartItems = this.cartItems.map((item: any) => {
-          item.accessory.additional_images = item.accessory.additional_images.map((image: any) => {
-            image.image = image.image.replace(/\\/g, "");
-            return image;
-          });
-          return item;
+        // this.cartItems = this.cartItems.map((item: any) => {
+        //   item.accessory.additional_images = item?.accessory?.additional_images.map((image: any) => {
+        //     image.image = image.image.replace(/\\/g, "");
+        //     return image;
+        //   });
+        //   return item;
+        // });
+
+        this.lugWidth = [];
+        Object.values(res?.items?.accessory?.attributes || {}).forEach(attrObj => {
+          if (attrObj && typeof attrObj === 'object') {
+            this.lugWidth.push(...Object.keys(attrObj));
+          }
         });
+        this.Buckle = [];
+        this.Buckle = res?.items?.accessory?.inventories[0].attribute_values;
+        this.Length = [];
+        this.Length = res?.items?.accessory?.inventories;
+        this.Color = [];
+        this.Color = res?.items?.accessory?.inventories[0]?.attribute_values;
       }
     });
     console.log(this.cartItems);
