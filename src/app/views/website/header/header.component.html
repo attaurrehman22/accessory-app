@@ -120,6 +120,12 @@
                   {{ "my_Listing.Favorites" | translate }}
                 </a>
               </div>
+              <div (click)="goToCart()"  class="d-flex gap-2 align-items-center cursor-pointer">
+                <img src="assets/images/black_cartitems.svg" alt="Listing" />
+                <a [disableRipple]="true" mat-menu-item class="a-custom-style"> 
+                  {{ "header.cart" | translate }}
+                </a>
+              </div>
             </div>
             <div class="route-groups" *ngIf="isUserLogin === 'true'" >
               <div (click)="goToMyListings()"  class="d-flex gap-2 align-items-center cursor-pointer">
@@ -128,12 +134,7 @@
                   {{ "header.myListings" | translate }}
                 </a>
               </div>
-              <div (click)="goToCart()"  class="d-flex gap-2 align-items-center cursor-pointer">
-                <img src="assets/images/black_cartitems.svg" alt="Listing" />
-                <a [disableRipple]="true" mat-menu-item class="a-custom-style"> 
-                  {{ "header.cart" | translate }}
-                </a>
-              </div>
+              
               <div class="d-flex gap-2 align-items-center cursor-pointer"  (click)="goToBuyOrders()">
                 <img src="assets/images/black_buy_sell.svg" alt="Listing" />
                 <a [disableRipple]="true" mat-menu-item class="a-custom-style"> 

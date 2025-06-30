@@ -45,6 +45,12 @@ export class AccessorySummaryComponent implements OnInit {
  
   goBack() {
     // Handle back navigation
+    this.router.navigate(['/myListing'], 
+      { 
+        state: {
+          activeRouteType: 'cart'
+        }
+       });
   }
 
   paymentId: any;

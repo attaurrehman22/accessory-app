@@ -1,30 +1,34 @@
 <div class="global-main-wraper my-5">
     <div class="card shadow-sm rounded">
       <div class="card-body">
-        <h5 class="fw-bold">Summary</h5>
-        <p class="text-muted">Review your information and items before making a purchase.</p>
+        <p class="font-size-24 font-wight-700 color-242424 margin-0">Summary</p>
+        <p class="font-size-16 font-wight-400 color-909090">Review your information and items before making a purchase.</p>
   
         <!-- Billing Info -->
-        <div class="mb-4">
-          <h6 class="fw-bold">Billing Information</h6>
-          <div class="border rounded p-3">
+        <div class="mb-4 custom-border-card ">
+          <p class="font-size-18 font-wight-700 color-242424 margin-0">Billing Information</p>
+          <div class="p-3" style="background: #F7F7F8;border-radius: 16px;margin-top: 10px;">
             <div class="row">
               <div class="col-md-9">
-                <p class="mb-1"><strong>Billing Address:</strong> Rest assured, each watch will undergo verification by our team</p>
-                <p class="mb-0"><strong>City:</strong> Makkah</p>
+                <p class="font-size-16 font-wight-400 color-909090 margin-0">Billing Address </p>
+                <p class="font-size-16 font-wight-600 color-242424 margin-0"> Rest assured, each watch will undergo verification by our team</p>
+                <p class="font-size-16 font-wight-400 color-909090 margin-0">city </p>
+                <p class="font-size-16 font-wight-600 color-242424 margin-0"> Makkah</p>
               </div>
               <div class="col-md-3 text-md-end">
-                <p class="mb-1"><strong>Street:</strong> Al Kharaj #1234</p>
-                <p class="mb-0"><strong>Zip Code:</strong> 479123</p>
+                <p class="font-size-16 font-wight-400 color-909090 margin-0">Street </p> 
+                <p class="font-size-16 font-wight-600 color-242424 margin-0">Al Kharaj #1234</p>
+                <p class="font-size-16 font-wight-400 color-909090 margin-0">Zip Code</p> 
+                <p class="font-size-16 font-wight-600 color-242424 margin-0"> 479123</p>
               </div>
             </div>
           </div>
         </div>
   
         <!-- Items -->
-        <div class="mb-4">
-          <h6 class="fw-bold">Items</h6>
-          <div *ngFor="let item of cartItems" class="border rounded p-3 mb-2 d-flex align-items-center">
+        <div class="mb-4 custom-border-card ">
+          <p class="font-size-18 font-wight-700 color-242424 margin-0">Items</p>
+          <div *ngFor="let item of cartItems" class="accessory-custom-card  p-3 mb-2 d-flex align-items-center">
             <img [src]="apiUrl+item.accessory.main_image" alt="product" class="img-thumbnail me-3" style="width: 80px; height: 80px;">
             <div class="flex-grow-1">
               <h6 class="mb-1">{{ item.accessory.name }}</h6>
@@ -45,28 +49,28 @@
         </div>
   
         <!-- Price & Shipment -->
-        <div class="mb-4">
-          <h6 class="fw-bold">Price & Shipment</h6>
-          <div class="border rounded p-3">
+        <div class="mb-4 custom-border-card ">
+          <p class="font-size-18 font-wight-700 color-242424 margin-0">Price & Shipment</p>
+          <div style="background: #F7F7F8;border-radius: 16px;margin-top: 10px;" class="p-3">
             <div class="d-flex justify-content-between mb-2">
-              <span class="text-muted">Total Amount</span>
-              <span>﷼{{ totalAmount }}</span>
+              <p class="margin-0 font-size-16 font-wight-400 color-909090">Total Amount</p>
+              <p class="font-size-16 font-wight-600 color-242424 margin-0"><img src="../../../../assets/images/Saudi_Riyal_Symbol-2.svg" class="sar-icon-style" alt="SAR"/>{{ totalAmount }}</p>
             </div>
             <div class="d-flex justify-content-between mb-2">
-              <span class="text-muted">Shipping Charges</span>
-              <span>﷼{{ shippingCharges }}</span>
+              <p class="margin-0 font-size-16 font-wight-400 color-909090">Shipping Charges</p>
+              <p class="font-size-16 font-wight-600 color-242424 margin-0"><img src="../../../../assets/images/Saudi_Riyal_Symbol-2.svg" class="sar-icon-style" alt="SAR"/>{{ shippingCharges }}</p>
             </div>
             <div class="d-flex justify-content-between fw-bold">
-              <span>Total Payout</span>
-              <span>﷼{{ totalPayout }}</span>
+              <p class="margin-0 font-size-16 font-wight-400 color-909090">Total Payout</p>
+              <p class="font-size-16 font-wight-600 color-242424 margin-0"><img src="../../../../assets/images/Saudi_Riyal_Symbol-2.svg" class="sar-icon-style" alt="SAR"/>{{ totalPayout }}</p>
             </div>
           </div>
         </div>
   
         <!-- Buttons -->
-        <div class="d-flex justify-content-between">
-          <button class="btn btn-outline-dark" (click)="goBack()">Back</button>
-          <button class="btn btn-dark" (click)="payNow()">Pay now</button>
+        <div class="d-flex justify-content-end gap-2 mb-2">
+          <button class="custom-white-btn " (click)="goBack()">Back</button>
+          <button class="custom-dark-btn" (click)="payNow()">Pay now</button>
         </div>
       </div>
     </div>
