@@ -102,6 +102,7 @@ export class AccessorieDetailComponent implements OnInit {
     } else {
       this.ProductID = history.state.data.id;
     }
+    this.getWishList()
     this.initializeComponent();
   }
 
@@ -247,9 +248,29 @@ export class AccessorieDetailComponent implements OnInit {
   }
 
   addWishList(productID: any) {
-    // this.http.addWishList(productID).subscribe((res: any) => {
-    //   console.log("res",res);
-    // });
+    if(this.wishList.includes(productID)){
+      this.http.removeAccessoryWishList(productID).subscribe(
+        (res: any) => {
+          // this.wishList = res.data;
+          this.getWishList()
+        }
+      );
+    }else{
+      this.http.addAccessoryWishList(productID).subscribe(
+        (res: any) => {
+          this.wishList = res.data;
+          this.getWishList()
+        }
+      );
+    }
+  }
+
+  wishList: number[] = [];
+
+  getWishList() {
+    this.http.getAccessoryWishList().subscribe((res: any) => {
+      this.wishList = res.data.map((item: any) => item.id); // extract only the IDs
+    });
   }
 
   copyCurrentUrl() {

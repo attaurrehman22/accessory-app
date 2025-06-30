@@ -172,9 +172,35 @@ export class AccessoriesNewArrivalsComponent implements OnInit{
   @ViewChild('scrollContainer', { static: false }) scrollContainer!: ElementRef;
 
   ngOnInit(): void {
+    this.getWishList()
     this.applyFilters();
   }
 
+  wishList: number[] = [];
+
+  getWishList() {
+    this.http.getAccessoryWishList().subscribe((res: any) => {
+      this.wishList = res.data.map((item: any) => item.id); // extract only the IDs
+    });
+  }
+
+  addWishList(productID: any) {
+    if(this.wishList.includes(productID)){
+      this.http.removeAccessoryWishList(productID).subscribe(
+        (res: any) => {
+          // this.wishList = res.data;
+          this.getWishList()
+        }
+      );
+    }else{
+      this.http.addAccessoryWishList(productID).subscribe(
+        (res: any) => {
+          this.wishList = res.data;
+          this.getWishList()
+        }
+      );
+    }
+  }  
   // Fetch accessories from API
   getAccessories() {
     this.loading = true;

@@ -1,15 +1,6 @@
 <div class="container mt-5">
   <div class="row" [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }">
     <div class="col-md-6">
-      <!-- <img *ngIf="selectedType === 'image'" [src]="apiUrl + selectedImage" style="
-          object-fit: scale-down;
-          height: 485px;
-          width: 100%;
-          border: none !important;
-          border-radius: 16px;
-          background: #f8f8f8;
-        " class="img-fluid" alt="Selected Watch" /> -->
-
         <div class="zoom-container custom-zoom">
           <lib-ngx-image-zoom
               [thumbImage]=myThumbnail
@@ -40,16 +31,12 @@
         </div>
         <div class="featured-card-heart-sec">
           <div class="heart-icon-one" *ngIf="isUserLogin == 'true'" (click)="addWishList(productDetails.id)">
-            <!-- <i
-              class="fa"
-              [ngClass]="
-                wishList?.includes(productDetails.id)
-                  ? 'fa-heart'
-                  : 'fa-heart fa-heart-o'
-              "
-              aria-hidden="true"
-            ></i> -->
-            <i class="fa fa-heart fa-heart-o" aria-hidden="true"></i>
+            <i 
+              class="fa" 
+              [ngClass]="wishList?.includes(productDetails?.id) ? 'fa-heart' : 'fa-heart fa-heart-o'"
+              aria-hidden="true">
+            </i>
+
           </div>
           <div (click)="copyCurrentUrl()">
             <i class="fas fa-share-alt share-icon"></i>
@@ -200,7 +187,6 @@
             Length:
           </p>
           <div class="d-flex flex-wrap gap-2">
-            // display maximum 4 items
             <button *ngFor="let length of productDetails?.inventories | slice:0:4" class="condition-btn">
               {{ length.title }}
             </button>

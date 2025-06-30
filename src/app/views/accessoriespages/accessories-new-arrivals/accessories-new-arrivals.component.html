@@ -176,8 +176,14 @@
             </a>
             <button
               class="btn btn-light rounded-circle position-absolute top-0 end-0 m-2 p-2 i-icon-style custom-i-icon-position"
+              (click)="addWishList(accessory.id)"
             >
-              <i class="bi bi-heart-fill text-danger"></i>
+              <!-- <i class="bi bi-heart-fill text-danger"></i> -->
+              <i 
+                class="fa" 
+                [ngClass]="wishList?.includes(accessory?.id) ? 'fa-heart' : 'fa-heart fa-heart-o'"
+                aria-hidden="true">
+              </i>
             </button>
           </div>
           <div class="card-body">

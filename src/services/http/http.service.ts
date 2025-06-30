@@ -1571,6 +1571,33 @@ export class HttpService implements OnInit {
           });
         }
 
+        getAccessoryWishList(): Observable<any> {
+          return this.http.get(`${this.apiUrl}/api/wishlist/accessories`, {
+            headers: {
+              Accept: "application/json",
+              Authorization: `Bearer ${this.token}`,
+            },
+          });
+        }
+
+        addAccessoryWishList(ID): Observable<any> {
+          return this.http.post(`${this.apiUrl}/api/wishlist/accessories/${ID}`, {}, {
+            headers: {
+              Accept: "application/json",
+              Authorization: `Bearer ${this.token}`,
+            },
+          });
+        }
+
+        removeAccessoryWishList(ID): Observable<any> {
+          return this.http.delete(`${this.apiUrl}/api/wishlist/accessories/${ID}`, {
+            headers: {
+              Accept: "application/json",
+              Authorization: `Bearer ${this.token}`,
+            },
+          });
+        }
+
       // ------------------------------ Public Accessories APIs End here ------------------------------
 
       // ------------------------------ Public Accessories Cart APIs Start here ------------------------------
