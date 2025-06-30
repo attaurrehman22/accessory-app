@@ -124,7 +124,10 @@ export class AddAccessorySubCategoryGroupComponent implements OnInit {
           },
           (err) => {
             console.log("Error", err.error.message);
-            if (err?.error?.message) {
+            if(err?.error?.errors?.slug){
+              this.alertService.showAlert("warning", err.error.errors.slug[0]);
+            }
+            else if (err?.error?.message) {
               this.alertService.showAlert("warning", err.error.message);
             } else {
               this.alertService.showAlert(

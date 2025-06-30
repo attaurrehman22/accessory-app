@@ -26,7 +26,8 @@
     "buyOrders": "طلبات الشراء",
     "sellOrders": "طلبات البيع",
     "myListings": "قوائمي",
-    "Sign_Out": "تسجيل الخروج"
+    "Sign_Out": "تسجيل الخروج",
+    "cart": "عربة التسوق"
   },
   "product_listing":{
     "Watch_Listing": "قائمة المشاهدة",

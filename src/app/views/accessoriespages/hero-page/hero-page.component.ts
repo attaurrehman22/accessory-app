@@ -114,6 +114,15 @@ export class HeroPageComponent {
     );
   }
 
+  goToCart() {
+    this.router.navigate(['/myListing'], 
+      { 
+        state: {
+          activeRouteType: 'cart'
+        }
+       });
+  }
+
   searchFilter: boolean = true;
   supportLanguages = [
     { name: "English", value: "en" },

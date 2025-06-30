@@ -26,7 +26,8 @@
     "buyOrders":"Buy Orders",
     "sellOrders":"Sell Orders",
     "myListings":"My Listings",
-    "Sign_Out":"Sign Out"
+    "Sign_Out":"Sign Out",
+    "cart":"Cart"
   },
   "product_listing":{
     "Watch_Listing": "Watch Listing",

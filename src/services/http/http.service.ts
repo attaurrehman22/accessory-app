@@ -1553,6 +1553,24 @@ export class HttpService implements OnInit {
           });
         }
 
+        paymentInitiate(formData): Observable<any> {
+          return this.http.post(`${this.apiUrl}/api/accessory-payment/initiate`, formData, {
+            headers: {
+              Accept: "application/json",
+              Authorization: `Bearer ${this.token}`,
+            },
+          });
+        }
+
+        paymentCallback(paymentId: string): Observable<any> {
+          return this.http.get(`${this.apiUrl}/api/accessory-payment/callback?paymentId=${paymentId}`, {
+            headers: {
+              Accept: "application/json",
+              Authorization: `Bearer ${this.token}`,
+            },
+          });
+        }
+
       // ------------------------------ Public Accessories APIs End here ------------------------------
 
       // ------------------------------ Public Accessories Cart APIs Start here ------------------------------

@@ -81,6 +81,7 @@ const routes: Routes = [
   { path: 'buy-now', component:  BuyNowComponent},
   { path: 'myListing', component:  MyListingDetailsComponent},
   { path: 'forgotPassword', component:  ForgotPasswordComponent},
+  { path: 'payment-callback', component:  MyListingDetailsComponent},
   {path:'chat',component:ChatComponent}
 ];
 

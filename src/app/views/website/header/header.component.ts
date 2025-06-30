@@ -338,4 +338,13 @@ onSearchInputClick() {
         state:{activeRouteType:'myListings'}
       })
     }
+
+    goToCart() {
+      this.router.navigate(['/myListing'], 
+        { 
+          state: {
+            activeRouteType: 'cart'
+          }
+         });
+    }
 }

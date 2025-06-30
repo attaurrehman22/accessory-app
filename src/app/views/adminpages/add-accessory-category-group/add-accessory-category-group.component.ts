@@ -131,10 +131,13 @@ export class AddAccessoryCategoryGroupComponent implements OnInit {
           this.dialogRef.close(true);
         },
         (err) => {
-          console.log("Error", err.error.message);
-          if (err?.error?.message) {
+          if(err?.error?.errors?.slug){
+            this.alertService.showAlert("warning", err.error.errors.slug[0]);
+          }
+          else if (err?.error?.message) {
             this.alertService.showAlert("warning", err.error.message);
-          } else {
+          } 
+          else {
             this.alertService.showAlert("warning", "Error in creating Category");
           }
         }

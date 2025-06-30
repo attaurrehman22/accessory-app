@@ -177,7 +177,7 @@
             LUG Width:
           </p>
           <div class="d-flex flex-wrap gap-2">
-            <button class="condition-btn" *ngFor="let lug of lugWidth">
+            <button class="condition-btn" *ngFor="let lug of lugWidth | slice:0:5">
               {{ lug }}
             </button>
           </div>
@@ -188,7 +188,7 @@
             Buckle/Connector:
           </p>
           <div class="d-flex flex-wrap gap-2">
-            <button *ngFor="let buckle of productDetails?.inventories[0].attribute_values" class="condition-btn">
+            <button *ngFor="let buckle of productDetails?.inventories[0].attribute_values | slice:0:5" class="condition-btn">
               {{ buckle.value }}
             </button>
           </div>
@@ -200,8 +200,9 @@
             Length:
           </p>
           <div class="d-flex flex-wrap gap-2">
-            <button *ngFor="let length of Length" class="condition-btn">
-              {{ length }}
+            // display maximum 4 items
+            <button *ngFor="let length of productDetails?.inventories | slice:0:4" class="condition-btn">
+              {{ length.title }}
             </button>
           </div>
         </div>
@@ -211,7 +212,7 @@
             Color:
           </p>
           <div class="d-flex flex-wrap gap-2">
-            <div *ngFor="let c of productDetails?.inventories[0]?.attribute_values" [ngStyle]="{
+            <div *ngFor="let c of productDetails?.inventories[0]?.attribute_values | slice:0:6" [ngStyle]="{
               'background-color': c.color,
               width: '50px',
               height: '30px',

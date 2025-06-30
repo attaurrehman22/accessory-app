@@ -1,21 +1,25 @@
 <div class="container d-flex flex-column justify-content-between" style="min-height: 100vh;">
   <!-- Top Section -->
-  <div class="col-md-12 flex-grow-1">
-    <div class="col-md-12 d-flex flex-column">
+  <div class="col-md-12 flex-grow-1" >
+    <div class="col-md-12 d-flex flex-column" *ngIf="cartItems?.length == 0">
+      <h5 class="shopping-cart-text pt-4">Shopping Cart</h5>
+      <p class="shooping-des">Your cart is empty.</p>
+    </div>
+    <div class="col-md-12 d-flex flex-column" *ngIf="cartItems?.length > 0">
       <h5 class="shopping-cart-text pt-4">Shopping Cart</h5>
       <p class="shooping-des">Confirm your order before adding it to cart.</p>
 
-      <div class="card mb-3" style="border: 2px solid #F5F5F5; border-radius: 12px;">
+      <div class="card mb-3" style="border: 2px solid #F5F5F5; border-radius: 12px;" *ngFor="let item of cartItems">
         <div class="row g-2 align-items-center">
           <div class="col-auto">
-            <img src="../../../../assets/images/cart-access.svg" class="img-fluid" alt="Product Image" style="width: 60px;">
+            <img [src]="apiUrl + item.accessory.main_image" class="img-fluid" alt="Product Image" style="width: 60px;">
           </div>
           <div class="col">
-            <div class="img-title">Python Skin - Slate Grey</div>
-            <div class="img-number">#123456</div>
+            <div class="img-title">{{item?.accessory?.name}}</div>
+            <div class="img-number">{{item?.accessory?.sku}}</div>
           </div>
         </div>
-      </div>
+      </div>  
 
       <div class="mb-2 d-flex flex-column">
         <label class="label-title">LUG Width</label>
@@ -45,10 +49,16 @@
   </div>
 
   <!-- Bottom Section -->
-  <div class="col-md-12 d-flex flex-column pb-4">
+  <div class="col-md-12 d-flex flex-column pb-4" *ngIf="cartItems?.length > 0">
     <div class="d-grid gap-2">
       <button class="btn btn-dark" style="height: 55px; font-size: 18px; font-weight: 400;" (click)="goToCheckout()">Checkout</button>
       <button class="btn btn-outline-dark" style="height: 55px; font-size: 18px; font-weight: 400;" (click)="goToCart()">View Cart</button>
+    </div>
+  </div>
+
+  <div class="col-md-12 d-flex flex-column pb-4" *ngIf="cartItems?.length == 0">
+    <div class="d-grid gap-2">
+      <button class="btn btn-dark" style="height: 55px; font-size: 18px; font-weight: 400;" (click)="goToCart()">View Cart</button>
     </div>
   </div>
 </div>

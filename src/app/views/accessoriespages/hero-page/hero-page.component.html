@@ -71,8 +71,8 @@
               {{ "header.Login" | translate }}
             </button>
 
-            <div class="route-groups" *ngIf="isUserLogin === 'true'">
-              <div class="d-flex gap-2 align-items-center">
+            <!-- <div class="route-groups" *ngIf="isUserLogin === 'true'"> -->
+              <!-- <div class="d-flex gap-2 align-items-center"> -->
                 <!-- <div class="">
                   <div *ngIf="userDetails?.main_image; else noImage">
                     <img
@@ -108,8 +108,8 @@
                   <p class="margin-0 font-weight-600 font-size-18 color-242424" *ngIf="userDetails?.name"> {{userDetails?.name}} </p>
                   <p class="margin-0 font-weight-600 font-size-12 color-909090" *ngIf="userDetails?.name"> {{userDetails?.name}} </p>
                 </div> -->
-              </div>
-            </div>
+              <!-- </div> -->
+            <!-- </div> -->
 
             <div class="route-groups" *ngIf="showHideAdminUser === true"   routerLink="/admin/dashboard">
               <div class="d-flex gap-2 align-items-center cursor-pointer">
@@ -145,6 +145,12 @@
                 <img src="assets/images/black_buy_sell.svg" alt="Listing" />
                 <a [disableRipple]="true" mat-menu-item class="a-custom-style"> 
                   {{ "header.myListings" | translate }}
+                </a>
+              </div>
+              <div (click)="goToCart()"  class="d-flex gap-2 align-items-center cursor-pointer">
+                <img src="assets/images/black_cartitems.svg" alt="Listing" />
+                <a [disableRipple]="true" mat-menu-item class="a-custom-style"> 
+                  {{ "header.cart" | translate }}
                 </a>
               </div>
               <div class="d-flex gap-2 align-items-center cursor-pointer"  (click)="goToBuyOrders()">

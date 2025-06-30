@@ -95,7 +95,7 @@ export class CreateAccessoriesProductComponent implements OnInit {
     { id: 'reflective', label: 'Reflective Elements' },
     { id: 'wirelessCharging', label: 'Wireless Charging Compatible' },
   ];
-  constructor(private fb: FormBuilder, private http: HttpClient,private httpService:HttpService,private router:Router) {}
+  constructor(private fb: FormBuilder, private http: HttpClient,private httpService:HttpService,private router:Router,private alertService:AlertsServicesService) {}
   ngOnInit(): void {
     this.getCategories();
     this.initForm();
@@ -248,6 +248,12 @@ export class CreateAccessoriesProductComponent implements OnInit {
               this.submitting = false;
             },
             error: (error) => {
+              if(error?.error?.errors?.slug){
+                this.alertService.showAlert("warning", error.error.errors.slug[0]);
+              }
+              else if (error?.error?.message) {
+                this.alertService.showAlert("warning", error.error.message);
+              }
               console.error('Error submitting form:', error);
               this.submitting = false;
               // Add error handling logic here
