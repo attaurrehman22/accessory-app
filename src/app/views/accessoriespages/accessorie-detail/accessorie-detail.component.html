@@ -1,262 +1,263 @@
-<div class="container mt-5">
-  <div class="row" [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }">
-    <div class="col-md-6">
-        <div class="zoom-container custom-zoom">
-          <lib-ngx-image-zoom
-              [thumbImage]=myThumbnail
-              [fullImage]=myFullresImage
-              [enableScrollZoom]="true"
-              [enableLens]="true"
-              [lensWidth]="200"
-              [lensHeight]="200"
-              [lensBorder]="2"
-              [lensBorderColor]="'#ccc'"
-              [magnification]="2"
-              [minZoomRatio]="1"
-              [maxZoomRatio]="4"
-          ></lib-ngx-image-zoom>
-        </div>
-
-      <video *ngIf="selectedType === 'video'" [src]="apiUrl + selectedImage" style="
-          object-fit: cover;
-          height: 485px;
-          width: 100%;
-          border: none !important;
-          border-radius: 16px;
-          background: #f8f8f8;
-        " class="img-fluid" alt="Selected Watch" controls></video>
-      <div [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }" class="featured-card">
-        <div *ngIf="productDetails?.feature_item === 1" class="featured-card-featred">
-          <p style="margin: 0">Featured</p>
-        </div>
-        <div class="featured-card-heart-sec">
-          <div class="heart-icon-one" *ngIf="isUserLogin == 'true'" (click)="addWishList(productDetails.id)">
-            <i 
-              class="fa" 
-              [ngClass]="wishList?.includes(productDetails?.id) ? 'fa-heart' : 'fa-heart fa-heart-o'"
-              aria-hidden="true">
-            </i>
-
+<div class="global-main-wraper mt-5">
+  <div class="row d-flex justify-content-center" [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }">
+    <div class="row accessory-details-style" [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }">
+      <div class="col-md-6">
+          <div class="zoom-container custom-zoom">
+            <lib-ngx-image-zoom
+                [thumbImage]=myThumbnail
+                [fullImage]=myFullresImage
+                [enableScrollZoom]="true"
+                [enableLens]="true"
+                [lensWidth]="200"
+                [lensHeight]="200"
+                [lensBorder]="2"
+                [lensBorderColor]="'#ccc'"
+                [magnification]="2"
+                [minZoomRatio]="1"
+                [maxZoomRatio]="4"
+            ></lib-ngx-image-zoom>
           </div>
-          <div (click)="copyCurrentUrl()">
-            <i class="fas fa-share-alt share-icon"></i>
+
+        <video *ngIf="selectedType === 'video'" [src]="apiUrl + selectedImage" style="
+            object-fit: cover;
+            height: 485px;
+            width: 100%;
+            border: none !important;
+            border-radius: 16px;
+            background: #f8f8f8;
+          " class="img-fluid" alt="Selected Watch" controls></video>
+        <div [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }" class="featured-card">
+          <div *ngIf="productDetails?.feature_item === 1" class="featured-card-featred">
+            <p style="margin: 0">Featured</p>
           </div>
-        </div>
-      </div>
+          <div class="featured-card-heart-sec">
+            <div class="heart-icon-one" *ngIf="isUserLogin == 'true'" (click)="addWishList(productDetails.id)">
+              <i 
+                class="fa" 
+                [ngClass]="wishList?.includes(productDetails?.id) ? 'fa-heart' : 'fa-heart fa-heart-o'"
+                aria-hidden="true">
+              </i>
 
-      <div [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }"
-        *ngIf="productDetails && productDetails?.views_count" class="featured-bottom">
-        <i class="fas fa-eye"></i>
-        <p style="margin: 0">
-          {{ productDetails?.views_count }}
-        </p>
-      </div>
-
-      <div class="mt-3" style="display: flex; overflow-x: auto">
-        <div class="col-3" style="height: 110px" *ngFor="let item of thumbnails">
-          <!-- Display Image -->
-          <img *ngIf="item.type === 'image'" [src]="apiUrl + item.url"
-           style="background: #f8f8f8; object-fit: cover;height: -webkit-fill-available !important;"
-            class="img-fluid" 
-            alt="thumbnail" [ngClass]="{
-              'blur-image': item.url !== selectedImage,
-              'hover-remove-blur': true
-            }" (click)="swapImages(item)" />
-
-          <!-- <img
-            *ngIf="item.type === 'image'"
-            src="../../../../assets/images/card-acc-det-1.svg"
-            style="background: #f8f8f8; object-fit: cover"
-            class="img-fluid"
-            alt="thumbnail"
-            [ngClass]="{
-              'blur-image': item.url !== selectedImage,
-              'hover-remove-blur': true
-            }"
-            (click)="swapImages(item)"
-          /> -->
-
-          <!-- Display Video -->
-          <video *ngIf="item.type === 'video'" (click)="swapImages(item)" [src]="apiUrl + item.url"
-            style="background: #f8f8f8; object-fit: scale-down; height: 100%" class="img-fluid"></video>
-        </div>
-      </div>
-
-      <div class="mt-3">
-        <div class="mb-1">
-          <i class="bi bi-check-lg text-success"></i> About
-        </div>
-        <div class="text-muted mb-3">Usually delivers in 1-2 weeks</div>
-
-        <div class="fw-bold border-bottom pb-1 mb-2">Total Reviews</div>
-
-        <div class="d-flex align-items-center">
-          <div class="text-warning me-2">
-            <i class="bi bi-star-fill"></i>
-            <i class="bi bi-star-fill"></i>
-            <i class="bi bi-star-fill"></i>
-            <i class="bi bi-star-fill"></i>
-            <i class="bi bi-star-fill"></i>
-          </div>
-          <span class="text-muted">69 Reviews</span>
-        </div>
-      </div>
-    </div>
-    <div *ngIf="productDetails" class="col-md-6" [ngClass]="{
-        'reverse-order-prod-price-des': translateService.currentLang !== 'en'
-      }">
-      <div class="routes-div">
-        <p class="routes-styl" style="cursor: pointer" routerLink="/">
-          Home /
-        </p>
-        <p *ngIf="productDetails?.categories" class="routes-styl-active">
-          {{ productDetails?.categories[0]?.name }} /
-        </p>
-        <p *ngIf="productDetails?.inventories" class="routes-styl-active">
-          {{ productDetails?.inventories[0]?.title }} /
-        </p>
-        <p *ngIf="productDetails?.name" class="routes-styl-active">
-          {{ productDetails?.name }}
-        </p>
-      </div>
-
-      <!-- <div
-        *ngIf="productDetails?.created_by?.city"
-        class="d-flex gap-2 align-items-baseline"
-      >
-        <i class="fas fa-map-marker-alt"></i>
-        <p class="routes-styl margin-0">
-          {{ productDetails?.created_by?.city }}
-        </p>
-        <p *ngIf="productDetails?.published_date" class="routes-styl margin-0">
-          {{ "buy_product.Published_At" | translate }} :
-          {{ productDetails?.published_date | date : "yyyy-MM-dd" }}
-        </p>
-      </div> -->
-
-      <div class="d-flex flex-wrap">
-        <p class="brand-name-title margin-0">
-          {{ productDetails?.name }} - {{ productDetails?.brand }}
-          <!-- {{ productDetails?.title }} -->
-        </p>
-      </div>
-
-      <div class="d-flex flex-column mt-4 gap-3">
-        <p class="header-highligted-color brand-name-title margin-0">
-          <img src="../../../../assets/images/Saudi_Riyal_Symbol-2.svg" style="height: 30px !important"
-            class="sar-icon-style" alt="SAR" />
-          {{ productDetails?.min_price }}
-        </p>
-        <!-- <p class="color-666666 font-wight-400 font-size-14 margin-0">
-          {{
-            productDetails?.shipping_type == "inclusiveShipping"
-              ? "Inclusive Shipping"
-              : productDetails?.shipping_type == "exclusiveShipping"
-              ? "Exclusive Shipping"
-              : productDetails?.shipping_type == "freeCharge"
-              ? "Free Charge"
-              : productDetails?.shipping_type
-          }}
-        </p> -->
-
-        <div class="d-flex flex-column mt-3">
-          <p class="header-highligted-color font-wight-400 font-size-16 margin-0" style="padding-bottom: 7px">
-            LUG Width:
-          </p>
-          <div class="d-flex flex-wrap gap-2">
-            <button class="condition-btn" *ngFor="let lug of lugWidth | slice:0:5">
-              {{ lug }}
-            </button>
-          </div>
-        </div>
-
-        <div *ngIf="productDetails?.inventories" class="d-flex flex-column mt-3">
-          <p class="header-highligted-color font-wight-400 font-size-16 margin-0" style="padding-bottom: 7px">
-            Buckle/Connector:
-          </p>
-          <div class="d-flex flex-wrap gap-2">
-            <button *ngFor="let buckle of productDetails?.inventories[0].attribute_values | slice:0:5" class="condition-btn">
-              {{ buckle.value }}
-            </button>
-          </div>
-        </div>
-
-        <div class="d-flex flex-column mt-3">
-          <p class="header-highligted-color font-wight-400 font-size-16 margin-0" style="padding-bottom: 7px">
-            <!-- {{ "buy_product.Est_Delivery" | translate }} -->
-            Length:
-          </p>
-          <div class="d-flex flex-wrap gap-2">
-            <button *ngFor="let length of productDetails?.inventories | slice:0:4" class="condition-btn">
-              {{ length.title }}
-            </button>
-          </div>
-        </div>
-
-        <div class="d-flex flex-column mt-3">
-          <p class="header-highligted-color font-wight-400 font-size-16 margin-0" style="padding-bottom: 7px">
-            Color:
-          </p>
-          <div class="d-flex flex-wrap gap-2">
-            <div *ngFor="let c of productDetails?.inventories[0]?.attribute_values | slice:0:6" [ngStyle]="{
-              'background-color': c.color,
-              width: '50px',
-              height: '30px',
-              'border-radius': '5px',
-              border: c.color == '#000' ? '1px solid #333' : 'none'
-            }"></div>
-          </div>
-        </div>
-
-        <div class="d-flex flex-column mt-3">
-          <p class="header-highligted-color font-wight-400 font-size-16 margin-0" style="padding-bottom: 7px">
-            Quantity:
-          </p>
-          <div class="d-flex border rounded overflow-hidden" style="width: fit-content">
-            <button class="btn btn-light border-end" style="background-color: none !important;" (click)="decrement()">
-              −
-            </button>
-            <div class="d-flex align-items-center justify-content-center px-3" style="min-width: 60px">
-              {{ quantity }}
             </div>
-            <button class="btn btn-light border-start" style="background-color: none !important;" (click)="increment()">
-              +
-            </button>
+            <div (click)="copyCurrentUrl()">
+              <i class="fas fa-share-alt share-icon"></i>
+            </div>
           </div>
         </div>
-        <div class="mt-4">
-          <button class="buy-btn" (click)="buyandGoToOrderDetails()">
-            {{ "buy_product.buy" | translate }}
-          </button>
-          <!-- <button
-          *ngIf="
-            loggedUserType && loggedUserType == 'seller' && orderID && chatID
-          "
-          (click)="goToOrderDetails()"
-          [disabled]="routeFrom === 'listing-to-product'"
-          class="buy-btn"
+
+        <div [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }"
+          *ngIf="productDetails && productDetails?.views_count" class="featured-bottom">
+          <i class="fas fa-eye"></i>
+          <p style="margin: 0">
+            {{ productDetails?.views_count }}
+          </p>
+        </div>
+
+        <div class="mt-3" style="display: flex; overflow-x: auto">
+          <div class="col-3" style="height: 110px" *ngFor="let item of thumbnails">
+            <!-- Display Image -->
+            <img *ngIf="item.type === 'image'" [src]="apiUrl + item.url"
+            style="background: #f8f8f8; object-fit: cover;height: -webkit-fill-available !important;"
+              class="img-fluid" 
+              alt="thumbnail" [ngClass]="{
+                'blur-image': item.url !== selectedImage,
+                'hover-remove-blur': true
+              }" (click)="swapImages(item)" />
+
+            <!-- <img
+              *ngIf="item.type === 'image'"
+              src="../../../../assets/images/card-acc-det-1.svg"
+              style="background: #f8f8f8; object-fit: cover"
+              class="img-fluid"
+              alt="thumbnail"
+              [ngClass]="{
+                'blur-image': item.url !== selectedImage,
+                'hover-remove-blur': true
+              }"
+              (click)="swapImages(item)"
+            /> -->
+
+            <!-- Display Video -->
+            <video *ngIf="item.type === 'video'" (click)="swapImages(item)" [src]="apiUrl + item.url"
+              style="background: #f8f8f8; object-fit: scale-down; height: 100%" class="img-fluid"></video>
+          </div>
+        </div>
+
+        <div class="mt-3">
+          <div class="mb-1">
+            <i class="bi bi-check-lg text-success"></i> About
+          </div>
+          <div class="text-muted mb-3">Usually delivers in 1-2 weeks</div>
+
+          <div class="fw-bold border-bottom pb-1 mb-2">Total Reviews</div>
+
+          <div class="d-flex align-items-center">
+            <div class="text-warning me-2">
+              <i class="bi bi-star-fill"></i>
+              <i class="bi bi-star-fill"></i>
+              <i class="bi bi-star-fill"></i>
+              <i class="bi bi-star-fill"></i>
+              <i class="bi bi-star-fill"></i>
+            </div>
+            <span class="text-muted">69 Reviews</span>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="productDetails" class="col-md-6" [ngClass]="{
+          'reverse-order-prod-price-des': translateService.currentLang !== 'en'
+        }">
+        <div class="routes-div">
+          <p class="routes-styl" style="cursor: pointer" routerLink="/">
+            Home /
+          </p>
+          <p *ngIf="productDetails?.categories" class="routes-styl-active">
+            {{ productDetails?.categories[0]?.name }} /
+          </p>
+          <p *ngIf="productDetails?.inventories" class="routes-styl-active">
+            {{ productDetails?.inventories[0]?.title }} /
+          </p>
+          <p *ngIf="productDetails?.name" class="routes-styl-active">
+            {{ productDetails?.name }}
+          </p>
+        </div>
+
+        <!-- <div
+          *ngIf="productDetails?.created_by?.city"
+          class="d-flex gap-2 align-items-baseline"
         >
+          <i class="fas fa-map-marker-alt"></i>
+          <p class="routes-styl margin-0">
+            {{ productDetails?.created_by?.city }}
+          </p>
+          <p *ngIf="productDetails?.published_date" class="routes-styl margin-0">
+            {{ "buy_product.Published_At" | translate }} :
+            {{ productDetails?.published_date | date : "yyyy-MM-dd" }}
+          </p>
+        </div> -->
 
-          Oder Status
-        </button> -->
+        <div class="d-flex flex-wrap">
+          <p class="brand-name-title margin-0">
+            {{ productDetails?.name }} - {{ productDetails?.brand }}
+            <!-- {{ productDetails?.title }} -->
+          </p>
+        </div>
 
-          <!-- <button
-          *ngIf="
-            loggedUserType && loggedUserType == 'buyer' && orderID && chatID
-          "
-          (click)="goToChatOrOrderDetails()"
-          [disabled]="routeFrom === 'listing-to-product'"
-          class="buy-btn"
-        >
+        <div class="d-flex flex-column mt-4 gap-3">
+          <p class="header-highligted-color brand-name-title margin-0">
+            <img src="../../../../assets/images/Saudi_Riyal_Symbol-2.svg" style="height: 30px !important"
+              class="sar-icon-style" alt="SAR" />
+            {{ productDetails?.min_price }}
+          </p>
+          <!-- <p class="color-666666 font-wight-400 font-size-14 margin-0">
+            {{
+              productDetails?.shipping_type == "inclusiveShipping"
+                ? "Inclusive Shipping"
+                : productDetails?.shipping_type == "exclusiveShipping"
+                ? "Exclusive Shipping"
+                : productDetails?.shipping_type == "freeCharge"
+                ? "Free Charge"
+                : productDetails?.shipping_type
+            }}
+          </p> -->
 
-          View Order Status or Chat
-        </button> -->
-          <button class="make-offer-btn mt-2" (click)="addtoCart()">Add to Cart</button>
+          <div class="d-flex flex-column mt-3">
+            <p class="header-highligted-color font-wight-400 font-size-16 margin-0" style="padding-bottom: 7px">
+              LUG Width:
+            </p>
+            <div class="d-flex flex-wrap gap-2">
+              <button class="condition-btn" *ngFor="let lug of lugWidth | slice:0:5">
+                {{ lug }}
+              </button>
+            </div>
+          </div>
+
+          <div *ngIf="productDetails?.inventories" class="d-flex flex-column mt-3">
+            <p class="header-highligted-color font-wight-400 font-size-16 margin-0" style="padding-bottom: 7px">
+              Buckle/Connector:
+            </p>
+            <div class="d-flex flex-wrap gap-2">
+              <button *ngFor="let buckle of productDetails?.inventories[0].attribute_values | slice:0:5" class="condition-btn">
+                {{ buckle.value }}
+              </button>
+            </div>
+          </div>
+
+          <div class="d-flex flex-column mt-3">
+            <p class="header-highligted-color font-wight-400 font-size-16 margin-0" style="padding-bottom: 7px">
+              <!-- {{ "buy_product.Est_Delivery" | translate }} -->
+              Length:
+            </p>
+            <div class="d-flex flex-wrap gap-2">
+              <button *ngFor="let length of productDetails?.inventories | slice:0:4" class="condition-btn">
+                {{ length.title }}
+              </button>
+            </div>
+          </div>
+
+          <div class="d-flex flex-column mt-3">
+            <p class="header-highligted-color font-wight-400 font-size-16 margin-0" style="padding-bottom: 7px">
+              Color:
+            </p>
+            <div class="d-flex flex-wrap gap-2">
+              <div *ngFor="let c of productDetails?.inventories[0]?.attribute_values | slice:0:6" [ngStyle]="{
+                'background-color': c.color,
+                width: '50px',
+                height: '30px',
+                'border-radius': '5px',
+                border: c.color == '#000' ? '1px solid #333' : 'none'
+              }"></div>
+            </div>
+          </div>
+
+          <div class="d-flex flex-column mt-3">
+            <p class="header-highligted-color font-wight-400 font-size-16 margin-0" style="padding-bottom: 7px">
+              Quantity:
+            </p>
+            <div class="d-flex border rounded overflow-hidden" style="width: fit-content">
+              <button class="btn btn-light border-end" style="background-color: none !important;" (click)="decrement()">
+                −
+              </button>
+              <div class="d-flex align-items-center justify-content-center px-3" style="min-width: 60px">
+                {{ quantity }}
+              </div>
+              <button class="btn btn-light border-start" style="background-color: none !important;" (click)="increment()">
+                +
+              </button>
+            </div>
+          </div>
+          <div class="mt-4">
+            <button class="buy-btn" (click)="buyandGoToOrderDetails()">
+              {{ "buy_product.buy" | translate }}
+            </button>
+            <!-- <button
+            *ngIf="
+              loggedUserType && loggedUserType == 'seller' && orderID && chatID
+            "
+            (click)="goToOrderDetails()"
+            [disabled]="routeFrom === 'listing-to-product'"
+            class="buy-btn"
+          >
+
+            Oder Status
+          </button> -->
+
+            <!-- <button
+            *ngIf="
+              loggedUserType && loggedUserType == 'buyer' && orderID && chatID
+            "
+            (click)="goToChatOrOrderDetails()"
+            [disabled]="routeFrom === 'listing-to-product'"
+            class="buy-btn"
+          >
+
+            View Order Status or Chat
+          </button> -->
+            <button class="make-offer-btn mt-2" (click)="addtoCart()">Add to Cart</button>
+          </div>
         </div>
       </div>
     </div>
-
-    <div class="container mt-5">
+    <div class="container-fluid mt-5">
       <div class="card-body d-flex flex-column">
         <ul class="nav nav-tabs" style="display: flex; justify-content: center" id="myTab" role="tablist"
           [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }">
@@ -326,7 +327,7 @@
       </div>
     </div>
 
-    <div *ngIf="similarWatchesList?.length > 0" class="container mt-3">
+    <div *ngIf="similarWatchesList?.length > 0" class="container-fluid mt-3">
       <p class="font-wight-700 font-size-64 color-484848 text-center cormorant-styl">
         {{ "product_details.similar_prod" | translate }}
       </p>
@@ -335,20 +336,20 @@
           <div class="card custom-card h-100 shadow-sm">
             <a [routerLink]="['/accessories/details']" [queryParams]="{ id: watch.id }" class="card-img-link"
               (click)="viewProduct(watch.id)">
-              <!-- <img
-            [src]="apiUrl + watch.main_image"
-            class="card-img-top"
-            alt="No Image Exist"
-          /> -->
+              <img
+              [src]="apiUrl + watch.main_image"
+              class="card-img-top"
+              alt="No Image Exist"
+            />
 
-              <img src="../../../../assets/images/accss-sim-prod.svg" class="card-img-top" alt="No Image Exist" />
+              <!-- <img src="../../../../assets/images/accss-sim-prod.svg" class="card-img-top" alt="No Image Exist" /> -->
             </a>
             <div class="card-body d-flex flex-column">
               <p class="text-muted small mb-1">
-                {{ watch.brand.name }} | {{ watch.model || "N/A" }}
+                {{ watch.categories.name }} | {{ watch.model_number || "N/A" }}
               </p>
 
-              <h6 class="card-title fw-semibold mb-3">{{ watch.title }}</h6>
+              <h6 class="card-title fw-semibold mb-3">{{ watch.name }}</h6>
 
               <div class="d-flex justify-content-between align-items-center">
                 <div>
@@ -366,6 +367,9 @@
                   </div>
                 </div>
               </div>
+              <button class="add-to-cart-btn mt-2" (click)="addtoCartById(watch.id)">
+                Add to Cart
+              </button>
             </div>
           </div>
           <div class="heart-icon">
@@ -387,8 +391,14 @@
               justify-content: center;
             ">
               <button
+                (click)="addWishList(watch.id)"
                 class="btn btn-light rounded-circle position-absolute top-0 end-0 m-2 p-2 i-icon-style custom-i-icon-position">
-                <i class="bi bi-heart-fill text-danger"></i>
+                <!-- <i class="bi bi-heart-fill text-danger"></i> -->
+                <i 
+                class="fa" 
+                [ngClass]="wishList?.includes(watch?.id) ? 'fa-heart' : 'fa-heart fa-heart-o'"
+                aria-hidden="true">
+              </i>
               </button>
               <!-- <i
             *ngIf="isUserLogin === 'true'"

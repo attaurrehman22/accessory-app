@@ -10,19 +10,6 @@
     [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }"
   >
     <div class="col-md-6">
-      <!-- <img *ngIf="selectedType === 'image'"
-        [src]="apiUrl + selectedImage"
-        style="
-          object-fit: cover;
-          height: 485px;
-          width: 100%;
-          border: none !important;
-          border-radius: 16px;
-          background: #f8f8f8;
-        "
-        class="img-fluid"
-        alt="Selected Watch"
-      /> -->
       <div class="zoom-container custom-zoom">
         <lib-ngx-image-zoom
             [thumbImage]=myThumbnail
@@ -109,8 +96,6 @@
           (click)="swapImages(item)"
         />
 
-
-
           <!-- Display Video -->
           <video
             *ngIf="item.type === 'video'"
@@ -169,7 +154,7 @@
           <div>
             <img
               class="watch-brand-details-img"
-              src="../../../../assets/images/brand-icon.png"
+              src="../../../../assets/images/brand-icon.svg"
               alt="brand"
             />
           </div>
@@ -187,7 +172,7 @@
           <div>
             <img
               class="watch-brand-details-img"
-              src="../../../../assets/images/model-icon.png"
+              src="../../../../assets/images/model-icon.svg"
               alt="brand"
             />
           </div>
@@ -205,7 +190,7 @@
           <div>
             <img
               class="watch-brand-details-img"
-              src="../../../../assets/images/watch-icon.png"
+              src="../../../../assets/images/watch-icon.svg"
               alt="brand"
             />
           </div>

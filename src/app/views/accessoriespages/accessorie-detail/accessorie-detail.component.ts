@@ -208,13 +208,13 @@ export class AccessorieDetailComponent implements OnInit {
   async getAllSimilarProducts() {
     try {
       const res = await this.http
-        .getSimilarProductsByID(this.ProductID)
+        .getPublicSimilarAccessoriesByID(this.ProductID)
         .toPromise();
-      this.similarWatchesList = res.data.data.map((product: any) => {
+      this.similarWatchesList = res.similar_accessories.map((product: any) => {
         return {
           ...product,
-          main_image: product.main_image
-            ? product.main_image.replace(/\\/g, "")
+          main_image: product.image
+            ? product.image.replace(/\\/g, "")
             : null,
         };
       });
@@ -230,7 +230,7 @@ export class AccessorieDetailComponent implements OnInit {
       this.currentPage++;
       try {
         const res = await this.http
-          .getSimilarProductsByIDwithPage(this.ProductID, this.currentPage)
+          .getPublicSimilarAccessoriesByID(this.ProductID)
           .toPromise();
         const newWatches = res.data.data.map((product: any) => ({
           ...product,
@@ -277,11 +277,13 @@ export class AccessorieDetailComponent implements OnInit {
     const url = window.location.href;
     navigator.clipboard.writeText(url);
   }
-
+  isBuy:boolean=false
   buyandGoToOrderDetails() {
     const userLogin = localStorage.getItem("user_token");
     if(userLogin && this.isUserLogin == 'true'){
-      this.router.navigate(['/order-details'], { queryParams: { id: this.ProductID } });
+      this.isBuy=true
+      this.addtoCart();
+      this.router.navigate(['/myListing/summary'])
     }else{
       this.loginFirst();
     }
@@ -309,6 +311,30 @@ export class AccessorieDetailComponent implements OnInit {
           {
             accessory_id: this.ProductID,
             quantity: this.quantity
+          }
+        ]
+      }
+      this.http.addtoCart(formData).subscribe(
+        (res: any) => {
+          if(!this.isBuy){
+            this.alertService.showAlert('success', 'Accessory added to cart successfully');
+          }
+      },(err: any) => {
+        this.alertService.showAlert('warning', 'Something went wrong');
+      });
+    }else{
+      this.loginFirst();
+    }
+  }
+
+  addtoCartById(ID) {
+    const userLogin = localStorage.getItem("user_token");
+    if(userLogin && this.isUserLogin == 'true'){
+      const formData = {
+        items: [
+          {
+            accessory_id: ID,
+            quantity: 1
           }
         ]
       }

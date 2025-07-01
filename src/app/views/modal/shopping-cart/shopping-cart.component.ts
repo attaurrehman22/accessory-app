@@ -66,8 +66,9 @@ export class ShoppingCartComponent implements OnInit{
   }
 
   goToCheckout() {
-    this.http.confirmCartOrder().subscribe((res) => {
-      this.alertService.showAlert("success", "Order confirmed");
-    });
+    // this.http.confirmCartOrder().subscribe((res) => {
+    //   this.alertService.showAlert("success", "Order confirmed");
+    // });
+    this.router.navigate(['/myListing/summary'])
   }
 }

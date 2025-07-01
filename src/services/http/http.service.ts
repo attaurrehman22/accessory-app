@@ -1553,6 +1553,14 @@ export class HttpService implements OnInit {
           });
         }
 
+        getPublicSimilarAccessoriesByID(ID: any): Observable<any> {
+          return this.http.get(`${this.apiUrl}/api/similar-accessories/${ID}`, {
+            headers: {
+              Accept: "application/json",
+            },
+          });
+        }
+
         paymentInitiate(formData): Observable<any> {
           return this.http.post(`${this.apiUrl}/api/accessory-payment/initiate`, formData, {
             headers: {
