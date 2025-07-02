@@ -219,7 +219,7 @@ export class AccessorieDetailComponent implements OnInit {
         };
       });
 
-      this.totalPages = res.data.last_page;
+      this.totalPages = res?.data?.last_page;
     } catch (err) {
       console.error("Error fetching similar products:", err);
     }
@@ -240,7 +240,7 @@ export class AccessorieDetailComponent implements OnInit {
             : null,
         }));
         this.similarWatchesList = [...this.similarWatchesList, ...newWatches];
-        this.totalPages = res.data.last_page;
+        this.totalPages = res?.data?.last_page;
       } catch (err) {
         console.error("Error loading more watches:", err);
       }

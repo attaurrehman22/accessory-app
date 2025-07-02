@@ -499,8 +499,9 @@ paymentId: any;
     } else if (this.activeIndex == 5) {
       this.getSellOrders();
     } else if (this.activeIndex == 6) {
-      console.log("this.activeIndex == 9");
-      this.getWishList();
+      // this.getAccessoriesWishList();
+      // this.getWishList();
+      this.getAccessoriesWishList();
     } else if (this.activeIndex == 1) {
       // this.getCountryLists();
       this.getCityLists('Saudi Arabia');
@@ -513,6 +514,39 @@ paymentId: any;
     }
   }
 
+  accessoriesWishList: any[] = [];
+  selectedFilter: string = "accessory";
+
+  onFilterChange(event: any) {
+    this.selectedFilter = event;
+    if(this.selectedFilter == "product"){
+      this.getWishList();
+    }else{
+      this.getAccessoriesWishList();
+    }
+  }
+
+  getAccessoriesWishList() {
+    this.http.getAccessoryWishList().subscribe((res) => {
+      this.accessoriesWishList = res.data.map((item: any) => {
+        item.image = item.image.replace(/\\/g, "");
+        return item;
+      })  ;
+    });
+  }
+
+  goToAccessoryDetails(accessory) {
+    this.router.navigate(["/accessories/details"], {
+      // state: { accessory: accessory },
+      queryParams: { id: accessory.id },
+    });
+  }
+
+  
+  lugWidth=[];
+  Buckle=[];
+  Length=[];
+  Color:any;
   getCartList() {
     this.http.getCartList().subscribe((res) => {
       this.cartItems = res.items;
@@ -522,13 +556,26 @@ paymentId: any;
           return item;
         });
 
-        this.cartItems = this.cartItems?.map((item: any) => {
-          item.accessory.additional_images = item.accessory.additional_images.map((image: any) => {
-            image.image = image.image.replace(/\\/g, "");
-            return image;
-          });
-          return item;
+        this.Buckle = res?.items[0]?.accessory?.inventories[0]?.attribute_values;
+        console.log("Buckle",this.Buckle)
+        this.Length = res?.items[0]?.accessory?.inventories;
+        console.log("this.Length",this.Length)
+        this.Color = res?.items[0]?.accessory?.inventories[0]?.attribute_values;
+        console.log("this.Color",this.Color)
+        Object.values(res?.items[0]?.accessory?.attributes || {}).forEach(attrObj => {
+          if (attrObj && typeof attrObj === 'object') {
+            this.lugWidth.push(...Object.keys(attrObj));
+          }
         });
+        console.log("this.lugWidth",this.lugWidth)
+
+        // this.cartItems = this.cartItems?.map((item: any) => {
+        //   item.accessory.additional_images = item.accessory.additional_images.map((image: any) => {
+        //     image.image = image.image.replace(/\\/g, "");
+        //     return image;
+        //   });
+        //   return item;
+        // });
       }
     });
   }
@@ -1105,7 +1152,7 @@ paymentId: any;
 
   updateCart(item: any) {
     const formData = {
-      accessory_id: item.accessory_id,
+      accessory_id: item.accessory.id,
       quantity: item.quantity
     }
     this.http.updateCart(formData).subscribe((res) => {
@@ -1121,7 +1168,7 @@ paymentId: any;
   removeItem(item: any) {
     this.cartItems = this.cartItems.filter((i) => i !== item);
     console.log("item",item);
-    this.http.deleteCart(item.accessory_id).subscribe((res) => {
+    this.http.deleteCart(item.accessory.id).subscribe((res) => {
       this.alertService.showAlert("success", "Item removed from cart");
       this.getCartList();
     });
@@ -1132,10 +1179,16 @@ paymentId: any;
   }
 
   getSubTotal() {
+    // return this.cartItems.reduce(
+    //   (total, item) => total + item.price * item.quantity,
+    //   0
+    // );
+
     return this.cartItems.reduce(
-      (total, item) => total + item.price * item.quantity,
+      (total, item) => total + item.unit_price * item.quantity,
       0
     );
+  
   }
 
   goToCheckout() {

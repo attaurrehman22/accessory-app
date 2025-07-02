@@ -185,6 +185,7 @@
     height: 260px;
     object-fit: contain;
     background: #F8F8F8;
+    border-radius: 12px !important;
   }
   
   .watch-brand {

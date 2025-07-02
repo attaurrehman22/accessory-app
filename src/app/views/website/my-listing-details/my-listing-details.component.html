@@ -1162,11 +1162,17 @@
       <div *ngIf="activeIndex === 6" class="container-fluid">
         <div class="d-flex justify-content-between align-items-center mb-3 filtered-div">
           <h4 class="mobile-label">{{ "my_Listing.Favorites" | translate }}</h4>
+          <mat-form-field>a
+            <select class="form-select form-select-sm" style="width: 150px" [(ngModel)]="selectedFilter" (ngModelChange)="onFilterChange($event)">
+              <option value="product">Products</option>
+              <option value="accessory">Accessories</option>
+            </select>
+          </mat-form-field>
         </div>
-        <div class="list-cards" *ngIf="favoritesProductDetails?.length > 0">
-          <div *ngFor="let listing of favoritesProductDetails" class="card mb-3">
-            <div class="card-body d-flex align-items-center">
-              <div class="col-11 d-flex align-items-center card-hover-change-color"  (click)="startChat(listing)">
+        <div class="list-cards" *ngIf="selectedFilter == 'product' ? favoritesProductDetails?.length > 0 : accessoriesWishList?.length > 0">
+          <div *ngFor="let listing of selectedFilter == 'product' ? favoritesProductDetails : accessoriesWishList" class="card mb-3">
+            <div class="card-body d-flex align-items-center" *ngIf="selectedFilter == 'product'">
+              <div class="col-11 d-flex align-items-center card-hover-change-color gap-2"  (click)="startChat(listing)">
                 <div class="main_image_div">
                   <img
                     *ngIf="listing?.main_image"
@@ -1213,6 +1219,53 @@
                 </mat-menu>
               </div>
             </div>
+            <div class="card-body d-flex align-items-center" *ngIf="selectedFilter == 'accessory'">
+              <div class="col-11 d-flex align-items-center card-hover-change-color gap-2"  (click)="goToAccessoryDetails(listing)">
+                <div class="main_image_div">
+                  <img
+                    *ngIf="listing?.image"
+                    class="img-fluid"
+                    style="object-fit: cover !important;height: 100% !important; width: 100% !important;"
+                    [src]="apiUrl + listing.image"
+                    alt="{{ 'find_dream.img_alt' | translate }}"
+                  />
+                    <div *ngIf="!listing?.image" class="no-image-styles-div">
+                      <p>{{ "my_Listing.no_image" | translate }}</p>
+                  </div>
+                </div>
+                <div class="main_image_content_div">
+                  <small class="text-muted mobile-label">
+                    Model Number <span class="span-listing-id-label"> {{ listing.model_number || "N/A" }} </span> | Added
+                    <span class="span-listing-id-label">
+                    {{ listing.added_at | date : "yyyy-MM-dd" }}
+                    </span>
+                  </small>
+
+                  <h6 class="mt-1 mb-1 mobile-label listing-concate-label">
+                    {{ listing.name }} {{ listing.brand }}
+                  </h6>
+                </div>
+              </div>
+              <div class="col-1 d-flex justify-content-end">
+                <button
+                  mat-icon-button
+                  [matMenuTriggerFor]="menu"
+                  aria-label="More options"
+                >
+                  <mat-icon>more_vert</mat-icon>
+                </button>
+                <mat-menu #menu="matMenu">
+                  <button mat-menu-item (click)="goToAccessoryDetails(listing)">
+                    <!-- <mat-icon>edit</mat-icon> -->
+                    <span>Details</span>
+                  </button>
+                  <!-- <button mat-menu-item (click)="deleteListing(listing)">
+                    <mat-icon color="warn">delete</mat-icon>
+                    <span>Delete</span>
+                  </button> -->
+                </mat-menu>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -1234,11 +1287,11 @@
                 <div class="col">
                   <div class="card-body py-2 d-flex flex-column">
                     <p class="mb-1 font-size-14 font-wight-400 color-6a6a6a">
-                      LUG Width <span class="color-242424">Apple 38/40/41MM</span>   
-                      |  Buckle/Connector <span class="color-242424"> Black </span>  
+                      LUG Width <span class="color-242424" *ngIf="lugWidth.length > 0">{{lugWidth[0]}}</span>   
+                      |  Buckle/Connector <span class="color-242424" *ngIf="Buckle.length > 0"> {{Buckle[0].color}} </span>  
                       |  Length 
-                      <span class="color-242424"> Small 115/75MM 
-                      | Color {{ item.color }} </span>
+                      <span class="color-242424" *ngIf="Length.length > 0"> {{Length[0].title}}
+                      | Color {{ Color[0].color }} </span>
                     </p>
 
                     <p class="font-size-18 font-wight-600 color-242424 margin-0">{{ item.accessory.name }}</p>
@@ -1246,7 +1299,7 @@
                       <img src="../../../../assets/images/Saudi_Riyal_Symbol-2.svg" class="sar-icon-style"
                       style="    width: 12px;height: 12px;"
                       alt="SAR"/>
-                      {{ item.price | number:'1.2-2' }}</span>
+                      {{ item.unit_price | number:'1.2-2' }}</span>
                     </p>
                   </div>
                 </div>

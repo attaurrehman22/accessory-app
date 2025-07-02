@@ -15,7 +15,10 @@ export class AccessorySummaryComponent implements OnInit {
   totalAmount = 361.50;
   shippingCharges = 25.50;
   totalPayout = 386.00;
-
+  lugWidth=[];
+  Buckle=[];
+  Length=[];
+  Color:any;
   ngOnInit(): void {
     this.getCartList();
   }
@@ -23,19 +26,30 @@ export class AccessorySummaryComponent implements OnInit {
   getCartList() {
     this.http.getCartList().subscribe((res) => {
       this.cartItems = res.items;
+      this.totalAmount = res.total_amount ? res.total_amount : 0;
+      this.shippingCharges = res.shipping_charges ? res.shipping_charges : 0;
+      this.totalPayout = res.total_amount ? res.total_amount : 0;
       if(this.cartItems){
         this.cartItems = this.cartItems?.map((item: any) => {
           item.accessory.main_image = item.accessory.main_image.replace(/\\/g, "");
           return item;
         });
-
-        this.cartItems = this.cartItems?.map((item: any) => {
-          item.accessory.additional_images = item.accessory.additional_images.map((image: any) => {
-            image.image = image.image.replace(/\\/g, "");
-            return image;
-          });
-          return item;
+        this.Buckle = res?.items[0]?.accessory?.inventories[0]?.attribute_values;
+        this.Length = res?.items[0]?.accessory?.inventories;
+        this.Color = res?.items[0]?.accessory?.inventories[0]?.attribute_values;
+        Object.values(res?.items[0]?.accessory?.attributes || {}).forEach(attrObj => {
+          if (attrObj && typeof attrObj === 'object') {
+            this.lugWidth.push(...Object.keys(attrObj));
+          }
         });
+
+        // this.cartItems = this.cartItems?.map((item: any) => {
+        //   item.accessory.additional_images = item.accessory.additional_images.map((image: any) => {
+        //     image.image = image.image.replace(/\\/g, "");
+        //     return image;
+        //   });
+        //   return item;
+        // });
       }
     });
   }

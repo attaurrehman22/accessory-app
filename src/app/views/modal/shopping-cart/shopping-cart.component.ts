@@ -31,26 +31,18 @@ export class ShoppingCartComponent implements OnInit{
           return item;
         });
 
-        // this.cartItems = this.cartItems.map((item: any) => {
-        //   item.accessory.additional_images = item?.accessory?.additional_images.map((image: any) => {
-        //     image.image = image.image.replace(/\\/g, "");
-        //     return image;
-        //   });
-        //   return item;
-        // });
+        this.Buckle = res?.items[0]?.accessory?.inventories[0]?.attribute_values;
 
-        this.lugWidth = [];
-        Object.values(res?.items?.accessory?.attributes || {}).forEach(attrObj => {
+        this.Length = res?.items[0]?.accessory?.inventories;
+
+        this.Color = res?.items[0]?.accessory?.inventories[0]?.attribute_values;
+      
+        Object.values(res?.items[0]?.accessory?.attributes || {}).forEach(attrObj => {
           if (attrObj && typeof attrObj === 'object') {
             this.lugWidth.push(...Object.keys(attrObj));
           }
         });
-        this.Buckle = [];
-        this.Buckle = res?.items?.accessory?.inventories[0].attribute_values;
-        this.Length = [];
-        this.Length = res?.items?.accessory?.inventories;
-        this.Color = [];
-        this.Color = res?.items?.accessory?.inventories[0]?.attribute_values;
+       
       }
     });
     console.log(this.cartItems);

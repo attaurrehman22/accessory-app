@@ -28,12 +28,12 @@
 
       <div class="mb-2 d-flex flex-column" *ngIf="Buckle?.length > 0">
         <label class="label-title">Buckle/Connector</label>
-        <button class="btn btn-dark btn-sm text-style" *ngFor="let buck of Buckle | slice:0:5">{{buck}}</button>
+        <button class="btn btn-dark btn-sm text-style" *ngFor="let buck of Buckle | slice:0:5">{{buck.color}}</button>
       </div>
 
       <div class="mb-2 d-flex flex-column" *ngIf="Length?.length > 0">
         <label class="label-title">Length</label>
-        <button class="btn btn-dark btn-sm text-style" *ngFor="let leng of Length | slice:0:5">{{leng}}</button>
+        <button class="btn btn-dark btn-sm text-style" *ngFor="let leng of Length | slice:0:5">{{leng.title}}</button>
       </div>
 
       <div class="mb-2 d-flex flex-column" *ngIf="Color?.length > 0">
