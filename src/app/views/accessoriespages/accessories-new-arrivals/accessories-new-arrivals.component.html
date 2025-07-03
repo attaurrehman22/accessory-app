@@ -23,9 +23,11 @@
   </div>
 
   <div class="col-md-12 mt-5">
-    <div class="row d-flex justify-content-between align-items-center mt-3">
+    <div class="row d-flex justify-content-between align-items-center mt-3" 
+    [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }"
+    >
       <p class="font-size-28 font-wight-600 color-242424" style="width: 25%">
-        All
+        {{ "chat_com.all" | translate }}
       </p>
 
       <button class="custom-filter-btn" (click)="openFilters()">
@@ -180,14 +182,14 @@
               </i>
             </button>
           </div>
-          <div class="card-body">
+          <div class="card-body" [ngClass]="{ 'reverse-card-body-order': translateService.currentLang !== 'en' }">
             <p class="text-muted small mb-1">
               {{ getDisplayBrand(accessory) }} | {{ accessory.model_number || "N/A" }}
             </p>
 
             <h6 class="card-title fw-semibold mb-3">{{ getDisplayTitle(accessory) }}</h6>
 
-            <div class="d-flex justify-content-between align-items-center">
+            <div class="d-flex justify-content-between align-items-center card-body-reverse-bottom-para">
               <div>
                 <small class="text-muted d-block">Exclusive Shipping</small>
                 <span class="fw-bold"

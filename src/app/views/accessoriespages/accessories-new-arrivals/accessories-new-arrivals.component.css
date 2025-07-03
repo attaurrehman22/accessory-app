@@ -222,10 +222,10 @@
     background: #ffffff
   }
 
-  .reverse-filter-order {
+  /* .reverse-filter-order {
     top: 183px;
     left: 68px !important;
-  }
+  } */
 
   .filter-btns-div{
     width: 82%;
@@ -242,10 +242,10 @@
     background: #ffffff
   }
 
-  .reverse-filter-order {
+  /* .reverse-filter-order {
     top: 183px;
     left: 192px;
-  }
+  } */
 
   .filtered-btn {
     height: 60px;
@@ -271,10 +271,10 @@
     background: #ffffff
   }
 
-  .reverse-filter-order {
+  /* .reverse-filter-order {
     top: 200px !important;
     left: 19px !important
-  }
+  } */
 
   .list-data {
     padding: 0 0 0 0 !important;
@@ -286,8 +286,8 @@
 }
 
 .reverse-filter-order {
-  top: 183px;
-  left: 192px;
+  top: 60px;
+  left: 0;
 }
 
 .reverse-filter-order .filters-top-header {
@@ -365,6 +365,18 @@
 
 .reverse-order>.range-container>.first-thumb>.second-img {
   display: block;
+}
+
+.reverse-card-body-order > p {
+  text-align: end;
+}
+
+.reverse-card-body-order > h6 {
+  text-align: end;
+}
+
+.reverse-card-body-order > .card-body-reverse-bottom-para {
+  flex-direction: row-reverse;
 }
 
 
