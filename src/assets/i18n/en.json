@@ -750,6 +750,14 @@
    "city":"City",
    "city_place":"Enter city name",
    "no_image":"No Image"
+  },
+  "accessory_details":{
+    "LUG-Width":"LUG Width:",
+    "Buckle-Connector":"Buckle/Connector:",
+    "Length":"Length:",
+    "Color":"Color:",
+    "Quantity":"Quantity:",
+    "Add-to-Cart":"Add to Cart"
   }
   
 }

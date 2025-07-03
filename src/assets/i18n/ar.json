@@ -702,6 +702,14 @@
 "city_place": "أدخل اسم المدينة",
 "no_image": "لا توجد صورة"
 
+},
+"accessory_details":{
+  "LUG-Width": "عرض المشبك:",
+  "Buckle-Connector": "الإبزيم/الوصلة:",
+  "Length": "الطول:",
+  "Color": "اللون:",
+  "Quantity": "الكمية:",
+  "Add-to-Cart": "أضف إلى السلة"
 }
 
 

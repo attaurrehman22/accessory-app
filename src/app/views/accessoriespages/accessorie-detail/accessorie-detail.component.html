@@ -121,24 +121,9 @@
           </p>
         </div>
 
-        <!-- <div
-          *ngIf="productDetails?.created_by?.city"
-          class="d-flex gap-2 align-items-baseline"
-        >
-          <i class="fas fa-map-marker-alt"></i>
-          <p class="routes-styl margin-0">
-            {{ productDetails?.created_by?.city }}
-          </p>
-          <p *ngIf="productDetails?.published_date" class="routes-styl margin-0">
-            {{ "buy_product.Published_At" | translate }} :
-            {{ productDetails?.published_date | date : "yyyy-MM-dd" }}
-          </p>
-        </div> -->
-
         <div class="d-flex flex-wrap">
           <p class="brand-name-title margin-0">
             {{ productDetails?.name }} - {{ productDetails?.brand }}
-            <!-- {{ productDetails?.title }} -->
           </p>
         </div>
 
@@ -148,21 +133,10 @@
               class="sar-icon-style" alt="SAR" />
             {{ productDetails?.min_price }}
           </p>
-          <!-- <p class="color-666666 font-wight-400 font-size-14 margin-0">
-            {{
-              productDetails?.shipping_type == "inclusiveShipping"
-                ? "Inclusive Shipping"
-                : productDetails?.shipping_type == "exclusiveShipping"
-                ? "Exclusive Shipping"
-                : productDetails?.shipping_type == "freeCharge"
-                ? "Free Charge"
-                : productDetails?.shipping_type
-            }}
-          </p> -->
 
           <div class="d-flex flex-column mt-3">
             <p class="header-highligted-color font-wight-400 font-size-16 margin-0" style="padding-bottom: 7px">
-              LUG Width:
+              {{ "accessory_details.LUG-Width" | translate }}
             </p>
             <div class="d-flex flex-wrap gap-2">
               <button class="condition-btn" *ngFor="let lug of lugWidth | slice:0:5">
@@ -173,7 +147,7 @@
 
           <div *ngIf="productDetails?.inventories" class="d-flex flex-column mt-3">
             <p class="header-highligted-color font-wight-400 font-size-16 margin-0" style="padding-bottom: 7px">
-              Buckle/Connector:
+              {{ "accessory_details.Buckle-Connector" | translate }}
             </p>
             <div class="d-flex flex-wrap gap-2">
               <button *ngFor="let buckle of productDetails?.inventories[0].attribute_values | slice:0:5" class="condition-btn">
@@ -184,8 +158,7 @@
 
           <div class="d-flex flex-column mt-3">
             <p class="header-highligted-color font-wight-400 font-size-16 margin-0" style="padding-bottom: 7px">
-              <!-- {{ "buy_product.Est_Delivery" | translate }} -->
-              Length:
+              {{ "accessory_details.Length" | translate }}
             </p>
             <div class="d-flex flex-wrap gap-2">
               <button *ngFor="let length of productDetails?.inventories | slice:0:4" class="condition-btn">
@@ -196,7 +169,7 @@
 
           <div class="d-flex flex-column mt-3">
             <p class="header-highligted-color font-wight-400 font-size-16 margin-0" style="padding-bottom: 7px">
-              Color:
+              {{ "accessory_details.Color" | translate }}
             </p>
             <div class="d-flex flex-wrap gap-2">
               <div *ngFor="let c of productDetails?.inventories[0]?.attribute_values | slice:0:6" [ngStyle]="{
@@ -211,7 +184,7 @@
 
           <div class="d-flex flex-column mt-3">
             <p class="header-highligted-color font-wight-400 font-size-16 margin-0" style="padding-bottom: 7px">
-              Quantity:
+              {{ "accessory_details.Quantity" | translate }}
             </p>
             <div class="d-flex border rounded overflow-hidden" style="width: fit-content">
               <button class="btn btn-light border-end" style="background-color: none !important;" (click)="decrement()">
@@ -229,30 +202,7 @@
             <button class="buy-btn" (click)="buyandGoToOrderDetails()">
               {{ "buy_product.buy" | translate }}
             </button>
-            <!-- <button
-            *ngIf="
-              loggedUserType && loggedUserType == 'seller' && orderID && chatID
-            "
-            (click)="goToOrderDetails()"
-            [disabled]="routeFrom === 'listing-to-product'"
-            class="buy-btn"
-          >
-
-            Oder Status
-          </button> -->
-
-            <!-- <button
-            *ngIf="
-              loggedUserType && loggedUserType == 'buyer' && orderID && chatID
-            "
-            (click)="goToChatOrOrderDetails()"
-            [disabled]="routeFrom === 'listing-to-product'"
-            class="buy-btn"
-          >
-
-            View Order Status or Chat
-          </button> -->
-            <button class="make-offer-btn mt-2" (click)="addtoCart()">Add to Cart</button>
+            <button class="make-offer-btn mt-2" (click)="addtoCart()">{{ "accessory_details.Add-to-Cart" | translate }}</button>
           </div>
         </div>
       </div>
@@ -291,7 +241,7 @@
                 </div>
               </div>
 
-              <div class="col-12 d-flex flex-wrap">
+              <div class="col-12 d-flex flex-wrap" [ngClass]="{ 'reverse-order-for-images': translateService.currentLang !== 'en' }">
                 <div *ngFor="let image of productDetails?.images" class="col-md-6 d-flex flex-wrap mb-2"
                   style="border-radius: 16px">
                   <img [src]="apiUrl + image.url" style="
@@ -331,7 +281,7 @@
       <p class="font-wight-700 font-size-64 color-484848 text-center cormorant-styl">
         {{ "product_details.similar_prod" | translate }}
       </p>
-      <div class="row">
+      <div class="row" [ngClass]="{ 'reverse-order-for-images': translateService.currentLang !== 'en' }">
         <div class="col-md-3 col-sm-6 mb-4" *ngFor="let watch of similarWatchesList; let i = index">
           <div class="card custom-card h-100 shadow-sm">
             <a [routerLink]="['/accessories/details']" [queryParams]="{ id: watch.id }" class="card-img-link"
@@ -368,7 +318,7 @@
                 </div>
               </div>
               <button class="add-to-cart-btn mt-2" (click)="addtoCartById(watch.id)">
-                Add to Cart
+                {{ "accessory_details.Add-to-Cart" | translate }}
               </button>
             </div>
           </div>
