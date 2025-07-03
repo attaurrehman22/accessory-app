@@ -692,7 +692,23 @@ text-align: end;
   margin: 32px 17px 0 0;
  }
 
+.reverse-order-for-cart-items {
+  flex-direction: row-reverse;
+}
 
+.reverse-order-for-cart-items > .col-auto {
+  flex-direction: row-reverse;
+}
+
+.reverse-order-for-cart-items > .col > .card-body > P {
+  text-align: end;
+  flex-direction: row-reverse;
+}
+
+.sar-icon-style {
+  height: 20px !important;
+  width: 20px !important;
+}
 
  .main_image_div {
   height: 63px;

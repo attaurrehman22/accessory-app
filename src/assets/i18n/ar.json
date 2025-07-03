@@ -709,7 +709,14 @@
   "Length": "الطول:",
   "Color": "اللون:",
   "Quantity": "الكمية:",
-  "Add-to-Cart": "أضف إلى السلة"
+  "Add-to-Cart": "أضف إلى السلة",
+  "Cart-Items": "عناصر السلة",
+  "Remove-Selected": "إزالة المحدد",
+  "Total-Price": "السعر الإجمالي",
+  "Total-Items": "إجمالي العناصر",
+  "Sub-Total": "المجموع الفرعي",
+  "Estimated-Payout": "الدفع المقدر",
+  "Checkout": "إتمام الشراء"
 }
 
 

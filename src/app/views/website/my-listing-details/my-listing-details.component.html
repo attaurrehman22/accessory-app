@@ -1272,13 +1272,13 @@
       <!-- if "Cart Items" is Active -->
       <div *ngIf="activeIndex === 7" class="container-fluid">
         <div class="d-flex justify-content-between align-items-center mb-1 filtered-div">
-          <h4 class="mobile-label font-size-28 font-wight-600 color-242424 margin-0">Cart Items</h4>
-           <h4 class="mobile-label font-size-14 font-wight-600 color-242424 margin-0" *ngIf="cartItems?.length > 0">Remove Selected</h4>
+          <h4 class="mobile-label font-size-28 font-wight-600 color-242424 margin-0">{{ "accessory_details.Cart-Items" | translate }}</h4>
+           <h4 class="mobile-label font-size-14 font-wight-600 color-242424 margin-0" *ngIf="cartItems?.length > 0">{{ "accessory_details.Remove-Selected" | translate }}</h4>
         </div>
         <div class="list-cards">
           <div class="container-fluid my-4">
             <div class="card mb-3" *ngFor="let item of cartItems" style="box-shadow:none !important">
-              <div class="row g-0 align-items-center p-2">
+              <div class="row g-0 align-items-center p-2"  [ngClass]="{ 'reverse-order-for-cart-items': translateService.currentLang !== 'en' }">
                 <div class="col-auto d-flex align-items-center gap-2">
                   <input type="checkbox" *ngIf="item.accessory.additional_images.length > 0" [(ngModel)]="item.selected" class="form-check-input" />
                   <img [src]="apiUrl + item.accessory.main_image" alt="{{ item.name }}" class="img-thumbnail" style="width: 80px; height: auto;">
@@ -1287,15 +1287,15 @@
                 <div class="col">
                   <div class="card-body py-2 d-flex flex-column">
                     <p class="mb-1 font-size-14 font-wight-400 color-6a6a6a">
-                      LUG Width <span class="color-242424" *ngIf="lugWidth.length > 0">{{lugWidth[0]}}</span>   
-                      |  Buckle/Connector <span class="color-242424" *ngIf="Buckle.length > 0"> {{Buckle[0].color}} </span>  
-                      |  Length 
+                      {{ "accessory_details.LUG-Width" | translate }}<span class="color-242424" *ngIf="lugWidth.length > 0">{{lugWidth[0]}}</span>   
+                      |  {{ "accessory_details.Buckle-Connector" | translate }} <span class="color-242424" *ngIf="Buckle.length > 0"> {{Buckle[0].color}} </span>  
+                      |  {{ "accessory_details.Length" | translate }} 
                       <span class="color-242424" *ngIf="Length.length > 0"> {{Length[0].title}}
-                      | Color {{ Color[0].color }} </span>
+                      | {{ "accessory_details.Color" | translate }} {{ Color[0].color }} </span>
                     </p>
 
                     <p class="font-size-18 font-wight-600 color-242424 margin-0">{{ item.accessory.name }}</p>
-                    <p class="mb-1 font-size-14 font-wight-400 color-6a6a6a gap-2 d-flex">Total Price: <span class="color-242424">
+                    <p class="mb-1 font-size-14 font-wight-400 color-6a6a6a gap-2 d-flex">{{ "accessory_details.Total-Price" | translate }}: <span class="color-242424">
                       <img src="../../../../assets/images/Saudi_Riyal_Symbol-2.svg" class="sar-icon-style"
                       style="    width: 12px;height: 12px;"
                       alt="SAR"/>
@@ -1304,7 +1304,7 @@
                   </div>
                 </div>
                 <div class="col-auto d-flex gap-2 align-items-center justify-content-center mx-5">
-                  <label class="" style="font-size: 14px;font-wight: 400 !important;color: #6a6a6a;">Quantity</label>
+                  <label class="" style="font-size: 14px;font-weight: 400 !important;color: #6a6a6a;">{{ "accessory_details.Quantity" | translate }}</label>
                   <div class="input-group input-group-sm">
                     <button class="btn btn-outline-secondary"
                     style="border: 0.53px solid #6A6A6A;width: 36px;"
@@ -1323,35 +1323,32 @@
               </div>
             </div>
 
-            <div class="col-md-12 d-flex justify-content-end mt-4" *ngIf="cartItems?.length > 0">
+            <div class="col-md-12 d-flex justify-content-end mt-4" *ngIf="cartItems?.length > 0" [ngClass]="{ 'reverse-order-for-cart-items': translateService.currentLang !== 'en' }">
+              <div class="col-md-8"></div>
               <div class="col-md-4 d-flex flex-column">
                 <ul class="list-group list-group-flush mb-3 card" style="box-shadow:none !important">
                   <div class="card-body" style="border:none !important;display: flex;flex-direction: column;border-radius: 16px !important;">
-                    <li style="background: #F7F7F8 !important;border:none !important" class="list-group-item d-flex justify-content-between align-items-center">
-                      Total Items
+                    <li [ngClass]="{ 'reverse-order-for-cart-items': translateService.currentLang !== 'en' }" style="background: #F7F7F8 !important;border:none !important" class="list-group-item d-flex justify-content-between align-items-center">
+                      {{ "accessory_details.Total-Items" | translate }}
                       <span>{{ getTotalItems() }}</span>
                     </li>
-                    <li style="background: #F7F7F8 !important;border:none !important"  class="list-group-item d-flex justify-content-between align-items-center">
-                      Sub Total
-                      <span>₦{{ getSubTotal() | number:'1.2-2' }}</span>
+                    <li [ngClass]="{ 'reverse-order-for-cart-items': translateService.currentLang !== 'en' }" style="background: #F7F7F8 !important;border:none !important"  class="list-group-item d-flex justify-content-between align-items-center">
+                      {{ "accessory_details.Sub-Total" | translate }}
+                      <span><img src="../../../../assets/images/Saudi_Riyal_Symbol-2.svg"
+                        class="sar-icon-style" alt="SAR" />{{ getSubTotal() | number:'1.2-2' }}</span>
                     </li>
-                    <li style="background: #F7F7F8 !important;border-top: 1px solid #E2E2E2 !important;
+                    <li [ngClass]="{ 'reverse-order-for-cart-items': translateService.currentLang !== 'en' }" style="background: #F7F7F8 !important;border-top: 1px solid #E2E2E2 !important;
                         border-bottom: 0 !important;
     border-left: 0 !important;
     border-right: 0 !important;
                     "  class="list-group-item d-flex justify-content-between align-items-center">
-                      Estimated Payout
-                      <span>₦{{ getSubTotal() | number:'1.2-2' }}</span>
+                      {{ "accessory_details.Estimated-Payout" | translate }}
+                      <span><img src="../../../../assets/images/Saudi_Riyal_Symbol-2.svg"
+                        class="sar-icon-style" alt="SAR" />{{ getSubTotal() | number:'1.2-2' }}</span>
                     </li>
                   </div>
                 </ul>
-                <button class="btn btn-dark w-100" (click)="goToCheckout()">Checkout</button>
-                <!-- <button 
-                  *ngIf="paymentId.getItem('pendingPaymentOrderId')" 
-                  class="btn btn-outline-dark w-100 mt-2" 
-                  (click)="refreshPaymentStatus()">
-                  Check Payment Status
-                </button> -->
+                <button class="btn btn-dark w-100" (click)="goToCheckout()">{{ "accessory_details.Checkout" | translate }}</button>
               </div>
             </div>
           </div>

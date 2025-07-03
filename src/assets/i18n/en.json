@@ -757,7 +757,16 @@
     "Length":"Length:",
     "Color":"Color:",
     "Quantity":"Quantity:",
-    "Add-to-Cart":"Add to Cart"
+    "Add-to-Cart":"Add to Cart",
+
+    "Cart-Items":"Cart Items",
+    "Remove-Selected":"Remove Selected",
+    "Total-Price":"Total Price",
+    "Total-Items":"Total Items",
+    "Sub-Total":"Sub Total",
+    "Estimated-Payout":"Estimated Payout",
+    "Checkout":"Checkout"
+    
   }
   
 }
