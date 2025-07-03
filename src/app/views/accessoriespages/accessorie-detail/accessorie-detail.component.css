@@ -104,6 +104,10 @@
     border: 1px solid #242424;
   }
 
+  .reverse-order {
+    flex-direction: row-reverse;
+  }
+
   .reverse-order-prod-price-des > .routes-div {
     flex-direction: row-reverse;
   }
