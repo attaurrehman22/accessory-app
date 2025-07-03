@@ -557,25 +557,13 @@ paymentId: any;
         });
 
         this.Buckle = res?.items[0]?.accessory?.inventories[0]?.attribute_values;
-        console.log("Buckle",this.Buckle)
         this.Length = res?.items[0]?.accessory?.inventories;
-        console.log("this.Length",this.Length)
         this.Color = res?.items[0]?.accessory?.inventories[0]?.attribute_values;
-        console.log("this.Color",this.Color)
         Object.values(res?.items[0]?.accessory?.attributes || {}).forEach(attrObj => {
           if (attrObj && typeof attrObj === 'object') {
             this.lugWidth.push(...Object.keys(attrObj));
           }
         });
-        console.log("this.lugWidth",this.lugWidth)
-
-        // this.cartItems = this.cartItems?.map((item: any) => {
-        //   item.accessory.additional_images = item.accessory.additional_images.map((image: any) => {
-        //     image.image = image.image.replace(/\\/g, "");
-        //     return image;
-        //   });
-        //   return item;
-        // });
       }
     });
   }
