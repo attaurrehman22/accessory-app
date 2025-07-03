@@ -36,17 +36,6 @@
                       style="cursor: pointer"
                     />
                     <div *ngIf="isShowSearchField" class="small-screen-search-Box">
-                    <!-- <mat-menu #search3Menu="matMenu"  class="notificationsMenu"> -->
-                      <!-- <form class="d-flex flex-grow-1 ms-3 mat-menu-nav" (ngSubmit)="onSearch(searchQuery)" (click)="$event.stopPropagation()">
-                        <input
-                          [(ngModel)]="searchQuery"
-                          (ngModelChange)="onSearchChange()"
-                          class="form-control me-2"
-                          type="search"
-                          placeholder="Search"
-                          aria-label="Search"
-                        />
-                      </form> -->
                       <form  class="d-flex flex-grow-1 ms-3 mt-3" (ngSubmit)="onSearch(searchQuery)">
                         <div class="input-group">
                           <input
@@ -58,9 +47,7 @@
                           />
                           <button class="search-btn" type="submit">Search</button>
                         </div>
-                      </form>
-
-                    <!-- </mat-menu> -->
+                      </form>            
                   </div>
                     <mat-menu #profileMenu="matMenu" class="custom-profile-menu">
                    <button
@@ -70,46 +57,6 @@
             >
               {{ "header.Login" | translate }}
             </button>
-
-            <!-- <div class="route-groups" *ngIf="isUserLogin === 'true'"> -->
-              <!-- <div class="d-flex gap-2 align-items-center"> -->
-                <!-- <div class="">
-                  <div *ngIf="userDetails?.main_image; else noImage">
-                    <img
-                      [src]="
-                        apiUrl + userDetails?.main_image
-                      "
-                      alt="chat image"
-                      class="img-thumbnail"
-                      style="width: 32px; height: 32px;border-radius: 50%;"
-                    />
-                  </div>
-                  <ng-template #noImage>
-                    <div
-                      class="img-thumbnail"
-                      style="
-                        width: 32px;
-                        height: 32px;
-                        display: flex;
-                        align-items: center;
-                        justify-content: center;
-                        background-color: #ccc;
-                        color: white;
-                        font-size: 16px;
-                        font-weight: 400;
-                        border-radius: 50%;
-                      "
-                    >
-                      {{ userDetails.name?.substring(0, 2) }}
-                    </div>
-                  </ng-template>
-                </div>
-                <div class="d-flex flex-column">
-                  <p class="margin-0 font-weight-600 font-size-18 color-242424" *ngIf="userDetails?.name"> {{userDetails?.name}} </p>
-                  <p class="margin-0 font-weight-600 font-size-12 color-909090" *ngIf="userDetails?.name"> {{userDetails?.name}} </p>
-                </div> -->
-              <!-- </div> -->
-            <!-- </div> -->
 
             <div class="route-groups" *ngIf="showHideAdminUser === true"   routerLink="/admin/dashboard">
               <div class="d-flex gap-2 align-items-center cursor-pointer">
@@ -479,14 +426,14 @@
             </nav>
         </header>
     </div>
-    <div class="col-md-12 d-flex flex-wrap hero-page">
+    <div class="col-md-12 d-flex flex-wrap hero-page" [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }">
         <div class="col-md-6 accessories-details-section" style="height: 945px !important;">
            <div [ngClass]="windowWidth >= 992 ? 'container' : 'container-fluid'">
-            <p class="watch-straps-title">- Watch Straps</p>
-            <p class="watch-straps-scond-title mt-4">Snake Skin Watch Straps</p>
-            <p class="watch-straps-para mt-3">OUR SNAKE SKIN STRAPS ARE MADE WITH PURE SNAKE SKIN IMPORTED FROM REGISTERED FARMS OF CHINA AND VIETNAM. THESE ARE NOT PRINTED/EMBOSSED LEATHER. THIS IS 100% PURE EXOTIC LEATHER.</p>
+            <p class="watch-straps-title">{{ "header.Watch-Straps" | translate }}</p>
+            <p class="watch-straps-scond-title mt-4">{{ "header.Snake-Skin-Watch-Straps" | translate }}</p>
+            <p class="watch-straps-para mt-3">{{ "header.Snake-Skin-Watch-Straps-para" | translate }}</p>
            <button class="explore-now-btn mt-5">
-            Explore Now
+            {{ "header.Explore-Now" | translate }}
            </button>
           </div>
         </div>
@@ -494,7 +441,7 @@
           <ng-container *ngIf="homeData?.slider?.length > 0">
             <div
               id="carouselExample"
-              class="carousel slide"
+              class="carousel  carousel-fade"
               data-bs-ride="carousel"
             >
               <div class="carousel-inner">
@@ -509,11 +456,6 @@
                     alt="{{ 'find_dream.img_alt' | translate }}"
                   />
 
-                   <!-- <img
-                    class="img-fluid"
-                    src="../../../../assets/images/background.svg"
-                    alt="{{ 'find_dream.img_alt' | translate }}"
-                  /> -->
                 </div>
               </div>
 
@@ -532,38 +474,4 @@
           </ng-container>
         </div>
     </div>
-    <!-- <div class="position-relative">
-
-      <div 
-        class="scroll-icon left"
-        (click)="scrollLeft()"
-      >
-       <img src="../../../../assets/images/less_arrow.svg" alt="alt" />
-
-      </div>
-
- 
-      <div 
-        #scrollContainer 
-        class="col-md-12 d-flex align-items-center mt-3 global-main-wraper" 
-        style="overflow-x: auto; scroll-behavior: smooth;"
-      >
-        <div 
-          *ngFor="let img of duplicatedImages; let index = index"
-          [style.width.px]="imageWidth"
-          [style.margin.px]="slideMargin"
-          [innerHTML]="img | safeHtml"
-        ></div>
-      </div>
-
-
-      <div 
-        class="scroll-icon right"
-        (click)="scrollRight()"
-      >
-      <img src="../../../../assets/images/great_arrow.svg" alt="alt" />
- 
-      </div>
-    </div> -->
-
 </div>

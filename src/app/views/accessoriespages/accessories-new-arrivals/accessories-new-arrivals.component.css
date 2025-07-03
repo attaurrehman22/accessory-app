@@ -95,10 +95,19 @@
   position: relative;
 }
 
+.filter-btns-div{
+  display: flex;
+  align-items: center;
+  overflow-x: hidden; 
+  scroll-behavior: 
+  smooth;width: 88%;
+}
+
 .scroll-icon {
   position: absolute;
   top: 65%;
   transform: translateY(-50%);
+  z-index: 555;
 }
 
 .scroll-icon.left {
@@ -197,6 +206,12 @@
   font-weight: 400;
 }
 
+@media (max-width: 1560px) {
+  .filter-btns-div{
+    width: 85%;
+  }
+}
+
 @media (max-width: 1024px) {
   .filter-Div {
     position: absolute;
@@ -210,6 +225,10 @@
   .reverse-filter-order {
     top: 183px;
     left: 68px !important;
+  }
+
+  .filter-btns-div{
+    width: 82%;
   }
 }
 
@@ -226,6 +245,19 @@
   .reverse-filter-order {
     top: 183px;
     left: 192px;
+  }
+
+  .filtered-btn {
+    height: 60px;
+    padding: 20px 30px 20px 30px;
+    background: #FAFAFA;
+    border: 1px solid #F3F3F3;
+    border-radius: 10px;
+    width: max-content;
+  }
+
+  .filter-btns-div{
+    width: 80%;
   }
 }
 
@@ -246,6 +278,10 @@
 
   .list-data {
     padding: 0 0 0 0 !important;
+  }
+
+  .filter-btns-div{
+    width: 60%;
   }
 }
 

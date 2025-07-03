@@ -27,7 +27,12 @@
     "sellOrders":"Sell Orders",
     "myListings":"My Listings",
     "Sign_Out":"Sign Out",
-    "cart":"Cart"
+    "cart":"Cart",
+
+    "Watch-Straps":"- Watch Straps",
+    "Snake-Skin-Watch-Straps":"Snake Skin Watch Straps",
+    "Snake-Skin-Watch-Straps-para":"OUR SNAKE SKIN STRAPS ARE MADE WITH PURE SNAKE SKIN IMPORTED FROM REGISTERED FARMS OF CHINA AND VIETNAM. THESE ARE NOT PRINTED/EMBOSSED LEATHER. THIS IS 100% PURE EXOTIC LEATHER.",
+    "Explore-Now":"Explore Now"
   },
   "product_listing":{
     "Watch_Listing": "Watch Listing",

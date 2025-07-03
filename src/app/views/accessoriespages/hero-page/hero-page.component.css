@@ -587,3 +587,34 @@
   color: #FFFFFF;
 }
 
+/* ----------------- Localization ----------------- */
+
+.reverse-order {
+  flex-direction: row-reverse;
+}
+
+.reverse-order > .accessories-details-section > .container > p {
+  text-align: end;
+}
+
+.reverse-order > .accessories-details-section > .container-fluid > p {
+  text-align: end;
+}
+
+.reverse-order > .accessories-details-section > .container  {
+  display: flex;
+  flex-direction: column;
+}
+
+.reverse-order > .accessories-details-section > .container-fluid {
+  display: flex;
+  flex-direction: column;
+}
+
+.reverse-order > .accessories-details-section > .container > .explore-now-btn {
+  align-self: flex-end;
+}
+
+.reverse-order > .accessories-details-section > .container-fluid > .explore-now-btn {
+  align-self: flex-end;
+}
