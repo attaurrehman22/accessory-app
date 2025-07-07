@@ -49,7 +49,7 @@ export class AddInventoryComponent implements OnInit{
       stock_quantity: [0, [Validators.required, Validators.min(0)]],
       quantity: [0, [Validators.required, Validators.min(0)]],
       damaged_quantity: [0, [Validators.min(0)]],
-      user_id: [0, [Validators.required]],
+      user_id: [1, [Validators.required]],
       purchase_price: [0, [Validators.required, Validators.min(0)]],
       sale_price: [0, [Validators.required, Validators.min(0)]],
       offer_price: [0, [Validators.min(0)]],

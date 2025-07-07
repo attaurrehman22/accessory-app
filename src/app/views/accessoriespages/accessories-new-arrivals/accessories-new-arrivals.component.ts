@@ -252,11 +252,20 @@ export class AccessoriesNewArrivalsComponent implements OnInit{
 
   // Helper method to get display price for an accessory
   getDisplayPrice(accessory: any): string {
+    // if (accessory.inventories && accessory.inventories.length > 0) {
+    //   const inventory = accessory.inventories[0];
+    //   return inventory.offer_price || inventory.sale_price || '0';
+    // }
+    // return accessory.min_price || '0';
+
     if (accessory.inventories && accessory.inventories.length > 0) {
       const inventory = accessory.inventories[0];
-      return inventory.offer_price || inventory.sale_price || '0';
+      const price = inventory.offer_price || inventory.sale_price || '0';
+      return parseFloat(price).toFixed(2);
     }
-    return accessory.min_price || '0';
+    const minPrice = accessory.min_price || '0';
+    return parseFloat(minPrice).toFixed(2);
+    
   }
 
   // Helper method to get display title for an accessory
