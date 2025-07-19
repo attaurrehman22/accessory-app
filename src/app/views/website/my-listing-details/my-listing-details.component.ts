@@ -100,12 +100,12 @@ export class MyListingDetailsComponent implements OnInit {
       black_icon: "assets/images/black_favourites.svg",
       white_icon: "assets/images/white_favourites.svg",
     },
-    {
-      label: "Cart Items",
-      arabicLabel: "المفضلة",
-      black_icon: "assets/images/black_cartitems.svg",
-      white_icon: "assets/images/white_cartitems.svg",
-    },
+    // {
+    //   label: "Cart Items",
+    //   arabicLabel: "المفضلة",
+    //   black_icon: "assets/images/black_cartitems.svg",
+    //   white_icon: "assets/images/white_cartitems.svg",
+    // },
     // { label: "Security", arabicLabel: "الأمان", icon: "bi bi-shield-lock" },
     // { label: "Privacy", arabicLabel: "الخصوصية", icon: "bi bi-globe" },
     // { label: "My Subscriptions", arabicLabel: "اشتراكاتي", icon: "bi bi-box-arrow-in-right" },
@@ -515,7 +515,7 @@ paymentId: any;
   }
 
   accessoriesWishList: any[] = [];
-  selectedFilter: string = "accessory";
+  selectedFilter: string = "product";
 
   onFilterChange(event: any) {
     this.selectedFilter = event;

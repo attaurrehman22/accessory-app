@@ -176,6 +176,7 @@ export class HeaderComponent {
     
     if (this.isUserLoggedIn()) {
       this.showHideUser = this.isUserLoggedIn();
+      console.log("IsAdminUser ----------- ",this.isAdminUser())
       if (this.isAdminUser()) {
         this.showHideAdminUser = this.isAdminUser();
       } else {

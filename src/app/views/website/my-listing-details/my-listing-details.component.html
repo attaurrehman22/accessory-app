@@ -1162,12 +1162,12 @@
       <div *ngIf="activeIndex === 6" class="container-fluid">
         <div class="d-flex justify-content-between align-items-center mb-3 filtered-div">
           <h4 class="mobile-label">{{ "my_Listing.Favorites" | translate }}</h4>
-          <mat-form-field>a
+          <!-- <mat-form-field>
             <select class="form-select form-select-sm" style="width: 150px" [(ngModel)]="selectedFilter" (ngModelChange)="onFilterChange($event)">
               <option value="product">Products</option>
               <option value="accessory">Accessories</option>
             </select>
-          </mat-form-field>
+          </mat-form-field> -->
         </div>
         <div class="list-cards" *ngIf="selectedFilter == 'product' ? favoritesProductDetails?.length > 0 : accessoriesWishList?.length > 0">
           <div *ngFor="let listing of selectedFilter == 'product' ? favoritesProductDetails : accessoriesWishList" class="card mb-3">
