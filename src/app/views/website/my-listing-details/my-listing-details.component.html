@@ -383,7 +383,6 @@
         
             <div class="col-md-6 mb-3 d-flex flex-column" [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'">
               <label for="country" class="form-label">{{ "my_Listing.Country" | translate }}</label>
-                <!-- <select disabled class="form-control" formControlName="country" (selectionChange)="getCountryName(country)"> -->
                 <select disabled class="form-control" formControlName="country">
                   <option>{{this.billingForm.get('country').value}}</option>
                 </select>
@@ -779,7 +778,7 @@
                       <button (click)="routeToChat()" class="action-btn">Open Chat</button>
                     </div>
                   </div>
-                  <div class="col-md-12 d-flex flex-column">
+                  <div class="col-md-12 d-flex flex-column custom-height-for-buy-and-sell-details">
                     <p class="order-status-label">Order Status</p>
                     <ul class="list-group">
                       <li
@@ -797,11 +796,131 @@
                         </label>
                         <!-- <div class="vertical-line" *ngIf="i !== statuses.length - 1"></div> -->
                         <div class="vertical-line" *ngIf="i !== activeBuyerStatuses.length - 1"></div>
-                        <div class="order-details">
-                          <p class="label-stl">{{ status.label }}</p>
+                        <div class="order-details" 
+                        style="cursor: pointer"
+                          (mouseenter)="onMouseEnter(status)"
+                          (mouseleave)="onMouseLeave()"
+                        >
+                          <p class="label-stl">{{ status.label }} <span class="desc-stl"> {{status.time}} </span></p>
                           <p class="desc-stl">{{ status.description }}</p>
                         </div>
                       </li>
+
+                      <div
+                        class="hover-modal"
+                        *ngIf="hoveredStatus && offerHistoryDetails.length > 0"
+                        (mouseenter)="onMouseEnter(hoveredStatus)"
+                        (mouseleave)="onMouseLeave()"
+                      >
+                        <div
+                          *ngFor="let customOfferDetails of offerHistoryDetails"
+                          class="col-md-12"
+                        >
+                        <span>
+                          {{
+                            customOfferDetails.recorded_at | date : "MMMM d, yyyy, h:mm a"
+                          }}
+                        </span>
+                          <div
+                            [ngClass]="{
+                              'reverse-order-custom-offer':
+                                translateService.currentLang !== 'en'
+                            }"
+                            class="d-flex flex-column card p-2 mt-3"
+                          >
+                            <div
+                              style="background: #f9fafb"
+                              class="d-flex align-items-baseline"
+                            >
+                              <ng-container
+                                *ngIf="
+                                  customOfferDetails?.sender?.img;
+                                  else showInitials
+                                "
+                              >
+                                <img
+                                  [src]="
+                                    apiUrl +
+                                    customOfferDetails?.sender?.img
+                                  "
+                                  alt="IMG"
+                                />
+                              </ng-container>
+                              <ng-template #showInitials>
+                                <div class="initials">
+                                  {{
+                                    customOfferDetails?.sender?.name
+                                      | slice : 0 : 2
+                                  }}
+                                </div>
+                              </ng-template>
+                              <p class="mx-2">
+                                {{ "chat_com.custom_offer" | translate }}
+                              </p>
+                            </div>
+
+                            <div
+                              class="d-flex justify-content-between align-items-center"
+                            >
+                              <p class="smaall-screen-text">
+                                {{ "chat_com.listing_id" | translate }}
+                              </p>
+                              <p class="smaall-screen-text">
+                                {{ productSerialNumber }}
+                              </p>
+                            </div>
+                            <div
+                              style="border-bottom: 1px solid #f2f5f8"
+                              class="d-flex justify-content-between align-items-center"
+                            >
+                              <p class="smaall-screen-text">
+                                {{ "chat_com.add_price" | translate }}
+                              </p>
+                              <p class="smaall-screen-text">
+                                {{ productPrice }}
+                              </p>
+                            </div>
+                            <div
+                              style="border-bottom: 1px solid #f2f5f8"
+                              class="d-flex justify-content-between align-items-center"
+                            >
+                              <p class="smaall-screen-text">
+                                {{ "chat_com.custom_offer" | translate }}
+                              </p>
+                              <p class="smaall-screen-text">
+                                {{ customOfferDetails.offer_price }}
+                              </p>
+                            </div>
+
+                            <div *ngIf="customOfferDetails?.ship_price"
+                              style="border-bottom: 1px solid #f2f5f8"
+                              class="d-flex justify-content-between align-items-center"
+                            >
+                              <p class="smaall-screen-text">
+                                <!-- {{ "chat_com.custom_offer" | translate }} -->
+                                  Ship Price
+                              </p>
+                              <p class="smaall-screen-text">
+                                {{ customOfferDetails.ship_price }}
+                              </p>
+                            </div>
+
+                            <div
+                            style="border-bottom: 1px solid #f2f5f8"
+                            class="d-flex justify-content-between align-items-center"
+                          >
+                            <p class="smaall-screen-text">
+                              <!-- {{ "chat_com.custom_offer" | translate }} -->
+                                Offer Status
+                            </p>
+                            <p class="smaall-screen-text">
+                              {{ customOfferDetails.offers_status }}
+                            </p>
+                          </div>
+
+                          </div>
+                        </div>
+                      </div>
                     </ul>
                   </div>
                 </div>
@@ -1050,13 +1169,13 @@
                       <button (click)="routeToChat()" class="action-btn">Open Chat</button>
                     </div>
                   </div>
-                  <div class="col-md-12 d-flex flex-column">
+                  <div class="col-md-12 d-flex flex-column custom-height-for-buy-and-sell-details">
                     <p class="order-status-label">Order Status</p>
                     <ul class="list-group">
                       <li
                         *ngFor="let status of activeSellerStatuses ; let i = index"
                         class="list-group-item d-flex align-items-center "
-                        style="border: none; background: transparent ;    position: relative;"
+                        style="border: none; background: transparent ;position: relative;"
                         [class.active]="status.active"
                       >
                         <label class="radio-container me-2">
@@ -1071,11 +1190,134 @@
                           (click)="callSellerOption()"
                           style="cursor: pointer"
                           class="order-details"
+                          (mouseenter)="onMouseEnter(status)"
+                          (mouseleave)="onMouseLeave()"
                         >
-                          <p class="label-stl">{{ status.label }}</p>
+                          <p class="label-stl">{{ status.label }} <span class="desc-stl">{{status.time}} </span></p>
                           <p class="desc-stl">{{ status.description }}</p>
                         </div>
                       </li>
+
+                      <div
+                        class="hover-modal"
+                        *ngIf="hoveredStatus && offerHistoryDetails.length > 0"
+                        (mouseenter)="onMouseEnter(hoveredStatus)"
+                        (mouseleave)="onMouseLeave()"
+                      >
+                      <div
+                      *ngFor="let customOfferDetails of offerHistoryDetails"
+                      class="col-md-12"
+                    >
+                      <span>
+                        {{
+                          customOfferDetails.recorded_at | date : "MMMM d, yyyy, h:mm a"
+                        }}
+                      </span>
+                      <div
+                        [ngClass]="{
+                          'reverse-order-custom-offer':
+                            translateService.currentLang !== 'en'
+                        }"
+                        class="d-flex flex-column card p-2 mt-3"
+                      >
+                        <div
+                          style="background: #f9fafb"
+                          class="d-flex align-items-baseline"
+                        >
+                          <ng-container
+                            *ngIf="
+                              customOfferDetails?.sender?.img;
+                              else showInitials
+                            "
+                          >
+                            <img
+                              [src]="
+                                apiUrl +
+                                customOfferDetails?.sender?.img
+                              "
+                              alt="IMG"
+                            />
+                          </ng-container>
+                          <ng-template #showInitials>
+                            <div class="initials">
+                              {{
+                                customOfferDetails?.sender?.name
+                                  | slice : 0 : 2
+                              }}
+                            </div>
+                          </ng-template>
+                          <p class="mx-2">
+                            {{ "chat_com.custom_offer" | translate }}
+                          </p>
+                        </div>
+
+                        <div
+                          class="d-flex justify-content-between align-items-center"
+                        >
+                          <p class="smaall-screen-text">
+                            {{ "chat_com.listing_id" | translate }}
+                          </p>
+                          <p class="smaall-screen-text">
+                            {{ productSerialNumber }}
+                          </p>
+                        </div>
+                        <div
+                          style="border-bottom: 1px solid #f2f5f8"
+                          class="d-flex justify-content-between align-items-center"
+                        >
+                          <p class="smaall-screen-text">
+                            {{ "chat_com.add_price" | translate }}
+                          </p>
+                          <p class="smaall-screen-text">
+                            {{ productPrice }}
+                          </p>
+                        </div>
+                        <div
+                          style="border-bottom: 1px solid #f2f5f8"
+                          class="d-flex justify-content-between align-items-center"
+                        >
+                          <p class="smaall-screen-text">
+                            {{ "chat_com.custom_offer" | translate }}
+                          </p>
+                          <!-- <p class="smaall-screen-text">
+                            {{ message.offer_price }}
+                          </p> -->
+                        </div>
+
+                        <div
+                          *ngIf="customOfferDetails?.ship_price"
+                          style="border-bottom: 1px solid #f2f5f8"
+                          class="d-flex justify-content-between align-items-center"
+                        >
+                          <p class="smaall-screen-text">
+                            Ship Price
+                          </p>
+                          <p class="smaall-screen-text">
+                            {{ customOfferDetails.ship_price }}
+                          </p>
+                        </div>
+
+                        <!-- 
+
+                        <div
+                          *ngIf="message?.days"
+                          style="border-bottom: 1px solid #f2f5f8"
+                          class="d-flex justify-content-between align-items-center"
+                        >
+                          <p class="smaall-screen-text">
+                            {{ "chat_com.offer_valid" | translate }}
+                          </p>
+                          <p class="smaall-screen-text">
+                            {{ message.days }}
+                            {{ "chat_com.days" | translate }}
+                          </p>
+                        </div> -->
+
+
+                      </div>
+                    </div>
+                      </div>
+
                     </ul>
                   </div>
                 </div>

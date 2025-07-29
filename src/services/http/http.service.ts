@@ -1330,6 +1330,24 @@ export class HttpService implements OnInit {
     });
   }
 
+  OrderHistory(orderID): Observable<any> {
+    return this.http.get(`${this.apiUrl}/api/order-history/${orderID}`, {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+  }
+
+  offerDetailsOfHistory(offerID): Observable<any> {
+    return this.http.get(`${this.apiUrl}/api/offer-history/${offerID}`, {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+  }
+
 
   getOrderDetails(orderID): Observable<any> {
     return this.http.get(`${this.apiUrl}/api/order/details/${orderID}`, {

@@ -14,6 +14,7 @@ import {
 import { TranslateService } from "@ngx-translate/core";
 import { LanguageService } from "src/services/lang-service/language.service";
 import { environment } from "src/environments/environment";
+import * as moment from 'moment';
 
 @Component({
   selector: "app-my-listing-details",
@@ -124,7 +125,9 @@ export class MyListingDetailsComponent implements OnInit {
       return words[0][0].toUpperCase();
     } else {
       const emailWord =this.profileForm.get('email').value;
-      return emailWord[0][0].toUpperCase();
+      if(emailWord){
+        return emailWord[0][0].toUpperCase();
+      }
       // return (emailWord[0][0].toUpperCase());
       // return 'EM';
     }
@@ -240,14 +243,14 @@ paymentId: any;
         last_name: res.last_name,
         gender: res.gender,
         city: res.city,
-        country: res.country,
+        country: 'Saudi Arabia',
         date_of_birth: res.date_of_birth,
         phone_number: res.phone_number,
         language: res?.language,
         occupation: res?.occupation,
         about_me: res?.about_me,
         email: res?.email,
-        profile_image: res?.profile_image.replace(/\\/g, ""),
+        profile_image: res?.profile_image?.replace(/\\/g, ""),
         password: res?.password,
       });
     });
@@ -309,7 +312,7 @@ paymentId: any;
           zip_code: res.data.zip_code,
           city: res.data.city,
           billing_address: res.data.billing_address,
-          country: res.data.country ? res.data.country : 'Saudi Arabia',
+          country: 'Saudi Arabia',
           state: res?.data?.state,
         });
       },
@@ -414,13 +417,13 @@ paymentId: any;
   orderDetails: any;
 
   getOrderDetails() {
-    this.http.getOrderDetails(this.orderID).subscribe((res) => {
-      this.orderDetails = res.order;
-      if(this.orderDetails?.product?.main_image){
-        this.orderDetails.product.main_image =
-          this.orderDetails.product.main_image.replace(/\\/g, "");
-      }
-    });
+    // this.http.getOrderDetails(this.orderID).subscribe((res) => {
+    //   this.orderDetails = res.order;
+    //   if(this.orderDetails?.product?.main_image){
+    //     this.orderDetails.product.main_image =
+    //       this.orderDetails.product.main_image.replace(/\\/g, "");
+    //   }
+    // });
   }
 
   loginFirst() {
@@ -472,7 +475,6 @@ paymentId: any;
 
   activeIndex: number = 0; // Default: First item is active
   setActive(index: number): void {
-    console.log("Active index", this.activeIndex);
     this.activeIndex = index;
     this.isShowSellOrdersListngDetails = false;
     this.isShowBuyOrdersListngDetails = false;
@@ -509,7 +511,6 @@ paymentId: any;
     } else if (this.activeIndex == 2) {
       this.getLatestMessages();
     }else if (this.activeIndex == 7) {
-      console.log(" --------------------- this.activeIndex == 7 ---------------------");
       this.getCartList();
     }
   }
@@ -661,8 +662,8 @@ paymentId: any;
 
   isShowSellOrdersListngDetails: boolean = false;
   isShowBuyOrdersListngDetails: boolean = false;
-  sellerDetails: any = null;
-  buyerDetails: any = null;
+  // sellerDetails: any = null;
+  // buyerDetails: any = null;
   productDetails: any;
   orderID: any;
   orderDate: any;
@@ -672,6 +673,7 @@ paymentId: any;
   SellerCityForDisplay: any;
 
   detailListing(listing: any): void {
+    this.offerHistoryDetails = []
     this.SellerNameForDisplay = listing.buyer.name;
     this.SellerCityForDisplay = listing.buyer.city;
     this.isShowSellOrdersListngDetails = true;
@@ -695,17 +697,21 @@ paymentId: any;
     if (!name) {
       return "";
     }
-    console.log("name", name);
     // Split name by space and get first letters
     const words = name.trim().split(" ");
-    console.log("words", words);
     // words ['']0: ""length: 1[[Prototype]]: Array(0)
 
     if (words?.length === 1 && words[0] !== "" && words[0] !== undefined && words[0] !== null ) {
       return words[0][0].toUpperCase();
     } else {
-      const emailWord =this.profileForm.get('email').value
-      return emailWord[0][0].toUpperCase();
+      if(this.profileForm.get('email').value){
+        const emailWord = this.profileForm.get('email').value
+        if(emailWord[0][0]){
+          return emailWord[0][0].toUpperCase();
+        }else{
+          return
+        }
+      }
       // return (emailWord[0][0].toUpperCase());
       // return 'EM';
     }
@@ -715,6 +721,7 @@ paymentId: any;
 
   // existingProductUserID:any;
   detailsBuyListing(listing: any): void {
+    this.offerHistoryDetails = []
     this.isShowBuyOrdersListngDetails = true;
     this.orderID = listing?.id;
     this.forSendingProductID = listing?.product_id;
@@ -738,53 +745,96 @@ paymentId: any;
   activeSellerStatuses: any;
 
   fetchOrderStatus(orderID: number, type: "seller" | "buyer"): void {
+    
     this.getOrderStatus(orderID).subscribe(
       (res) => {
         if (type === "seller") {
-          if (
-            res?.status_flow?.initiated &&
-            res?.status_flow?.awaiting_confirmation &&
-            !res?.status_flow?.make_payment
-          ) {
+
+          let initiate_ = '';
+          let awaiting_confirmation_ = '';
+          let make_payment_ = '';
+          let delivery_in_progress_ = '';
+          let order_delivered_ = '';
+          let preparing_shipment_ = '';
+          let order_completed_ = '';
+          let order_canceled_ = '';
+
+          if(res?.data?.history){
+            res?.data?.history.forEach((history:any)=>{
+              if(history.new_status == 'initiated'){
+               initiate_ = 'true';
+               this.sellerStatuses[0].time = moment(history.created_at).fromNow();
+              }
+              if(history.new_status == 'awaiting_confirmation'){
+                awaiting_confirmation_ = 'true'
+                this.sellerStatuses[1].time = moment(history.created_at).fromNow();
+               }
+               if(history.new_status == 'make_payment'){
+                make_payment_ = 'true';
+                this.sellerStatuses[2].time = moment(history.created_at).fromNow();
+               }
+               if(history.new_status == 'preparing_shipment'){
+                preparing_shipment_ = 'true';
+                this.sellerStatuses[3].time = moment(history.created_at).fromNow();
+              }
+              if(history.new_status == 'delivery_in_progress'){
+                delivery_in_progress_ = 'true';
+                this.sellerStatuses[4].time = moment(history.created_at).fromNow();
+              }
+              if(history.new_status == 'order_delivered'){
+                order_delivered_ = 'true';
+                this.sellerStatuses[5].time = moment(history.created_at).fromNow();
+              }
+              if(history.new_status == 'order_completed'){
+                order_completed_ = 'true';
+                this.sellerStatuses[6].time = moment(history.created_at).fromNow();
+              }
+              if(history.new_status == 'order_canceled'){
+                order_canceled_ = 'true';
+                this.sellerStatuses[7].time = moment(history.created_at).fromNow();
+              }
+              
+            })
+          }
+
+          if (initiate_ && awaiting_confirmation_ && !make_payment_) 
+          {
+            console.log("lengthTwoofSeller",this.lengthTwoofSeller)
             this.lengthTwoofSeller = true;
           }
 
-          if (
-            res?.status_flow?.delivery_in_progress &&
-            !res?.status_flow?.order_delivered
-          ) {
+          if (delivery_in_progress_ && !order_delivered_) {
+            console.log("isSellerDeliveryInprogress",this.isSellerDeliveryInprogress)
             this.isSellerDeliveryInprogress = true;
           }
-
-          this.sellerDetails = res;
-          this.orderID = res.order_id;
+          this.orderID = res?.data?.history[0]?.order_id;
 
           // Reset all to inactive
           this.sellerStatuses.forEach((s) => (s.active = false));
 
-          if (res?.status_flow) {
-            if (res?.status_flow?.initiated) {
+          if (res?.data?.history) {
+            if (initiate_) {
               this.sellerStatuses[0].active = true;
             }
-            if (res?.status_flow?.awaiting_confirmation) {
+            if (awaiting_confirmation_) {
               this.sellerStatuses[1].active = true;
             }
-            if (res?.status_flow?.make_payment) {
+            if (make_payment_) {
               this.sellerStatuses[2].active = true;
             }
-            if (res?.status_flow?.preparing_shipment) {
+            if (preparing_shipment_) {
               this.sellerStatuses[3].active = true;
             }
-            if (res?.status_flow?.delivery_in_progress) {
+            if (delivery_in_progress_) {
               this.sellerStatuses[4].active = true;
             }
-            if (res?.status_flow?.order_delivered) {
+            if (order_delivered_) {
               this.sellerStatuses[5].active = true;
             }
-            if (res?.status_flow?.order_completed) {
+            if (order_completed_) {
               this.sellerStatuses[6].active = true;
             }
-            if (res?.status_flow?.order_canceled) {
+            if (order_canceled_) {
               this.sellerStatuses[7].active = true;
             }
           }
@@ -794,43 +844,54 @@ paymentId: any;
             (s) => s.active
           );
         } else if (type == "buyer") {
-          console.log("Type is Buyes");
-          this.buyerDetails = res;
+          // this.buyerDetails = res;
           // Reset all to inactive
           this.statuses.forEach((s) => (s.active = false));
-
-          if (res?.status_flow) {
-            if (res?.status_flow?.initiated) {
-              this.statuses[0].active = true;
-            }
-            if (res?.status_flow?.awaiting_confirmation) {
-              this.statuses[1].active = true;
-            }
-            if (res?.status_flow?.make_payment) {
-              this.statuses[2].active = true;
-            }
-            if (res?.status_flow?.preparing_shipment) {
-              this.statuses[3].active = true;
-            }
-            if (res?.status_flow?.delivery_in_progress) {
-              this.statuses[4].active = true;
-            }
-            if (res?.status_flow?.order_delivered) {
-              this.statuses[5].active = true;
-            }
-            if (res?.status_flow?.order_completed) {
-              this.statuses[6].active = true;
-            }
-            if (res?.status_flow?.order_canceled) {
-              this.statuses[7].active = true;
-            }
+          if(res?.data?.history){
+            res?.data?.history.forEach(
+              (history:any)=>{
+                if (history.new_status == 'initiated') {
+                  this.statuses[0].active = true;
+                  this.statuses[0].time = moment(history.created_at).fromNow();
+                }
+                if (history.new_status == 'awaiting_confirmation') {
+                  this.statuses[1].active = true;
+                  this.statuses[1].time = moment(history.created_at).fromNow();
+                }
+                if (history.new_status == 'make_payment') {
+                  this.statuses[2].active = true;
+                  this.statuses[2].time = moment(history.created_at).fromNow();
+                }
+                if (history.new_status == 'preparing_shipment') {
+                  this.statuses[3].active = true;
+                  this.statuses[3].time = moment(history.created_at).fromNow();
+                }
+                if (history.new_status == 'delivery_in_progress') {
+                  this.statuses[4].active = true;
+                  this.statuses[4].time = moment(history.created_at).fromNow();
+                }
+                if (history.new_status == 'order_delivered') {
+                  this.statuses[5].active = true;
+                  this.statuses[5].time = moment(history.created_at).fromNow();
+                }
+                if (history.new_status == 'order_completed') {
+                  this.statuses[6].active = true;
+                  this.statuses[6].time = moment(history.created_at).fromNow();
+                }
+                if (history.new_status == 'order_canceled') {
+                  this.statuses[7].active = true;
+                  this.statuses[7].time = moment(history.created_at).fromNow();
+                }
+              }
+            )
           }
-
           // 🔥 Filter only active buyer statuses
           this.activeBuyerStatuses = this.statuses.filter((s) => s.active);
         }
-
-        this.getOrderDetails();
+        this.productSerialNumber = res?.data?.order?.product?.serial_no
+        this.productPrice = res?.data?.order?.product?.price;
+        this.offerHistory(res?.data?.order?.offer_id)
+        // this.getOrderDetails();
       },
       (error) => {
         console.error("Error fetching order status:", error);
@@ -838,10 +899,45 @@ paymentId: any;
     );
   }
 
+  productSerialNumber:any;
+  productPrice:any;
+
+  offerHistoryDetails:any;
+  hoveredStatus: any = null;
+  closeTimeout: any;
+  
+  onMouseEnter(status: any) {
+    if (this.closeTimeout) {
+      clearTimeout(this.closeTimeout);
+    }
+    this.hoveredStatus = status;
+  }
+  
+  onMouseLeave() {
+    this.closeTimeout = setTimeout(() => {
+      this.hoveredStatus = null;
+    }, 200); // 200ms delay gives time to move to modal
+  }
+  
+  offerHistory(orderID){
+    this.http.offerDetailsOfHistory(orderID).subscribe(
+      (res)=>{
+        if(res?.history){
+          this.offerHistoryDetails = res.history
+        }else{
+          this.offerHistoryDetails = []
+        }
+      },(err)=>{
+        this.offerHistoryDetails = []
+      }
+    )
+  }
+
+
   activeBuyerStatuses: any[] = [];
 
   getOrderStatus(orderID: number): Observable<any> {
-    return this.http.getOrderStatus(orderID);
+    return this.http.OrderHistory(orderID);
   }
 
   deleteListing(listing) {
@@ -1039,41 +1135,49 @@ paymentId: any;
   statuses = [
     {
       label: "Order Initiated",
+      time:null,
       description: "Order has been initiated.",
       active: false,
     },
     {
       label: "Awaiting For Confirmation",
+      time:null,
       description: "Waiting for seller to confirm the order.",
       active: false,
     },
     {
       label: "Make Payment",
+      time:null,
       description: "Make a payment for your order.",
       active: false,
     },
     {
       label: "Preparing Shipment",
+      time:null,
       description: "Seller is preparing your order.",
       active: false,
     },
     {
       label: "Delivery in Progress",
+      time:null,
       description: "Click to track your order.",
       active: false,
     },
     {
       label: "Payout Confirmation",
+      time:null,
       description: "Your payment has been released.",
       active: false,
     },
     {
       label: "Order Delivered",
+      time:null,
       description: "Authorize payout for your order.",
       active: false,
     },
     {
       label: "Order canceled",
+      time:null,
       description: "Your order has been canceled.",
       active: false,
     },
@@ -1083,41 +1187,49 @@ paymentId: any;
   sellerStatuses = [
     {
       label: "Order Initiated",
+     time:null,
       description: "Buyer has initiated the order.",
       active: false,
     },
     {
       label: "Confirm Order Availability",
+     time:null,
       description: "Confirm availability for your listed order.",
       active: false,
     },
     {
       label: "Awaiting Payment",
+     time:null,
       description: "Awaiting payment confirmation from buyer.",
       active: false,
     },
     {
       label: "Prepare Shipment",
+     time:null,
       description: "Prepare shipment for your order.",
       active: false,
     },
     {
       label: "Delivery in Progress",
+     time:null,
       description: "Click to track your order.",
       active: false,
     },
     {
       label: "Order Delivered",
+     time:null,
       description: "Awaiting for buyer to authorize payment.",
       active: false,
     },
     {
       label: "Order Completed",
+     time:null,
       description: "Your order has been completed successfully.",
       active: false,
     },
     {
       label: "Order canceled",
+     time:null,
       description: "The order was canceled by the buyer.",
       active: false,
     },
@@ -1144,7 +1256,6 @@ paymentId: any;
       quantity: item.quantity
     }
     this.http.updateCart(formData).subscribe((res) => {
-      console.log("res",res);
     });
   }
 
@@ -1155,7 +1266,6 @@ paymentId: any;
 
   removeItem(item: any) {
     this.cartItems = this.cartItems.filter((i) => i !== item);
-    console.log("item",item);
     this.http.deleteCart(item.accessory.id).subscribe((res) => {
       this.alertService.showAlert("success", "Item removed from cart");
       this.getCartList();
@@ -1181,187 +1291,6 @@ paymentId: any;
 
   goToCheckout() {
     this.router.navigate(['/myListing/summary'])
-    // this.http.confirmCartOrder().subscribe(
-    //   (res) => {
-    //   this.alertService.showAlert("success", "Order confirmed");
-    //   console.log("res",res);
-    //   // this.router.navigate(['/myListing/summary'],{
-    //   //   state:{orderID:res?.order_id}
-    //   // })
-    //   // if(res?.order_id){
-    //   //   const formData = {
-    //   //     order_id: res?.order_id,
-    //   //   }
-    //   //   this.http.paymentInitiate(formData).subscribe(
-    //   //     (res) => {
-    //   //     if(res?.payment_url){
-    //   //       const paymentUrl = res?.payment_url.replace(/\\/g, "");
-    //   //       console.log("paymentUrl",paymentUrl);
-            
-    //   //       // Store order ID for callback handling
-    //   //       localStorage.setItem('pendingPaymentOrderId', res?.order_id);
-    //   //       this.paymentId = res?.payment_id;
-    //   //       // Add return URL to payment URL if not already present
-    //   //       let finalPaymentUrl = paymentUrl;
-    //   //       if (!paymentUrl.includes('returnUrl') && !paymentUrl.includes('callback')) {
-    //   //         const returnUrl = encodeURIComponent(window.location.origin + '/payment-callback');
-    //   //         finalPaymentUrl = paymentUrl + (paymentUrl.includes('?') ? '&' : '?') + 'returnUrl=' + returnUrl;
-    //   //       }
-            
-    //   //       // Open payment URL in new window
-    //   //       const paymentWindow = window.open(finalPaymentUrl, "_blank");
-            
-    //   //       // Set up polling to check payment status
-    //   //       this.checkPaymentStatus(res?.order_id, paymentWindow);
-    //   //     }
-    //   //     console.log("res",res);
-    //   //   });
-    //   // }
-    // });
   }
-
-  // goToCheckout() {
-  //   this.http.confirmCartOrder().subscribe(
-  //     (res) => {
-  //     this.alertService.showAlert("success", "Order confirmed");
-  //     console.log("res",res);
-  //     if(res?.order_id){
-  //       const formData = {
-  //         order_id: res?.order_id,
-  //       }
-  //       this.http.paymentInitiate(formData).subscribe(
-  //         (res) => {
-  //         if(res?.payment_url){
-  //           const paymentUrl = res?.payment_url.replace(/\\/g, "");
-  //           console.log("paymentUrl",paymentUrl);
-            
-  //           // Store order ID for callback handling
-  //           localStorage.setItem('pendingPaymentOrderId', res?.order_id);
-  //           this.paymentId = res?.payment_id;
-  //           // Add return URL to payment URL if not already present
-  //           let finalPaymentUrl = paymentUrl;
-  //           if (!paymentUrl.includes('returnUrl') && !paymentUrl.includes('callback')) {
-  //             const returnUrl = encodeURIComponent(window.location.origin + '/payment-callback');
-  //             finalPaymentUrl = paymentUrl + (paymentUrl.includes('?') ? '&' : '?') + 'returnUrl=' + returnUrl;
-  //           }
-            
-  //           // Open payment URL in new window
-  //           const paymentWindow = window.open(finalPaymentUrl, "_blank");
-            
-  //           // Set up polling to check payment status
-  //           this.checkPaymentStatus(res?.order_id, paymentWindow);
-  //         }
-  //         console.log("res",res);
-  //       });
-  //     }
-  //   });
-  // }
-
-  // // Check payment status after redirect
-  // checkPaymentStatus(orderId: string, paymentWindow: Window) {
-  //   const checkInterval = setInterval(() => {
-  //     // Check if payment window is closed
-  //     if (paymentWindow.closed) {
-  //       clearInterval(checkInterval);
-  //       this.handlePaymentCallback(orderId);
-  //     }
-  //   }, 2000); // Check every 2 seconds
-
-  //   // Also check after 30 seconds regardless of window status
-  //   setTimeout(() => {
-  //     clearInterval(checkInterval);
-  //     this.handlePaymentCallback(orderId);
-  //   }, 30000);
-  // }
-
-  // // Handle payment callback
-  // handlePaymentCallback(orderId: string) {
-  //   // console.log("orderId -----------------------------",orderId);
-  //   // Get payment ID from localStorage or URL parameters
-  //   const urlParams = new URLSearchParams(window.location.search);
-  //   console.log("urlParams -----------------------------",urlParams);
-  //   const paymentId = urlParams.get('paymentId') || localStorage.getItem('paymentId');
-  //   // const paymentId = '07075871732281095673'
-  //   console.log("orderId -----------------------------",paymentId);
-  //   if (paymentId) {
-  //     this.http.paymentCallback(paymentId).subscribe(
-  //       (response) => {
-  //         console.log('Payment callback response:', response);
-          
-  //         if (response?.status === 'success' || response?.payment_status === 'completed') {
-  //           this.alertService.showAlert("success", "Payment completed successfully!");
-  //           // Refresh cart and order data
-  //           this.getCartList();
-  //           this.getOrderDetails();
-            
-  //           // Redirect to cart page if we're on payment callback route
-  //           if (window.location.pathname.includes('payment-callback')) {
-  //             this.router.navigate(['/myListing'], { 
-  //               state: { activeRouteType: 'cart' } 
-  //             });
-  //           }
-  //         } else if (response?.status === 'failed' || response?.payment_status === 'failed') {
-  //           this.alertService.showAlert("warning", "Payment failed. Please try again.");
-            
-  //           // Redirect to cart page if we're on payment callback route
-  //           if (window.location.pathname.includes('payment-callback')) {
-  //             this.router.navigate(['/myListing'], { 
-  //               state: { activeRouteType: 'cart' } 
-  //             });
-  //           }
-  //         } else {
-  //           this.alertService.showAlert("info", "Payment status: " + (response?.status || 'pending'));
-  //         }
-          
-  //         // Clear stored payment data
-  //         localStorage.removeItem('pendingPaymentOrderId');
-  //         localStorage.removeItem('paymentId');
-  //       },
-  //       (error) => {
-  //         console.error('Payment callback error:', error);
-  //         this.alertService.showAlert("warning", "Error checking payment status. Please contact support.");
-          
-  //         // Redirect to cart page if we're on payment callback route
-  //         if (window.location.pathname.includes('payment-callback')) {
-  //           this.router.navigate(['/myListing'], { 
-  //             state: { activeRouteType: 'cart' } 
-  //           });
-  //         }
-  //       }
-  //     );
-  //   } else {
-  //     // No payment ID found, redirect to cart page
-  //     if (window.location.pathname.includes('payment-callback')) {
-  //       this.router.navigate(['/myListing'], { 
-  //         state: { activeRouteType: 'cart' } 
-  //       });
-  //     }
-  //   }
-  // }
-
-  // // Check payment status for a specific order
-  // checkOrderPaymentStatus(orderId: string) {
-  //   if (orderId) {
-  //     // You can implement this method to check payment status for a specific order
-  //     // This might involve calling a different API endpoint
-  //     console.log('Checking payment status for order:', orderId);
-      
-  //     // For now, we'll use the callback method with a stored payment ID
-  //     const paymentId = localStorage.getItem('paymentId');
-  //     if (paymentId) {
-  //       this.handlePaymentCallback(orderId);
-  //     }
-  //   }
-  // }
-
-  // // Manual payment status check (can be called from UI)
-  // refreshPaymentStatus() {
-  //   const pendingOrderId = localStorage.getItem('pendingPaymentOrderId');
-  //   if (pendingOrderId) {
-  //     this.checkOrderPaymentStatus(pendingOrderId);
-  //   } else {
-  //     this.alertService.showAlert("info", "No pending payment found.");
-  //   }
-  // }
 
 }
