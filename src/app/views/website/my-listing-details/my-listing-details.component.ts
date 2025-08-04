@@ -417,13 +417,13 @@ paymentId: any;
   orderDetails: any;
 
   getOrderDetails() {
-    // this.http.getOrderDetails(this.orderID).subscribe((res) => {
-    //   this.orderDetails = res.order;
-    //   if(this.orderDetails?.product?.main_image){
-    //     this.orderDetails.product.main_image =
-    //       this.orderDetails.product.main_image.replace(/\\/g, "");
-    //   }
-    // });
+    this.http.getOrderDetails(this.orderID).subscribe((res) => {
+      this.orderDetails = res.order;
+      if(this.orderDetails?.product?.main_image){
+        this.orderDetails.product.main_image =
+          this.orderDetails.product.main_image.replace(/\\/g, "");
+      }
+    });
   }
 
   loginFirst() {
@@ -741,7 +741,7 @@ paymentId: any;
 
   lengthTwoofSeller: boolean = false;
   isSellerDeliveryInprogress: boolean = false;
-
+  selectedProductDetails:any;
   activeSellerStatuses: any;
 
   fetchOrderStatus(orderID: number, type: "seller" | "buyer"): void {
@@ -888,19 +888,16 @@ paymentId: any;
           // 🔥 Filter only active buyer statuses
           this.activeBuyerStatuses = this.statuses.filter((s) => s.active);
         }
-        this.productSerialNumber = res?.data?.order?.product?.serial_no
-        this.productPrice = res?.data?.order?.product?.price;
+        this.selectedProductDetails = res?.data?.order?.product;
+        this.selectedProductDetails.main_image = this.selectedProductDetails.main_image.replace(/\\/g, "");
         this.offerHistory(res?.data?.order?.offer_id)
-        // this.getOrderDetails();
+        this.getOrderDetails();
       },
       (error) => {
         console.error("Error fetching order status:", error);
       }
     );
   }
-
-  productSerialNumber:any;
-  productPrice:any;
 
   offerHistoryDetails:any;
   hoveredStatus: any = null;
@@ -983,20 +980,17 @@ paymentId: any;
     }
 
     const formData = {
-      product_id: this.orderDetails.product_id || 0,
-      sender_id: userIDD || 0,
-      offer_id: Number(this.orderDetails.offer_id) || 0,
-      // offer_price: Number(this.orderDetails.final_price) || 0,
-      ship_price: this.shippingCharges || 0,
-      // Safely handle null or undefined chat_id
-      chat_id: this.orderDetails.chat_id
-        ? this.orderDetails.chat_id.toString()
-        : "0", // Fallback to '0' if null/undefined
-      validity_days: this.offerValidity || 0,
+      chat_id: this.orderDetails?.chat_id,
+      ship_price: this.shippingCharges,
+      product_id: this.selectedProductDetails.id,
+      sender_id: userIDD,
+      receiver_id: this.orderDetails?.buyer_id,
+      validity_days: this.offerValidity,
     };
 
-    this.http.sendOffer(formData).subscribe(
+    this.http.sendShipmenttoBuyer(formData).subscribe(
       (res) => {
+        this.showSellerConfirmOrderAvailability = false;
         if (this.translateService.currentLang == "en") {
           this.alertService.showAlert("success", "Offer Sent Successfully");
         } else {
@@ -1008,6 +1002,32 @@ paymentId: any;
         this.alertService.showAlert("warning", errorMessage);
       }
     );
+    // const formData = {
+    //   product_id: this.selectedProductDetails.id || 0,
+    //   sender_id: userIDD || 0,
+    //   offer_id: Number(this.orderDetails?.offer_id) || 0,
+    //   ship_price: this.shippingCharges || 0,
+    //   // Safely handle null or undefined chat_id
+    //   chat_id: this.orderDetails?.chat_id
+    //     ? this.orderDetails?.chat_id.toString()
+    //     : "0", // Fallback to '0' if null/undefined
+    //   validity_days: this.offerValidity || 0,
+    // };
+    // console.log("FormData",formData)
+    // sendShipmenttoBuyer(formData)
+    // this.http.sendOffer(formData).subscribe(
+    //   (res) => {
+    //     if (this.translateService.currentLang == "en") {
+    //       this.alertService.showAlert("success", "Offer Sent Successfully");
+    //     } else {
+    //       this.alertService.showAlert("success", "تم إرسال العرض بنجاح");
+    //     }
+    //   },
+    //   (err) => {
+    //     const errorMessage = err.error?.message || "Something went wrong!";
+    //     this.alertService.showAlert("warning", errorMessage);
+    //   }
+    // );
   }
 
   markAsSold() {
