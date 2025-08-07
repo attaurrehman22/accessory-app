@@ -92,7 +92,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
       this.loginFirst();
     }
     
-    if (history?.state?.chatID) {
+    // if (history?.state?.chatID) {
       this.getLatestMessage();
       
       if (history?.state?.fromRoute == "gotToChat") {
@@ -137,7 +137,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
           this.getChatDetails();
         }
       }
-    }
+    // }
     if (history?.state?.data && history?.state?.fromRoute != "gotToChat") {
       this.productDeatils = history.state.data;
       this.noMessageDetails = this.productDeatils.created_by;
@@ -314,8 +314,12 @@ export class ChatComponent implements OnInit, AfterViewChecked {
             count_sen_rec++;
           }
 
-          if (message.action_type === "buy_now") {
-            this.isBuyNowFromChatCheck = true;
+          if (message.action_type) {
+            if(message.action_type == "buy_now"){
+              this.isBuyNowFromChatCheck = true;
+            }else{
+              this.isBuyNowFromChatCheck = false;
+            }
           }
 
           if (message.action_type === "add_shipping") {
@@ -754,6 +758,10 @@ export class ChatComponent implements OnInit, AfterViewChecked {
 
   // assign this object true when click buyer 'Buy Now' and dealer get option 'Add Shipping' when this object is true also update this when buyer buy product
   isBuyNowFromChatCheck: boolean = false;
+
+  hasBuyNowMessage(): boolean {
+    return this.reversedMessages?.some((message: any) => message.action_type === 'buy_now') || false;
+  }
 
   buyNowFromChat() {
     const formData = {

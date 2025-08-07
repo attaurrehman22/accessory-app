@@ -163,12 +163,12 @@ paymentId: any;
 
     if (history?.state?.activeRouteType == "buyOrders") {
       this.activeIndex = 4;
-      this.getOrderDetails();
+      this.getBuyOrders();
     }
 
     if (history?.state?.activeRouteType == "sellOrders") {
       this.activeIndex = 5;
-      this.getOrderDetails();
+      this.getSellOrders();
     }
 
     if (history?.state?.Ordertype == "buy") {
