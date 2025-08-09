@@ -744,6 +744,8 @@ paymentId: any;
   selectedProductDetails:any;
   activeSellerStatuses: any;
 
+  backUpSelectedProductWhenBuyandSellitemClicked:any;
+
   fetchOrderStatus(orderID: number, type: "seller" | "buyer"): void {
     
     this.getOrderStatus(orderID).subscribe(
@@ -765,7 +767,7 @@ paymentId: any;
                initiate_ = 'true';
                this.sellerStatuses[0].time = moment(history.created_at).fromNow();
               }
-              if(history.new_status == 'awaiting_confirmation'){
+              if(history.new_status == 'awaiting_confirmation' || history.new_status == 'add_shipping'){
                 awaiting_confirmation_ = 'true'
                 this.sellerStatuses[1].time = moment(history.created_at).fromNow();
                }
@@ -797,7 +799,7 @@ paymentId: any;
             })
           }
 
-          if (initiate_ && awaiting_confirmation_ && !make_payment_) 
+          if (initiate_ && !awaiting_confirmation_ && !make_payment_) 
           {
             console.log("lengthTwoofSeller",this.lengthTwoofSeller)
             this.lengthTwoofSeller = true;
@@ -815,21 +817,27 @@ paymentId: any;
           if (res?.data?.history) {
             if (initiate_) {
               this.sellerStatuses[0].active = true;
+              this.sellerStatuses[1].active = true;
             }
             if (awaiting_confirmation_) {
               this.sellerStatuses[1].active = true;
+              this.sellerStatuses[2].active = true;
             }
             if (make_payment_) {
               this.sellerStatuses[2].active = true;
+              this.sellerStatuses[3].active = true;
             }
             if (preparing_shipment_) {
               this.sellerStatuses[3].active = true;
+              this.sellerStatuses[4].active = true;
             }
             if (delivery_in_progress_) {
               this.sellerStatuses[4].active = true;
+              this.sellerStatuses[5].active = true;
             }
             if (order_delivered_) {
               this.sellerStatuses[5].active = true;
+              this.sellerStatuses[6].active = true;
             }
             if (order_completed_) {
               this.sellerStatuses[6].active = true;
@@ -852,26 +860,32 @@ paymentId: any;
               (history:any)=>{
                 if (history.new_status == 'initiated') {
                   this.statuses[0].active = true;
+                  this.statuses[1].active = true;
                   this.statuses[0].time = moment(history.created_at).fromNow();
                 }
-                if (history.new_status == 'awaiting_confirmation') {
+                if (history.new_status == 'awaiting_confirmation' || history.new_status == 'add_shipping') {
                   this.statuses[1].active = true;
+                  this.statuses[2].active = true;
                   this.statuses[1].time = moment(history.created_at).fromNow();
                 }
                 if (history.new_status == 'make_payment') {
                   this.statuses[2].active = true;
+                  this.statuses[3].active = true;
                   this.statuses[2].time = moment(history.created_at).fromNow();
                 }
                 if (history.new_status == 'preparing_shipment') {
                   this.statuses[3].active = true;
+                  this.statuses[4].active = true;
                   this.statuses[3].time = moment(history.created_at).fromNow();
                 }
                 if (history.new_status == 'delivery_in_progress') {
                   this.statuses[4].active = true;
+                  this.statuses[5].active = true;
                   this.statuses[4].time = moment(history.created_at).fromNow();
                 }
                 if (history.new_status == 'order_delivered') {
                   this.statuses[5].active = true;
+                  this.statuses[6].active = true;
                   this.statuses[5].time = moment(history.created_at).fromNow();
                 }
                 if (history.new_status == 'order_completed') {
@@ -889,6 +903,28 @@ paymentId: any;
           this.activeBuyerStatuses = this.statuses.filter((s) => s.active);
         }
         this.selectedProductDetails = res?.data?.order?.product;
+        // this.backUpSelectedProductWhenBuyandSellitemClicked = res?.data;
+        const data = res?.data;
+
+        // Parse shipping_proof into an array
+        if (data?.order?.shipping_proof) {
+          try {
+            let proofs = JSON.parse(data.order.shipping_proof); // turns into ["shipping_proof/458/1754679496_689648c87fa28.png"]
+
+            // If you just want to remove slashes completely:
+            proofs = proofs.map((p: string) => p.replace(/\//g, ''));
+
+            // Or if you just want the normal path without escape chars:
+            // proofs = proofs.map((p: string) => p); // no need to replace anything
+
+            data.order.shipping_proof = proofs;
+          } catch (e) {
+            console.error("Invalid shipping_proof format", e);
+          }
+        }
+
+        this.backUpSelectedProductWhenBuyandSellitemClicked = data;
+         console.log("PROOF images",this.backUpSelectedProductWhenBuyandSellitemClicked?.order?.shipping_proof)
         this.selectedProductDetails.main_image = this.selectedProductDetails.main_image.replace(/\\/g, "");
         this.offerHistory(res?.data?.order?.offer_id)
         this.getOrderDetails();
@@ -897,6 +933,20 @@ paymentId: any;
         console.error("Error fetching order status:", error);
       }
     );
+  }
+
+  get totalPrice(): number {
+    const shipPrice = Number(this.backUpSelectedProductWhenBuyandSellitemClicked?.order?.offer?.ship_price || 0);
+    const finalPrice = Number(this.backUpSelectedProductWhenBuyandSellitemClicked?.order?.final_price || 0);
+    return shipPrice + finalPrice;
+  }
+  
+
+  formateTime(time: any) {
+    const result = moment(time).fromNow(); // "in 3 days" or "3 days ago"
+    return result.startsWith("in ") 
+      ? result.replace("in ", "") + " left" 
+      : result; 
   }
 
   offerHistoryDetails:any;
@@ -960,14 +1010,42 @@ paymentId: any;
 
   showSellerConfirmOrderAvailability: boolean = false;
   showSellerProofofShipping: boolean = false;
-
-  callSellerOption() {
-    if (this.lengthTwoofSeller) {
+  showBuyerandSellerProofOfOwnerShipReadOnlyModal:boolean = false;
+  callSellerOption(i:any) {
+    console.log("this.activeSellerStatuses.length = " ,this.activeSellerStatuses.length )
+    console.log("i = " ,i )
+    if (this.lengthTwoofSeller && i == 1) {
       this.showSellerConfirmOrderAvailability = true;
     }
-    if (this.isSellerDeliveryInprogress) {
-      this.showSellerProofofShipping = true;
+    // if (this.isSellerDeliveryInprogress && i == 4) {
+    //   this.showSellerProofofShipping = true;
+    // }
+    if(i == 3 && this.activeSellerStatuses.length == 4)
+    {
+      this.showSellerProofofShipping = true
     }
+
+    if(i == 4 && this.activeSellerStatuses.length >= 5){
+      this.showBuyerandSellerProofOfOwnerShipReadOnlyModal = true;
+    }
+  }
+
+  showBuyerMakePayment: boolean = false;
+
+  callBuyerOption(i:any){
+    console.log("Buyer Production",i)
+    console.log("this.activeBuyerStatuses.length",this.activeBuyerStatuses.length)
+    if(i == 2 && this.activeBuyerStatuses.length == 3){
+      this.showBuyerMakePayment = true;
+    }else if(i == 4 && this.activeBuyerStatuses.length >= 5){
+      this.showBuyerandSellerProofOfOwnerShipReadOnlyModal = true;
+    }else{
+      this.showBuyerMakePayment = false;
+    }
+  }
+
+  closeshowBuyerandSellerProofOfOwnerShipReadOnlyModal(){
+    this.showBuyerandSellerProofOfOwnerShipReadOnlyModal = false;
   }
 
   shippingCharges: any;
@@ -996,6 +1074,7 @@ paymentId: any;
         } else {
           this.alertService.showAlert("success", "تم إرسال العرض بنجاح");
         }
+        this.fetchOrderStatus(this.orderID, "seller");
       },
       (err) => {
         const errorMessage = err.error?.message || "Something went wrong!";
@@ -1030,6 +1109,53 @@ paymentId: any;
     // );
   }
 
+
+  buyerMakePayment() {
+
+    console.log("Buyer Make Payment caling")
+    let userIDD;
+    if (localStorage.getItem("userID")) {
+      userIDD = localStorage.getItem("userID").toString();
+    }
+
+    const formData = {
+      chat_id: this.orderDetails?.chat_id,
+      product_id: this.selectedProductDetails.id,
+      receiver_id: this.backUpSelectedProductWhenBuyandSellitemClicked.order.product.created_by,
+      action_type: "make_payment",
+    };
+    console.log("Buyer Make Payment caling",formData)
+    // console.log("receiver_id",receiver_id)
+    this.http.sendMessage(formData).subscribe(
+      (res) => {
+        this.showBuyerMakePayment = false;
+        if (this.translateService.currentLang == "en") {
+          this.alertService.showAlert("success", "Payment Send Successfully");
+        } else {
+          this.alertService.showAlert("success", "تم إرسال العرض بنجاح");
+        }
+        this.fetchOrderStatus(this.orderID, "buyer");
+      },
+      (err) => {
+        if (err && err.error) {
+          this.alertService.showAlert("warning", `${err.error.message}`);
+        } else {
+          if (this.translateService.currentLang == "en") {
+            this.alertService.showAlert(
+              "warning",
+              "Error in Making payment. Please try again"
+            );
+          } else {
+            this.alertService.showAlert(
+              "warning",
+              "حدث خطأ أثناء إجراء الدفع. يرجى المحاولة مرة أخرى"
+            );
+          }
+        }
+      }
+    );
+  }
+
   markAsSold() {
     // const formData = {
     //   offer_id: this.offerID,
@@ -1051,6 +1177,10 @@ paymentId: any;
     //     this.alertService.showAlert("warning", "Error in Product Mark as Sold");
     //   }
     // );
+  }
+
+  cancelMakePayment(){
+    this.showBuyerMakePayment = false
   }
 
   cancelSellerOffer() {
@@ -1110,6 +1240,7 @@ paymentId: any;
     this.http.createShipment(formData).subscribe(
       (res) => {
         this.showSellerProofofShipping = false;
+        this.fetchOrderStatus(this.orderID, "seller");
       },
       (err) => {
         if (this.translateService.currentLang == "en") {
@@ -1256,8 +1387,10 @@ paymentId: any;
   ];
 
   routeToChat() {
+    console.log('this slectedProduct details',this.backUpSelectedProductWhenBuyandSellitemClicked)
+    console.log("this.forSendingProductID",this.forSendingProductID)
     this.router.navigate(["/chat"], {
-      state: { chatID: this.chat_ID, productID: this.forSendingProductID },
+      state: { chatID: this.chat_ID, productID: this.forSendingProductID,chatRouteFrom:'orderDetails', productDetailsFromOrder: this.backUpSelectedProductWhenBuyandSellitemClicked},
     });
   }
 

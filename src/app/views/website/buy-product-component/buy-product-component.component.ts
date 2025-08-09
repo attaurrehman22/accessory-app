@@ -515,7 +515,9 @@ export class BuyProductComponentComponent implements OnInit {
       }
     );
 
-    dialogRef.afterClosed().subscribe((result) => {
+    dialogRef.afterClosed().subscribe(
+      (result) => {
+       
       if (result == "openChat" || result == "viewOrder") {
         if (result == "openChat") {
           this.router.navigate(["/chat"], {
@@ -627,6 +629,9 @@ export class BuyProductComponentComponent implements OnInit {
                         },
                       });
                     }
+                  }else{
+                    console.log("Calling initializeComponent,")
+                    this.initializeComponent();
                   }
                 });
               },
@@ -701,7 +706,8 @@ export class BuyProductComponentComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        // this.router.navigate(["/chat"]);
+        console.log("Calling initializeComponent,")
+        this.initializeComponent();
       }
     });
   }

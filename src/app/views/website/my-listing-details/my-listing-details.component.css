@@ -302,6 +302,9 @@ input[type="radio"]:not(:disabled):hover {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
+  height: 26vh;
+  overflow-y: auto;
+  padding: 5px;
 }
 
 .image-preview {
@@ -310,8 +313,8 @@ input[type="radio"]:not(:disabled):hover {
 }
 
 .preview-img {
-  width: 80px;
-  height: 80px;
+  width: 210px;
+  height: 210px;
   border-radius: 5px;
   object-fit: cover;
   border: 1px solid #ddd;
@@ -319,8 +322,8 @@ input[type="radio"]:not(:disabled):hover {
 
 .remove-btn {
   position: absolute;
-  top: -5px;
-  right: -5px;
+  top: 45%;
+  right: 45%;
   background: red;
   color: white;
   border: none;

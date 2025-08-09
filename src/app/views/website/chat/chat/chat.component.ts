@@ -150,12 +150,36 @@ export class ChatComponent implements OnInit, AfterViewChecked {
       this.getChatDetails();
     }
 
+    if(history?.state?.chatRouteFrom){
+      console.log("Callling ---------------------------- from Order Details")
+      // this.getMesageDetails(history?.state?.chat_ID)
+      // this.getDetailsofProduct(history.state.productID);
+      const data = history.state.productDetailsFromOrder
+      this.UserNameOFMessenger = (data?.order?.product?.created_by == this.userID ? data?.order?.buyer?.name : data?.order?.buyer?.name)
+      this.userCity = (data?.order?.product?.created_by == this.userID ? data?.order?.buyer?.city :data?.order?.buyer?.city)
+      this.chat_id_for_remove_unread_count = history?.state?.chat_ID;
+      this.sellerProductID = history.state.productID;
+      this.sellerID = data?.order?.product?.created_by;
+      this.user_id = localStorage.getItem("userID");
+
+      if (this.sellerID == this.user_id) {
+        this.isBuyerUser = false;
+      } else {
+        this.isBuyerUser = true;
+      }
+
+      this.chat_id = history?.state?.chat_ID;
+      this.getProductDetails = data?.order?.product;
+      this.getChatDetails();
+    }
+
     if (this.productDeatils) {
       this.getLatestMessage();
       this.getDetailsofProduct(this.productDeatils.id);
     } else {
       this.getLatestMessage();
     }
+
   }
 
   @ViewChild("chatContainer") chatContainer: ElementRef;
@@ -262,6 +286,9 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     let actionTypeforCallingCustomOffer = false;
     if (history?.state?.data) {
       history.replaceState({ data: null }, document.title);
+    }
+    if(history?.state?.chatRouteFrom){
+      this.chat_id = history?.state?.chatID
     }
     this.http.getChatsDetails(this.chat_id).subscribe(
       (res) => {
