@@ -1341,7 +1341,7 @@
                           [src]="apiUrl + sellerImageName"
                           alt="img"
                         /> -->
-                       <div class="user-name-img-initials" *ngIf="sellerImageName">
+                       <div class="user-name-img-initials">
                         {{ getInitials(SellerNameForDisplay) }}
                       </div>
                       <div class="d-flex flex-column p-1">
@@ -1924,7 +1924,7 @@
             <input type="file" #fileInput (change)="onFileSelected($event)" multiple hidden accept=".jpg,.jpeg,.png" />
             
             <!-- Show "+" icon if no files selected -->
-            <div *ngIf="uploadedFiles.length === 0" class="upload-placeholder">
+            <div class="upload-placeholder">
               <span class="plus-icon">+</span>
             </div>
           </div>
