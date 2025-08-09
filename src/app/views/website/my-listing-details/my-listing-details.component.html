@@ -932,12 +932,12 @@
                 <div class="card-body d-flex flex-column">
                   <div class="col-md-12 d-flex flex-wrap align-items-center" style="padding: 0;margin: 0;background: #faf9fb;">
                     <div class="col-10 d-flex flex-wrap align-items-center">
-                      <!-- <img
+                      <img *ngIf="productDetails?.created_by?.profile_image"
                         class="user-name-img-initials"
-                        src="../../../../assets/images/apple-logo.png"
+                        [src]="apiUrl + productDetails?.created_by?.profile_image"
                         alt="img"
-                      /> -->
-                      <div class="user-name-img-initials">
+                      />
+                      <div class="user-name-img-initials" *ngIf="!productDetails?.created_by?.profile_image">
                         {{ getInitials(productDetails?.created_by?.name) }}
                       </div>
                       <div class="d-flex flex-column p-1">
@@ -950,6 +950,13 @@
                           class="font-size-16 font-weight-400 margin-0 color-909090"
                         >
                           {{ productDetails?.created_by?.city }}
+                          <img 
+                            [src]="'https://flagcdn.com/24x18/' + 'sa' + '.png'"
+                            [alt]="productDetails.created_by.country + ' flag'" width="24" height="18"
+                            style="margin-left: 8px;height: 20px;
+                            width: 20px;
+                            object-fit: contain;
+                        " />
                         </p>
                       </div>
                     </div>
@@ -1329,12 +1336,12 @@
                 <div class="card-body d-flex flex-column">
                   <div class="col-md-12 d-flex flex-wrap align-items-center" style="padding: 0;margin: 0;background: #faf9fb;">
                     <div class="col-10 d-flex flex-wrap align-items-center">
-                      <!-- <img
-                      class="user-name-img-initials"
-                        src="../../../../assets/images/apple-logo.png"
-                        alt="img"
-                      /> -->
-                       <div class="user-name-img-initials">
+                        <!-- <img *ngIf="sellerImageName"
+                          class="user-name-img-initials"
+                          [src]="apiUrl + sellerImageName"
+                          alt="img"
+                        /> -->
+                       <div class="user-name-img-initials" *ngIf="sellerImageName">
                         {{ getInitials(SellerNameForDisplay) }}
                       </div>
                       <div class="d-flex flex-column p-1">
@@ -1347,6 +1354,13 @@
                           class="font-size-16 font-weight-400 margin-0 color-909090"
                         >
                           {{ SellerCityForDisplay }}
+                          <img 
+                          [src]="'https://flagcdn.com/24x18/' + 'sa' + '.png'"
+                          [alt]="productDetails.created_by.country + ' flag'" width="24" height="18"
+                          style="margin-left: 8px;height: 20px;
+                          width: 20px;
+                          object-fit: contain;
+                      " />
                         </p>
                       </div>
                     </div>
@@ -1745,12 +1759,16 @@
           </button> -->
           <div 
           style="
-            background: none;
-            border: 1px solid #242424;
-            border-radius: 10px;
-            color: #242424;
-            height: 44px;
-            width: 144px;
+              background: none;
+              border: 1px solid #242424;
+              border-radius: 30px;
+              color: #242424;
+              height: 44px;
+              width: 144px;
+              display: flex;
+              align-items: center;
+              gap: 5px;
+              padding: 0 10px 0 10px;
           "
           >
           <img 

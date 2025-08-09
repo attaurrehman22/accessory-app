@@ -203,10 +203,13 @@
                   <p class="font-size-16 font-wight-400 color-909090 margin-0">
                     {{ userCity }}
                     <!-- show country flag using getProductDetails.created_by.country -->
-                    <img *ngIf="getProductDetails?.created_by?.country"
+                    <img
                       [src]="'https://flagcdn.com/24x18/' + 'sa' + '.png'"
                       [alt]="getProductDetails.created_by.country + ' flag'" width="24" height="18"
-                      style="margin-left: 8px;" />
+                      style="margin-left: 8px;    height: 20px;
+                      width: 20px;
+                      object-fit: contain;
+                  " />
                   </p>
                 </div>
               </div>
@@ -717,9 +720,13 @@
               <p class="font-size-16 font-wight-400 color-909090 margin-0">
                 {{ userCity }}
 
-                <img *ngIf="getProductDetails?.created_by?.country" [src]="'https://flagcdn.com/24x18/' + 'sa' + '.png'"
-                  [alt]="getProductDetails.created_by.country + ' flag'" width="24" height="18"
-                  style="margin-left: 8px;" />
+                <img
+                      [src]="'https://flagcdn.com/24x18/' + 'sa' + '.png'"
+                      [alt]="getProductDetails.created_by.country + ' flag'" width="24" height="18"
+                      style="margin-left: 8px;    height: 20px;
+                      width: 20px;
+                      object-fit: contain;
+                  " />
               </p>
             </div>
           </div>

@@ -671,8 +671,10 @@ paymentId: any;
   chat_ID: any;
   forSendingProductID: any;
   SellerCityForDisplay: any;
+  sellerImageName:any;
 
   detailListing(listing: any): void {
+    console.log("Listing Details",listing)
     this.offerHistoryDetails = []
     this.SellerNameForDisplay = listing.buyer.name;
     this.SellerCityForDisplay = listing.buyer.city;
@@ -683,6 +685,13 @@ paymentId: any;
     this.orderDate = listing?.status_updated_at;
     this.estimateDelivery = listing?.status_updated_at;
     this.productDetails = listing.product;
+    if (this.productDetails?.created_by?.profile_image) {
+      this.productDetails.created_by.profile_image = this.productDetails.created_by.profile_image.replace(
+        /\\/g,
+        ""
+      );
+    }
+    this.sellerImageName = this.productDetails?.created_by?.profile_image
     if (this.productDetails?.main_image) {
       this.productDetails.main_image = this.productDetails.main_image.replace(
         /\\/g,
