@@ -127,7 +127,7 @@ export class RegisterComponent implements OnInit {
   }
 
   register() {
- 
+    console.log("Calling")
     this.registerForm.markAllAsTouched();
 
     if (this.registerForm.valid) {
