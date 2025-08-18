@@ -313,6 +313,7 @@
     "Images": "الصور",
     "label": "إنشاء قائمة المنتج",
     "listing_details": "تفاصيل الإدراج",
+    "future_year_validation_message": "لا يُسمح بالسنوات المستقبلية",
     "listing_details_para_one": "قدّم معلومات أساسية عن ساعتك لبدء عملية الإدراج.",
     "listing_details_para": "قدّم معلومات أساسية عن ساعتك لبدء عملية الإدراج.",
     "watch_details": "تفاصيل الساعة",

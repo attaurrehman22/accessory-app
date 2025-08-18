@@ -368,7 +368,7 @@
     "Images":"Images",
     "label": "Create Product Listing",
     "listing_details": "Listing Details",
-    
+    "future_year_validation_message":"Future years are not allowed",
     "listing_details_para_one": "Provide basic information about your watch to start the listing process.",
     "listing_details_para": "Provide basic information about your watch to start the listing process.",
     "watch_details": "Watch Details",

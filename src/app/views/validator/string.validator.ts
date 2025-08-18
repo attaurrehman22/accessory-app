@@ -369,3 +369,12 @@ export function priceValidator(productPrice: number): ValidatorFn {
     return null;
   };
 }
+
+export function noFutureYearValidator(control: AbstractControl): ValidationErrors | null {
+  if (!control.value) return null;
+  const currentYear = new Date().getFullYear();
+  const enteredYear = Number(control.value);
+
+  return enteredYear > currentYear ? { futureYearNotAllowed: true } : null;
+}
+

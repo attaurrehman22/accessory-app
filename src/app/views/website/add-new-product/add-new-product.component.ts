@@ -6,6 +6,7 @@ import {
   ViewChild,
   computed,
 } from "@angular/core";
+import {noFutureYearValidator } from '../../validator/string.validator'
 import {
   FormArray,
   FormBuilder,
@@ -130,6 +131,7 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
     Validators.minLength(4), // Minimum length of 4 digits
     Validators.maxLength(4), // Maximum length of 4 digits
     Validators.pattern("^[0-9]{4}$"), // Ensures the value is a 4-digit number
+    noFutureYearValidator,
   ]);
   approximate_year = new FormControl(true);
   unknown = new FormControl(false);

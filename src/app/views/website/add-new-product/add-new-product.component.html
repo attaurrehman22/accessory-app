@@ -390,6 +390,21 @@
                       | translate
                   }}
                 </mat-error>
+
+                <mat-error
+                  [ngClass]="{
+                    'text-left': translateService.currentLang === 'en',
+                    'text-right': translateService.currentLang !== 'en'
+                  }"
+                  *ngIf="year_of_production.hasError('futureYearNotAllowed')"
+                >
+                  {{
+                    "create_product_listing.future_year_validation_message"
+                      | translate
+                  }}
+                </mat-error>
+
+
               </mat-form-field>
 
               <mat-checkbox
@@ -3766,6 +3781,18 @@
                     | translate
                 }}
               </mat-error>
+              <mat-error
+                  [ngClass]="{
+                    'text-left': translateService.currentLang === 'en',
+                    'text-right': translateService.currentLang !== 'en'
+                  }"
+                  *ngIf="year_of_production.hasError('futureYearNotAllowed')"
+                >
+                  {{
+                    "create_product_listing.future_year_validation_message"
+                      | translate
+                  }}
+                </mat-error>
             </mat-form-field>
             <div
               [ngClass]="{
