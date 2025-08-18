@@ -1640,16 +1640,23 @@ onUnknownChange(event: MatCheckboxChange): void {
               this.selectSection("watchDetails");
             },
             (err) => {
-              if (this.translateService.currentLang == "en") {
-                this.alertService.showAlert(
-                  "warning",
-                  "Error in adding listing details"
-                );
-              } else {
-                this.alertService.showAlert(
-                  "warning",
-                  "حدث خطأ أثناء إضافة تفاصيل القائمة"
-                );
+              if(err?.error?.message){
+                this.alertService.showAlert("warning",`${err?.error?.message}`);
+              }
+              else if(err?.message){
+                this.alertService.showAlert("warning",`${err?.message}`);
+              }else{
+                if (this.translateService.currentLang == "en") {
+                  this.alertService.showAlert(
+                    "warning",
+                    "Error in adding listing details"
+                  );
+                } else {
+                  this.alertService.showAlert(
+                    "warning",
+                    "حدث خطأ أثناء إضافة تفاصيل القائمة"
+                  );
+                }
               }
             }
           );
@@ -1778,16 +1785,23 @@ onUnknownChange(event: MatCheckboxChange): void {
             this.selectSection("uploadImages");
           },
           (err) => {
+            if(err?.error?.message){
+              this.alertService.showAlert("warning",`${err?.error?.message}`);
+            }
+            else if(err?.message){
+              this.alertService.showAlert("warning",`${err?.message}`);
+            }else{
             if (this.translateService.currentLang == "en") {
-              this.alertService.showAlert(
-                "warning",
-                "Error in adding listing details"
-              );
-            } else {
-              this.alertService.showAlert(
-                "warning",
-                "حدث خطأ أثناء إضافة تفاصيل القائمة"
-              );
+                this.alertService.showAlert(
+                  "warning",
+                  "Error in adding listing details"
+                );
+              } else {
+                this.alertService.showAlert(
+                  "warning",
+                  "حدث خطأ أثناء إضافة تفاصيل القائمة"
+                );
+              }
             }
           }
         );
@@ -1904,9 +1918,6 @@ onUnknownChange(event: MatCheckboxChange): void {
           }
         });
       formData.forEach((value, key) => console.log(key, value));
-
-      console.log("FormData",formData)
-
       this.http.addUploadImages(formData).subscribe(
         (res) => {
           if (this.translateService.currentLang == "en") {
@@ -1919,9 +1930,15 @@ onUnknownChange(event: MatCheckboxChange): void {
           this.selectSection("conditionGrading");
         },
         (err) => {
-          if (err && err.error) {
+          if (err && err?.error?.error) {
             this.alertService.showAlert("warning", `${err.error.error}`);
-          } else {
+          } else if(err?.error?.message){
+            this.alertService.showAlert("warning",`${err?.error?.message}`);
+          }
+          else if(err?.message){
+            this.alertService.showAlert("warning",`${err?.message}`);
+          }
+          else {
             if (this.translateService.currentLang == "en") {
               this.alertService.showAlert("warning", "Error in adding Images");
             } else {
@@ -1966,16 +1983,25 @@ onUnknownChange(event: MatCheckboxChange): void {
             this.selectSection("scopeofdelivery");
           },
           (err) => {
-            if (this.translateService.currentLang == "en") {
-              this.alertService.showAlert(
-                "warning",
-                "Error in adding Condition"
-              );
-            } else {
-              this.alertService.showAlert(
-                "warning",
-                "حدث خطأ أثناء إضافة الحالة"
-              );
+            if (err && err?.error?.error) {
+              this.alertService.showAlert("warning", `${err.error.error}`);
+            } else if(err?.error?.message){
+              this.alertService.showAlert("warning",`${err?.error?.message}`);
+            }
+            else if(err?.message){
+              this.alertService.showAlert("warning",`${err?.message}`);
+            }else{
+              if (this.translateService.currentLang == "en") {
+                this.alertService.showAlert(
+                  "warning",
+                  "Error in adding Condition"
+                );
+              } else {
+                this.alertService.showAlert(
+                  "warning",
+                  "حدث خطأ أثناء إضافة الحالة"
+                );
+              }
             }
           }
         );
@@ -2015,13 +2041,23 @@ onUnknownChange(event: MatCheckboxChange): void {
             );
           },
           (err) => {
-            if (this.translateService.currentLang == "en") {
-              this.alertService.showAlert("warning", "Error in adding Scope");
-            } else {
-              this.alertService.showAlert(
-                "warning",
-                "حدث خطأ أثناء إضافة النطاق"
-              );
+            if (err && err?.error?.error) {
+              this.alertService.showAlert("warning", `${err.error.error}`);
+            } else if(err?.error?.message){
+              this.alertService.showAlert("warning",`${err?.error?.message}`);
+            }
+            else if(err?.message){
+              this.alertService.showAlert("warning",`${err?.message}`);
+            }
+            else{
+              if (this.translateService.currentLang == "en") {
+                this.alertService.showAlert("warning", "Error in adding Scope");
+              } else {
+                this.alertService.showAlert(
+                  "warning",
+                  "حدث خطأ أثناء إضافة النطاق"
+                );
+              }
             }
           }
         );
@@ -2090,13 +2126,22 @@ onUnknownChange(event: MatCheckboxChange): void {
             this.selectSection("priceshipment");
           },
           (err) => {
-            if (this.translateService.currentLang == "en") {
-              this.alertService.showAlert("warning", "Error in adding Images");
-            } else {
-              this.alertService.showAlert(
-                "warning",
-                "حدث خطأ أثناء إضافة الصور"
-              );
+            if (err && err?.error?.error) {
+              this.alertService.showAlert("warning", `${err.error.error}`);
+            } else if(err?.error?.message){
+              this.alertService.showAlert("warning",`${err?.error?.message}`);
+            }
+            else if(err?.message){
+              this.alertService.showAlert("warning",`${err?.message}`);
+            }else{
+              if (this.translateService.currentLang == "en") {
+                this.alertService.showAlert("warning", "Error in adding Images");
+              } else {
+                this.alertService.showAlert(
+                  "warning",
+                  "حدث خطأ أثناء إضافة الصور"
+                );
+              }
             }
           }
         );
@@ -2200,16 +2245,26 @@ onUnknownChange(event: MatCheckboxChange): void {
             this.selectSection("billinginformation");
           },
           (err) => {
-            if (this.translateService.currentLang == "en") {
-              this.alertService.showAlert(
-                "warning",
-                "Error in adding Price and Shipment"
-              );
-            } else {
-              this.alertService.showAlert(
-                "warning",
-                "حدث خطأ أثناء إضافة السعر والشحن"
-              );
+            if (err && err?.error?.error) {
+              this.alertService.showAlert("warning", `${err.error.error}`);
+            } else if(err?.error?.message){
+              this.alertService.showAlert("warning",`${err?.error?.message}`);
+            }
+            else if(err?.message){
+              this.alertService.showAlert("warning",`${err?.message}`);
+            }
+            else{
+              if (this.translateService.currentLang == "en") {
+                this.alertService.showAlert(
+                  "warning",
+                  "Error in adding Price and Shipment"
+                );
+              } else {
+                this.alertService.showAlert(
+                  "warning",
+                  "حدث خطأ أثناء إضافة السعر والشحن"
+                );
+              }
             }
           }
         );
@@ -2251,16 +2306,25 @@ onUnknownChange(event: MatCheckboxChange): void {
             this.selectSection("summary");
           },
           (err) => {
-            if (this.translateService.currentLang == "en") {
-              this.alertService.showAlert(
-                "warning",
-                "Error in adding Billing Info"
-              );
-            } else {
-              this.alertService.showAlert(
-                "warning",
-                "حدث خطأ أثناء إضافة معلومات الفوترة"
-              );
+            if (err && err?.error?.error) {
+              this.alertService.showAlert("warning", `${err.error.error}`);
+            } else if(err?.error?.message){
+              this.alertService.showAlert("warning",`${err?.error?.message}`);
+            }
+            else if(err?.message){
+              this.alertService.showAlert("warning",`${err?.message}`);
+            }else{
+              if (this.translateService.currentLang == "en") {
+                this.alertService.showAlert(
+                  "warning",
+                  "Error in adding Billing Info"
+                );
+              } else {
+                this.alertService.showAlert(
+                  "warning",
+                  "حدث خطأ أثناء إضافة معلومات الفوترة"
+                );
+              }
             }
           }
         );
@@ -2289,13 +2353,22 @@ onUnknownChange(event: MatCheckboxChange): void {
           this.router.navigate(["/"]);
         },
         (err) => {
-          if (this.translateService.currentLang == "en") {
-            this.alertService.showAlert(
-              "warning",
-              "Error in Product Publishing"
-            );
-          } else {
-            this.alertService.showAlert("warning", "حدث خطأ أثناء نشر المنتج");
+          if (err && err?.error?.error) {
+            this.alertService.showAlert("warning", `${err.error.error}`);
+          } else if(err?.error?.message){
+            this.alertService.showAlert("warning",`${err?.error?.message}`);
+          }
+          else if(err?.message){
+            this.alertService.showAlert("warning",`${err?.message}`);
+          }else{
+            if (this.translateService.currentLang == "en") {
+              this.alertService.showAlert(
+                "warning",
+                "Error in Product Publishing"
+              );
+            } else {
+              this.alertService.showAlert("warning", "حدث خطأ أثناء نشر المنتج");
+            }
           }
         }
       );
