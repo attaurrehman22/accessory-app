@@ -70,6 +70,8 @@
           matSuffix
           type="button"
           (click)="togglePasswordVisibilityofFirstLogin()"
+          tabindex="-1" 
+          aria-hidden="true"
         >
           <!-- <mat-icon>{{ hidepass ? "visibility_off" : "visibility" }}</mat-icon> -->
           <i [class]="hidepass ?  'fas fa-eye-slash': 'fas fa-eye'"></i>
@@ -109,6 +111,8 @@
           matSuffix
           type="button"
           (click)="toggleConfirmPasswordVisibilityofFirstLogin()"
+          tabindex="-1"
+          aria-hidden="true"
         >
           <!-- <mat-icon>{{ hideconfirmpass ? "visibility_off" : "visibility" }}</mat-icon> -->
           <i [class]="hideconfirmpass ?  'fas fa-eye-slash': 'fas fa-eye'"></i>

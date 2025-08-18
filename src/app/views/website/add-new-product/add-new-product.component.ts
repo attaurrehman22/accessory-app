@@ -611,7 +611,6 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
   }
 
   addCategory(category: Category): void {
-    console.log("Add Func Before Categories",this.selectedCategories.value)
     if (
       this.selectedCategories.controls.length >= this.MAX_CATEGORY_SELECTION
     ) {
