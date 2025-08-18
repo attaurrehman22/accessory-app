@@ -611,6 +611,7 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
   }
 
   addCategory(category: Category): void {
+    console.log("Add Func Before Categories",this.selectedCategories.value)
     if (
       this.selectedCategories.controls.length >= this.MAX_CATEGORY_SELECTION
     ) {
@@ -627,7 +628,7 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
       return; // Do not add more than MAX_CATEGORY_SELECTION
     }
 
-    if (
+    else if (
       this.selectedCategories.controls.some(
         (ctrl) => ctrl.value.id === category.id
       )
@@ -644,34 +645,42 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
       );
       return; // If already selected, do not add again
     }
+    else{
 
-    this.selectedCategories.push(new FormControl(category));
-    // this.myCategoryControl = new FormControl<string | Category>("");
-    // this.filteredCategoryOptions=this.categoryList;
-    this.myCategoryControl.setValue("");
-    // this.filteredCategoryOptions = this.myCategoryControl.valueChanges.pipe(
-    //   startWith(''),
-    //   map(value => this._filterCategories(value)) // Reapply the filter
-    // );
-    this.filteredCategoryOptions = this.myCategoryControl.valueChanges.pipe(
-      startWith(""),
-      map((value) => {
-        const name = typeof value === "string" ? value : value?.name;
-        return name
-          ? this._filterCategories(name as string)
-          : this.categoryList;
-      })
-    );
+      this.selectedCategories.push(new FormControl(category));
+      // this.myCategoryControl = new FormControl<string | Category>("");
+      // this.filteredCategoryOptions=this.categoryList;
+      this.myCategoryControl.setValue("");
+      // this.filteredCategoryOptions = this.myCategoryControl.valueChanges.pipe(
+      //   startWith(''),
+      //   map(value => this._filterCategories(value)) // Reapply the filter
+      // );
+      this.filteredCategoryOptions = this.myCategoryControl.valueChanges.pipe(
+        startWith(""),
+        map((value) => {
+          const name = typeof value === "string" ? value : value?.name;
+          return name
+            ? this._filterCategories(name as string)
+            : this.categoryList;
+        })
+      );
+      console.log("Add Func After Categories",this.selectedCategories.value)
+      return
+    }
   }
 
   // Remove selected category from the FormArray
   removeCategory(category: Category): void {
+
+    console.log("Before Categories",this.selectedCategories.value)
     const index = this.selectedCategories.controls.findIndex(
       (ctrl) => ctrl.value.id === category.id
     );
     if (index !== -1) {
+      console.log("Seleted Index",index)
       this.selectedCategories.removeAt(index);
     }
+    console.log("After Categories",this.selectedCategories.value)
   }
 
   // Filtering categories

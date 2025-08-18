@@ -125,7 +125,7 @@
                     [disabled]="productDetails?.categories ? true : false"
                     *ngFor="let option of filteredCategoryOptions | async"
                     [value]="option"
-                    (onSelectionChange)="addCategory(option)"
+                    (onSelectionChange)="$event.isUserInput ? addCategory(option) : null"
                   >
                     {{ option.name }}
                   </mat-option>
@@ -3517,7 +3517,7 @@
                   [disabled]="productDetails?.categories ? true : false"
                   *ngFor="let option of filteredCategoryOptions | async"
                   [value]="option"
-                  (onSelectionChange)="addCategory(option)"
+                  (onSelectionChange)="$event.isUserInput ? addCategory(option) : null"
                 >
                   {{ option.name }}
                 </mat-option>
