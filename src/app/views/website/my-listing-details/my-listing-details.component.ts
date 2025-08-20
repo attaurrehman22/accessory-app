@@ -62,24 +62,28 @@ export class MyListingDetailsComponent implements OnInit {
     {
       label: "Personal Info",
       arabicLabel: "المعلومات الشخصية",
+      route: '/myListing/profile',
       white_icon: "assets/images/white_profile.svg",
       black_icon: "assets/images/black_profile.svg",
     },
     {
       label: "Shipping Address",
       arabicLabel: "عنوان الشحن",
+      route: '/myListing/shipping',
       black_icon: "assets/images/black_shipping_address.svg",
       white_icon: "assets/images/white_shipping_address.svg",
     },
     {
       label: "Messages",
       arabicLabel: "الرسائل",
+      route: '/myListing/message',
       black_icon: "assets/images/black_chat.svg",
       white_icon: "assets/images/white_chat.svg",
     },
     {
       label: "My Listings",
       arabicLabel: "قوائمي",
+      route: '/myListing/listing',
       black_icon: "assets/images/black_mylisting.svg",
       white_icon: "assets/images/white_buy_sell.svg",
     },
@@ -98,6 +102,7 @@ export class MyListingDetailsComponent implements OnInit {
     {
       label: "Favorites",
       arabicLabel: "المفضلة",
+      route: '/myListing/favorite',
       black_icon: "assets/images/black_favourites.svg",
       white_icon: "assets/images/white_favourites.svg",
     },
@@ -503,15 +508,18 @@ paymentId: any;
     } else if (this.activeIndex == 6) {
       // this.getAccessoriesWishList();
       // this.getWishList();
-      this.getAccessoriesWishList();
+      // this.getAccessoriesWishList();
     } else if (this.activeIndex == 1) {
       // this.getCountryLists();
-      this.getCityLists('Saudi Arabia');
-      this.getBillingInformation();
+      // this.router.navigate(['/myListing/shipping'])
+      // this.getCityLists('Saudi Arabia');
+      // this.getBillingInformation();
     } else if (this.activeIndex == 2) {
-      this.getLatestMessages();
+      // this.getLatestMessages();
     }else if (this.activeIndex == 7) {
-      this.getCartList();
+      // this.getCartList();
+    }else if (this.activeIndex == 0) {
+      // this.router.navigate(['/myListing/profile'])
     }
   }
 

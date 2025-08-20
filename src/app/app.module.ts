@@ -141,6 +141,11 @@ import { NgxImageZoomModule } from 'ngx-image-zoom';
 import { AccessoryAttachImagesComponent } from './views/adminpages/accessory-attach-images/accessory-attach-images.component';
 import { AccessorySummaryComponent } from './views/website/accessory-summary/accessory-summary.component';
 import { PayoutConfirmationComponent } from './views/website/payout-confirmation/payout-confirmation.component';
+import { ProfileComponent } from './views/website/my-listing/profile/profile.component';
+import { ShippingAddressComponent } from './views/website/my-listing/shipping-address/shipping-address.component';
+import { MessageComponent } from './views/website/my-listing/message/message.component';
+import { ListingComponent } from './views/website/my-listing/listing/listing.component';
+import { FavoriteComponent } from './views/website/my-listing/favorite/favorite.component';
 
 @NgModule({
   declarations: [
@@ -225,7 +230,12 @@ import { PayoutConfirmationComponent } from './views/website/payout-confirmation
     AddAttributeInventoryComponent,
     AccessoryAttachImagesComponent,
     AccessorySummaryComponent,
-    PayoutConfirmationComponent
+    PayoutConfirmationComponent,
+    ProfileComponent,
+    ShippingAddressComponent,
+    MessageComponent,
+    ListingComponent,
+    FavoriteComponent
   ],
   imports: [
     MatSortModule,

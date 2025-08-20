@@ -1,0 +1,216 @@
+<form [formGroup]="profileForm" (ngSubmit)="profileFormSubmit()"  [ngClass]="{ 'arabic-style-form': translateService.currentLang !== 'en' }">
+    <!-- Personal Information -->
+    <h3>{{ "my_Listing.Personal_Information" | translate }}</h3>
+
+    <div class="row">
+      <div class="col-md-12 mb-3 gap-2 d-flex align-items-center">
+        <div class="position-relative profile-image-container">
+          <ng-container
+            *ngIf="
+              profileForm.get('profile_image').value || profileImagePreview;
+              else fallbackImage
+            "
+          >
+            <img
+              [src]="profileImagePreview || (apiUrl + profileForm.get('profile_image').value)"
+              alt="Profile Image"
+              style="width: 48px; height: 48px; border-radius: 30px;border:none;object-fit: cover;"
+            />
+            <label for="profileImageUpload" class="position-absolute camera-icon" style="bottom: 1px; right: 14px; cursor: pointer; color: #242424; border-radius: 50%; padding: 2px; opacity: 0; transition: opacity 0.3s ease;">
+              <i class="bi bi-camera-fill"></i>
+            </label>
+            <input type="file" id="profileImageUpload" (change)="onProfileImageSelect($event)" accept="image/*" style="display: none;">
+          </ng-container>
+
+          <ng-template #fallbackImage>
+            <div
+              class="profile-image-container"
+              style="
+                width: 48px;
+                height: 48px;
+                border-radius: 30px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background-color: #ccc;
+                color: white;
+                font-size: 20px;
+                border:none;
+                position: relative;
+              "
+            >
+              {{ getInitialsofUsername(profileForm.get('first_name').value + ' ' + profileForm.get('last_name').value) }}
+              <label for="profileImageUpload" class="position-absolute camera-icon" style="bottom: 1px; right: 14px; cursor: pointer; color: #242424; border-radius: 50%; padding: 2px; opacity: 0; transition: opacity 0.3s ease;">
+                <i class="bi bi-camera-fill"></i>
+              </label>
+              <input type="file" id="profileImageUpload" (change)="onProfileImageSelect($event)" accept="image/*" style="display: none;">
+            </div>
+          </ng-template>
+        </div>
+        <div>
+          <p class="font-size-20 font-weight-600 color-242424 margin-0">{{profileForm.get('first_name').value}} {{profileForm.get('last_name').value}}</p>
+          <p class="font-size-16 font-weight-400 color-909090 margin-0">{{profileForm.get('email').value}}</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6 mb-3" [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'">
+        <label for="first_name" class="form-label">{{ "my_Listing.First_Name" | translate }}</label>
+        <input type="text" id="first_name" class="form-control" formControlName="first_name" placeholder='{{ "my_Listing.First_Name_place" | translate }}' />
+        <div *ngIf="profileForm.get('first_name')?.touched && profileForm.get('first_name')?.invalid" class="text-danger">
+          <small *ngIf="profileForm.get('first_name')?.hasError('required')">{{ "form_validation.required" | translate }}</small>
+          <small *ngIf="profileForm.get('first_name')?.hasError('minlength')">{{ "form_validation.min_2_chars" | translate }}</small>
+          <small *ngIf="profileForm.get('first_name')?.hasError('maxlength')">{{ "form_validation.max_50_chars" | translate }}</small>
+        </div>
+      </div>
+      <div class="col-md-6 mb-3" [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'">
+        <label for="last_name" class="form-label">{{ "my_Listing.Last_Name" | translate }}</label>
+        <input type="text" id="last_name" class="form-control" formControlName="last_name" placeholder='{{ "my_Listing.Last_Name_place" | translate }}' />
+        <div *ngIf="profileForm.get('last_name')?.touched && profileForm.get('last_name')?.invalid" class="text-danger">
+          <small *ngIf="profileForm.get('last_name')?.hasError('required')">{{ "form_validation.required" | translate }}</small>
+          <small *ngIf="profileForm.get('last_name')?.hasError('minlength')">{{ "form_validation.min_2_chars" | translate }}</small>
+          <small *ngIf="profileForm.get('last_name')?.hasError('maxlength')">{{ "form_validation.max_50_chars" | translate }}</small>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6 mb-3" [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'">
+        <label for="gender" class="form-label">{{ "my_Listing.Gender" | translate }}</label>
+        <select id="gender" class="form-select" formControlName="gender">
+          <option selected disabled>{{ "my_Listing.select_gender" | translate }}</option>
+          <option value="Male">{{ "my_Listing.Male" | translate }}</option>
+          <option value="Female">{{ "my_Listing.Female" | translate }}</option>
+          <option value="Other">{{ "my_Listing.Other" | translate }}</option>
+          <div *ngIf="profileForm.get('gender')?.touched && profileForm.get('gender')?.invalid" class="text-danger">
+            <small *ngIf="profileForm.get('gender')?.hasError('required')">{{ "form_validation.required" | translate }}</small>
+          </div>
+        </select>
+      </div>
+      <div class="col-md-6 mb-3" [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'">
+        <label for="date_of_birth" class="form-label">{{ "my_Listing.Date_of_Birth" | translate }}</label>
+        <input [attr.max]="maxDate"  type="date" id="date_of_birth" class="form-control" formControlName="date_of_birth" />
+        <div *ngIf="profileForm.get('date_of_birth')?.touched && profileForm.get('date_of_birth')?.invalid" class="text-danger">
+          <small *ngIf="profileForm.get('date_of_birth')?.hasError('required')">{{ "form_validation.required" | translate }}</small>
+        </div>
+      </div>
+    </div>
+
+    <!-- <div class="row">
+      <div class="col-md-6 mb-3" [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'">
+        <label for="country" class="form-label">{{ "my_Listing.coutry" | translate }}</label>
+        <input type="text" id="country" class="form-control" formControlName="country" placeholder='{{ "my_Listing.country_place" | translate }}' />
+        <div *ngIf="profileForm.get('country')?.touched && profileForm.get('country')?.invalid" class="text-danger">
+          <small *ngIf="profileForm.get('country')?.hasError('required')">{{ "form_validation.required" | translate }}</small>
+          <small *ngIf="profileForm.get('country')?.hasError('minlength')">{{ "form_validation.min_2_chars" | translate }}</small>
+          <small *ngIf="profileForm.get('country')?.hasError('maxlength')">{{ "form_validation.max_50_chars" | translate }}</small>
+        </div>
+      </div>
+      <div class="col-md-6 mb-3" [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'">
+        <label for="city" class="form-label">{{ "my_Listing.city" | translate }}</label>
+        <input type="text" id="city" class="form-control" formControlName="city" placeholder='{{ "my_Listing.city_place" | translate }}' />
+        <div *ngIf="profileForm.get('city')?.touched && profileForm.get('city')?.invalid" class="text-danger">
+          <small *ngIf="profileForm.get('city')?.hasError('required')">{{ "form_validation.required" | translate }}</small>
+          <small *ngIf="profileForm.get('city')?.hasError('minlength')">{{ "form_validation.min_2_chars" | translate }}</small>
+          <small *ngIf="profileForm.get('city')?.hasError('maxlength')">{{ "form_validation.max_50_chars" | translate }}</small>
+        </div>
+      </div>
+    </div> -->
+
+    <div class="row">
+      <div class="col-md-6 mb-3" [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'">
+        <label for="phone_number" class="form-label">{{ "my_Listing.Phone" | translate }}</label>
+        <div class="input-group" style="flex-wrap: nowrap !important;">
+          <select class="form-select" formControlName="countryCode" style="max-width: 180px;min-width: 120px;border-right: none !important;">
+            <option value="KSA">KSA
+              <span 
+                style="border: 1px solid #909090;
+                background: none;border-right: none;
+                color: #909090;font-size: 16px;font-weight: 400;"
+                class="input-group-text" id="countryCode">
+                  +966
+              </span>
+            </option>
+          </select>
+          <div class="input-group" >
+            <!-- <span style="border: 1px solid #ced4da;background: none;border-right: none;"
+             class="input-group-text" id="countryCode">
+             KSA +966
+            </span> -->
+            <input
+              style="border-left:none !important;border-top-left-radius: 0 !important;border-bottom-left-radius: 0 !important;"
+              type="text"
+              id="phone_number"
+              class="form-control"
+              formControlName="phone_number"
+              placeholder="55 000 0000"
+              aria-describedby="countryCode"
+            />
+          </div>
+        </div>
+        <div *ngIf="profileForm.get('phone_number')?.touched && profileForm.get('phone_number')?.invalid" class="text-danger">
+          <small *ngIf="profileForm.get('phone_number')?.hasError('required')">{{ "form_validation.required" | translate }}</small>
+          <small *ngIf="profileForm.get('phone_number')?.hasError('pattern')">{{ "form_validation.invalid_phone" | translate }}</small>
+        </div>
+      </div>
+      <div class="col-md-6 mb-3" [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'">
+        <label for="language" class="form-label">{{ "my_Listing.Language" | translate }}</label>
+        <select id="language" class="form-select" formControlName="language">
+          <option value="english">{{ "my_Listing.English" | translate }}</option>
+          <option value="arabic">{{ "my_Listing.Arabic" | translate }}</option>
+          <div *ngIf="profileForm.get('language')?.touched && profileForm.get('language')?.invalid" class="text-danger">
+            <small *ngIf="profileForm.get('language')?.hasError('required')">{{ "form_validation.required" | translate }}</small>
+          </div>
+        </select>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6 mb-3" [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'">
+        <label for="occupation" class="form-label">{{ "my_Listing.Occupation" | translate }}</label>
+        <input type="text" id="occupation" class="form-control" formControlName="occupation" placeholder='{{ "my_Listing.Occupation" | translate }}' />
+        <div *ngIf="profileForm.get('occupation')?.touched && profileForm.get('occupation')?.invalid" class="text-danger">
+          <small *ngIf="profileForm.get('occupation')?.hasError('required')">{{ "form_validation.required" | translate }}</small>
+          <small *ngIf="profileForm.get('occupation')?.hasError('minlength')">{{ "form_validation.min_2_chars" | translate }}</small>
+        </div>
+      </div>
+      <div class="col-md-6 mb-3" [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'">
+        <label for="about_me" class="form-label">{{ "my_Listing.About_Me" | translate }}</label>
+        <textarea id="about_me" class="form-control" rows="2" formControlName="about_me" placeholder='{{ "my_Listing.Description" | translate }}'></textarea>
+        <div *ngIf="profileForm.get('about_me')?.touched && profileForm.get('about_me')?.invalid" class="text-danger">
+          <small *ngIf="profileForm.get('about_me')?.hasError('maxlength')">{{ "form_validation.max_300_chars" | translate }}</small>
+        </div>
+      </div>
+    </div>
+
+    <!-- Login Information -->
+    <h3>{{ "my_Listing.Login_Information" | translate }}</h3>
+    <div class="row">
+      <div class="col-md-6 mb-3" [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'">
+        <label for="email" class="form-label">{{ "my_Listing.Email_Address" | translate }}</label>
+        <input type="email" id="email" class="form-control" formControlName="email" placeholder='{{ "my_Listing.Email_Address_place" | translate }}' />
+      </div>
+      <div class="col-md-6 mb-3" [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'">
+        <label for="password" class="form-label">{{ "my_Listing.Password" | translate }}</label>
+        <a routerLink="/change-password"  class="d-block text-decoration-none a-style-forgot-pass">{{ "my_Listing.Change_password" | translate }}</a>
+      </div>
+    </div>
+
+    <!-- Login with -->
+    <h3>{{ "my_Listing.Login_with" | translate }}</h3>
+    <div class="d-flex gap-3 my-3 search-arabic-style">
+      <button type="button" class="btn btn-outline-secondary w-100">
+        <img src="../assets/images/download.png" alt="Google Logo" class="me-2" style="width: 20px" />
+        {{ "my_Listing.Sign_in_Google" | translate }}
+      </button>
+      <button type="button" class="btn btn-outline-secondary w-100">
+        <img src="../assets/images/apple-logo.png" alt="Apple Logo" class="me-2" style="width: 20px" />
+        {{ "my_Listing.Sign_in_Apple" | translate }}
+      </button>
+    </div>
+
+    <div class="text-end">
+      <button type="submit" class="submit-btn">{{ "my_Listing.Save_Changes" | translate }}</button>
+    </div>
+  </form>

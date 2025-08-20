@@ -1,0 +1,70 @@
+ .arabic-style-form > h3 {
+    text-align: end;
+  }
+  
+ .arabic-style-form > .row {
+   flex-direction: row-reverse;
+  }
+  
+ .arabic-style-form > .search-arabic-style {
+    flex-direction: row-reverse;
+   }
+  
+ .arabic-style-form > .row > .mb-3 {
+    flex-direction: row-reverse;
+    display: flex;
+    flex-wrap: wrap;
+    text-align: right;
+   }
+  
+ .arabic-style-form > .row > .mb-3 > .text-decoration-none {
+    text-align: right;
+    width: 100%;
+   }
+  
+  
+ .arabic-style-form > .row > .mb-3 > .form-label {
+    width: 100%;
+    text-align: justify;
+   }
+  
+ .arabic-style-form > .row > .mb-3 > .form-control {
+    flex-direction: row-reverse;
+    display: flex;
+    flex-wrap: wrap;
+   }
+
+   .profile-image-container:hover .camera-icon {
+    opacity: 1 !important;
+  }
+  
+  .profile-image-container {
+    position: relative;
+    display: inline-block;
+  }
+
+  .profile-image-container:hover .camera-icon {
+    opacity: 1 !important;
+  }
+
+  .form-label {
+    font-size: 14px;
+    font-weight: 400 !important;
+    color: #242424;
+ }
+
+ .submit-btn {
+    border-radius: 12px;
+    background: #242424;
+    color: white;
+    width: 240px;
+    height: 56px;
+    font-size: 16px;
+    font-weight: 600;
+  }
+
+ @media (max-width: 468px) {
+    .form-select { 
+        font-size: 10px !important;
+      }
+ }

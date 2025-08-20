@@ -40,6 +40,11 @@ import { AccessoryImagesListingComponent } from './views/adminpages/accessories/
 import { AttributeInventoryComponent } from './views/adminpages/attribute-inventory/attribute-inventory.component';
 import { PayoutConfirmationComponent } from './views/website/payout-confirmation/payout-confirmation.component';
 import { AccessorySummaryComponent } from './views/website/accessory-summary/accessory-summary.component';
+import { ProfileComponent } from './views/website/my-listing/profile/profile.component';
+import { ShippingAddressComponent } from './views/website/my-listing/shipping-address/shipping-address.component';
+import { MessageComponent } from './views/website/my-listing/message/message.component';
+import { ListingComponent } from './views/website/my-listing/listing/listing.component';
+import { FavoriteComponent } from './views/website/my-listing/favorite/favorite.component';
 
 
 const routes: Routes = [
@@ -81,7 +86,23 @@ const routes: Routes = [
 
  { path: 'change-password', component:  ChangePasswordComponent},
   { path: 'buy-now', component:  BuyNowComponent},
-  { path: 'myListing', component:  MyListingDetailsComponent},
+  // { path: 'myListing', component:  MyListingDetailsComponent},
+
+
+  {
+    path: 'myListing',
+    component: MyListingDetailsComponent, // parent container (with sidebar)
+    children: [
+      { path: '', redirectTo: 'profile', pathMatch: 'full' },
+      { path: 'profile', component: ProfileComponent },
+      { path: 'shipping', component: ShippingAddressComponent },
+      { path: 'message', component: MessageComponent },
+      { path: 'listing', component: ListingComponent },
+      { path: 'favorite', component: FavoriteComponent },
+    ],
+  },
+
+
   { path: 'forgotPassword', component:  ForgotPasswordComponent},
   { path: 'payment-callback', component:  MyListingDetailsComponent},
   {path:'payment-confirmation',component:PayoutConfirmationComponent},
