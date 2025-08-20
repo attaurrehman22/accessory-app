@@ -400,7 +400,15 @@
               <label for="city" class="form-label">{{ "my_Listing.City" | translate }}</label>
                 <div class="position-relative">
                   <select class="form-control" formControlName="city">
-                    <option *ngFor="let city of cityLists" [value]="city">{{city}}</option>
+                    <option *ngFor="let city of cityLists" [value]="city">
+                      <!-- <img
+                        [src]="'https://flagcdn.com/24x18/' + 'sa' + '.png'"
+                        alt="{{ city }} flag"
+                         width="24" height="18"
+                         style="margin-right: 8px; vertical-align: middle;"
+                         /> -->
+                      {{city}}
+                    </option>
                   </select>
                   <div class="position-absolute" style="right: 10px; top: 50%; transform: translateY(-50%); pointer-events: none;">
                     <i class="bi bi-chevron-down"></i>

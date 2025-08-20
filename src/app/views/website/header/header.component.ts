@@ -39,6 +39,7 @@ export class HeaderComponent {
   dropdownOpen = false;
   showHideAdminUser: any;
   showHideUser: any;
+  isNewArrivalsProduct:boolean=false;
 
   isAdminUser = computed(() => this.loginStateService.isAdminUser());
   isUserLoggedIn = computed(() => this.loginStateService.isUserLoggedIn());
@@ -73,13 +74,6 @@ export class HeaderComponent {
     this.translateService.setDefaultLang("en");
     const browserlang = this.translateService.getBrowserLang();
 
-    // this.userToken = localStorage.getItem('user_token');
-
-    // // If the token exists, decode it
-    // if (this.userToken) {
-    //   this.decodeToken();
-    // }
-
     if (languagevalues.includes(browserlang)) {
       this.translateService.use(browserlang);
       this.isRtl = browserlang !== "en";
@@ -96,16 +90,6 @@ export class HeaderComponent {
       this.selectedLang = lang;
     });
   }
-
-  // decodedToken: any;
-  // private decodeToken() {
-  //   try {
-  //     this.decodedToken = jwtDecode(this.userToken); // Using the correct function name
-  //     console.log('Decoded Token:', this.decodedToken);
-  //   } catch (error) {
-  //     console.error('Token decoding failed', error);
-  //   }
-  // }
 
 
   @ViewChild('search2MenuTrigger') search2MenuTrigger: MatMenuTrigger;
@@ -143,7 +127,6 @@ export class HeaderComponent {
   }
 
   ngOnInit() {
-    console.log("showHideAdminUser",this.showHideAdminUser)
     this.isSmallScreen = window.innerWidth <= 1500;
    
     // if(this.isManuallyToggled && this.isShowSearchField){
@@ -179,12 +162,18 @@ export class HeaderComponent {
       console.log("IsAdminUser ----------- ",this.isAdminUser())
       if (this.isAdminUser()) {
         this.showHideAdminUser = this.isAdminUser();
-      } else {
-
       }
-    } else {
+    } 
+    this.callForNewArrivals(); // <-- Call immediately once
+    setInterval(() => {
+      this.callForNewArrivals();
+    }, 30 * 60 * 1000); // 30 minutes in milliseconds
+  }
 
-    }
+
+// call this function to check new arrivals product 
+  callForNewArrivals(){
+    // this.isNewArrivalsProduct = true
   }
 
   userDetails:any

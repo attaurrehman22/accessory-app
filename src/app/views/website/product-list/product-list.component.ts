@@ -96,6 +96,7 @@ export class ProductListComponent implements OnInit {
 
    // Method to remove category from selected categories
    removeCategory(categoryId: number) {
+    this.isFiltereredOptionIsShow=false;
     const category = this.categories.find(cat => cat.id === categoryId);
     if (category) {
       category.selected = false;  // Deselect the category
@@ -168,9 +169,14 @@ export class ProductListComponent implements OnInit {
 
   onItemsPerPageChange() {
     this.currentPage = 1; 
+    this.updatePagination();
     this.applyFilters(); 
   }
 
+  updatePagination() {
+    this.totalItems = Math.ceil(this.totalItems / this.itemsPerPage);
+    this.currentPage = Math.floor((this.fromItem - 1) / this.itemsPerPage) + 1;
+  }
 
   isFiltereredOptionIsShow:boolean=false;
   applyFilters() {

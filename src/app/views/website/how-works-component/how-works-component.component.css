@@ -23,7 +23,9 @@
   background-color: #F8F8F8;
   border: none;
   border-radius: 42px;
-  padding: 5px 10px 5px 10px;
+  padding: 0 20px 0 20px;
+  min-height: 36px;
+  min-width: 80px;
 }
 
 .res-img {

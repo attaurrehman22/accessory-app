@@ -69,7 +69,7 @@
     "password_maxlength": "لا يمكن أن تتجاوز كلمة المرور 30 حرفًا",
     "confirm_password": "تأكيد كلمة المرور",
     "confirm_password_required": "أدخل تأكيد كلمة المرور",
-    "password_mismatch": "كلمتا المرور غير متطابقتين",
+   "password_mismatch": "كلمة المرور وتأكيد كلمة المرور غير متطابقين",
     "register_button": "تسجيل",
     "or": "أو",
     "already_have_account": "هل لديك حساب؟",
