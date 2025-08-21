@@ -179,21 +179,6 @@ img {
   margin: 0 !important;
 }
 
-/* .list-group-item.active {
-  background-color: #f8f9fa;
-  font-weight: 700;
-  color: #242424;
-  font-size: 16px;
-}
-
-.list-group-item.active >.order-details > .label-stl{
-  color: #242424;
-}
-
-.list-group-item.active >.order-details > .desc-stl{
-  color: #242424;
-} */
-
 .prev-btn {
   height: 35px;
   width: 35px;

@@ -90,12 +90,14 @@ export class MyListingDetailsComponent implements OnInit {
     {
       label: "Buy Orders",
       arabicLabel: "طلبات الشراء",
+      route: '/myListing/buy/order',
       black_icon: "assets/images/black_buy_sell.svg",
       white_icon: "assets/images/white_buy_sell.svg",
     },
     {
       label: "Sell Orders",
       arabicLabel: "طلبات البيع",
+      route: '/myListing/sell/order',
       black_icon: "assets/images/black_buy_sell.svg",
       white_icon: "assets/images/white_buy_sell.svg",
     },
@@ -818,7 +820,6 @@ paymentId: any;
 
           if (initiate_ && !awaiting_confirmation_ && !make_payment_) 
           {
-            console.log("lengthTwoofSeller",this.lengthTwoofSeller)
             this.lengthTwoofSeller = true;
           }
 
@@ -1034,9 +1035,6 @@ paymentId: any;
     if (this.lengthTwoofSeller && i == 1) {
       this.showSellerConfirmOrderAvailability = true;
     }
-    // if (this.isSellerDeliveryInprogress && i == 4) {
-    //   this.showSellerProofofShipping = true;
-    // }
     if(i == 3 && this.activeSellerStatuses.length == 4)
     {
       this.showSellerProofofShipping = true

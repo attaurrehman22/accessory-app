@@ -146,6 +146,10 @@ import { ShippingAddressComponent } from './views/website/my-listing/shipping-ad
 import { MessageComponent } from './views/website/my-listing/message/message.component';
 import { ListingComponent } from './views/website/my-listing/listing/listing.component';
 import { FavoriteComponent } from './views/website/my-listing/favorite/favorite.component';
+import { SellOrderComponent } from './views/website/my-listing/sell-order/sell-order.component';
+import { BuyOrderComponent } from './views/website/my-listing/buy-order/buy-order.component';
+import { SellOrderDetailsComponent } from './views/website/my-listing/sell-order-details/sell-order-details.component';
+import { BuyOrderDetailsComponent } from './views/website/my-listing/buy-order-details/buy-order-details.component';
 
 @NgModule({
   declarations: [
@@ -235,7 +239,11 @@ import { FavoriteComponent } from './views/website/my-listing/favorite/favorite.
     ShippingAddressComponent,
     MessageComponent,
     ListingComponent,
-    FavoriteComponent
+    FavoriteComponent,
+    SellOrderComponent,
+    BuyOrderComponent,
+    SellOrderDetailsComponent,
+    BuyOrderDetailsComponent
   ],
   imports: [
     MatSortModule,

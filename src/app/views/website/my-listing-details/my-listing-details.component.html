@@ -47,95 +47,9 @@
 
        <router-outlet></router-outlet>
 
-      <!-- if "Chats" is Active -->
-      <!-- <div *ngIf="activeIndex === 2" class="container">
-       
-      </div> -->
-
-      <!-- if "My Listing" is Active -->
-      <!-- <div *ngIf="activeIndex === 3" class="container">
-        <div class="d-flex justify-content-between align-items-center mb-3 filtered-div">
-          <h4 class="mobile-label">{{ "my_Listing.My_Listings" | translate }}</h4>
-          <div class="d-flex justify-content-between align-items-center gap-2 filtered-btn-div">
-            <div>
-              <select class="form-select form-select-sm" style="width: 150px">
-                <option selected>{{ "my_Listing.Status" | translate }}</option>
-                <option value="1">{{ "my_Listing.In_Process" | translate }}</option>
-                <option value="2">{{ "my_Listing.Delivered" | translate }}</option>
-                <option value="3">{{ "my_Listing.Cancelled" | translate }}</option>
-              </select>
-            </div>
-            <div>
-              <select class="form-select form-select-sm" style="width: 150px">
-                <option selected>{{ "my_Listing.4_Weeks" | translate }}</option>
-                <option value="1">{{ "my_Listing.1_Weeks" | translate }}</option>
-                <option value="2">{{ "my_Listing.1_Month" | translate }}</option>
-                <option value="3">{{ "my_Listing.6_Weeks" | translate }}</option>
-              </select>
-            </div>
-          </div>
-        </div>
-        <div class="list-cards">
-          <div *ngFor="let listing of listings" class="card mb-3 custom-card-style">
-            <div class="card-body d-flex align-items-center">
-              <div class="col-11 d-flex align-items-center card-hover-change-color" (click)="editListing(listing)">
-                <div class="main_image_div">
-                  <img
-                    *ngIf="listing?.main_image"
-                    class="img-fluid"
-                    style="object-fit: cover !important;height: 100% !important; width: 100% !important;"
-                    [src]="apiUrl + listing?.main_image"
-                    alt="{{ 'find_dream.img_alt' | translate }}"
-                  />
-                  <div *ngIf="!listing?.main_image" class="no-image-styles-div">
-                      <p>{{ "my_Listing.no_image" | translate }}</p>
-                  </div>
-                </div>
-                <div class="main_image_content_div pl-2 pr-2">
-                  <small *ngIf="translateService.currentLang == 'en'" class="text-muted mobile-label listing-id-label">
-                    Listing ID <span class="span-listing-id-label"> {{ listing.listing_code || "N/A" }} </span> | Created
-                   <span class="span-listing-id-label"> {{ listing.created_at | date : "yyyy-MM-dd" }} </span>
-                  </small>
-
-                  <small *ngIf="translateService.currentLang !== 'en'" class="text-muted mobile-label">
-                    Listing ID <span class="span-listing-id-label"> {{ listing.listing_code || "N/A" }} </span> | Created
-                    <span class="span-listing-id-label">  {{ listing.created_at | date : "yyyy-MM-dd" }} </span>
-                  </small>
-
-                  <h6 class="mt-1 mb-1 mobile-label listing-concate-label">
-                    {{ listing.brand.name }} {{ listing.model }}
-                    {{ listing.title }}
-                  </h6>
-                  <span class="badge">{{
-                    listing?.is_listing_completed == 0 ? "Draft" : listing?.sale_status == "for_sale" ? "Active" : listing?.sale_status == "reserved" ? 'Reserved': "N/A"
-                  }}</span>
-                </div>
-              </div>
-              <div class="col-1 d-flex justify-content-end">
-                <button
-                  mat-icon-button
-                  [matMenuTriggerFor]="menu"
-                  aria-label="More options"
-                >
-                  <mat-icon>more_vert</mat-icon>
-                </button>
-                <mat-menu #menu="matMenu">
-                  <button mat-menu-item (click)="editListing(listing)">
-                    <mat-icon>edit</mat-icon>
-                    <span>Edit</span>
-                  </button>
-                  <button mat-menu-item (click)="deleteListing(listing)">
-                    <mat-icon color="warn">delete</mat-icon>
-                    <span>Delete</span>
-                  </button>
-                </mat-menu>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div> -->
       <!-- if "Buy Orders" is Active -->
-      <div *ngIf="activeIndex === 4" class="container-fluid">
+
+      <!-- <div *ngIf="activeIndex === 4" class="container-fluid">
         <div
           *ngIf="!isShowBuyOrdersListngDetails"
           class="d-flex justify-content-between align-items-center mb-3 filtered-div"
@@ -208,15 +122,6 @@
                     <mat-icon>more_vert</mat-icon>
                   </button>
                   <mat-menu #menu="matMenu">
-                    <!-- <button mat-menu-item (click)="editListing(listing)">
-                        <mat-icon>edit</mat-icon>
-                        <span>Edit</span>
-                      </button>
-                      <button mat-menu-item (click)="deleteListing(listing)">
-                        <mat-icon color="warn">delete</mat-icon>
-                        <span>Delete</span>
-                      </button> -->
-
                     <button mat-menu-item (click)="detailsBuyListing(listing)">
                       <mat-icon>info</mat-icon>
                       <span>Deatails</span>
@@ -238,11 +143,9 @@
                     style="background: #f9fafb"
                   >
                     <div class="col-11 d-flex align-items-center">
-                       <!-- For english Text next icon -->
                       <button *ngIf="translateService.currentLang == 'en'" (click)="setActive(4)" class="prev-btn">
                         <img src="../../../../assets/images/prev_btn.png" alt="IMG" class="prev-btn-img"/>
                       </button>
-                      <!-- For arabic Text prev icon -->
                       <button *ngIf="translateService.currentLang !== 'en'" (click)="setActive(4)" class="prev-btn">
                         <img src="../../../../assets/images/prev_btn.png" alt="IMG" class="prev-btn-img"/>
                       </button>
@@ -310,7 +213,6 @@
                           />
                           <span class="radio-custom"></span>
                         </label>
-                        <!-- <div class="vertical-line" *ngIf="i !== statuses.length - 1"></div> -->
                         <div class="vertical-line" *ngIf="i !== activeBuyerStatuses.length - 1"></div>
                         <div class="order-details" 
                         style="cursor: pointer"
@@ -414,7 +316,6 @@
                               class="d-flex justify-content-between align-items-center"
                             >
                               <p class="smaall-screen-text">
-                                <!-- {{ "chat_com.custom_offer" | translate }} -->
                                   Ship Price
                               </p>
                               <p class="smaall-screen-text">
@@ -427,7 +328,6 @@
                             class="d-flex justify-content-between align-items-center"
                           >
                             <p class="smaall-screen-text">
-                              <!-- {{ "chat_com.custom_offer" | translate }} -->
                                 Offer Status
                             </p>
                             <p class="smaall-screen-text">
@@ -511,24 +411,11 @@
                 </div>
               </div>
             </div>
-
-            <!-- <div class="card mt-3">
-              <div class="card-body d-flex justify-content-between">
-                <div>
-                  <h6>Dealer Name</h6>
-                  <p class="text-muted">Location</p>
-                </div>
-                <div>
-                  <p><strong>Order Date:</strong> Oct 16, 2024</p>
-                  <p><strong>Estimated Delivery:</strong> Oct 30, 2024</p>
-                </div>
-              </div>
-            </div> -->
           </div>
         </div>
-      </div>
+      </div> -->
       <!-- if "Sell Orders" is Active -->
-      <div *ngIf="activeIndex === 5" class="container-fluid">
+      <!-- <div *ngIf="activeIndex === 5" class="container-fluid">
         <div
           *ngIf="!isShowSellOrdersListngDetails"
           class="d-flex justify-content-between align-items-center mb-3 filtered-div"
@@ -582,12 +469,7 @@
                       {{ listing.product.brand.name }} {{ listing.product.model }}
                       {{ listing.product.title }}
                     </h6>
-                    <!-- <span class="badge" [ngClass]="listing.statusClass">{{ listing.status || "In Process" }}</span> -->
-                    <!-- <span class="badge">{{
-                      listing.product?.status || "In Process"
-                    }}</span> -->
-
-                    
+    
                     <small class="text-muted mobile-label mobile-label-arabic d-flex gap-5">
                       <b class="font-size-14 font-weight-400 color-242424" style="text-decoration: underline;">
                         {{ listing?.buyer?.name || "N/A" }}
@@ -606,14 +488,6 @@
                     <mat-icon>more_vert</mat-icon>
                   </button>
                   <mat-menu #menu="matMenu">
-                    <!-- <button mat-menu-item (click)="editListing(listing)">
-                        <mat-icon>edit</mat-icon>
-                        <span>Edit</span>
-                      </button>
-                      <button mat-menu-item (click)="deleteListing(listing)">
-                        <mat-icon color="warn">delete</mat-icon>
-                        <span>Delete</span>
-                      </button> -->
                     <button mat-menu-item (click)="detailListing(listing)">
                       <mat-icon>info</mat-icon>
                       <span>Details</span>
@@ -635,11 +509,9 @@
                     style="background: #f9fafb"
                   >
                     <div class="col-11 d-flex align-items-center">
-                      <!-- For english Text next icon -->
                       <button *ngIf="translateService.currentLang == 'en'" (click)="setActive(5)" class="prev-btn">
                         <img src="../../../../assets/images/prev_btn.png" alt="IMG" class="prev-btn-img"/>
                       </button>
-                      <!-- For arabic Text prev icon -->
                       <button *ngIf="translateService.currentLang !== 'en'" (click)="setActive(5)" class="prev-btn">
                         <img src="../../../../assets/images/prev_btn.png" alt="IMG" class="prev-btn-img"/>
                       </button>
@@ -803,9 +675,6 @@
                           <p class="smaall-screen-text">
                             {{ "chat_com.custom_offer" | translate }}
                           </p>
-                          <!-- <p class="smaall-screen-text">
-                            {{ message.offer_price }}
-                          </p> -->
                         </div>
 
                         <div
@@ -820,24 +689,6 @@
                             {{ customOfferDetails.ship_price }}
                           </p>
                         </div>
-
-                        <!-- 
-
-                        <div
-                          *ngIf="message?.days"
-                          style="border-bottom: 1px solid #f2f5f8"
-                          class="d-flex justify-content-between align-items-center"
-                        >
-                          <p class="smaall-screen-text">
-                            {{ "chat_com.offer_valid" | translate }}
-                          </p>
-                          <p class="smaall-screen-text">
-                            {{ message.days }}
-                            {{ "chat_com.days" | translate }}
-                          </p>
-                        </div> -->
-
-
                       </div>
                     </div>
                       </div>
@@ -852,11 +703,6 @@
                 <div class="card-body d-flex flex-column">
                   <div class="col-md-12 d-flex flex-wrap align-items-center" style="padding: 0;margin: 0;background: #faf9fb;">
                     <div class="col-10 d-flex flex-wrap align-items-center">
-                        <!-- <img *ngIf="sellerImageName"
-                          class="user-name-img-initials"
-                          [src]="apiUrl + sellerImageName"
-                          alt="img"
-                        /> -->
                        <div class="user-name-img-initials">
                         {{ getInitials(SellerNameForDisplay) }}
                       </div>
@@ -915,22 +761,9 @@
                 </div>
               </div>
             </div>
-
-            <!-- <div class="card mt-3">
-                <div class="card-body d-flex justify-content-between">
-                  <div>
-                    <h6>Dealer Name</h6>
-                    <p class="text-muted">Location</p>
-                  </div>
-                  <div>
-                    <p><strong>Order Date:</strong> Oct 16, 2024</p>
-                    <p><strong>Estimated Delivery:</strong> Oct 30, 2024</p>
-                  </div>
-                </div>
-              </div> -->
           </div>
         </div>
-      </div>
+      </div> -->
       <!-- if "Favorites" is Active -->
       <!-- <div *ngIf="activeIndex === 6" class="container-fluid">
         <div class="d-flex justify-content-between align-items-center mb-3 filtered-div">

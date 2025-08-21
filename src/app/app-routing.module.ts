@@ -45,6 +45,10 @@ import { ShippingAddressComponent } from './views/website/my-listing/shipping-ad
 import { MessageComponent } from './views/website/my-listing/message/message.component';
 import { ListingComponent } from './views/website/my-listing/listing/listing.component';
 import { FavoriteComponent } from './views/website/my-listing/favorite/favorite.component';
+import { SellOrderComponent } from './views/website/my-listing/sell-order/sell-order.component';
+import { BuyOrderComponent } from './views/website/my-listing/buy-order/buy-order.component';
+import { SellOrderDetailsComponent } from './views/website/my-listing/sell-order-details/sell-order-details.component';
+import { BuyOrderDetailsComponent } from './views/website/my-listing/buy-order-details/buy-order-details.component';
 
 
 const routes: Routes = [
@@ -99,6 +103,10 @@ const routes: Routes = [
       { path: 'message', component: MessageComponent },
       { path: 'listing', component: ListingComponent },
       { path: 'favorite', component: FavoriteComponent },
+      { path: 'sell/order', component: SellOrderComponent },
+      { path: 'sell/order/details', component: SellOrderDetailsComponent },
+      { path: 'buy/order', component: BuyOrderComponent },
+      { path: 'buy/order/details', component: BuyOrderDetailsComponent },
     ],
   },
 

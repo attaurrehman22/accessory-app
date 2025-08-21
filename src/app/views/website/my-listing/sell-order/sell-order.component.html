@@ -1,0 +1,73 @@
+<div class="d-flex justify-content-between align-items-center mb-3 filtered-div">
+    <h4 class="mobile-label">{{ "my_Listing.Sell_Orders" | translate }}</h4>
+    <div class="d-flex justify-content-between align-items-center gap-2 filtered-btn-div">
+        <div>
+            <select class="form-select form-select-sm" style="width: 150px">
+                <option selected>{{ "my_Listing.Status" | translate }}</option>
+                <option value="1">{{ "my_Listing.In_Process" | translate }}</option>
+                <option value="2">{{ "my_Listing.Delivered" | translate }}</option>
+                <option value="3">{{ "my_Listing.Cancelled" | translate }}</option>
+            </select>
+        </div>
+        <div>
+            <select class="form-select form-select-sm" style="width: 150px">
+                <option selected>{{ "my_Listing.4_Weeks" | translate }}</option>
+                <option value="1">{{ "my_Listing.1_Weeks" | translate }}</option>
+                <option value="2">{{ "my_Listing.1_Month" | translate }}</option>
+                <option value="3">{{ "my_Listing.6_Weeks" | translate }}</option>
+            </select>
+        </div>
+    </div>
+</div>
+<div class="list-cards">
+    <div class="listing-div">
+        <div *ngFor="let listing of sellOrders" class="card mb-3">
+            <div class="card-body d-flex align-items-center">
+                <div class="col-11 d-flex align-items-center  card-hover-change-color" (click)="detailListing(listing)">
+                    <div class="main_image_div">
+                        <img *ngIf="listing?.product?.main_image" class="img-fluid"
+                            style="object-fit: scale-down !important" [src]="apiUrl + listing?.product?.main_image"
+                            alt="{{ 'find_dream.img_alt' | translate }}" />
+                        <div *ngIf="!listing?.product?.main_image" class="no-image-styles-div">
+                            <p>{{ "my_Listing.no_image" | translate }}</p>
+                        </div>
+                    </div>
+                    <div class="main_image_content_div">
+                        <small class="text-muted mobile-label">
+                            Listing ID <span class="span-listing-id-label">{{ listing.product.listing_code || "N/A" }}
+                            </span> | Created
+                            <span class="span-listing-id-label">
+                                {{ listing.created_at | date : "yyyy-MM-dd" }}
+                            </span>
+                        </small>
+
+                        <h6 class="mt-1 mb-1 mobile-label">
+                            {{ listing.product.brand.name }} {{ listing.product.model }}
+                            {{ listing.product.title }}
+                        </h6>
+
+
+                        <small class="text-muted mobile-label mobile-label-arabic d-flex gap-5">
+                            <b class="font-size-14 font-weight-400 color-242424" style="text-decoration: underline;">
+                                {{ listing?.buyer?.name || "N/A" }}
+                            </b>
+                            {{ listing?.buyer?.city || "N/A" }}
+                        </small>
+                    </div>
+
+                </div>
+                <div class="col-1 d-flex justify-content-end">
+                    <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="More options">
+                        <mat-icon>more_vert</mat-icon>
+                    </button>
+                    <mat-menu #menu="matMenu">
+                        <button mat-menu-item (click)="detailListing(listing)">
+                            <mat-icon>info</mat-icon>
+                            <span>Details</span>
+                        </button>
+                    </mat-menu>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
