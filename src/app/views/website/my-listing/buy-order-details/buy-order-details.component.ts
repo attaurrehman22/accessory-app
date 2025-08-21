@@ -140,7 +140,7 @@ export class BuyOrderDetailsComponent implements OnInit{
       this.selectedSellOrderDetails = this.sellOrders.filter(
         (order) => {
           console.log("Order ID", order.id, "Listing ID", this.listingID);
-          return order.id == this.listingID;  // ✅ must return
+          return order.id == this.listingID || order.product.id == this.listingID;  // ✅ must return
         }
       );
 

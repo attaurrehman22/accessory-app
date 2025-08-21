@@ -306,27 +306,19 @@ onSearchInputClick() {
     }
 
     goToFavorites(){
-      this.router.navigate(['myListing'], {
-        state:{activeRouteType:'Favorites'}
-      })
+      this.router.navigate(['myListing/favorite'])
     }
 
     goToBuyOrders(){
-      this.router.navigate(['myListing'], {
-        state:{activeRouteType:'buyOrders'}
-      })
+      this.router.navigate(['myListing/buy/order'])
     }
 
      goToSellOrders(){
-      this.router.navigate(['myListing'], {
-        state:{activeRouteType:'sellOrders'}
-      })
+      this.router.navigate(['myListing/sell/order'])
     }
 
     goToMyListings(){
-      this.router.navigate(['myListing'], {
-        state:{activeRouteType:'myListings'}
-      })
+      this.router.navigate(['myListing/listing'])
     }
 
     goToCart() {

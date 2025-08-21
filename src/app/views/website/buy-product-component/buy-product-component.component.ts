@@ -476,20 +476,27 @@ export class BuyProductComponentComponent implements OnInit {
     } else {
       OrderTypeval = "buy";
     }
-    this.router.navigate(["/myListing"], {
-      state: {
-        data: {
-          id: this.orderID,
-          product_id: this.productDetails.id,
-          product: this.productDetails,
-          chat_id: this.chatID,
-        },
 
-        orderID: this.orderID,
-        Ordertype: OrderTypeval,
-        fromRoute: "gotToOrderDetails",
-      },
-    });
+    if(OrderTypeval == 'buy'){
+      this.router.navigate(["/myListing/buy/order/details"],{ queryParams: { id: this.productDetails.id } })
+    }else{
+      this.router.navigate(["/myListing/sell/order"])
+    }
+
+    // this.router.navigate(["/myListing"], {
+    //   state: {
+    //     data: {
+    //       id: this.orderID,
+    //       product_id: this.productDetails.id,
+    //       product: this.productDetails,
+    //       chat_id: this.chatID,
+    //     },
+
+    //     orderID: this.orderID,
+    //     Ordertype: OrderTypeval,
+    //     fromRoute: "gotToOrderDetails",
+    //   },
+    // });
   }
 
   goToChatOrOrderDetails() {
@@ -521,7 +528,6 @@ export class BuyProductComponentComponent implements OnInit {
       if (result == "openChat" || result == "viewOrder") {
         if (result == "openChat") {
           this.router.navigate(["/chat"], {
-            // state: { data: this.productDetails },
             state: {
               data: this.productDetails,
               chatID: this.chatID,
@@ -529,20 +535,25 @@ export class BuyProductComponentComponent implements OnInit {
             },
           });
         } else if (result == "viewOrder") {
-          this.router.navigate(["/myListing"], {
-            state: {
-              data: {
-                id: this.orderID,
-                product_id: this.productDetails.id,
-                product: this.productDetails,
-                chat_id: this.chatID,
-              },
+          if(OrderTypeval == 'buy'){
+            this.router.navigate(["/myListing/buy/order/details"],{ queryParams: { id: this.productDetails.id } })
+          }else{
+            this.router.navigate(["/myListing/sell/order"])
+          }
+          // this.router.navigate(["/myListing"], {
+          //   state: {
+          //     data: {
+          //       id: this.orderID,
+          //       product_id: this.productDetails.id,
+          //       product: this.productDetails,
+          //       chat_id: this.chatID,
+          //     },
 
-              orderID: this.orderID,
-              Ordertype: OrderTypeval,
-              fromRoute: "gotToOrderDetails",
-            },
-          });
+          //     orderID: this.orderID,
+          //     Ordertype: OrderTypeval,
+          //     fromRoute: "gotToOrderDetails",
+          //   },
+          // });
         }
       }
     });
@@ -614,20 +625,25 @@ export class BuyProductComponentComponent implements OnInit {
                         },
                       });
                     } else if (result == "viewOrder") {
-                      this.router.navigate(["/myListing"], {
-                        state: {
-                          data: {
-                            id: this.orderID,
-                            product_id: this.productDetails.id,
-                            product: this.productDetails,
-                            chat_id: this.chatID,
-                          },
+                      if(OrderTypeval == 'buy'){
+                        this.router.navigate(["/myListing/buy/order/details"],{ queryParams: { id: this.productDetails.id } })
+                      }else{
+                        this.router.navigate(["/myListing/sell/order"])
+                      }
+                      // this.router.navigate(["/myListing"], {
+                      //   state: {
+                      //     data: {
+                      //       id: this.orderID,
+                      //       product_id: this.productDetails.id,
+                      //       product: this.productDetails,
+                      //       chat_id: this.chatID,
+                      //     },
 
-                          orderID: this.orderID,
-                          Ordertype: OrderTypeval,
-                          fromRoute: "gotToOrderDetails",
-                        },
-                      });
+                      //     orderID: this.orderID,
+                      //     Ordertype: OrderTypeval,
+                      //     fromRoute: "gotToOrderDetails",
+                      //   },
+                      // });
                     }
                   }else{
                     console.log("Calling initializeComponent,")
