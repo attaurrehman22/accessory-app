@@ -41,6 +41,18 @@
   padding: 0 135px 0 135px !important;
 }
 
+.blur-effect::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.3); /* Semi-transparent black overlay */
+  filter: blur(5px); /* Apply blur effect to the overlay */
+  pointer-events: none; /* Ensure the overlay doesn't block interactions */
+}
+
 
 @media (max-width: 1332px) { 
    .reverse-order > .arabic-style > .flex-column > .flex-column > .nav-item > .nav-link {
@@ -49,4 +61,11 @@
    .nav-link {
     font-size: 12px;
    }
+}
+
+@media (max-width: 1024px) {
+  .global-main-wraper {
+    padding: 0 10px !important;
+  }
+
 }

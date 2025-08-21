@@ -1,6 +1,5 @@
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
-import { Observable } from "rxjs";
 import { HttpService } from "src/services/http/http.service";
 import { ModelLoginComponent } from "../../auth/model-login/model-login.component";
 import { MatDialog } from "@angular/material/dialog";
@@ -13,8 +12,6 @@ import {
 } from "@angular/forms";
 import { TranslateService } from "@ngx-translate/core";
 import { LanguageService } from "src/services/lang-service/language.service";
-import { environment } from "src/environments/environment";
-import * as moment from 'moment';
 
 @Component({
   selector: "app-my-listing-details",
@@ -87,6 +84,14 @@ export class MyListingDetailsComponent implements OnInit {
     // { label: "Feedback", arabicLabel: "التقييمات", icon: "bi bi-star" },
     // { label: "Help Center", arabicLabel: "مركز المساعدة", icon: "bi bi-question-circle" },
   ];
+
+  getWrapperClass(): string {
+    const url = this.router.url;
+    if (url.includes('sell/order/details') || url.includes('buy/order/details')) {
+      return 'global-main-wraper';
+    }
+    return 'container';
+  }
 
   listings: any[] = [];
   userID: any;
