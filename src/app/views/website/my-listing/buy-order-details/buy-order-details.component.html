@@ -209,3 +209,299 @@
         </div>
     </div>
 </div>
+
+  <!-- display Buyer to Make Payment start modal here -->
+  <div *ngIf="showBuyerMakePayment" class="container" style="
+      position: absolute;
+      z-index: 999;
+      background: white;
+      top: 0;
+      right: 0;
+      width: 30%;
+      padding: 15px;
+      border-top-left-radius: 12px;
+      border-bottom-left-radius: 12px;
+      height: 100%;
+    ">
+    <div class="d-flex flex-column justify-content-between" style="min-height: 100%;">
+      <div class="col-md-12 flex-grow-1">
+        <!-- Header Section -->
+        <div class="d-flex justify-content-between align-items-center mt-3">
+          <div>
+            <p class="font-size-20 font-wight-700 color-242424 margin-0">Make Payment</p>
+            <p class="font-size-16 font-wight-400 color-909090 margin-0">Your order logistics details are shown as
+              follows:</p>
+          </div>
+          <!-- show validity time like 3 days border-left -->
+          <!-- <button
+            style="
+              background: none;
+              border: 1px solid #242424;
+              border-radius: 10px;
+              color: #242424;
+              height: 44px;
+              width: 144px;
+            "
+          >
+          formateTime(backUpSelectedProductWhenBuyandSellitemClicked?.order?.created_at)
+          </button> -->
+          <div style="
+              background: none;
+              border: 1px solid #242424;
+              border-radius: 30px;
+              color: #242424;
+              height: 44px;
+              width: 144px;
+              display: flex;
+              align-items: center;
+              gap: 5px;
+              padding: 0 10px 0 10px;
+          ">
+            <img style="min-height:20px;min-width:20px" src="../../../../assets/images/famicons_stopwatch-outline.svg"
+              alt="IMG" />
+            {{ formateTime(backUpSelectedProductWhenBuyandSellitemClicked?.order?.offer?.valid_until) }}
+          </div>
+        </div>
+
+        <!-- Order Details Card -->
+        <div class="card p-3 mt-4">
+          <div class="d-flex align-items-center">
+            <img style="height: 64px; width: 64px; object-fit: contain" [src]="
+                apiUrl + selectedProductDetails?.main_image
+              " class="img-fluid rounded" alt="Product hhhhhh Image" />
+            <div class="ms-3">
+              <p class="font-size-16 font-wight-600 color-242424 margin-0">
+                {{ selectedProductDetails?.title }}
+                {{ selectedProductDetails?.condition }}
+              </p>
+              <p class="font-size-16 font-wight-600 color-909090 margin-0">
+                {{ selectedProductDetails?.serial_no }}
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Shipping Cost Input -->
+        <div class="mt-4">
+          <label class="font-size-16 font-wight-600 color-242424 margin-0">Watch Price</label>
+          <input type="text" value={{backUpSelectedProductWhenBuyandSellitemClicked?.order?.final_price}}
+            [readOnly]="true" class="form-control" />
+        </div>
+
+        <div class="mt-4">
+          <label class="font-size-16 font-wight-600 color-242424 margin-0">Shipping Price</label>
+          <input type="text" value={{backUpSelectedProductWhenBuyandSellitemClicked?.order?.offer?.ship_price}}
+            [readOnly]="true" class="form-control" />
+        </div>
+
+        <div class="mt-4">
+          <label class="font-size-16 font-wight-600 color-242424 margin-0">Total</label>
+          <input type="text" [value]="totalPrice" [readOnly]="true" class="form-control" />
+        </div>
+      </div>
+      <div class="col-md-12 d-flex flex-column">
+        <!-- Buttons -->
+        <div class="d-flex flex-column gap-2">
+          <button (click)="buyerMakePayment()" class="btn btn-dark"
+            style="height: 55px; font-size: 18px; font-weight: 400;">
+            Make Payment
+          </button>
+          <button (click)="cancelMakePayment()" class="btn btn-outline-dark"
+            style="height: 55px; font-size: 18px; font-weight: 400;">
+            Cancel
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- display Buyer to Make Payment end here -->
+
+  <div *ngIf="showSellerProofofShipping" class="container" style="
+      position: absolute;
+      z-index: 999;
+      background: white;
+      top: 0;
+      right: 0;
+      width: 30%;
+      padding: 15px;
+      border-top-left-radius: 12px;
+      border-bottom-left-radius: 12px;
+      height: 100%;
+    ">
+    <div class="d-flex flex-column justify-content-between" style="min-height: 100%;">
+      <div class="col-md-12 flex-grow-1">
+        <div class="d-flex justify-content-between align-items-center mt-3">
+          <div>
+            <p class="font-size-20 font-wight-700 color-242424 margin-0">Shipment Details</p>
+            <p class="font-size-16 font-wight-400 color-909090 margin-0">
+              Your order logistics details are shown as follows:
+            </p>
+          </div>
+          <!-- <button (click)="markAsSold()" style="background: none;border: 1px solid #242424;border-radius: 10px;color: #242424;height: 44px;width: 144px;">Mark as Sold</button> -->
+        </div>
+        <div class="card p-3 mt-3">
+          <div class="d-flex align-items-center">
+            <img style="height: 64px; width: 64px; object-fit: contain" [src]="
+                apiUrl + orderDetails?.product?.main_image
+              " class="img-fluid rounded" alt="Product Image" />
+            <div class="ms-3">
+              <p class="font-size-16 font-wight-600 color-242424 margin-0">
+                {{ orderDetails?.product?.title }}
+                {{ orderDetails?.product?.condition }}
+              </p>
+              <p class="font-size-16 font-wight-600 color-909090 margin-0">
+                {{ orderDetails?.product?.serial_no }}
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-4">
+          <label class="font-size-16 font-wight-600 color-242424 margin-0">Tracking ID</label>
+          <input type="text" [(ngModel)]="trackingID" class="form-control" placeholder="Enter Tracking ID" />
+        </div>
+
+        <div class="mt-4">
+          <label class="font-size-16 font-wight-600 color-242424 margin-0">Logistics Partner</label>
+          <select class="form-select" [(ngModel)]="logisticsPartner">
+            <option value="DHL">DHL</option>
+          </select>
+        </div>
+
+        <div class="mt-4">
+          <label class="font-size-16 font-wight-600 color-242424 margin-0">Upload Proof of Shipment</label>
+          <div class="upload-box" (click)="fileInput.click()">
+            <input type="file" #fileInput (change)="onFileSelected($event)" multiple hidden accept=".jpg,.jpeg,.png" />
+
+            <!-- Show "+" icon if no files selected -->
+            <div class="upload-placeholder">
+              <span class="plus-icon">+</span>
+            </div>
+          </div>
+
+          <!-- Show selected image previews -->
+          <label class="font-size-16 font-wight-600 color-242424 margin-0" *ngIf="uploadedFiles.length > 0">Proof of
+            Shipment</label>
+          <div class="image-preview-container mt-2" *ngIf="uploadedFiles.length > 0">
+            <div class="image-preview" *ngFor="let imgSrc of imagePreviews; let i = index">
+              <img [src]="imgSrc" class="preview-img" />
+              <button class="remove-btn" (click)="removeImage(i)">×
+
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-12 d-flex flex-column">
+        <div class="d-flex flex-column gap-2">
+          <button (click)="sendProofofShipMent()" class="btn btn-dark"
+            style="height: 55px; font-size: 18px; font-weight: 400;">
+            Done
+          </button>
+          <button (click)="cancelProofofShipMent()" class="btn btn-outline-dark"
+            style="height: 55px; font-size: 18px; font-weight: 400;">
+            Cancel
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- // show Details of Buyer and Seller Proof Of Owner Ship Read Only Modal -->
+
+  <div *ngIf="showBuyerandSellerProofOfOwnerShipReadOnlyModal" class="container" style="
+    position: absolute;
+    z-index: 999;
+    background: white;
+    top: 0;
+    right: 0;
+    width: 30%;
+    padding: 15px;
+    border-top-left-radius: 12px;
+    border-bottom-left-radius: 12px;
+    height: 100%;
+  ">
+    <div class="d-flex flex-column justify-content-between" style="min-height: 100%;">
+      <div class="col-md-12 flex-grow-1">
+        <div class="d-flex justify-content-between align-items-center mt-3">
+          <div>
+            <p class="font-size-20 font-wight-700 color-242424 margin-0">Shipment Details</p>
+            <p class="font-size-16 font-wight-400 color-909090 margin-0">
+              Your order logistics details are shown as follows:
+            </p>
+          </div>
+          <!-- <button (click)="markAsSold()" style="background: none;border: 1px solid #242424;border-radius: 10px;color: #242424;height: 44px;width: 144px;">Mark as Sold</button> -->
+        </div>
+        <div class="card p-3 mt-3">
+          <div class="d-flex align-items-center">
+            <img style="height: 64px; width: 64px; object-fit: contain" [src]="
+              apiUrl + orderDetails?.product?.main_image
+            " class="img-fluid rounded" alt="Product Image" />
+            <div class="ms-3">
+              <p class="font-size-16 font-wight-600 color-242424 margin-0">
+                {{ orderDetails?.product?.title }}
+                {{ orderDetails?.product?.condition }}
+              </p>
+              <p class="font-size-16 font-wight-600 color-909090 margin-0">
+                {{ orderDetails?.product?.serial_no }}
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-4">
+          <label class="font-size-16 font-wight-600 color-242424 margin-0">Tracking ID</label>
+          <p class="font-size-16 font-wight-400 color-242424 margin-0">
+            {{backUpSelectedProductWhenBuyandSellitemClicked?.order?.shiping_tracking_id}}</p>
+          <!-- <input
+          type="text"
+          [(ngModel)]="trackingID"
+          [readOnly]="true"
+          class="form-control"
+          placeholder="Enter Tracking ID"
+        /> -->
+        </div>
+
+        <div class="mt-4">
+          <label class="font-size-16 font-wight-600 color-242424 margin-0">Logistics Partner</label>
+          <p class="font-size-16 font-wight-400 color-242424 margin-0">
+            {{backUpSelectedProductWhenBuyandSellitemClicked?.order?.shiping_partner}}</p>
+          <!-- <select class="form-select" [(ngModel)]="logisticsPartner">
+          <option value="DHL">DHL</option>
+        </select> -->
+        </div>
+
+        <div class="mt-4">
+          <!-- Show selected image previews -->
+          <label class="font-size-16 font-wight-600 color-242424 margin-0"
+            *ngIf="backUpSelectedProductWhenBuyandSellitemClicked?.order?.shipping_proof?.length > 0">Proof of
+            Shipment</label>
+          <div class="image-preview-container mt-2"
+            *ngIf="backUpSelectedProductWhenBuyandSellitemClicked?.order?.shipping_proof?.length > 0">
+            <div class="image-preview"
+              *ngFor="let imgSrc of backUpSelectedProductWhenBuyandSellitemClicked?.order?.shipping_proof; let i = index">
+              <!-- <img [src]="imgSrc" class="preview-img" /> -->
+              <img [src]="
+            apiUrl + imgSrc
+          " class="preview-img" />
+              <!-- <button class="remove-btn" (click)="removeImage(i)">×
+
+            </button> -->
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-12 d-flex flex-column">
+        <div class="d-flex flex-column gap-2">
+          <!-- <button (click)="sendProofofShipMent()" class="btn btn-dark" style="height: 55px; font-size: 18px; font-weight: 400;">
+          Done
+        </button> -->
+          <button (click)="closeshowBuyerandSellerProofOfOwnerShipReadOnlyModal()" class="btn btn-outline-dark"
+            style="height: 55px; font-size: 18px; font-weight: 400;">
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>

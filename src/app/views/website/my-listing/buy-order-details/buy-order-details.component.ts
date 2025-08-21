@@ -40,6 +40,9 @@ export class BuyOrderDetailsComponent implements OnInit{
   hoveredStatus: any = null;
   closeTimeout: any;
   profileForm!: FormGroup;
+  showSellerProofofShipping: boolean = false;
+  trackingID: any;
+  logisticsPartner: any;
 
   constructor(private route: ActivatedRoute,
     private http: HttpService,
@@ -366,6 +369,142 @@ export class BuyOrderDetailsComponent implements OnInit{
       // return (emailWord[0][0].toUpperCase());
       // return 'EM';
     }
+  }
+
+  get totalPrice(): number {
+    const shipPrice = Number(this.backUpSelectedProductWhenBuyandSellitemClicked?.order?.offer?.ship_price || 0);
+    const finalPrice = Number(this.backUpSelectedProductWhenBuyandSellitemClicked?.order?.final_price || 0);
+    return shipPrice + finalPrice;
+  }
+
+  buyerMakePayment() {
+    let userIDD;
+    if (localStorage.getItem("userID")) {
+      userIDD = localStorage.getItem("userID").toString();
+    }
+
+    const formData = {
+      chat_id: this.orderDetails?.chat_id,
+      product_id: this.selectedProductDetails.id,
+      receiver_id: this.backUpSelectedProductWhenBuyandSellitemClicked.order.product.created_by,
+      action_type: "make_payment",
+    };
+    console.log("Buyer Make Payment caling",formData)
+    // console.log("receiver_id",receiver_id)
+    this.http.sendMessage(formData).subscribe(
+      (res) => {
+        this.showBuyerMakePayment = false;
+        if (this.translateService.currentLang == "en") {
+          this.alertService.showAlert("success", "Payment Send Successfully");
+        } else {
+          this.alertService.showAlert("success", "تم إرسال العرض بنجاح");
+        }
+        this.fetchOrderStatus(this.orderID, "buyer");
+      },
+      (err) => {
+        if (err && err.error) {
+          this.alertService.showAlert("warning", `${err.error.message}`);
+        } else {
+          if (this.translateService.currentLang == "en") {
+            this.alertService.showAlert(
+              "warning",
+              "Error in Making payment. Please try again"
+            );
+          } else {
+            this.alertService.showAlert(
+              "warning",
+              "حدث خطأ أثناء إجراء الدفع. يرجى المحاولة مرة أخرى"
+            );
+          }
+        }
+      }
+    );
+  }
+
+  cancelMakePayment(){
+    this.showBuyerMakePayment = false
+  }
+  allowedExtensions = ["jpeg", "jpg", "png"];
+  uploadedFiles: File[] = [];
+  imagePreviews: string[] = [];
+  onFileSelected(event: any) {
+    const files = event.target.files;
+    if (files) {
+      for (let file of files) {
+        const fileExt = file.name.split(".").pop().toLowerCase();
+        if (this.allowedExtensions.includes(fileExt)) {
+          this.uploadedFiles.push(file);
+          const reader = new FileReader();
+          reader.onload = (e: any) => {
+            this.imagePreviews.push(e.target.result); // Save preview URL
+          };
+          reader.readAsDataURL(file);
+        } else {
+          alert("Only JPEG, JPG, and PNG files are allowed.");
+        }
+      }
+    }
+  }
+
+  sendProofofShipMent() {
+    if (this.uploadedFiles.length === 0) {
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("order_id", this.orderDetails.id);
+    formData.append("shipping_tracking_id", this.trackingID);
+    formData.append("shipping_partner", this.logisticsPartner);
+    formData.append(
+      "shipping_address",
+      this.orderDetails.shipping_address || "ship xyz 123"
+    );
+
+    // Append multiple images as shipping_proof[]
+    this.uploadedFiles.forEach((file) => {
+      formData.append("shipping_proof[]", file);
+    });
+
+    this.http.createShipment(formData).subscribe(
+      (res) => {
+        this.showSellerProofofShipping = false;
+        this.fetchOrderStatus(this.orderID, "seller");
+      },
+      (err) => {
+        if (this.translateService.currentLang == "en") {
+          this.alertService.showAlert(
+            "warning",
+            "Error in sending Proof of ownership"
+          );
+        } else {
+          this.alertService.showAlert(
+            "warning",
+            "حدث خطأ أثناء إرسال إثبات الملكية"
+          );
+        }
+      }
+    );
+  }
+
+  formateTime(time: any) {
+    const result = moment(time).fromNow(); // "in 3 days" or "3 days ago"
+    return result.startsWith("in ") 
+      ? result.replace("in ", "") + " left" 
+      : result; 
+  }
+
+  cancelProofofShipMent() {
+    this.showSellerProofofShipping = false;
+  }
+
+  // Remove selected image
+  removeImage(index: number) {
+    this.uploadedFiles.splice(index, 1);
+    this.imagePreviews.splice(index, 1);
+  }
+
+  closeshowBuyerandSellerProofOfOwnerShipReadOnlyModal(){
+    this.showBuyerandSellerProofOfOwnerShipReadOnlyModal = false;
   }
 
     // for buyer

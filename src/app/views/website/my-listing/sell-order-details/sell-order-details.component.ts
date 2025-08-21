@@ -510,4 +510,70 @@ export class SellOrderDetailsComponent implements OnInit {
       state: { chatID: this.chat_ID, productID: this.forSendingProductID, chatRouteFrom: 'orderDetails', productDetailsFromOrder: this.backUpSelectedProductWhenBuyandSellitemClicked },
     });
   }
+
+  shippingCharges: any;
+  offerValidity: any;
+
+  markAsSold() {
+    // const formData = {
+    //   offer_id: this.offerID,
+    //   product_id:this.offerDetails.product.id,
+    //   action_type: "mark_sold",
+    //   chat_id:this.offerDetails.chat_id,
+    //   receiver_id:this.offerDetails.sender_id,
+    //   sender_id:localStorage.getItem("userID")
+    // };
+    // this.http.sendMessage(formData).subscribe(
+    //   (res) => {
+    //     this.alertService.showAlert(
+    //       "success",
+    //       "Product Mark as Sold Succesfully"
+    //     );
+    //     // this.dialogRef.close(this.offerForm.value);
+    //   },
+    //   (err) => {
+    //     this.alertService.showAlert("warning", "Error in Product Mark as Sold");
+    //   }
+    // );
+  }
+
+  sendSellerOffer() {
+    let userIDD;
+    if (localStorage.getItem("userID")) {
+      userIDD = localStorage.getItem("userID").toString();
+    }
+
+    const formData = {
+      chat_id: this.orderDetails?.chat_id,
+      ship_price: this.shippingCharges,
+      product_id: this.selectedProductDetails.id,
+      sender_id: userIDD,
+      receiver_id: this.orderDetails?.buyer_id,
+      validity_days: this.offerValidity,
+    };
+
+    this.http.sendShipmenttoBuyer(formData).subscribe(
+      (res) => {
+        this.showSellerConfirmOrderAvailability = false;
+        if (this.translateService.currentLang == "en") {
+          this.alertService.showAlert("success", "Offer Sent Successfully");
+        } else {
+          this.alertService.showAlert("success", "تم إرسال العرض بنجاح");
+        }
+        this.fetchOrderStatus(this.orderID, "seller");
+      },
+      (err) => {
+        const errorMessage = err.error?.message || "Something went wrong!";
+        this.alertService.showAlert("warning", errorMessage);
+      }
+    );
+  }
+
+  cancelSellerOffer() {
+    this.showSellerConfirmOrderAvailability = false;
+  }
+
+  closeshowBuyerandSellerProofOfOwnerShipReadOnlyModal(){
+    this.showBuyerandSellerProofOfOwnerShipReadOnlyModal = false;
+  }
 }
