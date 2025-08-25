@@ -85,6 +85,8 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     dialogRef.afterClosed().subscribe((result) => {});
   }
 
+  private intervalId: any;
+
   ngOnInit(): void {
     this.user_id = localStorage.getItem("userID");
     this.userID = localStorage.getItem('userID');
@@ -187,6 +189,20 @@ export class ChatComponent implements OnInit, AfterViewChecked {
       this.getLatestMessage();
     }
 
+    this.intervalId = setInterval(() => {
+      this.getLatestMessage();
+      if(this.chat_id){
+        this.getChatDetails()
+      }
+    }, 8000);
+
+  }
+
+  ngOnDestroy(): void {
+    // Clear interval when component destroyed
+    if (this.intervalId) {
+      clearInterval(this.intervalId);
+    }
   }
 
   @ViewChild("chatContainer") chatContainer: ElementRef;

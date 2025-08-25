@@ -68,6 +68,7 @@ export class SellOrderDetailsComponent implements OnInit {
     }
   }
 
+  intervalId: any;
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
       const id = params['id'];
@@ -104,6 +105,17 @@ export class SellOrderDetailsComponent implements OnInit {
     this.fetchProfiling();
     if (this.listingID) {
       this.getSellOrders()
+
+      this.intervalId = setInterval(() => {
+        this.getSellOrders();
+      }, 8000);
+    }
+  }
+
+  ngOnDestroy(): void {
+    // Clear interval when component is destroyed
+    if (this.intervalId) {
+      clearInterval(this.intervalId);
     }
   }
 

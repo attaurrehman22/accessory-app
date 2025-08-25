@@ -12,11 +12,23 @@ export class BuyOrderComponent implements OnInit{
   apiUrl = environment.apipath + "/";
   listingID: any;
   buyOrdersListings: any[] = [];
+  private refreshInterval: any;
 
   constructor(private http:HttpService,private router:Router){}
 
   ngOnInit(): void {
     this.getBuyOrders()
+
+    this.refreshInterval = setInterval(() => {
+      this.getBuyOrders();
+    }, 8000);
+  }
+
+  ngOnDestroy(): void {
+    // Clear interval when component is destroyed to avoid memory leaks
+    if (this.refreshInterval) {
+      clearInterval(this.refreshInterval);
+    }
   }
 
   getBuyOrders() {

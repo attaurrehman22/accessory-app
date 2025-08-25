@@ -44,8 +44,21 @@ export class SellOrderComponent implements OnInit{
     }
   }
 
+  private intervalId: any;
+
   ngOnInit(): void {
     this.getSellOrders()
+
+    this.intervalId = setInterval(() => {
+      this.getSellOrders();
+    }, 8000);
+  }
+
+  ngOnDestroy(): void {
+    // Clear interval when component destroyed
+    if (this.intervalId) {
+      clearInterval(this.intervalId);
+    }
   }
 
   getSellOrders() {

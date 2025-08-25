@@ -68,6 +68,7 @@ export class BuyOrderDetailsComponent implements OnInit{
       }
     }
   }
+  intervalId: any;
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
@@ -105,6 +106,17 @@ export class BuyOrderDetailsComponent implements OnInit{
     this.fetchProfiling();
     if (this.listingID) {
       this.getSellOrders()
+
+      this.intervalId = setInterval(() => {
+        this.getSellOrders();
+      }, 8000);
+    }
+  }
+
+  ngOnDestroy(): void {
+    // Clear interval when component is destroyed
+    if (this.intervalId) {
+      clearInterval(this.intervalId);
     }
   }
 
@@ -333,10 +345,6 @@ export class BuyOrderDetailsComponent implements OnInit{
 
   showBuyerToConfirmOrderDeliveres:boolean = false;
 
-  // this.showBuyerMakePayment = false;
-  // this.showBuyerMakePayment = false;
-  // this.showBuyerandSellerProofOfOwnerShipReadOnlyModal = false;
-  // this.showBuyerToConfirmOrderDeliveres = false;
   isHoverModel: boolean = false
   callBuyerOption(i:any){
     console.log("Buyer Production",i)
