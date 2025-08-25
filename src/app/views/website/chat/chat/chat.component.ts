@@ -113,6 +113,9 @@ export class ChatComponent implements OnInit, AfterViewChecked {
           this.getMesageDetails(history?.state?.chatDetails)
         } 
         if(!history?.state?.chatDetails && history?.state?.data && history?.state?.chatID){
+          console.log("Calling --------------")
+          console.log("Calling chat Details",this.chat_id)
+          console.log("history?.state?.chatID",history?.state?.chatID)
           let getFilterdChat
           this.http.getChatsWithLatestMessage().subscribe((res) => {
             const chatList = res.chats.map(
@@ -133,7 +136,11 @@ export class ChatComponent implements OnInit, AfterViewChecked {
           });
         }
         else{
-          console.log("Calling chat Details",this.chat_id)
+         
+          if(!this.chat_id && history?.state?.chatID){
+            this.chat_id = history?.state?.chatID
+          }
+         
           this.getChatDetails();
         }
       }
@@ -402,6 +409,11 @@ export class ChatComponent implements OnInit, AfterViewChecked {
         }
       }
     );
+  }
+
+  
+  hasCancelOffer(){
+    return this.reversedMessages.some(msg => msg.action_type === 'cancel_order');
   }
 
   hasBuyNow(): boolean {

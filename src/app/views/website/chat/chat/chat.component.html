@@ -191,17 +191,17 @@
                         color: white;
                         font-size: 20px;
                       ">
-                      {{ UserNameOFMessenger?.substring(0, 2) }}
+                      <!-- {{ UserNameOFMessenger?.substring(0, 2) }} -->
                     </div>
                   </ng-template>
                 </div>
 
                 <div class="d-flex flex-column mx-2">
                   <p class="font-size-20 font-wight-600 color-242424 margin-0">
-                    {{ UserNameOFMessenger }}
+                    <!-- {{ UserNameOFMessenger }} -->
                   </p>
                   <p class="font-size-16 font-wight-400 color-909090 margin-0">
-                    {{ userCity }}
+                    <!-- {{ userCity }} -->
                     <!-- show country flag using getProductDetails.created_by.country -->
                     <img
                       [src]="'https://flagcdn.com/24x18/' + 'sa' + '.png'"
@@ -288,13 +288,13 @@
                       <div class="message-content" [ngClass]="{ 'no-background': message.attachments }">
                         <p *ngIf="message?.message" [ngClass]="{ 'black-background-text': message.attachments }">{{
                           message.message }}</p>
-                        <p class="smaall-screen-text" *ngIf="
+                        <!-- <p class="smaall-screen-text" *ngIf="
                             isShowMarkAsSold &&
                             isBuyerUser &&
                             message.action_type === 'mark_sold'
                           ">
                           {{ "chat_com.seller_mark_sold_status" | translate }}
-                        </p>
+                        </p> -->
 
                         <div class="d-flex gap-2" *ngIf="message.attachments">
                           <ng-container *ngIf="!isArray(message.attachments)">
@@ -813,13 +813,13 @@
                     </div>
                     <!-- // show shipping price and validity time end here -->
                      <!-- // show mark as sold start here -->
-                    <p *ngIf="
+                    <!-- <p *ngIf="
                         isShowMarkAsSold &&
                         isBuyerUser &&
                         message.action_type === 'mark_sold'
                       ">
                       {{ "chat_com.seller_mark_sold_status" | translate }}
-                    </p>
+                    </p> -->
                     <!-- // show mark as sold end here -->
                      <!-- // show attachments start here -->
                     <div class="d-flex gap-2" *ngIf="message.attachments">
@@ -1006,17 +1006,19 @@
               </div>
             </div>
             <!-- <h1>Buy Now : {{ hasBuyNow() }}</h1>
+            <h1>Cancel Offer : {{ hasCancelOffer() == false }}</h1>
              <h1>{{ isCustomOffer }}</h1>
              <h1>{{ isShowMarkAsSold }}</h1>
              <h1>{{ isShowPaymentMethod }}</h1>
              <h1>{{ isBuyerUser }}</h1> -->
             <!-- // show buy now and create offer button start here -->
             <div *ngIf="
-                !isCustomOffer &&
-                hasBuyNow() &&
-                !isShowMarkAsSold &&
-                !isShowPaymentMethod
-              " class="col-md-12 d-flex justify-content-center">
+            !isCustomOffer &&
+            hasBuyNow() &&
+            hasCancelOffer() == false &&
+            !isShowMarkAsSold &&
+            !isShowPaymentMethod
+          " class="col-md-12 d-flex justify-content-center">
               <div *ngIf="isBuyerUser && !isBuyNowFromChatCheck" class="d-flex flex-column card p-2">
                 <div style="border-bottom: 1px solid #f2f5f8" class="d-flex justify-content-between align-items-center">
                   <p>
@@ -1050,7 +1052,7 @@
             <!-- // show buy now and create offer button end here -->
 
             <!-- // show payment method start here -->
-            <div *ngIf="isShowPaymentMethod && isBuyerUser && isExistMakePayment"
+            <div *ngIf="isShowPaymentMethod && isBuyerUser && isExistMakePayment && !hasCancelOffer()"
               class="col-md-12 d-flex justify-content-center">
               <!-- // when buyer satisfied with product and dealer and 'Buy Now' and after 'Buy Now' dealer add shipping price then this section show message to buyer 'Add Payment' or 'Cancel Order' -->
 
