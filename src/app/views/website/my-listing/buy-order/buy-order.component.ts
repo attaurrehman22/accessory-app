@@ -21,7 +21,7 @@ export class BuyOrderComponent implements OnInit{
 
     this.refreshInterval = setInterval(() => {
       this.getBuyOrders();
-    }, 8000);
+    }, 10000);
   }
 
   ngOnDestroy(): void {

@@ -109,7 +109,7 @@ export class BuyOrderDetailsComponent implements OnInit{
 
       this.intervalId = setInterval(() => {
         this.getSellOrders();
-      }, 8000);
+      }, 10000);
     }
   }
 

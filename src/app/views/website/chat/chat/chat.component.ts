@@ -160,7 +160,6 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     }
 
     if(history?.state?.chatRouteFrom){
-      console.log("Callling ---------------------------- from Order Details")
       // this.getMesageDetails(history?.state?.chat_ID)
       // this.getDetailsofProduct(history.state.productID);
       const data = history.state.productDetailsFromOrder
@@ -194,7 +193,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
       if(this.chat_id){
         this.getChatDetails()
       }
-    }, 8000);
+    }, 10000);
 
   }
 
@@ -305,6 +304,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
   isExistMakePayment: boolean = true;
   isActionTypeMakePaymentToHideCustomOffer: boolean = false;
   userProfile:any;
+  isProductSold:boolean=false;
   getChatDetails() {
     let actionTypeforCallingCustomOffer = false;
     if (history?.state?.data) {
@@ -316,6 +316,11 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     this.http.getChatsDetails(this.chat_id).subscribe(
       (res) => {
         this.userProfile = res.profile;
+        if(res.is_product_sold == 1){
+            this.isProductSold = true
+        }else{
+          this.isProductSold = false
+        }
         this.userProfile.profile_image = this.userProfile.profile_image.replace(/\\/g, '');
         console.log("this.userProfile",this.userProfile)
         this.messages = res.messages;

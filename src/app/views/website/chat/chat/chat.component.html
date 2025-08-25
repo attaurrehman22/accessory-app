@@ -1105,14 +1105,14 @@
 
           <!-- // show already sold message start here -->
           <div class="card-header d-flex flex-wrap justify-content-between border rounded"
-            *ngIf="isProductReserved && !isBuyerUser">
+            *ngIf="isProductSold">
             <div class="d-flex" style="width: 84%">
-              <div class="">
+              <div>
                 <ng-container *ngIf="getProductDetails.main_image; else fallbackImage">
                   <img [src]="
                       apiUrl +
                       getProductDetails.main_image
-                    " alt="chat image" class="img-thumbnail" style="width: 48px; height: 48px; border-radius: 30px" />
+                    " alt="chat image" class="img-thumbnail" style="width: 48px; height: 48px; border-radius: 8px;   background-color: #E9E9E9;" />
                 </ng-container>
 
                 <ng-template #fallbackImage>
@@ -1135,7 +1135,7 @@
               <div class="d-flex flex-column mx-2">
                 <p class="font-size-20 font-wight-600 color-242424 margin-0">
                   {{ "chat_com.already_sold" | translate }}
-                  <span class="font-size-16 font-wight-400 color-909090 margin-0 mx-2">{{ getProductDetails.serial_no
+                  <span class="font-size-16 font-wight-400 color-909090 margin-0 mx-2">{{ getProductDetails.model
                     }}</span>
                 </p>
                 <p class="font-size-16 font-wight-400 color-909090 margin-0">

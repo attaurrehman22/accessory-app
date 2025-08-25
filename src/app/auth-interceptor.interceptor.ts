@@ -10,7 +10,15 @@ export const authInterceptorInterceptor: HttpInterceptorFn = (req, next) => {
   // Define endpoints to skip loader
   const skipLoaderEndpoints = [
     '/check-user-existence',
-    '/check-email-existence'
+    '/check-email-existence',
+    '/list',
+    '/messages',
+    '/buyList',
+    '/profile',
+    '/order-history',
+    '/details',
+    '/sold-orders',
+    '/offer-history'
   ];
 
   // Check if the request URL matches any of the skipLoaderEndpoints
@@ -24,7 +32,7 @@ export const authInterceptorInterceptor: HttpInterceptorFn = (req, next) => {
   return next(req).pipe(
     finalize(() => {
       // Hide loader only if not skipping
-      if (!shouldSkipLoader) {
+      if (!shouldSkipLoader || shouldSkipLoader) {
         loaderService.hide();
       }
     })
