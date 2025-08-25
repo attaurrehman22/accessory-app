@@ -12,6 +12,7 @@ import {
 } from "@angular/forms";
 import { TranslateService } from "@ngx-translate/core";
 import { LanguageService } from "src/services/lang-service/language.service";
+import { HoverStateService } from "../../services/shared-blured-modal-service/hover-state.service";
 
 @Component({
   selector: "app-my-listing-details",
@@ -85,23 +86,30 @@ export class MyListingDetailsComponent implements OnInit {
     // { label: "Help Center", arabicLabel: "مركز المساعدة", icon: "bi bi-question-circle" },
   ];
 
-  getWrapperClass(): string {
+  getWrapperClass(): any {
     const url = this.router.url;
-    if (url.includes('sell/order/details') || url.includes('buy/order/details')) {
-      return 'global-main-wraper';
-    }
-    return 'container';
+    return {
+      'global-main-wraper': url.includes('sell/order/details') || url.includes('buy/order/details'),
+      'container': !(url.includes('sell/order/details') || url.includes('buy/order/details')),
+      'blur-effect': this.isHoverModel
+    };
   }
+  
 
   listings: any[] = [];
   userID: any;
   paymentId: any;
-
+  isHoverModel: boolean = false;
   ngOnInit(): void {
     this.userID = localStorage.getItem("userID");
     if (!this.userID) {
       this.loginFirst();
     }
+
+    this.hoverStateService.hoverState$.subscribe(state => {
+      this.isHoverModel = state;
+      console.log("Hover state in MyListingDetailsComponent = ", state);
+    });
   }
 
 
@@ -119,6 +127,7 @@ export class MyListingDetailsComponent implements OnInit {
 
   constructor(
     private http: HttpService,
+    private hoverStateService: HoverStateService,
     private router: Router,
     private dialog: MatDialog,
     private alertService: AlertsServicesService,

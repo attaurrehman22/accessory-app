@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import * as moment from 'moment';
 import { Observable } from 'rxjs';
+import { HoverStateService } from 'src/app/views/services/shared-blured-modal-service/hover-state.service';
 import { environment } from 'src/environments/environment';
 import { AlertsServicesService } from 'src/services/alerts-service/alerts-services.service';
 import { HttpService } from 'src/services/http/http.service';
@@ -44,7 +45,7 @@ export class BuyOrderDetailsComponent implements OnInit{
   trackingID: any;
   logisticsPartner: any;
 
-  constructor(private route: ActivatedRoute,
+  constructor(private route: ActivatedRoute,private hoverStateService: HoverStateService,
     private http: HttpService,
     private router: Router,
     private dialog: MatDialog,
@@ -192,8 +193,12 @@ export class BuyOrderDetailsComponent implements OnInit{
                 }
                 if (history.new_status == 'awaiting_confirmation' || history.new_status == 'add_shipping') {
                   this.statuses[1].active = true;
-                  this.statuses[2].active = true;
                   this.statuses[1].time = moment(history.created_at).fromNow();
+                  if(res?.data?.history.some(msg => msg.new_status === 'order_sold') || res?.data?.history.some(msg => msg.new_status === 'order_canceled') ){
+                    this.statuses[2].active = false;
+                  }else{
+                    this.statuses[2].active = true;
+                  }
                 }
                 if (history.new_status == 'make_payment') {
                   this.statuses[2].active = true;
@@ -222,6 +227,11 @@ export class BuyOrderDetailsComponent implements OnInit{
                 if (history.new_status == 'order_canceled') {
                   this.statuses[7].active = true;
                   this.statuses[7].time = moment(history.created_at).fromNow();
+                }
+                if (history.new_status == 'order_sold') {
+                  this.statuses[2].active = false;
+                  this.statuses[8].active = true;
+                  this.statuses[8].time = moment(history.created_at).fromNow();
                 }
               }
             )
@@ -281,6 +291,25 @@ export class BuyOrderDetailsComponent implements OnInit{
         this.orderDetails.product.main_image =
           this.orderDetails.product.main_image.replace(/\\/g, "");
       }
+      if (this.orderDetails?.shipping_proof) {
+        // Parse the string into an array
+        let proofs: string[] = JSON.parse(this.orderDetails.shipping_proof);
+      
+        // Remove escape slashes if any (safety check)
+        proofs = proofs.map(p => p.replace(/\\/g, ""));
+    
+      
+        // Build full URLs for preview
+        this.imagePreviews = proofs.map(p => this.apiUrl + p);
+      }
+    
+      if(this.orderDetails?.shipping_tracking_id){
+        this.trackingID = this.orderDetails?.shipping_tracking_id
+      }
+
+      if(this.orderDetails?.shipping_partner){
+        this.logisticsPartner = this.orderDetails?.shipping_partner
+      }
     });
   }
 
@@ -302,18 +331,44 @@ export class BuyOrderDetailsComponent implements OnInit{
     }, 200); // 200ms delay gives time to move to modal
   }
 
+  showBuyerToConfirmOrderDeliveres:boolean = false;
+
+  // this.showBuyerMakePayment = false;
+  // this.showBuyerMakePayment = false;
+  // this.showBuyerandSellerProofOfOwnerShipReadOnlyModal = false;
+  // this.showBuyerToConfirmOrderDeliveres = false;
+  isHoverModel: boolean = false
   callBuyerOption(i:any){
     console.log("Buyer Production",i)
     console.log("this.activeBuyerStatuses.length",this.activeBuyerStatuses.length)
     if(i == 2 && this.activeBuyerStatuses.length == 3){
+      this.showBuyerandSellerProofOfOwnerShipReadOnlyModal = false;
+      this.showBuyerToConfirmOrderDeliveres = false;
       this.showBuyerMakePayment = true;
-    }else if(i == 4 && this.activeBuyerStatuses.length >= 5){
+      this.isHoverModel = true
+    }else if(i == 3 && this.activeBuyerStatuses.length >= 5){
+      this.showBuyerToConfirmOrderDeliveres = false;
+       this.showBuyerMakePayment = false;
+       this.showBuyerMakePayment = false;
       this.showBuyerandSellerProofOfOwnerShipReadOnlyModal = true;
-    }else{
+      this.isHoverModel = true
+    }else if(i == 4 && this.activeBuyerStatuses.length == 5){
+      this.showBuyerMakePayment = false;
+      this.showBuyerMakePayment = false;
+      this.showBuyerandSellerProofOfOwnerShipReadOnlyModal = false;
+      this.showBuyerToConfirmOrderDeliveres = true;
+      this.isHoverModel = true
+    }
+    else if(i == 4 && this.activeBuyerStatuses.length >= 5){
+      this.showBuyerMakePayment = false;
+      this.showBuyerMakePayment = false;
+      this.showBuyerandSellerProofOfOwnerShipReadOnlyModal = false;
+    }
+    else{
       this.showBuyerMakePayment = false;
     }
-  }
- 
+    this.hoverStateService.setHoverState(this.isHoverModel);
+  } 
 
   setActive(){
     this.router.navigate(['/myListing/buy/order'])
@@ -386,13 +441,14 @@ export class BuyOrderDetailsComponent implements OnInit{
     const formData = {
       chat_id: this.orderDetails?.chat_id,
       product_id: this.selectedProductDetails.id,
-      receiver_id: this.backUpSelectedProductWhenBuyandSellitemClicked.order.product.created_by,
+      receiver_id: this.backUpSelectedProductWhenBuyandSellitemClicked.order.product.created_by.id,
       action_type: "make_payment",
     };
-    console.log("Buyer Make Payment caling",formData)
     // console.log("receiver_id",receiver_id)
     this.http.sendMessage(formData).subscribe(
       (res) => {
+        this.isHoverModel=false;
+        this.hoverStateService.setHoverState(this.isHoverModel);
         this.showBuyerMakePayment = false;
         if (this.translateService.currentLang == "en") {
           this.alertService.showAlert("success", "Payment Send Successfully");
@@ -422,8 +478,66 @@ export class BuyOrderDetailsComponent implements OnInit{
   }
 
   cancelMakePayment(){
+    this.isHoverModel=false;
+    this.hoverStateService.setHoverState(this.isHoverModel);
     this.showBuyerMakePayment = false
   }
+
+
+  conformOrderRecieved() {
+    let userIDD;
+    if (localStorage.getItem("userID")) {
+      userIDD = localStorage.getItem("userID").toString();
+    }
+  
+    const formData = {
+      chat_id: this.orderDetails?.chat_id,
+      product_id: this.selectedProductDetails.id,
+      receiver_id: this.backUpSelectedProductWhenBuyandSellitemClicked.order.product.created_by.id,
+      action_type: "order_delivered",
+    };
+  
+    this.http.sendMessage(formData).subscribe(
+      (res) => {
+        this.isHoverModel=false;
+        this.hoverStateService.setHoverState(this.isHoverModel);
+        this.showBuyerToConfirmOrderDeliveres = false;
+        if (this.translateService.currentLang == "en") {
+          this.alertService.showAlert("success", "Order confirmed as received successfully");
+        } else {
+          this.alertService.showAlert("success", "تم تأكيد استلام الطلب بنجاح");
+        }
+        this.fetchOrderStatus(this.orderID, "buyer");
+      },
+      (err) => {
+        if (err && err.error) {
+          this.alertService.showAlert("warning", `${err.error.message}`);
+        } else {
+          if (this.translateService.currentLang == "en") {
+            this.alertService.showAlert(
+              "warning",
+              "Error in confirming order. Please try again"
+            );
+          } else {
+            this.alertService.showAlert(
+              "warning",
+              "حدث خطأ أثناء تأكيد الطلب. يرجى المحاولة مرة أخرى"
+            );
+          }
+        }
+      }
+    );
+  }
+  
+
+
+  cancelOrderRecieved(){
+    this.isHoverModel=false;
+    this.hoverStateService.setHoverState(this.isHoverModel);
+    this.showBuyerToConfirmOrderDeliveres =false
+  }
+
+
   allowedExtensions = ["jpeg", "jpg", "png"];
   uploadedFiles: File[] = [];
   imagePreviews: string[] = [];
@@ -467,6 +581,8 @@ export class BuyOrderDetailsComponent implements OnInit{
 
     this.http.createShipment(formData).subscribe(
       (res) => {
+        this.isHoverModel=false;
+        this.hoverStateService.setHoverState(this.isHoverModel);
         this.showSellerProofofShipping = false;
         this.fetchOrderStatus(this.orderID, "seller");
       },
@@ -494,6 +610,8 @@ export class BuyOrderDetailsComponent implements OnInit{
   }
 
   cancelProofofShipMent() {
+    this.isHoverModel=false;
+    this.hoverStateService.setHoverState(this.isHoverModel);
     this.showSellerProofofShipping = false;
   }
 
@@ -504,6 +622,8 @@ export class BuyOrderDetailsComponent implements OnInit{
   }
 
   closeshowBuyerandSellerProofOfOwnerShipReadOnlyModal(){
+    this.isHoverModel=false;
+    this.hoverStateService.setHoverState(this.isHoverModel);
     this.showBuyerandSellerProofOfOwnerShipReadOnlyModal = false;
   }
 
@@ -555,6 +675,12 @@ export class BuyOrderDetailsComponent implements OnInit{
         label: "Order canceled",
         time:null,
         description: "Your order has been canceled.",
+        active: false,
+      },
+      {
+        label: "Order Sold",
+        time:null,
+        description: "The seller has marked the item as sold.",
         active: false,
       },
     ];

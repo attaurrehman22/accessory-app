@@ -151,17 +151,19 @@
                 <div class="col-md-12 d-flex flex-wrap align-items-center"
                     style="padding: 0;margin: 0;background: #faf9fb;">
                     <div class="col-10 d-flex flex-wrap align-items-center">
-                        <div class="user-name-img-initials">
-                            {{ getInitials(SellerNameForDisplay) }}
+                        <img *ngIf="buyerProfileDetails?.profile_image" class="user-name-img-initials"
+                        [src]="apiUrl + buyerProfileDetails?.profile_image" alt="img" />
+                        <div class="user-name-img-initials" *ngIf="!buyerProfileDetails?.profile_image">
+                            {{ getInitials(buyerProfileDetails?.name) }}
                         </div>
                         <div class="d-flex flex-column p-1">
                             <p class="user-created-product-label">
-                                {{ SellerNameForDisplay }}
+                                {{ buyerProfileDetails?.name }}
                             </p>
                             <p class="font-size-16 font-weight-400 margin-0 color-909090">
-                                {{ SellerCityForDisplay }}
+                                {{ buyerProfileDetails?.city }}
                                 <img [src]="'https://flagcdn.com/24x18/' + 'sa' + '.png'"
-                                    [alt]="productDetails?.created_by.country + ' flag'" width="24" height="18" style="margin-left: 8px;height: 20px;
+                                    [alt]="productDetails?.created_by?.country + ' flag'" width="24" height="18" style="margin-left: 8px;height: 20px;
                           width: 20px;
                           object-fit: contain;
                       " />
@@ -201,18 +203,7 @@
 
 <!-- display Seller to Confirm Order Availability and add shipping charges start modal here  -->
 
-<div *ngIf="showSellerConfirmOrderAvailability" class="container" style="
-  position: absolute;
-  z-index: 999;
-  background: white;
-  top: 0;
-  right: 0;
-  width: 30%;
-  padding: 15px;
-  border-top-left-radius: 12px;
-  border-bottom-left-radius: 12px;
-  height: 100%;
-">
+<div *ngIf="showSellerConfirmOrderAvailability" class="container global-mylisting-modal-style">
     <div class="d-flex flex-column justify-content-between" style="min-height: 100%;">
         <div class="col-md-12 flex-grow-1">
             <!-- Header Section -->
@@ -288,18 +279,7 @@
 
 <!-- // show Details of Buyer and Seller Proof Of Owner Ship Read Only Modal -->
 
-<div *ngIf="showBuyerandSellerProofOfOwnerShipReadOnlyModal" class="container" style="
- position: absolute;
- z-index: 999;
- background: white;
- top: 0;
- right: 0;
- width: 30%;
- padding: 15px;
- border-top-left-radius: 12px;
- border-bottom-left-radius: 12px;
- height: 100%;
-">
+<div *ngIf="showBuyerandSellerProofOfOwnerShipReadOnlyModal" class="container global-mylisting-modal-style">
     <div class="d-flex flex-column justify-content-between" style="min-height: 100%;">
         <div class="col-md-12 flex-grow-1">
             <div class="d-flex justify-content-between align-items-center mt-3">
@@ -378,6 +358,169 @@
                 <button (click)="closeshowBuyerandSellerProofOfOwnerShipReadOnlyModal()" class="btn btn-outline-dark"
                     style="height: 55px; font-size: 18px; font-weight: 400;">
                     Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="showBuyerandSellerProofOfOwnerShipReadOnlyModal" class="container global-mylisting-modal-style">
+    <div class="d-flex flex-column justify-content-between" style="min-height: 100%;">
+        <div class="col-md-12 flex-grow-1">
+            <div class="d-flex justify-content-between align-items-center mt-3">
+                <div>
+                    <p class="font-size-20 font-wight-700 color-242424 margin-0">Shipment Details</p>
+                    <p class="font-size-16 font-wight-400 color-909090 margin-0">
+                        Your order logistics details are shown as follows:
+                    </p>
+                </div>
+                <!-- <button (click)="markAsSold()" style="background: none;border: 1px solid #242424;border-radius: 10px;color: #242424;height: 44px;width: 144px;">Mark as Sold</button> -->
+            </div>
+            <div class="card p-3 mt-3">
+                <div class="d-flex align-items-center">
+                    <img style="height: 64px; width: 64px; object-fit: contain" [src]="
+          apiUrl + orderDetails?.product?.main_image
+        " class="img-fluid rounded" alt="Product Image" />
+                    <div class="ms-3">
+                        <p class="font-size-16 font-wight-600 color-242424 margin-0">
+                            {{ orderDetails?.product?.title }}
+                            {{ orderDetails?.product?.condition }}
+                        </p>
+                        <p class="font-size-16 font-wight-600 color-909090 margin-0">
+                            {{ orderDetails?.product?.serial_no }}
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-4">
+                <label class="font-size-16 font-wight-600 color-242424 margin-0">Tracking ID</label>
+                <p class="font-size-16 font-wight-400 color-242424 margin-0">
+                    {{trackingID}}</p>
+                <!-- <input
+      type="text"
+      [(ngModel)]="trackingID"
+      [readOnly]="true"
+      class="form-control"
+      placeholder="Enter Tracking ID"
+    /> -->
+            </div>
+
+            <div class="mt-4">
+                <label class="font-size-16 font-wight-600 color-242424 margin-0">Logistics Partner</label>
+                <p class="font-size-16 font-wight-400 color-242424 margin-0">
+                    {{logisticsPartner}}</p>
+                <!-- <select class="form-select" [(ngModel)]="logisticsPartner">
+      <option value="DHL">DHL</option>
+    </select> -->
+            </div>
+
+            <div class="mt-4">
+                <!-- Show selected image previews -->
+                <label class="font-size-16 font-wight-600 color-242424 margin-0" *ngIf="imagePreviews.length > 0">Proof
+                    of
+                    Shipment</label>
+                <div class="image-preview-container mt-2" *ngIf="imagePreviews.length > 0">
+                    <div class="image-preview" *ngFor="let imgSrc of imagePreviews; let i = index">
+                        <!-- <img [src]="imgSrc" class="preview-img" /> -->
+                        <img [src]=" imgSrc" class="preview-img" />
+                        <!-- <button class="remove-btn" (click)="removeImage(i)">×
+        </button> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12 d-flex flex-column">
+            <div class="d-flex flex-column gap-2">
+                <!-- <button (click)="sendProofofShipMent()" class="btn btn-dark" style="height: 55px; font-size: 18px; font-weight: 400;">
+      Done
+    </button> -->
+                <button (click)="closeshowBuyerandSellerProofOfOwnerShipReadOnlyModal()" class="btn btn-outline-dark"
+                    style="height: 55px; font-size: 18px; font-weight: 400;">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div *ngIf="showSellerProofofShipping" class="container global-mylisting-modal-style">
+    <div class="d-flex flex-column justify-content-between" style="min-height: 100%;">
+        <div class="col-md-12 flex-grow-1">
+            <div class="d-flex justify-content-between align-items-center mt-3">
+                <div>
+                    <p class="font-size-20 font-wight-700 color-242424 margin-0">Shipment Details</p>
+                    <p class="font-size-16 font-wight-400 color-909090 margin-0">
+                        Your order logistics details are shown as follows:
+                    </p>
+                </div>
+                <!-- <button (click)="markAsSold()" style="background: none;border: 1px solid #242424;border-radius: 10px;color: #242424;height: 44px;width: 144px;">Mark as Sold</button> -->
+            </div>
+            <div class="card p-3 mt-3">
+                <div class="d-flex align-items-center">
+                    <img style="height: 64px; width: 64px; object-fit: contain" [src]="
+          apiUrl + orderDetails?.product?.main_image
+        " class="img-fluid rounded" alt="Product Image" />
+                    <div class="ms-3">
+                        <p class="font-size-16 font-wight-600 color-242424 margin-0">
+                            {{ orderDetails?.product?.title }}
+                            {{ orderDetails?.product?.condition }}
+                        </p>
+                        <p class="font-size-16 font-wight-600 color-909090 margin-0">
+                            {{ orderDetails?.product?.serial_no }}
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-4">
+                <label class="font-size-16 font-wight-600 color-242424 margin-0">Tracking ID</label>
+                <input type="text" [(ngModel)]="trackingID" class="form-control" placeholder="Enter Tracking ID" />
+            </div>
+
+            <div class="mt-4">
+                <label class="font-size-16 font-wight-600 color-242424 margin-0">Logistics Partner</label>
+                <select class="form-select" [(ngModel)]="logisticsPartner">
+                    <option value="DHL">DHL</option>
+                </select>
+            </div>
+
+            <div class="mt-4">
+                <label class="font-size-16 font-wight-600 color-242424 margin-0">Upload Proof of Shipment</label>
+                <div class="upload-box" (click)="fileInput.click()">
+                    <input type="file" #fileInput (change)="onFileSelected($event)" multiple hidden
+                        accept=".jpg,.jpeg,.png" />
+
+                    <!-- Show "+" icon if no files selected -->
+                    <div class="upload-placeholder">
+                        <span class="plus-icon">+</span>
+                    </div>
+                </div>
+
+                <!-- Show selected image previews -->
+                <label class="font-size-16 font-wight-600 color-242424 margin-0" *ngIf="uploadedFiles.length > 0">Proof
+                    of
+                    Shipment</label>
+                <div class="image-preview-container mt-2" *ngIf="uploadedFiles.length > 0">
+                    <div class="image-preview" *ngFor="let imgSrc of imagePreviews; let i = index">
+                        <img [src]="imgSrc" class="preview-img" />
+                        <button class="remove-btn" (click)="removeImage(i)">×
+
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12 d-flex flex-column">
+            <div class="d-flex flex-column gap-2">
+                <button (click)="sendProofofShipMent()" class="btn btn-dark"
+                    style="height: 55px; font-size: 18px; font-weight: 400;">
+                    Done
+                </button>
+                <button (click)="cancelProofofShipMent()" class="btn btn-outline-dark"
+                    style="height: 55px; font-size: 18px; font-weight: 400;">
+                    Cancel
                 </button>
             </div>
         </div>

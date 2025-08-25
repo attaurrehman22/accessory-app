@@ -281,7 +281,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
   offerTypeStatus: boolean = false;
   isExistMakePayment: boolean = true;
   isActionTypeMakePaymentToHideCustomOffer: boolean = false;
-
+  userProfile:any;
   getChatDetails() {
     let actionTypeforCallingCustomOffer = false;
     if (history?.state?.data) {
@@ -292,6 +292,9 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     }
     this.http.getChatsDetails(this.chat_id).subscribe(
       (res) => {
+        this.userProfile = res.profile;
+        this.userProfile.profile_image = this.userProfile.profile_image.replace(/\\/g, '');
+        console.log("this.userProfile",this.userProfile)
         this.messages = res.messages;
         if (res.messages.length > 0) {
           let useridd = localStorage.getItem("userID");
@@ -400,6 +403,28 @@ export class ChatComponent implements OnInit, AfterViewChecked {
       }
     );
   }
+
+  hasBuyNow(): boolean {
+    if (!this.reversedMessages) return false;
+  
+    // 1. Direct check for buy_now
+    if (this.reversedMessages.some(msg => msg.action_type === 'buy_now')) {
+      return true;
+    }
+  
+    // 2. Check for both BTS and STB with null action_type
+    const hasBTS = this.reversedMessages.some(msg => msg.direction === 'BTS' && msg.action_type === null);
+    const hasSTB = this.reversedMessages.some(msg => msg.direction === 'STB' && msg.action_type === null);
+  
+    if (hasBTS && hasSTB) {
+      return true;
+    }
+  
+    // 3. Default
+    return false;
+  }
+  
+  
 
   editOffer(customOfferDetails: any) {
     const dialogRef = this.dialog.open(CustomOfferComponent, {

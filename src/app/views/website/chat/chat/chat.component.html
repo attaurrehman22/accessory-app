@@ -683,16 +683,16 @@
       <div class="card large-screen-show">
         <!-- // dealer deatail of top first row -->
         <div class="card-header d-flex flex-wrap justify-content-between" style="background: #f9fafb"
-          *ngIf="getProductDetails">
-          <div *ngIf="getProductDetails" class="d-flex" style="width: 95%">
+          *ngIf="userProfile">
+          <div *ngIf="userProfile" class="d-flex" style="width: 95%">
             <div class="">
               <ng-container *ngIf="
-                  getProductDetails.created_by.user_image;
+                  userProfile.profile_image;
                   else fallbackImage
                 ">
                 <img [src]="
                     apiUrl +
-                    getProductDetails.created_by.user_image
+                    userProfile.profile_image
                   " alt="chat image" class="img-thumbnail" style="width: 48px; height: 48px; border-radius: 30px" />
               </ng-container>
 
@@ -708,17 +708,17 @@
                     color: white;
                     font-size: 20px;
                   ">
-                  {{ getInitialsofUsername(UserNameOFMessenger) }}
+                  {{ getInitialsofUsername(userProfile.name) }}
                 </div>
               </ng-template>
             </div>
 
             <div class="d-flex flex-column mx-2">
               <p class="font-size-20 font-wight-600 color-242424 margin-0">
-                {{ UserNameOFMessenger }}
+                {{ userProfile.name }}
               </p>
               <p class="font-size-16 font-wight-400 color-909090 margin-0">
-                {{ userCity }}
+                {{ userProfile.city }}
 
                 <img
                       [src]="'https://flagcdn.com/24x18/' + 'sa' + '.png'"
@@ -1005,11 +1005,15 @@
                 </div>
               </div>
             </div>
-
+            <!-- <h1>Buy Now : {{ hasBuyNow() }}</h1>
+             <h1>{{ isCustomOffer }}</h1>
+             <h1>{{ isShowMarkAsSold }}</h1>
+             <h1>{{ isShowPaymentMethod }}</h1>
+             <h1>{{ isBuyerUser }}</h1> -->
             <!-- // show buy now and create offer button start here -->
             <div *ngIf="
                 !isCustomOffer &&
-                isShowBuyNowOffer &&
+                hasBuyNow() &&
                 !isShowMarkAsSold &&
                 !isShowPaymentMethod
               " class="col-md-12 d-flex justify-content-center">

@@ -1,251 +1,231 @@
 <div class="col-12 d-flex flex-wrap offer-details">
-    <div class="col-md-8 offer-details-col-8">
-        <div class="card shadow-sm">
-            <div class="card-body d-flex flex-column">
-                <div class="col-md-12 d-flex flex-wrap align-items-center" style="background: #f9fafb">
-                    <div class="col-11 d-flex align-items-center">
-                        <button *ngIf="translateService.currentLang == 'en'" (click)="setActive()" class="prev-btn">
-                            <img src="../../../../assets/images/prev_btn.png" alt="IMG" class="prev-btn-img" />
-                        </button>
-                        <button *ngIf="translateService.currentLang !== 'en'" (click)="setActive()" class="prev-btn">
-                            <img src="../../../../assets/images/prev_btn.png" alt="IMG" class="prev-btn-img" />
-                        </button>
-                        <img style="height: 64px; width: 64px; object-fit: contain" [src]="
+  <div class="col-md-8 offer-details-col-8">
+    <div class="card shadow-sm">
+      <div class="card-body d-flex flex-column">
+        <div class="col-md-12 d-flex flex-wrap align-items-center" style="background: #f9fafb">
+          <div class="col-11 d-flex align-items-center">
+            <button *ngIf="translateService.currentLang == 'en'" (click)="setActive()" class="prev-btn">
+              <img src="../../../../assets/images/prev_btn.png" alt="IMG" class="prev-btn-img" />
+            </button>
+            <button *ngIf="translateService.currentLang !== 'en'" (click)="setActive()" class="prev-btn">
+              <img src="../../../../assets/images/prev_btn.png" alt="IMG" class="prev-btn-img" />
+            </button>
+            <img style="height: 64px; width: 64px; object-fit: contain" [src]="
               apiUrl +
               productDetails?.main_image
             " alt="img" />
-                        <div class="brand-name-title-price p-1">
-                            <p class="brand-title-model-label-name">
-                                {{ productDetails?.brand?.name }}
-                                {{ productDetails?.model }} {{ productDetails?.title }}
-                            </p>
-                            <p class="currency-price-label">
-                                {{ productDetails?.currency }}
-                                {{ productDetails?.price }}
-                            </p>
-                        </div>
-                    </div>
-                    <div class="col-1">
-                        <p>
-                            <img src="../../../../assets/images/three-dot.svg" alt="..." class="three-dot-style" />
-                        </p>
-                    </div>
-                </div>
-                <div class="col-md-12 order-status-action-details">
-                    <div>
-                        <p class="font-size-16 font-weight-600 color-909090 margin-0">
-                            Order ID
-                        </p>
-                        <p class="font-size-20 font-weight-700 color-242424 margin-0">
-                            {{ orderID }}
-                        </p>
-                    </div>
-                    <div class="d-flex flex-wrap gap-2 justify-content-end">
-                        <button class="action-btn">Invoice</button>
-                        <button (click)="routeToChat()" class="action-btn">Open Chat</button>
-                    </div>
-                </div>
-                <div class="col-md-12 d-flex flex-column custom-height-for-buy-and-sell-details">
-                    <p class="order-status-label">Order Status</p>
-                    <ul class="list-group">
-                        <li *ngFor="let status of activeBuyerStatuses ; let i = index"
-                            class="list-group-item d-flex align-items-center "
-                            style="border: none; background: transparent ;    background: transparent;"
-                            [class.active]="status.active">
-                            <label class="radio-container me-2">
-                                <input type="radio" [checked]="status.active" />
-                                <span class="radio-custom"></span>
-                            </label>
-                            <div class="vertical-line" *ngIf="i !== activeBuyerStatuses?.length - 1"></div>
-                            <div class="order-details" style="cursor: pointer" (click)="callBuyerOption(i)"
+            <div class="brand-name-title-price p-1">
+              <p class="brand-title-model-label-name">
+                {{ productDetails?.brand?.name }}
+                {{ productDetails?.model }} {{ productDetails?.title }}
+              </p>
+              <p class="currency-price-label">
+                {{ productDetails?.currency }}
+                {{ productDetails?.price }}
+              </p>
+            </div>
+          </div>
+          <div class="col-1">
+            <p>
+              <img src="../../../../assets/images/three-dot.svg" alt="..." class="three-dot-style" />
+            </p>
+          </div>
+        </div>
+        <div class="col-md-12 order-status-action-details">
+          <div>
+            <p class="font-size-16 font-weight-600 color-909090 margin-0">
+              Order ID
+            </p>
+            <p class="font-size-20 font-weight-700 color-242424 margin-0">
+              {{ orderID }}
+            </p>
+          </div>
+          <div class="d-flex flex-wrap gap-2 justify-content-end">
+            <button class="action-btn">Invoice</button>
+            <button (click)="routeToChat()" class="action-btn">Open Chat</button>
+          </div>
+        </div>
+        <div class="col-md-12 d-flex flex-column custom-height-for-buy-and-sell-details">
+          <p class="order-status-label">Order Status</p>
+          <ul class="list-group">
+            <li *ngFor="let status of activeBuyerStatuses ; let i = index"
+              class="list-group-item d-flex align-items-center "
+              style="border: none; background: transparent ;    background: transparent;"
+              [class.active]="status.active">
+              <label class="radio-container me-2">
+                <input type="radio" [checked]="status.active" />
+                <span class="radio-custom"></span>
+              </label>
+              <div class="vertical-line" *ngIf="i !== activeBuyerStatuses?.length - 1"></div>
+              <!-- <div class="order-details" style="cursor: pointer" (click)="callBuyerOption(i)"
                                 (mouseenter)="onMouseEnter(status)" (mouseleave)="onMouseLeave()">
                                 <p class="label-stl">{{ status.label }} <span class="desc-stl"> {{status.time}} </span>
                                 </p>
                                 <p class="desc-stl">{{ status.description }}</p>
-                            </div>
-                        </li>
+                            </div> -->
+              <div class="order-details" style="cursor: pointer" (click)="callBuyerOption(i)"
+                (mouseenter)="onMouseEnter(status)" (mouseleave)="onMouseLeave()">
+                <p class="label-stl">{{ status.label }} <span class="desc-stl"> {{status.time}} </span>
+                </p>
+                <p class="desc-stl">{{ status.description }}</p>
+              </div>
+            </li>
 
-                        <div class="hover-modal" *ngIf="hoveredStatus && offerHistoryDetails.length > 0"
-                            (mouseenter)="onMouseEnter(hoveredStatus)" (mouseleave)="onMouseLeave()">
-                            <div *ngFor="let customOfferDetails of offerHistoryDetails" class="col-md-12">
-                                <span>
-                                    {{
-                                    customOfferDetails?.recorded_at | date : "MMMM d, yyyy, h:mm a"
-                                    }}
-                                </span>
-                                <div [ngClass]="{
+            <div class="hover-modal" *ngIf="hoveredStatus && offerHistoryDetails.length > 0"
+              (mouseenter)="onMouseEnter(hoveredStatus)" (mouseleave)="onMouseLeave()">
+              <div *ngFor="let customOfferDetails of offerHistoryDetails" class="col-md-12">
+                <span>
+                  {{
+                  customOfferDetails?.recorded_at | date : "MMMM d, yyyy, h:mm a"
+                  }}
+                </span>
+                <div [ngClass]="{
                   'reverse-order-custom-offer':
                     translateService.currentLang !== 'en'
                 }" class="d-flex flex-column card p-2 mt-3">
-                                    <div style="background: #f9fafb" class="d-flex align-items-baseline">
-                                        <ng-container *ngIf="
+                  <div style="background: #f9fafb" class="d-flex align-items-baseline">
+                    <ng-container *ngIf="
                       customOfferDetails?.sender?.img;
                       else showInitials
                     ">
-                                            <img [src]="
+                      <img [src]="
                         apiUrl +
                         customOfferDetails?.sender?.img
                       " alt="IMG" />
-                                        </ng-container>
-                                        <ng-template #showInitials>
-                                            <div class="initials">
-                                                {{
-                                                customOfferDetails?.sender?.name
-                                                | slice : 0 : 2
-                                                }}
-                                            </div>
-                                        </ng-template>
-                                        <p class="mx-2">
-                                            {{ "chat_com.custom_offer" | translate }}
-                                        </p>
-                                    </div>
+                    </ng-container>
+                    <ng-template #showInitials>
+                      <div class="initials">
+                        {{
+                        customOfferDetails?.sender?.name
+                        | slice : 0 : 2
+                        }}
+                      </div>
+                    </ng-template>
+                    <p class="mx-2">
+                      {{ "chat_com.custom_offer" | translate }}
+                    </p>
+                  </div>
 
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <p class="smaall-screen-text">
-                                            {{ "chat_com.listing_id" | translate }}
-                                        </p>
-                                        <p class="smaall-screen-text">
-                                            {{ selectedProductDetails?.serial_no }}
-                                        </p>
-                                    </div>
-                                    <div style="border-bottom: 1px solid #f2f5f8"
-                                        class="d-flex justify-content-between align-items-center">
-                                        <p class="smaall-screen-text">
-                                            {{ "chat_com.add_price" | translate }}
-                                        </p>
-                                        <p class="smaall-screen-text">
-                                            {{ selectedProductDetails?.price }}
-                                        </p>
-                                    </div>
-                                    <div style="border-bottom: 1px solid #f2f5f8"
-                                        class="d-flex justify-content-between align-items-center">
-                                        <p class="smaall-screen-text">
-                                            {{ "chat_com.custom_offer" | translate }}
-                                        </p>
-                                        <p class="smaall-screen-text">
-                                            {{ customOfferDetails?.offer_price }}
-                                        </p>
-                                    </div>
+                  <div class="d-flex justify-content-between align-items-center">
+                    <p class="smaall-screen-text">
+                      {{ "chat_com.listing_id" | translate }}
+                    </p>
+                    <p class="smaall-screen-text">
+                      {{ selectedProductDetails?.serial_no }}
+                    </p>
+                  </div>
+                  <div style="border-bottom: 1px solid #f2f5f8"
+                    class="d-flex justify-content-between align-items-center">
+                    <p class="smaall-screen-text">
+                      {{ "chat_com.add_price" | translate }}
+                    </p>
+                    <p class="smaall-screen-text">
+                      {{ selectedProductDetails?.price }}
+                    </p>
+                  </div>
+                  <div style="border-bottom: 1px solid #f2f5f8"
+                    class="d-flex justify-content-between align-items-center">
+                    <p class="smaall-screen-text">
+                      {{ "chat_com.custom_offer" | translate }}
+                    </p>
+                    <p class="smaall-screen-text">
+                      {{ customOfferDetails?.offer_price }}
+                    </p>
+                  </div>
 
-                                    <div *ngIf="customOfferDetails?.ship_price" style="border-bottom: 1px solid #f2f5f8"
-                                        class="d-flex justify-content-between align-items-center">
-                                        <p class="smaall-screen-text">
-                                            Ship Price
-                                        </p>
-                                        <p class="smaall-screen-text">
-                                            {{ customOfferDetails?.ship_price }}
-                                        </p>
-                                    </div>
+                  <div *ngIf="customOfferDetails?.ship_price" style="border-bottom: 1px solid #f2f5f8"
+                    class="d-flex justify-content-between align-items-center">
+                    <p class="smaall-screen-text">
+                      Ship Price
+                    </p>
+                    <p class="smaall-screen-text">
+                      {{ customOfferDetails?.ship_price }}
+                    </p>
+                  </div>
 
-                                    <div style="border-bottom: 1px solid #f2f5f8"
-                                        class="d-flex justify-content-between align-items-center">
-                                        <p class="smaall-screen-text">
-                                            Offer Status
-                                        </p>
-                                        <p class="smaall-screen-text">
-                                            {{ customOfferDetails?.offers_status }}
-                                        </p>
-                                    </div>
+                  <div style="border-bottom: 1px solid #f2f5f8"
+                    class="d-flex justify-content-between align-items-center">
+                    <p class="smaall-screen-text">
+                      Offer Status
+                    </p>
+                    <p class="smaall-screen-text">
+                      {{ customOfferDetails?.offers_status }}
+                    </p>
+                  </div>
 
-                                </div>
-                            </div>
-                        </div>
-                    </ul>
                 </div>
+              </div>
             </div>
+          </ul>
         </div>
+      </div>
     </div>
-    <div class="col-md-4">
-        <div class="card shadow-sm">
-            <div class="card-body d-flex flex-column">
-                <div class="col-md-12 d-flex flex-wrap align-items-center"
-                    style="padding: 0;margin: 0;background: #faf9fb;">
-                    <div class="col-10 d-flex flex-wrap align-items-center">
-                        <img *ngIf="productDetails?.created_by?.profile_image" class="user-name-img-initials"
-                            [src]="apiUrl + productDetails?.created_by?.profile_image" alt="img" />
-                        <div class="user-name-img-initials" *ngIf="!productDetails?.created_by?.profile_image">
-                            {{ getInitials(productDetails?.created_by?.name) }}
-                        </div>
-                        <div class="d-flex flex-column p-1">
-                            <p class="user-created-product-label">
-                                {{ productDetails?.created_by?.name }}
-                            </p>
-                            <p class="font-size-16 font-weight-400 margin-0 color-909090">
-                                {{ productDetails?.created_by?.city }}
-                                <img [src]="'https://flagcdn.com/24x18/' + 'sa' + '.png'"
-                                    [alt]="productDetails?.created_by?.country + ' flag'" width="24" height="18" style="margin-left: 8px;height: 20px;
+  </div>
+  <div class="col-md-4">
+    <div class="card shadow-sm">
+      <div class="card-body d-flex flex-column">
+        <div class="col-md-12 d-flex flex-wrap align-items-center" style="padding: 0;margin: 0;background: #faf9fb;">
+          <div class="col-10 d-flex flex-wrap align-items-center">
+            <img *ngIf="productDetails?.created_by?.profile_image" class="user-name-img-initials"
+              [src]="apiUrl + productDetails?.created_by?.profile_image" alt="img" />
+            <div class="user-name-img-initials" *ngIf="!productDetails?.created_by?.profile_image">
+              {{ getInitials(productDetails?.created_by?.name) }}
+            </div>
+            <div class="d-flex flex-column p-1">
+              <p class="user-created-product-label">
+                {{ productDetails?.created_by?.name }}
+              </p>
+              <p class="font-size-16 font-weight-400 margin-0 color-909090">
+                {{ productDetails?.created_by?.city }}
+                <img [src]="'https://flagcdn.com/24x18/' + 'sa' + '.png'"
+                  [alt]="productDetails?.created_by?.country + ' flag'" width="24" height="18" style="margin-left: 8px;height: 20px;
                 width: 20px;
                 object-fit: contain;
             " />
-                            </p>
-                        </div>
-                    </div>
-                    <div class="col-2 d-flex justify-content-end">
-                        <p>
-                            <img src="../../../../assets/images/blur-three-dot.png" alt="..."
-                                class="three-dot-style pt-3" />
-                        </p>
-                    </div>
-                </div>
-                <div class="col-md-12 d-flex justify-content-between" style="padding: 0 10px 10px 20px">
-                    <div>
-                        <p class="order-date-label">
-                            Order date
-                        </p>
-                        <p class="order-date-value-label">
-                            {{ orderDate | date : "yyyy-MM-dd" }}
-                        </p>
-                    </div>
-                    <div>
-                        <p class="order-date-label">
-                            Estimated Delivery
-                        </p>
-                        <p class="order-date-value-label">
-                            {{ estimateDelivery | date : "yyyy-MM-dd" }}
-                        </p>
-                    </div>
-                </div>
+              </p>
             </div>
+          </div>
+          <div class="col-2 d-flex justify-content-end">
+            <p>
+              <img src="../../../../assets/images/blur-three-dot.png" alt="..." class="three-dot-style pt-3" />
+            </p>
+          </div>
         </div>
+        <div class="col-md-12 d-flex justify-content-between" style="padding: 0 10px 10px 20px">
+          <div>
+            <p class="order-date-label">
+              Order date
+            </p>
+            <p class="order-date-value-label">
+              {{ orderDate | date : "yyyy-MM-dd" }}
+            </p>
+          </div>
+          <div>
+            <p class="order-date-label">
+              Estimated Delivery
+            </p>
+            <p class="order-date-value-label">
+              {{ estimateDelivery | date : "yyyy-MM-dd" }}
+            </p>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
 </div>
 
-  <!-- display Buyer to Make Payment start modal here -->
-  <div *ngIf="showBuyerMakePayment" class="container" style="
-      position: absolute;
-      z-index: 999;
-      background: white;
-      top: 0;
-      right: 0;
-      width: 30%;
-      padding: 15px;
-      border-top-left-radius: 12px;
-      border-bottom-left-radius: 12px;
-      height: 100%;
-    ">
-    <div class="d-flex flex-column justify-content-between" style="min-height: 100%;">
-      <div class="col-md-12 flex-grow-1">
-        <!-- Header Section -->
-        <div class="d-flex justify-content-between align-items-center mt-3">
-          <div>
-            <p class="font-size-20 font-wight-700 color-242424 margin-0">Make Payment</p>
-            <p class="font-size-16 font-wight-400 color-909090 margin-0">Your order logistics details are shown as
-              follows:</p>
-          </div>
-          <!-- show validity time like 3 days border-left -->
-          <!-- <button
-            style="
-              background: none;
-              border: 1px solid #242424;
-              border-radius: 10px;
-              color: #242424;
-              height: 44px;
-              width: 144px;
-            "
-          >
-          formateTime(backUpSelectedProductWhenBuyandSellitemClicked?.order?.created_at)
-          </button> -->
-          <div style="
+<!-- display Buyer to Make Payment start modal here -->
+<div *ngIf="showBuyerMakePayment" class="container global-mylisting-modal-style">
+  <div class="d-flex flex-column justify-content-between" style="min-height: 100%;">
+    <div class="col-md-12 flex-grow-1">
+      <!-- Header Section -->
+      <div class="d-flex justify-content-between align-items-center mt-3">
+        <div>
+          <p class="font-size-20 font-wight-700 color-242424 margin-0">Make Payment</p>
+          <p class="font-size-16 font-wight-400 color-909090 margin-0">Your order logistics details are shown as
+            follows:</p>
+        </div>
+        <div style="
               background: none;
               border: 1px solid #242424;
               border-radius: 30px;
@@ -257,251 +237,308 @@
               gap: 5px;
               padding: 0 10px 0 10px;
           ">
-            <img style="min-height:20px;min-width:20px" src="../../../../assets/images/famicons_stopwatch-outline.svg"
-              alt="IMG" />
-            {{ formateTime(backUpSelectedProductWhenBuyandSellitemClicked?.order?.offer?.valid_until) }}
-          </div>
+          <img style="min-height:20px;min-width:20px" src="../../../../assets/images/famicons_stopwatch-outline.svg"
+            alt="IMG" />
+          {{ formateTime(backUpSelectedProductWhenBuyandSellitemClicked?.order?.offer?.valid_until) }}
         </div>
+      </div>
 
-        <!-- Order Details Card -->
-        <div class="card p-3 mt-4">
-          <div class="d-flex align-items-center">
-            <img style="height: 64px; width: 64px; object-fit: contain" [src]="
+      <!-- Order Details Card -->
+      <div class="card p-3 mt-4">
+        <div class="d-flex align-items-center">
+          <img style="height: 64px; width: 64px; object-fit: contain" [src]="
                 apiUrl + selectedProductDetails?.main_image
               " class="img-fluid rounded" alt="Product hhhhhh Image" />
-            <div class="ms-3">
-              <p class="font-size-16 font-wight-600 color-242424 margin-0">
-                {{ selectedProductDetails?.title }}
-                {{ selectedProductDetails?.condition }}
-              </p>
-              <p class="font-size-16 font-wight-600 color-909090 margin-0">
-                {{ selectedProductDetails?.serial_no }}
-              </p>
-            </div>
+          <div class="ms-3">
+            <p class="font-size-16 font-wight-600 color-242424 margin-0">
+              {{ selectedProductDetails?.title }}
+              {{ selectedProductDetails?.condition }}
+            </p>
+            <p class="font-size-16 font-wight-600 color-909090 margin-0">
+              {{ selectedProductDetails?.serial_no }}
+            </p>
           </div>
         </div>
-
-        <!-- Shipping Cost Input -->
-        <div class="mt-4">
-          <label class="font-size-16 font-wight-600 color-242424 margin-0">Watch Price</label>
-          <input type="text" value={{backUpSelectedProductWhenBuyandSellitemClicked?.order?.final_price}}
-            [readOnly]="true" class="form-control" />
-        </div>
-
-        <div class="mt-4">
-          <label class="font-size-16 font-wight-600 color-242424 margin-0">Shipping Price</label>
-          <input type="text" value={{backUpSelectedProductWhenBuyandSellitemClicked?.order?.offer?.ship_price}}
-            [readOnly]="true" class="form-control" />
-        </div>
-
-        <div class="mt-4">
-          <label class="font-size-16 font-wight-600 color-242424 margin-0">Total</label>
-          <input type="text" [value]="totalPrice" [readOnly]="true" class="form-control" />
-        </div>
       </div>
-      <div class="col-md-12 d-flex flex-column">
-        <!-- Buttons -->
-        <div class="d-flex flex-column gap-2">
-          <button (click)="buyerMakePayment()" class="btn btn-dark"
-            style="height: 55px; font-size: 18px; font-weight: 400;">
-            Make Payment
-          </button>
-          <button (click)="cancelMakePayment()" class="btn btn-outline-dark"
-            style="height: 55px; font-size: 18px; font-weight: 400;">
-            Cancel
-          </button>
-        </div>
+
+      <!-- Shipping Cost Input -->
+      <div class="mt-4">
+        <label class="font-size-16 font-wight-600 color-242424 margin-0">Watch Price</label>
+        <input type="text" value={{backUpSelectedProductWhenBuyandSellitemClicked?.order?.final_price}}
+          [readOnly]="true" class="form-control" />
+      </div>
+
+      <div class="mt-4">
+        <label class="font-size-16 font-wight-600 color-242424 margin-0">Shipping Price</label>
+        <input type="text" value={{backUpSelectedProductWhenBuyandSellitemClicked?.order?.offer?.ship_price}}
+          [readOnly]="true" class="form-control" />
+      </div>
+
+      <div class="mt-4">
+        <label class="font-size-16 font-wight-600 color-242424 margin-0">Total</label>
+        <input type="text" [value]="totalPrice" [readOnly]="true" class="form-control" />
+      </div>
+    </div>
+    <div class="col-md-12 d-flex flex-column">
+      <!-- Buttons -->
+      <div class="d-flex flex-column gap-2">
+        <button (click)="buyerMakePayment()" class="btn btn-dark"
+          style="height: 55px; font-size: 18px; font-weight: 400;">
+          Make Payment
+        </button>
+        <button (click)="cancelMakePayment()" class="btn btn-outline-dark"
+          style="height: 55px; font-size: 18px; font-weight: 400;">
+          Cancel
+        </button>
       </div>
     </div>
   </div>
-  <!-- display Buyer to Make Payment end here -->
+</div>
+<!-- display Buyer to Make Payment end here -->
 
-  <div *ngIf="showSellerProofofShipping" class="container" style="
-      position: absolute;
-      z-index: 999;
-      background: white;
-      top: 0;
-      right: 0;
-      width: 30%;
-      padding: 15px;
-      border-top-left-radius: 12px;
-      border-bottom-left-radius: 12px;
-      height: 100%;
-    ">
-    <div class="d-flex flex-column justify-content-between" style="min-height: 100%;">
-      <div class="col-md-12 flex-grow-1">
-        <div class="d-flex justify-content-between align-items-center mt-3">
-          <div>
-            <p class="font-size-20 font-wight-700 color-242424 margin-0">Shipment Details</p>
-            <p class="font-size-16 font-wight-400 color-909090 margin-0">
-              Your order logistics details are shown as follows:
-            </p>
-          </div>
-          <!-- <button (click)="markAsSold()" style="background: none;border: 1px solid #242424;border-radius: 10px;color: #242424;height: 44px;width: 144px;">Mark as Sold</button> -->
+<div *ngIf="showSellerProofofShipping" class="container global-mylisting-modal-style">
+  <div class="d-flex flex-column justify-content-between" style="min-height: 100%;">
+    <div class="col-md-12 flex-grow-1">
+      <div class="d-flex justify-content-between align-items-center mt-3">
+        <div>
+          <p class="font-size-20 font-wight-700 color-242424 margin-0">Shipment Details</p>
+          <p class="font-size-16 font-wight-400 color-909090 margin-0">
+            Your order logistics details are shown as follows:
+          </p>
         </div>
-        <div class="card p-3 mt-3">
-          <div class="d-flex align-items-center">
-            <img style="height: 64px; width: 64px; object-fit: contain" [src]="
+        <!-- <button (click)="markAsSold()" style="background: none;border: 1px solid #242424;border-radius: 10px;color: #242424;height: 44px;width: 144px;">Mark as Sold</button> -->
+      </div>
+      <div class="card p-3 mt-3">
+        <div class="d-flex align-items-center">
+          <img style="height: 64px; width: 64px; object-fit: contain" [src]="
                 apiUrl + orderDetails?.product?.main_image
               " class="img-fluid rounded" alt="Product Image" />
-            <div class="ms-3">
-              <p class="font-size-16 font-wight-600 color-242424 margin-0">
-                {{ orderDetails?.product?.title }}
-                {{ orderDetails?.product?.condition }}
-              </p>
-              <p class="font-size-16 font-wight-600 color-909090 margin-0">
-                {{ orderDetails?.product?.serial_no }}
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <div class="mt-4">
-          <label class="font-size-16 font-wight-600 color-242424 margin-0">Tracking ID</label>
-          <input type="text" [(ngModel)]="trackingID" class="form-control" placeholder="Enter Tracking ID" />
-        </div>
-
-        <div class="mt-4">
-          <label class="font-size-16 font-wight-600 color-242424 margin-0">Logistics Partner</label>
-          <select class="form-select" [(ngModel)]="logisticsPartner">
-            <option value="DHL">DHL</option>
-          </select>
-        </div>
-
-        <div class="mt-4">
-          <label class="font-size-16 font-wight-600 color-242424 margin-0">Upload Proof of Shipment</label>
-          <div class="upload-box" (click)="fileInput.click()">
-            <input type="file" #fileInput (change)="onFileSelected($event)" multiple hidden accept=".jpg,.jpeg,.png" />
-
-            <!-- Show "+" icon if no files selected -->
-            <div class="upload-placeholder">
-              <span class="plus-icon">+</span>
-            </div>
-          </div>
-
-          <!-- Show selected image previews -->
-          <label class="font-size-16 font-wight-600 color-242424 margin-0" *ngIf="uploadedFiles.length > 0">Proof of
-            Shipment</label>
-          <div class="image-preview-container mt-2" *ngIf="uploadedFiles.length > 0">
-            <div class="image-preview" *ngFor="let imgSrc of imagePreviews; let i = index">
-              <img [src]="imgSrc" class="preview-img" />
-              <button class="remove-btn" (click)="removeImage(i)">×
-
-              </button>
-            </div>
+          <div class="ms-3">
+            <p class="font-size-16 font-wight-600 color-242424 margin-0">
+              {{ orderDetails?.product?.title }}
+              {{ orderDetails?.product?.condition }}
+            </p>
+            <p class="font-size-16 font-wight-600 color-909090 margin-0">
+              {{ orderDetails?.product?.serial_no }}
+            </p>
           </div>
         </div>
       </div>
-      <div class="col-md-12 d-flex flex-column">
-        <div class="d-flex flex-column gap-2">
-          <button (click)="sendProofofShipMent()" class="btn btn-dark"
-            style="height: 55px; font-size: 18px; font-weight: 400;">
-            Done
-          </button>
-          <button (click)="cancelProofofShipMent()" class="btn btn-outline-dark"
-            style="height: 55px; font-size: 18px; font-weight: 400;">
-            Cancel
-          </button>
+
+      <div class="mt-4">
+        <label class="font-size-16 font-wight-600 color-242424 margin-0">Tracking ID</label>
+        <input type="text" [(ngModel)]="trackingID" class="form-control" placeholder="Enter Tracking ID" />
+      </div>
+
+      <div class="mt-4">
+        <label class="font-size-16 font-wight-600 color-242424 margin-0">Logistics Partner</label>
+        <select class="form-select" [(ngModel)]="logisticsPartner">
+          <option value="DHL">DHL</option>
+        </select>
+      </div>
+
+      <div class="mt-4">
+        <label class="font-size-16 font-wight-600 color-242424 margin-0">Upload Proof of Shipment</label>
+        <div class="upload-box" (click)="fileInput.click()">
+          <input type="file" #fileInput (change)="onFileSelected($event)" multiple hidden accept=".jpg,.jpeg,.png" />
+
+          <!-- Show "+" icon if no files selected -->
+          <div class="upload-placeholder">
+            <span class="plus-icon">+</span>
+          </div>
+        </div>
+
+        <!-- Show selected image previews -->
+        <label class="font-size-16 font-wight-600 color-242424 margin-0" *ngIf="uploadedFiles.length > 0">Proof of
+          Shipment</label>
+        <div class="image-preview-container mt-2" *ngIf="uploadedFiles.length > 0">
+          <div class="image-preview" *ngFor="let imgSrc of imagePreviews; let i = index">
+            <img [src]="imgSrc" class="preview-img" />
+            <button class="remove-btn" (click)="removeImage(i)">×
+
+            </button>
+          </div>
         </div>
       </div>
     </div>
+    <div class="col-md-12 d-flex flex-column">
+      <div class="d-flex flex-column gap-2">
+        <button (click)="sendProofofShipMent()" class="btn btn-dark"
+          style="height: 55px; font-size: 18px; font-weight: 400;">
+          Done
+        </button>
+        <button (click)="cancelProofofShipMent()" class="btn btn-outline-dark"
+          style="height: 55px; font-size: 18px; font-weight: 400;">
+          Cancel
+        </button>
+      </div>
+    </div>
   </div>
+</div>
 
 
-  <!-- // show Details of Buyer and Seller Proof Of Owner Ship Read Only Modal -->
+<!-- // show Details of Buyer and Seller Proof Of Owner Ship Read Only Modal -->
 
-  <div *ngIf="showBuyerandSellerProofOfOwnerShipReadOnlyModal" class="container" style="
-    position: absolute;
-    z-index: 999;
-    background: white;
-    top: 0;
-    right: 0;
-    width: 30%;
-    padding: 15px;
-    border-top-left-radius: 12px;
-    border-bottom-left-radius: 12px;
-    height: 100%;
-  ">
-    <div class="d-flex flex-column justify-content-between" style="min-height: 100%;">
-      <div class="col-md-12 flex-grow-1">
-        <div class="d-flex justify-content-between align-items-center mt-3">
-          <div>
-            <p class="font-size-20 font-wight-700 color-242424 margin-0">Shipment Details</p>
-            <p class="font-size-16 font-wight-400 color-909090 margin-0">
-              Your order logistics details are shown as follows:
-            </p>
-          </div>
-          <!-- <button (click)="markAsSold()" style="background: none;border: 1px solid #242424;border-radius: 10px;color: #242424;height: 44px;width: 144px;">Mark as Sold</button> -->
+<div *ngIf="showBuyerandSellerProofOfOwnerShipReadOnlyModal" class="container global-mylisting-modal-style">
+  <div class="d-flex flex-column justify-content-between" style="min-height: 100%;">
+    <div class="col-md-12 flex-grow-1">
+      <div class="d-flex justify-content-between align-items-center mt-3">
+        <div>
+          <p class="font-size-20 font-wight-700 color-242424 margin-0">Shipment Details</p>
+          <p class="font-size-16 font-wight-400 color-909090 margin-0">
+            Your order logistics details are shown as follows:
+          </p>
         </div>
-        <div class="card p-3 mt-3">
-          <div class="d-flex align-items-center">
-            <img style="height: 64px; width: 64px; object-fit: contain" [src]="
+        <!-- <button (click)="markAsSold()" style="background: none;border: 1px solid #242424;border-radius: 10px;color: #242424;height: 44px;width: 144px;">Mark as Sold</button> -->
+      </div>
+      <div class="card p-3 mt-3">
+        <div class="d-flex align-items-center">
+          <img style="height: 64px; width: 64px; object-fit: contain" [src]="
               apiUrl + orderDetails?.product?.main_image
             " class="img-fluid rounded" alt="Product Image" />
-            <div class="ms-3">
-              <p class="font-size-16 font-wight-600 color-242424 margin-0">
-                {{ orderDetails?.product?.title }}
-                {{ orderDetails?.product?.condition }}
-              </p>
-              <p class="font-size-16 font-wight-600 color-909090 margin-0">
-                {{ orderDetails?.product?.serial_no }}
-              </p>
-            </div>
+          <div class="ms-3">
+            <p class="font-size-16 font-wight-600 color-242424 margin-0">
+              {{ orderDetails?.product?.title }}
+              {{ orderDetails?.product?.condition }}
+            </p>
+            <p class="font-size-16 font-wight-600 color-909090 margin-0">
+              {{ orderDetails?.product?.serial_no }}
+            </p>
           </div>
         </div>
+      </div>
 
-        <div class="mt-4">
-          <label class="font-size-16 font-wight-600 color-242424 margin-0">Tracking ID</label>
-          <p class="font-size-16 font-wight-400 color-242424 margin-0">
-            {{backUpSelectedProductWhenBuyandSellitemClicked?.order?.shiping_tracking_id}}</p>
-          <!-- <input
+      <div class="mt-4">
+        <label class="font-size-16 font-wight-600 color-242424 margin-0">Tracking ID</label>
+        <p class="font-size-16 font-wight-400 color-242424 margin-0">
+          {{trackingID}}</p>
+        <!-- <input
           type="text"
           [(ngModel)]="trackingID"
           [readOnly]="true"
           class="form-control"
           placeholder="Enter Tracking ID"
         /> -->
-        </div>
+      </div>
 
-        <div class="mt-4">
-          <label class="font-size-16 font-wight-600 color-242424 margin-0">Logistics Partner</label>
-          <p class="font-size-16 font-wight-400 color-242424 margin-0">
-            {{backUpSelectedProductWhenBuyandSellitemClicked?.order?.shiping_partner}}</p>
-          <!-- <select class="form-select" [(ngModel)]="logisticsPartner">
+      <div class="mt-4">
+        <label class="font-size-16 font-wight-600 color-242424 margin-0">Logistics Partner</label>
+        <p class="font-size-16 font-wight-400 color-242424 margin-0">
+          {{logisticsPartner}}</p>
+        <!-- <select class="form-select" [(ngModel)]="logisticsPartner">
           <option value="DHL">DHL</option>
         </select> -->
-        </div>
+      </div>
 
-        <div class="mt-4">
-          <!-- Show selected image previews -->
-          <label class="font-size-16 font-wight-600 color-242424 margin-0"
-            *ngIf="backUpSelectedProductWhenBuyandSellitemClicked?.order?.shipping_proof?.length > 0">Proof of
-            Shipment</label>
-          <div class="image-preview-container mt-2"
-            *ngIf="backUpSelectedProductWhenBuyandSellitemClicked?.order?.shipping_proof?.length > 0">
-            <div class="image-preview"
-              *ngFor="let imgSrc of backUpSelectedProductWhenBuyandSellitemClicked?.order?.shipping_proof; let i = index">
-              <!-- <img [src]="imgSrc" class="preview-img" /> -->
-              <img [src]="
-            apiUrl + imgSrc
-          " class="preview-img" />
-              <!-- <button class="remove-btn" (click)="removeImage(i)">×
-
+      <div class="mt-4">
+        <!-- Show selected image previews -->
+        <label class="font-size-16 font-wight-600 color-242424 margin-0" *ngIf="imagePreviews.length > 0">Proof of
+          Shipment</label>
+        <div class="image-preview-container mt-2" *ngIf="imagePreviews.length > 0">
+          <div class="image-preview" *ngFor="let imgSrc of imagePreviews; let i = index">
+            <!-- <img [src]="imgSrc" class="preview-img" /> -->
+            <img [src]=" imgSrc" class="preview-img" />
+            <!-- <button class="remove-btn" (click)="removeImage(i)">×
             </button> -->
-            </div>
           </div>
         </div>
       </div>
-      <div class="col-md-12 d-flex flex-column">
-        <div class="d-flex flex-column gap-2">
-          <!-- <button (click)="sendProofofShipMent()" class="btn btn-dark" style="height: 55px; font-size: 18px; font-weight: 400;">
+    </div>
+    <div class="col-md-12 d-flex flex-column">
+      <div class="d-flex flex-column gap-2">
+        <!-- <button (click)="sendProofofShipMent()" class="btn btn-dark" style="height: 55px; font-size: 18px; font-weight: 400;">
           Done
         </button> -->
-          <button (click)="closeshowBuyerandSellerProofOfOwnerShipReadOnlyModal()" class="btn btn-outline-dark"
-            style="height: 55px; font-size: 18px; font-weight: 400;">
-            Close
-          </button>
-        </div>
+        <button (click)="closeshowBuyerandSellerProofOfOwnerShipReadOnlyModal()" class="btn btn-outline-dark"
+          style="height: 55px; font-size: 18px; font-weight: 400;">
+          Close
+        </button>
       </div>
     </div>
   </div>
+</div>
+
+
+<!-- // Display modal for confirm order deliverd Start here  -->
+
+<div *ngIf="showBuyerToConfirmOrderDeliveres" class="container global-mylisting-modal-style">
+  <div class="d-flex flex-column justify-content-between" style="min-height: 100%;">
+    <div class="col-md-12 flex-grow-1">
+      <!-- Header Section -->
+      <div class="d-flex justify-content-between align-items-center mt-3">
+        <div>
+          <p class="font-size-20 font-wight-700 color-242424 margin-0">Order Received</p>
+          <p class="font-size-16 font-wight-400 color-909090 margin-0">Please confirm you have received the order.:</p>
+        </div>
+        <!-- <div style="
+          background: none;
+          border: 1px solid #242424;
+          border-radius: 30px;
+          color: #242424;
+          height: 44px;
+          width: 144px;
+          display: flex;
+          align-items: center;
+          gap: 5px;
+          padding: 0 10px 0 10px;
+      ">
+        <img style="min-height:20px;min-width:20px" src="../../../../assets/images/famicons_stopwatch-outline.svg"
+          alt="IMG" />
+        {{ formateTime(backUpSelectedProductWhenBuyandSellitemClicked?.order?.offer?.valid_until) }}
+      </div> -->
+      </div>
+
+      <!-- Order Details Card -->
+      <div class="card p-3 mt-4">
+        <div class="d-flex align-items-center">
+          <img style="height: 64px; width: 64px; object-fit: contain" [src]="
+            apiUrl + selectedProductDetails?.main_image
+          " class="img-fluid rounded" alt="Product hhhhhh Image" />
+          <div class="ms-3">
+            <p class="font-size-16 font-wight-600 color-242424 margin-0">
+              {{ selectedProductDetails?.title }}
+              {{ selectedProductDetails?.condition }}
+            </p>
+            <p class="font-size-16 font-wight-600 color-909090 margin-0">
+              {{ selectedProductDetails?.serial_no }}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Shipping Cost Input -->
+      <div class="mt-4">
+        <label class="font-size-16 font-wight-600 color-242424 margin-0">Watch Price</label>
+        <input type="text" value={{backUpSelectedProductWhenBuyandSellitemClicked?.order?.final_price}}
+          [readOnly]="true" class="form-control" />
+      </div>
+
+      <div class="mt-4">
+        <label class="font-size-16 font-wight-600 color-242424 margin-0">Shipping Price</label>
+        <input type="text" value={{backUpSelectedProductWhenBuyandSellitemClicked?.order?.offer?.ship_price}}
+          [readOnly]="true" class="form-control" />
+      </div>
+
+      <div class="mt-4">
+        <label class="font-size-16 font-wight-600 color-242424 margin-0">Total</label>
+        <input type="text" [value]="totalPrice" [readOnly]="true" class="form-control" />
+      </div>
+    </div>
+    <div class="col-md-12 d-flex flex-column">
+      <!-- Buttons -->
+      <div class="d-flex flex-column gap-2">
+        <button (click)="conformOrderRecieved()" class="btn btn-dark"
+          style="height: 55px; font-size: 18px; font-weight: 400;">
+          Confirm Order Received
+        </button>
+        <button (click)="cancelOrderRecieved()" class="btn btn-outline-dark"
+          style="height: 55px; font-size: 18px; font-weight: 400;">
+          Cancel
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- // Display modal for confirm order deliverd End here  -->

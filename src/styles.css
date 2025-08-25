@@ -1,8 +1,8 @@
-
 html,
 body {
   height: 100%;
 }
+
 body {
   margin: 0;
   font-family: "Open Sans", serif;
@@ -18,8 +18,8 @@ body {
 @font-face {
   font-family: 'Clash Display';
   src: url('/path/to/ClashDisplay-Regular.woff2') format('woff2'),
-       url('/path/to/ClashDisplay-Regular.woff') format('woff'),
-       url('/path/to/ClashDisplay-Regular.ttf') format('truetype');
+    url('/path/to/ClashDisplay-Regular.woff') format('woff'),
+    url('/path/to/ClashDisplay-Regular.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
 }
@@ -29,11 +29,19 @@ body {
   font-style: normal;
   font-weight: normal;
   src: local('Digital Numbers Regular'), url('DigitalNumbers-Regular.woff') format('woff');
-  }
+}
 
 
-p, h1, h2, h3, h4, h5, h6, span, a {
-  font-family: 'Open Sans',unset;
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+span,
+a {
+  font-family: 'Open Sans', unset;
 }
 
 .clash-display-font-family {
@@ -70,7 +78,7 @@ p, h1, h2, h3, h4, h5, h6, span, a {
 
 @media screen and (max-width: 991px) {
   .navbar-collapse.collapse[_ngcontent-ng-c87935469]:not(.show) {
-      display: none !important;
+    display: none !important;
   }
 }
 
@@ -248,7 +256,7 @@ p, h1, h2, h3, h4, h5, h6, span, a {
   background: none !important;
 }
 
-mat-drawer-backdrop.mat-drawer-show{
+mat-drawer-backdrop.mat-drawer-show {
   background: none !important;
 }
 
@@ -407,18 +415,20 @@ a {
 /* Adjust for screens smaller than 1200px (tablets and below) */
 @media screen and (max-width: 1199px) {
   #mat-menu-panel-2 {
-      max-width: 90% !important;
-      min-width: 90% !important;
-      margin-right: 50px; /* Adjust margin for smaller screens */
+    max-width: 90% !important;
+    min-width: 90% !important;
+    margin-right: 50px;
+    /* Adjust margin for smaller screens */
   }
 }
 
 /* Adjust for screens smaller than 768px (mobile devices) */
 @media screen and (max-width: 767px) {
   #mat-menu-panel-2 {
-      max-width: 95% !important;
-      min-width: 95% !important;
-      margin-right: 10px; /* Adjust margin for mobile screens */
+    max-width: 95% !important;
+    min-width: 95% !important;
+    margin-right: 10px;
+    /* Adjust margin for mobile screens */
   }
 }
 
@@ -445,11 +455,11 @@ a {
 }
 
 .hello {
-  background-color:rgba(255,255,255,.3);
+  background-color: rgba(255, 255, 255, .3);
   backdrop-filter: blur(10px);
 }
 
-.cdk-overlay-backdrop.cdk-overlay-backdrop-showing{
+.cdk-overlay-backdrop.cdk-overlay-backdrop-showing {
   backdrop-filter: blur(10px) !important;
 }
 
@@ -526,7 +536,7 @@ a {
   padding: 25px !important;
 } */
 
-.ng-image-slider > .ng-image-slider-container > .main > .main-inner {
+.ng-image-slider>.ng-image-slider-container>.main>.main-inner {
   /* height: 65% !important; */
   display: flex !important;
   gap: 20px !important;
@@ -545,7 +555,7 @@ a {
 /* --------------------------------------- Admin Table Style Start here -------------------- */
 
 .admin-add-btn {
-  background:#242424;
+  background: #242424;
   border-radius: 8px;
   color: #FFFFFF;
   height: 48px;
@@ -553,10 +563,10 @@ a {
 }
 
 .admin-clear-filter-btn {
-    border: 1px solid grey;
-    height: 48px;
-    padding: 0 15px 0 15px;
-    border-radius: 8px;
+  border: 1px solid grey;
+  height: 48px;
+  padding: 0 15px 0 15px;
+  border-radius: 8px;
 }
 
 .table-conatiner {
@@ -571,8 +581,9 @@ a {
   min-width: 100%;
   border-collapse: separate;
 }
+
 .admin-table th[mat-header-cell][stickyEnd] {
-   background: #242424;
+  background: #242424;
 }
 
 .admin-table th[mat-header-cell][stickyEnd],
@@ -597,12 +608,12 @@ a {
   border-top-right-radius: 6px !important;
 }
 
-.admin-table > tbody > tr > td:first-child {
+.admin-table>tbody>tr>td:first-child {
   border-top-left-radius: 6px !important;
   border-bottom-left-radius: 6px !important;
 }
 
-.admin-table > tbody > tr > td:last-child {
+.admin-table>tbody>tr>td:last-child {
   border-top-right-radius: 6px !important;
   border-bottom-right-radius: 6px !important;
 }
@@ -620,39 +631,41 @@ a {
 }
 
 .admin-table tr.mat-row {
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   border-radius: 4px;
-  background: #fff; 
+  background: #fff;
 }
 
-.admin-table tr.mat-row + tr.mat-row {
+.admin-table tr.mat-row+tr.mat-row {
   margin-top: 6px;
 }
 
 
-.admin-table > thead {
+.admin-table>thead {
   background: #242424 !important;
 }
 
-.admin-table > tbody > tr {
-   transition: 
+.admin-table>tbody>tr {
+  transition:
     background-color 0.3s ease,
     box-shadow 0.3s ease,
     transform 0.3s ease;
 }
 
-.admin-table > tbody > tr:hover {
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15); /* soft shadow all around */
-  transform: scale(-1px); /* slight scaling for 'pop' effect */
+.admin-table>tbody>tr:hover {
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  /* soft shadow all around */
+  transform: scale(-1px);
+  /* slight scaling for 'pop' effect */
   cursor: pointer;
 }
 
-.admin-table > thead > tr > th {
+.admin-table>thead>tr>th {
   color: #FFFFFF;
   border: none !important;
 }
 
-.admin-table > tbody > tr > td  {
+.admin-table>tbody>tr>td {
   border: none !important;
 }
 
@@ -662,32 +675,39 @@ a {
     padding: 0 !important;
   }
 }
+
 @media only screen and (max-width: 550px) {
   .mt {
     min-width: 623px;
   }
 }
+
 @media only screen and (min-width: 1500px) {
   .table {
     overflow-x: hidden;
     overflow-y: hidden;
   }
 }
+
 @media only screen and (min-width: 2000px) {
   .table {
     overflow-x: hidden;
     overflow-y: hidden;
   }
 }
+
 .row {
   --bs-gutter-x: -0.5rem !important;
 }
+
 .iconColor {
   color: blue;
 }
+
 .iconColor1 {
   color: red;
 }
+
 td {
   vertical-align: initial !important;
 }
@@ -702,14 +722,15 @@ td {
 .custom-modal .mat-dialog-container {
   min-width: 900px !important;
   max-width: 1200px !important;
-  width: 100%; /* Ensures it respects the `width` set in the dialog config */
+  width: 100%;
+  /* Ensures it respects the `width` set in the dialog config */
 }
 
 /* --------------------------------------- Admin Table Style End here -------------------- */
 
- /* ----------------------------------  Alert Styles start here ------------------------------ */
+/* ----------------------------------  Alert Styles start here ------------------------------ */
 
- .custom-alert {
+.custom-alert {
   padding: 1rem;
   border-radius: 12px;
   margin-bottom: 1rem;
@@ -717,9 +738,12 @@ td {
   position: relative;
   border: 1px solid transparent;
   border-radius: 10px;
-  opacity: 0.95; /* 👈 Slight transparency */
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* 👈 Subtle shadow */
-  transition: opacity 0.3s ease-in-out; /* 👈 Smooth transition */
+  opacity: 0.95;
+  /* 👈 Slight transparency */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  /* 👈 Subtle shadow */
+  transition: opacity 0.3s ease-in-out;
+  /* 👈 Smooth transition */
 }
 
 .custom-alert:hover {
@@ -728,13 +752,13 @@ td {
 }
 
 .custom-success {
- background-color: #e6ffed !important;
+  background-color: #e6ffed !important;
   color: #5ea96f !important;
   border-color: #c3e6cb !important;
 }
 
 .custom-danger {
-   background-color: #ffe5e5 !important;
+  background-color: #ffe5e5 !important;
   color: #a45860 !important;
   border-color: #f5c6cb !important;
 }
@@ -746,221 +770,237 @@ td {
 }
 
 .custom-info {
-   background-color: #e1f5fe !important;
+  background-color: #e1f5fe !important;
   color: #0c5460 !important;
   border-color: #bee5eb !important;
 }
 
 
- /* ----------------------------------  Alert Styles End here ------------------------------ */
+/* ----------------------------------  Alert Styles End here ------------------------------ */
 
 /* ----------------------------------  mat-form-field custom design start here start here ------------------------------ */
 
-  /* Optional: customize the input text color */
-  ::ng-deep .mat-form-fields-custom-deisgn mat-form-field > .mat-mdc-text-field-wrapper {
-    height: 48px;
-    border-radius: 6px !important;
-    border: 1px solid #EEEEEE;
-  }
+/* Optional: customize the input text color */
+::ng-deep .mat-form-fields-custom-deisgn mat-form-field>.mat-mdc-text-field-wrapper {
+  height: 48px;
+  border-radius: 6px !important;
+  border: 1px solid #EEEEEE;
+}
 
-  ::ng-deep .mat-form-fields-custom-deisgn mat-form-field > .mat-mdc-text-field-wrapper > .mat-mdc-form-field-flex > .mat-mdc-form-field-infix > .mat-mdc-select > .mat-mdc-select-trigger > .mat-mdc-select-value > .mat-mdc-select-value-text {
-    font-size: 16px !important;
-    font-weight: 400 !important;
-    color: #909090 !important;
-    line-height: 24px !important;
-    /* font-family: "Open Sans", serif; */
-  }
-
-  ::ng-deep .mat-form-fields-custom-deisgn mat-form-field > .mat-mdc-text-field-wrapper > .mat-mdc-form-field-flex > .mdc-notched-outline > .mat-mdc-notch-piece > .mdc-floating-label {
-    padding-bottom: 13px !important;
-  }
-
-  ::ng-deep .mat-form-fields-custom-deisgn mat-form-field > .mat-mdc-text-field-wrapper > .mat-mdc-form-field-flex > .mdc-notched-outline > .mdc-floating-label > .label-header {
-    font-size: 16px !important;
-    font-weight: 400 !important;
-    color: #242424 !important;
-    line-height: 100% !important;
-    font-family: "Open Sans", serif;
-  }
-
-  ::ng-deep .mat-form-fields-custom-deisgn mat-form-field > .mat-mdc-form-field-subscript-wrapper > .mat-mdc-form-field-error-wrapper > .mat-mdc-form-field-error {
-    font-size: 13px !important;
-    font-weight: 400 !important;
-    line-height: 100% !important;
-  }
-
-
-  ::ng-deep .mat-form-fields-custom-deisgn mat-form-field > .mat-mdc-text-field-wrapper > .mat-mdc-form-field-flex > .mdc-notched-outline > .mat-mdc-notch-piece {
-    border: none !important;
-    border-color: none !important;
-  }
-
-  ::ng-deep .mat-form-fields-custom-deisgn mat-form-field > .mat-mdc-text-field-wrapper > .mat-mdc-form-field-flex > .mat-mdc-form-field-infix > .mat-mdc-input-element {
-    font-size: 16px !important;
-    font-weight: 400 !important;
-    color: #909090 !important;
-    line-height: 24px !important;
-    /* font-family: "Open Sans", serif; */
-  }
-
-  ::ng-deep .mat-form-fields-custom-deisgn mat-form-field input::placeholder {
-    font-size: 16px !important;
-    font-weight: 400 !important;
-    color: #909090 !important;
-    line-height: 24px !important;
-    /* font-family: "Open Sans", serif; */
-  }
-
-  ::ng-deep .mat-form-fields-custom-deisgn mat-form-field textarea::placeholder {
-    font-size: 16px !important;
-    font-weight: 400 !important;
-    color: #909090 !important;
-    line-height: 24px !important;
-    font-family: "Open Sans", serif;
-  }
-
-
-
-  ::ng-deep .mat-form-fields-custom-deisgn mat-form-field .mat-input-element::placeholder {
+::ng-deep .mat-form-fields-custom-deisgn mat-form-field>.mat-mdc-text-field-wrapper>.mat-mdc-form-field-flex>.mat-mdc-form-field-infix>.mat-mdc-select>.mat-mdc-select-trigger>.mat-mdc-select-value>.mat-mdc-select-value-text {
   font-size: 16px !important;
-    font-weight: 400 !important;
-    color: #909090 !important;
-    line-height: 24px !important;
-    font-family: "Open Sans", serif;       
-  }
+  font-weight: 400 !important;
+  color: #909090 !important;
+  line-height: 24px !important;
+  /* font-family: "Open Sans", serif; */
+}
 
-  ::ng-deep .mat-form-fields-custom-deisgn mat-checkbox > .mdc-form-field > .mdc-checkbox > .mdc-checkbox__background {
-    border: 1px solid #E5E7EB !important;
-    border-radius: 2px !important;
-  }
+::ng-deep .mat-form-fields-custom-deisgn mat-form-field>.mat-mdc-text-field-wrapper>.mat-mdc-form-field-flex>.mdc-notched-outline>.mat-mdc-notch-piece>.mdc-floating-label {
+  padding-bottom: 13px !important;
+}
 
-  ::ng-deep .mat-form-fields-custom-deisgn mat-checkbox .mdc-label {
-    font-size: 14px !important;
-    font-weight: 400 !important;
-    line-height: 14px !important;
-    color: #909090 !important;
-  }
+::ng-deep .mat-form-fields-custom-deisgn mat-form-field>.mat-mdc-text-field-wrapper>.mat-mdc-form-field-flex>.mdc-notched-outline>.mdc-floating-label>.label-header {
+  font-size: 16px !important;
+  font-weight: 400 !important;
+  color: #242424 !important;
+  line-height: 100% !important;
+  font-family: "Open Sans", serif;
+}
 
-  ::ng-deep .mat-form-fields-custom-deisgn mat-form-field .mat-input-element:-ms-input-placeholder {
-    font-size: 16px;          
-    font-weight: 400;        
-    color: #909090;          
-  }
+::ng-deep .mat-form-fields-custom-deisgn mat-form-field>.mat-mdc-form-field-subscript-wrapper>.mat-mdc-form-field-error-wrapper>.mat-mdc-form-field-error {
+  font-size: 13px !important;
+  font-weight: 400 !important;
+  line-height: 100% !important;
+}
 
-  /* ----------------------------------  mat-form-field custom design end here ------------------------------ */
 
-  /* ----------------------------------  Global Product Cards Styles start here ------------------------------ */
+::ng-deep .mat-form-fields-custom-deisgn mat-form-field>.mat-mdc-text-field-wrapper>.mat-mdc-form-field-flex>.mdc-notched-outline>.mat-mdc-notch-piece {
+  border: none !important;
+  border-color: none !important;
+}
 
-  .card-img-top {
-    height: 260px !important;
-    object-fit: cover !important;
-    background: #F8F8F8;
-  }
+::ng-deep .mat-form-fields-custom-deisgn mat-form-field>.mat-mdc-text-field-wrapper>.mat-mdc-form-field-flex>.mat-mdc-form-field-infix>.mat-mdc-input-element {
+  font-size: 16px !important;
+  font-weight: 400 !important;
+  color: #909090 !important;
+  line-height: 24px !important;
+  /* font-family: "Open Sans", serif; */
+}
 
-  .card-body {
-    padding: 8px 0 0 0 !important;
-  }
+::ng-deep .mat-form-fields-custom-deisgn mat-form-field input::placeholder {
+  font-size: 16px !important;
+  font-weight: 400 !important;
+  color: #909090 !important;
+  line-height: 24px !important;
+  /* font-family: "Open Sans", serif; */
+}
 
-  .card {
-    border-radius: 15px;
-    overflow: hidden;
-    padding: 8px !important;
-  }
+::ng-deep .mat-form-fields-custom-deisgn mat-form-field textarea::placeholder {
+  font-size: 16px !important;
+  font-weight: 400 !important;
+  color: #909090 !important;
+  line-height: 24px !important;
+  font-family: "Open Sans", serif;
+}
 
-  .seller-chip {
-    background-color: #F8F8F8;
-    padding: 0 10px 0 10px;
-    width: fit-content;
-    border-radius: 4px;
-  }
 
-  .heart-icon {
-    display: flex;
-    justify-content: space-between;
-    position: absolute;
-    width: 85%;
-    top: 18px;
-    right: 25px;
-  }
 
-  .heart-icon i {
-    color: #ff4d4d;
-    font-size: 24px;
-    transition: background-color 0.3s ease;
-  }
-  
-  .fa-heart-o {
-    color: #a09494 !important;
-  }
-  
-  .fa-heart {
-    color: #ff4d4d;
-  }
-  
-  .featured-icon {
-    padding: 0 5px 0 5px;
-    border-radius: 4px;
-  }
+::ng-deep .mat-form-fields-custom-deisgn mat-form-field .mat-input-element::placeholder {
+  font-size: 16px !important;
+  font-weight: 400 !important;
+  color: #909090 !important;
+  line-height: 24px !important;
+  font-family: "Open Sans", serif;
+}
 
-  .price {
-    font-size: 14px;
-    font-weight: 400;
-    color: #6a6a6a;
-    margin: 0 !important;
-  }
+::ng-deep .mat-form-fields-custom-deisgn mat-checkbox>.mdc-form-field>.mdc-checkbox>.mdc-checkbox__background {
+  border: 1px solid #E5E7EB !important;
+  border-radius: 2px !important;
+}
 
-  .card-title {
-    font-size: 18px;
-    font-weight: 600;
-    color: #484848;
-    margin: 0 !important;
-  }
-  
-  .card-title-two {
-    font-size: 17px;
-    font-weight: 500;
-    color: #484848;
-    margin: 0 !important;
-  }
+::ng-deep .mat-form-fields-custom-deisgn mat-checkbox .mdc-label {
+  font-size: 14px !important;
+  font-weight: 400 !important;
+  line-height: 14px !important;
+  color: #909090 !important;
+}
 
-  .reverse-order-products > .card > .card-body > .d-flex {
-    flex-direction: row-reverse;
-  }
+::ng-deep .mat-form-fields-custom-deisgn mat-form-field .mat-input-element:-ms-input-placeholder {
+  font-size: 16px;
+  font-weight: 400;
+  color: #909090;
+}
 
-  .reverse-order-products > .heart-icon  {
-    flex-direction: row-reverse;
-  }
+/* ----------------------------------  mat-form-field custom design end here ------------------------------ */
 
-  /* ----------------------------------  Global Product Cards Styles End here ------------------------------ */
+/* ----------------------------------  Global Product Cards Styles start here ------------------------------ */
 
+.card-img-top {
+  height: 260px !important;
+  object-fit: cover !important;
+  background: #F8F8F8;
+}
+
+.card-body {
+  padding: 8px 0 0 0 !important;
+}
+
+.card {
+  border-radius: 15px;
+  overflow: hidden;
+  padding: 8px !important;
+}
+
+.seller-chip {
+  background-color: #F8F8F8;
+  padding: 0 10px 0 10px;
+  width: fit-content;
+  border-radius: 4px;
+}
+
+.heart-icon {
+  display: flex;
+  justify-content: space-between;
+  position: absolute;
+  width: 85%;
+  top: 18px;
+  right: 25px;
+}
+
+.heart-icon i {
+  color: #ff4d4d;
+  font-size: 24px;
+  transition: background-color 0.3s ease;
+}
+
+.fa-heart-o {
+  color: #a09494 !important;
+}
+
+.fa-heart {
+  color: #ff4d4d;
+}
+
+.featured-icon {
+  padding: 0 5px 0 5px;
+  border-radius: 4px;
+}
+
+.price {
+  font-size: 14px;
+  font-weight: 400;
+  color: #6a6a6a;
+  margin: 0 !important;
+}
+
+.card-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #484848;
+  margin: 0 !important;
+}
+
+.card-title-two {
+  font-size: 17px;
+  font-weight: 500;
+  color: #484848;
+  margin: 0 !important;
+}
+
+.reverse-order-products>.card>.card-body>.d-flex {
+  flex-direction: row-reverse;
+}
+
+.reverse-order-products>.heart-icon {
+  flex-direction: row-reverse;
+}
+
+/* ----------------------------------  Global Product Cards Styles End here ------------------------------ */
+
+.login-hover-btn {
+  width: auto !important;
+  padding: 0 !important;
+}
+
+@media screen and (max-width: 767px) {
   .login-hover-btn {
-    width: auto !important;
-    padding: 0 !important;
-  }
-
-  @media screen and (max-width: 767px) {
-    .login-hover-btn {
-      font-size: 12px !important;
-    }
-
-    .custom-en-ar-btn {
-      font-size: 12px !important;
-    }
-
-    .search-icon-for-mobile {
-      width: 20px !important;
-    }
-  }
-
-  .login-hover-btn:hover {
-    background-color: none !important;
-    background: none !important;
+    font-size: 12px !important;
   }
 
   .custom-en-ar-btn {
-    border: none;
-    background: none;
-    font-size: 16px;
-    font-weight: 400;
-    line-height: 19.68px;
+    font-size: 12px !important;
   }
+
+  .search-icon-for-mobile {
+    width: 20px !important;
+  }
+}
+
+.login-hover-btn:hover {
+  background-color: none !important;
+  background: none !important;
+}
+
+.custom-en-ar-btn {
+  border: none;
+  background: none;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 19.68px;
+}
+
+
+
+
+.global-mylisting-modal-style {
+  position: absolute;
+  z-index: 999;
+  background: white;
+  top: -120px;
+  right: -140px;
+  width: 38% !important;
+  padding: 15px;
+  border-top-left-radius: 12px;
+  border-bottom-left-radius: 12px;
+  height: 117%;
+}

@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import * as moment from 'moment';
 import { Observable } from 'rxjs';
+import { HoverStateService } from 'src/app/views/services/shared-blured-modal-service/hover-state.service';
 import { environment } from 'src/environments/environment';
 import { AlertsServicesService } from 'src/services/alerts-service/alerts-services.service';
 import { HttpService } from 'src/services/http/http.service';
@@ -43,7 +44,7 @@ export class SellOrderDetailsComponent implements OnInit {
   profileForm!: FormGroup;
   selectedProfileImage: File | null = null;
 
-  constructor(private route: ActivatedRoute,
+  constructor(private route: ActivatedRoute, private hoverStateService: HoverStateService,
     private http: HttpService,
     private router: Router,
     private dialog: MatDialog,
@@ -130,7 +131,7 @@ export class SellOrderDetailsComponent implements OnInit {
     this.profileForm.markAllAsTouched();
     if (this.profileForm.valid) {
       const formData = new FormData();
-      
+
       // Append all form fields to FormData
       Object.keys(this.profileForm.value).forEach(key => {
         if (key === 'profile_image' && this.selectedProfileImage) {
@@ -166,14 +167,14 @@ export class SellOrderDetailsComponent implements OnInit {
     const words = name.trim().split(" ");
     // words ['']0: ""length: 1[[Prototype]]: Array(0)
 
-    if (words?.length === 1 && words[0] !== "" && words[0] !== undefined && words[0] !== null ) {
+    if (words?.length === 1 && words[0] !== "" && words[0] !== undefined && words[0] !== null) {
       return words[0][0].toUpperCase();
     } else {
-      if(this.profileForm.get('email').value){
+      if (this.profileForm.get('email').value) {
         const emailWord = this.profileForm.get('email').value
-        if(emailWord[0][0]){
+        if (emailWord[0][0]) {
           return emailWord[0][0].toUpperCase();
-        }else{
+        } else {
           return
         }
       }
@@ -189,6 +190,13 @@ export class SellOrderDetailsComponent implements OnInit {
         return detail;
       });
       console.log("sellOrders   ", this.sellOrders)
+
+      if(this.sellOrders[0]?.buyer_id != localStorage.getItem('userID')){
+        this.buyerProfileDetails = this.sellOrders[0].buyer;
+        this.buyerProfileDetails.profile_image =  this.buyerProfileDetails.profile_image.replace(/\\/g, '')
+      }
+      console.log(" this.buyerProfileDetails", this.buyerProfileDetails)
+
       // ✅ Use .find instead of .map
       this.selectedSellOrderDetails = this.sellOrders.filter(
         (order) => {
@@ -246,7 +254,7 @@ export class SellOrderDetailsComponent implements OnInit {
   }
 
 
-  getInitialsofUsername(name){
+  getInitialsofUsername(name) {
     if (!name) {
       return '';
     }
@@ -256,8 +264,8 @@ export class SellOrderDetailsComponent implements OnInit {
     if (words?.length === 1 && words[0] !== "") {
       return words[0][0].toUpperCase();
     } else {
-      const emailWord =this.profileForm.get('email').value;
-      if(emailWord){
+      const emailWord = this.profileForm.get('email').value;
+      if (emailWord) {
         return emailWord[0][0].toUpperCase();
       }
       // return (emailWord[0][0].toUpperCase());
@@ -279,7 +287,7 @@ export class SellOrderDetailsComponent implements OnInit {
         let preparing_shipment_ = '';
         let order_completed_ = '';
         let order_canceled_ = '';
-
+        let order_sold_ = '';
         if (res?.data?.history) {
           res?.data?.history.forEach((history: any) => {
             if (history.new_status == 'initiated') {
@@ -314,7 +322,10 @@ export class SellOrderDetailsComponent implements OnInit {
               order_canceled_ = 'true';
               this.sellerStatuses[7].time = moment(history.created_at).fromNow();
             }
-
+            if (history.new_status == 'order_sold') {
+              order_sold_ = 'true';
+              this.sellerStatuses[8].time = moment(history.created_at).fromNow();
+            }
           })
         }
 
@@ -360,8 +371,14 @@ export class SellOrderDetailsComponent implements OnInit {
             this.sellerStatuses[6].active = true;
           }
           if (order_canceled_) {
+            this.sellerStatuses[2].active = false;
             this.sellerStatuses[7].active = true;
           }
+          if (order_sold_) {
+            this.sellerStatuses[2].active = false;
+            this.sellerStatuses[8].active = true;
+          }
+          
         }
 
         // 🔥 Filter only active statuses for display
@@ -415,6 +432,8 @@ export class SellOrderDetailsComponent implements OnInit {
     )
   }
 
+  buyerProfileDetails:any;
+
   getOrderDetails() {
     this.http.getOrderDetails(this.orderID).subscribe((res) => {
       this.orderDetails = res.order;
@@ -422,8 +441,106 @@ export class SellOrderDetailsComponent implements OnInit {
         this.orderDetails.product.main_image =
           this.orderDetails.product.main_image.replace(/\\/g, "");
       }
+      if (this.orderDetails?.shipping_proof) {
+        // Parse the string into an array
+        let proofs: string[] = JSON.parse(this.orderDetails.shipping_proof);
+
+        // Remove escape slashes if any (safety check)
+        proofs = proofs.map(p => p.replace(/\\/g, ""));
+
+
+        // Build full URLs for preview
+        this.imagePreviews = proofs.map(p => this.apiUrl + p);
+      }
+
+      if (this.orderDetails?.shipping_tracking_id) {
+        this.trackingID = this.orderDetails?.shipping_tracking_id
+      }
+
+      if (this.orderDetails?.shipping_partner) {
+        this.logisticsPartner = this.orderDetails?.shipping_partner
+      }
     });
   }
+
+  cancelProofofShipMent() {
+    this.isHoverModel = false;
+    this.hoverStateService.setHoverState(this.isHoverModel);
+    this.showSellerProofofShipping = false;
+  }
+
+  allowedExtensions = ["jpeg", "jpg", "png"];
+  uploadedFiles: File[] = [];
+  imagePreviews: string[] = [];
+
+  removeImage(index: number) {
+    this.uploadedFiles.splice(index, 1);
+    this.imagePreviews.splice(index, 1);
+  }
+
+  sendProofofShipMent() {
+    if (this.uploadedFiles.length === 0) {
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("order_id", this.orderDetails.id);
+    formData.append("shipping_tracking_id", this.trackingID);
+    formData.append("shipping_partner", this.logisticsPartner);
+    formData.append(
+      "shipping_address",
+      this.orderDetails.shipping_address || "ship xyz 123"
+    );
+
+    // Append multiple images as shipping_proof[]
+    this.uploadedFiles.forEach((file) => {
+      formData.append("shipping_proof[]", file);
+    });
+
+    this.http.createShipment(formData).subscribe(
+      (res) => {
+        this.isHoverModel = false;
+        this.hoverStateService.setHoverState(this.isHoverModel);
+        this.showSellerProofofShipping = false;
+        this.fetchOrderStatus(this.orderID, "seller");
+      },
+      (err) => {
+        if (this.translateService.currentLang == "en") {
+          this.alertService.showAlert(
+            "warning",
+            "Error in sending Proof of ownership"
+          );
+        } else {
+          this.alertService.showAlert(
+            "warning",
+            "حدث خطأ أثناء إرسال إثبات الملكية"
+          );
+        }
+      }
+    );
+  }
+
+  onFileSelected(event: any) {
+    const files = event.target.files;
+    if (files) {
+      for (let file of files) {
+        const fileExt = file.name.split(".").pop().toLowerCase();
+        if (this.allowedExtensions.includes(fileExt)) {
+          this.uploadedFiles.push(file);
+          const reader = new FileReader();
+          reader.onload = (e: any) => {
+            this.imagePreviews.push(e.target.result); // Save preview URL
+          };
+          reader.readAsDataURL(file);
+        } else {
+          alert("Only JPEG, JPG, and PNG files are allowed.");
+        }
+      }
+    }
+  }
+
+  trackingID: any;
+  logisticsPartner: any;
 
   getOrderStatus(orderID: number): Observable<any> {
     return this.http.OrderHistory(orderID);
@@ -432,19 +549,37 @@ export class SellOrderDetailsComponent implements OnInit {
   showSellerConfirmOrderAvailability: boolean = false;
   showSellerProofofShipping: boolean = false;
   showBuyerandSellerProofOfOwnerShipReadOnlyModal: boolean = false;
+  isHoverModel: boolean = false
   callSellerOption(i: any) {
     console.log("this.activeSellerStatuses.length = ", this.activeSellerStatuses.length)
     console.log("i = ", i)
     if (this.lengthTwoofSeller && i == 1) {
+      this.showSellerProofofShipping = false
+      this.showBuyerandSellerProofOfOwnerShipReadOnlyModal = false;
       this.showSellerConfirmOrderAvailability = true;
+      this.isHoverModel = true
     }
     if (i == 3 && this.activeSellerStatuses.length == 4) {
-      this.showSellerProofofShipping = true
+      this.showBuyerandSellerProofOfOwnerShipReadOnlyModal = false;
+      this.showSellerConfirmOrderAvailability = false;
+      this.showSellerProofofShipping = true;
+      this.isHoverModel = true;
+    }
+
+    if (i == 3 && this.activeSellerStatuses.length != 4) {
+      this.showBuyerandSellerProofOfOwnerShipReadOnlyModal = false;
+      this.showSellerConfirmOrderAvailability = false;
+      this.isHoverModel = false;
     }
 
     if (i == 4 && this.activeSellerStatuses.length >= 5) {
+      this.showSellerConfirmOrderAvailability = false;
+      this.showSellerProofofShipping = false
       this.showBuyerandSellerProofOfOwnerShipReadOnlyModal = true;
+      this.isHoverModel = true
     }
+
+    this.hoverStateService.setHoverState(this.isHoverModel);
   }
 
   sellerStatuses = [
@@ -496,6 +631,12 @@ export class SellOrderDetailsComponent implements OnInit {
       description: "The order was canceled by the buyer.",
       active: false,
     },
+    {
+      label: "Order Sold",
+      time: null,
+      description: "You’ve marked the Item as sold.",
+      active: false,
+    },
   ];
 
 
@@ -515,26 +656,28 @@ export class SellOrderDetailsComponent implements OnInit {
   offerValidity: any;
 
   markAsSold() {
-    // const formData = {
-    //   offer_id: this.offerID,
-    //   product_id:this.offerDetails.product.id,
-    //   action_type: "mark_sold",
-    //   chat_id:this.offerDetails.chat_id,
-    //   receiver_id:this.offerDetails.sender_id,
-    //   sender_id:localStorage.getItem("userID")
-    // };
-    // this.http.sendMessage(formData).subscribe(
-    //   (res) => {
-    //     this.alertService.showAlert(
-    //       "success",
-    //       "Product Mark as Sold Succesfully"
-    //     );
-    //     // this.dialogRef.close(this.offerForm.value);
-    //   },
-    //   (err) => {
-    //     this.alertService.showAlert("warning", "Error in Product Mark as Sold");
-    //   }
-    // );
+    const formData = {
+      product_id:this.selectedProductDetails.id,
+      action_type: "mark_sold",
+      chat_id:this.orderDetails?.chat_id,
+      receiver_id:this.backUpSelectedProductWhenBuyandSellitemClicked.order.buyer.id,
+    };
+    this.http.sendMessage(formData).subscribe(
+      (res) => {
+        this.isHoverModel = false;
+        this.hoverStateService.setHoverState(this.isHoverModel);
+        this.showSellerConfirmOrderAvailability =false
+        this.alertService.showAlert(
+          "success",
+          "Product Mark as Sold Succesfully"
+        );
+        this.fetchOrderStatus(this.orderID, "seller");
+        // this.dialogRef.close(this.offerForm.value);
+      },
+      (err) => {
+        this.alertService.showAlert("warning", "Error in Product Mark as Sold");
+      }
+    );
   }
 
   sendSellerOffer() {
@@ -554,6 +697,8 @@ export class SellOrderDetailsComponent implements OnInit {
 
     this.http.sendShipmenttoBuyer(formData).subscribe(
       (res) => {
+        this.isHoverModel = false;
+        this.hoverStateService.setHoverState(this.isHoverModel);
         this.showSellerConfirmOrderAvailability = false;
         if (this.translateService.currentLang == "en") {
           this.alertService.showAlert("success", "Offer Sent Successfully");
@@ -570,10 +715,14 @@ export class SellOrderDetailsComponent implements OnInit {
   }
 
   cancelSellerOffer() {
+    this.isHoverModel = false;
+    this.hoverStateService.setHoverState(this.isHoverModel);
     this.showSellerConfirmOrderAvailability = false;
   }
 
-  closeshowBuyerandSellerProofOfOwnerShipReadOnlyModal(){
+  closeshowBuyerandSellerProofOfOwnerShipReadOnlyModal() {
+    this.isHoverModel = false;
+    this.hoverStateService.setHoverState(this.isHoverModel);
     this.showBuyerandSellerProofOfOwnerShipReadOnlyModal = false;
   }
 }
