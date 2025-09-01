@@ -97,7 +97,7 @@ export class ProfileComponent implements OnInit{
       first_name: [
         "",
         [
-          Validators.required,
+          // Validators.required,
           Validators.minLength(2),
           Validators.maxLength(50),
         ],
@@ -105,19 +105,19 @@ export class ProfileComponent implements OnInit{
       last_name: [
         "",
         [
-          Validators.required,
+          // Validators.required,
           Validators.minLength(2),
           Validators.maxLength(50),
         ],
       ],
-      gender: ["", Validators.required],
-      date_of_birth: ["", Validators.required],
+      gender: [""],
+      date_of_birth: [""],
       countryCode: ["KSA"],
-      phone_number: ["", [Validators.required, Validators.pattern(/^5\d{8}$/)]],
-      language: ["english", Validators.required],
-      occupation: ["", [Validators.required, Validators.minLength(2)]],
+      phone_number: ["", [Validators.pattern(/^5\d{8}$/)]],
+      language: ["english"],
+      occupation: ["", [Validators.minLength(2)]],
       about_me: ["", [Validators.maxLength(300)]],
-      email: ["", [Validators.required, Validators.email]],
+      email: ["", [Validators.email]],
       password: [""],
       profile_image: [""]
     });
@@ -151,23 +151,27 @@ export class ProfileComponent implements OnInit{
 
   fetchProfiling() {
     this.http.getProfilingInformation().subscribe((res) => {
+      const cleanValue = (val: any) => (val === null || val === 'null' ? '' : val);
+  
       this.profileForm.patchValue({
-        first_name: res.first_name,
-        last_name: res.last_name,
-        gender: res.gender,
-        city: res.city,
-        country: 'Saudi Arabia',
-        date_of_birth: res.date_of_birth,
-        phone_number: res.phone_number,
-        language: res?.language,
-        occupation: res?.occupation,
-        about_me: res?.about_me,
-        email: res?.email,
-        profile_image: res?.profile_image?.replace(/\\/g, ""),
-        password: res?.password,
+        first_name: cleanValue(res.first_name),
+        last_name: cleanValue(res.last_name),
+        gender: cleanValue(res.gender),
+        city: cleanValue(res.city),
+        country: cleanValue(res.country) || 'Saudi Arabia',
+        date_of_birth: cleanValue(res.date_of_birth),
+        phone_number: cleanValue(res.phone_number),
+        language: cleanValue(res.language),
+        occupation: cleanValue(res.occupation),
+        about_me: cleanValue(res.about_me),
+        email: cleanValue(res.email),
+        profile_image: res?.profile_image ? res.profile_image.replace(/\\/g, "") : '',
+        password: cleanValue(res.password),
       });
     });
   }
+  
+  
 
   profileFormSubmit() {
     this.profileForm.markAllAsTouched();
@@ -176,8 +180,11 @@ export class ProfileComponent implements OnInit{
       
       // Append all form fields to FormData
       Object.keys(this.profileForm.value).forEach(key => {
-        if (key === 'profile_image' && this.selectedProfileImage) {
-          formData.append('profile_image', this.selectedProfileImage);
+        if (key === 'profile_image') {
+          // Sirf tab bhejo jab user ne new image select ki ho
+          if (this.selectedProfileImage) {
+            formData.append('profile_image', this.selectedProfileImage);
+          }
         } else {
           formData.append(key, this.profileForm.get(key).value);
         }

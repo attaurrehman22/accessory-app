@@ -59,7 +59,7 @@
         <label for="first_name" class="form-label">{{ "my_Listing.First_Name" | translate }}</label>
         <input type="text" id="first_name" class="form-control" formControlName="first_name" placeholder='{{ "my_Listing.First_Name_place" | translate }}' />
         <div *ngIf="profileForm.get('first_name')?.touched && profileForm.get('first_name')?.invalid" class="text-danger">
-          <small *ngIf="profileForm.get('first_name')?.hasError('required')">{{ "form_validation.required" | translate }}</small>
+          <!-- <small *ngIf="profileForm.get('first_name')?.hasError('required')">{{ "form_validation.required" | translate }}</small> -->
           <small *ngIf="profileForm.get('first_name')?.hasError('minlength')">{{ "form_validation.min_2_chars" | translate }}</small>
           <small *ngIf="profileForm.get('first_name')?.hasError('maxlength')">{{ "form_validation.max_50_chars" | translate }}</small>
         </div>
@@ -68,7 +68,7 @@
         <label for="last_name" class="form-label">{{ "my_Listing.Last_Name" | translate }}</label>
         <input type="text" id="last_name" class="form-control" formControlName="last_name" placeholder='{{ "my_Listing.Last_Name_place" | translate }}' />
         <div *ngIf="profileForm.get('last_name')?.touched && profileForm.get('last_name')?.invalid" class="text-danger">
-          <small *ngIf="profileForm.get('last_name')?.hasError('required')">{{ "form_validation.required" | translate }}</small>
+          <!-- <small *ngIf="profileForm.get('last_name')?.hasError('required')">{{ "form_validation.required" | translate }}</small> -->
           <small *ngIf="profileForm.get('last_name')?.hasError('minlength')">{{ "form_validation.min_2_chars" | translate }}</small>
           <small *ngIf="profileForm.get('last_name')?.hasError('maxlength')">{{ "form_validation.max_50_chars" | translate }}</small>
         </div>
@@ -84,7 +84,7 @@
           <option value="Female">{{ "my_Listing.Female" | translate }}</option>
           <option value="Other">{{ "my_Listing.Other" | translate }}</option>
           <div *ngIf="profileForm.get('gender')?.touched && profileForm.get('gender')?.invalid" class="text-danger">
-            <small *ngIf="profileForm.get('gender')?.hasError('required')">{{ "form_validation.required" | translate }}</small>
+            <!-- <small *ngIf="profileForm.get('gender')?.hasError('required')">{{ "form_validation.required" | translate }}</small> -->
           </div>
         </select>
       </div>
@@ -92,7 +92,7 @@
         <label for="date_of_birth" class="form-label">{{ "my_Listing.Date_of_Birth" | translate }}</label>
         <input [attr.max]="maxDate"  type="date" id="date_of_birth" class="form-control" formControlName="date_of_birth" />
         <div *ngIf="profileForm.get('date_of_birth')?.touched && profileForm.get('date_of_birth')?.invalid" class="text-danger">
-          <small *ngIf="profileForm.get('date_of_birth')?.hasError('required')">{{ "form_validation.required" | translate }}</small>
+          <!-- <small *ngIf="profileForm.get('date_of_birth')?.hasError('required')">{{ "form_validation.required" | translate }}</small> -->
         </div>
       </div>
     </div>
@@ -150,7 +150,7 @@
           </div>
         </div>
         <div *ngIf="profileForm.get('phone_number')?.touched && profileForm.get('phone_number')?.invalid" class="text-danger">
-          <small *ngIf="profileForm.get('phone_number')?.hasError('required')">{{ "form_validation.required" | translate }}</small>
+          <!-- <small *ngIf="profileForm.get('phone_number')?.hasError('required')">{{ "form_validation.required" | translate }}</small> -->
           <small *ngIf="profileForm.get('phone_number')?.hasError('pattern')">{{ "form_validation.invalid_phone" | translate }}</small>
         </div>
       </div>
@@ -160,7 +160,7 @@
           <option value="english">{{ "my_Listing.English" | translate }}</option>
           <option value="arabic">{{ "my_Listing.Arabic" | translate }}</option>
           <div *ngIf="profileForm.get('language')?.touched && profileForm.get('language')?.invalid" class="text-danger">
-            <small *ngIf="profileForm.get('language')?.hasError('required')">{{ "form_validation.required" | translate }}</small>
+            <!-- <small *ngIf="profileForm.get('language')?.hasError('required')">{{ "form_validation.required" | translate }}</small> -->
           </div>
         </select>
       </div>
@@ -171,7 +171,7 @@
         <label for="occupation" class="form-label">{{ "my_Listing.Occupation" | translate }}</label>
         <input type="text" id="occupation" class="form-control" formControlName="occupation" placeholder='{{ "my_Listing.Occupation" | translate }}' />
         <div *ngIf="profileForm.get('occupation')?.touched && profileForm.get('occupation')?.invalid" class="text-danger">
-          <small *ngIf="profileForm.get('occupation')?.hasError('required')">{{ "form_validation.required" | translate }}</small>
+          <!-- <small *ngIf="profileForm.get('occupation')?.hasError('required')">{{ "form_validation.required" | translate }}</small> -->
           <small *ngIf="profileForm.get('occupation')?.hasError('minlength')">{{ "form_validation.min_2_chars" | translate }}</small>
         </div>
       </div>
