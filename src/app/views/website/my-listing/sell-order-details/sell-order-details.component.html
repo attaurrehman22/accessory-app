@@ -56,7 +56,7 @@
                             [class.active]="status.active">
                             <label class="radio-container me-2">
                                 <input type="radio" [checked]="status.active" />
-                                <span class="radio-custom"></span>
+                                <span [ngClass]="activeSellerStatuses.length - 1 === i && status.label != 'Order Sold' && status.label != 'Order canceled' && status.label != 'Order Completed' ? 'last-radio' : 'radio-custom'"></span>
                             </label>
                             <div class="vertical-line" *ngIf="i !== activeSellerStatuses.length - 1"></div>
                             <div (click)="callSellerOption(i)" style="cursor: pointer" class="order-details"

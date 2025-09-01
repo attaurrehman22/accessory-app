@@ -50,19 +50,14 @@
           <ul class="list-group">
             <li *ngFor="let status of activeBuyerStatuses ; let i = index"
               class="list-group-item d-flex align-items-center "
-              style="border: none; background: transparent ;    background: transparent;"
+              style="border: none; background: transparent;background: transparent;"
               [class.active]="status.active">
               <label class="radio-container me-2">
                 <input type="radio" [checked]="status.active" />
-                <span class="radio-custom"></span>
+                <span [ngClass]="activeBuyerStatuses.length - 1 === i && status.label != 'Order Sold' && status.label != 'Order canceled' && status.label != 'Order Delivered' ? 'last-radio' : 'radio-custom'"></span>
               </label>
               <div class="vertical-line" *ngIf="i !== activeBuyerStatuses?.length - 1"></div>
-              <!-- <div class="order-details" style="cursor: pointer" (click)="callBuyerOption(i)"
-                                (mouseenter)="onMouseEnter(status)" (mouseleave)="onMouseLeave()">
-                                <p class="label-stl">{{ status.label }} <span class="desc-stl"> {{status.time}} </span>
-                                </p>
-                                <p class="desc-stl">{{ status.description }}</p>
-                            </div> -->
+              
               <div class="order-details" style="cursor: pointer" (click)="callBuyerOption(i)"
                 (mouseenter)="onMouseEnter(status)" (mouseleave)="onMouseLeave()">
                 <p class="label-stl">{{ status.label }} <span class="desc-stl"> {{status.time}} </span>

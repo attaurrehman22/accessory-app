@@ -321,7 +321,7 @@
   }
 
   /* 2) Draw the outer circle */
-.radio-custom {
+.last-radio {
     display: inline-block;
     width: 20px;
     height: 20px;
@@ -332,7 +332,7 @@
   }
   
   /* 3) Draw the inner fill when checked */
-  .radio-custom::after {
+  .last-radio::after {
     content: "";
     position: absolute;
     top: 50%;
@@ -345,10 +345,50 @@
     transition: transform 0.15s ease-in-out;
   }
 
-  .radio-container input:checked + .radio-custom::after {
+  .radio-container input:checked + .last-radio::after {
     transform: translate(-50%, -50%) scale(1);
   }
   
+
+   /* outer circle */
+.radio-custom {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #242424;
+    border-radius: 50%;
+    position: relative;
+    left: 4%;
+    cursor: pointer;
+  }
+  
+  /* tick mark */
+  .radio-custom::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 12px;
+    height: 12px;
+    color: #242424;
+    transform: translate(-50%, -50%) scale(0);
+    transition: transform 0.15s ease-in-out;
+    background-size: contain;
+    background-repeat: no-repeat;
+  }
+
+  .radio-container input:checked + .radio-custom {
+    background-color: #242424; /* black circle background */
+  }
+  
+  /* show tick when checked */
+  .radio-container input:checked + .radio-custom::after {
+    transform: translate(-60%, -50%) scale(1);
+    border-radius: 50%;
+    background-image: url("data:image/svg+xml;utf8,<svg fill='white' viewBox='0 0 16 16' xmlns='http://www.w3.org/2000/svg'><path d='M6.00039 10.8002L3.20039 8.00016L2.26606 8.9335L6.00039 12.6678L14.0004 4.66783L13.0671 3.7335L6.00039 10.8002Z'/></svg>");
+  }
+
+
   .vertical-line {
     width: 2px;
     height: 40px;
