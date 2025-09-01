@@ -10,9 +10,9 @@
           placeholder='{{ "my_Listing.First_Name_place" | translate }}'
           formControlName="first_name"
         />
-        <div class="" *ngIf="billingForm.get('first_name').hasError('required') && billingForm.get('first_name').touched">
+        <!-- <div class="" *ngIf="billingForm.get('first_name').hasError('required') && billingForm.get('first_name').touched">
           <small class="text-danger">{{ "my_Listing.First_Name_required" | translate }}</small>
-        </div>
+        </div> -->
 
         <div class="" *ngIf="billingForm.get('first_name').hasError('maxlength')">
           <small class="text-danger">{{ "my_Listing.First_name_exceed_limit" | translate }}</small>
@@ -27,9 +27,9 @@
           placeholder='{{ "my_Listing.Last_Name_place" | translate }}'
           formControlName="last_name"
         />
-        <div class="" *ngIf="billingForm.get('last_name').hasError('required') && billingForm.get('last_name').touched">
+        <!-- <div class="" *ngIf="billingForm.get('last_name').hasError('required') && billingForm.get('last_name').touched">
           <small class="text-danger">{{ "my_Listing.Last_Name_required" | translate }}</small>
-        </div>
+        </div> -->
 
         <div class="" *ngIf="billingForm.get('last_name').hasError('maxlength')">
           <small class="text-danger">{{ "my_Listing.First_name_exceed_limit" | translate }}</small>
@@ -47,9 +47,9 @@
           placeholder='{{ "my_Listing.Enter_street_Place" | translate }}'
           formControlName="street"
         />
-        <div class="" *ngIf="billingForm.get('street').hasError('required') && billingForm.get('street').touched">
+        <!-- <div class="" *ngIf="billingForm.get('street').hasError('required') && billingForm.get('street').touched">
           <small class="text-danger">{{ "my_Listing.Street_is_required" | translate }}</small>
-        </div>
+        </div> -->
 
         <div class="" *ngIf="billingForm.get('street').hasError('maxlength')">
           <small class="text-danger">{{ "my_Listing.Cannot_exceed_limit_of_80_character" | translate }}</small>
@@ -82,9 +82,9 @@
           formControlName="zip_code"
           appPositiveNumber
         />
-        <div class="" *ngIf="billingForm.get('zip_code').hasError('required') && billingForm.get('zip_code').touched">
+        <!-- <div class="" *ngIf="billingForm.get('zip_code').hasError('required') && billingForm.get('zip_code').touched">
           <small class="text-danger">{{ "my_Listing.ZIP_Code_Required" | translate }}</small>
-        </div>
+        </div> -->
 
         <div class="" *ngIf="billingForm.get('zip_code').hasError('maxlength')">
           <small class="text-danger">{{ "my_Listing.Cannot_exceed_limit__9_character" | translate }}</small>
@@ -104,9 +104,9 @@
           placeholder='{{ "my_Listing.Enter_Billing_address" | translate }}'
           formControlName="billing_address"
         />
-        <div class="" *ngIf="billingForm.get('billing_address').hasError('required') && billingForm.get('billing_address').touched">
+        <!-- <div class="" *ngIf="billingForm.get('billing_address').hasError('required') && billingForm.get('billing_address').touched">
           <small class="text-danger">{{ "my_Listing.Billing_address_required" | translate }}</small>
-        </div>
+        </div> -->
 
         <div class="" *ngIf="billingForm.get('billing_address').hasError('maxlength')">
           <small class="text-danger">{{ "my_Listing.Cannot_exceed_limit_120_character" | translate }}</small>
@@ -121,9 +121,9 @@
           <select disabled class="form-control" formControlName="country">
             <option>{{this.billingForm.get('country').value}}</option>
           </select>
-        <div class="" *ngIf="billingForm.get('country').hasError('required') && billingForm.get('country').touched">
+        <!-- <div class="" *ngIf="billingForm.get('country').hasError('required') && billingForm.get('country').touched">
           <small class="text-danger">{{ "my_Listing.Country_is_required" | translate }}</small>
-        </div>
+        </div> -->
 
         <div class="" *ngIf="billingForm.get('country').hasError('maxlength')">
           <small class="text-danger"> {{ "my_Listing.First_name_exceed_limit" | translate }}
@@ -143,9 +143,9 @@
               <i class="bi bi-chevron-down"></i>
             </div>
           </div>
-        <div class="" *ngIf="billingForm.get('city').hasError('required') && billingForm.get('city').touched">
+        <!-- <div class="" *ngIf="billingForm.get('city').hasError('required') && billingForm.get('city').touched">
           <small class="text-danger">{{ "my_Listing.City_required" | translate }}</small>
-        </div>
+        </div> -->
 
         <div class="" *ngIf="billingForm.get('city').hasError('maxlength')">
           <small class="text-danger">{{ "my_Listing.First_name_exceed_limit" | translate }}</small>
@@ -164,9 +164,9 @@
           placeholder='{{ "my_Listing.State_place" | translate }}'
           formControlName="state"
         />
-        <div class="" *ngIf="billingForm.get('state').hasError('required') && billingForm.get('state').touched">
+        <!-- <div class="" *ngIf="billingForm.get('state').hasError('required') && billingForm.get('state').touched">
           <small class="text-danger">{{ "my_Listing.State_required" | translate }}</small>
-        </div>
+        </div> -->
 
         <div class="" *ngIf="billingForm.get('state').hasError('maxlength')">
           <small class="text-danger">{{ "my_Listing.First_name_exceed_limit" | translate }}</small>

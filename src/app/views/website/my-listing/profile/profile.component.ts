@@ -170,8 +170,6 @@ export class ProfileComponent implements OnInit{
       });
     });
   }
-  
-  
 
   profileFormSubmit() {
     this.profileForm.markAllAsTouched();

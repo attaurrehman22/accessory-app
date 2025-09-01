@@ -15,30 +15,30 @@ import { LanguageService } from 'src/services/lang-service/language.service';
 export class ShippingAddressComponent implements OnInit{
   billingForm: FormGroup;
   billing_address = new FormControl(null, [
-    Validators.required,
+    
     Validators.maxLength(120),
   ]);
   first_name = new FormControl(
     [],
-    [Validators.required, Validators.maxLength(50)]
+    [ Validators.maxLength(50)]
   );
   last_name = new FormControl("", [
-    Validators.required,
+    
     Validators.maxLength(50),
   ]);
-  street = new FormControl("", [Validators.required, Validators.maxLength(80)]);
+  street = new FormControl("", [ Validators.maxLength(80)]);
   street_line_2 = new FormControl("", [Validators.maxLength(80)]);
   zip_code = new FormControl("", [
-    Validators.required,
+    
     Validators.pattern("^[0-9]*$"),
     Validators.maxLength(9),
   ]);
-  city = new FormControl("", [Validators.required, Validators.maxLength(50)]);
+  city = new FormControl("", [ Validators.maxLength(50)]);
   country = new FormControl({value: "Saudi Arabia", disabled: true}, [
-    Validators.required,
+    
     Validators.maxLength(50),
   ]);
-  state = new FormControl("", [Validators.required, Validators.maxLength(50)]);
+  state = new FormControl("", [ Validators.maxLength(50)]);
   supportLanguages = ["en", "ar", "fr", "ta", "hi"];
   currentLanguage: string;
   cityLists: any;
@@ -93,27 +93,28 @@ export class ShippingAddressComponent implements OnInit{
 
   
   getBillingInformation() {
+    const cleanValue = (val: any) => (val === null || val === 'null' ? '' : val);
+  
     this.http.getBillingInformation().subscribe(
       (res) => {
         this.billingForm.patchValue({
-          first_name: res.data.first_name,
-          last_name: res.data.last_name,
-          street: res.data.street,
-          street_line_2: res.data.street_line_2,
-          zip_code: res.data.zip_code,
-          city: res.data.city,
-          billing_address: res.data.billing_address,
+          first_name: cleanValue(res.data.first_name),
+          last_name: cleanValue(res.data.last_name),
+          street: cleanValue(res.data.street),
+          street_line_2: cleanValue(res.data.street_line_2),
+          zip_code: cleanValue(res.data.zip_code),
+          city: cleanValue(res.data.city),
+          billing_address: cleanValue(res.data.billing_address),
           country: 'Saudi Arabia',
-          state: res?.data?.state,
+          state: cleanValue(res?.data?.state),
         });
       },
       (err) => {
         if (this.translateService.currentLang == "en") {
-          // this.alertService.showAlert(
-          //   "warning",
-          //   "Error in Fetching Billing Information"
-          // );
-          
+          this.alertService.showAlert(
+            "warning",
+            "Error in Fetching Billing Information"
+          );
         } else {
           this.alertService.showAlert(
             "warning",
@@ -123,6 +124,7 @@ export class ShippingAddressComponent implements OnInit{
       }
     );
   }
+  
 
   submitBillingForm() {
     if (this.billingForm.invalid) {
