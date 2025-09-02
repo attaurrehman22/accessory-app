@@ -793,10 +793,10 @@
                   sent: message.sender_id != user_id,
                   'justify-content-center': message.is_system_generated === 1
                 }">
-                <div class="message-content-main">
+                <div class="message-content-main" *ngIf="message.message != null">
+                  <!-- <div class="message-content-main"> -->
                   <div class="message-content" [ngClass]="{ 'no-background': message.attachments }">
-                    <p *ngIf="message?.message" [ngClass]="{ 'black-background-text': message.attachments }">{{
-                      message.message }}</p>
+                    <p *ngIf="message?.message" [ngClass]="{ 'black-background-text': message.attachments }">{{message.message }}</p>
                      <!-- // show shipping price and validity time start here -->
                     <div *ngIf="message?.ship_price && message?.valid_until && !isCustomOffer"
                       class="shippment-and-validity-timr-div card">
@@ -811,15 +811,6 @@
                         </div>
                       </div>
                     </div>
-                    <!-- // show shipping price and validity time end here -->
-                     <!-- // show mark as sold start here -->
-                    <!-- <p *ngIf="
-                        isShowMarkAsSold &&
-                        isBuyerUser &&
-                        message.action_type === 'mark_sold'
-                      ">
-                      {{ "chat_com.seller_mark_sold_status" | translate }}
-                    </p> -->
                     <!-- // show mark as sold end here -->
                      <!-- // show attachments start here -->
                     <div class="d-flex gap-2" *ngIf="message.attachments">
