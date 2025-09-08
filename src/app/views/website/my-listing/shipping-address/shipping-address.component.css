@@ -63,6 +63,17 @@
     font-weight: 600;
   }
 
+  .custom-select {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+  }
+  .dropdown-menu {
+    position: absolute;
+    z-index: 1000;
+  }
+  
+
  @media (max-width: 468px) {
     .form-select { 
         font-size: 10px !important;

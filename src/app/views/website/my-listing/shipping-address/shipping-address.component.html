@@ -133,16 +133,43 @@
 
       <div class="col-md-6 mb-3 d-flex flex-column" [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'">
         <label for="city" class="form-label">{{ "my_Listing.City" | translate }}</label>
-          <div class="position-relative">
+          <!-- <div class="position-relative">
             <select class="form-control" formControlName="city">
-              <option *ngFor="let city of cityLists" [value]="city">
-                {{city}}
+              <option *ngFor="let city of cityLists" [value]="city.name">
+                <img [src]="city.flag" alt="flag" style="width:20px; height:14px; margin-right:8px;" />
+                {{ city.name }}
               </option>
             </select>
             <div class="position-absolute" style="right: 10px; top: 50%; transform: translateY(-50%); pointer-events: none;">
               <i class="bi bi-chevron-down"></i>
             </div>
+          </div> -->
+
+          <div class="position-relative">
+            <div class="custom-select form-control" (click)="toggleDropdown()">
+              <img *ngIf="selectedCity?.flag"
+                   [src]="selectedCity.flag"
+                   alt="flag"
+                   style="width:20px; height:14px; margin-right:8px;" />
+              {{ selectedCity?.name || 'Select City' }}
+              <div class="position-absolute"
+                   style="right: 10px; top: 50%; transform: translateY(-50%); pointer-events: none;">
+                <i class="bi bi-chevron-down"></i>
+              </div>
+            </div>
+          
+            <ul *ngIf="dropdownOpen" class="dropdown-menu w-100 show" style="max-height:200px; overflow-y:auto;">
+              <li *ngFor="let city of cityLists"
+                  (click)="selectCity(city)"
+                  style="cursor:pointer; padding:5px 10px; display:flex; align-items:center;">
+                <img [src]="city.flag" alt="flag" style="width:20px; height:14px; margin-right:8px;" />
+                {{ city.name }}
+              </li>
+            </ul>
           </div>
+
+          
+          
         <!-- <div class="" *ngIf="billingForm.get('city').hasError('required') && billingForm.get('city').touched">
           <small class="text-danger">{{ "my_Listing.City_required" | translate }}</small>
         </div> -->

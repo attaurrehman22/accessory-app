@@ -85,7 +85,7 @@
                 >
                   @for (option of filteredOptions | async; track option) {
                   <mat-option
-                    [disabled]="productDetails?.brand_id ? true : false"
+                    [disabled]="isListingCompleted"
                     [value]="option"
                     >{{ option.name }}</mat-option
                   >
@@ -122,7 +122,7 @@
                   [displayWith]="displayCategoryFn"
                 >
                   <mat-option
-                    [disabled]="productDetails?.categories ? true : false"
+                    [disabled]="isListingCompleted"
                     *ngFor="let option of filteredCategoryOptions | async"
                     [value]="option"
                     (onSelectionChange)="$event.isUserInput ? addCategory(option) : null"
@@ -225,7 +225,7 @@
                 >
                 <input
                   matInput
-                  [readonly]="productDetails?.model ? true : false"
+                  [readonly]="isListingCompleted"
                   placeholder="{{
                     'create_product_listing.enter_model_name' | translate
                   }}"
@@ -256,7 +256,7 @@
                   placeholder="{{
                     'create_product_listing.enter_title_name' | translate
                   }}"
-                  [readonly]="productDetails?.title ? true : false"
+                  [readonly]="isListingCompleted"
                   formControlName="title"
                   appFieldLimitIntoHundered
                 />
@@ -326,7 +326,7 @@
                   [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'"
                 >
                   <mat-option
-                    [disabled]="productDetails?.watch_type ? true : false"
+                    [disabled]="isListingCompleted"
                     *ngFor="let data of formdropdownListData.watch_type"
                     [value]="data.key"
                   >
@@ -363,7 +363,7 @@
                       | translate
                   }}"
                   formControlName="year_of_production"
-                  [readonly]="productDetails?.year_of_production ? true : false"
+                  [readonly]="isListingCompleted"
                   appPositiveNumber
                 />
                 <mat-error
@@ -3478,7 +3478,7 @@
               >
                 @for (option of filteredOptions | async; track option) {
                 <mat-option
-                  [disabled]="productDetails?.brand_id ? true : false"
+                  [disabled]="isListingCompleted"
                   [value]="option"
                   >{{ option.name }}</mat-option
                 >
@@ -3514,7 +3514,7 @@
                 [displayWith]="displayCategoryFn"
               >
                 <mat-option
-                  [disabled]="productDetails?.categories ? true : false"
+                  [disabled]="isListingCompleted"
                   *ngFor="let option of filteredCategoryOptions | async"
                   [value]="option"
                   (onSelectionChange)="$event.isUserInput ? addCategory(option) : null"
@@ -3617,7 +3617,7 @@
               >
               <input
                 matInput
-                [readonly]="productDetails?.model ? true : false"
+                [readonly]="isListingCompleted"
                 placeholder="{{
                   'create_product_listing.enter_model_name' | translate
                 }}"
@@ -3648,7 +3648,7 @@
                 placeholder="{{
                   'create_product_listing.enter_title_name' | translate
                 }}"
-                [readonly]="productDetails?.title ? true : false"
+                [readonly]="isListingCompleted"
                 formControlName="title"
                 appFieldLimitIntoHundered
               />
@@ -3717,7 +3717,7 @@
                 [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'"
               >
                 <mat-option
-                  [disabled]="productDetails?.watch_type ? true : false"
+                  [disabled]="isListingCompleted"
                   *ngFor="let data of formdropdownListData.watch_type"
                   [value]="data.key"
                 >
@@ -3754,7 +3754,7 @@
                     | translate
                 }}"
                 formControlName="year_of_production"
-                [readonly]="productDetails?.year_of_production ? true : false"
+                [readonly]="isListingCompleted"
                 appPositiveNumber
               />
               <mat-error

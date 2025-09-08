@@ -471,30 +471,69 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
     this.imagesInput.nativeElement.click();
   }
 
- onImagesSelected(event: Event) {
-    const files = (event.target as HTMLInputElement).files;
-    if (files && files.length > 0) {
-      Array.from(files).forEach((file: File) => {
-        const reader = new FileReader();
-        const newImage: ImageFile = { file, url: "", isUploading: true };
+//  onImagesSelected(event: Event) {
+//     const files = (event.target as HTMLInputElement).files;
+//     if (files && files.length > 0) {
+//       Array.from(files).forEach((file: File) => {
+//         const reader = new FileReader();
+//         const newImage: ImageFile = { file, url: "", isUploading: true };
 
-        this.allImages.push(newImage);
+//         this.allImages.push(newImage);
 
-        reader.onload = () => {
-          newImage.url = reader.result as string;
-          newImage.isUploading = false;
+//         reader.onload = () => {
+//           newImage.url = reader.result as string;
+//           newImage.isUploading = false;
 
-          // If no cover image is selected, set the first image as cover
-          const hasCover = this.allImages.some((img) => img.isCover);
-          if (!hasCover) {
-            this.setAsCoverImage(newImage);
-          }
-        };
+//           // If no cover image is selected, set the first image as cover
+//           const hasCover = this.allImages.some((img) => img.isCover);
+//           if (!hasCover) {
+//             this.setAsCoverImage(newImage);
+//           }
+//         };
 
-        reader.readAsDataURL(file);
-      });
+//         reader.readAsDataURL(file);
+//       });
+//     }
+//   }
+
+onImagesSelected(event: Event) {
+  const files = (event.target as HTMLInputElement).files;
+  if (files && files.length > 0) {
+    const invalidFiles: string[] = []; // ❌ invalid files list
+
+    Array.from(files).forEach((file: File) => {
+      if (!file.type.startsWith("image/")) {
+        invalidFiles.push(file.name); // invalid files collect karo
+        return;
+      }
+
+      const reader = new FileReader();
+      const newImage: ImageFile = { file, url: "", isUploading: true };
+
+      this.allImages.push(newImage);
+
+      reader.onload = () => {
+        newImage.url = reader.result as string;
+        newImage.isUploading = false;
+
+        // Agar koi cover image nahi hai to pehli ko cover set karo
+        const hasCover = this.allImages.some((img) => img.isCover);
+        if (!hasCover) {
+          this.setAsCoverImage(newImage);
+        }
+      };
+
+      reader.readAsDataURL(file);
+    });
+
+    // ✅ Agar invalid files hain to ek hi alert show karo
+    if (invalidFiles.length > 0) {
+      this.alertService.showAlert('warning',`These files are not images and were skipped:\n\n${invalidFiles.join("\n")}`);
     }
   }
+}
+
+
 
   setAsCoverImage(image: ImageFile) {
     this.allImages.forEach((img) => {
@@ -830,6 +869,7 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
             this.productDetails?.proof_image_2.replace(/\\/g, "");
         }
       });
+      console.log("isPublishedProduct = ",this.isPublishedProduct)
     this.patchFormDetails();
   }
 
@@ -986,7 +1026,7 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
       }
 
       // Disable the brand input field if brand_id exists
-      if (this.productDetails.brand_id) {
+      if (this.productDetails.brand_id && this.isListingCompleted) {
         this.listingForm.get("brand_id").disable();
       }
 
@@ -994,7 +1034,7 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
       this.productDetails.categories.map((item: any) => this.addCategory(item));
       // this.filteredCategoryOptions=this.productDetails.categories
       this.listingForm.get("category_ids").setValue(ids);
-      if (ids.length > 0) {
+      if (ids.length > 0 && this.isListingCompleted) {
         this.listingForm.get("category_ids").disable();
       }
 
@@ -1046,7 +1086,7 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
 
       this.listingForm.get("unknown")?.setValue(this.productDetails.unknown === 1);
 
-      if(this.productDetails?.unknown == 1){
+      if(this.productDetails?.unknown == 1 && this.isListingCompleted){
         this.listingForm.get("year_of_production").disable();
         this.listingForm.get("year_of_production").clearValidators();
         this.listingForm.get("year_of_production").updateValueAndValidity();
@@ -1054,7 +1094,7 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
         this.listingForm.get("approximate_year").disable();
       }
 
-      if(this.productDetails?.approximate_year == 1){
+      if(this.productDetails?.approximate_year == 1 && this.isListingCompleted){
         this.listingForm.get("year_of_production").disable();
         this.listingForm.get("unknown").disable();
         this.listingForm.get("approximate_year").disable();
@@ -1215,13 +1255,13 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
           selectedCondition = this.dealerconditions.find(
             (condition) => condition.title == this.productDetails.condition
           );
-          this.dealerconditions = [selectedCondition];
+          // this.dealerconditions = [selectedCondition];
         } else {
           selectedCondition = this.conditions.find(
             (condition) => condition.title == this.productDetails.condition
           );
           // selectedCondition=this.conditions.filter((item:any)=>{item.title === this.productDetails.condition})
-          this.conditions = [selectedCondition];
+          // this.conditions = [selectedCondition];
         }
         this.selectCondition(selectedCondition);
       }
@@ -1252,8 +1292,6 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
         );
       }
 
-      console.log("otherImages in Patch Form ",this.otherImages)
-      console.log("coverImage in Patch Form ",this.coverImage)
       if (this.otherImages.length > 0 || this.coverImage) {
 
         this.allImages = this.otherImages;

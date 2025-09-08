@@ -12,33 +12,33 @@ import { LanguageService } from 'src/services/lang-service/language.service';
   templateUrl: './shipping-address.component.html',
   styleUrl: './shipping-address.component.css'
 })
-export class ShippingAddressComponent implements OnInit{
+export class ShippingAddressComponent implements OnInit {
   billingForm: FormGroup;
   billing_address = new FormControl(null, [
-    
+
     Validators.maxLength(120),
   ]);
   first_name = new FormControl(
     [],
-    [ Validators.maxLength(50)]
+    [Validators.maxLength(50)]
   );
   last_name = new FormControl("", [
-    
+
     Validators.maxLength(50),
   ]);
-  street = new FormControl("", [ Validators.maxLength(80)]);
+  street = new FormControl("", [Validators.maxLength(80)]);
   street_line_2 = new FormControl("", [Validators.maxLength(80)]);
   zip_code = new FormControl("", [
-    
+
     Validators.pattern("^[0-9]*$"),
     Validators.maxLength(9),
   ]);
-  city = new FormControl("", [ Validators.maxLength(50)]);
-  country = new FormControl({value: "Saudi Arabia", disabled: true}, [
-    
+  city = new FormControl("", [Validators.maxLength(50)]);
+  country = new FormControl({ value: "Saudi Arabia", disabled: true }, [
+
     Validators.maxLength(50),
   ]);
-  state = new FormControl("", [ Validators.maxLength(50)]);
+  state = new FormControl("", [Validators.maxLength(50)]);
   supportLanguages = ["en", "ar", "fr", "ta", "hi"];
   currentLanguage: string;
   cityLists: any;
@@ -79,6 +79,7 @@ export class ShippingAddressComponent implements OnInit{
       state: this.state,
     });
     this.getCityLists('Saudi Arabia');
+
     this.getBillingInformation();
   }
 
@@ -87,27 +88,59 @@ export class ShippingAddressComponent implements OnInit{
       country: country,
     }
     this.http.getCityLists(formData).subscribe((res) => {
-      this.cityLists = res.data;
+      // Map each city into an object containing both city and flag
+      this.cityLists = res.data.map((city: string) => ({
+        name: city,
+        flag: "https://flagcdn.com/w20/sa.png" // Saudi Arabia flag
+      }));
+
+      console.log("Cities List",this.cityLists)
     });
+    
   }
 
-  
+
+  dropdownOpen = false;
+selectedCity: any = null;
+
+toggleDropdown() {
+  this.dropdownOpen = !this.dropdownOpen;
+}
+
+selectCity(city: any) {
+  this.selectedCity = city;
+  this.dropdownOpen = false;
+  this.billingForm.get('city')?.setValue(city.name); // keep formControlName working
+}
+
+
   getBillingInformation() {
     const cleanValue = (val: any) => (val === null || val === 'null' ? '' : val);
-  
+
     this.http.getBillingInformation().subscribe(
       (res) => {
+        const cityName = cleanValue(res.data.city);
         this.billingForm.patchValue({
           first_name: cleanValue(res.data.first_name),
           last_name: cleanValue(res.data.last_name),
           street: cleanValue(res.data.street),
           street_line_2: cleanValue(res.data.street_line_2),
           zip_code: cleanValue(res.data.zip_code),
-          city: cleanValue(res.data.city),
+          city: cityName,
           billing_address: cleanValue(res.data.billing_address),
           country: 'Saudi Arabia',
           state: cleanValue(res?.data?.state),
         });
+
+        if (cityName) {
+          const matchedCity = this.cityLists?.find((c: any) => c.name === cityName);
+          if (matchedCity) {
+            this.selectedCity = matchedCity;
+          } else {
+            // fallback in case city is not found in cityLists
+            this.selectedCity = { name: cityName, flag: "https://flagcdn.com/w20/sa.png" };
+          }
+        }
       },
       (err) => {
         if (this.translateService.currentLang == "en") {
@@ -124,7 +157,7 @@ export class ShippingAddressComponent implements OnInit{
       }
     );
   }
-  
+
 
   submitBillingForm() {
     if (this.billingForm.invalid) {

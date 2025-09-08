@@ -80,6 +80,11 @@ export class HttpService implements OnInit {
     return this.http.get(`${this.apiUrl}/api/topBrands`);
   }
 
+  getHeaderNewArrivalsProductDotIconChecker(): Observable<any> {
+    // https://api.chronosouq.com/api/last-30-days-new-products?page=1&per_page=10
+    return this.http.get(`${this.apiUrl}/api/last-30-days-new-products`);
+  }
+
   getallDropDownformData(): Observable<any> {
     return this.http.get(`${this.apiUrl}/api/product-form-dropdown`);
   }

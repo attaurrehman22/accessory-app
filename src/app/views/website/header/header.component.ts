@@ -167,13 +167,22 @@ export class HeaderComponent {
     this.callForNewArrivals(); // <-- Call immediately once
     setInterval(() => {
       this.callForNewArrivals();
-    }, 30 * 60 * 1000); // 30 minutes in milliseconds
+    }, 3 * 60 * 1000); // 30 minutes in milliseconds
   }
 
 
 // call this function to check new arrivals product 
   callForNewArrivals(){
     // this.isNewArrivalsProduct = true
+    this.http.getHeaderNewArrivalsProductDotIconChecker().subscribe(
+      (res)=>{
+        if(res?.new_count > 0){
+          this.isNewArrivalsProduct = true
+        }else{
+          this.isNewArrivalsProduct = false
+        }
+      }
+    )
   }
 
   userDetails:any
