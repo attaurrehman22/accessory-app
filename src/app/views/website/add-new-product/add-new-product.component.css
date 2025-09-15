@@ -44,6 +44,12 @@
   border: 1px solid #EEEEEE;
 }
 
+::ng-deep .mat-form-fields-custom-deisgn  .description-field > .mat-mdc-text-field-wrapper {
+  height: auto !important;
+  border-radius: 6px !important;
+  border: 1px solid #EEEEEE;
+}
+
 ::ng-deep .mat-form-fields-custom-deisgn mat-form-field > .mat-mdc-text-field-wrapper > .mat-mdc-form-field-flex > .mat-mdc-form-field-infix > .mat-mdc-select > .mat-mdc-select-trigger > .mat-mdc-select-value > .mat-mdc-select-value-text {
   font-size: 16px !important;
   font-weight: 400 !important;

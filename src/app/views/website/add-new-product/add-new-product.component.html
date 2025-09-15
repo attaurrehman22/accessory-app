@@ -3524,7 +3524,7 @@
               </mat-autocomplete>
 
               <!-- Display selected categories as chips -->
-              <div
+              <!-- <div
                 *ngIf="selectedCategories?.controls?.length > 0"
                 class="selected-categories"
               >
@@ -3549,7 +3549,7 @@
                     <mat-icon matChipRemove>cancel</mat-icon>
                   </mat-chip>
                 </mat-chip-list>
-              </div>
+              </div> -->
               <mat-hint>{{
                 "create_product_listing.category_limit_5" | translate
               }}</mat-hint>
@@ -3576,6 +3576,34 @@
                 {{ "create_product_listing.category_required" | translate }}
               </mat-error>
             </mat-form-field>
+
+            <div
+                *ngIf="selectedCategories?.controls?.length > 0"
+                class="selected-categories"
+                style="margin: 10px 10px 10px 10px !important;"
+              >
+                <mat-chip-list
+                  class="d-flex gap-2 flex-wrap"
+                  #chipList
+                  aria-label="{{
+                    'create_product_listing.category_selection' | translate
+                  }}"
+                >
+                  <mat-chip
+                    class="mat-chip-text"
+                    *ngFor="let category of selectedCategories?.controls"
+                    [removable]="true"
+                    (click)="
+                      productDetails?.categories
+                        ? null
+                        : removeCategory(category.value)
+                    "
+                  >
+                    {{ category.value.name }}
+                    <mat-icon matChipRemove>cancel</mat-icon>
+                  </mat-chip>
+                </mat-chip-list>
+              </div>
 
             <!-- <mat-form-field
               [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'"
@@ -3666,7 +3694,7 @@
             <mat-form-field
               [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'"
               appearance="outline"
-              class="w-100 mt-2"
+              class="w-100 mt-2 description-field"
             >
               <mat-label class="label-header">{{
                 "create_product_listing.description" | translate
@@ -4320,7 +4348,7 @@
                                 *ngIf="no_of_jewels.hasError('pattern')"
                               >
                                 {{
-                                  "create_product_listing.no_of_jewels_error"
+                                  "create_product_listing.no_of_jewels_pattern"
                                     | translate
                                 }}
                               </mat-error>

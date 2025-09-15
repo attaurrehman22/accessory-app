@@ -138,7 +138,7 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
 
   // Watch Form Details
 
-   decimalPattern = "^[0-9]{1,3}(.[0-9]{1,2})?$";
+  decimalPattern = "^[1-9][0-9]?$";
    refPattern = "^[0-9]{1,10}(\\.[0-9]{1,5})?$";
 
   reference_number = new FormControl("", [
