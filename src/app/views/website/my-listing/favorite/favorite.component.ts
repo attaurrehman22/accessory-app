@@ -15,6 +15,7 @@ export class FavoriteComponent implements OnInit{
   apiUrl = environment.apipath + "/";
   selectedFilter: string = "product";
   favoritesProductDetails: any[] = [];
+  filteredFavoritesProductDetails: any[] = [];
   accessoriesWishList: any[] = [];
   supportLanguages = ["en", "ar", "fr", "ta", "hi"];
   currentLanguage: string;
@@ -54,6 +55,7 @@ export class FavoriteComponent implements OnInit{
     });
   }
   
+  filters: any[] = [];
   async fetchProductDetails() {
     for (const productId of this.wishList) {
       try {
@@ -74,13 +76,34 @@ export class FavoriteComponent implements OnInit{
           );
         }
 
+        //add unique only gender to the filters
+        if (!this.filters.some(filter => filter.gender === productDetail.gender)) {
+          this.filters.push({
+            id: productDetail.id,
+            gender: productDetail.gender
+          })
+        }
+
         this.favoritesProductDetails.push(productDetail); // Add the product details to the array
+        this.filteredFavoritesProductDetails.push(productDetail);
       } catch (err) {
         console.error(
           "Error fetching product details for ID " + productId,
           err
         );
       }
+    }
+  }
+
+  selectedProductFilter: string = "all";
+
+  onFilterChange(event) {
+    this.selectedProductFilter = event;
+    console.log("event", event);
+    if (event === "all") {
+      this.filteredFavoritesProductDetails = this.favoritesProductDetails;
+    } else {
+      this.filteredFavoritesProductDetails = this.favoritesProductDetails.filter(product => product.gender == event);
     }
   }
 
@@ -102,6 +125,23 @@ export class FavoriteComponent implements OnInit{
   goToAccessoryDetails(accessory) {
     this.router.navigate(["/accessories/details"], {
       queryParams: { id: accessory.id },
+    });
+  }
+
+  removeFromFavorites(listing) {
+    const formData = {
+      product_id: listing.id,
+    };
+    this.http.addWishList(formData).subscribe((res) => {
+      this.getWishList()
+      window.location.reload();
+    });
+  }
+
+  viewProductDetails(listing) {
+    // http://localhost:4300/buy-product?id=393
+    this.router.navigate(["/buy-product"], {
+      queryParams: { id: listing.id },
     });
   }
 }

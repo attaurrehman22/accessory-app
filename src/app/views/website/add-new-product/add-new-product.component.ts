@@ -37,6 +37,7 @@ interface ImageFile {
   url: string;
   isUploading: boolean;
   isCover?: boolean;
+  randomName?: string;
 }
 
 export interface Brand {
@@ -496,6 +497,8 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
 //     }
 //   }
 
+
+
 onImagesSelected(event: Event) {
   const files = (event.target as HTMLInputElement).files;
   if (files && files.length > 0) {
@@ -508,7 +511,16 @@ onImagesSelected(event: Event) {
       }
 
       const reader = new FileReader();
-      const newImage: ImageFile = { file, url: "", isUploading: true };
+
+      // ✅ Har file ke liye unique random name banao
+      const uniqueName = this.generateUniqueName(file);
+
+      const newImage: ImageFile = {
+        file,
+        url: "",
+        isUploading: true,
+        randomName: uniqueName, // 👈 unique name assign
+      };
 
       this.allImages.push(newImage);
 
@@ -528,10 +540,59 @@ onImagesSelected(event: Event) {
 
     // ✅ Agar invalid files hain to ek hi alert show karo
     if (invalidFiles.length > 0) {
-      this.alertService.showAlert('warning',`These files are not images and were skipped:\n\n${invalidFiles.join("\n")}`);
+      this.alertService.showAlert(
+        "warning",
+        `These files are not images and were skipped:\n\n${invalidFiles.join("\n")}`
+      );
     }
   }
 }
+
+// ✅ Always unique name generator
+private generateUniqueName(file: File): string {
+  const extension = file.name.split(".").pop(); // original extension
+  const uuid = crypto.randomUUID(); // browser supported unique ID
+  return `${uuid}.${extension}`;
+}
+
+
+
+// onImagesSelected(event: Event) {
+//   const files = (event.target as HTMLInputElement).files;
+//   if (files && files.length > 0) {
+//     const invalidFiles: string[] = []; // ❌ invalid files list
+
+//     Array.from(files).forEach((file: File) => {
+//       if (!file.type.startsWith("image/")) {
+//         invalidFiles.push(file.name); // invalid files collect karo
+//         return;
+//       }
+
+//       const reader = new FileReader();
+//       const newImage: ImageFile = { file, url: "", isUploading: true };
+
+//       this.allImages.push(newImage);
+
+//       reader.onload = () => {
+//         newImage.url = reader.result as string;
+//         newImage.isUploading = false;
+
+//         // Agar koi cover image nahi hai to pehli ko cover set karo
+//         const hasCover = this.allImages.some((img) => img.isCover);
+//         if (!hasCover) {
+//           this.setAsCoverImage(newImage);
+//         }
+//       };
+
+//       reader.readAsDataURL(file);
+//     });
+
+//     // ✅ Agar invalid files hain to ek hi alert show karo
+//     if (invalidFiles.length > 0) {
+//       this.alertService.showAlert('warning',`These files are not images and were skipped:\n\n${invalidFiles.join("\n")}`);
+//     }
+//   }
+// }
 
 
 
@@ -550,9 +611,20 @@ onImagesSelected(event: Event) {
   removedImagesUrl: string[] = [];
 
   removeImage(image: ImageFile) {
+    console.log("all images",this.allImages)
+    console.log("image",image)
     this.removedImagesUrl.push(image.url)
     const wasCover = image.isCover;
-    this.allImages = this.allImages.filter((img) => img.url !== image.url);
+    this.allImages = this.allImages.filter(
+      (img) => {
+        if(img.randomName){
+          return img.randomName !== image.randomName
+          }else{
+          return img.url !== image.url
+        }
+      }
+    );
+    console.log("all images after remove",this.allImages)
 
     if (wasCover && this.allImages.length > 0) {
       this.setAsCoverImage(this.allImages[0]);
