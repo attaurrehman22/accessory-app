@@ -1,4 +1,4 @@
-<div class="d-flex justify-content-between align-items-center mb-3 filtered-div">
+<div class="d-flex justify-content-between align-items-center mb-3 filtered-div" [ngClass]="{ 'reverse-order-details': translateService.currentLang !== 'en' }">
     <h4 class="mobile-label">{{ "my_Listing.Favorites" | translate }}</h4>
     <!-- // add dropdown for filter of product -->
      <mat-form-field>
@@ -20,7 +20,7 @@
       </select>
     </mat-form-field> -->
   </div>
-  <div class="list-cards" *ngIf="selectedFilter == 'product' ? filteredFavoritesProductDetails?.length > 0 : accessoriesWishList?.length > 0">
+  <div class="list-cards" *ngIf="selectedFilter == 'product' ? filteredFavoritesProductDetails?.length > 0 : accessoriesWishList?.length > 0" [ngClass]="{ 'reverse-order-details': translateService.currentLang !== 'en' }">
     <div *ngFor="let listing of selectedFilter == 'product' ? filteredFavoritesProductDetails : accessoriesWishList" class="card mb-3">
       <div class="card-body d-flex align-items-center" *ngIf="selectedFilter == 'product'">
         <div class="col-11 d-flex align-items-center card-hover-change-color gap-2"  (click)="viewProductDetails(listing)">

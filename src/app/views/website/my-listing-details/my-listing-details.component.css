@@ -8,6 +8,10 @@
     gap: 8px;
 }
 
+.reverse-order > .arabic-style > .flex-column > .flex-column > .nav-item > .nav-link {
+  flex-direction: row-reverse;
+ }
+
 .nav-link {
   padding: 10px 15px;
   border-radius: 5px;

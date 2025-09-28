@@ -264,7 +264,7 @@
               </div>
               <div class="view-add-btn-div">
                 <a class="view-add-btn small-scren-view-add-btn" [routerLink]="['/buy-product']"
-                  [queryParams]="{ id: getProductDetails.id, fromChat: true }">
+                  [queryParams]="{ id: getProductDetails?.id, fromChat: true }">
                   {{ "chat_com.view_add" | translate }}
                 </a>
                 <!-- <button (click)="viewAdd()" >View Add</button> -->
@@ -775,7 +775,7 @@
           </div>
           <div class="view-add-btn-div">
             <a class="view-add-btn" [routerLink]="['/buy-product']"
-              [queryParams]="{ id: getProductDetails.id, fromChat: true }">
+              [queryParams]="{ id: getProductDetails?.id, fromChat: true }">
               {{ "chat_com.view_add" | translate }}
             </a>
             <!-- <button (click)="viewAdd()" >View Add</button> -->
@@ -1005,7 +1005,7 @@
             <!-- // show buy now and create offer button start here -->
             <div *ngIf="
             !isCustomOffer &&
-            hasBuyNow() &&
+          
             hasCancelOffer() == false &&
             !isShowMarkAsSold &&
             !isShowPaymentMethod

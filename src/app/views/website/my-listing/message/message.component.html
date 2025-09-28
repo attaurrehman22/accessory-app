@@ -1,74 +1,68 @@
-<div class="d-flex justify-content-between align-items-center mb-3 filtered-div">
-    <h4 class="mobile-label">{{ "my_Listing.My_Listings" | translate }}</h4>
-    <div class="d-flex justify-content-between align-items-center gap-2 filtered-btn-div">
-      <div>
-        <select class="form-select form-select-sm" style="width: 150px">
-          <option selected>{{ "my_Listing.Status" | translate }}</option>
-          <option value="1">{{ "my_Listing.In_Process" | translate }}</option>
-          <option value="2">{{ "my_Listing.Delivered" | translate }}</option>
-          <option value="3">{{ "my_Listing.Cancelled" | translate }}</option>
-        </select>
-      </div>
-      <div>
-        <select class="form-select form-select-sm" style="width: 150px">
-          <option selected>{{ "my_Listing.4_Weeks" | translate }}</option>
-          <option value="1">{{ "my_Listing.1_Weeks" | translate }}</option>
-          <option value="2">{{ "my_Listing.1_Month" | translate }}</option>
-          <option value="3">{{ "my_Listing.6_Weeks" | translate }}</option>
-        </select>
-      </div>
+<div class="d-flex justify-content-between align-items-center mb-3 filtered-div"
+  [ngClass]="{ 'reverse-order-details': translateService.currentLang !== 'en' }">
+  <h4 class="mobile-label">{{ "my_Listing.My_Listings" | translate }}</h4>
+  <div class="d-flex justify-content-between align-items-center gap-2 filtered-btn-div">
+    <div>
+      <select class="form-select form-select-sm" style="width: 150px">
+        <option selected>{{ "my_Listing.Status" | translate }}</option>
+        <option value="1">{{ "my_Listing.In_Process" | translate }}</option>
+        <option value="2">{{ "my_Listing.Delivered" | translate }}</option>
+        <option value="3">{{ "my_Listing.Cancelled" | translate }}</option>
+      </select>
+    </div>
+    <div>
+      <select class="form-select form-select-sm" style="width: 150px">
+        <option selected>{{ "my_Listing.4_Weeks" | translate }}</option>
+        <option value="1">{{ "my_Listing.1_Weeks" | translate }}</option>
+        <option value="2">{{ "my_Listing.1_Month" | translate }}</option>
+        <option value="3">{{ "my_Listing.6_Weeks" | translate }}</option>
+      </select>
     </div>
   </div>
-  <div class="list-cards">
-    <div  *ngFor="let chat of filteredChats; else: noRecord" class="card mb-3 custom-card-style">
-      <div class="card-body d-flex align-items-center">
-        <div class="col-11 d-flex align-items-center card-hover-change-color" (click)="getMesageDetails(chat)">
-          <div class="main_image_div">
-            <img
-              *ngIf="chat.product.main_image"
-              class="img-fluid"
-              style="object-fit: cover !important;height: 100% !important; width: 100% !important;"
-               [src]="apiUrl + chat.product.main_image"
-              alt="{{ 'find_dream.img_alt' | translate }}"
-            />
-            <div *ngIf="!chat.product.main_image" class="no-image-styles-div">
-                <p>{{ "my_Listing.no_image" | translate }}</p>
-            </div>
-          </div>
-          <div class="main_image_content_div pl-2 pr-2">
-            <small class="text-muted mobile-label listing-id-label">
-              <span class="span-listing-id-label"> {{ chat.product.created_by.name || "N/A" }}</span>  |
-             <span class="span-listing-id-label"> {{ chat.latest_chat_time | date : "yyyy-MM-dd" }} </span>
-            </small>
-
-            
-            <h6 class="mt-1 mb-1 mobile-label listing-concate-label">
-              {{ chat.product.title || "N/A" }}
-              {{ chat.product.condition || "N/A" }}
-            </h6>
-            <small class="text-muted mobile-label">
-               {{
-                chat.latest_message_preview.length > 45
-                  ? (chat.latest_message_preview | slice : 0 : 45) + "..."
-                  : chat.latest_message_preview
-              }}
-            </small>
-            <!-- <span class="badge" [ngClass]="listing.statusClass">{{ listing.status || "In Process" }}</span> -->
-            <!-- <span class="badge">{{
-              listing?.is_listing_completed == 0 ? "Draft" : listing?.sale_status == "for_sale" ? "Active" : listing?.sale_status == "reserved" ? 'Reserved': "N/A"
-            }}</span> -->
+</div>
+<div class="list-cards" [ngClass]="{ 'reverse-order-details': translateService.currentLang !== 'en' }">
+  <div *ngFor="let chat of filteredChats; else: noRecord" class="card mb-3 custom-card-style">
+    <div class="card-body d-flex align-items-center">
+      <div class="col-11 d-flex align-items-center card-hover-change-color" (click)="getMesageDetails(chat)">
+        <div class="main_image_div">
+          <img *ngIf="chat.product.main_image" class="img-fluid"
+            style="object-fit: cover !important;height: 100% !important; width: 100% !important;"
+            [src]="apiUrl + chat.product.main_image" alt="{{ 'find_dream.img_alt' | translate }}" />
+          <div *ngIf="!chat.product.main_image" class="no-image-styles-div">
+            <p>{{ "my_Listing.no_image" | translate }}</p>
           </div>
         </div>
-        <div class="col-1 d-flex justify-content-end">
-          <span
-            *ngIf="
+        <div class="main_image_content_div pl-2 pr-2">
+          <small class="text-muted mobile-label listing-id-label">
+            <span class="span-listing-id-label"> {{ chat.product.created_by.name || "N/A" }}</span> |
+            <span class="span-listing-id-label"> {{ chat.latest_chat_time | date : "yyyy-MM-dd" }} </span>
+          </small>
+
+
+          <h6 class="mt-1 mb-1 mobile-label listing-concate-label">
+            {{ chat.product.title || "N/A" }}
+            {{ chat.product.condition || "N/A" }}
+          </h6>
+          <small class="text-muted mobile-label">
+            {{
+            chat.latest_message_preview.length > 45
+            ? (chat.latest_message_preview | slice : 0 : 45) + "..."
+            : chat.latest_message_preview
+            }}
+          </small>
+          <!-- <span class="badge" [ngClass]="listing.statusClass">{{ listing.status || "In Process" }}</span> -->
+          <!-- <span class="badge">{{
+              listing?.is_listing_completed == 0 ? "Draft" : listing?.sale_status == "for_sale" ? "Active" : listing?.sale_status == "reserved" ? 'Reserved': "N/A"
+            }}</span> -->
+        </div>
+      </div>
+      <div class="col-1 d-flex justify-content-end">
+        <span *ngIf="
               chat.unread_count > 0
-            "
-            class="badge-styl smaall-screen-text"
-          >
-            {{ chat.unread_count }}
-          </span>
-          <!-- <button
+            " class="badge-styl smaall-screen-text">
+          {{ chat.unread_count }}
+        </span>
+        <!-- <button
             mat-icon-button
             [matMenuTriggerFor]="menu"
             aria-label="More options"
@@ -82,7 +76,7 @@
             </button>
             
           </mat-menu> -->
-        </div>
       </div>
     </div>
   </div>
+</div>

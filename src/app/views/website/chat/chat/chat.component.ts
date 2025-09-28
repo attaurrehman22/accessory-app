@@ -69,11 +69,11 @@ export class ChatComponent implements OnInit, AfterViewChecked {
   UserNameOFMessenger:any;
 
   getNameOfMessenger(chat){
-   return (chat.product.created_by.id == this.userID ? chat.buyer : chat.seller) || 'N/A'
+   return (chat?.product?.created_by?.id == this.userID ? chat?.buyer : chat.seller) || 'N/A'
   }
 
    getCityOfMessenger(chat){
-   return (chat.product.created_by.id == this.userID ? chat.buyer_city : chat.seller_city) || 'N/A'
+   return (chat?.product?.created_by?.id == this.userID ? chat.buyer_city : chat.seller_city) || 'N/A'
   }
 
   loginFirst() {
@@ -122,7 +122,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
           this.http.getChatsWithLatestMessage().subscribe((res) => {
             const chatList = res.chats.map(
               (chat) => {
-                chat.product.main_image = chat.product.main_image.replace(/\\/g, "/");
+                chat.product.main_image = chat?.product?.main_image?.replace(/\\/g, "/");
                 return chat;
               }
             );
@@ -183,7 +183,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
 
     if (this.productDeatils) {
       this.getLatestMessage();
-      this.getDetailsofProduct(this.productDeatils.id);
+      this.getDetailsofProduct(this.productDeatils?.id);
     } else {
       this.getLatestMessage();
     }
@@ -234,7 +234,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
   try {
     const res: any = await this.http.getChatsWithLatestMessage().toPromise();
     this.chats = res.chats.map((chat) => {
-      chat.product.main_image = chat.product.main_image.replace(/\\/g, "/");
+      chat.product.main_image = chat?.product?.main_image?.replace(/\\/g, "/");
       return chat;
     });
     this.filteredChats = this.chats;
@@ -278,11 +278,11 @@ export class ChatComponent implements OnInit, AfterViewChecked {
   }
 
   getMesageDetails(param: any) {
-    this.UserNameOFMessenger = (param.product.created_by.id == this.userID ? param.buyer : param.seller)
-    this.userCity = (param.product.created_by.id == this.userID ? param.buyer_city : param.seller_city)
+    this.UserNameOFMessenger = (param?.product?.created_by?.id == this.userID ? param.buyer : param.seller)
+    this.userCity = (param.product.created_by?.id == this.userID ? param.buyer_city : param.seller_city)
     this.chat_id_for_remove_unread_count = param.chat_id;
     this.sellerProductID = param.product_id;
-    this.sellerID = param.product.created_by.id;
+    this.sellerID = param?.product?.created_by?.id;
     this.user_id = localStorage.getItem("userID");
 
     if (this.sellerID == this.user_id) {
@@ -308,7 +308,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
   getChatDetails() {
     let actionTypeforCallingCustomOffer = false;
     if (history?.state?.data) {
-      history.replaceState({ data: null }, document.title);
+      history?.replaceState({ data: null }, document.title);
     }
     if(history?.state?.chatRouteFrom){
       this.chat_id = history?.state?.chatID
@@ -321,7 +321,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
         }else{
           this.isProductSold = false
         }
-        this.userProfile.profile_image = this.userProfile.profile_image.replace(/\\/g, '');
+        this.userProfile.profile_image = this.userProfile?.profile_image?.replace(/\\/g, '');
         console.log("this.userProfile",this.userProfile)
         this.messages = res.messages;
         if (res.messages.length > 0) {
@@ -513,7 +513,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
   isCancelOffer: boolean = false;
 
   getCustomOffer() {
-    this.http.offerByFilter(this.getProductDetails.id, this.chat_id).subscribe(
+    this.http.offerByFilter(this.getProductDetails?.id, this.chat_id).subscribe(
       (res) => {
         this.isCustomOffer = true;
         this.customOfferDetails = res.offer;
@@ -544,7 +544,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     this.http.getProductsByID(ID).subscribe(
       (res) => {
         if (res.data.main_image) {
-          res.data.main_image = res.data.main_image.replace(/\\/g, "");
+          res.data.main_image = res?.data?.main_image?.replace(/\\/g, "");
         }
         this.getProductDetails = res.data;
       },
@@ -574,11 +574,11 @@ export class ChatComponent implements OnInit, AfterViewChecked {
       this.filteredChats = this.chats;
     } else if (option == "Buy") {
       this.filteredChats = this.chats.filter((item: any) => {
-        return item.product.created_by.id != localStorage.getItem("userID");
+        return item?.product?.created_by?.id != localStorage.getItem("userID");
       });
     } else if (option == "Sell") {
       this.filteredChats = this.chats.filter((item: any) => {
-        return item.product.created_by.id == localStorage.getItem("userID");
+        return item?.product?.created_by?.id == localStorage.getItem("userID");
       });
     }
 
@@ -641,7 +641,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     if (this.messages && this.messages.length > 0) {
       formData.append("product_id", this.messages[0].product_id);
     } else if (this.productDeatils) {
-      formData.append("product_id", this.productDeatils.id);
+      formData.append("product_id", this.productDeatils?.id);
     }
 
     if (this.chat_id) {
@@ -651,10 +651,10 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     if (this.reciever_ID) {
       formData.append("receiver_id", this.reciever_ID.toString());
     } else if (!this.reciever_ID && this.productDeatils) {
-      this.reciever_ID = this.productDeatils.created_by.id;
+      this.reciever_ID = this.productDeatils?.created_by?.id;
       formData.append(
         "receiver_id",
-        this.productDeatils.created_by.id.toString()
+        this.productDeatils.created_by?.id.toString()
       );
     }
 
@@ -719,7 +719,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
       return false;
     }
     return this.chats.some(
-      (chat) => chat.product_id === this.productDeatils.id
+      (chat) => chat?.product_id === this.productDeatils?.id
     );
   }
 
@@ -758,7 +758,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
 
   cancelOfferStatus() {
     const formData = {
-      offer_id: this.customOfferDetails.id,
+      offer_id: this.customOfferDetails?.id,
       offers_status: "canceled",
       sender_id: localStorage.getItem("userID"),
       receiver_id: this.reciever_ID,
@@ -808,7 +808,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
 
   acceptOffer() {
     const formData = {
-      offer_id: this.customOfferDetails.id,
+      offer_id: this.customOfferDetails?.id,
       offers_status: "accepted",
       sender_id: localStorage.getItem("userID"),
       receiver_id: this.reciever_ID,
@@ -949,6 +949,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
       }
     });
   }
+  
   cancelOffer() {
     const formData = {
       product_id: this.messages[0].product_id,

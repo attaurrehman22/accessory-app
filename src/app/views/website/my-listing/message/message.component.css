@@ -1,8 +1,8 @@
-.reverse-order-details>.container>.filtered-div {
+.reverse-order-details.filtered-div {
     flex-direction: row-reverse;
 }
 
-.reverse-order-details>.container>.filtered-div>.filtered-btn-div {
+.reverse-order-details.filtered-div>.filtered-btn-div {
     flex-direction: row-reverse;
 }
 
@@ -14,15 +14,15 @@
     flex-direction: row-reverse;
 }
 
-.reverse-order-details>.container>.list-cards>.card>.card-body>.d-flex {
+.reverse-order-details.list-cards>.card>.card-body>.d-flex {
     flex-direction: row-reverse;
 }
 
-.reverse-order-details>.container>.list-cards>.card>.card-body>.col-11 {
+.reverse-order-details.list-cards>.card>.card-body>.col-11 {
     text-align: end;
 }
 
-.reverse-order-details>.container>.list-cards>.card>.card-body>.d-flex>.main_image_content_div>.mobile-label {
+.reverse-order-details.list-cards>.card>.card-body>.d-flex>.main_image_content_div>.mobile-label {
     display: flex;
     align-items: center;
     justify-content: end;
