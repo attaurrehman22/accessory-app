@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
@@ -111,7 +111,7 @@ export class ProfileComponent implements OnInit{
         ],
       ],
       gender: [""],
-      date_of_birth: [""],
+      date_of_birth: ["", [this.noFutureDateValidator]],
       countryCode: ["KSA"],
       phone_number: ["", [Validators.pattern(/^5\d{8}$/)]],
       language: ["english"],
@@ -122,6 +122,13 @@ export class ProfileComponent implements OnInit{
       profile_image: [""]
     });
     this.fetchProfiling();
+  }
+
+  noFutureDateValidator(control: AbstractControl) {
+    if (control.value && new Date(control.value) > new Date()) {
+      return { futureDate: true };
+    }
+    return null;
   }
 
   loginFirst() {
@@ -146,6 +153,22 @@ export class ProfileComponent implements OnInit{
         this.profileImagePreview = e.target.result;
       };
       reader.readAsDataURL(file);
+    }
+  }
+
+  onDateChange(event: any) {
+    const selectedDate = new Date(event.target.value);
+    const today = new Date();
+    today.setHours(23, 59, 59, 999); // Set to end of today
+    
+    if (selectedDate > today) {
+      // Clear the field if future date is selected
+      this.profileForm.get('date_of_birth')?.setValue('');
+      if (this.translateService.currentLang == "en") {
+        this.alertService.showAlert("warning", "Future dates are not allowed");
+      } else {
+        this.alertService.showAlert("warning", "التواريخ المستقبلية غير مسموحة");
+      }
     }
   }
 

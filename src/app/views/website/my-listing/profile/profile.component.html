@@ -90,9 +90,9 @@
       </div>
       <div class="col-md-6 mb-3" [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'">
         <label for="date_of_birth" class="form-label">{{ "my_Listing.Date_of_Birth" | translate }}</label>
-        <input [attr.max]="maxDate"  type="date" id="date_of_birth" class="form-control" formControlName="date_of_birth" />
+        <input [attr.max]="maxDate" type="date" id="date_of_birth" class="form-control" formControlName="date_of_birth" (change)="onDateChange($event)" />
         <div *ngIf="profileForm.get('date_of_birth')?.touched && profileForm.get('date_of_birth')?.invalid" class="text-danger">
-          <!-- <small *ngIf="profileForm.get('date_of_birth')?.hasError('required')">{{ "form_validation.required" | translate }}</small> -->
+          <small *ngIf="profileForm.get('date_of_birth')?.hasError('futureDate')">{{ "form_validation.future_date_not_allowed" | translate }}</small>
         </div>
       </div>
     </div>
