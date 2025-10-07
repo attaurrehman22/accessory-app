@@ -16,6 +16,7 @@ export class NewArrivalsComponent {
   currentLanguage: string;
   showList: any;
   isUserLogin: any;
+  isLoading: boolean = true;
   constructor(private http: HttpService, private router: Router,
      public translateService: TranslateService,  private languageService:LanguageService,
   ) {
@@ -81,6 +82,9 @@ export class NewArrivalsComponent {
         }
         return product;
       });
+      this.isLoading = false;
+    }, (err) => {
+      this.isLoading = false;
     });
   }
 
