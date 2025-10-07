@@ -1,3 +1,4 @@
+<ng-container *ngIf="(userProfile || filteredChats?.length); else chatSkeleton">
 <div class="global-main-wraper mt-5">
   <div class="row" [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }">
     <!-- Left Sidebar: Contacts list -->
@@ -1176,3 +1177,99 @@
     </div>
   </div>
 </div>
+</ng-container>
+
+<ng-template #chatSkeleton>
+<div class="global-main-wraper mt-5">
+  <div class="row">
+    <div class="col-md-4 chat-messages">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <div class="skel skel-line w-50"></div>
+        <div class="skel skel-btn"></div>
+      </div>
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <div class="skel skel-tab w-25"></div>
+        <div class="skel skel-tab w-25"></div>
+        <div class="skel skel-tab w-25"></div>
+      </div>
+      <div class="list-group">
+        <div *ngFor="let i of [1,2,3,4,5]" class="list-group-item d-flex align-items-center">
+          <div class="skel skel-img-90"></div>
+          <div class="ms-3 w-100">
+            <div class="d-flex justify-content-between">
+              <div class="skel skel-line w-50 mb-2"></div>
+              <div class="skel skel-line w-25"></div>
+            </div>
+            <div class="skel skel-line w-75 mb-1"></div>
+            <div class="skel skel-line w-50"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-8 chat-Details">
+      <div class="card">
+        <div class="card-header d-flex align-items-center" style="background:#f9fafb">
+          <div class="skel skel-circle me-2"></div>
+          <div class="w-100">
+            <div class="skel skel-line w-25 mb-2"></div>
+            <div class="skel skel-line w-50"></div>
+          </div>
+        </div>
+
+        <div class="card-header d-flex align-items-center card-header-bottom">
+          <div class="skel skel-img-48 me-2"></div>
+          <div class="w-100">
+            <div class="skel skel-line w-50 mb-2"></div>
+            <div class="skel skel-line w-25"></div>
+          </div>
+          <div class="ms-auto skel skel-btn w-25"></div>
+        </div>
+
+        <div class="card-body" style="height:480px; overflow-y:auto;">
+          <div *ngFor="let i of [1,2,3,4,5,6]" class="d-flex mb-3">
+            <div class="skel skel-bubble me-2"></div>
+            <div class="w-100">
+              <div class="skel skel-line w-75 mb-1"></div>
+              <div class="skel skel-line w-50"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-footer">
+          <div class="d-flex align-items-center w-100 gap-2">
+            <div class="skel skel-square"></div>
+            <div class="skel skel-input w-100"></div>
+            <div class="skel skel-btn w-25"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .skel{position:relative;overflow:hidden;background:#e9ecef;border-radius:8px}
+  .skel::after{content:"";position:absolute;top:0;left:-150px;height:100%;width:150px;background:linear-gradient(90deg,rgba(233,236,239,0)0%,rgba(255,255,255,0.7)50%,rgba(233,236,239,0)100%);animation:chat-shimmer 1.3s infinite}
+  @keyframes chat-shimmer{0%{transform:translateX(0)}100%{transform:translateX(300%)}}
+  .skel-line{height:16px}
+  .skel-btn{height:36px;width:120px;border-radius:8px}
+  .skel-tab{height:32px;border-radius:16px}
+  .skel-img-90{height:90px;width:90px;border-radius:8px}
+  .skel-img-48{height:48px;width:48px;border-radius:8px}
+  .skel-circle{height:48px;width:48px;border-radius:50%}
+  .skel-bubble{height:48px;width:48px;border-radius:16px}
+  .skel-square{height:32px;width:32px;border-radius:6px}
+  .skel-input{height:40px;border-radius:8px}
+  .w-25{width:25%}
+  .w-50{width:50%}
+  .w-75{width:75%}
+  .w-100{width:100%}
+  .mb-1{margin-bottom:.25rem}
+  .mb-2{margin-bottom:.5rem}
+  .mb-3{margin-bottom:1rem}
+  .me-2{margin-right:.5rem}
+  .ms-auto{margin-left:auto}
+  .gap-2{gap:.5rem}
+</style>
+</ng-template>
