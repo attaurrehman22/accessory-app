@@ -220,7 +220,7 @@
             </div>
 
             <!-- // Product deatail of Second first row -->
-            <div class="card-header d-flex flex-wrap justify-content-between card-header-bottom"
+            <div class="card-header d-flex flex-wrap justify-content-between card-header-bottom align-items-center"
               *ngIf="getProductDetails">
               <div class="d-flex" style="width: 80%">
                 <div class="">
@@ -330,21 +330,33 @@
                               'reverse-order-custom-offer':
                                 translateService.currentLang !== 'en'
                             }" class="d-flex flex-column card p-2">
-                            <div style="background: #f9fafb" class="d-flex align-items-baseline">
-                              <ng-container *ngIf="
-                                  customOfferDetails?.sender.img;
-                                  else showInitials
-                                ">
-                                <img [src]="
+                            <div style="background: #f9fafb" class="d-flex align-items-center">
+                              <ng-container *ngIf="userProfile?.profile_image && message.sender_id == user_id">
+                                <img class="profile-img-stl" *ngIf="userProfile?.profile_image" [src]="
                                     apiUrl +
-                                    customOfferDetails?.sender.img
+                                    userProfile?.profile_image
                                   " alt="IMG" />
                               </ng-container>
-                              <ng-template #showInitials>
+    
+                              <ng-container *ngIf="message.sender_id != user_id">
+                                <img class="profile-img-stl" *ngIf="personProfile?.profile_image" [src]="
+                                    apiUrl +
+                                    personProfile?.profile_image
+                                  " alt="IMG" />
+                              </ng-container>
+    
+                              <ng-template *ngIf="message.sender_id != user_id && !personProfile?.profile_image">
                                 <div class="initials">
                                   {{
-                                  customOfferDetails?.sender.name
-                                  | slice : 0 : 2
+                                  personProfile?.name | slice : 0 : 2
+                                  }}
+                                </div>
+                              </ng-template>
+    
+                              <ng-template *ngIf="message.sender_id == user_id && !userProfile?.profile_image">
+                                <div class="initials">
+                                  {{
+                                  customOfferDetails?.sender?.name | slice : 0 : 2
                                   }}
                                 </div>
                               </ng-template>
@@ -737,7 +749,7 @@
         </div>
 
         <!-- // Product deatail of Second first row -->
-        <div class="card-header d-flex flex-wrap justify-content-between card-header-bottom" *ngIf="getProductDetails">
+        <div class="card-header d-flex flex-wrap justify-content-between card-header-bottom align-items-center" *ngIf="getProductDetails">
           <div class="d-flex" style="width: 84%">
             <div class="">
               <ng-container *ngIf="getProductDetails.main_image; else fallbackImage">
@@ -849,20 +861,33 @@
                           'reverse-order-custom-offer':
                             translateService.currentLang !== 'en'
                         }" class="d-flex flex-column card p-2">
-                        <div style="background: #f9fafb" class="d-flex align-items-baseline">
-                          <ng-container *ngIf="
-                              customOfferDetails?.sender.img;
-                              else showInitials
-                            ">
-                            <img [src]="
+                        <div style="background: #f9fafb" class="d-flex align-items-center">
+                          <ng-container *ngIf="userProfile?.profile_image && message.sender_id == user_id">
+                            <img class="profile-img-stl" *ngIf="userProfile?.profile_image" [src]="
                                 apiUrl +
-                                customOfferDetails?.sender.img
+                                userProfile?.profile_image
                               " alt="IMG" />
                           </ng-container>
-                          <ng-template #showInitials>
+
+                          <ng-container *ngIf="message.sender_id != user_id">
+                            <img class="profile-img-stl" *ngIf="personProfile?.profile_image" [src]="
+                                apiUrl +
+                                personProfile?.profile_image
+                              " alt="IMG" />
+                          </ng-container>
+
+                          <ng-template *ngIf="message.sender_id != user_id && !personProfile?.profile_image">
                             <div class="initials">
                               {{
-                              customOfferDetails?.sender.name | slice : 0 : 2
+                              personProfile?.name | slice : 0 : 2
+                              }}
+                            </div>
+                          </ng-template>
+
+                          <ng-template *ngIf="message.sender_id == user_id && !userProfile?.profile_image">
+                            <div class="initials">
+                              {{
+                              customOfferDetails?.sender?.name | slice : 0 : 2
                               }}
                             </div>
                           </ng-template>
@@ -1006,7 +1031,6 @@
             <!-- // show buy now and create offer button start here -->
             <div *ngIf="
             !isCustomOffer &&
-          
             hasCancelOffer() == false &&
             !isShowMarkAsSold &&
             !isShowPaymentMethod

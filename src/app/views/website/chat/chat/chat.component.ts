@@ -85,6 +85,15 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     dialogRef.afterClosed().subscribe((result) => {});
   }
 
+  personProfile:any;
+
+  getProfileDetails() {
+    this.http.gtUserDetails().subscribe((res) => {
+      this.personProfile = res.user;
+      this.personProfile.profile_image = this.personProfile?.profile_image?.replace(/\\/g, "");
+    });
+  }
+
   private intervalId: any;
 
   ngOnInit(): void {
@@ -93,7 +102,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     if (!this.user_id) {
       this.loginFirst();
     }
-    
+    this.getProfileDetails();
     // if (history?.state?.chatID) {
       this.getLatestMessage();
       

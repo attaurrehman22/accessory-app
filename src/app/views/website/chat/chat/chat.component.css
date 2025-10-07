@@ -110,7 +110,7 @@
 }
 
 .message-content-main{
-    max-width: 70%;
+    max-width: 36%;
 }
 
 .message-content {
@@ -207,6 +207,12 @@ input.form-control {
     display: flex;
     padding: 0 10px 0 10px;
     align-items: center;
+}
+
+.profile-img-stl {
+  width: 48px;
+  height: 48px;
+  border-radius: 30px;
 }
 
 @media (max-width: 1370px) {
