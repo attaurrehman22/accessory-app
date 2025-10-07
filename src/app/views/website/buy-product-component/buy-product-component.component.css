@@ -890,3 +890,62 @@ flex-direction: row-reverse;
   object-fit: fill;
   width: auto !important;
 }
+
+/* Skeleton Loader */
+.skeleton {
+  position: relative;
+  overflow: hidden;
+  background: #e9ecef;
+  border-radius: 8px;
+}
+
+.skeleton::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -150px;
+  height: 100%;
+  width: 150px;
+  background: linear-gradient(90deg, rgba(233,236,239,0) 0%, rgba(255,255,255,0.7) 50%, rgba(233,236,239,0) 100%);
+  animation: shimmer 1.3s infinite;
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(300%); }
+}
+
+.skeleton-image {
+  height: 485px;
+  width: 100%;
+  border-radius: 16px;
+  background: #f3f3f3;
+}
+
+.skeleton-thumb {
+  min-width: 110px;
+  height: 110px;
+  border-radius: 12px;
+  margin-right: 10px;
+}
+
+.skeleton-text {
+  height: 20px;
+}
+
+.skeleton-badge {
+  height: 32px;
+  width: 140px;
+}
+
+.skeleton-button {
+  height: 60px;
+  width: 100%;
+  border-radius: 12px;
+}
+
+.skeleton-button.outline {
+  height: 60px;
+  width: 100%;
+  border-radius: 12px;
+}

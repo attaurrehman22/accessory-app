@@ -30,6 +30,7 @@ export class BuyProductComponentComponent implements OnInit {
 
   myThumbnail:any;
   myFullresImage:any;
+  isLoading: boolean = true;
 
   ngAfterViewInit() {
 
@@ -261,6 +262,7 @@ export class BuyProductComponentComponent implements OnInit {
   isReviewsCount: any;
 
   async initializeComponent() {
+    this.isLoading = true;
     try {
       if (this.routeFrom != "listing-to-product" && this.fromChat != true) {
         await this.fetchProductDetails();
@@ -335,6 +337,8 @@ export class BuyProductComponentComponent implements OnInit {
       await this.getAllSimilarProducts();
     } catch (err) {
       console.error("Error initializing component:", err);
+    } finally {
+      this.isLoading = false;
     }
   }
 
