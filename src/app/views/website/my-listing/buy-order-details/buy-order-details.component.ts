@@ -44,6 +44,8 @@ export class BuyOrderDetailsComponent implements OnInit{
   showSellerProofofShipping: boolean = false;
   trackingID: any;
   logisticsPartner: any;
+  isLoading: boolean = true;
+  hasLoadedOnce: boolean = false;
 
   constructor(private route: ActivatedRoute,private hoverStateService: HoverStateService,
     private http: HttpService,
@@ -159,6 +161,10 @@ export class BuyOrderDetailsComponent implements OnInit{
 
       console.log("selectedSellOrderDetails   ", this.selectedSellOrderDetails)
       this.detailListing(this.selectedSellOrderDetails[0])
+      if (!this.hasLoadedOnce) {
+        this.isLoading = false;
+        this.hasLoadedOnce = true;
+      }
     });
   }
 

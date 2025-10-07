@@ -43,6 +43,8 @@ export class SellOrderDetailsComponent implements OnInit {
   closeTimeout: any;
   profileForm!: FormGroup;
   selectedProfileImage: File | null = null;
+  isLoading: boolean = true;
+  hasLoadedOnce: boolean = false;
 
   constructor(private route: ActivatedRoute, private hoverStateService: HoverStateService,
     private http: HttpService,
@@ -194,32 +196,46 @@ export class SellOrderDetailsComponent implements OnInit {
   }
 
   getSellOrders() {
-    this.http.getSellOrders().subscribe((res) => {
-      this.sellOrders = res.orders.map((detail: any) => {
-        if (detail?.product?.main_image) {
-          detail.product.main_image = detail.product.main_image.replace(/\\/g, "");
-        }
-        return detail;
-      });
-      console.log("sellOrders   ", this.sellOrders)
+    this.http.getSellOrders().subscribe(
+      (res) => {
+        try {
+          this.sellOrders = res.orders.map((detail: any) => {
+            if (detail?.product?.main_image) {
+              detail.product.main_image = detail.product.main_image.replace(/\\/g, "");
+            }
+            return detail;
+          });
+          console.log("sellOrders   ", this.sellOrders)
 
-      if(this.sellOrders[0]?.buyer_id != localStorage.getItem('userID')){
-        this.buyerProfileDetails = this.sellOrders[0].buyer;
-        this.buyerProfileDetails.profile_image =  this.buyerProfileDetails.profile_image.replace(/\\/g, '')
+          if (this.sellOrders && this.sellOrders.length && this.sellOrders[0]?.buyer_id != localStorage.getItem('userID')) {
+            this.buyerProfileDetails = this.sellOrders[0].buyer;
+            if (this.buyerProfileDetails?.profile_image) {
+              this.buyerProfileDetails.profile_image = this.buyerProfileDetails.profile_image.replace(/\\/g, '')
+            }
+          }
+          console.log(" this.buyerProfileDetails", this.buyerProfileDetails)
+
+          this.selectedSellOrderDetails = (this.sellOrders || []).filter(
+            (order) => {
+              console.log("Order ID", order.id, "Listing ID", this.listingID);
+              return order.id == this.listingID;
+            }
+          );
+
+          console.log("selectedSellOrderDetails   ", this.selectedSellOrderDetails)
+          if (this.selectedSellOrderDetails && this.selectedSellOrderDetails.length) {
+            this.detailListing(this.selectedSellOrderDetails[0])
+          }
+        } finally {
+          this.isLoading = false;
+          this.hasLoadedOnce = true;
+        }
+      },
+      (err) => {
+        console.error('Error loading sell orders', err);
+        this.isLoading = false;
       }
-      console.log(" this.buyerProfileDetails", this.buyerProfileDetails)
-
-      // ✅ Use .find instead of .map
-      this.selectedSellOrderDetails = this.sellOrders.filter(
-        (order) => {
-          console.log("Order ID", order.id, "Listing ID", this.listingID);
-          return order.id == this.listingID;  // ✅ must return
-        }
-      );
-
-      console.log("selectedSellOrderDetails   ", this.selectedSellOrderDetails)
-      this.detailListing(this.selectedSellOrderDetails[0])
-    });
+    );
   }
 
   detailListing(listing: any): void {
