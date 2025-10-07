@@ -272,7 +272,7 @@
             </div>
 
             <!-- // Message deatail -->
-            <div class="card-body" style="height: 480px; overflow-y: scroll">
+            <div class="card-body" style="height: 480px; overflow-y: scroll;display: flex;flex-direction: column;justify-content: space-between;">
               <div *ngIf="messages">
                 <div *ngFor="let message of reversedMessages" [ngClass]="{
                     'reverse-order-message':
@@ -783,7 +783,7 @@
         </div>
 
         <!-- // Message deatail -->
-        <div class="card-body" style="height: 480px; overflow-y: scroll">
+        <div class="card-body" style="height: 480px; overflow-y: scroll;display: flex;flex-direction: column;justify-content: space-between;">
           <div *ngIf="messages">
             <div *ngFor="let message of reversedMessages" [ngClass]="{
                 'reverse-order-message': translateService.currentLang !== 'en'
