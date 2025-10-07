@@ -16,6 +16,7 @@ export class MessageComponent implements OnInit {
   apiUrl = environment.apipath + "/";
   filteredChats: any;
   chats: any;
+  isLoading: boolean = true;
   supportLanguages = ["en", "ar", "fr", "ta", "hi"];
   currentLanguage: string;
   ngOnInit(): void {
@@ -46,32 +47,37 @@ export class MessageComponent implements OnInit {
   }
 
   getLatestMessages() {
-    this.http.getChatsWithLatestMessage().subscribe((res) => {
-      this.chats = res.chats.map(
-        (chat) => {
-          chat.product.main_image = chat?.product?.main_image.replace(/\\/g, "/");
-          return chat;
-        },
-        (err) => {
-          if (err && err.error) {
-            this.alertService.showAlert("warning", `${err.error.message}`);
+    this.isLoading = true;
+    this.http.getChatsWithLatestMessage().subscribe(
+      (res) => {
+        this.chats = res.chats.map(
+          (chat) => {
+            chat.product.main_image = chat?.product?.main_image.replace(/\\/g, "/");
+            return chat;
+          }
+        );
+        this.filteredChats = this.chats;
+        this.isLoading = false;
+      },
+      (err) => {
+        this.isLoading = false;
+        if (err && err.error) {
+          this.alertService.showAlert("warning", `${err.error.message}`);
+        } else {
+          if (this.translateService.currentLang == "en") {
+            this.alertService.showAlert(
+              "warning",
+              "Error in getting message Please try again"
+            );
           } else {
-            if (this.translateService.currentLang == "en") {
-              this.alertService.showAlert(
-                "warning",
-                "Error in getting message Please try again"
-              );
-            } else {
-              this.alertService.showAlert(
-                "warning",
-                "حدث خطأ أثناء جلب الرسالة، يرجى المحاولة مرة أخرى"
-              );
-            }
+            this.alertService.showAlert(
+              "warning",
+              "حدث خطأ أثناء جلب الرسالة، يرجى المحاولة مرة أخرى"
+            );
           }
         }
-      );
-      this.filteredChats = this.chats;
-    });
+      }
+    );
   }
 
   getMesageDetails(chat) {

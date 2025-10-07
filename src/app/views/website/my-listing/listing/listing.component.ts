@@ -18,6 +18,7 @@ export class ListingComponent implements OnInit{
   listings: any[] = [];
   supportLanguages = ["en", "ar", "fr", "ta", "hi"];
   currentLanguage: string;
+  isLoading: boolean = true;
 
   constructor(
     private http: HttpService,
@@ -48,6 +49,7 @@ export class ListingComponent implements OnInit{
   }
 
   fetchListings(): void {
+    this.isLoading = true;
     this.http.getMyProductsListing().subscribe((res) => {
       this.listings = res.data.map((detail: any) => {
         if (detail.main_image) {
@@ -55,6 +57,9 @@ export class ListingComponent implements OnInit{
         }
         return detail;
       });
+      this.isLoading = false;
+    }, (err) => {
+      this.isLoading = false;
     });
   }
 

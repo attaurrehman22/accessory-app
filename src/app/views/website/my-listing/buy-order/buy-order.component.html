@@ -19,9 +19,34 @@
         </div>
     </div>
 </div>
-<div class="list-cards">
+
+<!-- Skeleton Loading -->
+<div *ngIf="isLoading" class="list-cards">
     <div class="listing-div">
-        <div *ngFor="let listing of buyOrdersListings" class="card mb-3">
+        <div *ngFor="let item of [1,2,3,4]" class="card mb-3">
+            <div class="card-body d-flex align-items-center">
+                <div class="col-11 d-flex align-items-center">
+                    <div class="main_image_div">
+                        <div class="skeleton-image"></div>
+                    </div>
+                    <div class="main_image_content_div pl-2 pr-2" style="width: 100%">
+                        <div class="skeleton-text-small mb-2" style="width: 40%"></div>
+                        <div class="skeleton-text-medium mb-2"></div>
+                        <div class="skeleton-text-large"></div>
+                    </div>
+                </div>
+                <div class="col-1 d-flex justify-content-end">
+                    <div class="skeleton-badge"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+<!-- Buy Orders List -->
+<div *ngIf="!isLoading" class="list-cards">
+    <div class="listing-div">
+        <div *ngFor="let listing of buyOrdersListings; else: noRecord" class="card mb-3">
             <div class="card-body d-flex align-items-center">
                 <div class="col-11 d-flex align-items-center  card-hover-change-color"
                     (click)="detailsBuyListing(listing)">
@@ -71,3 +96,20 @@
         </div>
     </div>
 </div>
+
+<!-- No Orders Template -->
+<ng-template #noRecord>
+    <div *ngIf="!isLoading" class="no-listings-container">
+        <div class="text-center py-5">
+            <div class="no-listings-icon mb-4">
+                <i class="fas fa-box-open fa-4x text-muted"></i>
+            </div>
+            <h5 class="text-muted mb-3">{{ "my_Listing.No_Buy_Orders" | translate }}</h5>
+            <p class="text-muted mb-4">{{ "my_Listing.No_Buy_Orders_Description" | translate }}</p>
+            <button class="btn btn-primary" routerLink="/product-list">
+                <i class="fas fa-search me-2"></i>
+                {{ "my_Listing.Browse_Products" | translate }}
+            </button>
+        </div>
+    </div>
+</ng-template>

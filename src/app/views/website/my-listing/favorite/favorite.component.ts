@@ -17,6 +17,7 @@ export class FavoriteComponent implements OnInit{
   favoritesProductDetails: any[] = [];
   filteredFavoritesProductDetails: any[] = [];
   accessoriesWishList: any[] = [];
+  isLoading: boolean = true;
   supportLanguages = ["en", "ar", "fr", "ta", "hi"];
   currentLanguage: string;
 
@@ -49,49 +50,39 @@ export class FavoriteComponent implements OnInit{
 
   wishList: any;
   getWishList() {
+    this.isLoading = true;
     this.http.getWishList().subscribe((res) => {
       this.wishList = res?.data;
       this.fetchProductDetails();
+    }, (err) => {
+      this.isLoading = false;
     });
   }
   
   filters: any[] = [];
   async fetchProductDetails() {
-    for (const productId of this.wishList) {
-      try {
-        const res = await this.http.getProductsByID(productId).toPromise(); // Call the API with each product ID
-
-        const productDetail = res.data; // Store the fetched details for this product
-
-        if (productDetail.additional_images) {
-          productDetail.additional_images = JSON.parse(
-            productDetail.additional_images
-          );
+    try {
+      for (const productId of this.wishList) {
+        try {
+          const res = await this.http.getProductsByID(productId).toPromise();
+          const productDetail = res.data;
+          if (productDetail.additional_images) {
+            productDetail.additional_images = JSON.parse(productDetail.additional_images);
+          }
+          if (productDetail.main_image) {
+            productDetail.main_image = productDetail.main_image.replace(/\\/g, "");
+          }
+          if (!this.filters.some(filter => filter.gender === productDetail.gender)) {
+            this.filters.push({ id: productDetail.id, gender: productDetail.gender });
+          }
+          this.favoritesProductDetails.push(productDetail);
+          this.filteredFavoritesProductDetails.push(productDetail);
+        } catch (err) {
+          console.error("Error fetching product details for ID " + productId, err);
         }
-
-        if (productDetail.main_image) {
-          productDetail.main_image = productDetail.main_image.replace(
-            /\\/g,
-            ""
-          );
-        }
-
-        //add unique only gender to the filters
-        if (!this.filters.some(filter => filter.gender === productDetail.gender)) {
-          this.filters.push({
-            id: productDetail.id,
-            gender: productDetail.gender
-          })
-        }
-
-        this.favoritesProductDetails.push(productDetail); // Add the product details to the array
-        this.filteredFavoritesProductDetails.push(productDetail);
-      } catch (err) {
-        console.error(
-          "Error fetching product details for ID " + productId,
-          err
-        );
       }
+    } finally {
+      this.isLoading = false;
     }
   }
 

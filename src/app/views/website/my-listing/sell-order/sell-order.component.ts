@@ -17,6 +17,7 @@ import { LanguageService } from 'src/services/lang-service/language.service';
 export class SellOrderComponent implements OnInit{
   apiUrl = environment.apipath + "/";
   sellOrders: any[] = [];
+  isLoading: boolean = true;
   supportLanguages = ["en", "ar", "fr", "ta", "hi"];
   currentLanguage: string;
 
@@ -62,6 +63,7 @@ export class SellOrderComponent implements OnInit{
   }
 
   getSellOrders() {
+    this.isLoading = true;
     this.http.getSellOrders().subscribe((res) => {
       this.sellOrders = res.orders.map((detail: any) => {
         if (detail?.product.main_image) {
@@ -72,6 +74,9 @@ export class SellOrderComponent implements OnInit{
         }
         return detail;
       });
+      this.isLoading = false;
+    }, (err) => {
+      this.isLoading = false;
     });
   }
 

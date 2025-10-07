@@ -12,6 +12,7 @@ export class BuyOrderComponent implements OnInit{
   apiUrl = environment.apipath + "/";
   listingID: any;
   buyOrdersListings: any[] = [];
+  isLoading: boolean = true;
   private refreshInterval: any;
 
   constructor(private http:HttpService,private router:Router){}
@@ -32,6 +33,7 @@ export class BuyOrderComponent implements OnInit{
   }
 
   getBuyOrders() {
+    this.isLoading = true;
     this.http.getBuyOrders().subscribe((res) => {
       this.buyOrdersListings = res.orders.map((detail: any) => {
         if (detail?.product?.main_image) {
@@ -42,6 +44,9 @@ export class BuyOrderComponent implements OnInit{
         }
         return detail;
       });
+      this.isLoading = false;
+    }, (err) => {
+      this.isLoading = false;
     });
   }
 
