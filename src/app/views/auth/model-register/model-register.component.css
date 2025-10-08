@@ -40,7 +40,7 @@
 ::ng-deep .mat-form-fields-custom-deisgn mat-form-field > .mat-mdc-text-field-wrapper > .mat-mdc-form-field-flex > .mat-mdc-form-field-infix > .mat-mdc-select > .mat-mdc-select-trigger > .mat-mdc-select-value > .mat-mdc-select-value-text {
   font-size: 16px !important;
   font-weight: 400 !important;
-  color: #909090 !important;
+  color: #242424 !important;
   line-height: 24px !important;
   font-family: "Open Sans", serif;
 }
@@ -82,7 +82,7 @@
 ::ng-deep .mat-form-fields-custom-deisgn mat-form-field > .mat-mdc-text-field-wrapper > .mat-mdc-form-field-flex > .mat-mdc-form-field-infix > .mat-mdc-input-element {
   font-size: 16px !important;
   font-weight: 400 !important;
-  color: #909090 !important;
+  color: #242424 !important;
   line-height: 24px !important;
   /* font-family: "Open Sans", serif; */
 }
