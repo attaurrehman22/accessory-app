@@ -753,7 +753,7 @@ background: none;
   justify-content: space-between;
   width: 100%;
   display: flex;
-  padding: 5px 20px 0 20px;
+  /* padding: 5px 20px 0 20px; */
 }
 
   /* ------------------------- Localization Start --------------------------- */

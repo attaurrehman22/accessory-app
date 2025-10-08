@@ -3140,8 +3140,9 @@
                         />
                         <div class="ml-3">
                           <h6 class="text-secondary">
-                            {{ brandnametoDisplay }} |
-                            {{ listingForm.get("name").value }}
+                            {{ productDetails?.brand?.name }} |
+                            {{ productDetails?.title }}
+                            <!-- {{ listingForm.get("name").value }} -->
                           </h6>
                           <p class="font-weight-bold mb-1">
                             {{ brandnametoDisplay }}
@@ -3434,14 +3435,13 @@
           border: 1px solid #f3f3f3;
           box-shadow: none !important;
           border-radius: 24px;
-          padding: 0 30px 0 30px;
+          padding: 8px 20px 0 20px !important;
           margin-top: 15px;
         "
       >
         <!-- <-- Listing Details -- > -->
         <div
           class="card-body"
-          style="padding: 8px 20px 0 20px !important"
           *ngIf="selectedSection === 'listingDetails'"
           [ngClass]="{
             'reverse-order-para-one': translateService.currentLang !== 'en'
@@ -3884,9 +3884,9 @@
         </div>
 
         <!-- <-- Watch Details -- > -->
-        <div *ngIf="watchDetailsForm && selectedSection === 'watchDetails'">
+        <div class="card-body" *ngIf="watchDetailsForm && selectedSection === 'watchDetails'">
           <div
-            class="card mb-4"
+            class="mb-4"
             style="box-shadow: none !important"
             [ngClass]="{
               'reverse-order-watch-details':
@@ -3898,10 +3898,7 @@
                 {{ "create_product_listing.watch_details" | translate }}
               </p>
             </div>
-            <p
-              style="padding: 0 20px 0 20px"
-              class="font-weight-400 font-size-16 color-909090"
-            >
+            <p class="font-weight-400 font-size-16 color-909090">
               {{ "create_product_listing.watch_details_para_one" | translate }}
             </p>
             <div class="card-body">
@@ -5149,21 +5146,22 @@
               translateService.currentLang !== 'en'
           }"
         >
-          <h5 class="font-weight-bold font-size-24 color-242424 mx-3">
+          <h5 class="font-weight-bold font-size-24 color-242424">
             {{ "create_product_listing.scope_of_delivery" | translate }}
           </h5>
-          <p class="font-weight-400 font-size-16 color-909090 mx-3">
+          <p class="font-weight-400 font-size-16 color-909090">
             {{
               "create_product_listing.scope_of_delivery_para_two" | translate
             }}
           </p>
-          <div class="container-fluid my-4" style="max-width: 100% !important;">
+          <div class="container-fluid my-4" style="max-width: 100% !important;padding:0">
             <div
               class="col-8 d-flex flex-wrap"
               style="padding-left: 0; padding-right: 0"
             >
               <div
                 class="col-md-6 mb-3"
+                style="margin-left: 0;padding-left: 0;"
                 *ngFor="let option of options"
                 (click)="toggleOption(option)"
                 [class.selected]="isSelected(option)"
@@ -5429,7 +5427,7 @@
 
           <div
             class="container-fluid mt-4"
-            style="padding-left: 0; padding-right: 0"
+            style="padding-left: 0; padding-right: 0;min-width:100%"
           >
             <div class="help-card">
               <div class="icon-placeholder">
@@ -5529,13 +5527,13 @@
               userType === 'user'
             "
             class="col-md-12 d-flex flex-wrap"
-            style="padding-left: 0"
+            style="padding-left: 0;padding:0"
             [ngClass]="{
               'reverse-order-price-and-shipment-div':
                 translateService.currentLang !== 'en'
             }"
           >
-            <div class="col-md-8">
+            <div class="col-md-8" style="padding:0">
               <div
                 class="container-fluid mt-5 mat-form-fields-custom-deisgn"
                 style="padding-left: 0"
@@ -5641,7 +5639,7 @@
                 </mat-card>
               </div>
             </div>
-            <div class="col-md-4"></div>
+            <div class="col-md-4" style="padding:0"></div>
           </div>
 
           <!-- this is Dealer -->
@@ -5651,7 +5649,7 @@
               userType === 'dealer' || userType == 'admin'
             "
             class="col-md-12"
-            style="padding-left: 0"
+            style="padding-left: 0;padding:0"
           >
             <div
               [ngClass]="{
@@ -6205,7 +6203,7 @@
             {{ "create_product_listing.Summary_para_two" | translate }}
           </p>
 
-          <div class="container-fluid mt-4">
+          <div class="container-fluid mt-4" style="min-width: 100%;">
             <div class="row">
               <!-- Ad Preview Section -->
               <div class="col-md-6">
@@ -6240,8 +6238,8 @@
                     />
                     <div *ngIf="productDetails" class="ml-3">
                       <h6 class="text-secondary">
-                        {{ brandnametoDisplay }} |
-                        {{ productDetails.name }}
+                        {{ productDetails?.brand?.name }} |
+                        {{ productDetails?.title }}
                         <!-- {{ listingForm.get("name").value }} -->
                       </h6>
                       <p class="font-weight-bold mb-1">
