@@ -722,7 +722,11 @@
     "No_Listings_Description": "You haven't created any listings yet. Start by creating your first product listing.",
     "Create_Listing": "Create Listing",
     "No_Sell_Orders": "No Sell Orders Yet",
-    "No_Sell_Orders_Description": "You don't have any sell orders yet. Browse products to get started."
+    "No_Sell_Orders_Description": "You don't have any sell orders yet. Browse products to get started.",
+    "Tips_To_Get_Started": "Tips to Get Started",
+    "Tip_1": "Create a listing to start selling your products.",
+    "Tip_2": "Browse products to find the perfect item for your needs.",
+    "Tip_3": "Chat with sellers to negotiate the best price for your products."
   },
   "accessory_details": {
     "LUG-Width": "LUG Width:",

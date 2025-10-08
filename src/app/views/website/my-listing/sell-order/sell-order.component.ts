@@ -50,17 +50,17 @@ export class SellOrderComponent implements OnInit{
   ngOnInit(): void {
     this.getSellOrders()
 
-    this.intervalId = setInterval(() => {
-      this.getSellOrders();
-    }, 10000);
+    // this.intervalId = setInterval(() => {
+    //   this.getSellOrders();
+    // }, 10000);
   }
 
-  ngOnDestroy(): void {
-    // Clear interval when component destroyed
-    if (this.intervalId) {
-      clearInterval(this.intervalId);
-    }
-  }
+  // ngOnDestroy(): void {
+  //   // Clear interval when component destroyed
+  //   if (this.intervalId) {
+  //     clearInterval(this.intervalId);
+  //   }
+  // }
 
   getSellOrders() {
     this.isLoading = true;
@@ -74,6 +74,7 @@ export class SellOrderComponent implements OnInit{
         }
         return detail;
       });
+      console.log("sellOrders", this.sellOrders)
       this.isLoading = false;
     }, (err) => {
       this.isLoading = false;

@@ -44,9 +44,9 @@
 </div>
 
 <!-- Sell Orders List -->
-<div *ngIf="!isLoading" class="list-cards">
+<div *ngIf="!isLoading && (sellOrders?.length > 0)" class="list-cards">
     <div class="listing-div">
-        <div *ngFor="let listing of sellOrders; else: noRecord" class="card mb-3">
+        <div *ngFor="let listing of sellOrders" class="card mb-3">
             <div class="card-body d-flex align-items-center">
                 <div class="col-11 d-flex align-items-center  card-hover-change-color" (click)="detailListing(listing)">
                     <div class="main_image_div">
@@ -98,18 +98,53 @@
 </div>
 
 <!-- No Orders Template -->
-<ng-template #noRecord>
-    <div *ngIf="!isLoading" class="no-listings-container">
-        <div class="text-center py-5">
-            <div class="no-listings-icon mb-4">
-                <i class="fas fa-box-open fa-4x text-muted"></i>
+<div *ngIf="!isLoading && (!sellOrders || sellOrders.length === 0)" class="empty-state-container">
+    <div class="empty-state-content">
+            <!-- Animated Icon -->
+            <!-- <div class="empty-state-icon">
+                <div class="icon-wrapper">
+                    <i class="fas fa-shopping-cart"></i>
+                    <div class="pulse-ring"></div>
+                </div>
+            </div> -->
+            
+            <!-- Content -->
+            <div class="empty-state-text">
+                <h3 class="empty-state-title">{{ "my_Listing.No_Sell_Orders" | translate }}</h3>
+                <p class="empty-state-description">
+                    {{ "my_Listing.No_Sell_Orders_Description" | translate }}
+                </p>
             </div>
-            <h5 class="text-muted mb-3">{{ "my_Listing.No_Sell_Orders" | translate }}</h5>
-            <p class="text-muted mb-4">{{ "my_Listing.No_Sell_Orders_Description" | translate }}</p>
-            <button class="btn btn-primary" routerLink="/product-list">
-                <i class="fas fa-search me-2"></i>
-                {{ "my_Listing.Browse_Products" | translate }}
-            </button>
-        </div>
+            
+            <!-- Action Buttons -->
+            <div class="empty-state-actions">
+                <button class="btn btn-primary btn-lg me-3" routerLink="/product-list">
+                    <i class="fas fa-search me-2"></i>
+                    {{ "my_Listing.Browse_Products" | translate }}
+                </button>
+                <button class="btn btn-outline-primary btn-lg" routerLink="/myListing/listing">
+                    <i class="fas fa-plus me-2"></i>
+                    {{ "my_Listing.Create_Listing" | translate }}
+                </button>
+            </div>
+            
+            <!-- Helpful Tips -->
+            <div class="empty-state-tips">
+                <h6 class="tips-title">{{ "my_Listing.Tips_To_Get_Started" | translate }}</h6>
+                <div class="tips-list">
+                    <div class="tip-item">
+                        <i class="fas fa-check-circle text-success me-2"></i>
+                        <span>{{ "my_Listing.Tip_1" | translate }}</span>
+                    </div>
+                    <div class="tip-item">
+                        <i class="fas fa-check-circle text-success me-2"></i>
+                        <span>{{ "my_Listing.Tip_2" | translate }}</span>
+                    </div>
+                    <div class="tip-item">
+                        <i class="fas fa-check-circle text-success me-2"></i>
+                        <span>{{ "my_Listing.Tip_3" | translate }}</span>
+                    </div>
+                </div>
+            </div>
     </div>
-</ng-template>
+</div>

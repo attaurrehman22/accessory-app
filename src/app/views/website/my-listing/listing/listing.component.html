@@ -41,8 +41,8 @@
 </div>
 
 <!-- Listings List -->
-<div *ngIf="!isLoading" class="list-cards" [ngClass]="{ 'reverse-order-details': translateService.currentLang !== 'en' }">
-  <div *ngFor="let listing of listings; else: noRecord" class="card mb-3 custom-card-style">
+<div *ngIf="!isLoading && (listings.length > 0)" class="list-cards" [ngClass]="{ 'reverse-order-details': translateService.currentLang !== 'en' }">
+  <div *ngFor="let listing of listings" class="card mb-3 custom-card-style">
     <div class="card-body d-flex align-items-center">
       <div class="col-11 d-flex align-items-center card-hover-change-color" (click)="editListing(listing)">
         <div class="main_image_div">
@@ -102,8 +102,7 @@
 </div>
 
 <!-- No Listings Template -->
-<ng-template #noRecord>
-  <div *ngIf="!isLoading" class="no-listings-container">
+  <div *ngIf="!isLoading && (!listings || listings.length === 0)" class="no-listings-container">
     <div class="text-center py-5">
       <div class="no-listings-icon mb-4">
         <i class="fas fa-list fa-4x text-muted"></i>
@@ -116,4 +115,3 @@
       </button>
     </div>
   </div>
-</ng-template>

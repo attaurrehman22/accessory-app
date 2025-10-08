@@ -57,6 +57,7 @@ export class MessageComponent implements OnInit {
           }
         );
         this.filteredChats = this.chats;
+        console.log("Filtered Chats",this.filteredChats)
         this.isLoading = false;
       },
       (err) => {

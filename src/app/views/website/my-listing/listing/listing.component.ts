@@ -57,6 +57,7 @@ export class ListingComponent implements OnInit{
         }
         return detail;
       });
+      console.log("listings",this.listings)
       this.isLoading = false;
     }, (err) => {
       this.isLoading = false;
