@@ -112,6 +112,8 @@ export class ChatComponent implements OnInit, AfterViewChecked {
       await this.getProfileDetails();
       await this.getLatestMessage();
 
+      console.log("history", history)
+
       if (history?.state?.fromRoute == "gotToChat") {
         if (history?.state?.chatID) {
           this.chat_id = history?.state?.chatID;
@@ -167,6 +169,11 @@ export class ChatComponent implements OnInit, AfterViewChecked {
         this.productDeatils = history.state.data;
         this.noMessageDetails = this.productDeatils.created_by;
       }
+
+      if(history?.state?.chatID && history?.state?.chatRouteFrom == "orderDetails"){
+        this.chat_id = history?.state?.chatID;
+        this.chat_id_for_remove_unread_count = this.chat_id;
+      }
       
       if (history?.state?.chat) {
         await this.getLatestMessage();
@@ -176,10 +183,13 @@ export class ChatComponent implements OnInit, AfterViewChecked {
       }
 
       if (history?.state?.chatRouteFrom) {
+
         const data = history.state.productDetailsFromOrder
         this.UserNameOFMessenger = (data?.order?.product?.created_by == this.userID ? data?.order?.buyer?.name : data?.order?.buyer?.name)
         this.userCity = (data?.order?.product?.created_by == this.userID ? data?.order?.buyer?.city : data?.order?.buyer?.city)
-        this.chat_id_for_remove_unread_count = history?.state?.chat_ID;
+        if(history?.state?.chat_ID){
+          this.chat_id_for_remove_unread_count = history?.state?.chat_ID;
+        }
         this.sellerProductID = history.state.productID;
         this.sellerID = data?.order?.product?.created_by;
         this.user_id = localStorage.getItem("userID");
