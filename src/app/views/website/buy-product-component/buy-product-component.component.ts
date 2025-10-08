@@ -504,6 +504,8 @@ export class BuyProductComponentComponent implements OnInit {
   }
 
   goToChatOrOrderDetails() {
+    console.log("Calling goToChatOrOrderDetails, line 507", this.productDetails)
+    console.log("this.chatID", this.chatID)
     let OrderTypeval;
     if (
       this.productDetails.created_by.id ==
@@ -528,9 +530,11 @@ export class BuyProductComponentComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(
       (result) => {
-       
+       console.log("result", result)
       if (result == "openChat" || result == "viewOrder") {
         if (result == "openChat") {
+          console.log("Calling goToChatOrOrderDetails, line 534", this.productDetails)
+          console.log("this.chatID", this.chatID)
           this.router.navigate(["/chat"], {
             state: {
               data: this.productDetails,
@@ -620,6 +624,8 @@ export class BuyProductComponentComponent implements OnInit {
                 dialogRef.afterClosed().subscribe((result) => {
                   if (result == "openChat" || result == "viewOrder") {
                     if (result == "openChat") {
+                      console.log("Calling goToChatOrOrderDetails, line 627", this.productDetails)
+                      console.log("this.chatID", this.chatID)
                       this.router.navigate(["/chat"], {
                         // state: { data: this.productDetails },
                         state: {

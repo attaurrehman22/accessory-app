@@ -66,14 +66,14 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     }
   }
 
-  UserNameOFMessenger:any;
+  UserNameOFMessenger: any;
 
-  getNameOfMessenger(chat){
-   return (chat?.product?.created_by?.id == this.userID ? chat?.buyer : chat.seller) || 'N/A'
+  getNameOfMessenger(chat) {
+    return (chat?.product?.created_by?.id == this.userID ? chat?.buyer : chat.seller) || 'N/A'
   }
 
-   getCityOfMessenger(chat){
-   return (chat?.product?.created_by?.id == this.userID ? chat.buyer_city : chat.seller_city) || 'N/A'
+  getCityOfMessenger(chat) {
+    return (chat?.product?.created_by?.id == this.userID ? chat.buyer_city : chat.seller_city) || 'N/A'
   }
 
   loginFirst() {
@@ -82,128 +82,141 @@ export class ChatComponent implements OnInit, AfterViewChecked {
       data: { message: "dialog-box" },
     });
 
-    dialogRef.afterClosed().subscribe((result) => {});
+    dialogRef.afterClosed().subscribe((result) => { });
   }
 
-  personProfile:any;
+  personProfile: any;
 
-  getProfileDetails() {
-    this.http.gtUserDetails().subscribe((res) => {
+  async getProfileDetails() {
+    try {
+      const res: any = await this.http.gtUserDetails().toPromise();
       this.personProfile = res.user;
       this.personProfile.profile_image = this.personProfile?.profile_image?.replace(/\\/g, "");
-    });
+    } catch (err) {
+      console.error("Error getting profile details:", err);
+    }
   }
 
   private intervalId: any;
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     this.user_id = localStorage.getItem("userID");
     this.userID = localStorage.getItem('userID');
     if (!this.user_id) {
       this.loginFirst();
+      return;
     }
-    this.getProfileDetails();
-    // if (history?.state?.chatID) {
-      this.getLatestMessage();
-      
+    
+    try {
+      // Initialize profile and chats first
+      await this.getProfileDetails();
+      await this.getLatestMessage();
+
       if (history?.state?.fromRoute == "gotToChat") {
-        // this.getDetailsofProduct(history?.state?.data.id);
-        if(history?.state?.chatID){
+        if (history?.state?.chatID) {
           this.chat_id = history?.state?.chatID;
-          this.chat_id_for_remove_unread_count = this.chat_id; 
+          this.chat_id_for_remove_unread_count = this.chat_id;
         }
-        if(history?.state?.data?.id){
-          console.log("Calling 1 line 105")
-          this.getDetailsofProduct(history.state.data.id);
-        }if(history?.state?.productID){
-          console.log("Calling 2 line 107")
-          this.getDetailsofProduct(history?.state?.productID);
-        }
-        if(history?.state?.chatDetails){
-          console.log("Calling 3 line 110")
-          this.getMesageDetails(history?.state?.chatDetails)
+        
+        if (history?.state?.data?.id) {
+          await this.getDetailsofProduct(history.state.data.id);
         } 
-        if(!history?.state?.chatDetails && history?.state?.data && history?.state?.chatID){
-          console.log("Calling --------------")
-          console.log("Calling chat Details",this.chat_id)
-          console.log("history?.state?.chatID",history?.state?.chatID)
-          let getFilterdChat
-          this.http.getChatsWithLatestMessage().subscribe((res) => {
+        
+        if(history?.state?.fromRoute == "gotToChat" && !history?.state?.chatID && history?.state?.data?.id){
+          if(this.filteredChats.length > 0){  
+            this.chat_id = this.filteredChats.find(chat => chat.product_id == history?.state?.data?.id)?.chat_id;
+            this.chat_id_for_remove_unread_count = this.chat_id;
+            await this.getChatDetails();
+          }
+        }
+        
+        if (history?.state?.productID) {
+          await this.getDetailsofProduct(history?.state?.productID);
+        }
+        
+        if (history?.state?.chatDetails) {
+          await this.getMesageDetails(history?.state?.chatDetails)
+        }
+        
+        if (!history?.state?.chatDetails && history?.state?.data && history?.state?.chatID) {
+          try {
+            const res: any = await this.http.getChatsWithLatestMessage().toPromise();
             const chatList = res.chats.map(
               (chat) => {
                 chat.product.main_image = chat?.product?.main_image?.replace(/\\/g, "/");
                 return chat;
               }
             );
-            console.log("history?.state?.chatID",history?.state?.chatID)
-            console.log("chatList",chatList)
-            getFilterdChat = chatList.filter(
-              (chat:any)=> chat.chat_id == history?.state?.chatID)
-            console.log("getFilterdChat",getFilterdChat)
-            if(getFilterdChat){
-              console.log("this.filteredChats",this.filteredChats)
-              this.getMesageDetails(getFilterdChat[0])
+            const getFilterdChat = chatList.filter(
+              (chat: any) => chat.chat_id == history?.state?.chatID)
+            if (getFilterdChat && getFilterdChat.length > 0) {
+              await this.getMesageDetails(getFilterdChat[0])
             }
-          });
+          } catch (err) {
+          }
         }
-        else{
-         
-          if(!this.chat_id && history?.state?.chatID){
+        else {
+          if (!this.chat_id && history?.state?.chatID) {
             this.chat_id = history?.state?.chatID
           }
-         
-          this.getChatDetails();
+          await this.getChatDetails();
         }
       }
-    // }
-    if (history?.state?.data && history?.state?.fromRoute != "gotToChat") {
-      this.productDeatils = history.state.data;
-      this.noMessageDetails = this.productDeatils.created_by;
-    }
-    if (history?.state?.chat) {
-      this.getLatestMessage();
+      
+      if (history?.state?.data && history?.state?.fromRoute != "gotToChat") {
+        this.productDeatils = history.state.data;
+        this.noMessageDetails = this.productDeatils.created_by;
+      }
+      
+      if (history?.state?.chat) {
+        await this.getLatestMessage();
+        await this.getDetailsofProduct(history?.state?.chat.product_id);
+        this.chat_id = history?.state?.chat.chat_id;
+        await this.getChatDetails();
+      }
 
-      this.getDetailsofProduct(history?.state?.chat.product_id);
-      this.chat_id = history?.state?.chat.chat_id;
-      this.getChatDetails();
-    }
+      if (history?.state?.chatRouteFrom) {
+        const data = history.state.productDetailsFromOrder
+        this.UserNameOFMessenger = (data?.order?.product?.created_by == this.userID ? data?.order?.buyer?.name : data?.order?.buyer?.name)
+        this.userCity = (data?.order?.product?.created_by == this.userID ? data?.order?.buyer?.city : data?.order?.buyer?.city)
+        this.chat_id_for_remove_unread_count = history?.state?.chat_ID;
+        this.sellerProductID = history.state.productID;
+        this.sellerID = data?.order?.product?.created_by;
+        this.user_id = localStorage.getItem("userID");
 
-    if(history?.state?.chatRouteFrom){
-      // this.getMesageDetails(history?.state?.chat_ID)
-      // this.getDetailsofProduct(history.state.productID);
-      const data = history.state.productDetailsFromOrder
-      this.UserNameOFMessenger = (data?.order?.product?.created_by == this.userID ? data?.order?.buyer?.name : data?.order?.buyer?.name)
-      this.userCity = (data?.order?.product?.created_by == this.userID ? data?.order?.buyer?.city :data?.order?.buyer?.city)
-      this.chat_id_for_remove_unread_count = history?.state?.chat_ID;
-      this.sellerProductID = history.state.productID;
-      this.sellerID = data?.order?.product?.created_by;
-      this.user_id = localStorage.getItem("userID");
+        if (this.sellerID == this.user_id) {
+          this.isBuyerUser = false;
+        } else {
+          this.isBuyerUser = true;
+        }
 
-      if (this.sellerID == this.user_id) {
-        this.isBuyerUser = false;
+        this.chat_id = history?.state?.chat_ID;
+        this.getProductDetails = data?.order?.product;
+        await this.getChatDetails();
+      }
+
+      if (this.productDeatils) {
+        await this.getLatestMessage();
+        await this.getDetailsofProduct(this.productDeatils?.id);
       } else {
-        this.isBuyerUser = true;
+        await this.getLatestMessage();
       }
 
-      this.chat_id = history?.state?.chat_ID;
-      this.getProductDetails = data?.order?.product;
-      this.getChatDetails();
+      // Set up interval for periodic updates
+      this.intervalId = setInterval(async () => {
+        try {
+          await this.getLatestMessage();
+          if (this.chat_id) {
+            await this.getChatDetails()
+          }
+        } catch (err) {
+          console.error("Error in interval update:", err);
+        }
+      }, 10000);
+
+    } catch (err) {
+      console.error("Error in ngOnInit:", err);
     }
-
-    if (this.productDeatils) {
-      this.getLatestMessage();
-      this.getDetailsofProduct(this.productDeatils?.id);
-    } else {
-      this.getLatestMessage();
-    }
-
-    this.intervalId = setInterval(() => {
-      this.getLatestMessage();
-      if(this.chat_id){
-        this.getChatDetails()
-      }
-    }, 10000);
-
   }
 
   ngOnDestroy(): void {
@@ -239,26 +252,28 @@ export class ChatComponent implements OnInit, AfterViewChecked {
   }
 
 
- async getLatestMessage() {
-  try {
-    const res: any = await this.http.getChatsWithLatestMessage().toPromise();
-    this.chats = res.chats.map((chat) => {
-      chat.product.main_image = chat?.product?.main_image?.replace(/\\/g, "/");
-      return chat;
-    });
-    this.filteredChats = this.chats;
-  } catch (err: any) {
-    if (err && err.error) {
-      this.alertService.showAlert("warning", `${err.error.message}`);
-    } else {
-      if (this.translateService.currentLang == "en") {
-        this.alertService.showAlert("warning", "Error in getting message. Please try again");
+  async getLatestMessage() {
+    try {
+      const res: any = await this.http.getChatsWithLatestMessage().toPromise();
+      this.chats = res.chats.map((chat) => {
+        chat.product.main_image = chat?.product?.main_image?.replace(/\\/g, "/");
+        return chat;
+      });
+      this.filteredChats = this.chats;
+      return res;
+    } catch (err: any) {
+      if (err && err.error) {
+        this.alertService.showAlert("warning", `${err.error.message}`);
       } else {
-        this.alertService.showAlert("warning", "حدث خطأ أثناء جلب الرسالة، يرجى المحاولة مرة أخرى");
+        if (this.translateService.currentLang == "en") {
+          this.alertService.showAlert("warning", "Error in getting message. Please try again");
+        } else {
+          this.alertService.showAlert("warning", "حدث خطأ أثناء جلب الرسالة، يرجى المحاولة مرة أخرى");
+        }
       }
+      throw err;
     }
   }
-}
 
 
   reciever_ID: any;
@@ -270,9 +285,9 @@ export class ChatComponent implements OnInit, AfterViewChecked {
 
   user_id: any;
   chat_id_for_remove_unread_count: any;
-  userCity:any;
+  userCity: any;
 
-  getInitialsofUsername(name){
+  getInitialsofUsername(name) {
     if (!name) {
       return '';
     }
@@ -286,7 +301,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     }
   }
 
-  getMesageDetails(param: any) {
+  async getMesageDetails(param: any) {
     this.UserNameOFMessenger = (param?.product?.created_by?.id == this.userID ? param.buyer : param.seller)
     this.userCity = (param.product.created_by?.id == this.userID ? param.buyer_city : param.seller_city)
     this.chat_id_for_remove_unread_count = param.chat_id;
@@ -302,7 +317,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
 
     this.chat_id = param.chat_id;
     this.getProductDetails = param.product;
-    this.getChatDetails();
+    await this.getChatDetails();
   }
 
   isOfferShowToUserandDealer: boolean = false;
@@ -312,161 +327,160 @@ export class ChatComponent implements OnInit, AfterViewChecked {
   offerTypeStatus: boolean = false;
   isExistMakePayment: boolean = true;
   isActionTypeMakePaymentToHideCustomOffer: boolean = false;
-  userProfile:any;
-  isProductSold:boolean=false;
-  getChatDetails() {
+  userProfile: any;
+  isProductSold: boolean = false;
+  async getChatDetails() {
     let actionTypeforCallingCustomOffer = false;
     if (history?.state?.data) {
       history?.replaceState({ data: null }, document.title);
     }
-    if(history?.state?.chatRouteFrom){
+    if (history?.state?.chatRouteFrom) {
       this.chat_id = history?.state?.chatID
     }
-    this.http.getChatsDetails(this.chat_id).subscribe(
-      (res) => {
-        this.userProfile = res.profile;
-        if(res.is_product_sold == 1){
-            this.isProductSold = true
-        }else{
-          this.isProductSold = false
+    
+    try {
+      const res: any = await this.http.getChatsDetails(this.chat_id).toPromise();
+      this.userProfile = res.profile;
+      if (res.is_product_sold == 1) {
+        this.isProductSold = true
+      } else {
+        this.isProductSold = false
+      }
+      this.userProfile.profile_image = this.userProfile?.profile_image?.replace(/\\/g, '');
+      this.messages = res.messages;
+      if (res.messages.length > 0) {
+        let useridd = localStorage.getItem("userID");
+        // this.reciever_ID = res.messages[1]?.receiver_id;
+        if (useridd == res.messages[0]?.sender_id) {
+          this.reciever_ID = res.messages[0]?.receiver_id;
+        } else if (res.messages[0]?.receiver_id === null) {
+          this.reciever_ID = res.messages[1]?.receiver_id;
+        } else {
+          this.reciever_ID = res.messages[0]?.sender_id;
         }
-        this.userProfile.profile_image = this.userProfile?.profile_image?.replace(/\\/g, '');
-        console.log("this.userProfile",this.userProfile)
-        this.messages = res.messages;
-        if (res.messages.length > 0) {
-          let useridd = localStorage.getItem("userID");
-          // this.reciever_ID = res.messages[1]?.receiver_id;
-          if (useridd == res.messages[0]?.sender_id) {
-            this.reciever_ID = res.messages[0]?.receiver_id;
-          } else if (res.messages[0]?.receiver_id === null) {
-            this.reciever_ID = res.messages[1]?.receiver_id;
-          } else {
-            this.reciever_ID = res.messages[0]?.sender_id;
-          }
 
-          console.log("Reciever ID",this.reciever_ID)
+      }
+      let count_sen_rec = 0;
+      this.messages.forEach((message) => {
+        if (message.attachments) {
+          try {
+            message.attachments = JSON.parse(message.attachments);
+          } catch (error) {
+            console.error("Error parsing attachments:", error);
+          }
         }
-        let count_sen_rec = 0;
-        this.messages.forEach((message) => {
-          if (message.attachments) {
-            try {
-              message.attachments = JSON.parse(message.attachments);
-            } catch (error) {
-              console.error("Error parsing attachments:", error);
-            }
-          }
 
-          if (message.action_type == "offer") {
-            actionTypeforCallingCustomOffer = true;
-          }
+        if (message.action_type == "offer") {
+          actionTypeforCallingCustomOffer = true;
+        }
 
-          if (message.action_type === "make_payment") {
-            this.isExistMakePayment = false;
-          }
+        if (message.action_type === "make_payment") {
+          this.isExistMakePayment = false;
+        }
 
-          if (message.valid_until) {
-            this.isCancelOfferBuyer = true;
-          }
+        if (message.valid_until) {
+          this.isCancelOfferBuyer = true;
+        }
 
-          if (message.offer_price >= 1) {
-            this.isOfferShowToUserandDealer = true;
-          }
-          let useridd = localStorage.getItem("userID");
+        if (message.offer_price >= 1) {
+          this.isOfferShowToUserandDealer = true;
+        }
+        let useridd = localStorage.getItem("userID");
 
-          if (message.sender_id == useridd) {
-            count_sen_rec++;
-          }
-
-          if (message.sender_id != useridd) {
-            count_sen_rec++;
-          }
-
-          if (message.action_type) {
-            if(message.action_type == "buy_now"){
-              this.isBuyNowFromChatCheck = true;
-            }else{
-              this.isBuyNowFromChatCheck = false;
-            }
-          }
-
-          if (message.action_type === "add_shipping") {
-            this.isShowPaymentMethod = true;
-          }
-
-          if (message.action_type === "mark_sold") {
-            this.isShowMarkAsSold = true;
-          }
-
-          if (message.action_type === "update_offer") {
-            this.isShowCancelOffertoBuyer = true;
-          }
-
-          if (message.action_type === "offer") {
-            this.isCustomOffer = true;
-          }
-
-          if (message.action_type === "make_payment") {
-            this.isActionTypeMakePaymentToHideCustomOffer = true;
-          }
-        });
-
-        if (this.messages[0]?.message == "Buyer have start the Order Process") {
+        if (message.sender_id == useridd) {
           count_sen_rec++;
         }
-        if (count_sen_rec >= 2) {
-          this.isShowBuyNowOffer = true;
+
+        if (message.sender_id != useridd) {
+          count_sen_rec++;
         }
 
-        if (actionTypeforCallingCustomOffer == true) {
-          this.getCustomOffer();
-        }
-      },
-      (err) => {
-        if (err && err.error) {
-          this.alertService.showAlert("warning", `${err.error.message}`);
-        } else {
-          if (this.translateService.currentLang == "en") {
-            this.alertService.showAlert(
-              "warning",
-              "Error in getting chat Details. Please try again"
-            );
+        if (message.action_type) {
+          if (message.action_type == "buy_now") {
+            this.isBuyNowFromChatCheck = true;
           } else {
-            this.alertService.showAlert(
-              "warning",
-              "حدث خطأ أثناء جلب تفاصيل الدردشة، يرجى المحاولة مرة أخرى"
-            );
+            this.isBuyNowFromChatCheck = false;
           }
         }
+
+        if (message.action_type === "add_shipping") {
+          this.isShowPaymentMethod = true;
+        }
+
+        if (message.action_type === "mark_sold") {
+          this.isShowMarkAsSold = true;
+        }
+
+        if (message.action_type === "update_offer") {
+          this.isShowCancelOffertoBuyer = true;
+        }
+
+        if (message.action_type === "offer") {
+          this.isCustomOffer = true;
+        }
+
+        if (message.action_type === "make_payment") {
+          this.isActionTypeMakePaymentToHideCustomOffer = true;
+        }
+      });
+
+      if (this.messages[0]?.message == "Buyer have start the Order Process") {
+        count_sen_rec++;
       }
-    );
+      if (count_sen_rec >= 2) {
+        this.isShowBuyNowOffer = true;
+      }
+
+      if (actionTypeforCallingCustomOffer) {
+        await this.getCustomOffer();
+      }
+      return res;
+    } catch (err: any) {
+      if (err && err.error) {
+        this.alertService.showAlert("warning", `${err.error.message}`);
+      } else {
+        if (this.translateService.currentLang == "en") {
+          this.alertService.showAlert(
+            "warning",
+            "Error in getting chat Details. Please try again"
+          );
+        } else {
+          this.alertService.showAlert(
+            "warning",
+            "حدث خطأ أثناء جلب تفاصيل الدردشة، يرجى المحاولة مرة أخرى"
+          );
+        }
+      }
+      throw err;
+    }
   }
 
-  
-  hasCancelOffer(){
+
+  hasCancelOffer() {
     return this.reversedMessages.some(msg => msg.action_type === 'cancel_order');
   }
 
   hasBuyNow(): boolean {
     if (!this.reversedMessages) return false;
-  
+
     // 1. Direct check for buy_now
     if (this.reversedMessages.some(msg => msg.action_type === 'buy_now')) {
       return true;
     }
-  
+
     // 2. Check for both BTS and STB with null action_type
     const hasBTS = this.reversedMessages.some(msg => msg.direction === 'BTS' && msg.action_type === null);
     const hasSTB = this.reversedMessages.some(msg => msg.direction === 'STB' && msg.action_type === null);
-  
+
     if (hasBTS && hasSTB) {
       return true;
     }
-  
+
     // 3. Default
     return false;
   }
-  
-  
+
+
 
   editOffer(customOfferDetails: any) {
     const dialogRef = this.dialog.open(CustomOfferComponent, {
@@ -489,9 +503,9 @@ export class ChatComponent implements OnInit, AfterViewChecked {
           receiver_id: this.reciever_ID.toString(),
         };
         this.http.sendMessage(formData).subscribe(
-          (res) => {
-            this.getChatDetails();
-            this.getLatestMessage();
+          async (res) => {
+            await this.getChatDetails();
+            await this.getLatestMessage();
           },
           (err) => {
             if (err && err.error) {
@@ -521,60 +535,62 @@ export class ChatComponent implements OnInit, AfterViewChecked {
   isProductReserved: boolean = false;
   isCancelOffer: boolean = false;
 
-  getCustomOffer() {
-    this.http.offerByFilter(this.getProductDetails?.id, this.chat_id).subscribe(
-      (res) => {
-        this.isCustomOffer = true;
-        this.customOfferDetails = res.offer;
-        if (res.offer.offers_status == "canceled") {
-          this.isCancelOffer = true;
-        }
-        if (res.offer.offers_status === "accepted") {
-          this.isOfferStatusAccepted = true;
-        }
-        if (
-          res.offer.offers_status !== "accepted" &&
-          res.offer.product.sale_status === "reserved"
-        ) {
-          this.isProductReserved = true;
-        } else {
-          this.isProductReserved = false;
-        }
-      },
-      (err) => {}
-    );
+  async getCustomOffer() {
+    try {
+      const res: any = await this.http.offerByFilter(this.getProductDetails?.id, this.chat_id).toPromise();
+      this.isCustomOffer = true;
+      this.customOfferDetails = res.offer;
+      if (res.offer.offers_status == "canceled") {
+        this.isCancelOffer = true;
+      }
+      if (res.offer.offers_status === "accepted") {
+        this.isOfferStatusAccepted = true;
+      }
+      if (
+        res.offer.offers_status !== "accepted" &&
+        res.offer.product.sale_status === "reserved"
+      ) {
+        this.isProductReserved = true;
+      } else {
+        this.isProductReserved = false;
+      }
+      return res;
+    } catch (err) {
+      console.error("Error getting custom offer:", err);
+      throw err;
+    }
   }
 
   isArray(attachments: any): boolean {
     return Array.isArray(attachments);
   }
 
-  getDetailsofProduct(ID: any) {
-    this.http.getProductsByID(ID).subscribe(
-      (res) => {
-        if (res.data.main_image) {
-          res.data.main_image = res?.data?.main_image?.replace(/\\/g, "");
-        }
-        this.getProductDetails = res.data;
-      },
-      (err) => {
-        if (err && err.error) {
-          this.alertService.showAlert("warning", `${err.error.message}`);
+  async getDetailsofProduct(ID: any) {
+    try {
+      const res: any = await this.http.getProductsByID(ID).toPromise();
+      if (res.data.main_image) {
+        res.data.main_image = res?.data?.main_image?.replace(/\\/g, "");
+      }
+      this.getProductDetails = res.data;
+      return res;
+    } catch (err: any) {
+      if (err && err.error) {
+        this.alertService.showAlert("warning", `${err.error.message}`);
+      } else {
+        if (this.translateService.currentLang == "en") {
+          this.alertService.showAlert(
+            "warning",
+            "Error in getting product details"
+          );
         } else {
-          if (this.translateService.currentLang == "en") {
-            this.alertService.showAlert(
-              "warning",
-              "Error in getting product details"
-            );
-          } else {
-            this.alertService.showAlert(
-              "warning",
-              "حدث خطأ أثناء جلب تفاصيل المنتج"
-            );
-          }
+          this.alertService.showAlert(
+            "warning",
+            "حدث خطأ أثناء جلب تفاصيل المنتج"
+          );
         }
       }
-    );
+      throw err;
+    }
   }
 
   activeOption(option: any) {
@@ -613,9 +629,9 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     return this.messages ? [...this.messages].reverse() : [];
   }
 
-//  isArray(attachments: any): boolean {
-//     return Array.isArray(attachments);
-//   }
+  //  isArray(attachments: any): boolean {
+  //     return Array.isArray(attachments);
+  //   }
 
   getAttachmentType(attachment: string): 'image' | 'video' | 'unknown' {
     const lower = attachment.toLowerCase();
@@ -630,7 +646,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
 
 
 
-  sendMessage(): void {
+  async sendMessage(): Promise<void> {
     const trimmedMessage = this.newMessage?.trim();
     if (!trimmedMessage && !this.selectedImages) {
       return; // Don't send API request if message is only spaces or empty
@@ -671,30 +687,30 @@ export class ChatComponent implements OnInit, AfterViewChecked {
       formData.append("action_type", "buy_now");
     }
 
-    this.http.sendMessage(formData).subscribe(
-      (res) => {
-        this.chat_id = res?.data?.chat_id;
-        this.getChatDetails();
-        this.getLatestMessage();
-      },
-      (err) => {
-        if (err && err.error) {
-          this.alertService.showAlert("warning", `${err.error.message}`);
+    try {
+      const res: any = await this.http.sendMessage(formData).toPromise();
+      this.chat_id = res?.data?.chat_id;
+      await this.getChatDetails();
+      await this.getLatestMessage();
+    } catch (err: any) {
+      if (err && err.error) {
+        this.alertService.showAlert("warning", `${err.error.message}`);
+      } else {
+        if (this.translateService.currentLang == "en") {
+          this.alertService.showAlert(
+            "warning",
+            "Error in sending message. Please try again"
+          );
         } else {
-          if (this.translateService.currentLang == "en") {
-            this.alertService.showAlert(
-              "warning",
-              "Error in sending message. Please try again"
-            );
-          } else {
-            this.alertService.showAlert(
-              "warning",
-              "حدث خطأ أثناء إرسال الرسالة، يرجى المحاولة مرة أخرى"
-            );
-          }
+          this.alertService.showAlert(
+            "warning",
+            "حدث خطأ أثناء إرسال الرسالة، يرجى المحاولة مرة أخرى"
+          );
         }
       }
-    );
+      throw err;
+    }
+    
     this.newMessage = "";
     this.buyNowStatus = false;
     this.selectedImages = [];
@@ -707,13 +723,13 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     this.fileInput.nativeElement.click();
   }
 
-  onFileSelected(event: any): void {
+  async onFileSelected(event: any): Promise<void> {
     const files = event.target.files;
-    console.log("files",files)
+    console.log("files", files)
     if (files && files.length > 0) {
       this.selectedImages = Array.from(files);
-      console.log("selectedImages",this.selectedImages)
-      this.sendMessage();
+      console.log("selectedImages", this.selectedImages)
+      await this.sendMessage();
     }
   }
 
@@ -738,9 +754,9 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     this.isBuyNow = true;
   }
 
-  buyNowProduct() {
+  async buyNowProduct() {
     this.buyNowStatus = true;
-    this.sendMessage();
+    await this.sendMessage();
   }
 
   customOffer() {
@@ -759,9 +775,9 @@ export class ChatComponent implements OnInit, AfterViewChecked {
       },
     });
 
-    dialogRef.afterClosed().subscribe((result) => {
-      this.getChatDetails();
-      this.getLatestMessage();
+    dialogRef.afterClosed().subscribe(async (result) => {
+      await this.getChatDetails();
+      await this.getLatestMessage();
     });
   }
 
@@ -777,10 +793,10 @@ export class ChatComponent implements OnInit, AfterViewChecked {
       width: "700px",
       data: { message: "Are you sure you want to cancel offer" },
     });
-    dialogRef.afterClosed().subscribe((result) => {
+    dialogRef.afterClosed().subscribe(async (result) => {
       if (result == true) {
         this.http.editOfferStatus(formData).subscribe(
-          (res) => {
+          async (res) => {
             if (this.translateService.currentLang == "en") {
               this.alertService.showAlert(
                 "success",
@@ -790,8 +806,8 @@ export class ChatComponent implements OnInit, AfterViewChecked {
               this.alertService.showAlert("success", "تم إلغاء العرض بنجاح");
             }
 
-            this.getChatDetails();
-            this.getLatestMessage();
+            await this.getChatDetails();
+            await this.getLatestMessage();
           },
           (err) => {
             if (err && err.error) {
@@ -825,7 +841,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     };
 
     this.http.editOfferStatus(formData).subscribe(
-      (res) => {
+      async (res) => {
         if (this.translateService.currentLang == "en") {
           this.alertService.showAlert("success", "Product Sold Successfully");
         } else {
@@ -833,8 +849,8 @@ export class ChatComponent implements OnInit, AfterViewChecked {
         }
 
         this.isOfferStatusAccepted = true;
-        this.getChatDetails();
-        this.getLatestMessage();
+        await this.getChatDetails();
+        await this.getLatestMessage();
       },
       (err) => {
         if (err && err.error) {
@@ -857,44 +873,47 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     return this.reversedMessages?.some((message: any) => message.action_type === 'buy_now') || false;
   }
 
-  buyNowFromChat() {
+  async buyNowFromChat() {
     const formData = {
       product_id: this.messages[0].product_id,
       chat_id: this.chat_id,
       receiver_id: this.reciever_ID,
       action_type: "buy_now",
     };
-    this.http.sendMessage(formData).subscribe((res) => {
+    try {
+      const res: any = await this.http.sendMessage(formData).toPromise();
       this.chat_id = res.data.chat_id;
       if (res.data.action_type === "buy_now") {
         this.isBuyNowFromChatCheck = true;
-        this.getChatDetails();
-        this.getLatestMessage();
-      } else {
-        this.getChatDetails();
-        this.getLatestMessage();
       }
-    });
+      await this.getChatDetails();
+      await this.getLatestMessage();
+    } catch (err) {
+      console.error("Error in buyNowFromChat:", err);
+    }
   }
 
   createOfferFromChat() {
     this.customOffer();
   }
 
-  MarkAsSoldfromChat() {
+  async MarkAsSoldfromChat() {
     const formData = {
       product_id: this.messages[0].product_id,
       chat_id: this.chat_id,
       receiver_id: this.reciever_ID,
       action_type: "mark_sold",
     };
-    this.http.sendMessage(formData).subscribe((res) => {
+    try {
+      const res: any = await this.http.sendMessage(formData).toPromise();
       this.chat_id = res?.data?.chat_id;
       if (this.chat_id) {
-        this.getChatDetails();
-        this.getLatestMessage();
+        await this.getChatDetails();
+        await this.getLatestMessage();
       }
-    });
+    } catch (err) {
+      console.error("Error in MarkAsSoldfromChat:", err);
+    }
   }
 
   isCancelOfferBuyer: boolean = false;
@@ -905,7 +924,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
       data: { isShowMarkAsSold: this.isShowMarkAsSold },
     });
 
-    dialogRef.afterClosed().subscribe((result) => {
+    dialogRef.afterClosed().subscribe(async (result) => {
       if (result) {
         const formData = {
           chat_id: this.chat_id,
@@ -916,10 +935,10 @@ export class ChatComponent implements OnInit, AfterViewChecked {
           validity_days: result.formData.validity_days,
         };
         this.http.sendShipmenttoBuyer(formData).subscribe(
-          (res) => {
+          async (res) => {
             this.isCancelOfferBuyer = true;
-            this.getChatDetails();
-            this.getLatestMessage();
+            await this.getChatDetails();
+            await this.getLatestMessage();
           },
           (err) => {
             if (err && err.error) {
@@ -946,19 +965,19 @@ export class ChatComponent implements OnInit, AfterViewChecked {
             receiver_id: this.reciever_ID,
             action_type: "mark_sold",
           };
-          this.http.sendMessage(formData).subscribe((res) => {
+          this.http.sendMessage(formData).subscribe(async (res) => {
             this.chat_id = res?.data?.chat_id;
-            this.getChatDetails();
-            this.getLatestMessage();
+            await this.getChatDetails();
+            await this.getLatestMessage();
           });
         } else {
-          this.getChatDetails();
-          this.getLatestMessage();
+          await this.getChatDetails();
+          await this.getLatestMessage();
         }
       }
     });
   }
-  
+
   cancelOffer() {
     const formData = {
       product_id: this.messages[0].product_id,
@@ -973,11 +992,11 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     dialogRef.afterClosed().subscribe((result) => {
       if (result == true) {
         this.http.sendMessage(formData).subscribe(
-          (res) => {
+          async (res) => {
             this.chat_id = res?.data?.chat_id;
             if (this.chat_id) {
-              this.getChatDetails();
-              this.getLatestMessage();
+              await this.getChatDetails();
+              await this.getLatestMessage();
             }
           },
           (err) => {
@@ -1002,36 +1021,34 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     });
   }
 
-  makePayment() {
+  async makePayment() {
     const formData = {
       product_id: this.messages[0].product_id,
       chat_id: this.chat_id,
       receiver_id: this.reciever_ID,
       action_type: "make_payment",
     };
-    this.http.sendMessage(formData).subscribe(
-      (res) => {
-        this.chat_id = res?.data?.chat_id;
-        this.getChatDetails();
-        this.getLatestMessage();
-      },
-      (err) => {
-        if (err && err.error) {
-          this.alertService.showAlert("warning", `${err.error.message}`);
+    try {
+      const res: any = await this.http.sendMessage(formData).toPromise();
+      this.chat_id = res?.data?.chat_id;
+      await this.getChatDetails();
+      await this.getLatestMessage();
+    } catch (err: any) {
+      if (err && err.error) {
+        this.alertService.showAlert("warning", `${err.error.message}`);
+      } else {
+        if (this.translateService.currentLang == "en") {
+          this.alertService.showAlert(
+            "warning",
+            "Error in Making payment. Please try again"
+          );
         } else {
-          if (this.translateService.currentLang == "en") {
-            this.alertService.showAlert(
-              "warning",
-              "Error in Making payment. Please try again"
-            );
-          } else {
-            this.alertService.showAlert(
-              "warning",
-              "حدث خطأ أثناء إجراء الدفع. يرجى المحاولة مرة أخرى"
-            );
-          }
+          this.alertService.showAlert(
+            "warning",
+            "حدث خطأ أثناء إجراء الدفع. يرجى المحاولة مرة أخرى"
+          );
         }
       }
-    );
+    }
   }
 }
