@@ -13,6 +13,7 @@ import { LanguageService } from 'src/services/lang-service/language.service';
   styleUrl: './shipping-address.component.css'
 })
 export class ShippingAddressComponent implements OnInit {
+  saudiArabiaFlagPath = "https://flagcdn.com/w20/sa.png"
   billingForm: FormGroup;
   billing_address = new FormControl(null, [
 
@@ -89,12 +90,12 @@ export class ShippingAddressComponent implements OnInit {
     }
     this.http.getCityLists(formData).subscribe((res) => {
       // Map each city into an object containing both city and flag
-      this.cityLists = res.data.map((city: string) => ({
-        name: city,
-        flag: "https://flagcdn.com/w20/sa.png" // Saudi Arabia flag
-      }));
+      // this.cityLists = res.data.map((city: string) => ({
+      //   name: city,
+      //   flag: "https://flagcdn.com/w20/sa.png" // Saudi Arabia flag
+      // }));
 
-      console.log("Cities List",this.cityLists)
+      this.cityLists= res.data;
     });
     
   }
