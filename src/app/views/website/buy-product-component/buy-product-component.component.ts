@@ -693,9 +693,18 @@ export class BuyProductComponentComponent implements OnInit {
             },
           });
         } else {
+          console.log("Calling gotToChat, line 692", this.productDetails)
+          const productDetails = {
+            chats:{
+              product:this.productDetails
+            }
+          }
           this.router.navigate(["/chat"], {
-            state: { data: this.productDetails },
+            state:{firstMessage: true, product_ID: this.productDetails.id, created_by: this.productDetails.created_by.id ,product_Details:productDetails},
           });
+          // this.router.navigate(["/chat"], {
+          //   state: { data: this.productDetails ,fromRoute: "gotToChat" ,productID: this.productDetails.id, },
+          // });
         }
       } else {
         if (this.translateService.currentLang == "en") {

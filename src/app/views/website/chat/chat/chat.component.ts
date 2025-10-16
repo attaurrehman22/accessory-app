@@ -109,10 +109,23 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     
     try {
       // Initialize profile and chats first
+      console.log("history", history)
       await this.getProfileDetails();
       await this.getLatestMessage();
 
-      console.log("history", history)
+      if(history?.state?.firstMessage){
+        await this.getDetailsofProduct(history?.state?.product_ID);
+        this.productDeatils = this.getProductDetails;
+        const exists = this.filteredChats.find(
+          (chat: any) => chat.product_id == history?.state?.product_ID
+        );
+        if(exists){
+         this.getMesageDetails(exists)
+        }else{
+          this.filteredChats.unshift(history.state.product_Details.chats);
+        }
+        console.log("NEW FILTERED CHATS",this.filteredChats)
+      }
 
       if (history?.state?.fromRoute == "gotToChat") {
         if (history?.state?.chatID) {
@@ -121,6 +134,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
         }
         
         if (history?.state?.data?.id) {
+          console.log("calling this line 130")
           await this.getDetailsofProduct(history.state.data.id);
         } 
         
@@ -128,20 +142,24 @@ export class ChatComponent implements OnInit, AfterViewChecked {
           if(this.filteredChats.length > 0){  
             this.chat_id = this.filteredChats.find(chat => chat.product_id == history?.state?.data?.id)?.chat_id;
             this.chat_id_for_remove_unread_count = this.chat_id;
+            console.log("calling this line 138")
             await this.getChatDetails();
           }
         }
         
         if (history?.state?.productID) {
+          console.log("calling this line 144")
           await this.getDetailsofProduct(history?.state?.productID);
         }
         
         if (history?.state?.chatDetails) {
+          console.log("calling this line 149")
           await this.getMesageDetails(history?.state?.chatDetails)
         }
         
         if (!history?.state?.chatDetails && history?.state?.data && history?.state?.chatID) {
           try {
+            console.log("calling this line 155")
             const res: any = await this.http.getChatsWithLatestMessage().toPromise();
             const chatList = res.chats.map(
               (chat) => {
@@ -161,6 +179,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
           if (!this.chat_id && history?.state?.chatID) {
             this.chat_id = history?.state?.chatID
           }
+          console.log("calling this line 175")
           await this.getChatDetails();
         }
       }
@@ -176,6 +195,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
       }
       
       if (history?.state?.chat) {
+        console.log("calling this line 185")
         await this.getLatestMessage();
         await this.getDetailsofProduct(history?.state?.chat.product_id);
         this.chat_id = history?.state?.chat.chat_id;
@@ -206,9 +226,15 @@ export class ChatComponent implements OnInit, AfterViewChecked {
       }
 
       if (this.productDeatils) {
-        await this.getLatestMessage();
-        await this.getDetailsofProduct(this.productDeatils?.id);
+        console.log("calling this line 215")
+        if(history?.state?.firstMessage){
+
+        }else{
+          await this.getLatestMessage();
+          await this.getDetailsofProduct(this.productDeatils?.id);
+        }
       } else {
+        console.log("calling this line 218")
         await this.getLatestMessage();
       }
 
@@ -312,6 +338,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
   }
 
   async getMesageDetails(param: any) {
+    console.log("Param",param)
     this.UserNameOFMessenger = (param?.product?.created_by?.id == this.userID ? param.buyer : param.seller)
     this.userCity = (param.product.created_by?.id == this.userID ? param.buyer_city : param.seller_city)
     this.chat_id_for_remove_unread_count = param.chat_id;

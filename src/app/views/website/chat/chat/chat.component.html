@@ -142,9 +142,9 @@
                   </p>
                   <p class="font-size-14 font-weight-400 color-242424 smaall-screen-text">
                     {{
-                    chat.latest_message_preview.length > 45
-                    ? (chat.latest_message_preview | slice : 0 : 45) + "..."
-                    : chat.latest_message_preview
+                    chat?.latest_message_preview?.length > 45
+                    ? (chat?.latest_message_preview | slice : 0 : 45) + "..."
+                    : chat?.latest_message_preview
                     }}
                   </p>
                 </div>
