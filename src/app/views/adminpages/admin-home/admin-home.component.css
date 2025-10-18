@@ -1,9 +1,236 @@
-/* Customize the background color of the dashboard */
+/* Dashboard Container */
+.dashboard-container {
+  padding: 20px;
+  background-color: #f8f9fa;
+  min-height: 100vh;
+}
+
+/* Dashboard Cards */
+.dashboard-card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.dashboard-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+}
+
+.card-header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 15px 20px;
+  border-bottom: none;
+}
+
+.card-title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.card-body {
+  padding: 20px;
+}
+
+/* Chart Container */
+.chart-container {
+  margin-bottom: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.chart-container highcharts-chart {
+  width: 100% !important;
+  display: flex;
+  justify-content: center;
+}
+
+/* Total Count Display */
+.total-count {
+  text-align: center;
+  padding: 10px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  border-left: 4px solid #667eea;
+}
+
+.count-label {
+  font-size: 14px;
+  color: #6c757d;
+  display: block;
+  margin-bottom: 5px;
+}
+
+.count-value {
+  font-size: 24px;
+  font-weight: bold;
+  color: #495057;
+}
+
+/* Revenue Stats */
+.revenue-stats {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.revenue-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 15px;
+  border-radius: 8px;
+  border-left: 4px solid;
+}
+
+.revenue-item.confirmed {
+  background: #d4edda;
+  border-left-color: #28a745;
+}
+
+.revenue-item.delivered {
+  background: #cce5ff;
+  border-left-color: #007bff;
+}
+
+.revenue-item.pending {
+  background: #fff3cd;
+  border-left-color: #ffc107;
+}
+
+.revenue-item.dispute {
+  background: #f8d7da;
+  border-left-color: #dc3545;
+}
+
+.revenue-label {
+  font-size: 14px;
+  color: #495057;
+  font-weight: 500;
+}
+
+.revenue-value {
+  font-size: 18px;
+  font-weight: bold;
+  color: #212529;
+}
+
+/* Filters Container */
+.filters-container {
+  background: #f8f9fa;
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.filter-field {
+  width: 100%;
+  font-size: 14px;
+}
+
+.search-btn {
+  height: 56px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Orders Table */
+.table-responsive {
+  overflow-x: auto;
+}
+
+.orders-table {
+  width: 100%;
+  background: white;
+}
+
+.orders-table th {
+  background: #f8f9fa;
+  color: #495057;
+  font-weight: 600;
+  border-bottom: 2px solid #dee2e6;
+}
+
+.orders-table td {
+  border-bottom: 1px solid #dee2e6;
+  padding: 12px 8px;
+}
+
+/* Status Badges */
+.status-badge {
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+.status-pending {
+  background: #fff3cd;
+  color: #856404;
+}
+
+.status-confirmed {
+  background: #d1ecf1;
+  color: #0c5460;
+}
+
+.status-shipped {
+  background: #cce5ff;
+  color: #004085;
+}
+
+.status-delivered {
+  background: #d4edda;
+  color: #155724;
+}
+
+.status-cancelled {
+  background: #f8d7da;
+  color: #721c24;
+}
+
+.status-dispute {
+  background: #f5c6cb;
+  color: #721c24;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .dashboard-container {
+    padding: 10px;
+  }
+
+  .revenue-stats {
+    gap: 8px;
+  }
+
+  .revenue-item {
+    padding: 8px 12px;
+  }
+
+  .filters-container .row {
+    margin: 0;
+  }
+
+  .filters-container .col-md-2 {
+    margin-bottom: 10px;
+  }
+}
+
+/* Legacy styles (keeping for compatibility) */
 .dashboard {
   background-color: #f0f0f0;
 }
 
-/* Define the card styles */
 .card {
   margin: 20px;
   width: calc(25% - 40px);
@@ -31,7 +258,6 @@
   border: 5px solid #9b59b6;
 }
 
-/* Define the circle styles */
 .circle {
   margin: 20px;
   width: 150px;
@@ -46,7 +272,6 @@
   border-radius: 50%;
 }
 
-/* Define the data table styles */
 table {
   width: 100%;
 }
