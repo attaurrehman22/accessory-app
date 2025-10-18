@@ -57,6 +57,7 @@ export interface Category {
 })
 export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
   apiUrl = environment.apipath + "/";
+  cityLists: any;
   nullImagePath = this.apiUrl + "null";
   selectedSection: string = "listingDetails";
   selectedOptionsList: any = ["listingDetails"];
@@ -73,6 +74,17 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
   videoUrl: string | null = null;
   isAdminUser = computed(() => this.loginStateService.isAdminUser());
   apipath = environment.apipath;
+
+  getCityLists(country) {
+    const formData = {
+      country: country,
+    }
+    this.http.getCityLists(formData).subscribe((res) => {
+      this.cityLists= res.data;
+    });
+  }
+
+
 
   onVideoSelected(event: any): void {
     const file = event.target.files[0];
@@ -1475,6 +1487,7 @@ onUnknownChange(event: MatCheckboxChange): void {
     if (!userToken) {
       this.loginFirst();
     }
+    this.getCityLists('Saudi Arabia');
     if (!this.productIDFromResponse) {
       this.productIDFromResponse = localStorage.getItem("productID");
       const selectedOptionsListString = localStorage.getItem(

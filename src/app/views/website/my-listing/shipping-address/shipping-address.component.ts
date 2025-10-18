@@ -89,15 +89,8 @@ export class ShippingAddressComponent implements OnInit {
       country: country,
     }
     this.http.getCityLists(formData).subscribe((res) => {
-      // Map each city into an object containing both city and flag
-      // this.cityLists = res.data.map((city: string) => ({
-      //   name: city,
-      //   flag: "https://flagcdn.com/w20/sa.png" // Saudi Arabia flag
-      // }));
-
       this.cityLists= res.data;
     });
-    
   }
 
 
