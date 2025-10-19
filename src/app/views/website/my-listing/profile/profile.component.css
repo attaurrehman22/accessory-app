@@ -1,76 +1,142 @@
- .arabic-style-form>h3 {
-     text-align: end;
- }
+.user-dashboard .card {
+  border: 1px solid #F5F5F5;
+  box-shadow: 0px 40px 90px 0px #0000000F;
+  background: #FFFFFF;
+  border-radius: 16px;
+}
 
- .arabic-style-form>.row {
-     flex-direction: row-reverse;
- }
+.badge {
+  height: 28px;
+  background: #EBEBEB;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 400;
+  color: #242424;
+  padding: 6px 12px 6px 12px;
+}
 
- .arabic-style-form>.search-arabic-style {
-     flex-direction: row-reverse;
- }
+.profile-card .profile-img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  align-self: center;
+}
 
- .arabic-style-form>.row>.mb-3 {
-     flex-direction: row-reverse;
-     display: flex;
-     flex-wrap: wrap;
-     text-align: right;
- }
+.stay-alert-img {
+  width: 55px;
+  height: 55px;
+  object-fit: contain;
+  align-self: center;
+}
 
- .arabic-style-form>.row>.mb-3>.text-decoration-none {
-     text-align: right;
-     width: 100%;
- }
+.second-card-label-img{
+  height: 24px;
+  width: 24px;
+}
 
+.watch-img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 10px;
+}
 
- .arabic-style-form>.row>.mb-3>.form-label {
-     width: 100%;
-     text-align: justify;
- }
+.btn-outline-dark:hover {
+  background-color: #000;
+  color: #fff;
+}
 
- .arabic-style-form>.row>.mb-3>.form-control {
-     flex-direction: row-reverse;
-     display: flex;
-     flex-wrap: wrap;
- }
+.provate-seller-btn {
+  background: none;
+  border: 1px solid #F5F5F5;
+  border-radius: 62px;
+  font-size: 16px;
+  font-weight: 400;
+  color: #242424;
+  width: 145px;
+  align-self: center;
+}
 
- .arabic-style-form > .row > .mb-3 > .form-label {
-    width: 100%;
-    text-align: justify;
-   }
-  
+.light-label-class {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 400;
+  color: #6a6a6a;
+  align-self: flex-start;
+}
 
- .profile-image-container:hover .camera-icon {
-    opacity: 1 !important;
+.dark-label-class {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #484848;
+  align-self: flex-start;
+}
+
+.line-break-class{
+  margin: 9px;
+}
+
+.form-check-input:checked {
+  background-color: #242424;
+  border-color: #242424;
+}
+
+.notofication-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid #F5F5F5;
+  padding: 12px 18px 12px 18px;
+  width: 90%;
+  align-self: center;
+  border-radius: 12px;
+}
+
+.dealer-btn {
+  background-color: #242424;
+  color: #FFFFFF;
+  border-radius: 12px;
+  width: 68%;
+  font-size: 18px;
+  font-weight: 400;
+  height: 50px;
+  align-self: center;
+}
+
+.seller-btn {
+  border: 1px solid #242424;
+  background-color: #FFFFFF;
+  border-radius: 12px;
+  width: 68%;
+  font-size: 18px;
+  font-weight: 400;
+  height: 50px;
+  align-self: center;
+}
+
+.view-all-btn{
+  background:none;
+  border: 1px solid #484848;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #484848;
+  height: 41px;
+  width: 93px;
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .profile-card, .card {
+    text-align: center;
   }
-  
-  .profile-image-container {
-    position: relative;
-    display: inline-block;
+  .watch-img {
+    width: 50px;
+    height: 50px;
   }
-
-  .profile-image-container:hover .camera-icon {
-    opacity: 1 !important;
-  }
-
-  .form-label {
+  .user-dashboard .btn {
     font-size: 14px;
-    font-weight: 400 !important;
-    color: #242424;
- }
-
- .submit-btn {
-    border-radius: 12px;
-    background: #242424;
-    color: white;
-    width: 240px;
-    height: 56px;
-    font-size: 16px;
-    font-weight: 600;
   }
-
- @media (max-width: 468px) {
-    .form-select { 
-        font-size: 10px !important;
-      }
- }
+}

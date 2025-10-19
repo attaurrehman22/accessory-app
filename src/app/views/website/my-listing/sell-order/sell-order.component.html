@@ -21,9 +21,9 @@
 </div>
 
 <!-- Skeleton Loading -->
-<div *ngIf="isLoading" class="list-cards">
-    <div class="listing-div">
-        <div *ngFor="let item of [1,2,3,4]" class="card mb-3">
+<div *ngIf="isLoading" class="col-md-12 d-flex flex-wrap">
+    <div class="listing-div col-md-6" *ngFor="let item of [1,2,3,4]">
+        <div class="card mb-3">
             <div class="card-body d-flex align-items-center">
                 <div class="col-11 d-flex align-items-center">
                     <div class="main_image_div">
@@ -44,9 +44,9 @@
 </div>
 
 <!-- Sell Orders List -->
-<div *ngIf="!isLoading && (sellOrders?.length > 0)" class="list-cards">
-    <div class="listing-div">
-        <div *ngFor="let listing of sellOrders" class="card mb-3">
+<div *ngIf="!isLoading && (sellOrders?.length > 0)" class="list-cards col-md-12 d-flex flex-wrap">
+    <div class="listing-div col-md-6" *ngFor="let listing of sellOrders">
+        <div class="card mb-3">
             <div class="card-body d-flex align-items-center">
                 <div class="col-11 d-flex align-items-center  card-hover-change-color" (click)="detailListing(listing)">
                     <div class="main_image_div">

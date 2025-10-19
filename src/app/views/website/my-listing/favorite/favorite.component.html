@@ -1,164 +1,263 @@
-<div class="d-flex justify-content-between align-items-center mb-3 filtered-div" [ngClass]="{ 'reverse-order-details': translateService.currentLang !== 'en' }">
-    <h4 class="mobile-label">{{ "my_Listing.Favorites" | translate }}</h4>
-    <!-- // add dropdown for filter of product -->
-     <mat-form-field>
-      <mat-select [(ngModel)]="selectedProductFilter" (ngModelChange)="onFilterChange($event)">
-        <mat-option value="all">All</mat-option>
-        <mat-option *ngFor="let filter of filters" [value]="filter.gender">{{ filter.gender }}</mat-option>
-      </mat-select>
-     </mat-form-field>
-     <!-- <mat-form-field>
-      <select class="form-select form-select-sm" style="width: 150px" [(ngModel)]="selectedProductFilter" (ngModelChange)="onFilterChange($event)">
-        <option value="all">ALL</option>
-        <option *ngFor="let filter of filters" [value]="filter.id">{{ filter.gender }}</option>
-      </select>
-    </mat-form-field> -->
-    <!-- <mat-form-field>
-      <select class="form-select form-select-sm" style="width: 150px" [(ngModel)]="selectedFilter" (ngModelChange)="onFilterChange($event)">
-        <option value="product">Products</option>
-        <option value="accessory">Accessories</option>
-      </select>
-    </mat-form-field> -->
-  </div>
+<!-- <div class="d-flex justify-content-between align-items-center mb-3 filtered-div"
+  [ngClass]="{ 'reverse-order-details': translateService.currentLang !== 'en' }"> -->
+  
+  <!-- // add dropdown for filter of product -->
+  <!-- <mat-form-field>
+    <mat-select [(ngModel)]="selectedProductFilter" (ngModelChange)="onFilterChange($event)">
+      <mat-option value="all">All</mat-option>
+      <mat-option *ngFor="let filter of filters" [value]="filter.gender">{{ filter.gender }}</mat-option>
+    </mat-select>
+  </mat-form-field> -->
+<!-- </div> -->
 
-  <!-- Skeleton Loading -->
-  <div *ngIf="isLoading" class="list-cards" [ngClass]="{ 'reverse-order-details': translateService.currentLang !== 'en' }">
-    <div *ngFor="let item of [1,2,3,4]" class="card mb-3 custom-card-style">
-      <div class="card-body d-flex align-items-center">
-        <div class="col-11 d-flex align-items-center">
-          <div class="main_image_div">
-            <div class="skeleton-image"></div>
-          </div>
-          <div class="main_image_content_div pl-2 pr-2" style="width: 100%">
-            <div class="skeleton-text-small mb-2" style="width: 40%"></div>
-            <div class="skeleton-text-medium mb-2"></div>
-            <div class="skeleton-text-large"></div>
-          </div>
-        </div>
-        <div class="col-1 d-flex justify-content-end">
-          <div class="skeleton-badge"></div>
+<!-- Skeleton Loading -->
+<div class="container-fluid list-data" *ngIf="isLoading">
+  <div class="row w-100">
+    <div class="col-md-3 col-sm-6 mb-4" *ngFor="let item of [1,2,3,4,5,6,7,8,9,10,11,12]">
+      <div class="card h-100 shadow-sm p-2">
+        <div class="skeleton-card-image mb-3"></div>
+        <div class="skeleton-text-small mb-2" style="width: 60%"></div>
+        <div class="skeleton-text-medium mb-2" style="width: 80%"></div>
+        <div class="d-flex justify-content-between align-items-center">
+          <div class="skeleton-text-small" style="width: 40%"></div>
+          <div class="skeleton-text-small" style="width: 30%"></div>
         </div>
       </div>
     </div>
   </div>
+</div>
 
-  <!-- Favorites List -->
-  <div class="list-cards" *ngIf="!isLoading && (selectedFilter == 'product' ? filteredFavoritesProductDetails?.length > 0 : accessoriesWishList?.length > 0)" [ngClass]="{ 'reverse-order-details': translateService.currentLang !== 'en' }">
-    <div *ngFor="let listing of selectedFilter == 'product' ? filteredFavoritesProductDetails : accessoriesWishList" class="card mb-3">
-      <div class="card-body d-flex align-items-center" *ngIf="selectedFilter == 'product'">
-        <div class="col-11 d-flex align-items-center card-hover-change-color gap-2"  (click)="viewProductDetails(listing)">
-          <div class="main_image_div">
-            <img
-              *ngIf="listing?.main_image"
-              class="img-fluid"
-              style="object-fit: cover !important;height: 100% !important; width: 100% !important;"
-              [src]="apiUrl + listing.main_image"
-              alt="{{ 'find_dream.img_alt' | translate }}"
-            />
-             <div *ngIf="!listing?.main_image" class="no-image-styles-div">
-                <p>{{ "my_Listing.no_image" | translate }}</p>
-            </div>
-          </div>
-          <div class="main_image_content_div">
-            <small class="text-muted mobile-label">
-              Listing ID <span class="span-listing-id-label"> {{ listing.listing_code || "N/A" }} </span> | Created
-             <span class="span-listing-id-label">
-              {{ listing.created_at | date : "yyyy-MM-dd" }}
-              </span>
-            </small>
+<!-- Favorites List -->
 
-            <h6 class="mt-1 mb-1 mobile-label listing-concate-label">
-              {{ listing.brand.name }} {{ listing.model }}
-              {{ listing.title }}
-            </h6>
-          </div>
-        </div>
-        <div class="col-1 d-flex justify-content-end">
-          <button
-            mat-icon-button
-            [matMenuTriggerFor]="menu"
-            aria-label="More options"
-          >
-            <mat-icon>more_vert</mat-icon>
-          </button>
-          <mat-menu #menu="matMenu">
-            <button mat-menu-item (click)="startChat(listing)">
-              <!-- <mat-icon>edit</mat-icon> -->
-              <mat-icon>chat</mat-icon>
-              <span>Start Chating</span>
-            </button>
-            <button mat-menu-item (click)="removeFromFavorites(listing)">
-              <mat-icon color="warn">delete</mat-icon>
-              <span>Remove From Favorites</span>
-            </button>
-            <button mat-menu-item (click)="viewProductDetails(listing)">
-              <mat-icon>visibility</mat-icon>
-              <span>View Product Details</span>
-            </button>
-          </mat-menu>
-        </div>
-      </div>
-      <div class="card-body d-flex align-items-center" *ngIf="selectedFilter == 'accessory'">
-        <div class="col-11 d-flex align-items-center card-hover-change-color gap-2"  (click)="goToAccessoryDetails(listing)">
-          <div class="main_image_div">
-            <img
-              *ngIf="listing?.image"
-              class="img-fluid"
-              style="object-fit: cover !important;height: 100% !important; width: 100% !important;"
-              [src]="apiUrl + listing.image"
-              alt="{{ 'find_dream.img_alt' | translate }}"
-            />
-              <div *ngIf="!listing?.image" class="no-image-styles-div">
-                <p>{{ "my_Listing.no_image" | translate }}</p>
-            </div>
-          </div>
-          <div class="main_image_content_div">
-            <small class="text-muted mobile-label">
-              Model Number <span class="span-listing-id-label"> {{ listing.model_number || "N/A" }} </span> | Added
-              <span class="span-listing-id-label">
-              {{ listing.added_at | date : "yyyy-MM-dd" }}
-              </span>
-            </small>
-
-            <h6 class="mt-1 mb-1 mobile-label listing-concate-label">
-              {{ listing.name }} {{ listing.brand }}
-            </h6>
-          </div>
-        </div>
-        <div class="col-1 d-flex justify-content-end">
-          <button
-            mat-icon-button
-            [matMenuTriggerFor]="menu"
-            aria-label="More options"
-          >
-            <mat-icon>more_vert</mat-icon>
-          </button>
-          <mat-menu #menu="matMenu">
-            <button mat-menu-item (click)="goToAccessoryDetails(listing)">
-              <!-- <mat-icon>edit</mat-icon> -->
-              <span>Details</span>
-            </button>
-            <!-- <button mat-menu-item (click)="deleteListing(listing)">
-              <mat-icon color="warn">delete</mat-icon>
-              <span>Delete</span>
-            </button> -->
-          </mat-menu>
-        </div>
-      </div>
+<div class="container-fluid list-data">
+  <div class="col-lg-12 col-md-12 col-sm-12 d-flex justify-content-between align-items-center"
+    [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }">
+    <div class="d-flex gap-2 align-items-center">
+      <span routerLink="/myListing" style="cursor: pointer;font-size: 30px;" class="back-icon">&lt;</span>
+      <p class="font-size-28 font-wight-600 color-242424 margin-0">{{ "my_Listing.Favorites" | translate }}</p>
     </div>
+    <button class="custom-filter-btn" (click)="openFilters()">
+      <img src="../assets/images/hugeicons_filter.png" />
+      {{ "product_listing.filters" | translate }}
+      <img src="../assets/images/FiChevronDown.png" />
+    </button>
   </div>
-
-  <!-- No Favorites Template -->
-  <div *ngIf="!isLoading && !(selectedFilter == 'product' ? filteredFavoritesProductDetails?.length > 0 : accessoriesWishList?.length > 0)" class="no-listings-container">
-    <div class="text-center py-5">
-      <div class="no-listings-icon mb-4">
-        <i class="fas fa-heart-broken fa-4x text-muted"></i>
-      </div>
-      <h5 class="text-muted mb-3">{{ 'my_Listing.No_Favorites' | translate }}</h5>
-      <p class="text-muted mb-4">{{ 'my_Listing.No_Favorites_Description' | translate }}</p>
-      <button class="btn btn-primary" routerLink="/product-list">
-        <i class="fas fa-search me-2"></i>
-        {{ 'my_Listing.Browse_Products' | translate }}
+  <div [ngClass]="{ 'reverse-filter-order': translateService.currentLang !== 'en' }" *ngIf="isShowFilters"
+    class="filter-Div p-3 border rounded">
+    <div class="filters-top-header">
+      <h5 class="mb-3">{{ "product_listing.filters" | translate }}</h5>
+      <button style="border: none; background: none; color: #242424" (click)="clearFilters()">
+        {{ "product_listing.cleaer_filter" | translate }}
       </button>
     </div>
+    <!-- Categories Section -->
+    <div class="mb-4 border-bottom-color">
+      <p [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }"
+        class="font-size-16 font-wight-600 color-242424 margin-0">
+        <!-- {{ "product_listing.categories" | translate }} -->
+          Brand
+      </p>
+      <div class="row mt-2">
+        <div class="col-md-4 d-flex flex-wrap" *ngFor="let brand of brands | slice : 0 : 8">
+          <div class="form-check d-flex flex-wrap">
+            <input type="checkbox" class="form-check-input" [id]="'brand-' + brand.id"
+              [(ngModel)]="brand.selected" />
+            <label class="form-check-label" [for]="'brand-' + brand.id">
+              {{ brand.name }}
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Watch Type Section -->
+    <div class="mb-4 border-bottom-color">
+      <p [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }"
+        class="font-size-16 font-wight-600 color-242424 margin-0">
+        {{ "product_listing.watch_type" | translate }}
+      </p>
+      <div class="row mt-2">
+        <div class="col-md-4 d-flex flex-wrap" *ngFor="let type of watchTypes | slice : 0 : 8">
+          <div class="form-check d-flex flex-wrap">
+            <input type="checkbox" class="form-check-input" [id]="'watch-type-' + type.id"
+              [(ngModel)]="type.selected" />
+            <label class="form-check-label" [for]="'watch-type-' + type.id">
+              {{ type.name }}
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Apply Filters Button -->
+    <button class="btn btn-dark w-100 custom-apply-filter-btn" (click)="applyFilters()">
+      Apply Filters
+    </button>
   </div>
+
+  <!-- <div
+    *ngIf="(selectedCategories?.length > 0 || selectedWatchTypes?.length > 0 || searchQuery) && ( isFiltereredOptionIsShow || isFiltereredSearchQueryIsShow)"
+    class="container-fluid mt-3">
+    <div class="col-md-12 d-flex flex-wrap align-items-center">
+      <div class="col-md-10 d-flex flex-wrap">
+
+       
+
+        <ul *ngIf="searchQuery" class="d-flex flex-wrap align-items-center gap-1" style="list-style: none !important;">
+          <li class="d-flex align-items-center li-styl">
+            <span>{{ searchQuery }}</span>
+            <button type="button" class="btn btn-link p-0 ms-2" (click)="removeSearchQuery()">
+              <i class="fas fa-times-circle" style="color: white;"></i>
+            </button>
+          </li>
+        </ul>
+
+ 
+
+       
+        <ul *ngIf="selectedCategories?.length > 0 && isFiltereredOptionIsShow"
+          class="d-flex flex-wrap align-items-center gap-1" style="list-style: none !important;">
+          <li *ngFor="let category of selectedCategories" class="d-flex align-items-center li-styl">
+            <span>{{ category.name }}</span>
+            <button type="button" class="btn btn-link p-0 ms-2" (click)="removeCategory(category.id)">
+              <i class="fas fa-times-circle" style="color: white;"></i>
+            </button>
+          </li>
+        </ul>
+
+
+        <ul *ngIf="selectedWatchTypes?.length > 0 && isFiltereredOptionIsShow"
+          class="d-flex flex-wrap align-items-center gap-1" style="list-style: none !important;">
+          <li *ngFor="let watchType of selectedWatchTypes" class="d-flex align-items-center li-styl">
+            <span>{{ watchType.name }}</span>
+            <button type="button" class="btn btn-link p-0 ms-2" (click)="removeWatchType(watchType.id)">
+              <i class="fas fa-times-circle" style="color: white;"></i>
+            </button>
+          </li>
+        </ul>
+
+      </div>
+
+      <div class="col-md-2 d-flex justify-content-end">
+        <button style="border: none; background: none; color: #242424" (click)="clearFilters()">
+          {{ "product_listing.cleaer_filter" | translate }}
+        </button>
+
+      </div>
+    </div>
+  </div> -->
+
+  <div *ngIf="filteredFavoritesProductDetails?.length > 0" class="container-fluid mt-3">
+    <div class="row">
+
+      <div class="d-flex flex-wrap" *ngIf="!isLoading">
+        <div [ngClass]="{ 'reverse-order-products': translateService.currentLang !== 'en' }"
+          class="col-md-3 col-sm-6 mb-4" *ngFor="let watch of filteredFavoritesProductDetails">
+          <div class="card h-100 shadow-sm">
+            <a (click)="viewProductDetails(watch)" class="card-img-link">
+              <img style="cursor: pointer" [src]="apiUrl+ watch.main_image" class="card-img-top" alt="watch image" />
+            </a>
+            <div class="card-body">
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <div>
+                  <p class="font-size-16 font-wight-400 color-6a6a6a" style="margin: 0 !important">
+                    {{ watch.brand.name }} | {{ watch.model || "N/A" }}
+                  </p>
+                </div>
+                <div>
+                  <i class="fa fa-heart-o" aria-hidden="true"></i>
+                </div>
+              </div>
+              <div class="d-flex justify-content-between align-items-center mt-2">
+                <p class="card-title d-flex flex-wrap">
+                  {{ watch.title }}
+                </p>
+              </div>
+              <div class="d-flex justify-content-between align-items-center mt-3">
+                <p *ngIf="watch?.shipping_charges" class="price">
+                  +<img src="../../../../assets/images/Saudi_Riyal_Symbol-2.svg" class="sar-icon-style" alt="SAR" />
+
+                  {{ watch.shipping_charges }}
+                  Shipping
+                </p>
+                <p *ngIf="!watch.shipping_charges" class="price">
+                  {{ watch?.shipping_charges || 'Without' }}
+                  Shipping
+                </p>
+                <div>
+                  <p class="price">Location</p>
+                </div>
+              </div>
+              <div class="d-flex justify-content-between align-items-center">
+                <p class="card-title-two"><img *ngIf="watch?.price"
+                    src="../../../../assets/images/Saudi_Riyal_Symbol-2.svg" class="sar-icon-style" alt="SAR" />
+
+                  {{ watch.price }}</p>
+                <p class="card-title-two">{{ watch.created_by.city }}</p>
+              </div>
+              <div *ngIf="watch.created_by.type === 'user'" class="d-flex mt-2">
+                <p class="seller-chip"> Private Seller </p>
+              </div>
+              <div *ngIf="watch.created_by.type === 'dealer'" class="d-flex mt-2">
+                <p class="seller-chip"> Dealer </p>
+              </div>
+            </div>
+          </div>
+          <div class="heart-icon">
+            <div class="featured-icon">
+              <div *ngIf="watch?.created_by && watch?.sale_status == 'for_sale'" class="featured-promoted-class-badge">
+                {{watch?.created_by?.type}}
+              </div>
+              <div *ngIf="watch?.created_by && watch?.sale_status == 'reserved'" class="featured-promoted-class-badge">
+                Reserved
+              </div>
+              <div *ngIf="watch?.created_by && watch?.sale_status == 'sold'" class="featured-sold-class-badge">
+                Sold
+              </div>
+            </div>
+            <div class="" style="background-color: #FFF;
+            padding: 5px 5px 5px 5px;
+            border-radius: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;">
+            <i class="bi bi-trash-fill delete-icon" (click)="removeFromFavorites(watch)"></i>
+
+              <!-- <i (click)="removeFromFavorites(watch)" class="fa" [ngClass]="
+                wishList?.includes(watch.id) ? 'fa-heart' : 'fa-heart fa-heart-o'
+              " aria-hidden="true"></i> -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- <div class="col-12" *ngIf="showList?.length == 0 && !isLoading" style="
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 34px;
+    font-weight: 500;
+    min-height: 60vh;
+  ">
+    No record exist
+  </div>
+</div> -->
+
+<!-- No Favorites Template -->
+<div
+  *ngIf="!isLoading && !(selectedFilter == 'product' ? filteredFavoritesProductDetails?.length > 0 : accessoriesWishList?.length > 0)"
+  class="no-listings-container">
+  <div class="text-center py-5">
+    <div class="no-listings-icon mb-4">
+      <i class="fas fa-heart-broken fa-4x text-muted"></i>
+    </div>
+    <h5 class="text-muted mb-3">{{ 'my_Listing.No_Favorites' | translate }}</h5>
+    <p class="text-muted mb-4">{{ 'my_Listing.No_Favorites_Description' | translate }}</p>
+    <button class="btn btn-primary" routerLink="/product-list">
+      <i class="fas fa-search me-2"></i>
+      {{ 'my_Listing.Browse_Products' | translate }}
+    </button>
+  </div>
+</div>

@@ -122,6 +122,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
         if(exists){
          this.getMesageDetails(exists)
         }else{
+          console.log("history.state.product_Details.chats",history?.state?.product_Details?.chats)
           this.filteredChats.unshift(history.state.product_Details.chats);
         }
         console.log("NEW FILTERED CHATS",this.filteredChats)
