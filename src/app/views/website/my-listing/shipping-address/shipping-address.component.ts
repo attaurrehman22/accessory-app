@@ -24,8 +24,8 @@ export class ShippingAddressComponent implements OnInit {
   saudiArabiaFlagPath = "https://flagcdn.com/w20/sa.png"
   billingForm: FormGroup;
 
-  first_name = new FormControl("",[Validators.minLength(2),Validators.maxLength(50)])
-  last_name = new FormControl("",[Validators.minLength(2),Validators.maxLength(50)])
+  first_name = new FormControl("", [Validators.minLength(2), Validators.maxLength(50)])
+  last_name = new FormControl("", [Validators.minLength(2), Validators.maxLength(50)])
   gender = new FormControl("")
   date_of_birth = new FormControl("", [this.noFutureDateValidator])
   countryCode = new FormControl("KSA")
@@ -37,9 +37,6 @@ export class ShippingAddressComponent implements OnInit {
   password = new FormControl("")
   profile_image = new FormControl("")
   // date_of_birth: ["", [this.noFutureDateValidator]],
-
-
-
   billing_address = new FormControl(null, [Validators.maxLength(120)]);
   // first_name = new FormControl([],[Validators.maxLength(50)]);
   // last_name = new FormControl("", [Validators.maxLength(50)]);
@@ -51,14 +48,11 @@ export class ShippingAddressComponent implements OnInit {
     Validators.maxLength(9),
   ]);
   city = new FormControl("", [Validators.maxLength(50)]);
-  country = new FormControl({ value: "Saudi Arabia", disabled: true }, [
-
-    Validators.maxLength(50),
-  ]);
-  state = new FormControl("", [Validators.maxLength(50)]);
+  country = new FormControl({ value: "Saudi Arabia", disabled: true }, [Validators.maxLength(50)]);
+  // state = new FormControl("", [Validators.maxLength(50)]);
   cityLists: any;
 
-  getInitialsofUsername(name){
+  getInitialsofUsername(name) {
     if (!name) {
       return '';
     }
@@ -68,35 +62,28 @@ export class ShippingAddressComponent implements OnInit {
     if (words?.length === 1 && words[0] !== "") {
       return words[0][0].toUpperCase();
     } else {
-      const emailWord =this.billingForm.get('email').value;
-      if(emailWord){
+      const emailWord = this.billingForm.get('email').value;
+      if (emailWord) {
         return emailWord[0][0].toUpperCase();
       }
-      // return (emailWord[0][0].toUpperCase());
-      // return 'EM';
     }
   }
   getInitials(name: string | undefined | null): string {
     if (!name) {
       return "";
     }
-    // Split name by space and get first letters
     const words = name.trim().split(" ");
-    // words ['']0: ""length: 1[[Prototype]]: Array(0)
-
-    if (words?.length === 1 && words[0] !== "" && words[0] !== undefined && words[0] !== null ) {
+    if (words?.length === 1 && words[0] !== "" && words[0] !== undefined && words[0] !== null) {
       return words[0][0].toUpperCase();
     } else {
-      if(this.billingForm.get('email').value){
+      if (this.billingForm.get('email').value) {
         const emailWord = this.billingForm.get('email').value
-        if(emailWord[0][0]){
+        if (emailWord[0][0]) {
           return emailWord[0][0].toUpperCase();
-        }else{
+        } else {
           return
         }
       }
-      // return (emailWord[0][0].toUpperCase());
-      // return 'EM';
     }
   }
   userID: any;
@@ -116,7 +103,6 @@ export class ShippingAddressComponent implements OnInit {
     } else {
       const browserLang = this.translateService.getBrowserLang();
       this.currentLanguage = browserLang;
-
       if (this.supportLanguages.includes(browserLang)) {
         this.translateService.use(browserLang);
         this.languageService.setLanguage(browserLang);
@@ -159,7 +145,7 @@ export class ShippingAddressComponent implements OnInit {
     const selectedDate = new Date(event.target.value);
     const today = new Date();
     today.setHours(23, 59, 59, 999); // Set to end of today
-    
+
     if (selectedDate > today) {
       // Clear the field if future date is selected
       this.billingForm.get('date_of_birth')?.setValue('');
@@ -170,24 +156,28 @@ export class ShippingAddressComponent implements OnInit {
       }
     }
   }
-  fetchProfiling() {
-    this.http.getProfilingInformation().subscribe((res) => {
+  fetchProfilingandBilling() {
+    this.http.getProfilingWithBillingInformation().subscribe((res) => {
       const cleanValue = (val: any) => (val === null || val === 'null' ? '' : val);
-  
       this.billingForm.patchValue({
-        first_name: cleanValue(res.first_name),
-        last_name: cleanValue(res.last_name),
-        gender: cleanValue(res.gender),
-        city: cleanValue(res.city),
-        country: cleanValue(res.country) || 'Saudi Arabia',
-        date_of_birth: cleanValue(res.date_of_birth),
-        phone_number: cleanValue(res.phone_number),
-        language: cleanValue(res.language),
-        occupation: cleanValue(res.occupation),
-        about_me: cleanValue(res.about_me),
-        email: cleanValue(res.email),
-        profile_image: res?.profile_image ? res.profile_image.replace(/\\/g, "") : '',
-        password: cleanValue(res.password),
+        first_name: cleanValue(res?.user?.first_name),
+        last_name: cleanValue(res?.user?.last_name),
+        gender: cleanValue(res?.user?.gender),
+        city: cleanValue(res?.user?.city),
+        country: cleanValue(res?.user?.country) || 'Saudi Arabia',
+        date_of_birth: cleanValue(res?.user?.date_of_birth),
+        phone_number: cleanValue(res?.user?.phone_number),
+        language: cleanValue(res?.user?.language),
+        occupation: cleanValue(res?.user?.occupation),
+        about_me: cleanValue(res?.user?.about_me),
+        email: cleanValue(res?.user?.email),
+        profile_image: res?.user?.profile_image ? res?.user?.profile_image.replace(/\\/g, "") : '',
+        password: cleanValue(res?.user?.password),
+        street: cleanValue(res?.user?.billing_information?.street),
+        street_line_2: cleanValue(res?.user?.billing_information?.street_line_2),
+        zip_code: cleanValue(res?.user?.billing_information?.zip_code),
+        billing_address: cleanValue(res?.user?.billing_information?.billing_address),
+        // state: cleanValue(res?.user?.billing_information?.state),
       });
     });
   }
@@ -200,7 +190,7 @@ export class ShippingAddressComponent implements OnInit {
       zip_code: this.zip_code,
       city: this.city,
       country: this.country,
-      state: this.state,
+      // state: this.state,
       first_name: this.first_name,
       last_name: this.last_name,
       gender: this.gender,
@@ -212,13 +202,11 @@ export class ShippingAddressComponent implements OnInit {
       about_me: this.about_me,
       email: this.email,
       password: this.password,
-      profile_image:this.profile_image
-      
+      profile_image: this.profile_image
+
     });
     this.getCityLists('Saudi Arabia');
-
-    this.getBillingInformation();
-    this.fetchProfiling();
+    this.fetchProfilingandBilling();
   }
 
   getCityLists(country) {
@@ -226,114 +214,85 @@ export class ShippingAddressComponent implements OnInit {
       country: country,
     }
     this.http.getCityLists(formData).subscribe((res) => {
-      this.cityLists= res.data;
+      this.cityLists = res.data;
     });
   }
 
 
   dropdownOpen = false;
-selectedCity: any = null;
+  selectedCity: any = null;
 
-toggleDropdown() {
-  this.dropdownOpen = !this.dropdownOpen;
-}
+  toggleDropdown() {
+    this.dropdownOpen = !this.dropdownOpen;
+  }
 
-selectCity(city: any) {
-  this.selectedCity = city;
-  this.dropdownOpen = false;
-  this.billingForm.get('city')?.setValue(city.name); // keep formControlName working
-}
+  selectCity(city: any) {
+    this.selectedCity = city;
+    this.dropdownOpen = false;
+    this.billingForm.get('city')?.setValue(city.name); // keep formControlName working
+  }
 
 
-  getBillingInformation() {
-    const cleanValue = (val: any) => (val === null || val === 'null' ? '' : val);
+  // submitBillingForm() {
+  //   if (this.billingForm.invalid) {
+  //     this.alertService.showAlert("warning", "Please fill all the fields");
+  //   } else {
+  //     this.http.saveProfilingandBillingInformation(this.billingForm.value).subscribe(
+  //       (res) => {
+  //         if (this.translateService.currentLang == "en") {
+  //           this.alertService.showAlert(
+  //             "success",
+  //             "Billing Information Saved Successfully"
+  //           );
+  //         } else {
+  //           this.alertService.showAlert(
+  //             "success",
+  //             "تم حفظ معلومات الفوترة بنجاح"
+  //           );
+  //         }
+  //       },
+  //       (err) => {
+  //         if (this.translateService.currentLang == "en") {
+  //           this.alertService.showAlert(
+  //             "warning",
+  //             "Error in Saving Billing Information"
+  //           );
+  //         } else {
+  //           this.alertService.showAlert(
+  //             "warning",
+  //             "حدث خطأ أثناء حفظ معلومات الفوترة"
+  //           );
+  //         }
+  //       }
+  //     );
+  //   }
+  // }
 
-    this.http.getBillingInformation().subscribe(
-      (res) => {
-        const cityName = cleanValue(res.data.city);
-        this.billingForm.patchValue({
-          first_name: cleanValue(res.data.first_name),
-          last_name: cleanValue(res.data.last_name),
-          street: cleanValue(res.data.street),
-          street_line_2: cleanValue(res.data.street_line_2),
-          zip_code: cleanValue(res.data.zip_code),
-          city: cityName,
-          billing_address: cleanValue(res.data.billing_address),
-          country: 'Saudi Arabia',
-          state: cleanValue(res?.data?.state),
-        });
 
-        if (cityName) {
-          const matchedCity = this.cityLists?.find((c: any) => c.name === cityName);
-          if (matchedCity) {
-            this.selectedCity = matchedCity;
-          } else {
-            // fallback in case city is not found in cityLists
-            this.selectedCity = { name: cityName, flag: "https://flagcdn.com/w20/sa.png" };
-          }
-        }
-      },
-      (err) => {
-        if (this.translateService.currentLang == "en") {
-          this.alertService.showAlert(
-            "warning",
-            "Error in Fetching Billing Information"
-          );
-        } else {
-          this.alertService.showAlert(
-            "warning",
-            "حدث خطأ أثناء جلب معلومات الفوترة"
-          );
+  removeImage(){
+    this.http.removeProfileImage().subscribe(
+      (res)=>{
+        this.alertService.showAlert("success", "Profile image removed Successfully");
+        this.getCityLists('Saudi Arabia');
+        this.fetchProfilingandBilling();
+      },(err)=>{
+        if(err && err?.error?.message){
+          this.alertService.showAlert("warning", `${err?.error?.message}`);
+        }else if(err && err?.message){
+          this.alertService.showAlert("warning", `${err?.message}`);
+        }else{
+          this.alertService.showAlert("warning", "Error in removing Profile Image");
         }
       }
-    );
+    )
   }
-
-
-  submitBillingForm() {
-    if (this.billingForm.invalid) {
-      this.alertService.showAlert("warning", "Please fill all the fields");
-    } else {
-      this.http.saveBillingInformation(this.billingForm.value).subscribe(
-        (res) => {
-          if (this.translateService.currentLang == "en") {
-            this.alertService.showAlert(
-              "success",
-              "Billing Information Saved Successfully"
-            );
-          } else {
-            this.alertService.showAlert(
-              "success",
-              "تم حفظ معلومات الفوترة بنجاح"
-            );
-          }
-        },
-        (err) => {
-          if (this.translateService.currentLang == "en") {
-            this.alertService.showAlert(
-              "warning",
-              "Error in Saving Billing Information"
-            );
-          } else {
-            this.alertService.showAlert(
-              "warning",
-              "حدث خطأ أثناء حفظ معلومات الفوترة"
-            );
-          }
-        }
-      );
-    }
-  }
-
-
-
 
 
   profileFormSubmit() {
     this.billingForm.markAllAsTouched();
     if (this.billingForm.valid) {
       const formData = new FormData();
-      
+
       // Append all form fields to FormData
       Object.keys(this.billingForm.value).forEach(key => {
         if (key === 'profile_image') {
@@ -341,12 +300,15 @@ selectCity(city: any) {
           if (this.selectedProfileImage) {
             formData.append('profile_image', this.selectedProfileImage);
           }
-        } else {
+        } 
+        else {
           formData.append(key, this.billingForm.get(key).value);
         }
       });
 
-      this.http.saveProfilingInformation(formData).subscribe((res) => {
+      formData.append('country',this.billingForm.get('country').value)
+
+      this.http.saveProfilingandBillingInformation(formData).subscribe((res) => {
         if (this.translateService.currentLang == "en") {
           this.alertService.showAlert("success", "Profile Update Successfully");
         } else {

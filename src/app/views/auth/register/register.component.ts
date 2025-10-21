@@ -127,14 +127,14 @@ export class RegisterComponent implements OnInit {
   }
 
   register() {
-    console.log("Calling")
     this.registerForm.markAllAsTouched();
 
     if (this.registerForm.valid) {
-      this.http
-        .register(this.registerForm)
-        .subscribe(
+      this.http.register(this.registerForm).subscribe(
           (response) => {
+            if(response && response?.message){
+              this.alertService.showAlert('success',`${response?.message}`)
+            }
             localStorage.setItem("isLoggedIn", "true");
             localStorage.setItem("user_token", response.authorisation.token);
             localStorage.setItem('userType',response.user.type)
@@ -145,15 +145,21 @@ export class RegisterComponent implements OnInit {
             });
           },
           (error) => {
-            console.error("Registration error", error);
+            if(error && error?.error?.error){
+              this.alertService.showAlert("warning", `${error?.error?.error}`);
+            }else if(error && error?.error?.message){
+              this.alertService.showAlert("warning", `${error?.error?.message}`);
+            }else{
+              this.alertService.showAlert("warning", "Error in Register");
+            }
           }
         );
     } else {
-      if (this.translateService.currentLang == "en") {
-        this.alertService.showAlert("warning", "Please Enter Valid Form Values");
-      }else{
-           this.alertService.showAlert("warning", "يرجى إدخال قيم صحيحة في النموذج");
-      }
+      // if (this.translateService.currentLang == "en") {
+      //   this.alertService.showAlert("warning", "Please Enter Valid Form Values");
+      // }else{
+      //      this.alertService.showAlert("warning", "يرجى إدخال قيم صحيحة في النموذج");
+      // }
     }
   }
 }

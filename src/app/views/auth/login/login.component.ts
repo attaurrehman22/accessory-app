@@ -114,17 +114,23 @@ export class LoginComponent implements OnInit {
           }
         },
         (error) => {
-          if (this.translateService.currentLang == "en") {
-            this.alertService.showAlert(
-              "warning",
-              "You entered an incorrect email or password"
-            );
-          } else {
-            this.alertService.showAlert(
-              "warning",
-              "لقد أدخلت بريدًا إلكترونيًا أو كلمة مرور غير صحيحة"
-            );
-          }
+
+          if(error && error?.error?.error){
+            this.alertService.showAlert("warning", `${error?.error?.error}`);
+          }else if(error && error?.error?.message){
+            this.alertService.showAlert("warning", `${error?.error?.message}`);
+          }else{
+            if (this.translateService.currentLang == "en") {
+              this.alertService.showAlert(
+                "warning",
+                "You entered an incorrect email or password"
+              );
+            } else {
+              this.alertService.showAlert(
+                "warning",
+                "لقد أدخلت بريدًا إلكترونيًا أو كلمة مرور غير صحيحة"
+              );
+            }          }
           console.error("Login error", error);
         }
       );

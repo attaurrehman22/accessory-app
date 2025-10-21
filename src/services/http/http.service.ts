@@ -1410,8 +1410,35 @@ export class HttpService implements OnInit {
     });
   }
 
+  getProfilingWithBillingInformation(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/api/profile/complete`, {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+  }
+
+  saveProfilingandBillingInformation(formData): Observable<any> {
+    return this.http.post(`${this.apiUrl}/api/profile`, formData, {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+  }
+
    saveProfilingInformation(formData): Observable<any> {
     return this.http.post(`${this.apiUrl}/api/profile`, formData, {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+  }
+
+  removeProfileImage(): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/api/profile/remove-image`, {
       headers: {
         Accept: "application/json",
         Authorization: `Bearer ${this.token}`,
