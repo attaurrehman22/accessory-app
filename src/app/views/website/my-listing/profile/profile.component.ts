@@ -24,6 +24,15 @@ export class ProfileComponent implements OnInit{
 
   ngOnInit(): void {
     this.fetchProfiling();
+    this.getSummary()
+  }
+
+  getSummary(){
+    this.http.getSummary().subscribe(
+      (res)=>{
+        console.log("RES",res)
+      }
+    )
   }
 
   profile:any;

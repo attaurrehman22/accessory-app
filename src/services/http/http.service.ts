@@ -1410,6 +1410,15 @@ export class HttpService implements OnInit {
     });
   }
 
+  getSummary(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/api/dashboard/summary`, {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+  }
+
   getProfilingWithBillingInformation(): Observable<any> {
     return this.http.get(`${this.apiUrl}/api/profile/complete`, {
       headers: {
