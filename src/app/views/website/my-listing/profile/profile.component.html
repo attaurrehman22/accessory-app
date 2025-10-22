@@ -1,10 +1,22 @@
 <div class="container-fluid py-4 user-dashboard" [dir]="currentLanguage === 'ar' ? 'rtl' : 'ltr'">
-  <div class="row">
+  <div *ngIf="!isLoading; else skeletonLoader" class="row">
     <!-- Left Sidebar -->
     <div class="col-lg-3 col-md-4 mb-4">
       <div class="card profile-card text-center p-3" style="position: relative;">
         <img src="../../../../../assets/images/mingcute_edit-line.svg" routerLink="/myListing/shipping" style="height: 24px;width: 24px;align-self: end;top: 15px;position: absolute;cursor: pointer;" />
-        <img [src]="apiUrl + profile" alt="Profile" class="profile-img mb-3 mt-2" />
+        <img
+        *ngIf="profile; else noProfile"
+        [src]="apiUrl + profile"
+        alt="Profile"
+        class="profile-img mb-3 mt-2"
+      />
+    
+      <!-- ❌ Agar image nahi hai -->
+      <ng-template #noProfile>
+        <div class="profile-placeholder mb-3 mt-2">
+          {{ email?.slice(0, 2) | uppercase }}
+        </div>
+      </ng-template>
         <p class="font-size-20 font-wight-600 color-242424 margin-0">{{ 'Muhammad Kamran' }} <span class="font-size-14 font-wight-400 color-909090">#12345</span></p>
         <!-- <p class="text-muted">{{ 'Private Seller' | translate }}</p> -->
          <button class="provate-seller-btn mt-1 mb-4">Private Seller</button>
@@ -82,9 +94,20 @@
         <hr style="margin: 5px;" />
         <div class="p-3">
           <div class="d-flex align-items-center justify-content-between">
-            <div class="d-flex gap-2">
-              <img src="assets/watch.jpg" alt="Watch" class="watch-img me-3" />
-              <div>
+            <div class="d-flex gap-2 align-items-center">
+              <img
+              *ngIf="section?.image; else noImage"
+              [src]="apiUrl + section.image"
+              alt="Watch"
+              class="watch-img me-3"
+            />
+            <ng-template #noImage>
+              <div
+                class="watch-placeholder me-3 d-flex align-items-center justify-content-center"
+              >
+                {{ section?.itemTitle?.slice(0, 2) | uppercase }}
+              </div>
+            </ng-template>              <div>
                 <p class="mb-1 fw-bold">{{ section.itemTitle }}</p>
                 <p class="text-muted small mb-1">{{ section.itemDesc }}</p>
                 <span class="badge">{{ section.status | translate }}</span>
@@ -94,13 +117,54 @@
           </div>
         </div>
       </div>
-
-      <!-- Language Switch -->
-      <!-- <div class="text-end mt-3">
-        <button class="btn btn-link" (click)="toggleLang()">
-          {{ currentLanguage === 'en' ? 'AR' : 'EN' }}
-        </button>
-      </div> -->
     </div>
   </div>
+<!-- 🔹 Skeleton Loader -->
+<ng-template #skeletonLoader>
+  <div class="row">
+    <!-- Left Sidebar Skeleton -->
+    <div class="col-lg-3 col-md-4 mb-4">
+      <div class="card p-3 text-center">
+        <div class="skeleton-circle mb-3 mt-2" style="align-self: center;"></div>
+        <div class="skeleton-text-medium mb-2" style="width: 60%; margin: 0 auto;"></div>
+        <div class="skeleton-text-small mb-3" style="width: 40%; margin: 0 auto;"></div>
+        <div class="skeleton-text-medium mb-2" style="width: 80%; margin: 0 auto;"></div>
+        <div class="skeleton-text-medium mb-2" style="width: 70%; margin: 0 auto;"></div>
+        <div class="skeleton-text-small mb-2" style="width: 50%; margin: 0 auto;"></div>
+      </div>
+      <div class="card p-3 text-center">
+        <div class="skeleton-circle mb-3 mt-2" style="align-self: center;"></div>
+        <div class="skeleton-text-medium mb-2" style="width: 60%; margin: 0 auto;"></div>
+        <div class="skeleton-text-small mb-3" style="width: 40%; margin: 0 auto;"></div>
+        <div class="skeleton-text-medium mb-2" style="width: 80%; margin: 0 auto;"></div>
+        <div class="skeleton-text-medium mb-2" style="width: 70%; margin: 0 auto;"></div>
+        <div class="skeleton-text-small mb-2" style="width: 50%; margin: 0 auto;"></div>
+      </div>
+      <div class="card p-3 text-center">
+        <div class="skeleton-circle mb-3 mt-2" style="align-self: center;"></div>
+        <div class="skeleton-text-medium mb-2" style="width: 60%; margin: 0 auto;"></div>
+        <div class="skeleton-text-small mb-3" style="width: 40%; margin: 0 auto;"></div>
+        <div class="skeleton-text-medium mb-2" style="width: 80%; margin: 0 auto;"></div>
+        <div class="skeleton-text-small mb-2" style="width: 70%; margin: 0 auto;"></div>
+        <div class="skeleton-text-small mb-2" style="width: 50%; margin: 0 auto;"></div>
+      </div>
+    </div>
+
+    <!-- Right Content Skeleton -->
+    <div class="col-lg-9 col-md-8">
+      <div class="card mb-3 p-3" *ngFor="let i of [1,2,3,4]">
+        <div class="skeleton-text-medium mb-2" style="width: 40%;"></div>
+        <hr />
+        <div class="d-flex align-items-center">
+          <div class="skeleton-circle me-3"></div>
+          <div style="flex: 1;">
+            <div class="skeleton-text-medium mb-2" style="width: 80%;"></div>
+            <div class="skeleton-text-small mb-2" style="width: 60%;"></div>
+            <div class="skeleton-text-small" style="width: 30%;"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
 </div>

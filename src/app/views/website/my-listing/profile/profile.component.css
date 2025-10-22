@@ -75,7 +75,7 @@
 }
 
 .line-break-class{
-  margin: 9px;
+  margin: 4px;
 }
 
 .form-check-input:checked {
@@ -139,4 +139,71 @@
   .user-dashboard .btn {
     font-size: 14px;
   }
+}
+
+.watch-placeholder {
+  width: 60px;
+  height: 60px;
+  border-radius: 10px;
+  background-color: #e5e7eb;
+  color: #0f172a;
+  font-weight: 600;
+  font-size: 18px;
+  text-transform: uppercase;
+}
+
+.profile-placeholder {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background-color: #e5e7eb;
+  color: #0f172a;
+  font-weight: 600;
+  font-size: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  text-transform: uppercase;
+}
+
+/* Skeleton Animation */
+@keyframes loading {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+/* Skeleton Elements */
+.skeleton-text-small,
+.skeleton-text-medium,
+.skeleton-card-image,
+.skeleton-circle {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+  border-radius: 4px;
+}
+
+.skeleton-text-small {
+  height: 12px;
+}
+
+.skeleton-text-medium {
+  height: 16px;
+}
+
+.skeleton-circle {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+}
+
+.watch-placeholder,
+.profile-placeholder {
+  background-color: #e5e7eb;
+}
+
+/* Optional aesthetic tweaks */
+.card {
+  border-radius: 12px;
 }
