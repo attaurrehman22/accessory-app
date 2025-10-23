@@ -207,3 +207,8 @@
 .card {
   border-radius: 12px;
 }
+
+.card-hover-change-color:hover {
+  background: #F7F7F8;
+  cursor: pointer;
+}

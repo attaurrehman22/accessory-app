@@ -45,6 +45,7 @@ export class ProfileComponent implements OnInit{
           Array.isArray(data) ? data : data ? [data] : [];
   
         const buyOrders = toArray(res?.data?.buy_order).map((order: any) => ({
+          id: order?.id,
           title: 'Buy Orders',
           image: order?.product?.main_image ?  order?.product?.main_image.replace(/\\/g, "") : '',
           itemTitle: order?.product?.title || 'N/A',
@@ -53,6 +54,7 @@ export class ProfileComponent implements OnInit{
         }));
   
         const sellOrders = toArray(res?.data?.sell_order).map((order: any) => ({
+          id: order?.id,
           title: 'Sell Orders', 
           image: order?.product?.main_image ?  order?.product?.main_image.replace(/\\/g, "") : '',
           itemTitle: order?.product?.title || 'N/A',
@@ -61,6 +63,7 @@ export class ProfileComponent implements OnInit{
         }));
   
         const myListings = toArray(res?.data?.my_listing).map((listing: any) => ({
+          id: listing?.id,
           title: 'My Listings',
           image: listing?.main_image ?  listing?.main_image.replace(/\\/g, "") : '',
           itemTitle: listing?.title || 'N/A',
@@ -124,7 +127,9 @@ export class ProfileComponent implements OnInit{
       this.router.navigate(['myListing/sell/order'])
     }
     else if(section.title == 'My Listings'){
-      this.router.navigate(['myListing/listing'])
+      this.router.navigate(["/new-product"], {
+        state: { productID: section.id },
+      });
     }else if(section.title == 'Favorites'){
       this.router.navigate(['myListing/favorite'])
     }
@@ -154,6 +159,21 @@ export class ProfileComponent implements OnInit{
 
   navigateTo(route: string) {
     this.router.navigate([`/${route}`]);
+  }
+
+  goToDetails(section){
+    if(section.title == 'Buy Orders'){
+      this.router.navigate(['/myListing/buy/order/details'], { queryParams: { id: section.id } });
+    }else if(section.title == 'Sell Orders'){
+      this.router.navigate(['/myListing/sell/order/details'], { queryParams: { id: section.id } });
+    }
+    else if(section.title == 'My Listings'){
+      this.router.navigate(["/new-product"], {
+        state: { productID: section.id },
+      });
+    }else if(section.title == 'Favorites'){
+      this.router.navigate(['myListing/favorite'])
+    }
   }
 
   toggleLang() {

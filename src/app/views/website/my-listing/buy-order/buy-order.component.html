@@ -58,7 +58,7 @@
                             <p>{{ "my_Listing.no_image" | translate }}</p>
                         </div>
                     </div>
-                    <div class="main_image_content_div">
+                    <div class="main_image_content_div mx-2">
                         <small class="text-muted mobile-label mobile-label-arabic listing-id-label">
                             Listing ID <span class="span-listing-id-label"> {{ listing?.product?.listing_code || "N/A"
                                 }} </span> | Created
@@ -79,7 +79,6 @@
                             {{ listing?.product?.created_by?.city || "N/A" }}
                         </small>
                     </div>
-
                 </div>
                 <div class="col-1 d-flex justify-content-end">
                     <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="More options">
