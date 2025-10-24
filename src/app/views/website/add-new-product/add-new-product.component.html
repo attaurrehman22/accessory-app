@@ -105,7 +105,7 @@
               <mat-form-field
                 [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'"
                 appearance="outline"
-                class="w-100 mt-2 category-field"
+                class="w-100 mt-2"
               >
                 <mat-label class="label-header">{{
                   "create_product_listing.category" | translate
@@ -134,7 +134,7 @@
                 <!-- Display selected categories as chips -->
                 <div
                   *ngIf="selectedCategories?.controls?.length > 0"
-                  class="selected-categories"
+                  class="selected-categories mt-4"
                 >
                   <mat-chip-list
                     class="d-flex gap-2 flex-wrap"
@@ -154,7 +154,7 @@
                       "
                     >
                       {{ category.value.name }}
-                      <mat-icon matChipRemove>cancel</mat-icon>
+                      <mat-icon class="custom-mat-option" matChipRemove>cancel</mat-icon>
                     </mat-chip>
                   </mat-chip-list>
                 </div>
@@ -218,7 +218,7 @@
               <mat-form-field
                 [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'"
                 appearance="outline"
-                class="w-100 mt-2"
+                class="w-100 mt-5"
               >
                 <mat-label class="label-header">
                   {{ "create_product_listing.model" | translate }}</mat-label
@@ -3522,7 +3522,7 @@
             <mat-form-field
               [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'"
               appearance="outline"
-              class="w-100 mt-2 category-field"
+              class="w-100 mt-2"
             >
               <mat-label class="label-header">{{
                 "create_product_listing.category" | translate
@@ -3539,6 +3539,7 @@
                 [displayWith]="displayCategoryFn"
               >
                 <mat-option
+                
                   [disabled]="isListingCompleted"
                   *ngFor="let option of filteredCategoryOptions | async"
                   [value]="option"
@@ -3625,7 +3626,7 @@
                     "
                   >
                     {{ category.value.name }}
-                    <mat-icon matChipRemove>cancel</mat-icon>
+                    <mat-icon class="custom-mat-option" matChipRemove>cancel</mat-icon>
                   </mat-chip>
                 </mat-chip-list>
               </div>

@@ -2,7 +2,8 @@
   [ngClass]="{ 'arabic-style-form': translateService.currentLang !== 'en' }">
   <!-- Personal Information -->
   <div class="d-flex gap-2 align-items-center">
-    <span routerLink="/myListing" style="cursor: pointer;font-size: 30px;" class="back-icon">&lt;</span>
+    <!-- <span routerLink="/myListing" style="cursor: pointer;font-size: 30px;" class="back-icon">&lt;</span> -->
+    <img routerLink="/myListing" src="../../../../assets/images/prev_btn.svg" alt="img" class="global-back-to-icon-style" />
     <p class="font-size-28 font-wight-600 color-242424 margin-0">{{ "my_Listing.Personal_Information" | translate }}</p>
   </div>
 

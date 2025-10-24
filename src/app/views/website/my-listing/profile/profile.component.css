@@ -212,3 +212,23 @@
   background: #F7F7F8;
   cursor: pointer;
 }
+
+.profile-card {
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+  transform: translateY(0);
+}
+
+.profile-card:hover {
+  /* background: #F7F7F8;
+  cursor: pointer; */
+  transform: translateY(-8px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  background: linear-gradient(145deg, #ffffff, #f8f9fb);
+  border: 1px solid #e0e6ed;
+}
+
+.profile-card:hover img.profile-img {
+  transform: scale(1.05);
+  transition: transform 0.3s ease-in-out;
+}

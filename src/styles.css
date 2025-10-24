@@ -1004,3 +1004,9 @@ td {
   border-bottom-left-radius: 12px;
   height: 117%;
 }
+
+.global-back-to-icon-style {
+  height: 32px !important;
+  width: 32px !important;
+  cursor: pointer;
+}

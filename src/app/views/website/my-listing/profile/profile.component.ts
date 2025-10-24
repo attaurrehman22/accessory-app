@@ -127,9 +127,10 @@ export class ProfileComponent implements OnInit{
       this.router.navigate(['myListing/sell/order'])
     }
     else if(section.title == 'My Listings'){
-      this.router.navigate(["/new-product"], {
-        state: { productID: section.id },
-      });
+      // this.router.navigate(["/new-product"], {
+      //   state: { productID: section.id },
+      // });
+      this.router.navigate(['/myListing/listing'])
     }else if(section.title == 'Favorites'){
       this.router.navigate(['myListing/favorite'])
     }
