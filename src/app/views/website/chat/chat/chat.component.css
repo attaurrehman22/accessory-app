@@ -17,10 +17,19 @@
 .unread-btn {
     background: none;
     border: none;
-    font-size: 19px;
+    font-size: 14px;
     font-weight: 500;
     align-self: flex-start;
     color: #242424;
+    width: 100%;
+    align-self: flex-start;
+    display: flex;
+    height: 30px;
+    align-items: center;
+}
+
+.unread-btn:hover {
+  background: #6A6A6A0D;
 }
 
 .active-bottom-border {
