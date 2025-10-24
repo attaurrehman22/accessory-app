@@ -46,6 +46,11 @@ export class BuyOrderDetailsComponent implements OnInit{
   logisticsPartner: any;
   isLoading: boolean = true;
   hasLoadedOnce: boolean = false;
+  showInvoice = false;
+
+  downloadInvoice() {
+    window.print(); // simple print option — can be replaced with html2pdf.js later
+  }
 
   constructor(private route: ActivatedRoute,private hoverStateService: HoverStateService,
     private http: HttpService,
@@ -71,6 +76,15 @@ export class BuyOrderDetailsComponent implements OnInit{
     }
   }
   intervalId: any;
+
+  getShippingPriceWithVAT(value: any): number {
+    const numericValue = parseFloat(value) || 0; // convert to number safely
+    const vat = numericValue * 0.02; // 2% VAT
+    console.log("VAT",vat)
+    console.log("numericValue",numericValue)
+    return +(vat).toFixed(2); // return total with 2 decimal places
+  }
+  
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
@@ -640,6 +654,20 @@ export class BuyOrderDetailsComponent implements OnInit{
     this.hoverStateService.setHoverState(this.isHoverModel);
     this.showBuyerandSellerProofOfOwnerShipReadOnlyModal = false;
   }
+
+  openInvoice(){
+
+  }
+
+  hasDeliveredOrSoldStatus(): boolean {
+    if (!this.activeBuyerStatuses || this.activeBuyerStatuses.length === 0) return false;
+  
+    return this.activeBuyerStatuses.some(
+      status =>
+        status.label === 'Order Delivered' || status.label === 'Order Sold'
+    );
+  }
+  
 
     // for buyer
     statuses = [

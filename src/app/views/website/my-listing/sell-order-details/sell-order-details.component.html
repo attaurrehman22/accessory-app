@@ -44,7 +44,7 @@
                         </p>
                     </div>
                     <div class="d-flex flex-wrap gap-2 justify-content-end">
-                        <button class="action-btn">Invoice</button>
+                        <button class="action-btn" (click)="showInvoice = true" *ngIf="hasDeliveredOrSoldStatus()">Invoice</button>
                         <button (click)="routeToChat()" class="action-btn">Open Chat</button>
                     </div>
                 </div>
@@ -622,3 +622,89 @@
         </div>
     </div>
 </div>
+
+
+
+<div class="overlay" *ngIf="showInvoice">
+    <div class="invoice-modal">
+      <div class="invoice-header">
+        <h2>Invoice</h2>
+        <button class="close-btn" (click)="showInvoice = false">&times;</button>
+      </div>
+  
+      <div class="invoice-body">
+        <div class="invoice-section company-info">
+          <img style="width: 190px !important;" src="./assets/images/logo.svg" alt="Logo" class="logo" />
+          <div>
+            <h3>ChronoSouq</h3>
+            <p class="margin-0">{{selectedSellOrderDetails[0]?.product?.title}}</p>
+            <p class="margin-0"><b>Date:</b> {{ selectedSellOrderDetails[0]?.status_updated_at | date: 'mediumDate' }}</p>
+            <p class="margin-0"><b>Invoice No:</b> {{ selectedSellOrderDetails[0]?.id }}</p>
+          </div>
+        </div>
+  
+        <hr />
+  
+        <div class="invoice-section">
+          <h4>Customer Details</h4>
+          <p><b>Name:</b> {{ selectedSellOrderDetails[0]?.product?.created_by?.name }}</p>
+          <p><b>Country:</b> {{ selectedSellOrderDetails[0]?.product?.created_by?.country | uppercase }}</p>
+          <p><b>Shipping Address:</b> {{ selectedSellOrderDetails[0]?.shipping_address }}</p>
+        </div>
+  
+        <div class="invoice-section product-details">
+          <h4>Product Details</h4>
+          <div class="product-box">
+            <img
+              [src]="apiUrl + selectedSellOrderDetails[0]?.product?.main_image"
+              alt="Product"
+              class="product-image"
+            />
+            <div class="product-info">
+              <p class="margin-0"><b>Product:</b> {{ selectedSellOrderDetails[0]?.product?.title }}</p>
+              <p class="margin-0"><b>Brand:</b> {{ selectedSellOrderDetails[0]?.product?.brand?.name }}</p>
+              <p class="margin-0"><b>Model:</b> {{ selectedSellOrderDetails[0]?.product?.model }}</p>
+              <p class="margin-0"><b>Condition:</b> {{ selectedSellOrderDetails[0]?.product?.condition }}</p>
+            </div>
+          </div>
+        </div>
+  
+        <div class="invoice-section">
+          <h4>Order Summary</h4>
+          <table class="summary-table">
+            <tr>
+              <td>Listing Price:</td>
+              <td>{{ selectedSellOrderDetails[0]?.listing_price | currency: 'USD' }}</td>
+            </tr>
+            <tr>
+              <td>VAT ({{ selectedSellOrderDetails[0]?.vat_percentage }}%):</td>
+              <td>{{ selectedSellOrderDetails[0]?.vat_amount | currency: 'USD' }}</td>
+            </tr>
+            <tr class="total-row">
+              <td><b>Total:</b></td>
+              <td><b>{{ selectedSellOrderDetails[0]?.final_price | currency: 'USD' }}</b></td>
+            </tr>
+          </table>
+        </div>
+  
+        <div class="invoice-section">
+          <h4>Shipping Details</h4>
+          <p class="margin-0"><b>Partner:</b> {{ selectedSellOrderDetails[0]?.shipping_partner || "N/A"}}</p>
+          <p class="margin-0"><b>Tracking ID:</b> {{ selectedSellOrderDetails[0]?.shipping_tracking_id || "N/A" }}</p>
+          <p class="margin-0"><b>Status:</b> {{ selectedSellOrderDetails[0]?.status | titlecase }}</p>
+        </div>
+  
+        <div class="invoice-footer">
+          <p>Thank you for shopping with ChronoSouq!</p>
+          <small>This is a system-generated invoice.</small>
+        </div>
+      </div>
+  
+      <div class="d-flex gap-2 mt-3 align-items-center justify-content-center">
+        <button  class="btn btn-outline-dark"
+        style="height: 45px; font-size: 18px; font-weight: 400;min-width: 120px;"(click)="showInvoice = false">Close</button>
+        <button class="btn btn-dark"
+        style="height: 45px; font-size: 18px; font-weight: 400;min-width: 120px" (click)="downloadInvoice()">Download PDF</button>
+      </div>
+    </div>
+  </div>
