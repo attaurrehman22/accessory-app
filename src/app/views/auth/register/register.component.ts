@@ -134,15 +134,18 @@ export class RegisterComponent implements OnInit {
           (response) => {
             if(response && response?.message){
               this.alertService.showAlert('success',`${response?.message}`)
+              this.router.navigate(['/login'])
+            }else{
+              localStorage.setItem("isLoggedIn", "true");
+              localStorage.setItem("user_token", response?.authorisation?.token);
+              localStorage.setItem('userType',response?.user?.type)
+              localStorage.setItem("userID", response?.user?.id);
+              // this.router.navigateByUrl("");
+              this.router.navigateByUrl("").then(() => {
+                window.location.reload();
+              });
             }
-            localStorage.setItem("isLoggedIn", "true");
-            localStorage.setItem("user_token", response.authorisation.token);
-            localStorage.setItem('userType',response.user.type)
-            localStorage.setItem("userID", response.user.id);
-            // this.router.navigateByUrl("");
-            this.router.navigateByUrl("").then(() => {
-              window.location.reload();
-            });
+           
           },
           (error) => {
             if(error && error?.error?.error){

@@ -26,7 +26,7 @@ export class ProfileComponent implements OnInit{
   phone:any;
   city:any;
   isLoading: boolean = true;
-
+userName:any;
   ngOnInit(): void {
     this.getSummary()
   }
@@ -40,6 +40,9 @@ export class ProfileComponent implements OnInit{
         this.email = res?.data?.profile?.email;
         this.phone = res?.data?.profile?.phone_number;
         this.city = res?.data?.profile?.city;
+        if(res?.data?.profile?.first_name ){
+          this.userName =  res?.data?.profile?.first_name + ' ' + res?.data?.profile?.last_name
+        }
 
         const toArray = (data: any) =>
           Array.isArray(data) ? data : data ? [data] : [];

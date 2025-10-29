@@ -17,7 +17,7 @@
             <!-- <a [disableRipple]="true" mat-menu-item class="custom-btn a-custom-style">
               {{ "header.admin_pannel" | translate }}
             </a> -->
-            <button class="unread-btn">
+            <button (click)="showAllMessages()" class="unread-btn">
               All Messages
             </button>
 

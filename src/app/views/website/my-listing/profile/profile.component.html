@@ -17,7 +17,9 @@
           {{ email?.slice(0, 2) | uppercase }}
         </div>
       </ng-template>
-        <p class="font-size-20 font-wight-600 color-242424 margin-0">{{ 'Muhammad Kamran' }} <span class="font-size-14 font-wight-400 color-909090">#12345</span></p>
+        <p *ngIf="userName" class="font-size-20 font-wight-600 color-242424 margin-0">{{ userName }} <span class="font-size-14 font-wight-400 color-909090">#12345</span></p>
+        <p *ngIf="!userName" class="font-size-20 font-wight-600 color-242424 margin-0">{{ email?.slice(0, 2) | uppercase }} <span class="font-size-14 font-wight-400 color-909090">#12345</span></p>
+
         <!-- <p class="text-muted">{{ 'Private Seller' | translate }}</p> -->
          <button class="provate-seller-btn mt-1 mb-4">Private Seller</button>
 

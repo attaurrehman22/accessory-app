@@ -53,7 +53,7 @@
             <p class="font-size-16 font-wight-400 color-242424 margin-0">Price Alert</p>
         </div>
         <div class="form-check form-switch">
-            <input class="form-check-input" type="checkbox" id="notifications" [(ngModel)]="notifications" />
+            <input class="form-check-input" type="checkbox" id="notifications"   (change)="onNotificationToggle($event)" [(ngModel)]="notifications" />
         </div>
     </div>
 
