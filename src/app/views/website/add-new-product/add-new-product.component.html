@@ -105,7 +105,7 @@
               <mat-form-field
                 [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'"
                 appearance="outline"
-                class="w-100 mt-2"
+                class="w-100 mt-2 custom-height-for-cateegories"
               >
                 <mat-label class="label-header">{{
                   "create_product_listing.category" | translate
@@ -137,7 +137,7 @@
                   class="selected-categories mt-4"
                 >
                   <mat-chip-list
-                    class="d-flex gap-2 flex-wrap"
+                    class="d-flex gap-2"
                     #chipList
                     aria-label="{{
                       'create_product_listing.category_selection' | translate
@@ -158,7 +158,7 @@
                     </mat-chip>
                   </mat-chip-list>
                 </div>
-                <mat-hint>{{
+                <mat-hint class="custom-hint-style">{{
                   "create_product_listing.category_limit_5" | translate
                 }}</mat-hint>
                 <mat-error
@@ -316,7 +316,7 @@
               <mat-form-field
                 [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'"
                 appearance="outline"
-                class="w-100 mt-2"
+                class="w-100 mt-3"
               >
                 <mat-label class="label-header">{{
                   "create_product_listing.watchtype" | translate
@@ -411,6 +411,7 @@
                 [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'"
                 formControlName="approximate_year"
                 (change)="onApproximateYearChange($event)"
+                class="mt-3"
               >
                 <label
                   class="mdc-label"
@@ -424,6 +425,7 @@
                 [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'"
                 formControlName="unknown"
                 (change)="onUnknownChange($event)"
+                class="mt-3"
               >
                 <label
                   class="mdc-label"
@@ -743,7 +745,7 @@
               </div>
 
               <div style="padding: 0 0 0 0">
-                <p>
+                <p class="additional-label-style">
                   <strong>{{
                     "create_product_listing.additional_information" | translate
                   }}</strong>
@@ -910,7 +912,7 @@
                               *ngIf="no_of_jewels.hasError('pattern')"
                             >
                               {{
-                                "create_product_listing.no_of_jewels_error"
+                                "create_product_listing.no_of_jewels_pattern"
                                   | translate
                               }}
                             </mat-error>
@@ -1409,7 +1411,7 @@
             ✓
           </div>
 
-          <div class="step-content">
+          <div class="step-content w-100">
             <strong
               style="cursor: pointer"
               (click)="moveToForm('uploadImages')"
@@ -1456,11 +1458,12 @@
 
                   <!-- Image Previews -->
                   <div
-                    class="d-flex flex-wrap"
+                    class="d-flex image-scroll-wrapper"
                     [ngClass]="{
                       'reverse-order-upload-media':
                         translateService.currentLang !== 'en'
                     }"
+                    
                     *ngIf="allImages?.length > 0"
                   >
                     <div
@@ -3576,7 +3579,7 @@
                   </mat-chip>
                 </mat-chip-list>
               </div> -->
-              <mat-hint>{{
+              <mat-hint class="custom-hint-style">{{
                 "create_product_listing.category_limit_5" | translate
               }}</mat-hint>
               <mat-error
@@ -3609,7 +3612,7 @@
                 style="margin: 10px 10px 10px 10px !important;"
               >
                 <mat-chip-list
-                  class="d-flex gap-2 flex-wrap"
+                  class="d-flex gap-2"
                   #chipList
                   aria-label="{{
                     'create_product_listing.category_selection' | translate
