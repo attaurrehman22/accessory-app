@@ -21,30 +21,30 @@
         <p *ngIf="!userName" class="font-size-20 font-wight-600 color-242424 margin-0">{{ email?.slice(0, 2) | uppercase }} <span class="font-size-14 font-wight-400 color-909090">#12345</span></p>
 
         <!-- <p class="text-muted">{{ 'Private Seller' | translate }}</p> -->
-         <button class="provate-seller-btn mt-1 mb-4">Private Seller</button>
+         <button class="provate-seller-btn mt-1 mb-4">{{ 'profile.private_seller' | translate }}</button>
 
-        <p class="light-label-class">Email</p>
+        <p class="light-label-class">{{ 'profile.email' | translate }}</p>
         <p class="dark-label-class">{{email}}</p>
         <hr class="line-break-class" />
-        <p class="light-label-class">Phone</p>
+        <p class="light-label-class">{{ 'profile.phone' | translate }}</p>
         <p class="dark-label-class">{{phone}}</p>
         <!-- <p class="font-size-14 font-wight-400 color-6a6a6a"><strong>{{ 'Phone:' | translate }}</strong> {{phone}}</p> -->
         <hr class="line-break-class" />
-        <p class="light-label-class">City</p>
+        <p class="light-label-class">{{ 'profile.city' | translate }}</p>
         <p class="dark-label-class">{{city}}</p>
         <!-- <p class="font-size-14 font-wight-400 color-6a6a6a"><strong>{{ 'City:' | translate }}</strong> {{city}}</p> -->
       </div>
 
       <div class="card p-3 mt-3">
         <img src="../../../../../assets/images/stay-in-touch.svg" alt="Profile" class="stay-alert-img mb-3" />
-        <p class="font-size-20 font-wight-600 color-242424 margin-0" style="align-self: center;">Stay in Touch</p>
+        <p class="font-size-20 font-wight-600 color-242424 margin-0" style="align-self: center;">{{ 'profile.stay_in_touch' | translate }}</p>
         <p class="font-size-14 font-wight-400 color-909090 margin-0" style="text-align: center;width: 80%;align-self: center;">
-          Get emails about watches, exciting offers and helpful information about ChronoSouq.
+          {{ 'profile.stay_in_touch_description' | translate }}
         </p>
         <div class="notofication-card mb-2 mt-3">
           <div class="d-flex gap-2">
             <img src="../../../../../assets/images/proicons_bell.svg" alt="Profile" class="second-card-label-img" />
-            <p class="font-size-16 font-wight-400 color-242424 margin-0">Notifications</p>
+            <p class="font-size-16 font-wight-400 color-242424 margin-0">{{ 'profile.notifications' | translate }}</p>
           </div>
           <div class="form-check form-switch">
             <input
@@ -58,7 +58,7 @@
         <div class="notofication-card">
           <div class="d-flex gap-2">
             <img src="../../../../../assets/images/black_mylisting.svg" alt="Profile" class="second-card-label-img" />
-            <p class="font-size-16 font-wight-400 color-242424 margin-0">Promotions Newsletter</p>
+            <p class="font-size-16 font-wight-400 color-242424 margin-0">{{ 'profile.promotions_newsletter' | translate }}</p>
           </div>
           <div class="form-check form-switch">
             <input
@@ -73,15 +73,15 @@
 
       <div class="card p-3 mt-3 text-center">
         <img src="../../../../../assets/images/arcticons_amazon-seller.svg" alt="Profile" class="stay-alert-img mb-3" />
-        <p class="font-size-20 font-wight-600 color-242424 margin-0" style="align-self: center;">List Your Watch Now</p>
+        <p class="font-size-20 font-wight-600 color-242424 margin-0" style="align-self: center;">{{ 'profile.list_your_watch_now' | translate }}</p>
         <p class="font-size-14 font-wight-400 color-909090 margin-0" style="text-align: center;width: 75%;align-self: center;">
-          Become a seller to start selling your beautiful antiques.
+          {{ 'profile.become_seller_description' | translate }}
         </p>
         <button class="dealer-btn mt-3" (click)="navigateTo('dealer')">
-          {{ 'Become a Dealer' | translate }}
+          {{ 'profile.become_a_dealer' | translate }}
         </button>
         <button class="seller-btn mt-3" (click)="navigateTo('private-seller')">
-          {{ 'Become Private Seller' | translate }}
+          {{ 'profile.become_private_seller' | translate }}
         </button>
       </div>
     </div>
@@ -90,7 +90,7 @@
     <div class="col-lg-9 col-md-8 for-reverse">
       <div class="card mb-3 p-2" *ngFor="let section of sections">
         <div class="d-flex align-items-center mb-2">
-          <p class="font-size-28 font-wight-600 color-242424 margin-0 mx-2">{{ section.title}}</p>
+          <p class="font-size-28 font-wight-600 color-242424 margin-0 mx-2">{{ section.titleKey ? (section.titleKey | translate) : section.title }}</p>
           <!-- <button class="btn btn-outline-secondary btn-sm">{{ 'View All' | translate }}</button> -->
         </div>
         <hr style="margin: 5px;" />
@@ -113,10 +113,10 @@
               <div>
                 <p [ngClass]="{ 'reverse-order-profile-for-text': translateService.currentLang !== 'en' }" class="mb-1 fw-bold">{{ section.itemTitle }}</p>
                 <p [ngClass]="{ 'reverse-order-profile-for-text': translateService.currentLang !== 'en' }" class="text-muted small mb-1">{{ section.itemDesc }}</p>
-                <span [ngClass]="{ 'reverse-order-profile-for-span': translateService.currentLang !== 'en' }" class="badge">{{ section.status | translate }}</span>
+                <span [ngClass]="{ 'reverse-order-profile-for-span': translateService.currentLang !== 'en' }" class="badge">{{ section.status }}</span>
               </div>
             </div>
-            <button class="view-all-btn" (click)="viewAllFor(section)">View All</button>
+            <button class="view-all-btn" (click)="viewAllFor(section)">{{ 'profile.view_all' | translate }}</button>
           </div>
         </div>
       </div>

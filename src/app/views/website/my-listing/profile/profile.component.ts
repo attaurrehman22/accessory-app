@@ -49,36 +49,36 @@ userName:any;
   
         const buyOrders = toArray(res?.data?.buy_order).map((order: any) => ({
           id: order?.id,
-          title: 'Buy Orders',
+          titleKey: 'profile.buy_orders',
           image: order?.product?.main_image ?  order?.product?.main_image.replace(/\\/g, "") : '',
           itemTitle: order?.product?.title || 'N/A',
-          itemDesc: `Order ID ${order?.order_id || 'N/A'} | ${this.timeAgo(order?.created_at)}`,
+          itemDesc: `${this.translateService.instant('profile.order_id')} ${order?.order_id || 'N/A'} | ${this.timeAgo(order?.created_at)}`,
           status: this.mapStatus(order?.status)
         }));
   
         const sellOrders = toArray(res?.data?.sell_order).map((order: any) => ({
           id: order?.id,
-          title: 'Sell Orders', 
+          titleKey: 'profile.sell_orders', 
           image: order?.product?.main_image ?  order?.product?.main_image.replace(/\\/g, "") : '',
           itemTitle: order?.product?.title || 'N/A',
-          itemDesc: `Order ID ${order?.order_id || 'N/A'} | ${this.timeAgo(order?.created_at)}`,
+          itemDesc: `${this.translateService.instant('profile.order_id')} ${order?.order_id || 'N/A'} | ${this.timeAgo(order?.created_at)}`,
           status: this.mapStatus(order?.status)
         }));
   
         const myListings = toArray(res?.data?.my_listing).map((listing: any) => ({
           id: listing?.id,
-          title: 'My Listings',
+          titleKey: 'profile.my_listings',
           image: listing?.main_image ?  listing?.main_image.replace(/\\/g, "") : '',
           itemTitle: listing?.title || 'N/A',
-          itemDesc: `Listing ID ${listing?.id || 'N/A'} | ${this.timeAgo(listing?.created_at)}`,
-          status: listing?.sale_status === 'for_sale' ? 'Active' : 'Inactive'
+          itemDesc: `${this.translateService.instant('profile.listing_id')} ${listing?.id || 'N/A'} | ${this.timeAgo(listing?.created_at)}`,
+          status: listing?.sale_status === 'for_sale' ? this.translateService.instant('profile.active') : this.translateService.instant('profile.inactive')
         }));
   
         const favorites = toArray(res?.data?.favorite).map((fav: any) => ({
-          title: 'Favorites',
+          titleKey: 'profile.favorites',
           image: fav?.product?.main_image ?  fav?.product?.main_image.replace(/\\/g, "") : '',
           itemTitle: `${fav?.product?.brand?.name || ''} | ${fav?.product?.model || ''}`,
-          itemDesc: 'Available At An Unbeatable Price, This Watch Is In Excellent Condition!',
+          itemDesc: this.translateService.instant('profile.favorite_description'),
           status: ''
         }));
   
@@ -100,41 +100,56 @@ userName:any;
     const hours = Math.floor(minutes / 60);
     const days = Math.floor(hours / 24);
 
-    if (days > 7) return `${Math.floor(days / 7)} week ago`;
-    if (days >= 1) return `${days} day${days > 1 ? 's' : ''} ago`;
-    if (hours >= 1) return `${hours} hour${hours > 1 ? 's' : ''} ago`;
-    if (minutes >= 1) return `${minutes} minute${minutes > 1 ? 's' : ''} ago`;
-    return 'Just now';
+    if (days > 7) {
+      const weeks = Math.floor(days / 7);
+      return weeks === 1 ? this.translateService.instant('profile.week_ago', { weeks }) : this.translateService.instant('profile.weeks_ago', { weeks });
+    }
+    if (days >= 1) {
+      return days === 1 ? this.translateService.instant('profile.day_ago', { days }) : this.translateService.instant('profile.days_ago', { days });
+    }
+    if (hours >= 1) {
+      return hours === 1 ? this.translateService.instant('profile.hour_ago', { hours }) : this.translateService.instant('profile.hours_ago', { hours });
+    }
+    if (minutes >= 1) {
+      return minutes === 1 ? this.translateService.instant('profile.minute_ago', { minutes }) : this.translateService.instant('profile.minutes_ago', { minutes });
+    }
+    return this.translateService.instant('profile.just_now');
   }
 
   mapStatus(status: string): string {
+    // change the status to the translation
     switch (status) {
       case 'initiated':
-        return 'Order Confirmation';
+        return this.translateService.instant('profile.order_confirmation');
       case 'pending_payment':
-        return 'Pending Payment';
+        return this.translateService.instant('profile.pending_payment');
       case 'completed':
-        return 'Completed';
-      default:
-        return status || '';
+        return this.translateService.instant('profile.completed');
     }
+    return this.translateService.instant('profile.order_confirmation');
   }
   
   sections:any = [  ];
 
   viewAllFor(section){
     console.log("Section",section)
-    if(section.title == 'Buy Orders'){
+    const buyOrdersKey = 'profile.buy_orders';
+    const sellOrdersKey = 'profile.sell_orders';
+    const myListingsKey = 'profile.my_listings';
+    const favoritesKey = 'profile.favorites';
+    const key = section.titleKey;
+
+    if(key == buyOrdersKey){
       this.router.navigate(['myListing/buy/order'])
-    }else if(section.title == 'Sell Orders'){
+    }else if(key == sellOrdersKey){
       this.router.navigate(['myListing/sell/order'])
     }
-    else if(section.title == 'My Listings'){
+    else if(key == myListingsKey){
       // this.router.navigate(["/new-product"], {
       //   state: { productID: section.id },
       // });
       this.router.navigate(['/myListing/listing'])
-    }else if(section.title == 'Favorites'){
+    }else if(key == favoritesKey){
       this.router.navigate(['myListing/favorite'])
     }
   }
@@ -166,16 +181,22 @@ userName:any;
   }
 
   goToDetails(section){
-    if(section.title == 'Buy Orders'){
+    const buyOrdersKey = 'profile.buy_orders';
+    const sellOrdersKey = 'profile.sell_orders';
+    const myListingsKey = 'profile.my_listings';
+    const favoritesKey = 'profile.favorites';
+    const key = section.titleKey;
+
+    if(key == buyOrdersKey){
       this.router.navigate(['/myListing/buy/order/details'], { queryParams: { id: section.id } });
-    }else if(section.title == 'Sell Orders'){
+    }else if(key == sellOrdersKey){
       this.router.navigate(['/myListing/sell/order/details'], { queryParams: { id: section.id } });
     }
-    else if(section.title == 'My Listings'){
+    else if(key == myListingsKey){
       this.router.navigate(["/new-product"], {
         state: { productID: section.id },
       });
-    }else if(section.title == 'Favorites'){
+    }else if(key == favoritesKey){
       this.router.navigate(['myListing/favorite'])
     }
   }
