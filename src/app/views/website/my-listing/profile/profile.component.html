@@ -111,9 +111,9 @@
               </div>
             </ng-template>              
               <div>
-                <p [ngClass]="{ 'reverse-order-profile-for-text': translateService.currentLang !== 'en' }" class="mb-1 fw-bold">{{ section.itemTitle }}</p>
-                <p [ngClass]="{ 'reverse-order-profile-for-text': translateService.currentLang !== 'en' }" class="text-muted small mb-1">{{ section.itemDesc }}</p>
-                <span [ngClass]="{ 'reverse-order-profile-for-span': translateService.currentLang !== 'en' }" class="badge">{{ section.status }}</span>
+                <p [ngClass]="{ 'reverse-order-profile-for-text': translateService.currentLang !== 'en' }" class="mb-1 fw-bold small-screen-order-profile-for-text">{{ section.itemTitle }}</p>
+                <p [ngClass]="{ 'reverse-order-profile-for-text': translateService.currentLang !== 'en' }" class="text-muted small mb-1 small-screen-order-profile-for-text">{{ section.itemDesc }}</p>
+                <span [ngClass]="{ 'reverse-order-profile-for-span': translateService.currentLang !== 'en' }" class="badge small-screen-order-profile-for-text">{{ section.status }}</span>
               </div>
             </div>
             <button class="view-all-btn" (click)="viewAllFor(section)">{{ 'profile.view_all' | translate }}</button>

@@ -139,6 +139,15 @@
   .user-dashboard .btn {
     font-size: 14px;
   }
+
+  .view-all-btn{
+    font-size: 10px;
+  font-weight: 500;
+  }
+
+  .small-screen-order-profile-for-text{
+    font-size: 12px;
+  }
 }
 
 .watch-placeholder {
