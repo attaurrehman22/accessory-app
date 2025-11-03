@@ -957,6 +957,13 @@ td {
 
 /* ----------------------------------  Global Product Cards Styles End here ------------------------------ */
 
+.global-label-style-for-profiling {
+  font-size: 28px;
+  font-weight: 600;
+  color: #242424;
+  margin: 0;
+}
+
 .login-hover-btn {
   width: auto !important;
   padding: 0 !important;
@@ -973,6 +980,10 @@ td {
 
   .search-icon-for-mobile {
     width: 20px !important;
+  }
+
+  .global-label-style-for-profiling {
+    font-size: 18px;
   }
 }
 
