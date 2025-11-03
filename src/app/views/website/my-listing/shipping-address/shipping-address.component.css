@@ -92,3 +92,11 @@
         font-size: 10px !important;
       }
  }
+
+ .submit-btn-div {
+  text-align: end;
+ }
+
+ .arabic-submit-btn-div {
+  text-align: left;
+ }

@@ -361,7 +361,7 @@
 
 
 
-  <div class="text-end">
+  <div class="submit-btn-div" [ngClass]="{ 'arabic-submit-btn-div': translateService.currentLang !== 'en' }">
     <button class="submit-btn">{{ "my_Listing.Save_Changes" | translate }}</button>
   </div>
 </form>

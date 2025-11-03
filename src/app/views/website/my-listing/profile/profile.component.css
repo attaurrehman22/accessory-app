@@ -232,3 +232,43 @@
   transform: scale(1.05);
   transition: transform 0.3s ease-in-out;
 }
+
+.reverse-order-profile {
+  flex-direction: row-reverse;
+}
+
+.reverse-order-profile > .mb-4 > .profile-card > .light-label-class {
+  align-self: end;
+}
+
+.reverse-order-profile > .mb-4 > .profile-card > .dark-label-class {
+  align-self: end;
+}
+
+.reverse-order-profile > .mb-4 > .card > .notofication-card {
+ flex-direction: row-reverse;
+}
+
+.reverse-order-profile > .mb-4 > .card > .notofication-card > .gap-2 {
+  flex-direction: row-reverse;
+ }
+
+ .reverse-order-profile > .for-reverse > .card > .d-flex{
+  flex-direction: row-reverse;
+}
+
+.reverse-order-profile > .for-reverse > .card > .p-2 > .d-flex{
+  flex-direction: row-reverse;
+}
+
+.reverse-order-profile > .for-reverse > .card > .p-2 > .d-flex > .d-flex {
+  flex-direction: row-reverse;
+}
+
+.reverse-order-profile-for-text{
+  text-align: end;
+}
+
+.reverse-order-profile-for-span{
+  align-self: end;
+}

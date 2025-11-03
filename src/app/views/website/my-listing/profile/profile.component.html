@@ -1,5 +1,5 @@
 <div class="container-fluid py-4 user-dashboard" [dir]="currentLanguage === 'ar' ? 'rtl' : 'ltr'">
-  <div *ngIf="!isLoading; else skeletonLoader" class="row">
+  <div *ngIf="!isLoading; else skeletonLoader" class="row" [ngClass]="{ 'reverse-order-profile': translateService.currentLang !== 'en' }">
     <!-- Left Sidebar -->
     <div class="col-lg-3 col-md-4 mb-4">
       <div class="card profile-card text-center p-3" style="position: relative;cursor: pointer;" routerLink="/myListing/shipping">
@@ -87,9 +87,9 @@
     </div>
 
     <!-- Right Content -->
-    <div class="col-lg-9 col-md-8">
+    <div class="col-lg-9 col-md-8 for-reverse">
       <div class="card mb-3 p-2" *ngFor="let section of sections">
-        <div class="d-flex justify-content-between align-items-center mb-2">
+        <div class="d-flex align-items-center mb-2">
           <p class="font-size-28 font-wight-600 color-242424 margin-0 mx-2">{{ section.title}}</p>
           <!-- <button class="btn btn-outline-secondary btn-sm">{{ 'View All' | translate }}</button> -->
         </div>
@@ -109,10 +109,11 @@
               >
                 {{ section?.itemTitle?.slice(0, 2) | uppercase }}
               </div>
-            </ng-template>              <div>
-                <p class="mb-1 fw-bold">{{ section.itemTitle }}</p>
-                <p class="text-muted small mb-1">{{ section.itemDesc }}</p>
-                <span class="badge">{{ section.status | translate }}</span>
+            </ng-template>              
+              <div>
+                <p [ngClass]="{ 'reverse-order-profile-for-text': translateService.currentLang !== 'en' }" class="mb-1 fw-bold">{{ section.itemTitle }}</p>
+                <p [ngClass]="{ 'reverse-order-profile-for-text': translateService.currentLang !== 'en' }" class="text-muted small mb-1">{{ section.itemDesc }}</p>
+                <span [ngClass]="{ 'reverse-order-profile-for-span': translateService.currentLang !== 'en' }" class="badge">{{ section.status | translate }}</span>
               </div>
             </div>
             <button class="view-all-btn" (click)="viewAllFor(section)">View All</button>
