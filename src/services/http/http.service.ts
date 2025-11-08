@@ -54,7 +54,6 @@ export class HttpService implements OnInit {
     });
   }
 
-
   sendEmail(formData: any): Observable<any> {
     const url = `${this.apiUrl}/api/forgot-password`;
     return this.http.post(url, formData);
@@ -64,7 +63,6 @@ export class HttpService implements OnInit {
     const url = `${this.apiUrl}/api/reset-password`;
     return this.http.post(url, formData);
   }
-
 
   changePassword(formData): Observable<any> {
     const url = `${this.apiUrl}/api/profile/change-password`;
@@ -90,7 +88,9 @@ export class HttpService implements OnInit {
   }
 
   getProductsByCategory(queryString: any) {
-    return this.http.get(`${this.apiUrl}/api/search-product-by/?${queryString}`);
+    return this.http.get(
+      `${this.apiUrl}/api/search-product-by/?${queryString}`
+    );
   }
 
   searchedProducts(name: any) {
@@ -326,58 +326,85 @@ export class HttpService implements OnInit {
   }
 
   saveWatchOfTheDay(formData): Observable<any> {
-    return this.http.post(`${this.apiUrl}/api/admin/watch-of-the-day/set`, formData, {
-      headers: {
-        Accept: "application/json",
-        Authorization: `Bearer ${this.token}`,
-      },
-    });
+    return this.http.post(
+      `${this.apiUrl}/api/admin/watch-of-the-day/set`,
+      formData,
+      {
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${this.token}`,
+        },
+      }
+    );
   }
 
   updateWatchOfTheDay(formData): Observable<any> {
-    return this.http.post(`${this.apiUrl}/api/admin/watch-of-the-day/update`, formData, {
-      headers: {
-        Accept: "application/json",
-        Authorization: `Bearer ${this.token}`,
-      },
-    });
+    return this.http.post(
+      `${this.apiUrl}/api/admin/watch-of-the-day/update`,
+      formData,
+      {
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${this.token}`,
+        },
+      }
+    );
   }
 
-  removeWatchOfTheDay(ID:any): Observable<any> {
-    return this.http.delete(`${this.apiUrl}/api/admin/watch-of-the-day/delete/${ID}`, {
-      headers: {
-        Accept: "application/json",
-        Authorization: `Bearer ${this.token}`,
-      },
-    });
+  removeWatchOfTheDay(ID: any): Observable<any> {
+    return this.http.delete(
+      `${this.apiUrl}/api/admin/watch-of-the-day/delete/${ID}`,
+      {
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${this.token}`,
+        },
+      }
+    );
   }
 
-  actandDeacWatchOfTheDay(ID:any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/api/admin/watch-of-the-day/set-active/${ID}`,{}, {
-      headers: {
-        Accept: "application/json",
-        Authorization: `Bearer ${this.token}`,
-      },
-    });
+  actandDeacWatchOfTheDay(ID: any): Observable<any> {
+    return this.http.post(
+      `${this.apiUrl}/api/admin/watch-of-the-day/set-active/${ID}`,
+      {},
+      {
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${this.token}`,
+        },
+      }
+    );
   }
 
-  getAdminUsers(pageIndex: number = 0, pageSize: number = 100): Observable<any> {
+  getAdminUsers(
+    pageIndex: number = 0,
+    pageSize: number = 100
+  ): Observable<any> {
     let pageSize2 = 100;
-    return this.http.get(`${this.apiUrl}/api/admin/user/list?page=${pageIndex + 1}&per_page=${pageSize2}`, {
-      headers: {
-        Accept: "application/json",
-        Authorization: `Bearer ${this.token}`,
-      },
-    });
+    return this.http.get(
+      `${this.apiUrl}/api/admin/user/list?page=${
+        pageIndex + 1
+      }&per_page=${pageSize2}`,
+      {
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${this.token}`,
+        },
+      }
+    );
   }
 
   changeUserType(formData): Observable<any> {
-    return this.http.post(`${this.apiUrl}/api/admin/user/update-user-type`, formData, {
-      headers: {
-        Accept: "application/json",
-        Authorization: `Bearer ${this.token}`,
-      },
-    });
+    return this.http.post(
+      `${this.apiUrl}/api/admin/user/update-user-type`,
+      formData,
+      {
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${this.token}`,
+        },
+      }
+    );
   }
 
   getAdminCategory(): Observable<any> {
@@ -434,55 +461,63 @@ export class HttpService implements OnInit {
   }
 
   // getAdminProducts(): Observable<any> {
-  getAdminProducts( name,pageIndex: number, pageSize: number, sortField: string, sortDirection: string,category_ids:any[] ,brand_ids:any[] , watch_gender ,sort_by?: string,
-    sort_order?: string): Observable<any> {
-      let params = new HttpParams()
-      .set('page', pageIndex.toString())
-      .set('per_page', pageSize.toString())
-      .set('sortField', sortField)
-    
-      
-      .set('sortDirection', sortDirection);
-  
+  getAdminProducts(
+    name,
+    pageIndex: number,
+    pageSize: number,
+    sortField: string,
+    sortDirection: string,
+    category_ids: any[],
+    brand_ids: any[],
+    watch_gender,
+    sort_by?: string,
+    sort_order?: string
+  ): Observable<any> {
+    let params = new HttpParams()
+      .set("page", pageIndex.toString())
+      .set("per_page", pageSize.toString())
+      .set("sortField", sortField)
+
+      .set("sortDirection", sortDirection);
+
     if (name) {
-      params = params.set('name', name);
+      params = params.set("name", name);
     }
 
     if (sort_by) {
-      params = params.set('sort_by', sort_by);
+      params = params.set("sort_by", sort_by);
     }
 
     if (sort_order) {
-      params = params.set('sort_order', sort_order);
+      params = params.set("sort_order", sort_order);
     }
 
-    if(watch_gender){
-      params = params.set('watch_gender', watch_gender)
+    if (watch_gender) {
+      params = params.set("watch_gender", watch_gender);
     }
 
-    if(watch_gender){
-      params = params.set('watch_gender', watch_gender)
+    if (watch_gender) {
+      params = params.set("watch_gender", watch_gender);
     }
-  
-  if (category_ids && category_ids.length) {
-    category_ids.forEach(category => {
-      params = params.append('category_ids[]', category);
-    });
-  }
 
-  if (brand_ids && brand_ids.length) {
-    brand_ids.forEach(brand => {
-      params = params.append('brand_ids[]', brand);
-    });
-  }
+    if (category_ids && category_ids.length) {
+      category_ids.forEach((category) => {
+        params = params.append("category_ids[]", category);
+      });
+    }
+
+    if (brand_ids && brand_ids.length) {
+      brand_ids.forEach((brand) => {
+        params = params.append("brand_ids[]", brand);
+      });
+    }
     return this.http.get(`${this.apiUrl}/api/admin/products`, {
       headers: {
         Accept: "application/json",
         Authorization: `Bearer ${this.token}`,
       },
-      params: params
+      params: params,
     });
-   
   }
 
   getPromotionProducts(): Observable<any> {
@@ -495,8 +530,18 @@ export class HttpService implements OnInit {
   }
 
   AddPromotionProducts(formData): Observable<any> {
+    return this.http.post(`${this.apiUrl}/api/admin/promotions`, formData, {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+  }
+
+  rejectProduct(ID, formData): Observable<any> {
     return this.http.post(
-      `${this.apiUrl}/api/admin/promotions`,formData,
+      `${this.apiUrl}/api/admin/products/${ID}/reject`,
+      formData,
       {
         headers: {
           Accept: "application/json",
@@ -506,22 +551,10 @@ export class HttpService implements OnInit {
     );
   }
 
-
-  rejectProduct(ID,formData): Observable<any> {
+  EditPromotionProducts(formData, ID): Observable<any> {
     return this.http.post(
-      `${this.apiUrl}/api/admin/products/${ID}/reject`,formData,
-      {
-        headers: {
-          Accept: "application/json",
-          Authorization: `Bearer ${this.token}`,
-        },
-      }
-    );
-  }
-
-  EditPromotionProducts(formData,ID): Observable<any> {
-    return this.http.post(
-      `${this.apiUrl}/api/admin/promotions/${ID}`,formData,
+      `${this.apiUrl}/api/admin/promotions/${ID}`,
+      formData,
       {
         headers: {
           Accept: "application/json",
@@ -550,7 +583,6 @@ export class HttpService implements OnInit {
     });
   }
 
-
   watchOfTheDay(): Observable<any> {
     return this.http.get(`${this.apiUrl}/api/admin/watch-of-the-day/list/get`, {
       headers: {
@@ -559,8 +591,6 @@ export class HttpService implements OnInit {
       },
     });
   }
-
-
 
   deleteAdminProducts(ID): Observable<any> {
     return this.http.delete(`${this.apiUrl}/api/admin/products/${ID}`, {
@@ -582,7 +612,6 @@ export class HttpService implements OnInit {
         },
       }
     );
-    
   }
 
   topFeatureProducts(ID): Observable<any> {
@@ -596,7 +625,6 @@ export class HttpService implements OnInit {
         },
       }
     );
-    
   }
 
   activateAdminProducts(ID): Observable<any> {
@@ -612,10 +640,8 @@ export class HttpService implements OnInit {
     );
   }
 
-
-
-  getAdminDashBoardDetails(): Observable<any> {
-    return this.http.get(`${this.apiUrl}/api/admin/dashboard/stats`, {
+  getAdminDashboardUsers(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/api/admin/reports/users-summary`, {
       headers: {
         Accept: "application/json",
         Authorization: `Bearer ${this.token}`,
@@ -623,7 +649,41 @@ export class HttpService implements OnInit {
     });
   }
 
+  getAdminDashboardProducts(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/api/admin/reports/products-summary`, {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+  }
 
+  getAdminDashboardOrders(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/api/admin/reports/orders-summary`, {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+  }
+
+  getAdminDashboardRevenue(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/api/admin/reports/revenue-summary`, {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+  }
+
+  getAdminDashboardOrdersByBrand(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/api/admin/reports/orders-by-brand`, {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+  }
   getAdminAccessroiesCategory(): Observable<any> {
     return this.http.get(`${this.apiUrl}/api/accessory-categories`, {
       headers: {
@@ -633,8 +693,8 @@ export class HttpService implements OnInit {
     });
   }
 
-   addAdminAccessroyCategory(bodyData): Observable<any> {
-    return this.http.post(`${this.apiUrl}/api/accessory-categories`,bodyData, {
+  addAdminAccessroyCategory(bodyData): Observable<any> {
+    return this.http.post(`${this.apiUrl}/api/accessory-categories`, bodyData, {
       headers: {
         Accept: "application/json",
         Authorization: `Bearer ${this.token}`,
@@ -642,16 +702,20 @@ export class HttpService implements OnInit {
     });
   }
 
-   editAdminAccessroyCategory(bodyData,ID): Observable<any> {
-    return this.http.put(`${this.apiUrl}/api/accessory-categories/${ID}`,bodyData, {
-      headers: {
-        Accept: "application/json",
-        Authorization: `Bearer ${this.token}`,
-      },
-    });
+  editAdminAccessroyCategory(bodyData, ID): Observable<any> {
+    return this.http.put(
+      `${this.apiUrl}/api/accessory-categories/${ID}`,
+      bodyData,
+      {
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${this.token}`,
+        },
+      }
+    );
   }
 
-    deleteAdminAccessroyCategory(ID): Observable<any> {
+  deleteAdminAccessroyCategory(ID): Observable<any> {
     return this.http.delete(`${this.apiUrl}/api/accessory-categories/${ID}`, {
       headers: {
         Accept: "application/json",
@@ -669,36 +733,45 @@ export class HttpService implements OnInit {
     });
   }
 
-   addAdminAccessroiesCategoryGroups(bodyData): Observable<any> {
-    return this.http.post(`${this.apiUrl}/api/accessory-category-groups`,bodyData, {
-      headers: {
-        Accept: "application/json",
-        Authorization: `Bearer ${this.token}`,
-      },
-    });
+  addAdminAccessroiesCategoryGroups(bodyData): Observable<any> {
+    return this.http.post(
+      `${this.apiUrl}/api/accessory-category-groups`,
+      bodyData,
+      {
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${this.token}`,
+        },
+      }
+    );
   }
 
-   editAdminAccessroiesCategoryGroups(bodyData,ID): Observable<any> {
-      return this.http.put(`${this.apiUrl}/api/accessory-category-groups/${ID}`,bodyData, {
+  editAdminAccessroiesCategoryGroups(bodyData, ID): Observable<any> {
+    return this.http.put(
+      `${this.apiUrl}/api/accessory-category-groups/${ID}`,
+      bodyData,
+      {
         headers: {
           Accept: "application/json",
           Authorization: `Bearer ${this.token}`,
         },
-      });
-    }
+      }
+    );
+  }
 
-     deleteAdminAccessroiesCategoryGroups(ID): Observable<any> {
-      return this.http.delete(`${this.apiUrl}/api/accessory-category-groups/${ID}`, {
+  deleteAdminAccessroiesCategoryGroups(ID): Observable<any> {
+    return this.http.delete(
+      `${this.apiUrl}/api/accessory-category-groups/${ID}`,
+      {
         headers: {
           Accept: "application/json",
           Authorization: `Bearer ${this.token}`,
         },
-      });
-    }
+      }
+    );
+  }
 
-
-
-    getAdminAccessroiesSubCategoryGroups(): Observable<any> {
+  getAdminAccessroiesSubCategoryGroups(): Observable<any> {
     return this.http.get(`${this.apiUrl}/api/accessory-category-sub-groups`, {
       headers: {
         Accept: "application/json",
@@ -707,8 +780,46 @@ export class HttpService implements OnInit {
     });
   }
 
-   addAdminAccessroiesSubCategoryGroups(bodyData): Observable<any> {
-    return this.http.post(`${this.apiUrl}/api/accessory-category-sub-groups`,bodyData, {
+  addAdminAccessroiesSubCategoryGroups(bodyData): Observable<any> {
+    return this.http.post(
+      `${this.apiUrl}/api/accessory-category-sub-groups`,
+      bodyData,
+      {
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${this.token}`,
+        },
+      }
+    );
+  }
+
+  editAdminAccessroiesSubCategoryGroups(bodyData, ID): Observable<any> {
+    return this.http.put(
+      `${this.apiUrl}/api/accessory-category-sub-groups/${ID}`,
+      bodyData,
+      {
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${this.token}`,
+        },
+      }
+    );
+  }
+
+  deleteAdminAccessroiesSubCategoryGroups(ID): Observable<any> {
+    return this.http.delete(
+      `${this.apiUrl}/api/accessory-category-sub-groups/${ID}`,
+      {
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${this.token}`,
+        },
+      }
+    );
+  }
+
+  getAttributesType(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/api/attribute-types`, {
       headers: {
         Accept: "application/json",
         Authorization: `Bearer ${this.token}`,
@@ -716,36 +827,8 @@ export class HttpService implements OnInit {
     });
   }
 
-   editAdminAccessroiesSubCategoryGroups(bodyData,ID): Observable<any> {
-      return this.http.put(`${this.apiUrl}/api/accessory-category-sub-groups/${ID}`,bodyData, {
-        headers: {
-          Accept: "application/json",
-          Authorization: `Bearer ${this.token}`,
-        },
-      });
-    }
-
-     deleteAdminAccessroiesSubCategoryGroups(ID): Observable<any> {
-      return this.http.delete(`${this.apiUrl}/api/accessory-category-sub-groups/${ID}`, {
-        headers: {
-          Accept: "application/json",
-          Authorization: `Bearer ${this.token}`,
-        },
-      });
-    }
-
-
-    getAttributesType(): Observable<any> {
-      return this.http.get(`${this.apiUrl}/api/attribute-types`, {
-        headers: {
-          Accept: "application/json",
-          Authorization: `Bearer ${this.token}`,
-        },
-      });
-    }
-
-   addAttributesType(bodyData): Observable<any> {
-    return this.http.post(`${this.apiUrl}/api/attribute-types`,bodyData, {
+  addAttributesType(bodyData): Observable<any> {
+    return this.http.post(`${this.apiUrl}/api/attribute-types`, bodyData, {
       headers: {
         Accept: "application/json",
         Authorization: `Bearer ${this.token}`,
@@ -753,36 +836,8 @@ export class HttpService implements OnInit {
     });
   }
 
-   editAttributesType(bodyData,ID): Observable<any> {
-      return this.http.put(`${this.apiUrl}/api/attribute-types/${ID}`,bodyData, {
-        headers: {
-          Accept: "application/json",
-          Authorization: `Bearer ${this.token}`,
-        },
-      });
-    }
-
-     deleteAttributesType(ID): Observable<any> {
-      return this.http.delete(`${this.apiUrl}/api/attribute-types/${ID}`, {
-        headers: {
-          Accept: "application/json",
-          Authorization: `Bearer ${this.token}`,
-        },
-      });
-    }
-
-
-    getAttributesValue(): Observable<any> {
-      return this.http.get(`${this.apiUrl}/api/attribute-values`, {
-        headers: {
-          Accept: "application/json",
-          Authorization: `Bearer ${this.token}`,
-        },
-      });
-    }
-
-   addAttributesValue(bodyData): Observable<any> {
-    return this.http.post(`${this.apiUrl}/api/attribute-values`,bodyData, {
+  editAttributesType(bodyData, ID): Observable<any> {
+    return this.http.put(`${this.apiUrl}/api/attribute-types/${ID}`, bodyData, {
       headers: {
         Accept: "application/json",
         Authorization: `Bearer ${this.token}`,
@@ -790,36 +845,8 @@ export class HttpService implements OnInit {
     });
   }
 
-   editAttributesValue(bodyData,ID): Observable<any> {
-      return this.http.put(`${this.apiUrl}/api/attribute-values/${ID}`,bodyData, {
-        headers: {
-          Accept: "application/json",
-          Authorization: `Bearer ${this.token}`,
-        },
-      });
-    }
-
-     deleteAttributesValue(ID): Observable<any> {
-      return this.http.delete(`${this.apiUrl}/api/attribute-values/${ID}`, {
-        headers: {
-          Accept: "application/json",
-          Authorization: `Bearer ${this.token}`,
-        },
-      });
-    }
-
-
-     getInventory(): Observable<any> {
-      return this.http.get(`${this.apiUrl}/api/inventories`, {
-        headers: {
-          Accept: "application/json",
-          Authorization: `Bearer ${this.token}`,
-        },
-      });
-    }
-
-   addInventory(bodyData): Observable<any> {
-    return this.http.post(`${this.apiUrl}/api/inventories`,bodyData, {
+  deleteAttributesType(ID): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/api/attribute-types/${ID}`, {
       headers: {
         Accept: "application/json",
         Authorization: `Bearer ${this.token}`,
@@ -827,212 +854,291 @@ export class HttpService implements OnInit {
     });
   }
 
-   editInventory(bodyData,ID): Observable<any> {
-      return this.http.put(`${this.apiUrl}/api/inventories/${ID}`,bodyData, {
+  getAttributesValue(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/api/attribute-values`, {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+  }
+
+  addAttributesValue(bodyData): Observable<any> {
+    return this.http.post(`${this.apiUrl}/api/attribute-values`, bodyData, {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+  }
+
+  editAttributesValue(bodyData, ID): Observable<any> {
+    return this.http.put(
+      `${this.apiUrl}/api/attribute-values/${ID}`,
+      bodyData,
+      {
         headers: {
           Accept: "application/json",
           Authorization: `Bearer ${this.token}`,
         },
-      });
-    }
+      }
+    );
+  }
 
-     deleteInventory(ID): Observable<any> {
-      return this.http.delete(`${this.apiUrl}/api/inventories/${ID}`, {
+  deleteAttributesValue(ID): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/api/attribute-values/${ID}`, {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+  }
+
+  getInventory(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/api/inventories`, {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+  }
+
+  addInventory(bodyData): Observable<any> {
+    return this.http.post(`${this.apiUrl}/api/inventories`, bodyData, {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+  }
+
+  editInventory(bodyData, ID): Observable<any> {
+    return this.http.put(`${this.apiUrl}/api/inventories/${ID}`, bodyData, {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+  }
+
+  deleteInventory(ID): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/api/inventories/${ID}`, {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+  }
+
+  getAccessory(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/api/accessories`, {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+  }
+
+  getAttributes(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/api/attributes`, {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+  }
+
+  addAttributes(formData): Observable<any> {
+    return this.http.post(`${this.apiUrl}/api/attributes`, formData, {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+  }
+
+  editAttributes(bodyData, ID): Observable<any> {
+    return this.http.put(`${this.apiUrl}/api/attributes/${ID}`, bodyData, {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+  }
+
+  deleteAttributes(ID): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/api/attributes/${ID}`, {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+  }
+
+  getAllAccessoryImages(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/api/admin/accessory-images`, {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+  }
+
+  addAccessoryImage(formData): Observable<any> {
+    return this.http.post(
+      `${this.apiUrl}/api/admin/accessory-images`,
+      formData,
+      {
         headers: {
           Accept: "application/json",
           Authorization: `Bearer ${this.token}`,
         },
-      });
-    }
+      }
+    );
+  }
 
-     getAccessory(): Observable<any> {
-      return this.http.get(`${this.apiUrl}/api/accessories`, {
+  editAccessoryImage(bodyData, ID): Observable<any> {
+    return this.http.post(
+      `${this.apiUrl}/api/admin/accessory-images/${ID}`,
+      bodyData,
+      {
         headers: {
           Accept: "application/json",
           Authorization: `Bearer ${this.token}`,
         },
-      });
-    }
+      }
+    );
+  }
 
-    getAttributes(): Observable<any> {
-      return this.http.get(`${this.apiUrl}/api/attributes`, {
+  deleteAccessoryImage(ID): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/api/admin/accessory-images/${ID}`, {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+  }
+
+  getAllAccessories(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/api/accessories`, {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+  }
+
+  getAccessoriesById(ID): Observable<any> {
+    return this.http.get(`${this.apiUrl}/api/accessories/${ID}`, {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+  }
+
+  addAccessory(bodyData): Observable<any> {
+    return this.http.post(`${this.apiUrl}/api/accessories`, bodyData, {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+  }
+
+  editAccessory(bodyData, ID): Observable<any> {
+    return this.http.put(`${this.apiUrl}/api/accessories/${ID}`, bodyData, {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+  }
+
+  toggleActiveAccessories(ID): Observable<any> {
+    return this.http.post(
+      `${this.apiUrl}/api/accessories/${ID}/toggle-status`,
+      {
         headers: {
           Accept: "application/json",
           Authorization: `Bearer ${this.token}`,
         },
-      });
-    }
+      }
+    );
+  }
 
-    addAttributes(formData): Observable<any> {
-      return this.http.post(`${this.apiUrl}/api/attributes`,formData, {
+  deleteAccessoriesById(ID): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/api/accessories/${ID}`, {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+  }
+
+  attachImagesToAccessory(bodyData, ID): Observable<any> {
+    return this.http.post(
+      `${this.apiUrl}/api/images-attach-to-accessory/${ID}`,
+      bodyData,
+      {
         headers: {
           Accept: "application/json",
           Authorization: `Bearer ${this.token}`,
         },
-      });
-    }
+      }
+    );
+  }
 
-     editAttributes(bodyData,ID): Observable<any> {
-      return this.http.put(`${this.apiUrl}/api/attributes/${ID}`,bodyData, {
+  getAdminAttributesInventory(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/api/attribute-inventory`, {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+  }
+
+  addAdminAttributesInventory(bodyData): Observable<any> {
+    return this.http.post(`${this.apiUrl}/api/attribute-inventory`, bodyData, {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+  }
+
+  editAdminAttributesInventory(bodyData, ID): Observable<any> {
+    return this.http.put(
+      `${this.apiUrl}/api/attribute-inventory/${ID}`,
+      bodyData,
+      {
         headers: {
           Accept: "application/json",
           Authorization: `Bearer ${this.token}`,
         },
-      });
-    }
+      }
+    );
+  }
 
-     deleteAttributes(ID): Observable<any> {
-      return this.http.delete(`${this.apiUrl}/api/attributes/${ID}`, {
+  deleteAdminAttributesInventory(
+    attributeID,
+    InventoryID,
+    attributeValueID
+  ): Observable<any> {
+    return this.http.delete(
+      `${this.apiUrl}/api/attribute-inventory/${attributeID}/${InventoryID}/${attributeValueID}`,
+      {
         headers: {
           Accept: "application/json",
           Authorization: `Bearer ${this.token}`,
         },
-      });
-    }
-
-    getAllAccessoryImages(): Observable<any> {
-      return this.http.get(`${this.apiUrl}/api/admin/accessory-images`, {
-        headers: {
-          Accept: "application/json",
-          Authorization: `Bearer ${this.token}`,
-        },
-      });
-    }
-
-
-    addAccessoryImage(formData): Observable<any> {
-      return this.http.post(`${this.apiUrl}/api/admin/accessory-images`,formData, {
-        headers: {
-          Accept: "application/json",
-          Authorization: `Bearer ${this.token}`,
-        },
-      });
-    }
-
-    editAccessoryImage(bodyData,ID): Observable<any> {
-      return this.http.post(`${this.apiUrl}/api/admin/accessory-images/${ID}`,bodyData, {
-        headers: {
-          Accept: "application/json",
-          Authorization: `Bearer ${this.token}`,
-        },
-      });
-    }
-
-    deleteAccessoryImage(ID): Observable<any> {
-      return this.http.delete(`${this.apiUrl}/api/admin/accessory-images/${ID}`, {
-        headers: {
-          Accept: "application/json",
-          Authorization: `Bearer ${this.token}`,
-        },
-      });
-    }
-
-    getAllAccessories(): Observable<any> {
-      return this.http.get(`${this.apiUrl}/api/accessories`, {
-        headers: {
-          Accept: "application/json",
-          Authorization: `Bearer ${this.token}`,
-        },
-      });
-    }
-
-    getAccessoriesById(ID): Observable<any> {
-      return this.http.get(`${this.apiUrl}/api/accessories/${ID}`, {
-        headers: {
-          Accept: "application/json",
-          Authorization: `Bearer ${this.token}`,
-        },
-      });
-    }
-
-    addAccessory(bodyData): Observable<any> {
-      return this.http.post(`${this.apiUrl}/api/accessories`,bodyData, {
-        headers: {
-          Accept: "application/json",
-          Authorization: `Bearer ${this.token}`,
-        },
-      });
-    }
-
-    editAccessory(bodyData,ID): Observable<any> {
-      return this.http.put(`${this.apiUrl}/api/accessories/${ID}`,bodyData, {
-        headers: {
-          Accept: "application/json",
-          Authorization: `Bearer ${this.token}`,
-        },
-      });
-    }
-
-    toggleActiveAccessories(ID): Observable<any> {
-      return this.http.post(`${this.apiUrl}/api/accessories/${ID}/toggle-status`, {
-        headers: {
-          Accept: "application/json",
-          Authorization: `Bearer ${this.token}`,
-        },
-      });
-    }
-
-    deleteAccessoriesById(ID): Observable<any> {
-      return this.http.delete(`${this.apiUrl}/api/accessories/${ID}`, {
-        headers: {
-          Accept: "application/json",
-          Authorization: `Bearer ${this.token}`,
-        },
-      });
-    }
-
-    attachImagesToAccessory(bodyData,ID): Observable<any> {
-      return this.http.post(`${this.apiUrl}/api/images-attach-to-accessory/${ID}`,bodyData, {
-        headers: {
-          Accept: "application/json",
-          Authorization: `Bearer ${this.token}`,
-        },
-      });
-    }
-
-    getAdminAttributesInventory(): Observable<any> {
-      return this.http.get(`${this.apiUrl}/api/attribute-inventory`, {
-        headers: {
-          Accept: "application/json",
-          Authorization: `Bearer ${this.token}`,
-        },
-      });
-    }
-
-    addAdminAttributesInventory(bodyData): Observable<any> {
-      return this.http.post(`${this.apiUrl}/api/attribute-inventory`,bodyData, {
-        headers: {
-          Accept: "application/json",
-          Authorization: `Bearer ${this.token}`,
-        },
-      });
-    }
-
-    editAdminAttributesInventory(bodyData,ID): Observable<any> {
-      return this.http.put(`${this.apiUrl}/api/attribute-inventory/${ID}`,bodyData, {
-        headers: {
-          Accept: "application/json",
-          Authorization: `Bearer ${this.token}`,
-        },
-      });
-    }
-
-    deleteAdminAttributesInventory(attributeID,InventoryID,attributeValueID): Observable<any> {
-      return this.http.delete(`${this.apiUrl}/api/attribute-inventory/${attributeID}/${InventoryID}/${attributeValueID}`, {
-        headers: {
-          Accept: "application/json",
-          Authorization: `Bearer ${this.token}`,
-        },
-      });
-    }
-
+      }
+    );
+  }
 
   // ----------------------------------  Admin Pannel Apis End Here ------------------------------
 
-
   // ----------------------------------  create Listing start ------------------------------
-
-
 
   addListingDetails(formData: any): Observable<any> {
     return this.http.post(`${this.apiUrl}/api/listing/create`, formData, {
@@ -1042,7 +1148,6 @@ export class HttpService implements OnInit {
       },
     });
   }
-
 
   updateListingDetails(formData: any): Observable<any> {
     return this.http.post(`${this.apiUrl}/api/listing/update`, formData, {
@@ -1190,8 +1295,6 @@ export class HttpService implements OnInit {
     });
   }
 
-
-
   // -------------------------------------------- chat Section start --------------------------
 
   buyNowFromDetailsProduct(ID: any, bodyData: any): Observable<any> {
@@ -1211,8 +1314,6 @@ export class HttpService implements OnInit {
       },
     });
   }
-
-
 
   getChatsDetails(chatID): Observable<any> {
     return this.http.get(`${this.apiUrl}/api/messages/${chatID}`, {
@@ -1246,12 +1347,15 @@ export class HttpService implements OnInit {
   }
 
   offerByFilter(productID: any, chatID: any): Observable<any> {
-    return this.http.get(`${this.apiUrl}/api/offer-by-filter?product_id=${productID}&chat_id=${chatID}`, {
-      headers: {
-        Accept: "application/json",
-        Authorization: `Bearer ${this.token}`,
-      },
-    });
+    return this.http.get(
+      `${this.apiUrl}/api/offer-by-filter?product_id=${productID}&chat_id=${chatID}`,
+      {
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${this.token}`,
+        },
+      }
+    );
   }
 
   editOffer(formData): Observable<any> {
@@ -1272,32 +1376,34 @@ export class HttpService implements OnInit {
     });
   }
 
-
   sendShipmenttoBuyer(formData): Observable<any> {
-    return this.http.post(`${this.apiUrl}/api/offers/shipment-offer/store`, formData, {
-      headers: {
-        Accept: "application/json",
-        Authorization: `Bearer ${this.token}`,
-      },
-    });
+    return this.http.post(
+      `${this.apiUrl}/api/offers/shipment-offer/store`,
+      formData,
+      {
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${this.token}`,
+        },
+      }
+    );
   }
-
 
   getOrderandChatIDDetails(productID: any): Observable<any> {
-    return this.http.get(`${this.apiUrl}/api/order/get-product-chat-info?product_id=${productID}`, {
-      headers: {
-        Accept: "application/json",
-        Authorization: `Bearer ${this.token}`,
-      },
-    });
+    return this.http.get(
+      `${this.apiUrl}/api/order/get-product-chat-info?product_id=${productID}`,
+      {
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${this.token}`,
+        },
+      }
+    );
   }
-
 
   // -------------------------------------------- Make Offer End --------------------------
 
-
   // -------------------------------------------- My Listing Module APIs Start --------------------------
-
 
   getMyProductsListing(): Observable<any> {
     return this.http.get(`${this.apiUrl}/api/listing/user-listings`, {
@@ -1309,12 +1415,15 @@ export class HttpService implements OnInit {
   }
 
   getProductDetailsByID(ProductID): Observable<any> {
-    return this.http.get(`${this.apiUrl}/api/listing/getStep?product_id=${ProductID}`, {
-      headers: {
-        Accept: "application/json",
-        Authorization: `Bearer ${this.token}`,
-      },
-    });
+    return this.http.get(
+      `${this.apiUrl}/api/listing/getStep?product_id=${ProductID}`,
+      {
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${this.token}`,
+        },
+      }
+    );
   }
 
   getBuyOrders(): Observable<any> {
@@ -1362,7 +1471,6 @@ export class HttpService implements OnInit {
     });
   }
 
-
   getOrderDetails(orderID): Observable<any> {
     return this.http.get(`${this.apiUrl}/api/order/details/${orderID}`, {
       headers: {
@@ -1372,16 +1480,18 @@ export class HttpService implements OnInit {
     });
   }
 
-
   createShipment(formData): Observable<any> {
-    return this.http.post(`${this.apiUrl}/api/order/create-shipment`, formData, {
-      headers: {
-        Accept: "application/json",
-        Authorization: `Bearer ${this.token}`,
-      },
-    });
+    return this.http.post(
+      `${this.apiUrl}/api/order/create-shipment`,
+      formData,
+      {
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${this.token}`,
+        },
+      }
+    );
   }
-
 
   getBillingInformation(): Observable<any> {
     return this.http.get(`${this.apiUrl}/api/billing-information`, {
@@ -1393,15 +1503,19 @@ export class HttpService implements OnInit {
   }
 
   saveBillingInformation(formData): Observable<any> {
-    return this.http.post(`${this.apiUrl}/api/save-billing-information`, formData, {
-      headers: {
-        Accept: "application/json",
-        Authorization: `Bearer ${this.token}`,
-      },
-    });
+    return this.http.post(
+      `${this.apiUrl}/api/save-billing-information`,
+      formData,
+      {
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${this.token}`,
+        },
+      }
+    );
   }
 
-   getProfilingInformation(): Observable<any> {
+  getProfilingInformation(): Observable<any> {
     return this.http.get(`${this.apiUrl}/api/profile`, {
       headers: {
         Accept: "application/json",
@@ -1437,7 +1551,7 @@ export class HttpService implements OnInit {
     });
   }
 
-   saveProfilingInformation(formData): Observable<any> {
+  saveProfilingInformation(formData): Observable<any> {
     return this.http.post(`${this.apiUrl}/api/profile`, formData, {
       headers: {
         Accept: "application/json",
@@ -1456,276 +1570,336 @@ export class HttpService implements OnInit {
   }
   // -------------------------------------------- My Listing Module APIs end --------------------------
 
+  // ----------------------------------  create Accesries start ------------------------------
 
-
-
-    // ----------------------------------  create Accesries start ------------------------------
-
-    getAccesriesStepper(ID): Observable<any> {
-      return this.http.get(`${this.apiUrl}/api/accessories/listing/getStep?product_id=${ID}`, {
+  getAccesriesStepper(ID): Observable<any> {
+    return this.http.get(
+      `${this.apiUrl}/api/accessories/listing/getStep?product_id=${ID}`,
+      {
         headers: {
           Accept: "application/json",
           Authorization: `Bearer ${this.token}`,
         },
-      });
-    }
-
-    getAllAccesriesInformation(): Observable<any> {
-      return this.http.get(`${this.apiUrl}/api/accessories/listing/user-listings`, {
-        headers: {
-          Accept: "application/json",
-          Authorization: `Bearer ${this.token}`,
-        },
-      });
-    }
-
-
-    saveAccesriesInformation(formData): Observable<any> {
-      return this.http.post(`${this.apiUrl}/api/accessories/listing/create`, formData, {
-        headers: {
-          Accept: "application/json",
-          Authorization: `Bearer ${this.token}`,
-        },
-      });
-    }
-
-    editAccesriesInformation(formData): Observable<any> {
-      return this.http.post(`${this.apiUrl}/api/accessories/listing/update`, formData, {
-        headers: {
-          Accept: "application/json",
-          Authorization: `Bearer ${this.token}`,
-        },
-      });
-    }
-
-    toogleActiveAccesriesInformation(ID): Observable<any> {
-      return this.http.patch(`${this.apiUrl}/api/admin/accessories/${ID}/toggle-active`, {},{
-        headers: {
-          Accept: "application/json",
-          Authorization: `Bearer ${this.token}`,
-        },
-      });
-    }
-
-    addPopularAccesriesInformation(ID): Observable<any> {
-      return this.http.patch(`${this.apiUrl}/api/admin/accessories/${ID}/toggle-popular`, {},{
-        headers: {
-          Accept: "application/json",
-          Authorization: `Bearer ${this.token}`,
-        },
-      });
-    }
-
-    addFeatureAccesriesInformation(ID): Observable<any> {
-      return this.http.patch(`${this.apiUrl}/api/admin/accessories/${ID}/toggle-feature`, {},{
-        headers: {
-          Accept: "application/json",
-          Authorization: `Bearer ${this.token}`,
-        },
-      });
-    }
-
-
-    deleteAccesriesStepper(ID): Observable<any> {
-      return this.http.delete(`${this.apiUrl}/api/admin/accessories/${ID}`, {
-        headers: {
-          Accept: "application/json",
-          Authorization: `Bearer ${this.token}`,
-        },
-      });
-    }
-
-    saveAccesriesWatchDetails(formData): Observable<any> {
-      return this.http.post(`${this.apiUrl}/api/accessories/listing/watchDetails`, formData, {
-        headers: {
-          Accept: "application/json",
-          Authorization: `Bearer ${this.token}`,
-        },
-      });
-    }
-
-    saveAccesriesUploadImages(formData): Observable<any> {
-      return this.http.post(`${this.apiUrl}/api/accessories/listing/uploadImages`, formData, {
-        headers: {
-          Accept: "application/json",
-          Authorization: `Bearer ${this.token}`,
-        },
-      });
-    }
-
-    saveAccesrieswatchCondition(formData): Observable<any> {
-      return this.http.post(`${this.apiUrl}/api/accessories/listing/watchCondition`, formData, {
-        headers: {
-          Accept: "application/json",
-          Authorization: `Bearer ${this.token}`,
-        },
-      });
-    }
-
-    saveAccesriesscopeOfDelivery(formData): Observable<any> {
-      return this.http.post(`${this.apiUrl}/api/accessories/listing/scopeOfDelivery`, formData, {
-        headers: {
-          Accept: "application/json",
-          Authorization: `Bearer ${this.token}`,
-        },
-      });
-    }
-
-    saveAccesriespriceAndShipment(formData): Observable<any> {
-      return this.http.post(`${this.apiUrl}/api/accessories/listing/priceAndShipment`, formData, {
-        headers: {
-          Accept: "application/json",
-          Authorization: `Bearer ${this.token}`,
-        },
-      });
-    }
-
-    saveAccesriesbillingInformation(formData): Observable<any> {
-      return this.http.post(`${this.apiUrl}/api/accessories/listing/billingInformation`, formData, {
-        headers: {
-          Accept: "application/json",
-          Authorization: `Bearer ${this.token}`,
-        },
-      });
-    }
-
-    saveAccesriesSummary(formData): Observable<any> {
-      return this.http.post(`${this.apiUrl}/api/accessories/listing/publishListing`, formData, {
-        headers: {
-          Accept: "application/json",
-          Authorization: `Bearer ${this.token}`,
-        },
-      });
-    }
-
-        // ----------------------------------  create Accesries end ------------------------------
-
-
-
-
-        // ------------------------------ Public Accessories APIs Start here ------------------------------
-
-        getPublicAccessories(queryString: any): Observable<any> {
-          return this.http.get(`${this.apiUrl}/api/accessories-by-groups?${queryString}`, {
-            headers: {
-              Accept: "application/json",
-            },
-          });
-        }
-
-        getPublicAccessoriesByID(ID: any): Observable<any> {
-          return this.http.get(`${this.apiUrl}/api/accessories-product-by-id/${ID}`, {
-            headers: {
-              Accept: "application/json",
-            },
-          });
-        }
-
-        getPublicSimilarAccessoriesByID(ID: any): Observable<any> {
-          return this.http.get(`${this.apiUrl}/api/similar-accessories/${ID}`, {
-            headers: {
-              Accept: "application/json",
-            },
-          });
-        }
-
-        paymentInitiate(formData): Observable<any> {
-          return this.http.post(`${this.apiUrl}/api/accessory-payment/initiate`, formData, {
-            headers: {
-              Accept: "application/json",
-              Authorization: `Bearer ${this.token}`,
-            },
-          });
-        }
-
-        paymentCallback(paymentId: string): Observable<any> {
-          return this.http.get(`${this.apiUrl}/api/accessory-payment/callback?paymentId=${paymentId}`, {
-            headers: {
-              Accept: "application/json",
-              Authorization: `Bearer ${this.token}`,
-            },
-          });
-        }
-
-        getAccessoryWishList(): Observable<any> {
-          return this.http.get(`${this.apiUrl}/api/wishlist/accessories`, {
-            headers: {
-              Accept: "application/json",
-              Authorization: `Bearer ${this.token}`,
-            },
-          });
-        }
-
-        addAccessoryWishList(ID): Observable<any> {
-          return this.http.post(`${this.apiUrl}/api/wishlist/accessories/${ID}`, {}, {
-            headers: {
-              Accept: "application/json",
-              Authorization: `Bearer ${this.token}`,
-            },
-          });
-        }
-
-        removeAccessoryWishList(ID): Observable<any> {
-          return this.http.delete(`${this.apiUrl}/api/wishlist/accessories/${ID}`, {
-            headers: {
-              Accept: "application/json",
-              Authorization: `Bearer ${this.token}`,
-            },
-          });
-        }
-
-      // ------------------------------ Public Accessories APIs End here ------------------------------
-
-      // ------------------------------ Public Accessories Cart APIs Start here ------------------------------
-
-      addtoCart(formData): Observable<any> {
-        return this.http.post(`${this.apiUrl}/api/accessory-cart/add`, formData, {
-          headers: {
-            Accept: "application/json",
-            Authorization: `Bearer ${this.token}`,
-          },
-        });
       }
+    );
+  }
 
-      getCartList(): Observable<any> {
-        return this.http.get(`${this.apiUrl}/api/accessory-cart`, {
-          headers: {
-            Accept: "application/json",
-            Authorization: `Bearer ${this.token}`,
-          },
-        });
+  getAllAccesriesInformation(): Observable<any> {
+    return this.http.get(
+      `${this.apiUrl}/api/accessories/listing/user-listings`,
+      {
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${this.token}`,
+        },
       }
+    );
+  }
 
-      updateCart(formData): Observable<any> {
-        return this.http.put(`${this.apiUrl}/api/accessory-cart/update`, formData, {
-          headers: {
-            Accept: "application/json",
-            Authorization: `Bearer ${this.token}`,
-          },
-        });
+  saveAccesriesInformation(formData): Observable<any> {
+    return this.http.post(
+      `${this.apiUrl}/api/accessories/listing/create`,
+      formData,
+      {
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${this.token}`,
+        },
       }
+    );
+  }
 
-      deleteCart(ID): Observable<any> {
-        return this.http.delete(`${this.apiUrl}/api/accessory-cart/item/${ID}`, {
-          headers: {
-            Accept: "application/json",
-            Authorization: `Bearer ${this.token}`,
-          },
-        });
+  editAccesriesInformation(formData): Observable<any> {
+    return this.http.post(
+      `${this.apiUrl}/api/accessories/listing/update`,
+      formData,
+      {
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${this.token}`,
+        },
       }
+    );
+  }
 
-      confirmCartOrder(): Observable<any> {
-        return this.http.post(`${this.apiUrl}/api/accessory-cart/confirm`,{}, {
-          headers: {
-            Accept: "application/json",
-            Authorization: `Bearer ${this.token}`,
-          },
-        });
+  toogleActiveAccesriesInformation(ID): Observable<any> {
+    return this.http.patch(
+      `${this.apiUrl}/api/admin/accessories/${ID}/toggle-active`,
+      {},
+      {
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${this.token}`,
+        },
       }
+    );
+  }
 
-      // ------------------------------ Public Accessories Cart APIs End here ------------------------------
+  addPopularAccesriesInformation(ID): Observable<any> {
+    return this.http.patch(
+      `${this.apiUrl}/api/admin/accessories/${ID}/toggle-popular`,
+      {},
+      {
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${this.token}`,
+        },
+      }
+    );
+  }
+
+  addFeatureAccesriesInformation(ID): Observable<any> {
+    return this.http.patch(
+      `${this.apiUrl}/api/admin/accessories/${ID}/toggle-feature`,
+      {},
+      {
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${this.token}`,
+        },
+      }
+    );
+  }
+
+  deleteAccesriesStepper(ID): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/api/admin/accessories/${ID}`, {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+  }
+
+  saveAccesriesWatchDetails(formData): Observable<any> {
+    return this.http.post(
+      `${this.apiUrl}/api/accessories/listing/watchDetails`,
+      formData,
+      {
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${this.token}`,
+        },
+      }
+    );
+  }
+
+  saveAccesriesUploadImages(formData): Observable<any> {
+    return this.http.post(
+      `${this.apiUrl}/api/accessories/listing/uploadImages`,
+      formData,
+      {
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${this.token}`,
+        },
+      }
+    );
+  }
+
+  saveAccesrieswatchCondition(formData): Observable<any> {
+    return this.http.post(
+      `${this.apiUrl}/api/accessories/listing/watchCondition`,
+      formData,
+      {
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${this.token}`,
+        },
+      }
+    );
+  }
+
+  saveAccesriesscopeOfDelivery(formData): Observable<any> {
+    return this.http.post(
+      `${this.apiUrl}/api/accessories/listing/scopeOfDelivery`,
+      formData,
+      {
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${this.token}`,
+        },
+      }
+    );
+  }
+
+  saveAccesriespriceAndShipment(formData): Observable<any> {
+    return this.http.post(
+      `${this.apiUrl}/api/accessories/listing/priceAndShipment`,
+      formData,
+      {
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${this.token}`,
+        },
+      }
+    );
+  }
+
+  saveAccesriesbillingInformation(formData): Observable<any> {
+    return this.http.post(
+      `${this.apiUrl}/api/accessories/listing/billingInformation`,
+      formData,
+      {
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${this.token}`,
+        },
+      }
+    );
+  }
+
+  saveAccesriesSummary(formData): Observable<any> {
+    return this.http.post(
+      `${this.apiUrl}/api/accessories/listing/publishListing`,
+      formData,
+      {
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${this.token}`,
+        },
+      }
+    );
+  }
+
+  // ----------------------------------  create Accesries end ------------------------------
+
+  // ------------------------------ Public Accessories APIs Start here ------------------------------
+
+  getPublicAccessories(queryString: any): Observable<any> {
+    return this.http.get(
+      `${this.apiUrl}/api/accessories-by-groups?${queryString}`,
+      {
+        headers: {
+          Accept: "application/json",
+        },
+      }
+    );
+  }
+
+  getPublicAccessoriesByID(ID: any): Observable<any> {
+    return this.http.get(`${this.apiUrl}/api/accessories-product-by-id/${ID}`, {
+      headers: {
+        Accept: "application/json",
+      },
+    });
+  }
+
+  getPublicSimilarAccessoriesByID(ID: any): Observable<any> {
+    return this.http.get(`${this.apiUrl}/api/similar-accessories/${ID}`, {
+      headers: {
+        Accept: "application/json",
+      },
+    });
+  }
+
+  paymentInitiate(formData): Observable<any> {
+    return this.http.post(
+      `${this.apiUrl}/api/accessory-payment/initiate`,
+      formData,
+      {
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${this.token}`,
+        },
+      }
+    );
+  }
+
+  paymentCallback(paymentId: string): Observable<any> {
+    return this.http.get(
+      `${this.apiUrl}/api/accessory-payment/callback?paymentId=${paymentId}`,
+      {
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${this.token}`,
+        },
+      }
+    );
+  }
+
+  getAccessoryWishList(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/api/wishlist/accessories`, {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+  }
+
+  addAccessoryWishList(ID): Observable<any> {
+    return this.http.post(
+      `${this.apiUrl}/api/wishlist/accessories/${ID}`,
+      {},
+      {
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${this.token}`,
+        },
+      }
+    );
+  }
+
+  removeAccessoryWishList(ID): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/api/wishlist/accessories/${ID}`, {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+  }
+
+  // ------------------------------ Public Accessories APIs End here ------------------------------
+
+  // ------------------------------ Public Accessories Cart APIs Start here ------------------------------
+
+  addtoCart(formData): Observable<any> {
+    return this.http.post(`${this.apiUrl}/api/accessory-cart/add`, formData, {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+  }
+
+  getCartList(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/api/accessory-cart`, {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+  }
+
+  updateCart(formData): Observable<any> {
+    return this.http.put(`${this.apiUrl}/api/accessory-cart/update`, formData, {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+  }
+
+  deleteCart(ID): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/api/accessory-cart/item/${ID}`, {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+  }
+
+  confirmCartOrder(): Observable<any> {
+    return this.http.post(
+      `${this.apiUrl}/api/accessory-cart/confirm`,
+      {},
+      {
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${this.token}`,
+        },
+      }
+    );
+  }
+
+  // ------------------------------ Public Accessories Cart APIs End here ------------------------------
 }
-
-
-
-  

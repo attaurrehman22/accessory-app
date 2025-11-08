@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
-import { Subscription } from "rxjs";
+import { Subscription, forkJoin, of } from "rxjs";
+import { catchError, finalize } from "rxjs/operators";
 import { AlertsServicesService } from "src/services/alerts-service/alerts-services.service";
 import * as Highcharts from "highcharts";
 import { HighchartsServiceService } from "src/services/highcharts-service/highcharts-service.service";
@@ -8,6 +9,22 @@ import { ChangeDetectorRef } from "@angular/core"; // Import ChangeDetectorRef
 import { HttpService } from "src/services/http/http.service";
 import { SidebarService } from "src/services/sidebar.service";
 import { MatTableDataSource } from "@angular/material/table";
+import {
+  UserStats,
+  ProductStats,
+  OrderStats,
+  RevenueStats,
+  Order,
+  OrderFilters,
+  OrderStatus,
+  PieChartOptions,
+  ColumnChartOptions,
+  DashboardData,
+  LoadingStates,
+  LegacyCardData,
+  LegacyDashboardDetails,
+  ApiResponse,
+} from "./dashboard.types";
 
 @Component({
   selector: "app-admin-home",
@@ -17,19 +34,53 @@ import { MatTableDataSource } from "@angular/material/table";
 export class AdminHomeComponent implements OnInit, OnDestroy {
   // Chart data and options
   Highcharts = Highcharts;
-  usersChartOptions: any = null;
-  productsChartOptions: any = null;
-  ordersChartOptions: any = null;
-  brandsChartOptions: any = null;
+  usersChartOptions: PieChartOptions | null = null;
+  productsChartOptions: PieChartOptions | null = null;
+  ordersChartOptions: PieChartOptions | null = null;
+  brandsChartOptions: ColumnChartOptions | null = null;
 
-  // Dashboard statistics
-  totalUsers: number = 0;
-  totalListings: number = 0;
-  totalOrders: number = 0;
-  confirmedPayments: number = 0;
-  deliveredOrders: number = 0;
-  pendingDeliveryOrders: number = 0;
-  ordersInDispute: number = 0;
+  // Loading and error states
+  isLoading = false;
+  hasError = false;
+  errorMessage = "";
+  loadingStates: LoadingStates = {
+    users: false,
+    products: false,
+    orders: false,
+    revenue: false,
+    brands: false,
+  };
+
+  // Dashboard statistics - using interfaces
+  userStats: UserStats = {
+    totalUsers: 0,
+    privateSellers: 0,
+    dealers: 0,
+  };
+
+  productStats: ProductStats = {
+    totalProducts: 0,
+    activeProducts: 0,
+    inactiveProducts: 0,
+    soldProducts: 0,
+  };
+
+  orderStats: OrderStats = {
+    totalOrders: 0,
+    initiatedOrders: 0,
+    preparingShipmentOrders: 0,
+    confirmedOrders: 0,
+    cancelledOrders: 0,
+    deliveryInProgressOrders: 0,
+    awaitingConfirmationOrders: 0,
+  };
+
+  revenueStats: RevenueStats = {
+    confirmedPayments: 0,
+    deliveredOrders: 0,
+    pendingDeliveryOrders: 0,
+    ordersInDispute: 0,
+  };
 
   // Orders table
   ordersDisplayedColumns: string[] = [
@@ -39,25 +90,17 @@ export class AdminHomeComponent implements OnInit, OnDestroy {
     "orderStatus",
     "orderCreatedAt",
   ];
-  ordersDataSource = new MatTableDataSource<any>([]);
-  filteredOrders: any[] = [];
-  allOrders: any[] = [];
+  ordersDataSource = new MatTableDataSource<Order>([]);
+  filteredOrders: Order[] = [];
+  allOrders: Order[] = [];
 
   // Filters
-  filters = {
+  filters: OrderFilters = {
     orderId: "",
     buyerName: "",
     sellerName: "",
     orderStatus: "",
     createdDate: "",
-  };
-
-  // Legacy data (keeping for compatibility)
-  cardData = {
-    totalUsers: 0,
-    totalPlayers: 0,
-    presentPlayers: 0,
-    totalPlayersWhoPaidFee: 0,
   };
 
   displayedColumns: string[] = ["id", "name", "email"];
@@ -66,8 +109,8 @@ export class AdminHomeComponent implements OnInit, OnDestroy {
     { id: 2, name: "Jane Smith", email: "jane@example.com" },
     { id: 3, name: "Bob Johnson", email: "bob@example.com" },
   ];
-  linechart: any;
-  dashboarddetails = {
+  linechart: any; // Will be typed when we know the structure
+  dashboarddetails: LegacyDashboardDetails = {
     totalNumberOfBrands: 0,
     totalNumberOfBrandsWithActiveSubscription: 0,
     totalNumberOfCatagory: 0,
@@ -92,10 +135,6 @@ export class AdminHomeComponent implements OnInit, OnDestroy {
   ) {}
   ngOnInit(): void {
     this.getDashboardDetails();
-    this.getDashBoardCardInfo();
-    this.initializeDummyData();
-    this.setupCharts();
-    this.loadHighcharts();
     this.sidebarClickSubscription = this.sidebarService.sidebarClick$.subscribe(
       () => {
         this.dialog.closeAll();
@@ -110,9 +149,119 @@ export class AdminHomeComponent implements OnInit, OnDestroy {
   }
 
   getDashboardDetails() {
-    this.http.getAdminDashBoardDetails().subscribe((res) => {
-      this.dashboarddetails = res.data;
-    });
+    this.isLoading = true;
+    this.hasError = false;
+    this.errorMessage = "";
+
+    // Load all dashboard data in parallel with proper error handling
+    forkJoin({
+      users: this.http.getAdminDashboardUsers().pipe(
+        catchError((error) => {
+          console.error("Error loading users data:", error);
+          this.toast.showAlert("danger", "Failed to load users data");
+          return of(null);
+        })
+      ),
+      products: this.http.getAdminDashboardProducts().pipe(
+        catchError((error) => {
+          console.error("Error loading products data:", error);
+          this.toast.showAlert("danger", "Failed to load products data");
+          return of(null);
+        })
+      ),
+      orders: this.http.getAdminDashboardOrders().pipe(
+        catchError((error) => {
+          console.error("Error loading orders data:", error);
+          this.toast.showAlert("danger", "Failed to load orders data");
+          return of(null);
+        })
+      ),
+      revenue: this.http.getAdminDashboardRevenue().pipe(
+        catchError((error) => {
+          console.error("Error loading revenue data:", error);
+          this.toast.showAlert("danger", "Failed to load revenue data");
+          return of(null);
+        })
+      ),
+      brands: this.http.getAdminDashboardOrdersByBrand().pipe(
+        catchError((error) => {
+          console.error("Error loading brands data:", error);
+          this.toast.showAlert("danger", "Failed to load brands data");
+          return of(null);
+        })
+      ),
+    })
+      .pipe(
+        finalize(() => {
+          this.isLoading = false;
+        })
+      )
+      .subscribe({
+        next: (data) => {
+          this.processDashboardData(data);
+          this.setupCharts();
+        },
+        error: (error) => {
+          console.error("Dashboard loading error:", error);
+          this.hasError = true;
+          this.errorMessage =
+            "Failed to load dashboard data. Please try again.";
+          this.toast.showAlert("danger", this.errorMessage);
+        },
+      });
+  }
+
+  private processDashboardData(data: any) {
+    // Process users data
+    if (data.users) {
+      this.userStats = {
+        totalUsers: data.users.data?.total_registered_users || 0, // Using dummy value as requested
+        privateSellers: data.users.data?.private_sellers || 0,
+        dealers: data.users.data?.dealers || 0,
+      };
+    }
+
+    // Process products data
+    if (data.products) {
+      this.productStats = {
+        totalProducts: data.products.data?.total_products || 0,
+        activeProducts: data.products.data?.active_products || 0,
+        inactiveProducts: data.products.data?.inactive_products || 0,
+        soldProducts: data.products.data?.sold_products || 0,
+      };
+    }
+
+    // Process orders data
+    if (data.orders) {
+      this.allOrders = data.orders.data?.allOrders || [];
+      this.initializeOrdersTableData();
+      this.orderStats = {
+        totalOrders: data.orders.data?.totalOrders || 0,
+        initiatedOrders: data.orders.data?.initiatedOrders || 0,
+        preparingShipmentOrders: data.orders.data?.preparingShipmentOrders || 0,
+        confirmedOrders: data.orders.data?.orderConfirmOrders || 0,
+        cancelledOrders: data.orders.data?.orderCanceledOrders || 0,
+        deliveryInProgressOrders:
+          data.orders.data?.deliveryInProgressOrders || 0,
+        awaitingConfirmationOrders:
+          data.orders.data?.awaitingConfirmationOrders || 0,
+      };
+    }
+
+    // Process revenue data
+    if (data.revenue) {
+      this.revenueStats = {
+        confirmedPayments: data.revenue.data?.confirmedPayments || 0,
+        deliveredOrders: data.revenue.data?.deliveredOrders || 0,
+        pendingDeliveryOrders: data.revenue.data?.pendingDelivery || 0,
+        ordersInDispute: data.revenue.data?.disputeOrders || 0,
+      };
+    }
+
+    // Process brands data
+    if (data.brands) {
+      this.brandsChartOptions = data.brands.data?.totalNumberOfBrands || 0;
+    }
   }
 
   loadHighcharts() {
@@ -121,99 +270,8 @@ export class AdminHomeComponent implements OnInit, OnDestroy {
     this.cd.detectChanges();
   }
 
-  getDashBoardCardInfo() {}
-
   // Initialize dummy data for all components
-  initializeDummyData() {
-    // Users data
-    this.totalUsers = 1250;
-
-    // Products data
-    this.totalListings = 3420;
-
-    // Orders data
-    this.totalOrders = 890;
-
-    // Revenue data
-    this.confirmedPayments = 756;
-    this.deliveredOrders = 623;
-    this.pendingDeliveryOrders = 134;
-    this.ordersInDispute = 12;
-
-    // Orders table data
-    this.allOrders = [
-      {
-        orderId: "ORD001",
-        buyerName: "John Smith",
-        sellerName: "TechDeals Inc",
-        orderStatus: "delivered",
-        orderCreatedAt: new Date("2024-01-15"),
-      },
-      {
-        orderId: "ORD002",
-        buyerName: "Sarah Johnson",
-        sellerName: "ElectroMart",
-        orderStatus: "pending",
-        orderCreatedAt: new Date("2024-01-16"),
-      },
-      {
-        orderId: "ORD003",
-        buyerName: "Mike Brown",
-        sellerName: "GadgetWorld",
-        orderStatus: "shipped",
-        orderCreatedAt: new Date("2024-01-17"),
-      },
-      {
-        orderId: "ORD004",
-        buyerName: "Emily Davis",
-        sellerName: "TechDeals Inc",
-        orderStatus: "confirmed",
-        orderCreatedAt: new Date("2024-01-18"),
-      },
-      {
-        orderId: "ORD005",
-        buyerName: "David Wilson",
-        sellerName: "ElectroMart",
-        orderStatus: "dispute",
-        orderCreatedAt: new Date("2024-01-19"),
-      },
-      {
-        orderId: "ORD006",
-        buyerName: "Lisa Anderson",
-        sellerName: "GadgetWorld",
-        orderStatus: "delivered",
-        orderCreatedAt: new Date("2024-01-20"),
-      },
-      {
-        orderId: "ORD007",
-        buyerName: "Tom Miller",
-        sellerName: "TechDeals Inc",
-        orderStatus: "cancelled",
-        orderCreatedAt: new Date("2024-01-21"),
-      },
-      {
-        orderId: "ORD008",
-        buyerName: "Anna Garcia",
-        sellerName: "ElectroMart",
-        orderStatus: "pending",
-        orderCreatedAt: new Date("2024-01-22"),
-      },
-      {
-        orderId: "ORD009",
-        buyerName: "Chris Lee",
-        sellerName: "GadgetWorld",
-        orderStatus: "shipped",
-        orderCreatedAt: new Date("2024-01-23"),
-      },
-      {
-        orderId: "ORD010",
-        buyerName: "Rachel Taylor",
-        sellerName: "TechDeals Inc",
-        orderStatus: "delivered",
-        orderCreatedAt: new Date("2024-01-24"),
-      },
-    ];
-
+  initializeOrdersTableData() {
     this.filteredOrders = [...this.allOrders];
     this.ordersDataSource.data = this.filteredOrders;
   }
@@ -231,10 +289,7 @@ export class AdminHomeComponent implements OnInit, OnDestroy {
   }
 
   // Users pie chart (Private Sellers vs Dealers)
-  setupUsersChart() {
-    const privateSellers = 750;
-    const dealers = 500;
-
+  setupUsersChart(): void {
     this.usersChartOptions = {
       chart: {
         type: "pie",
@@ -269,12 +324,12 @@ export class AdminHomeComponent implements OnInit, OnDestroy {
           data: [
             {
               name: "Private Sellers",
-              y: privateSellers,
+              y: this.userStats.privateSellers,
               color: "#3498db",
             },
             {
               name: "Dealers",
-              y: dealers,
+              y: this.userStats.dealers,
               color: "#e74c3c",
             },
           ],
@@ -284,11 +339,7 @@ export class AdminHomeComponent implements OnInit, OnDestroy {
   }
 
   // Products pie chart (Active, Inactive, Sold)
-  setupProductsChart() {
-    const active = 2100;
-    const inactive = 890;
-    const sold = 430;
-
+  setupProductsChart(): void {
     this.productsChartOptions = {
       chart: {
         type: "pie",
@@ -323,17 +374,17 @@ export class AdminHomeComponent implements OnInit, OnDestroy {
           data: [
             {
               name: "Active",
-              y: active,
+              y: this.productStats.activeProducts,
               color: "#2ecc71",
             },
             {
               name: "Inactive",
-              y: inactive,
+              y: this.productStats.inactiveProducts,
               color: "#f39c12",
             },
             {
               name: "Sold",
-              y: sold,
+              y: this.productStats.soldProducts,
               color: "#9b59b6",
             },
           ],
@@ -343,12 +394,7 @@ export class AdminHomeComponent implements OnInit, OnDestroy {
   }
 
   // Orders pie chart (Different order types)
-  setupOrdersChart() {
-    const onlineOrders = 520;
-    const phoneOrders = 180;
-    const walkInOrders = 90;
-    const bulkOrders = 100;
-
+  setupOrdersChart(): void {
     this.ordersChartOptions = {
       chart: {
         type: "pie",
@@ -382,24 +428,39 @@ export class AdminHomeComponent implements OnInit, OnDestroy {
           colorByPoint: true,
           data: [
             {
-              name: "Online Orders",
-              y: onlineOrders,
+              name: "Initiated Orders",
+              y: this.orderStats.initiatedOrders,
               color: "#3498db",
             },
             {
-              name: "Phone Orders",
-              y: phoneOrders,
+              name: "Preparing Shipment Orders",
+              y: this.orderStats.preparingShipmentOrders,
               color: "#e74c3c",
             },
             {
-              name: "Walk-in Orders",
-              y: walkInOrders,
+              name: "Confirmed Orders",
+              y: this.orderStats.confirmedOrders,
               color: "#2ecc71",
             },
             {
-              name: "Bulk Orders",
-              y: bulkOrders,
+              name: "Cancelled Orders",
+              y: this.orderStats.cancelledOrders,
               color: "#f39c12",
+            },
+            {
+              name: "Delivery In Progress Orders",
+              y: this.orderStats.deliveryInProgressOrders,
+              color: "#9b59b6",
+            },
+            {
+              name: "Awaiting Confirmation Orders",
+              y: this.orderStats.awaitingConfirmationOrders,
+              color: "#e74c3c",
+            },
+            {
+              name: "Delivered Orders",
+              y: this.revenueStats.deliveredOrders,
+              color: "#2ecc71",
             },
           ],
         },
@@ -408,7 +469,7 @@ export class AdminHomeComponent implements OnInit, OnDestroy {
   }
 
   // Brands bar chart
-  setupBrandsChart() {
+  setupBrandsChart(): void {
     this.brandsChartOptions = {
       chart: {
         type: "column",
@@ -462,14 +523,19 @@ export class AdminHomeComponent implements OnInit, OnDestroy {
     };
   }
 
+  // Retry loading dashboard data
+  retryLoadDashboard() {
+    this.getDashboardDetails();
+  }
+
   // Apply filters to orders table
-  applyFilters() {
-    this.filteredOrders = this.allOrders.filter((order) => {
+  applyFilters(): void {
+    this.filteredOrders = this.allOrders.filter((order: Order) => {
       let matches = true;
 
       if (
         this.filters.orderId &&
-        !order.orderId
+        !order.orderID
           .toLowerCase()
           .includes(this.filters.orderId.toLowerCase())
       ) {
@@ -502,7 +568,7 @@ export class AdminHomeComponent implements OnInit, OnDestroy {
       }
 
       if (this.filters.createdDate) {
-        const orderDate = new Date(order.orderCreatedAt)
+        const orderDate = new Date(order.createdAt || order.orderCreatedAt)
           .toISOString()
           .split("T")[0];
         if (orderDate !== this.filters.createdDate) {

@@ -1,51 +1,104 @@
 <div class="sidebar">
   <nav class="mt-2">
-    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+    <ul
+      class="nav nav-pills nav-sidebar flex-column"
+      data-widget="treeview"
+      role="menu"
+      data-accordion="false"
+    >
       <li class="nav-item menu-open">
         <ul class="nav nav-treeview">
           <li class="nav-item">
-            <a routerLink="/admin/dashboard" routerLinkActive="active" class="nav-link" (click)="onMenuItemClick()">
+            <a
+              routerLink="/admin/dashboard"
+              routerLinkActive="active"
+              class="nav-link"
+              (click)="onMenuItemClick()"
+            >
               <mat-icon>dashboard</mat-icon>
               <p>Dashboard</p>
             </a>
           </li>
           <li class="nav-item">
-            <a routerLink="/admin/brands" routerLinkActive="active" class="nav-link" (click)="onMenuItemClick()">
+            <a
+              routerLink="/admin/brands"
+              routerLinkActive="active"
+              class="nav-link"
+              (click)="onMenuItemClick()"
+            >
               <mat-icon>branding_watermark</mat-icon>
               <p>Brands</p>
             </a>
           </li>
           <li class="nav-item">
-            <a routerLink="/admin/category" routerLinkActive="active" class="nav-link" (click)="onMenuItemClick()">
+            <a
+              routerLink="/admin/category"
+              routerLinkActive="active"
+              class="nav-link"
+              (click)="onMenuItemClick()"
+            >
               <mat-icon>category</mat-icon>
               <p>Category</p>
             </a>
           </li>
           <li class="nav-item">
-            <a routerLink="/admin/products" routerLinkActive="active" class="nav-link" (click)="onMenuItemClick()">
+            <a
+              routerLink="/admin/products"
+              routerLinkActive="active"
+              class="nav-link"
+              (click)="onMenuItemClick()"
+            >
               <mat-icon>inventory_2</mat-icon>
               <p>Products</p>
             </a>
           </li>
           <li class="nav-item">
-            <a routerLink="/admin/users" routerLinkActive="active" class="nav-link" (click)="onMenuItemClick()">
+            <a
+              routerLink="/admin/users"
+              routerLinkActive="active"
+              class="nav-link"
+              (click)="onMenuItemClick()"
+            >
               <mat-icon>people</mat-icon>
               <p>Users</p>
             </a>
           </li>
 
           <li class="nav-item">
-            <a routerLink="/admin/watchOfDay" routerLinkActive="active" class="nav-link" (click)="onMenuItemClick()">
+            <a
+              routerLink="/admin/watchOfDay"
+              routerLinkActive="active"
+              class="nav-link"
+              (click)="onMenuItemClick()"
+            >
               <mat-icon>watch</mat-icon>
               <p>Watch of The Day</p>
             </a>
           </li>
 
+          <li class="nav-item">
+            <a
+              routerLink="/admin/roles"
+              routerLinkActive="active"
+              class="nav-link"
+              (click)="onMenuItemClick()"
+            >
+              <mat-icon>security</mat-icon>
+              <p>Roles</p>
+            </a>
+          </li>
+
           <!-- Accessories Dropdown -->
           <li class="nav-item">
-            <a class="nav-link" (click)="toggleAccessoriesMenu()" [class.active]="isAccRoutShow">
+            <a
+              class="nav-link"
+              (click)="toggleAccessoriesMenu()"
+              [class.active]="isAccRoutShow"
+            >
               <mat-icon>style</mat-icon>
-              <p class="d-flex align-items-center justify-content-between w-100">
+              <p
+                class="d-flex align-items-center justify-content-between w-100"
+              >
                 Accessories
                 <mat-icon class="dropdown-icon" [class.rotated]="isAccRoutShow">
                   expand_more
@@ -53,79 +106,128 @@
               </p>
             </a>
           </li>
-          
+
           <!-- Accessories Submenu -->
           <div class="accessories-submenu" [class.show]="isAccRoutShow">
             <li class="nav-item">
-              <a routerLink="/admin/group" routerLinkActive="active" class="nav-link" (click)="onMenuItemClick()">
+              <a
+                routerLink="/admin/group"
+                routerLinkActive="active"
+                class="nav-link"
+                (click)="onMenuItemClick()"
+              >
                 <mat-icon>group_work</mat-icon>
                 <p>Categories Group</p>
               </a>
             </li>
 
             <li class="nav-item">
-              <a routerLink="/admin/sub-group" routerLinkActive="active" class="nav-link" (click)="onMenuItemClick()">
+              <a
+                routerLink="/admin/sub-group"
+                routerLinkActive="active"
+                class="nav-link"
+                (click)="onMenuItemClick()"
+              >
                 <mat-icon>subdirectory_arrow_right</mat-icon>
                 <p>Sub Categories Group</p>
               </a>
             </li>
 
             <li class="nav-item">
-              <a routerLink="/admin/accessory/categories" routerLinkActive="active" class="nav-link" (click)="onMenuItemClick()">
+              <a
+                routerLink="/admin/accessory/categories"
+                routerLinkActive="active"
+                class="nav-link"
+                (click)="onMenuItemClick()"
+              >
                 <mat-icon>category</mat-icon>
                 <p>Categories</p>
               </a>
             </li>
 
             <li class="nav-item">
-              <a routerLink="/admin/images-listing" routerLinkActive="active" class="nav-link" (click)="onMenuItemClick()">
+              <a
+                routerLink="/admin/images-listing"
+                routerLinkActive="active"
+                class="nav-link"
+                (click)="onMenuItemClick()"
+              >
                 <mat-icon>image</mat-icon>
                 <p>Accessories Images</p>
               </a>
             </li>
 
             <li class="nav-item">
-              <a routerLink="/admin/accessories" routerLinkActive="active" class="nav-link" (click)="onMenuItemClick()">
+              <a
+                routerLink="/admin/accessories"
+                routerLinkActive="active"
+                class="nav-link"
+                (click)="onMenuItemClick()"
+              >
                 <mat-icon>style</mat-icon>
                 <p>Accessories</p>
               </a>
             </li>
 
             <li class="nav-item">
-              <a routerLink="/admin/attributes" routerLinkActive="active" class="nav-link" (click)="onMenuItemClick()">
+              <a
+                routerLink="/admin/attributes"
+                routerLinkActive="active"
+                class="nav-link"
+                (click)="onMenuItemClick()"
+              >
                 <mat-icon>format_list_bulleted</mat-icon>
                 <p>Attribute Types</p>
               </a>
             </li>
 
             <li class="nav-item">
-              <a routerLink="/admin/attribute-listing" routerLinkActive="active" class="nav-link" (click)="onMenuItemClick()">
+              <a
+                routerLink="/admin/attribute-listing"
+                routerLinkActive="active"
+                class="nav-link"
+                (click)="onMenuItemClick()"
+              >
                 <mat-icon>list_alt</mat-icon>
                 <p>Attribute</p>
               </a>
             </li>
 
             <li class="nav-item">
-              <a routerLink="/admin/attribute-values" routerLinkActive="active" class="nav-link" (click)="onMenuItemClick()">
+              <a
+                routerLink="/admin/attribute-values"
+                routerLinkActive="active"
+                class="nav-link"
+                (click)="onMenuItemClick()"
+              >
                 <mat-icon>format_list_numbered</mat-icon>
                 <p>Attribute Values</p>
               </a>
             </li>
 
             <li class="nav-item">
-              <a routerLink="/admin/inventory" routerLinkActive="active" class="nav-link" (click)="onMenuItemClick()">
+              <a
+                routerLink="/admin/inventory"
+                routerLinkActive="active"
+                class="nav-link"
+                (click)="onMenuItemClick()"
+              >
                 <mat-icon>inventory</mat-icon>
                 <p>Inventory</p>
               </a>
             </li>
 
             <li class="nav-item">
-              <a routerLink="/admin/attribute-inventory" routerLinkActive="active" class="nav-link" (click)="onMenuItemClick()">
+              <a
+                routerLink="/admin/attribute-inventory"
+                routerLinkActive="active"
+                class="nav-link"
+                (click)="onMenuItemClick()"
+              >
                 <mat-icon>inventory</mat-icon>
                 <p>Attribute Inventory</p>
               </a>
             </li>
-
           </div>
         </ul>
       </li>
