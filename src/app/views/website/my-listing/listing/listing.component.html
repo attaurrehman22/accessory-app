@@ -1,5 +1,8 @@
-<div class="d-flex justify-content-between align-items-center mb-3 filtered-div" [ngClass]="{ 'reverse-order-details': translateService.currentLang !== 'en' }">
-    <h4 class="mobile-label">{{ "my_Listing.My_Listings" | translate }}</h4>
+<div class="d-flex justify-content-between align-items-center mb-3 filtered-div">
+  <div class="d-flex gap-2 align-items-center">
+    <img routerLink="/myListing" src="../../../../assets/images/prev_btn.svg" alt="img" class="global-back-to-icon-style" />
+    <p class="global-label-style-for-profiling">{{ "my_Listing.My_Listings" | translate }}</p>
+  </div>
     <div class="d-flex justify-content-between align-items-center gap-2 filtered-btn-div">
       <div>
         <select class="form-select form-select-sm" style="width: 150px">
@@ -20,82 +23,86 @@
     </div>
   </div>
 <!-- Skeleton Loading -->
-<div *ngIf="isLoading" class="list-cards" [ngClass]="{ 'reverse-order-details': translateService.currentLang !== 'en' }">
-  <div *ngFor="let item of [1,2,3,4]" class="card mb-3 custom-card-style">
-    <div class="card-body d-flex align-items-center">
-      <div class="col-11 d-flex align-items-center">
-        <div class="main_image_div">
-          <div class="skeleton-image"></div>
+<div *ngIf="isLoading" class="col-12 d-flex flex-wrap" [ngClass]="{ 'reverse-order-details': translateService.currentLang !== 'en' }">
+  <div class="col-md-6" *ngFor="let item of [1,2,3,4]">
+    <div  class="card mb-3 custom-card-style">
+      <div class="card-body d-flex align-items-center">
+        <div class="col-11 d-flex align-items-center">
+          <div class="main_image_div">
+            <div class="skeleton-image"></div>
+          </div>
+          <div class="main_image_content_div pl-2 pr-2">
+            <div class="skeleton-text-small mb-2"></div>
+            <div class="skeleton-text-medium mb-2"></div>
+            <div class="skeleton-text-large"></div>
+          </div>
         </div>
-        <div class="main_image_content_div pl-2 pr-2">
-          <div class="skeleton-text-small mb-2"></div>
-          <div class="skeleton-text-medium mb-2"></div>
-          <div class="skeleton-text-large"></div>
+        <div class="col-1 d-flex justify-content-end">
+          <div class="skeleton-badge"></div>
         </div>
-      </div>
-      <div class="col-1 d-flex justify-content-end">
-        <div class="skeleton-badge"></div>
       </div>
     </div>
   </div>
 </div>
 
 <!-- Listings List -->
-<div *ngIf="!isLoading && (listings.length > 0)" class="list-cards" [ngClass]="{ 'reverse-order-details': translateService.currentLang !== 'en' }">
-  <div *ngFor="let listing of listings" class="card mb-3 custom-card-style">
-    <div class="card-body d-flex align-items-center">
-      <div class="col-11 d-flex align-items-center card-hover-change-color" (click)="editListing(listing)">
-        <div class="main_image_div">
-          <img
-            *ngIf="listing?.main_image"
-            class="img-fluid"
-            style="object-fit: cover !important;height: 100% !important; width: 100% !important;"
-            [src]="apiUrl + listing?.main_image"
-            alt="{{ 'find_dream.img_alt' | translate }}"
-          />
-          <div *ngIf="!listing?.main_image" class="no-image-styles-div">
-              <p>{{ "my_Listing.no_image" | translate }}</p>
+<div *ngIf="!isLoading && (listings.length > 0)" class="col-12 d-flex flex-wrap" [ngClass]="{ 'arabic-list-cards': translateService.currentLang !== 'en' }">
+  <div class="col-md-6 listing-div" *ngFor="let listing of listings">
+    <div class="card mb-3 custom-card-style">
+      <div class="card-body d-flex align-items-center">
+        <div class="col-11 d-flex align-items-center card-hover-change-color" (click)="editListing(listing)">
+          <div class="main_image_div">
+            <img
+              *ngIf="listing?.main_image"
+              class="img-fluid"
+              style="object-fit: cover !important;height: 100% !important; width: 100% !important;"
+              [src]="apiUrl + listing?.main_image"
+              alt="{{ 'find_dream.img_alt' | translate }}"
+            />
+            <div *ngIf="!listing?.main_image" class="no-image-styles-div">
+                <p>{{ "my_Listing.no_image" | translate }}</p>
+            </div>
+          </div>
+          <div class="main_image_content_div pl-2 pr-2">
+            <small *ngIf="translateService.currentLang == 'en'" class="text-muted mobile-label listing-id-label">
+              Listing ID <span class="span-listing-id-label"> {{ listing.listing_code || "N/A" }} </span> | Created
+            <span class="span-listing-id-label"> {{ listing.created_at | date : "yyyy-MM-dd" }} </span>
+            </small>
+
+            <small *ngIf="translateService.currentLang !== 'en'" class="text-muted mobile-label">
+              Listing ID <span class="span-listing-id-label"> {{ listing.listing_code || "N/A" }} </span> | Created
+              <span class="span-listing-id-label">  {{ listing.created_at | date : "yyyy-MM-dd" }} </span>
+            </small>
+
+            <h6 class="mt-1 mb-1 mobile-label listing-concate-label">
+              {{ listing.brand.name }} {{ listing.model }}
+              {{ listing.title }}
+            </h6>
+            <!-- <span class="badge" [ngClass]="listing.statusClass">{{ listing.status || "In Process" }}</span> -->
+            <span class="badge">{{
+              listing?.is_listing_completed == 0 ? "Draft" : listing?.sale_status == "for_sale" ? "Active" : listing?.sale_status == "reserved" ? 'Reserved': "N/A"
+            }}</span>
           </div>
         </div>
-        <div class="main_image_content_div pl-2 pr-2">
-          <small *ngIf="translateService.currentLang == 'en'" class="text-muted mobile-label listing-id-label">
-            Listing ID <span class="span-listing-id-label"> {{ listing.listing_code || "N/A" }} </span> | Created
-           <span class="span-listing-id-label"> {{ listing.created_at | date : "yyyy-MM-dd" }} </span>
-          </small>
-
-          <small *ngIf="translateService.currentLang !== 'en'" class="text-muted mobile-label">
-            Listing ID <span class="span-listing-id-label"> {{ listing.listing_code || "N/A" }} </span> | Created
-            <span class="span-listing-id-label">  {{ listing.created_at | date : "yyyy-MM-dd" }} </span>
-          </small>
-
-          <h6 class="mt-1 mb-1 mobile-label listing-concate-label">
-            {{ listing.brand.name }} {{ listing.model }}
-            {{ listing.title }}
-          </h6>
-          <!-- <span class="badge" [ngClass]="listing.statusClass">{{ listing.status || "In Process" }}</span> -->
-          <span class="badge">{{
-            listing?.is_listing_completed == 0 ? "Draft" : listing?.sale_status == "for_sale" ? "Active" : listing?.sale_status == "reserved" ? 'Reserved': "N/A"
-          }}</span>
+        <div class="col-1 d-flex justify-content-end">
+          <button
+            mat-icon-button
+            [matMenuTriggerFor]="menu"
+            aria-label="More options"
+          >
+            <mat-icon>more_vert</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item (click)="editListing(listing)">
+              <mat-icon>edit</mat-icon>
+              <span>Edit</span>
+            </button>
+            <button mat-menu-item (click)="deleteListing(listing)">
+              <mat-icon color="warn">delete</mat-icon>
+              <span>Delete</span>
+            </button>
+          </mat-menu>
         </div>
-      </div>
-      <div class="col-1 d-flex justify-content-end">
-        <button
-          mat-icon-button
-          [matMenuTriggerFor]="menu"
-          aria-label="More options"
-        >
-          <mat-icon>more_vert</mat-icon>
-        </button>
-        <mat-menu #menu="matMenu">
-          <button mat-menu-item (click)="editListing(listing)">
-            <mat-icon>edit</mat-icon>
-            <span>Edit</span>
-          </button>
-          <button mat-menu-item (click)="deleteListing(listing)">
-            <mat-icon color="warn">delete</mat-icon>
-            <span>Delete</span>
-          </button>
-        </mat-menu>
       </div>
     </div>
   </div>

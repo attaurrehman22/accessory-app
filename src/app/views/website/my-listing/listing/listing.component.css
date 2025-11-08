@@ -84,6 +84,57 @@
     margin: 32px 17px 0 0;
 }
 
+
+
+.arabic-list-cards {
+    flex-direction: row-reverse;
+}
+
+.arabic-list-cards>.card>.card-body>.d-flex>.main_image_content_div>.mobile-label {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+}
+
+.arabic-list-cards>.listing-div>.card>.card-body>.col-11>.main_image_content_div>.mobile-label {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+}
+
+.arabic-list-cards>.listing-div>.card>.card-body>.col-11>.main_image_content_div>.mobile-label-arabic {
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.arabic-list-cards>.listing-div>.card>.card-body {
+    flex-direction: row-reverse;
+}
+
+.arabic-list-cards>.card>.card-body>.d-flex {
+    flex-direction: row-reverse;
+}
+
+.arabic-list-cards>.card>.card-body>.col-11 {
+    text-align: end;
+}
+
+.arabic-list-cards>.card>.card-body>.d-flex {
+    flex-direction: row-reverse;
+    text-align: end;
+}
+
+.arabic-list-cards>.listing-div>.card>.card-body>.d-flex {
+    flex-direction: row-reverse;
+}
+
+.arabic-list-cards>.listing-div>.card>.card-body>.col-11 {
+    text-align: end;
+}
+
+
+
+
 .reverse-order-for-cart-items>.col>.card-body>P {
     text-align: end;
     flex-direction: row-reverse;

@@ -43,9 +43,7 @@ export class CustomOfferComponent {
   ) {
     this.translateService.addLangs(this.supportLanguages);
     this.translateService.setDefaultLang("ar");
-
     const browserlang = this.translateService.getBrowserLang();
-
     this.currentLanguage = browserlang;
 
     if (this.supportLanguages.includes(browserlang)) {

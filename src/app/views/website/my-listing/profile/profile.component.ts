@@ -19,9 +19,141 @@ export class ProfileComponent implements OnInit{
   apiUrl = environment.apipath + "/";
   supportLanguages = ["en", "ar", "fr", "ta", "hi"];
   currentLanguage: string;
-  profileImagePreview: string | null = null;
-  selectedProfileImage: File | null = null;
-  maxDate: string = new Date().toISOString().split('T')[0];
+  notifications = true;
+  newsletter = false;
+  profile:any;
+  email:any;
+  phone:any;
+  city:any;
+  isLoading: boolean = true;
+userName:any;
+  ngOnInit(): void {
+    this.getSummary()
+  }
+
+  getSummary(){
+    this.isLoading=true
+    this.http.getSummary().subscribe(
+      (res) => {
+        console.log("API Response:", res);
+        this.profile = res?.data?.profile?.profile_image ? res?.data?.profile?.profile_image.replace(/\\/g, "") : '';
+        this.email = res?.data?.profile?.email;
+        this.phone = res?.data?.profile?.phone_number;
+        this.city = res?.data?.profile?.city;
+        if(res?.data?.profile?.first_name ){
+          this.userName =  res?.data?.profile?.first_name + ' ' + res?.data?.profile?.last_name
+        }
+
+        const toArray = (data: any) =>
+          Array.isArray(data) ? data : data ? [data] : [];
+  
+        const buyOrders = toArray(res?.data?.buy_order).map((order: any) => ({
+          id: order?.id,
+          titleKey: 'profile.buy_orders',
+          image: order?.product?.main_image ?  order?.product?.main_image.replace(/\\/g, "") : '',
+          itemTitle: order?.product?.title || 'N/A',
+          itemDesc: `${this.translateService.instant('profile.order_id')} ${order?.order_id || 'N/A'} | ${this.timeAgo(order?.created_at)}`,
+          status: this.mapStatus(order?.status)
+        }));
+  
+        const sellOrders = toArray(res?.data?.sell_order).map((order: any) => ({
+          id: order?.id,
+          titleKey: 'profile.sell_orders', 
+          image: order?.product?.main_image ?  order?.product?.main_image.replace(/\\/g, "") : '',
+          itemTitle: order?.product?.title || 'N/A',
+          itemDesc: `${this.translateService.instant('profile.order_id')} ${order?.order_id || 'N/A'} | ${this.timeAgo(order?.created_at)}`,
+          status: this.mapStatus(order?.status)
+        }));
+  
+        const myListings = toArray(res?.data?.my_listing).map((listing: any) => ({
+          id: listing?.id,
+          titleKey: 'profile.my_listings',
+          image: listing?.main_image ?  listing?.main_image.replace(/\\/g, "") : '',
+          itemTitle: listing?.title || 'N/A',
+          itemDesc: `${this.translateService.instant('profile.listing_id')} ${listing?.id || 'N/A'} | ${this.timeAgo(listing?.created_at)}`,
+          status: listing?.sale_status === 'for_sale' ? this.translateService.instant('profile.active') : this.translateService.instant('profile.inactive')
+        }));
+  
+        const favorites = toArray(res?.data?.favorite).map((fav: any) => ({
+          titleKey: 'profile.favorites',
+          image: fav?.product?.main_image ?  fav?.product?.main_image.replace(/\\/g, "") : '',
+          itemTitle: `${fav?.product?.brand?.name || ''} | ${fav?.product?.model || ''}`,
+          itemDesc: this.translateService.instant('profile.favorite_description'),
+          status: ''
+        }));
+  
+        // ✅ Final structured list
+        this.sections = [...buyOrders, ...sellOrders, ...myListings, ...favorites];
+        this.isLoading=false;
+        console.log("this.sections:", this.sections);
+      }
+      
+    )
+  }
+
+
+  timeAgo(dateString: string): string {
+    if (!dateString) return '';
+    const diff = Date.now() - new Date(dateString).getTime();
+    const seconds = Math.floor(diff / 1000);
+    const minutes = Math.floor(seconds / 60);
+    const hours = Math.floor(minutes / 60);
+    const days = Math.floor(hours / 24);
+
+    if (days > 7) {
+      const weeks = Math.floor(days / 7);
+      return weeks === 1 ? this.translateService.instant('profile.week_ago', { weeks }) : this.translateService.instant('profile.weeks_ago', { weeks });
+    }
+    if (days >= 1) {
+      return days === 1 ? this.translateService.instant('profile.day_ago', { days }) : this.translateService.instant('profile.days_ago', { days });
+    }
+    if (hours >= 1) {
+      return hours === 1 ? this.translateService.instant('profile.hour_ago', { hours }) : this.translateService.instant('profile.hours_ago', { hours });
+    }
+    if (minutes >= 1) {
+      return minutes === 1 ? this.translateService.instant('profile.minute_ago', { minutes }) : this.translateService.instant('profile.minutes_ago', { minutes });
+    }
+    return this.translateService.instant('profile.just_now');
+  }
+
+  mapStatus(status: string): string {
+    // change the status to the translation
+    switch (status) {
+      case 'initiated':
+        return this.translateService.instant('profile.order_confirmation');
+      case 'pending_payment':
+        return this.translateService.instant('profile.pending_payment');
+      case 'completed':
+        return this.translateService.instant('profile.completed');
+    }
+    return this.translateService.instant('profile.order_confirmation');
+  }
+  
+  sections:any = [  ];
+
+  viewAllFor(section){
+    console.log("Section",section)
+    const buyOrdersKey = 'profile.buy_orders';
+    const sellOrdersKey = 'profile.sell_orders';
+    const myListingsKey = 'profile.my_listings';
+    const favoritesKey = 'profile.favorites';
+    const key = section.titleKey;
+
+    if(key == buyOrdersKey){
+      this.router.navigate(['myListing/buy/order'])
+    }else if(key == sellOrdersKey){
+      this.router.navigate(['myListing/sell/order'])
+    }
+    else if(key == myListingsKey){
+      // this.router.navigate(["/new-product"], {
+      //   state: { productID: section.id },
+      // });
+      this.router.navigate(['/myListing/listing'])
+    }else if(key == favoritesKey){
+      this.router.navigate(['myListing/favorite'])
+    }
+  }
+
   constructor(private http: HttpService,
     private router: Router,
     private dialog: MatDialog,
@@ -44,188 +176,32 @@ export class ProfileComponent implements OnInit{
       }
     }
 
-  getInitialsofUsername(name){
-    if (!name) {
-      return '';
-    }
-
-    const words = name.trim().split(' ');
-    console.log("words", words);
-    if (words?.length === 1 && words[0] !== "") {
-      return words[0][0].toUpperCase();
-    } else {
-      const emailWord =this.profileForm.get('email').value;
-      if(emailWord){
-        return emailWord[0][0].toUpperCase();
-      }
-      // return (emailWord[0][0].toUpperCase());
-      // return 'EM';
-    }
+  navigateTo(route: string) {
+    this.router.navigate([`/${route}`]);
   }
 
-  getInitials(name: string | undefined | null): string {
-    if (!name) {
-      return "";
+  goToDetails(section){
+    const buyOrdersKey = 'profile.buy_orders';
+    const sellOrdersKey = 'profile.sell_orders';
+    const myListingsKey = 'profile.my_listings';
+    const favoritesKey = 'profile.favorites';
+    const key = section.titleKey;
+
+    if(key == buyOrdersKey){
+      this.router.navigate(['/myListing/buy/order/details'], { queryParams: { id: section.id } });
+    }else if(key == sellOrdersKey){
+      this.router.navigate(['/myListing/sell/order/details'], { queryParams: { id: section.id } });
     }
-    // Split name by space and get first letters
-    const words = name.trim().split(" ");
-    // words ['']0: ""length: 1[[Prototype]]: Array(0)
-
-    if (words?.length === 1 && words[0] !== "" && words[0] !== undefined && words[0] !== null ) {
-      return words[0][0].toUpperCase();
-    } else {
-      if(this.profileForm.get('email').value){
-        const emailWord = this.profileForm.get('email').value
-        if(emailWord[0][0]){
-          return emailWord[0][0].toUpperCase();
-        }else{
-          return
-        }
-      }
-      // return (emailWord[0][0].toUpperCase());
-      // return 'EM';
-    }
-  }
-  userID: any;
-  
-  ngOnInit(): void {
-    this.userID = localStorage.getItem("userID");
-    if (!this.userID) {
-      this.loginFirst();
-    }
-    this.profileForm = this.fb.group({
-      first_name: [
-        "",
-        [
-          // Validators.required,
-          Validators.minLength(2),
-          Validators.maxLength(50),
-        ],
-      ],
-      last_name: [
-        "",
-        [
-          // Validators.required,
-          Validators.minLength(2),
-          Validators.maxLength(50),
-        ],
-      ],
-      gender: [""],
-      date_of_birth: ["", [this.noFutureDateValidator]],
-      countryCode: ["KSA"],
-      phone_number: ["", [Validators.pattern(/^5\d{8}$/)]],
-      language: ["english"],
-      occupation: ["", [Validators.minLength(2)]],
-      about_me: ["", [Validators.maxLength(300)]],
-      email: ["", [Validators.email]],
-      password: [""],
-      profile_image: [""]
-    });
-    this.fetchProfiling();
-  }
-
-  noFutureDateValidator(control: AbstractControl) {
-    if (control.value && new Date(control.value) > new Date()) {
-      return { futureDate: true };
-    }
-    return null;
-  }
-
-  loginFirst() {
-    const dialogRef = this.dialog.open(ModelLoginComponent, {
-      width: "600px",
-      data: { message: "dialog-box" },
-    });
-
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result) {
-      }
-    });
-  }
-
-  onProfileImageSelect(event: any) {
-    const file = event.target.files[0];
-    if (file) {
-      this.selectedProfileImage = file;
-      // Create preview
-      const reader = new FileReader();
-      reader.onload = (e: any) => {
-        this.profileImagePreview = e.target.result;
-      };
-      reader.readAsDataURL(file);
-    }
-  }
-
-  onDateChange(event: any) {
-    const selectedDate = new Date(event.target.value);
-    const today = new Date();
-    today.setHours(23, 59, 59, 999); // Set to end of today
-    
-    if (selectedDate > today) {
-      // Clear the field if future date is selected
-      this.profileForm.get('date_of_birth')?.setValue('');
-      if (this.translateService.currentLang == "en") {
-        this.alertService.showAlert("warning", "Future dates are not allowed");
-      } else {
-        this.alertService.showAlert("warning", "التواريخ المستقبلية غير مسموحة");
-      }
-    }
-  }
-
-  fetchProfiling() {
-    this.http.getProfilingInformation().subscribe((res) => {
-      const cleanValue = (val: any) => (val === null || val === 'null' ? '' : val);
-  
-      this.profileForm.patchValue({
-        first_name: cleanValue(res.first_name),
-        last_name: cleanValue(res.last_name),
-        gender: cleanValue(res.gender),
-        city: cleanValue(res.city),
-        country: cleanValue(res.country) || 'Saudi Arabia',
-        date_of_birth: cleanValue(res.date_of_birth),
-        phone_number: cleanValue(res.phone_number),
-        language: cleanValue(res.language),
-        occupation: cleanValue(res.occupation),
-        about_me: cleanValue(res.about_me),
-        email: cleanValue(res.email),
-        profile_image: res?.profile_image ? res.profile_image.replace(/\\/g, "") : '',
-        password: cleanValue(res.password),
+    else if(key == myListingsKey){
+      this.router.navigate(["/new-product"], {
+        state: { productID: section.id },
       });
-    });
+    }else if(key == favoritesKey){
+      this.router.navigate(['myListing/favorite'])
+    }
   }
 
-  profileFormSubmit() {
-    this.profileForm.markAllAsTouched();
-    if (this.profileForm.valid) {
-      const formData = new FormData();
-      
-      // Append all form fields to FormData
-      Object.keys(this.profileForm.value).forEach(key => {
-        if (key === 'profile_image') {
-          // Sirf tab bhejo jab user ne new image select ki ho
-          if (this.selectedProfileImage) {
-            formData.append('profile_image', this.selectedProfileImage);
-          }
-        } else {
-          formData.append(key, this.profileForm.get(key).value);
-        }
-      });
-
-      this.http.saveProfilingInformation(formData).subscribe((res) => {
-        if (this.translateService.currentLang == "en") {
-          this.alertService.showAlert("success", "Profile Update Successfully");
-        } else {
-          this.alertService.showAlert("success", "تم تحديث الملف الشخصي بنجاح");
-        }
-        // Reset image selection after successful upload
-        this.selectedProfileImage = null;
-      });
-    } else {
-      if (this.translateService.currentLang == "en") {
-        this.alertService.showAlert("warning", "Please add form values");
-      } else {
-        this.alertService.showAlert("warning", "يرجى إضافة قيم النموذج");
-      }
-    }
+  toggleLang() {
+    this.currentLanguage = this.currentLanguage === 'en' ? 'ar' : 'en';
   }
 }

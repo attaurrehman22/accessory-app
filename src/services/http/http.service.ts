@@ -1172,6 +1172,15 @@ export class HttpService implements OnInit {
     });
   }
 
+  getWishListByFilter(querString): Observable<any> {
+    return this.http.get(`${this.apiUrl}/api/wishlist/get?${querString}`, {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+  }
+
   addWishList(formData): Observable<any> {
     return this.http.post(`${this.apiUrl}/api/wishlist/add`, formData, {
       headers: {
@@ -1401,8 +1410,44 @@ export class HttpService implements OnInit {
     });
   }
 
+  getSummary(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/api/dashboard/summary`, {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+  }
+
+  getProfilingWithBillingInformation(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/api/profile/complete`, {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+  }
+
+  saveProfilingandBillingInformation(formData): Observable<any> {
+    return this.http.post(`${this.apiUrl}/api/profile`, formData, {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+  }
+
    saveProfilingInformation(formData): Observable<any> {
     return this.http.post(`${this.apiUrl}/api/profile`, formData, {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+  }
+
+  removeProfileImage(): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/api/profile/remove-image`, {
       headers: {
         Accept: "application/json",
         Authorization: `Bearer ${this.token}`,

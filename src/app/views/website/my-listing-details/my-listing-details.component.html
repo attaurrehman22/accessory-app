@@ -1,6 +1,6 @@
-<div class="mt-5" [ngClass]="getWrapperClass()">
+<div class="mt-5 global-main-wraper">
   <div class="col-12 d-flex flex-wrap mb-3" [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }">
-    <div class="col-md-3 arabic-style">
+    <!-- <div class="col-md-3 arabic-style">
       <div class="d-flex flex-column p-lg-3 p-md-1 p-sm-1" style="height: 100%;background: none !important;">
         <ul class="nav nav-pills flex-column mb-auto">
           <li class="nav-item" *ngFor="let item of menuItems; let i = index">
@@ -11,15 +11,12 @@
               [routerLinkActiveOptions]="item.route.includes('buy/order') || item.route.includes('sell/order') ? {} : { exact: true }"
               #rla="routerLinkActive">
           
-              <!-- Show only ONE icon -->
               <img [src]="rla.isActive ? item.white_icon : item.black_icon" alt="Item" />
           
-              <!-- English -->
               <span *ngIf="translateService.currentLang == 'en'">
                 {{ item.label }}
               </span>
           
-              <!-- Arabic -->
               <span *ngIf="translateService.currentLang !== 'en'">
                 {{ item.arabicLabel }}
               </span>
@@ -28,8 +25,8 @@
                   
         </ul>
       </div>
-    </div>
-    <div class="col-md-9" style="min-height: 85vh;"
+    </div> -->
+    <div class="col-md-12" style="min-height: 85vh;"
       [ngClass]="{ 'reverse-order-details': translateService.currentLang !== 'en' }">
       <router-outlet></router-outlet>
     </div>

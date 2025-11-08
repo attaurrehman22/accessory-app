@@ -122,6 +122,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
         if(exists){
          this.getMesageDetails(exists)
         }else{
+          console.log("history.state.product_Details.chats",history?.state?.product_Details?.chats)
           this.filteredChats.unshift(history.state.product_Details.chats);
         }
         console.log("NEW FILTERED CHATS",this.filteredChats)
@@ -276,15 +277,21 @@ export class ChatComponent implements OnInit, AfterViewChecked {
   }
 
   unreadFilter() {
+    console.log("Before Calling",this.filteredChats)
     // this.chats = this.chats.filter((item: any) => item.unread_count > 0);
-    const filteredChats = this.chats.filter(
-      (item: any) => item.unread_count > 0
-    );
-
+    const filteredChats = this.chats.filter((item: any) => item.unread_count > 0);
+    this.filteredChats = filteredChats
+    console.log("After Calling",this.filteredChats)
     // Only update this.chats if filteredChats has at least one item
-    if (filteredChats.length > 0) {
-      this.chats = [...this.chats, ...filteredChats];
-    }
+    // if (filteredChats.length == 0) {
+    //   this.chats = [...this.chats, ...filteredChats];
+    // }
+  }
+
+  showAllMessages(){
+    console.log("Before Calling",this.filteredChats)
+    this.filteredChats = this.chats
+    console.log("After Calling",this.filteredChats)
   }
 
 

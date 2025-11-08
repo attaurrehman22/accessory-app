@@ -17,6 +17,19 @@
 .unread-btn {
     background: none;
     border: none;
+    font-size: 14px;
+    font-weight: 500;
+    align-self: flex-start;
+    color: #242424;
+    width: 100%;
+    align-self: flex-start;
+    display: flex;
+    height: 30px;
+    align-items: center;
+}
+
+.unread-btn:hover {
+  background: #6A6A6A0D;
 }
 
 .active-bottom-border {
@@ -368,4 +381,26 @@ input.form-control {
     min-width: 70%;
    }
 
- 
+  
+  ::ng-deep .mat-mdc-menu-panel {
+    background-color: #ffffff !important; 
+    box-shadow: 0px 30px 40px 0px #00000026 !important;
+    border-radius: 16px !important; 
+    padding: 0px;
+    min-width: 293px !important; 
+    margin-top: 8px;
+  }
+
+  .mat-mdc-menu-panel.mat-mdc-menu-panel {
+    max-width: 480px !important;
+    min-width: 310px !important;
+    max-height: 500px;
+  }
+  
+  #mat-menu-panel-2 {
+    max-width: 100px !important;
+    min-width: 10vw !important;
+    margin-top: 15px;
+    margin-right: 7vw;
+    margin-left: -9vw;
+  }

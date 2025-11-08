@@ -5,10 +5,32 @@
     <div class="col-md-4 chat-messages">
       <div class="d-flex justify-content-between align-items-center mb-3">
         <h3>{{ "chat_com.chats" | translate }}</h3>
-        <button (click)="unreadFilter()" class="unread-btn">
+        <!-- <button (click)="unreadFilter()" class="unread-btn">
           {{ "chat_com.Unread_Filter" | translate }}
-        </button>
+        </button> -->
+        <img style="cursor: pointer;height: 24px;width: 24px;" src="../../../../../assets/images/proicons_filter.svg" [matMenuTriggerFor]="profileMenu" />
       </div>
+      <mat-menu #profileMenu="matMenu" class="custom-profile-menu">
+        <div class="route-groups">
+          <div class="d-flex gap-1 align-items-center cursor-pointer flex-column p-2">
+            <!-- <img src="assets/images/black_profile.svg" alt="Profile" /> -->
+            <!-- <a [disableRipple]="true" mat-menu-item class="custom-btn a-custom-style">
+              {{ "header.admin_pannel" | translate }}
+            </a> -->
+            <button (click)="showAllMessages()" class="unread-btn">
+              All Messages
+            </button>
+
+            <button (click)="unreadFilter()" class="unread-btn">
+              {{ "chat_com.Unread_Filter" | translate }}
+            </button>
+
+            <button class="unread-btn">
+              Archived
+            </button>
+          </div>
+        </div>
+      </mat-menu>
       <div class="d-flex justify-content-between align-items-center mb-3">
         <button (click)="activeOption('All')" class="action-btn" [ngClass]="
             isActive === 'All'
@@ -744,8 +766,23 @@
             </div>
           </div>
           <div>
-            <p style="cursor: pointer">...</p>
+            <p style="cursor: pointer" [matMenuTriggerFor]="reportMenu">...</p>
           </div>
+
+          <mat-menu #reportMenu="matMenu" class="custom-profile-menu">
+            <div class="route-groups">
+              <div class="d-flex gap-1 align-items-center cursor-pointer flex-column p-2">
+    
+                <button class="unread-btn">
+                  Report Chat
+                </button>
+    
+                <button class="unread-btn">
+                  Archive Chat
+                </button>
+              </div>
+            </div>
+          </mat-menu>
         </div>
 
         <!-- // Product deatail of Second first row -->

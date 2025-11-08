@@ -1,242 +1,367 @@
-<form class="" [formGroup]="billingForm" [ngClass]="{ 'arabic-style-form': translateService.currentLang !== 'en' }">
-    <h3 class="mobile-label">{{ "my_Listing.Shipping_Address" | translate }}</h3>
-    <div class="row">
-      <div class="col-md-6 mb-3" [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'">
-        <label for="firstName" class="form-label">{{ "my_Listing.First_Name" | translate }}</label>
-        <input
-          type="text"
-          id="firstName"
-          class="form-control"
-          placeholder='{{ "my_Listing.First_Name_place" | translate }}'
-          formControlName="first_name"
-        />
-        <!-- <div class="" *ngIf="billingForm.get('first_name').hasError('required') && billingForm.get('first_name').touched">
-          <small class="text-danger">{{ "my_Listing.First_Name_required" | translate }}</small>
-        </div> -->
+<form [formGroup]="billingForm" (ngSubmit)="profileFormSubmit()"
+  [ngClass]="{ 'arabic-style-form': translateService.currentLang !== 'en' }">
+  <!-- Personal Information -->
+  <div class="d-flex gap-2 align-items-center">
+    <!-- <span routerLink="/myListing" style="cursor: pointer;font-size: 30px;" class="back-icon">&lt;</span> -->
+    <img routerLink="/myListing" src="../../../../assets/images/prev_btn.svg" alt="img" class="global-back-to-icon-style" />
+    <p class="font-size-28 font-wight-600 color-242424 margin-0">{{ "my_Listing.Personal_Information" | translate }}</p>
+  </div>
 
-        <div class="" *ngIf="billingForm.get('first_name').hasError('maxlength')">
-          <small class="text-danger">{{ "my_Listing.First_name_exceed_limit" | translate }}</small>
-        </div>
+  <div class="row">
+    <div class="col-md-12 mb-3 gap-2 d-flex align-items-center">
+      <div class="position-relative profile-image-container">
+        <ng-container *ngIf="billingForm.get('profile_image').value || profileImagePreview;else fallbackImage">
+          <img [src]="profileImagePreview || (apiUrl + billingForm.get('profile_image').value)" alt="Profile Image"
+            style="width: 48px; height: 48px; border-radius: 30px;border:none;object-fit: cover;" />
+          <i class="bi bi-trash-fill position-absolute" aria-hidden="true" title="Delete"
+            style="bottom: 12px; right: 16px; color: #dc3545; font-size: 15px; cursor: pointer; opacity: 0; transition: opacity 0.3s ease;"
+            (click)="removeImage()"></i>
+          <!-- <label for="profileImageUpload" class="position-absolute camera-icon" style="bottom: 1px; right: 14px; cursor: pointer; color: #242424; border-radius: 50%; padding: 2px; opacity: 0; transition: opacity 0.3s ease;">
+            <i class="bi bi-trash-fill" aria-hidden="true" title="Delete" style="color: #dc3545; font-size: 20px;" (click)="removeImage()"></i>
+          </label> -->
+          <input type="file" id="profileImageUpload" (change)="onProfileImageSelect($event)" accept="image/*"
+            style="display: none;">
+        </ng-container>
+
+        <ng-template #fallbackImage>
+          <div class="profile-image-container" style="
+              width: 48px;
+              height: 48px;
+              border-radius: 30px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              background-color: #ccc;
+              color: white;
+              font-size: 20px;
+              border:none;
+              position: relative;
+            ">
+            {{ getInitialsofUsername(billingForm.get('first_name').value + ' ' + billingForm.get('last_name').value) }}
+            <label for="profileImageUpload" class="position-absolute camera-icon"
+              style="bottom: 1px; right: 14px; cursor: pointer; color: #242424; border-radius: 50%; padding: 2px; opacity: 0; transition: opacity 0.3s ease;">
+              <i class="bi bi-camera-fill"></i>
+            </label>
+            <input type="file" id="profileImageUpload" (change)="onProfileImageSelect($event)" accept="image/*"
+              style="display: none;">
+          </div>
+        </ng-template>
       </div>
-      <div class="col-md-6 mb-3" [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'">
-        <label for="lastName" class="form-label">{{ "my_Listing.Last_Name" | translate }}</label>
-        <input
-          type="text"
-          id="lastName"
-          class="form-control"
-          placeholder='{{ "my_Listing.Last_Name_place" | translate }}'
-          formControlName="last_name"
-        />
-        <!-- <div class="" *ngIf="billingForm.get('last_name').hasError('required') && billingForm.get('last_name').touched">
-          <small class="text-danger">{{ "my_Listing.Last_Name_required" | translate }}</small>
-        </div> -->
-
-        <div class="" *ngIf="billingForm.get('last_name').hasError('maxlength')">
-          <small class="text-danger">{{ "my_Listing.First_name_exceed_limit" | translate }}</small>
-        </div>
+      <div>
+        <p class="font-size-20 font-weight-600 color-242424 margin-0">{{billingForm.get('first_name').value}}
+          {{billingForm.get('last_name').value}}</p>
+        <p class="font-size-16 font-weight-400 color-909090 margin-0">{{billingForm.get('email').value}}</p>
       </div>
     </div>
+  </div>
 
-    <div class="row">
-      <div class="col-md-6 mb-3" [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'">
-        <label for="street" class="form-label">{{ "my_Listing.Street" | translate }}</label>
-        <input
-          type="text"
-          id="street"
-          class="form-control"
-          placeholder='{{ "my_Listing.Enter_street_Place" | translate }}'
-          formControlName="street"
-        />
-        <!-- <div class="" *ngIf="billingForm.get('street').hasError('required') && billingForm.get('street').touched">
+  <div class="row">
+    <div class="col-md-6 mb-3" [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'">
+      <label for="first_name" class="form-label">{{ "my_Listing.First_Name" | translate }}</label>
+      <input type="text" id="first_name" class="form-control" formControlName="first_name"
+        placeholder='{{ "my_Listing.First_Name_place" | translate }}' />
+      <div *ngIf="billingForm.get('first_name')?.touched && billingForm.get('first_name')?.invalid" class="text-danger">
+        <!-- <small *ngIf="billingForm.get('first_name')?.hasError('required')">{{ "form_validation.required" | translate }}</small> -->
+        <small *ngIf="billingForm.get('first_name')?.hasError('minlength')">{{ "form_validation.min_2_chars" | translate
+          }}</small>
+        <small *ngIf="billingForm.get('first_name')?.hasError('maxlength')">{{ "form_validation.max_50_chars" |
+          translate }}</small>
+      </div>
+    </div>
+    <div class="col-md-6 mb-3" [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'">
+      <label for="last_name" class="form-label">{{ "my_Listing.Last_Name" | translate }}</label>
+      <input type="text" id="last_name" class="form-control" formControlName="last_name"
+        placeholder='{{ "my_Listing.Last_Name_place" | translate }}' />
+      <div *ngIf="billingForm.get('last_name')?.touched && billingForm.get('last_name')?.invalid" class="text-danger">
+        <!-- <small *ngIf="billingForm.get('last_name')?.hasError('required')">{{ "form_validation.required" | translate }}</small> -->
+        <small *ngIf="billingForm.get('last_name')?.hasError('minlength')">{{ "form_validation.min_2_chars" | translate
+          }}</small>
+        <small *ngIf="billingForm.get('last_name')?.hasError('maxlength')">{{ "form_validation.max_50_chars" | translate
+          }}</small>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6 mb-3" [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'">
+      <label for="gender" class="form-label">{{ "my_Listing.Gender" | translate }}</label>
+      <select id="gender" class="form-select" formControlName="gender">
+        <option selected disabled>{{ "my_Listing.select_gender" | translate }}</option>
+        <option value="Male">{{ "my_Listing.Male" | translate }}</option>
+        <option value="Female">{{ "my_Listing.Female" | translate }}</option>
+        <option value="Other">{{ "my_Listing.Other" | translate }}</option>
+        <div *ngIf="billingForm.get('gender')?.touched && billingForm.get('gender')?.invalid" class="text-danger">
+          <!-- <small *ngIf="billingForm.get('gender')?.hasError('required')">{{ "form_validation.required" | translate }}</small> -->
+        </div>
+      </select>
+    </div>
+    <div class="col-md-6 mb-3" [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'">
+      <label for="date_of_birth" class="form-label">{{ "my_Listing.Date_of_Birth" | translate }}</label>
+      <input [attr.max]="maxDate" type="date" id="date_of_birth" class="form-control" formControlName="date_of_birth"
+        (change)="onDateChange($event)" />
+      <div *ngIf="billingForm.get('date_of_birth')?.touched && billingForm.get('date_of_birth')?.invalid"
+        class="text-danger">
+        <small *ngIf="billingForm.get('date_of_birth')?.hasError('futureDate')">{{
+          "form_validation.future_date_not_allowed" | translate }}</small>
+      </div>
+    </div>
+  </div>
+
+  <!-- <div class="row">
+    <div class="col-md-6 mb-3" [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'">
+      <label for="country" class="form-label">{{ "my_Listing.coutry" | translate }}</label>
+      <input type="text" id="country" class="form-control" formControlName="country" placeholder='{{ "my_Listing.country_place" | translate }}' />
+      <div *ngIf="billingForm.get('country')?.touched && billingForm.get('country')?.invalid" class="text-danger">
+        <small *ngIf="billingForm.get('country')?.hasError('required')">{{ "form_validation.required" | translate }}</small>
+        <small *ngIf="billingForm.get('country')?.hasError('minlength')">{{ "form_validation.min_2_chars" | translate }}</small>
+        <small *ngIf="billingForm.get('country')?.hasError('maxlength')">{{ "form_validation.max_50_chars" | translate }}</small>
+      </div>
+    </div>
+    <div class="col-md-6 mb-3" [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'">
+      <label for="city" class="form-label">{{ "my_Listing.city" | translate }}</label>
+      <input type="text" id="city" class="form-control" formControlName="city" placeholder='{{ "my_Listing.city_place" | translate }}' />
+      <div *ngIf="billingForm.get('city')?.touched && billingForm.get('city')?.invalid" class="text-danger">
+        <small *ngIf="billingForm.get('city')?.hasError('required')">{{ "form_validation.required" | translate }}</small>
+        <small *ngIf="billingForm.get('city')?.hasError('minlength')">{{ "form_validation.min_2_chars" | translate }}</small>
+        <small *ngIf="billingForm.get('city')?.hasError('maxlength')">{{ "form_validation.max_50_chars" | translate }}</small>
+      </div>
+    </div>
+  </div> -->
+
+  <div class="row">
+    <div class="col-md-6 mb-3" [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'">
+      <label for="phone_number" class="form-label">{{ "my_Listing.Phone" | translate }}</label>
+      <div class="input-group" style="flex-wrap: nowrap !important;">
+        <select class="form-select" formControlName="countryCode"
+          style="max-width: 180px;min-width: 120px;border-right: none !important;">
+          <option value="KSA">KSA
+            <span style="border: 1px solid #909090;
+              background: none;border-right: none;
+              color: #909090;font-size: 16px;font-weight: 400;" class="input-group-text" id="countryCode">
+              +966
+            </span>
+          </option>
+        </select>
+        <div class="input-group">
+          <!-- <span style="border: 1px solid #ced4da;background: none;border-right: none;"
+           class="input-group-text" id="countryCode">
+           KSA +966
+          </span> -->
+          <input
+            style="border-left:none !important;border-top-left-radius: 0 !important;border-bottom-left-radius: 0 !important;"
+            type="text" id="phone_number" class="form-control" formControlName="phone_number" placeholder="55 000 0000"
+            aria-describedby="countryCode" />
+        </div>
+      </div>
+      <div *ngIf="billingForm.get('phone_number')?.touched && billingForm.get('phone_number')?.invalid"
+        class="text-danger">
+        <!-- <small *ngIf="billingForm.get('phone_number')?.hasError('required')">{{ "form_validation.required" | translate }}</small> -->
+        <small *ngIf="billingForm.get('phone_number')?.hasError('pattern')">{{ "form_validation.invalid_phone" |
+          translate }}</small>
+      </div>
+    </div>
+    <div class="col-md-6 mb-3" [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'">
+      <label for="language" class="form-label">{{ "my_Listing.Language" | translate }}</label>
+      <select id="language" class="form-select" formControlName="language">
+        <option value="english">{{ "my_Listing.English" | translate }}</option>
+        <option value="arabic">{{ "my_Listing.Arabic" | translate }}</option>
+        <div *ngIf="billingForm.get('language')?.touched && billingForm.get('language')?.invalid" class="text-danger">
+          <!-- <small *ngIf="billingForm.get('language')?.hasError('required')">{{ "form_validation.required" | translate }}</small> -->
+        </div>
+      </select>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6 mb-3" [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'">
+      <label for="occupation" class="form-label">{{ "my_Listing.Occupation" | translate }}</label>
+      <input type="text" id="occupation" class="form-control" formControlName="occupation"
+        placeholder='{{ "my_Listing.Occupation" | translate }}' />
+      <div *ngIf="billingForm.get('occupation')?.touched && billingForm.get('occupation')?.invalid" class="text-danger">
+        <!-- <small *ngIf="billingForm.get('occupation')?.hasError('required')">{{ "form_validation.required" | translate }}</small> -->
+        <small *ngIf="billingForm.get('occupation')?.hasError('minlength')">{{ "form_validation.min_2_chars" | translate
+          }}</small>
+      </div>
+    </div>
+    <div class="col-md-6 mb-3" [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'">
+      <label for="about_me" class="form-label">{{ "my_Listing.About_Me" | translate }}</label>
+      <textarea id="about_me" class="form-control" rows="2" formControlName="about_me"
+        placeholder='{{ "my_Listing.Description" | translate }}'></textarea>
+      <div *ngIf="billingForm.get('about_me')?.touched && billingForm.get('about_me')?.invalid" class="text-danger">
+        <small *ngIf="billingForm.get('about_me')?.hasError('maxlength')">{{ "form_validation.max_300_chars" | translate
+          }}</small>
+      </div>
+    </div>
+  </div>
+
+  <h3 class="mobile-label">{{ "my_Listing.Shipping_Address" | translate }}</h3>
+  <!-- <div class="row">
+    <div class="col-md-6 mb-3" [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'">
+      <label for="firstName" class="form-label">{{ "my_Listing.First_Name" | translate }}</label>
+      <input type="text" id="firstName" class="form-control"
+        placeholder='{{ "my_Listing.First_Name_place" | translate }}' formControlName="first_name" />
+      
+
+      <div class="" *ngIf="billingForm.get('first_name').hasError('maxlength')">
+        <small class="text-danger">{{ "my_Listing.First_name_exceed_limit" | translate }}</small>
+      </div>
+    </div>
+    <div class="col-md-6 mb-3" [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'">
+      <label for="lastName" class="form-label">{{ "my_Listing.Last_Name" | translate }}</label>
+      <input type="text" id="lastName" class="form-control" placeholder='{{ "my_Listing.Last_Name_place" | translate }}'
+        formControlName="last_name" />
+  
+
+      <div class="" *ngIf="billingForm.get('last_name').hasError('maxlength')">
+        <small class="text-danger">{{ "my_Listing.First_name_exceed_limit" | translate }}</small>
+      </div>
+    </div>
+  </div> -->
+
+  <div class="row">
+    <div class="col-md-6 mb-3" [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'">
+      <label for="street" class="form-label">{{ "my_Listing.Street" | translate }}</label>
+      <input type="text" id="street" class="form-control"
+        placeholder='{{ "my_Listing.Enter_street_Place" | translate }}' formControlName="street" />
+      <!-- <div class="" *ngIf="billingForm.get('street').hasError('required') && billingForm.get('street').touched">
           <small class="text-danger">{{ "my_Listing.Street_is_required" | translate }}</small>
         </div> -->
 
-        <div class="" *ngIf="billingForm.get('street').hasError('maxlength')">
-          <small class="text-danger">{{ "my_Listing.Cannot_exceed_limit_of_80_character" | translate }}</small>
-        </div>
-      </div>
-      <div class="col-md-6 mb-3" [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'">
-        <label for="street2" class="form-label">{{ "create_product_listing.Street_Line_two" | translate }}</label>
-        <input
-          type="text"
-          id="street2"
-          class="form-control"
-          placeholder='{{ "my_Listing.Enter_street_line_addres" | translate }}'
-          formControlName="street_line_2"
-        />
-
-        <div class="" *ngIf="billingForm.get('street_line_2').hasError('maxlength')">
-          <small class="text-danger">{{ "my_Listing.Cannot_exceed_limit_of_80_character" | translate }}</small>
-        </div>
+      <div class="" *ngIf="billingForm.get('street').hasError('maxlength')">
+        <small class="text-danger">{{ "my_Listing.Cannot_exceed_limit_of_80_character" | translate }}</small>
       </div>
     </div>
+    <div class="col-md-6 mb-3" [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'">
+      <label for="street2" class="form-label">{{ "create_product_listing.Street_Line_two" | translate }}</label>
+      <input type="text" id="street2" class="form-control"
+        placeholder='{{ "my_Listing.Enter_street_line_addres" | translate }}' formControlName="street_line_2" />
 
-    <div class="row">
-      <div class="col-md-6 mb-3" [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'">
-        <label for="zipCode" class="form-label">{{ "my_Listing.ZIP_Code" | translate }}</label>
-        <input
-          type="text"
-          id="zipCode"
-          class="form-control"
-          placeholder='{{ "my_Listing.ZIP_Code_place" | translate }}'
-          formControlName="zip_code"
-          appPositiveNumber
-        />
-        <!-- <div class="" *ngIf="billingForm.get('zip_code').hasError('required') && billingForm.get('zip_code').touched">
+      <div class="" *ngIf="billingForm.get('street_line_2').hasError('maxlength')">
+        <small class="text-danger">{{ "my_Listing.Cannot_exceed_limit_of_80_character" | translate }}</small>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6 mb-3" [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'">
+      <label for="zipCode" class="form-label">{{ "my_Listing.ZIP_Code" | translate }}</label>
+      <input type="text" id="zipCode" class="form-control" placeholder='{{ "my_Listing.ZIP_Code_place" | translate }}'
+        formControlName="zip_code" appPositiveNumber />
+      <!-- <div class="" *ngIf="billingForm.get('zip_code').hasError('required') && billingForm.get('zip_code').touched">
           <small class="text-danger">{{ "my_Listing.ZIP_Code_Required" | translate }}</small>
         </div> -->
 
-        <div class="" *ngIf="billingForm.get('zip_code').hasError('maxlength')">
-          <small class="text-danger">{{ "my_Listing.Cannot_exceed_limit__9_character" | translate }}</small>
-        </div>
-
-        <div class="" *ngIf="billingForm.get('zip_code').hasError('pattern')">
-          <small class="text-danger">{{ "my_Listing.Only_numeric_values_allowed_zip_code" | translate }}</small>
-        </div>
+      <div class="" *ngIf="billingForm.get('zip_code').hasError('maxlength')">
+        <small class="text-danger">{{ "my_Listing.Cannot_exceed_limit__9_character" | translate }}</small>
       </div>
 
-      <div class="col-md-6 mb-3" [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'">
-        <label for="billing_address" class="form-label">{{ "my_Listing.Billing_Address" | translate }}</label>
-        <input
-          type="text"
-          id="billing_address"
-          class="form-control"
-          placeholder='{{ "my_Listing.Enter_Billing_address" | translate }}'
-          formControlName="billing_address"
-        />
-        <!-- <div class="" *ngIf="billingForm.get('billing_address').hasError('required') && billingForm.get('billing_address').touched">
+      <div class="" *ngIf="billingForm.get('zip_code').hasError('pattern')">
+        <small class="text-danger">{{ "my_Listing.Only_numeric_values_allowed_zip_code" | translate }}</small>
+      </div>
+    </div>
+
+    <div class="col-md-6 mb-3" [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'">
+      <label for="billing_address" class="form-label">{{ "my_Listing.Billing_Address" | translate }}</label>
+      <input type="text" id="billing_address" class="form-control"
+        placeholder='{{ "my_Listing.Enter_Billing_address" | translate }}' formControlName="billing_address" />
+      <!-- <div class="" *ngIf="billingForm.get('billing_address').hasError('required') && billingForm.get('billing_address').touched">
           <small class="text-danger">{{ "my_Listing.Billing_address_required" | translate }}</small>
         </div> -->
 
-        <div class="" *ngIf="billingForm.get('billing_address').hasError('maxlength')">
-          <small class="text-danger">{{ "my_Listing.Cannot_exceed_limit_120_character" | translate }}</small>
-        </div>
+      <div class="" *ngIf="billingForm.get('billing_address').hasError('maxlength')">
+        <small class="text-danger">{{ "my_Listing.Cannot_exceed_limit_120_character" | translate }}</small>
       </div>
     </div>
+  </div>
 
-    <div class="row">
-  
-      <div class="col-md-6 mb-3 d-flex flex-column" [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'">
-        <label for="country" class="form-label">{{ "my_Listing.Country" | translate }}</label>
+  <div class="row">
 
-        <div class="position-relative">
-          <!-- <div class="custom-select form-control" (click)="toggleDropdown()">
-            <img *ngIf="selectedCity?.flag"
-                 [src]="selectedCity.flag"
-                 alt="flag"
-                 style="width:20px; height:14px; margin-right:8px;" />
-            {{ selectedCity?.name || 'Select City' }}
-            <div class="position-absolute"
-                 style="right: 10px; top: 50%; transform: translateY(-50%); pointer-events: none;">
-              <i class="bi bi-chevron-down"></i>
-            </div>
-          </div> -->
-        
-          <!-- <ul *ngIf="dropdownOpen" class="dropdown-menu w-100 show" style="max-height:200px; overflow-y:auto;">
-            <li *ngFor="let city of cityLists" (click)="selectCity(city)" style="cursor:pointer; padding:5px 10px; display:flex; align-items:center;">
-              <img [src]="city.flag" alt="flag" style="width:20px; height:14px; margin-right:8px;" />
-              {{ city.name }}
-            </li>
-          </ul> -->
+    <div class="col-md-6 mb-3 d-flex flex-column" [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'">
+      <label for="country" class="form-label">{{ "my_Listing.Country" | translate }}</label>
 
-           <div class="custom-select form-control">
-            <img *ngIf="saudiArabiaFlagPath"
-                 [src]="saudiArabiaFlagPath"
-                 alt="flag"
-                 style="width:20px; height:14px; margin-right:8px;" />
-                 {{this.billingForm.get('country').value}}
-            <div class="position-absolute"
-                 style="right: 10px; top: 50%; transform: translateY(-50%); pointer-events: none;">
-              <i class="bi bi-chevron-down"></i>
-            </div>
+      <div class="position-relative">
+
+        <div class="custom-select form-control">
+          <img *ngIf="saudiArabiaFlagPath" [src]="saudiArabiaFlagPath" alt="flag"
+            style="width:20px; height:14px; margin-right:8px;" />
+          {{this.billingForm.get('country').value}}
+          <div class="position-absolute"
+            style="right: 10px; top: 50%; transform: translateY(-50%); pointer-events: none;">
+            <i class="bi bi-chevron-down"></i>
           </div>
-
-          
-        </div>
-
-          <!-- <select disabled class="form-control" formControlName="country">
-            <option>{{this.billingForm.get('country').value}}</option>
-          </select> -->
-        <!-- <div class="" *ngIf="billingForm.get('country').hasError('required') && billingForm.get('country').touched">
-          <small class="text-danger">{{ "my_Listing.Country_is_required" | translate }}</small>
-        </div> -->
-
-        <div class="" *ngIf="billingForm.get('country').hasError('maxlength')">
-          <small class="text-danger"> {{ "my_Listing.First_name_exceed_limit" | translate }}
-            </small>
         </div>
       </div>
 
-      <div class="col-md-6 mb-3 d-flex flex-column" [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'">
-        <label for="city" class="form-label">{{ "my_Listing.City" | translate }}</label>
-          <div class="position-relative">
-            <select class="form-control" formControlName="city">
-              <option *ngFor="let city of cityLists" [value]="city">
-                {{ city }}
-              </option>
-            </select>
-            <div class="position-absolute" style="right: 10px; top: 50%; transform: translateY(-50%); pointer-events: none;">
-              <i class="bi bi-chevron-down"></i>
-            </div>
-          </div>
-
-          <!-- <div class="position-relative">
-            <div class="custom-select form-control" (click)="toggleDropdown()">
-              <img *ngIf="selectedCity?.flag"
-                   [src]="selectedCity.flag"
-                   alt="flag"
-                   style="width:20px; height:14px; margin-right:8px;" />
-              {{ selectedCity?.name || 'Select City' }}
-              <div class="position-absolute"
-                   style="right: 10px; top: 50%; transform: translateY(-50%); pointer-events: none;">
-                <i class="bi bi-chevron-down"></i>
-              </div>
-            </div>
-          
-            <ul *ngIf="dropdownOpen" class="dropdown-menu w-100 show" style="max-height:200px; overflow-y:auto;">
-              <li *ngFor="let city of cityLists"
-                  (click)="selectCity(city)"
-                  style="cursor:pointer; padding:5px 10px; display:flex; align-items:center;">
-                <img [src]="city.flag" alt="flag" style="width:20px; height:14px; margin-right:8px;" />
-                {{ city.name }}
-              </li>
-            </ul>
-          </div> -->
-
-          
-          
-        <!-- <div class="" *ngIf="billingForm.get('city').hasError('required') && billingForm.get('city').touched">
-          <small class="text-danger">{{ "my_Listing.City_required" | translate }}</small>
-        </div> -->
-
-        <div class="" *ngIf="billingForm.get('city').hasError('maxlength')">
-          <small class="text-danger">{{ "my_Listing.First_name_exceed_limit" | translate }}</small>
-        </div>
+      <div class="" *ngIf="billingForm.get('country').hasError('maxlength')">
+        <small class="text-danger"> {{ "my_Listing.First_name_exceed_limit" | translate }}
+        </small>
       </div>
     </div>
 
-    <div class="row">
-
-      <div class="col-md-6 mb-3" [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'">
-        <label for="state" class="form-label">{{ "my_Listing.State" | translate }}</label>
-        <input
-          type="text"
-          id="state"
-          class="form-control"
-          placeholder='{{ "my_Listing.State_place" | translate }}'
-          formControlName="state"
-        />
-        <!-- <div class="" *ngIf="billingForm.get('state').hasError('required') && billingForm.get('state').touched">
-          <small class="text-danger">{{ "my_Listing.State_required" | translate }}</small>
-        </div> -->
-
-        <div class="" *ngIf="billingForm.get('state').hasError('maxlength')">
-          <small class="text-danger">{{ "my_Listing.First_name_exceed_limit" | translate }}</small>
+    <div class="col-md-6 mb-3 d-flex flex-column" [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'">
+      <label for="city" class="form-label">{{ "my_Listing.City" | translate }}</label>
+      <div class="position-relative">
+        <select class="form-control" formControlName="city">
+          <option *ngFor="let city of cityLists" [value]="city">
+            {{ city }}
+          </option>
+        </select>
+        <div class="position-absolute"
+          style="right: 10px; top: 50%; transform: translateY(-50%); pointer-events: none;">
+          <i class="bi bi-chevron-down"></i>
         </div>
       </div>
-    </div>
 
-    <div class="text-end">
-      <button (click)="submitBillingForm()" class="submit-btn">{{ "my_Listing.Save_Changes" | translate }}</button>
+      <div class="" *ngIf="billingForm.get('city').hasError('maxlength')">
+        <small class="text-danger">{{ "my_Listing.First_name_exceed_limit" | translate }}</small>
+      </div>
     </div>
-  </form>
+  </div>
+
+  <!-- <div class="row">
+
+    <div class="col-md-6 mb-3" [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'">
+      <label for="state" class="form-label">{{ "my_Listing.State" | translate }}</label>
+      <input type="text" id="state" class="form-control" placeholder='{{ "my_Listing.State_place" | translate }}'
+        formControlName="state" />
+
+      <div class="" *ngIf="billingForm.get('state').hasError('maxlength')">
+        <small class="text-danger">{{ "my_Listing.First_name_exceed_limit" | translate }}</small>
+      </div>
+    </div>
+  </div> -->
+
+  <!-- Login Information -->
+  <h3>{{ "my_Listing.Login_Information" | translate }}</h3>
+  <div class="row">
+    <div class="col-md-6 mb-3" [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'">
+      <label for="email" class="form-label">{{ "my_Listing.Email_Address" | translate }}</label>
+      <input type="email" id="email" class="form-control" formControlName="email"
+        placeholder='{{ "my_Listing.Email_Address_place" | translate }}' />
+    </div>
+    <div class="col-md-6 mb-3" [dir]="translateService.currentLang === 'en' ? 'ltr' : 'rtl'">
+      <label for="password" class="form-label">{{ "my_Listing.Password" | translate }}</label>
+      <a routerLink="/change-password" class="d-block text-decoration-none a-style-forgot-pass">{{
+        "my_Listing.Change_password" | translate }}</a>
+    </div>
+  </div>
+
+  <!-- Login with -->
+  <h3>{{ "my_Listing.Login_with" | translate }}</h3>
+  <div class="d-flex gap-3 my-3 search-arabic-style">
+    <button type="button" class="login-with-btn col-md-6">
+      <img src="../assets/images/download.png" alt="Google Logo" class="me-2" style="width: 20px" />
+      {{ "my_Listing.Sign_in_Google" | translate }}
+    </button>
+    <button type="button" class="login-with-btn col-md-6">
+      <img src="../assets/images/apple-logo.png" alt="Apple Logo" class="me-2" style="width: 20px" />
+      {{ "my_Listing.Sign_in_Apple" | translate }}
+    </button>
+  </div>
+
+
+
+  <div class="submit-btn-div" [ngClass]="{ 'arabic-submit-btn-div': translateService.currentLang !== 'en' }">
+    <button class="submit-btn">{{ "my_Listing.Save_Changes" | translate }}</button>
+  </div>
+</form>

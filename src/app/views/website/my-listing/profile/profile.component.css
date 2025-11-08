@@ -1,76 +1,283 @@
- .arabic-style-form>h3 {
-     text-align: end;
- }
+.user-dashboard .card {
+  border: 1px solid #F5F5F5;
+  box-shadow: 0px 40px 90px 0px #0000000F;
+  background: #FFFFFF;
+  border-radius: 16px;
+}
 
- .arabic-style-form>.row {
-     flex-direction: row-reverse;
- }
+.badge {
+  height: 28px;
+  background: #EBEBEB;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 400;
+  color: #242424;
+  padding: 6px 12px 6px 12px;
+}
 
- .arabic-style-form>.search-arabic-style {
-     flex-direction: row-reverse;
- }
+.profile-card .profile-img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  align-self: center;
+}
 
- .arabic-style-form>.row>.mb-3 {
-     flex-direction: row-reverse;
-     display: flex;
-     flex-wrap: wrap;
-     text-align: right;
- }
+.stay-alert-img {
+  width: 55px;
+  height: 55px;
+  object-fit: contain;
+  align-self: center;
+}
 
- .arabic-style-form>.row>.mb-3>.text-decoration-none {
-     text-align: right;
-     width: 100%;
- }
+.second-card-label-img{
+  height: 24px;
+  width: 24px;
+}
 
+.watch-img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 10px;
+}
 
- .arabic-style-form>.row>.mb-3>.form-label {
-     width: 100%;
-     text-align: justify;
- }
+.btn-outline-dark:hover {
+  background-color: #000;
+  color: #fff;
+}
 
- .arabic-style-form>.row>.mb-3>.form-control {
-     flex-direction: row-reverse;
-     display: flex;
-     flex-wrap: wrap;
- }
+.provate-seller-btn {
+  background: none;
+  border: 1px solid #F5F5F5;
+  border-radius: 62px;
+  font-size: 16px;
+  font-weight: 400;
+  color: #242424;
+  width: 145px;
+  align-self: center;
+}
 
- .arabic-style-form > .row > .mb-3 > .form-label {
-    width: 100%;
-    text-align: justify;
-   }
-  
+.light-label-class {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 400;
+  color: #6a6a6a;
+  align-self: flex-start;
+}
 
- .profile-image-container:hover .camera-icon {
-    opacity: 1 !important;
+.dark-label-class {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #484848;
+  align-self: flex-start;
+}
+
+.line-break-class{
+  margin: 4px;
+}
+
+.form-check-input:checked {
+  background-color: #242424;
+  border-color: #242424;
+}
+
+.notofication-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid #F5F5F5;
+  padding: 12px 18px 12px 18px;
+  width: 90%;
+  align-self: center;
+  border-radius: 12px;
+}
+
+.dealer-btn {
+  background-color: #242424;
+  color: #FFFFFF;
+  border-radius: 12px;
+  width: 68%;
+  font-size: 18px;
+  font-weight: 400;
+  height: 50px;
+  align-self: center;
+}
+
+.seller-btn {
+  border: 1px solid #242424;
+  background-color: #FFFFFF;
+  border-radius: 12px;
+  width: 68%;
+  font-size: 18px;
+  font-weight: 400;
+  height: 50px;
+  align-self: center;
+}
+
+.view-all-btn{
+  background:none;
+  border: 1px solid #484848;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #484848;
+  height: 41px;
+  width: 93px;
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .profile-card, .card {
+    text-align: center;
   }
-  
-  .profile-image-container {
-    position: relative;
-    display: inline-block;
+  .watch-img {
+    width: 50px;
+    height: 50px;
   }
-
-  .profile-image-container:hover .camera-icon {
-    opacity: 1 !important;
-  }
-
-  .form-label {
+  .user-dashboard .btn {
     font-size: 14px;
-    font-weight: 400 !important;
-    color: #242424;
- }
-
- .submit-btn {
-    border-radius: 12px;
-    background: #242424;
-    color: white;
-    width: 240px;
-    height: 56px;
-    font-size: 16px;
-    font-weight: 600;
   }
 
- @media (max-width: 468px) {
-    .form-select { 
-        font-size: 10px !important;
-      }
+  .view-all-btn{
+    font-size: 10px;
+  font-weight: 500;
+  }
+
+  .small-screen-order-profile-for-text{
+    font-size: 12px;
+  }
+}
+
+.watch-placeholder {
+  width: 60px;
+  height: 60px;
+  border-radius: 10px;
+  background-color: #e5e7eb;
+  color: #0f172a;
+  font-weight: 600;
+  font-size: 18px;
+  text-transform: uppercase;
+}
+
+.profile-placeholder {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background-color: #e5e7eb;
+  color: #0f172a;
+  font-weight: 600;
+  font-size: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  text-transform: uppercase;
+}
+
+/* Skeleton Animation */
+@keyframes loading {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+/* Skeleton Elements */
+.skeleton-text-small,
+.skeleton-text-medium,
+.skeleton-card-image,
+.skeleton-circle {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+  border-radius: 4px;
+}
+
+.skeleton-text-small {
+  height: 12px;
+}
+
+.skeleton-text-medium {
+  height: 16px;
+}
+
+.skeleton-circle {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+}
+
+.watch-placeholder,
+.profile-placeholder {
+  background-color: #e5e7eb;
+}
+
+/* Optional aesthetic tweaks */
+.card {
+  border-radius: 12px;
+}
+
+.card-hover-change-color:hover {
+  background: #F7F7F8;
+  cursor: pointer;
+}
+
+.profile-card {
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+  transform: translateY(0);
+}
+
+.profile-card:hover {
+  /* background: #F7F7F8;
+  cursor: pointer; */
+  transform: translateY(-8px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  background: linear-gradient(145deg, #ffffff, #f8f9fb);
+  border: 1px solid #e0e6ed;
+}
+
+.profile-card:hover img.profile-img {
+  transform: scale(1.05);
+  transition: transform 0.3s ease-in-out;
+}
+
+.reverse-order-profile {
+  flex-direction: row-reverse;
+}
+
+.reverse-order-profile > .mb-4 > .profile-card > .light-label-class {
+  align-self: end;
+}
+
+.reverse-order-profile > .mb-4 > .profile-card > .dark-label-class {
+  align-self: end;
+}
+
+.reverse-order-profile > .mb-4 > .card > .notofication-card {
+ flex-direction: row-reverse;
+}
+
+.reverse-order-profile > .mb-4 > .card > .notofication-card > .gap-2 {
+  flex-direction: row-reverse;
  }
+
+ .reverse-order-profile > .for-reverse > .card > .d-flex{
+  flex-direction: row-reverse;
+}
+
+.reverse-order-profile > .for-reverse > .card > .p-2 > .d-flex{
+  flex-direction: row-reverse;
+}
+
+.reverse-order-profile > .for-reverse > .card > .p-2 > .d-flex > .d-flex {
+  flex-direction: row-reverse;
+}
+
+.reverse-order-profile-for-text{
+  text-align: end;
+}
+
+.reverse-order-profile-for-span{
+  align-self: end;
+}

@@ -74,8 +74,29 @@
   }
   
 
+  .login-with-btn {
+    height: 56px;
+    border-radius: 9999px;
+    background: #FFFFFF;
+    border: 2px solid #E2E8F0;
+  }
+
+  .profile-image-container:hover .bi-trash-fill,
+  .profile-image-container:hover .camera-icon {
+    opacity: 1 !important;
+  }
+
+
  @media (max-width: 468px) {
     .form-select { 
         font-size: 10px !important;
       }
+ }
+
+ .submit-btn-div {
+  text-align: end;
+ }
+
+ .arabic-submit-btn-div {
+  text-align: left;
  }

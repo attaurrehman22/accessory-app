@@ -166,11 +166,11 @@ export class ModelRegisterComponent implements OnInit {
         }
       );
     } else {
-       if (this.translateService.currentLang == "en") {
-        this.alertService.showAlert("warning", "Please Enter Valid Form Values");
-      }else{
-           this.alertService.showAlert("warning", "يرجى إدخال قيم صحيحة في النموذج");
-      }
+      //  if (this.translateService.currentLang == "en") {
+      //   this.alertService.showAlert("warning", "Please Enter Valid Form Values");
+      // }else{
+      //      this.alertService.showAlert("warning", "يرجى إدخال قيم صحيحة في النموذج");
+      // }
     }
   }
 

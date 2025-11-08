@@ -150,6 +150,7 @@ import { SellOrderComponent } from './views/website/my-listing/sell-order/sell-o
 import { BuyOrderComponent } from './views/website/my-listing/buy-order/buy-order.component';
 import { SellOrderDetailsComponent } from './views/website/my-listing/sell-order-details/sell-order-details.component';
 import { BuyOrderDetailsComponent } from './views/website/my-listing/buy-order-details/buy-order-details.component';
+import { WatchInfoComponent } from './views/website/my-listing/watch-info/watch-info.component';
 
 @NgModule({
   declarations: [
@@ -243,7 +244,8 @@ import { BuyOrderDetailsComponent } from './views/website/my-listing/buy-order-d
     SellOrderComponent,
     BuyOrderComponent,
     SellOrderDetailsComponent,
-    BuyOrderDetailsComponent
+    BuyOrderDetailsComponent,
+    WatchInfoComponent
   ],
   imports: [
     MatSortModule,

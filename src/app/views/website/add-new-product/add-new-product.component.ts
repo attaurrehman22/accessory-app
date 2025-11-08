@@ -509,11 +509,17 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
 //     }
 //   }
 
-
-
 onImagesSelected(event: Event) {
   const files = (event.target as HTMLInputElement).files;
   if (files && files.length > 0) {
+    if (this.allImages.length + files.length > 10) {
+      this.alertService.showAlert(
+        "warning",
+        "You can upload a maximum of 10 images only."
+      );
+      return;
+    }
+    
     const invalidFiles: string[] = []; // ❌ invalid files list
 
     Array.from(files).forEach((file: File) => {

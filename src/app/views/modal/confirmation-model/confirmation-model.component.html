@@ -1,11 +1,9 @@
 <div class="confirmation-modal">
-    <div class="modal-content" style="padding: 55px 35px 60px 35px;">
-      <h2 style="margin: 20px 0 40px 0;
-      text-align: center;
-      font-size: 21px;
-      margin-bottom: 35px;">{{message}}</h2>
-      
-      <div class="d-flex justify-content-center gap-2">
+    <div class="modal-content" style="padding: 30px 35px 30px 35px;">
+      <p *ngIf="label" class="font-size-20 font-wight-600 color-242424 text-center">{{label}}</p>
+      <p class="font-size-16 font-wight-400 color-909090 text-center">{{message}}</p>
+
+      <div *ngIf="!btnNames" class="d-flex justify-content-center gap-2">
         <button class="confirm-btn" style="height: 45px;
         width: 140px;
         border-radius: 8px;
@@ -15,6 +13,22 @@
         width: 140px;
         border-radius: 8px;" (click)="cancel()">No</button>
       </div>
+
+      <div *ngIf="btnNames" class="d-flex justify-content-center gap-2 mt-3">
+        <button style="
+        border: 1px solid #242424;
+        height: 45px;
+        width: 140px;
+        border-radius: 8px;" (click)="cancel()">Cancel</button>
+                <button class="confirm-btn" style="
+                border:none;
+                height: 45px;
+                width: 140px;
+                border-radius: 8px;
+                background: #EC2633;;
+                color: white;" (click)="confirm()">Yes, Remove</button>
+      </div>
+
     </div>
   </div>
   

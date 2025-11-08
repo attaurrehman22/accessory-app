@@ -180,7 +180,6 @@ export class ProductListComponent implements OnInit {
 
   isFiltereredOptionIsShow:boolean=false;
   applyFilters() {
-
     this.isShowFilters=false;
     let queryString = "";
     // // Add categories to the query string

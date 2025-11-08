@@ -1,0 +1,73 @@
+<div class="edit-offer-container mat-elevation-z3">
+    <div class="col-md-12 d-flex flex-wrap">
+        <div class="col-md-12">
+            <p class="font-size-20 font-wight-600 margin-0 color-242424">{{label}}</p>
+            <p class="font-size-16 font-wight-500 color-909090">{{message}}</p>
+        </div>
+    </div>
+
+    <div *ngIf="productDetail" class="col-md-12 d-flex flex-wrap" style="
+        border: 2px solid #f5f5f5;
+        padding: 10px 10px 10px 10px;
+        border-radius: 12px;
+      ">
+        <div class="">
+            <ng-container *ngIf="productDetail.main_image; else fallbackImage">
+                <img [src]="apiUrl + productDetail?.main_image" alt="chat image" class="img-thumbnail"
+                    style="width: 48px; height: 48px; border-radius: 7.6px" />
+            </ng-container>
+
+            <ng-template #fallbackImage>
+                <div class="img-thumbnail" style="
+              width: 48px;
+              height: 48px;
+              border-radius: 30px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              background-color: #ccc;
+              color: white;
+              font-size: 20px;
+            ">
+                    {{ productDetail?.name?.substring(0, 2) }}
+                </div>
+            </ng-template>
+        </div>
+
+        <div class="d-flex flex-column mx-2">
+            <p class="font-size-20 font-wight-600 color-242424 margin-0 d-flex align-items-center">
+                {{ productDetail?.title }} {{ productDetail?.condition }}
+                <span class="font-size-16 font-wight-400 color-909090 margin-0 mx-2">{{
+                    productDetail?.serial_no
+                    }}</span>
+            </p>
+            <p class="font-size-16 font-wight-400 color-909090 margin-0">
+                {{ productDetail?.currency }} {{ productDetail?.price }}
+            </p>
+        </div>
+    </div>
+
+    <div class="notofication-card mb-2 mt-3">
+        <div class="d-flex gap-2">
+            <img src="../../../../../assets/images/proicons_bell.svg" alt="Profile" class="second-card-label-img" />
+            <p class="font-size-16 font-wight-400 color-242424 margin-0">Price Alert</p>
+        </div>
+        <div class="form-check form-switch">
+            <input class="form-check-input" type="checkbox" id="notifications"   (change)="onNotificationToggle($event)" [(ngModel)]="notifications" />
+        </div>
+    </div>
+
+    <div class="notofication-card">
+        <div class="d-flex gap-2">
+            <img src="../../../../../assets/images/black_mylisting.svg" alt="Profile" class="second-card-label-img" />
+            <p class="font-size-16 font-wight-400 color-242424 margin-0">Show Simlilar Watches</p>
+        </div>
+        <i class="bi bi-chevron-right right-arrow" (click)="goToChat()"></i>
+    </div>
+
+    <div class="w-100 d-flex gap-2 align-items-center mt-3">
+        <button class="remove-fav-btn" (click)="removeFav()">Remove from Favorites</button>
+        <button class="contact-sell-btn" (click)="contactSell()">Contact Seller</button>
+    </div>
+
+</div>

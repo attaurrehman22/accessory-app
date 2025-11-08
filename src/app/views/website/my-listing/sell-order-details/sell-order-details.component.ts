@@ -610,6 +610,20 @@ export class SellOrderDetailsComponent implements OnInit {
     this.hoverStateService.setHoverState(this.isHoverModel);
   }
 
+  downloadInvoice() {
+    window.print(); // simple print option — can be replaced with html2pdf.js later
+  }
+  showInvoice = false;
+
+  hasDeliveredOrSoldStatus(): boolean {
+    if (!this.activeSellerStatuses || this.activeSellerStatuses.length === 0) return false;
+  
+    return this.activeSellerStatuses.some(
+      status =>
+        status.label === 'Order Sold' || status.label === 'Order Delivered'
+    );
+  }
+
   sellerStatuses = [
     {
       label: "Order Initiated",

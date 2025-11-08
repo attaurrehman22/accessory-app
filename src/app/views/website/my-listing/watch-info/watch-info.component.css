@@ -1,0 +1,108 @@
+.edit-offer-container {
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+    h2 {
+        font-size: 20px;
+        margin-bottom: 10px;
+    }
+
+    /* p {
+        font-size: 16px;
+        margin-bottom: 20px;
+        color: #666;
+        font-weight: 400;
+    } */
+
+    .full-width {
+        width: 100%;
+        margin-bottom: 15px;
+    }
+
+    .action-buttons {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 20px;
+    }
+
+    .mark-as-sold {
+        margin-top: 15px;
+        width: 100%;
+    }
+}
+
+.cancel-btn {
+    background: none;
+    border-radius: 7px;
+    width: 49%;
+    border: 1px solid #242424;
+    height: 50px;
+}
+
+.send-btn {
+    background-color: #242424;
+    color: #FFFFFF;
+    width: 49%;
+    border: none;
+    border-radius: 7px;
+    height: 50px;
+}
+
+.notofication-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid #F5F5F5;
+    padding: 12px 18px 12px 18px;
+    align-self: center;
+    border-radius: 12px;
+}
+
+.second-card-label-img {
+    height: 24px;
+    width: 24px;
+}
+
+.form-check-input:checked {
+    background-color: #242424;
+    border-color: #242424;
+}
+
+.remove-fav-btn {
+    height: 55px;
+    width: 50%;
+    border: 1px solid #EC2633;
+    font-size: 18px;
+    font-weight: 400;
+    color: #EC2633;
+    border-radius: 10px;
+    background: #FFFFFF;
+}
+
+.contact-sell-btn  {
+    height: 55px;
+    width: 50%;
+    background: #242424;
+    font-size: 18px;
+    font-weight: 400;
+    color: #FFFFFF;
+    border-radius: 10px;
+}
+
+.right-arrow {
+    font-size: 26px;
+    color: #222; /* dark grey/black */
+    background-color: #fff;
+    border-radius: 50%;
+    padding: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+  }
+  
+  .right-arrow:hover {
+    background-color: #f2f2f2;
+    transform: scale(1.1);
+  }
+  
