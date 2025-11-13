@@ -50,6 +50,7 @@ import { BuyOrderComponent } from "./views/website/my-listing/buy-order/buy-orde
 import { SellOrderDetailsComponent } from "./views/website/my-listing/sell-order-details/sell-order-details.component";
 import { BuyOrderDetailsComponent } from "./views/website/my-listing/buy-order-details/buy-order-details.component";
 import { RolesComponent } from "./views/adminpages/roles/roles.component";
+import { CreateRoleComponent } from "./views/adminpages/roles/create-role/create-role.component";
 
 const routes: Routes = [
   { path: "login", component: LoginComponent },
@@ -171,6 +172,16 @@ const routes: Routes = [
     component: AttributeInventoryComponent,
   },
   { canActivate: [adminGuard], path: "admin/roles", component: RolesComponent },
+  {
+    canActivate: [adminGuard],
+    path: "admin/roles/create",
+    component: CreateRoleComponent,
+  },
+  {
+    canActivate: [adminGuard],
+    path: "admin/roles/edit/:id",
+    component: CreateRoleComponent,
+  },
 
   { path: "accessories/home", component: AccessoriesHomeComponent },
   { path: "accessories/details", component: AccessorieDetailComponent },

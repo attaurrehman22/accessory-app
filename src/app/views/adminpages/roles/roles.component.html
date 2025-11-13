@@ -1,1 +1,105 @@
-<p>roles works!</p>
+<div class="content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">Roles Management</h3>
+
+            <div class="card-tools">
+              <button
+                class="btn btn-primary btn-sm mr-2"
+                [hidden]="!isAdmin()"
+                (click)="createRole()"
+              >
+                <i class="fas fa-plus"></i> Add Role
+              </button>
+              <div
+                class="input-group input-group-sm"
+                style="width: 200px; display: inline-flex"
+              >
+                <input
+                  type="text"
+                  class="form-control float-right"
+                  placeholder="Search roles..."
+                  (keyup)="applyFilter($event)"
+                  #input
+                />
+                <div class="input-group-append">
+                  <button type="button" class="btn btn-default">
+                    <i class="fas fa-search"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- /.card-header -->
+          <div class="card-body table-responsive p-0">
+            <table class="table table-hover text-nowrap">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Role Name</th>
+                  <th>Permissions</th>
+                  <th>Created Date</th>
+                  <th>Last Updated Date</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let row of getPaginatedData()">
+                  <td>{{ row.id }}</td>
+                  <td>
+                    <strong>{{ row.name }}</strong>
+                  </td>
+                  <td>
+                    <span class="badge badge-info">{{
+                      row.permissions.length || 0
+                    }}</span>
+                  </td>
+                  <td>{{ row.created_at | date : "medium" }}</td>
+                  <td>{{ row.updated_at | date : "medium" }}</td>
+                  <td>
+                    <button
+                      mat-icon-button
+                      class="btn-action btn-edit"
+                      (click)="editRole(row)"
+                      matTooltip="Edit Role"
+                    >
+                      <mat-icon>edit</mat-icon>
+                    </button>
+                    <button
+                      mat-icon-button
+                      class="btn-action btn-delete"
+                      (click)="deleteRole(row)"
+                      matTooltip="Delete Role"
+                    >
+                      <mat-icon>delete</mat-icon>
+                    </button>
+                  </td>
+                </tr>
+                <tr *ngIf="getPaginatedData().length === 0">
+                  <td colspan="6" class="text-center text-muted py-4">
+                    <span *ngIf="input.value"
+                      >No roles matching the filter "{{ input.value }}"</span
+                    >
+                    <span *ngIf="!input.value">No roles available</span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <!-- /.card-body -->
+          <div class="card-footer clearfix">
+            <mat-paginator
+              #paginator
+              [pageSizeOptions]="[5, 10, 20]"
+              showFirstLastButtons
+            ></mat-paginator>
+          </div>
+        </div>
+        <!-- /.card -->
+      </div>
+    </div>
+  </div>
+</div>

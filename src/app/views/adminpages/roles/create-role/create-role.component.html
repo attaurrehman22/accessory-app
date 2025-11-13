@@ -1,0 +1,286 @@
+<div class="content">
+  <div class="container-fluid">
+    <!-- Page Header -->
+    <div class="row mb-3">
+      <div class="col-12">
+        <h1 class="page-title">
+          {{ isEditMode ? "Edit Role" : "Create New Role" }}
+        </h1>
+      </div>
+    </div>
+
+    <!-- Loading State -->
+    <div *ngIf="isLoading" class="row">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-body text-center py-5">
+            <mat-spinner diameter="50" class="mx-auto"></mat-spinner>
+            <p class="mt-3 text-muted">Loading role data...</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Form Content -->
+    <div *ngIf="!isLoading">
+      <form [formGroup]="roleForm" (ngSubmit)="onSubmit()">
+        <div class="row">
+          <!-- Basic Information Card -->
+          <div class="col-12 mb-3">
+            <div class="card">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-6">
+                    <mat-form-field appearance="outline" class="full-width">
+                      <mat-label>Role Name</mat-label>
+                      <input
+                        matInput
+                        formControlName="name"
+                        placeholder="Enter role name (e.g., Manager, Editor)"
+                        required
+                      />
+                      <mat-error *ngIf="name?.hasError('required')">
+                        Role name is required
+                      </mat-error>
+                      <mat-error *ngIf="name?.hasError('minlength')">
+                        Minimum 3 characters required
+                      </mat-error>
+                      <mat-error *ngIf="name?.hasError('maxlength')">
+                        Maximum 50 characters allowed
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Permissions Section -->
+        <div class="row">
+          <!-- Quick Navigation Sidebar -->
+          <div class="col-lg-3 col-md-4">
+            <div class="card card-primary card-outline sticky-nav">
+              <div class="card-header">
+                <h3 class="card-title">
+                  <i class="fas fa-list mr-2"></i>
+                  Quick Navigation
+                </h3>
+              </div>
+              <div class="card-body p-0">
+                <ul class="nav nav-pills flex-column">
+                  <li
+                    class="nav-item"
+                    *ngFor="
+                      let category of permissionsByCategory | keyvalue;
+                      let i = index
+                    "
+                  >
+                    <a
+                      href="javascript:void(0)"
+                      class="nav-link"
+                      [class.active]="activeSection === category.key"
+                      (click)="scrollToSection(category.key)"
+                    >
+                      <mat-icon class="mr-2">{{
+                        getCategoryIconClass(category.key)
+                      }}</mat-icon>
+                      {{ category.key }}
+                      <span class="badge badge-info float-right">
+                        {{ getCategorySelectedCount(category.key) }}/{{
+                          category.value.length
+                        }}
+                      </span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+              <div class="card-footer">
+                <div class="info-box-small">
+                  <i class="fas fa-shield-alt"></i>
+                  <div class="info-content-small">
+                    <div class="info-label-small">Total Selected</div>
+                    <div class="info-value-small">
+                      {{ getSelectedPermissionsCount() }}/{{
+                        availablePermissions.length
+                      }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Permissions Content -->
+          <div class="col-lg-9 col-md-8">
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">
+                  <i class="fas fa-lock mr-2"></i>
+                  Role Permissions
+                </h3>
+                <div class="card-tools">
+                  <button
+                    type="button"
+                    class="btn btn-success btn-sm mr-2"
+                    (click)="selectAllPermissionsGlobal()"
+                  >
+                    <i class="fas fa-check-double"></i> Select All
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-danger btn-sm"
+                    (click)="deselectAllPermissionsGlobal()"
+                  >
+                    <i class="fas fa-times"></i> Deselect All
+                  </button>
+                </div>
+              </div>
+              <div class="card-body">
+                <!-- Permission Sections -->
+                <div
+                  *ngFor="
+                    let category of permissionsByCategory | keyvalue;
+                    let last = last
+                  "
+                  [id]="'section-' + category.key"
+                  class="permission-section"
+                  [class.mb-4]="!last"
+                >
+                  <div class="section-header">
+                    <div class="section-title">
+                      <mat-icon class="mr-2">{{
+                        getCategoryIconClass(category.key)
+                      }}</mat-icon>
+                      <h4>{{ category.key }}</h4>
+                      <span class="badge badge-info ml-2">
+                        {{ getCategorySelectedCount(category.key) }}/{{
+                          category.value.length
+                        }}
+                      </span>
+                    </div>
+                    <div class="section-actions">
+                      <button
+                        type="button"
+                        class="btn btn-outline-success btn-sm"
+                        (click)="selectAllPermissions(category.key)"
+                      >
+                        <i class="fas fa-check"></i> Select All
+                      </button>
+                      <button
+                        type="button"
+                        class="btn btn-outline-danger btn-sm ml-2"
+                        (click)="deselectAllPermissions(category.key)"
+                      >
+                        <i class="fas fa-times"></i> Deselect All
+                      </button>
+                    </div>
+                  </div>
+
+                  <div class="permissions-list">
+                    <div
+                      *ngFor="let permission of category.value"
+                      class="permission-item"
+                    >
+                      <div class="custom-control custom-checkbox">
+                        <input
+                          type="checkbox"
+                          class="custom-control-input"
+                          [id]="'permission-' + permission.name"
+                          [checked]="isPermissionChecked(permission.name)"
+                          (change)="onPermissionChange(permission.name, $event)"
+                        />
+                        <label
+                          class="custom-control-label"
+                          [for]="'permission-' + permission.name"
+                        >
+                          <span class="permission-name">{{
+                            permission.label
+                          }}</span>
+                          <!-- <span class="permission-code text-muted">{{
+                            permission.name
+                          }}</span> -->
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Form Actions -->
+        <div class="row mt-3">
+          <div class="col-12">
+            <div class="card">
+              <div class="card-body">
+                <button
+                  type="submit"
+                  class="btn btn-primary btn-lg"
+                  [disabled]="isSubmitting || roleForm.invalid"
+                  (click)="onSubmit()"
+                  [ngClass]="{
+                    'btn-disabled': isSubmitting || roleForm.invalid
+                  }"
+                  [ngStyle]="{
+                    opacity: isSubmitting || roleForm.invalid ? '0.6' : '1',
+                    'pointer-events':
+                      isSubmitting || roleForm.invalid ? 'none' : 'auto'
+                  }"
+                >
+                  <i
+                    class="fas"
+                    [class.fa-save]="isEditMode"
+                    [class.fa-plus]="!isEditMode"
+                    *ngIf="!isSubmitting"
+                    [ngStyle]="{
+                      color:
+                        isSubmitting || roleForm.invalid ? '#b3b3b3' : 'inherit'
+                    }"
+                  ></i>
+                  <span
+                    class="spinner-border spinner-border-sm mr-2"
+                    *ngIf="isSubmitting"
+                  ></span>
+                  <span
+                    *ngIf="!isSubmitting"
+                    [ngStyle]="{
+                      color:
+                        isSubmitting || roleForm.invalid ? '#b3b3b3' : 'inherit'
+                    }"
+                  >
+                    {{ isEditMode ? "Update Role" : "Create Role" }}
+                  </span>
+                  <span *ngIf="isSubmitting" [ngStyle]="{ color: '#b3b3b3' }">
+                    {{ isEditMode ? "Updating..." : "Creating..." }}
+                  </span>
+                </button>
+
+                <button
+                  type="button"
+                  class="btn btn-secondary btn-lg ml-2"
+                  (click)="onCancel()"
+                  [disabled]="isSubmitting"
+                >
+                  <i class="fas fa-times"></i>
+                  Cancel
+                </button>
+
+                <button
+                  type="button"
+                  class="btn btn-warning btn-lg ml-2"
+                  (click)="resetForm()"
+                  [disabled]="isSubmitting"
+                >
+                  <i class="fas fa-redo"></i>
+                  Reset
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

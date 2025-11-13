@@ -1480,6 +1480,45 @@ export class HttpService implements OnInit {
     });
   }
 
+  getAdminRoles(page: number = 1, perPage: number = 20): Observable<any> {
+    return this.http.get(
+      `${this.apiUrl}/api/admin/roles?page=${page}&per_page=${perPage}`,
+      {
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${this.token}`,
+        },
+      }
+    );
+  }
+
+  createAdminRole(formData): Observable<any> {
+    return this.http.post(`${this.apiUrl}/api/admin/roles`, formData, {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+  }
+
+  updateAdminRole(id: number, formData): Observable<any> {
+    return this.http.put(`${this.apiUrl}/api/admin/roles/${id}`, formData, {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+  }
+
+  deleteAdminRole(id: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/api/admin/roles/${id}`, {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+  }
+
   createShipment(formData): Observable<any> {
     return this.http.post(
       `${this.apiUrl}/api/order/create-shipment`,

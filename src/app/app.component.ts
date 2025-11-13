@@ -6,68 +6,58 @@ import { AlertsServicesService } from "src/services/alerts-service/alerts-servic
 import { LoaderService } from "./loader.service";
 import { SearchServiceService } from "src/services/search-service/search-service.service";
 import { MessageServiceService } from "src/services/search-show-hide/message-service.service";
-import mediumZoom from 'medium-zoom';
+import mediumZoom from "medium-zoom";
 @Component({
   selector: "app-root",
   templateUrl: "./app.component.html",
   styleUrls: ["./app.component.css"],
 })
 export class AppComponent implements OnInit {
-
-  routeToCom:any='dashboard';
-  myThumbnail="https://wittlock.github.io/ngx-image-zoom/assets/thumb.jpg";
-  myFullresImage="https://wittlock.github.io/ngx-image-zoom/assets/fullres.jpg";
+  routeToCom: any = "dashboard";
+  myThumbnail = "https://wittlock.github.io/ngx-image-zoom/assets/thumb.jpg";
+  myFullresImage =
+    "https://wittlock.github.io/ngx-image-zoom/assets/fullres.jpg";
   alertPositionStyle: any = {};
 
-  @HostListener('window:scroll', [])
+  @HostListener("window:scroll", [])
   onWindowScroll() {
     this.updateAlertPosition();
   }
 
   ngAfterViewInit() {
-    mediumZoom('[data-zoomable]', {
-      background: '#000',
+    mediumZoom("[data-zoomable]", {
+      background: "#000",
       scrollOffset: 0,
     });
   }
 
   // Update alert position dynamically based on screen visibility
   updateAlertPosition() {
-    const screenHeight = window.innerHeight; // Height of the visible screen area
-    const scrollPosition = window.scrollY;  // Current scroll position
-    const documentHeight = document.documentElement.scrollHeight; // Total document height
-
-    // Calculate available space at the top and bottom
-    const topSpace = scrollPosition;
-    const bottomSpace = documentHeight - (scrollPosition + screenHeight);
-
-    // Adjust the alert position based on where the user is currently on the page
-    if (bottomSpace > screenHeight / 2) {
-      this.setAlertPosition('fixed', '15px', 'auto', 'top');
-    } else if (topSpace > screenHeight / 2) {
-      this.setAlertPosition('fixed', '15px', 'auto', 'bottom');
-    } else {
-      // If screen space is insufficient, keep the alert in the center of the screen
-      this.setAlertPosition('fixed', '50%', 'auto', 'center');
-    }
+    // Always position at top-right for consistent UX
+    // The alert will be fixed at the top-right corner
+    this.setAlertPosition("fixed", "15px", "auto", "auto");
   }
 
   // Method to dynamically set alert position
-  setAlertPosition(position: string, top: string, left: string, bottom: string) {
+  setAlertPosition(
+    position: string,
+    top: string,
+    left: string,
+    bottom: string
+  ) {
     this.alertPositionStyle = {
       position: position,
       top: top,
       left: left,
       bottom: bottom,
-      right: '15px',
-      transform: position === 'fixed' ? 'translateY(-50%)' : 'none',
-      zIndex: '99999',  // Ensure alert is visible on top of other content
+      right: "15px",
+      transform: "none", // No transform needed for top-right positioning
+      zIndex: "99999", // Ensure alert is visible on top of other content
     };
   }
 
-
-  routeToSection(routeName){
-    this.routeToCom=routeName
+  routeToSection(routeName) {
+    this.routeToCom = routeName;
   }
 
   showHeader: boolean = true;
@@ -75,10 +65,7 @@ export class AppComponent implements OnInit {
   showSecondFooter: boolean = true;
   hideaccessoriesHeader: boolean = false;
 
-  routesToHideforAccessriesUser = [
-   "/accessories/home",
-   "accessories/details"
-  ]
+  routesToHideforAccessriesUser = ["/accessories/home", "accessories/details"];
 
   routesToHideforUser = [
     "/admin/dashboard",
@@ -101,7 +88,9 @@ export class AppComponent implements OnInit {
     "/admin/inventory",
     "/admin/attribute-listing",
     "/admin/images-listing",
-    "/admin/attribute-inventory"
+    "/admin/attribute-inventory",
+    "/admin/roles",
+    "/admin/roles/create",
   ];
   routesToHideforAdmin = [
     "/login",
@@ -118,15 +107,23 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     const val = TRANSLATE_ME("home.title");
 
+    // Initialize alert position on component load
+    this.updateAlertPosition();
+
     // this.isLoading$.subscribe(isLoading => {
     //   console.log('Loading Status:', isLoading);
     // });
-    
+
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         const currentRoute = this.router.url;
-        this.hideaccessoriesHeader = this.routesToHideforAccessriesUser.includes(currentRoute);
-        this.showHeader = !this.routesToHideforUser.includes(currentRoute);
+        this.hideaccessoriesHeader =
+          this.routesToHideforAccessriesUser.includes(currentRoute);
+        // Check if route is admin route (starts with /admin/)
+        const isAdminRoute = currentRoute.startsWith("/admin/");
+        this.showHeader = isAdminRoute
+          ? false
+          : !this.routesToHideforUser.includes(currentRoute);
         this.showAdminHeader =
           !this.routesToHideforAdmin.includes(currentRoute);
       }
@@ -141,7 +138,7 @@ export class AppComponent implements OnInit {
     private router: Router,
     public alertService: AlertsServicesService,
     public loaderService: LoaderService,
-    private searchShowHide:MessageServiceService
+    private searchShowHide: MessageServiceService
   ) {
     this.translateService.addLangs(this.supportLanguages);
     this.translateService.setDefaultLang("en");
@@ -154,7 +151,11 @@ export class AppComponent implements OnInit {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         const currentRoute = this.router.url;
-        this.showHeader = !this.routesToHideforUser.includes(currentRoute);
+        // Check if route is admin route (starts with /admin/)
+        const isAdminRoute = currentRoute.startsWith("/admin/");
+        this.showHeader = isAdminRoute
+          ? false
+          : !this.routesToHideforUser.includes(currentRoute);
         this.showAdminHeader =
           !this.routesToHideforAdmin.includes(currentRoute);
       }
@@ -166,34 +167,26 @@ export class AppComponent implements OnInit {
   }
 
   triggerSuccessAlert() {
-   if (this.translateService.currentLang == "en") {
-  this.alertService.showAlert(
-    "success",
-    "Your operation was successful."
-  );
-} else {
-  this.alertService.showAlert(
-    "success",
-    "تمت العملية بنجاح."
-  );
-}
-
+    if (this.translateService.currentLang == "en") {
+      this.alertService.showAlert("success", "Your operation was successful.");
+    } else {
+      this.alertService.showAlert("success", "تمت العملية بنجاح.");
+    }
   }
 
   // Method to trigger danger alert
   triggerDangerAlert() {
-   if (this.translateService.currentLang == "en") {
-  this.alertService.showAlert(
-    "warning",
-    "Something went wrong. Please try again."
-  );
-} else {
-  this.alertService.showAlert(
-    "warning",
-    "حدث خطأ ما. يرجى المحاولة مرة أخرى."
-  );
-}
-
+    if (this.translateService.currentLang == "en") {
+      this.alertService.showAlert(
+        "warning",
+        "Something went wrong. Please try again."
+      );
+    } else {
+      this.alertService.showAlert(
+        "warning",
+        "حدث خطأ ما. يرجى المحاولة مرة أخرى."
+      );
+    }
   }
 
   // Method to clear alert
@@ -201,16 +194,14 @@ export class AppComponent implements OnInit {
     this.alertService.clearAlert();
   }
 
-
-  gotoLogin(){
-    localStorage.removeItem('Logged')
-    localStorage.removeItem('user_token')
-    localStorage.removeItem('isAdminUser')
-   this.router.navigate(['/login'])
+  gotoLogin() {
+    localStorage.removeItem("Logged");
+    localStorage.removeItem("user_token");
+    localStorage.removeItem("isAdminUser");
+    this.router.navigate(["/login"]);
   }
 
-
-  closeSearchBox(){
-     this.searchShowHide.sendMessage('true')
+  closeSearchBox() {
+    this.searchShowHide.sendMessage("true");
   }
 }
