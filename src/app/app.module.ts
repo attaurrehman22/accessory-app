@@ -94,6 +94,7 @@ import { AddProductWatchOfTheDayComponent } from './views/adminpages/add-product
 import { SkeletonLoaderComponent } from './views/modal/skeleton-loader/skeleton-loader.component';
 import { SafeHtmlPipe } from './views/pipes/safe-html.pipe';
 import {MatTabsModule} from '@angular/material/tabs';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { AccessoriesProductsComponent } from './views/adminpages/accessories-products/accessories-products.component';
 import { CreateAccessoriesProductComponent } from './views/adminpages/create-accessories-product/create-accessories-product.component';
 import { UsernameValidationDirective } from './views/directives/username-validation/username-validation.directive';
@@ -151,6 +152,11 @@ import { BuyOrderComponent } from './views/website/my-listing/buy-order/buy-orde
 import { SellOrderDetailsComponent } from './views/website/my-listing/sell-order-details/sell-order-details.component';
 import { BuyOrderDetailsComponent } from './views/website/my-listing/buy-order-details/buy-order-details.component';
 import { WatchInfoComponent } from './views/website/my-listing/watch-info/watch-info.component';
+import { ReportChatComponent } from './views/modal/report-chat/report-chat.component';
+import { AdminReportsComponent } from './views/adminpages/admin-reports/admin-reports.component';
+import { ReportDetailsComponent } from './views/adminpages/report-details/report-details.component';
+import { AdminOrdersComponent } from './views/adminpages/admin-orders/admin-orders.component';
+import { AdminOrderDetailsComponent } from './views/adminpages/admin-order-details/admin-order-details.component';
 
 @NgModule({
   declarations: [
@@ -245,7 +251,12 @@ import { WatchInfoComponent } from './views/website/my-listing/watch-info/watch-
     BuyOrderComponent,
     SellOrderDetailsComponent,
     BuyOrderDetailsComponent,
-    WatchInfoComponent
+    WatchInfoComponent,
+    ReportChatComponent,
+    AdminReportsComponent,
+    ReportDetailsComponent,
+    AdminOrdersComponent,
+    AdminOrderDetailsComponent
   ],
   imports: [
     MatSortModule,
@@ -284,6 +295,7 @@ import { WatchInfoComponent } from './views/website/my-listing/watch-info/watch-
     NgImageSliderModule,
     MatExpansionModule,
     ColorPickerModule,
+    MatProgressSpinnerModule,
     BidiModule,HighchartsChartModule,
     MatTabsModule,
     DragDropModule,

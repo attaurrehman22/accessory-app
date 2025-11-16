@@ -766,14 +766,15 @@
             </div>
           </div>
           <div>
-            <p style="cursor: pointer" [matMenuTriggerFor]="reportMenu">...</p>
+            <!-- <p style="cursor: pointer" [matMenuTriggerFor]="reportMenu">...</p> -->
+            <p style="cursor: pointer">...</p>
           </div>
 
           <mat-menu #reportMenu="matMenu" class="custom-profile-menu">
             <div class="route-groups">
               <div class="d-flex gap-1 align-items-center cursor-pointer flex-column p-2">
     
-                <button class="unread-btn">
+                <button class="unread-btn" (click)="reportChat()">
                   Report Chat
                 </button>
     

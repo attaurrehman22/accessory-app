@@ -49,6 +49,8 @@ import { SellOrderComponent } from './views/website/my-listing/sell-order/sell-o
 import { BuyOrderComponent } from './views/website/my-listing/buy-order/buy-order.component';
 import { SellOrderDetailsComponent } from './views/website/my-listing/sell-order-details/sell-order-details.component';
 import { BuyOrderDetailsComponent } from './views/website/my-listing/buy-order-details/buy-order-details.component';
+import { AdminReportsComponent } from './views/adminpages/admin-reports/admin-reports.component';
+import { AdminOrdersComponent } from './views/adminpages/admin-orders/admin-orders.component';
 
 
 const routes: Routes = [
@@ -83,6 +85,8 @@ const routes: Routes = [
   {  canActivate: [adminGuard],path: 'admin/attribute-listing', component:  AttributeListingComponent},
   {  canActivate: [adminGuard],path: 'admin/images-listing', component:  AccessoryImagesListingComponent},
   {  canActivate: [adminGuard],path: 'admin/attribute-inventory', component:  AttributeInventoryComponent},
+  {  canActivate: [adminGuard],path: 'admin/reports', component:  AdminReportsComponent},
+  {  canActivate: [adminGuard],path: 'admin/orders', component:  AdminOrdersComponent},
 
 
   { path: 'accessories/home', component:  AccessoriesHomeComponent},

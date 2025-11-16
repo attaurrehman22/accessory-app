@@ -9,6 +9,7 @@ import { AlertsServicesService } from "src/services/alerts-service/alerts-servic
 import { AddShippingComponent } from "src/app/views/modal/add-shipping/add-shipping.component";
 import { ConfirmationModelComponent } from "src/app/views/modal/confirmation-model/confirmation-model.component";
 import { ModelLoginComponent } from "src/app/views/auth/model-login/model-login.component";
+import { ReportChatComponent } from "src/app/views/modal/report-chat/report-chat.component";
 import { TranslateService } from "@ngx-translate/core";
 import { LanguageService } from "src/services/lang-service/language.service";
 import { environment } from "src/environments/environment";
@@ -294,6 +295,57 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     console.log("After Calling",this.filteredChats)
   }
 
+  reportChat(){
+    // Get the reported user ID - the opposite party in the chat
+    let reportedUserId = this.reciever_ID;
+    
+    // If reciever_ID is not available, try to get it from UserNameOFMessenger
+    if (!reportedUserId && this.UserNameOFMessenger) {
+      reportedUserId = this.UserNameOFMessenger?.id || this.UserNameOFMessenger;
+    }
+    
+    // If still not available, try to get from current chat context
+    if (!reportedUserId && this.messages && this.messages.length > 0) {
+      const currentUserId = localStorage.getItem("userID");
+      const firstMessage = this.messages[0];
+      reportedUserId = firstMessage.sender_id === currentUserId 
+        ? firstMessage.receiver_id 
+        : firstMessage.sender_id;
+    }
+
+    if(reportedUserId == localStorage.getItem("userID")){
+      if(this.reciever_ID != localStorage.getItem("userID")){
+        reportedUserId = this.reciever_ID;
+      }
+    }
+
+    if (!reportedUserId) {
+      if (this.translateService.currentLang == "en") {
+        this.alertService.showAlert("warning", "Unable to identify the user to report. Please try again later.");
+      } else {
+        this.alertService.showAlert("warning", "تعذر تحديد المستخدم للإبلاغ عنه. يرجى المحاولة مرة أخرى لاحقًا.");
+      }
+      return;
+    }
+
+    const dialogRef = this.dialog.open(ReportChatComponent, {
+      width: "600px",
+      data: {
+        reportedUserId: reportedUserId,
+        orderId: null, // Can be populated if order ID is available
+        chatId: this.chat_id,
+        productId: this.messages[0].product_id,
+
+      },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        // Report was submitted successfully
+        console.log("Report submitted successfully");
+      }
+    });
+  }
 
   async getLatestMessage() {
     try {

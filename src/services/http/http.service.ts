@@ -1724,6 +1724,88 @@ export class HttpService implements OnInit {
       }
 
       // ------------------------------ Public Accessories Cart APIs End here ------------------------------
+
+  // -------------------------------------------- Report Chat API --------------------------
+
+  submitReport(formData: FormData): Observable<any> {
+    return this.http.post(`${this.apiUrl}/api/reports/submit`, formData, {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+  }
+
+  // -------------------------------------------- Report Chat API End --------------------------
+
+  // -------------------------------------------- Admin Reports API --------------------------
+
+  getAdminReports(page: number = 1, perPage: number = 10): Observable<any> {
+    return this.http.get(`${this.apiUrl}/api/admin/reports?page=${page}&per_page=${perPage}`, {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+  }
+
+  getAdminReportDetails(reportId: number): Observable<any> {
+    return this.http.get(`${this.apiUrl}/api/admin/reports/${reportId}`, {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+  }
+
+  performReportAction(formData: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/api/admin/reports/${formData.report_id}/actions`, formData, {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+  }
+
+    // -------------------------------------------- Admin Reports API End --------------------------
+
+    // -------------------------------------------- Admin Orders API --------------------------
+    getAdminOrders(page: number = 1, perPage: number = 10): Observable<any> {
+      return this.http.get(`${this.apiUrl}/api/admin/orders?page=${page}&per_page=${perPage}`, {
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${this.token}`,
+        },
+      });
+    }
+
+    getAdminOrderDetails(orderId: number): Observable<any> {
+      return this.http.get(`${this.apiUrl}/api/admin/orders/${orderId}`, {
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${this.token}`,
+        },
+      });
+    }
+
+    performAdminOrderAction(formData: any): Observable<any> {
+      return this.http.post(`${this.apiUrl}/api/admin/orders/${formData.order_id}/actions`, formData, {
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${this.token}`,
+        },
+      });
+    }
+
+    sendAdminMessage(formData: FormData): Observable<any> {
+      return this.http.post(`${this.apiUrl}/api/admin/orders/send-message`, formData, {
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${this.token}`,
+        },
+      });
+    }
+    // -------------------------------------------- Admin Orders API End --------------------------
 }
 
 

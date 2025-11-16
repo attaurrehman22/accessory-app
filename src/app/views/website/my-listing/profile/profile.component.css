@@ -147,6 +147,15 @@
 
   .small-screen-order-profile-for-text{
     font-size: 12px;
+    text-align: left;
+  }
+
+  .dealer-btn {
+    font-size: 14px;
+  }
+
+  .seller-btn {
+    font-size: 14px;
   }
 }
 
