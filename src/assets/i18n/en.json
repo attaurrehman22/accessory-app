@@ -364,6 +364,7 @@
     "accept_details_and_continue": "Accept Details and Continue"
   },
   "create_product_listing": {
+    "serial_no_invalid": "Serial Number must contain only alphanumeric characters.",
     "Images": "Images",
     "label": "Create Product Listing",
     "listing_details": "Listing Details",

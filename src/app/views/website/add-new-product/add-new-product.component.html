@@ -569,6 +569,15 @@
                         "create_product_listing.serial_no_required" | translate
                       }}
                     </mat-error> -->
+                    <mat-error
+                      [ngClass]="{
+                        'text-left': translateService.currentLang === 'en',
+                        'text-right': translateService.currentLang !== 'en'
+                      }"
+                      *ngIf="serial_no.hasError('pattern')"
+                    >
+                      {{ "create_product_listing.serial_no_invalid" | translate }}
+                    </mat-error>
                   </mat-form-field>
                 </div>
 
@@ -4012,6 +4021,15 @@
                             | translate
                         }}
                       </mat-error> -->
+                      <mat-error
+                      [ngClass]="{
+                        'text-left': translateService.currentLang === 'en',
+                        'text-right': translateService.currentLang !== 'en'
+                      }"
+                      *ngIf="serial_no.hasError('pattern')"
+                    >
+                      {{ "create_product_listing.serial_no_invalid" | translate }}
+                    </mat-error>
                     </mat-form-field>
                   </div>
 

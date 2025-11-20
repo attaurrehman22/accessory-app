@@ -308,6 +308,7 @@
     "reference_number": "رقم المرجع"
   },
   "create_product_listing": {
+    "serial_no_invalid": "يجب أن يحتوي الرقم التسلسلي على أحرف وأرقام فقط.",
     "Images": "الصور",
     "label": "إنشاء قائمة المنتج",
     "listing_details": "تفاصيل الإدراج",
