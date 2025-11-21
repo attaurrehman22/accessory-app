@@ -8,7 +8,10 @@
     >
       <li class="nav-item menu-open">
         <ul class="nav nav-treeview">
-          <li class="nav-item">
+          <li
+            class="nav-item"
+            *ngIf="doPermissionCheck(dashboardViewPermission)"
+          >
             <a
               routerLink="/admin/dashboard"
               routerLinkActive="active"
@@ -19,7 +22,7 @@
               <p>Dashboard</p>
             </a>
           </li>
-          <li class="nav-item">
+          <li class="nav-item" *ngIf="doPermissionCheck(brandsViewPermission)">
             <a
               routerLink="/admin/brands"
               routerLinkActive="active"
@@ -30,7 +33,10 @@
               <p>Brands</p>
             </a>
           </li>
-          <li class="nav-item">
+          <li
+            class="nav-item"
+            *ngIf="doPermissionCheck(categoryViewPermission)"
+          >
             <a
               routerLink="/admin/category"
               routerLinkActive="active"
@@ -41,7 +47,10 @@
               <p>Category</p>
             </a>
           </li>
-          <li class="nav-item">
+          <li
+            class="nav-item"
+            *ngIf="doPermissionCheck(productsViewPermission)"
+          >
             <a
               routerLink="/admin/products"
               routerLinkActive="active"
@@ -52,7 +61,7 @@
               <p>Products</p>
             </a>
           </li>
-          <li class="nav-item">
+          <li class="nav-item" *ngIf="doPermissionCheck(usersViewPermission)">
             <a
               routerLink="/admin/users"
               routerLinkActive="active"
@@ -64,7 +73,10 @@
             </a>
           </li>
 
-          <li class="nav-item">
+          <li
+            class="nav-item"
+            *ngIf="doPermissionCheck(watchOfTheDayViewPermission)"
+          >
             <a
               routerLink="/admin/watchOfDay"
               routerLinkActive="active"
@@ -76,7 +88,7 @@
             </a>
           </li>
 
-          <li class="nav-item">
+          <li class="nav-item" *ngIf="doPermissionCheck(rolesViewPermission)">
             <a
               routerLink="/admin/roles"
               routerLinkActive="active"
@@ -85,6 +97,18 @@
             >
               <mat-icon>security</mat-icon>
               <p>Roles</p>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a
+              routerLink="/admin/chronosouq-users"
+              routerLinkActive="active"
+              class="nav-link"
+              (click)="onMenuItemClick()"
+            >
+              <mat-icon>people</mat-icon>
+              <p>Chronosouq Users</p>
             </a>
           </li>
 

@@ -4,18 +4,17 @@
       class="d-flex global-main-wraper w-100"
       [ngClass]="{ 'rtl-reverse': isRtl }"
     >
-      
       <div class="query w-100" [ngClass]="{ 'rtl-layout-reverse': isRtl }">
         <div [ngClass]="{ 'lag-logo-stl': isRtl }" class="logo">
           <a href="/">
-          <img
-            class="logo-img sidebar-logo-small-screen"
-            routerLink="/"
-            src="./assets/images/logo.svg"
-            alt="Cronosuq"
-            style="cursor: pointer;"
-          />
-        </a>
+            <img
+              class="logo-img sidebar-logo-small-screen"
+              routerLink="/"
+              src="./assets/images/logo.svg"
+              alt="Cronosuq"
+              style="cursor: pointer"
+            />
+          </a>
         </div>
         <div
           class="header-content gap-4"
@@ -23,9 +22,7 @@
           [ngClass]="{
             'position-absolute search-box-small-screen': isSmallScreen
           }"
-        >
-        
-        </div>
+        ></div>
         <div class="header-contact header-contact-lg mat-menu-nav">
           <!-- Small Screen SearchForm Start Here  -->
           <img
@@ -35,7 +32,10 @@
             style="cursor: pointer"
           />
           <div *ngIf="isShowSearchField" class="small-screen-search-Box">
-            <form  class="d-flex flex-grow-1 ms-3 mt-3" (ngSubmit)="onSearch(searchQuery)">
+            <form
+              class="d-flex flex-grow-1 ms-3 mt-3"
+              (ngSubmit)="onSearch(searchQuery)"
+            >
               <div class="input-group">
                 <input
                   [(ngModel)]="searchQuery"
@@ -43,9 +43,15 @@
                   type="search"
                   placeholder="Search "
                   aria-label="Search"
-                 (click)="onSearchInputClick()"
+                  (click)="onSearchInputClick()"
                 />
-                <button class="search-btn" (click)="onSearch(searchQuery)" type="submit">Search</button>
+                <button
+                  class="search-btn"
+                  (click)="onSearch(searchQuery)"
+                  type="submit"
+                >
+                  Search
+                </button>
               </div>
             </form>
           </div>
@@ -53,8 +59,8 @@
           <!-- </mat-menu> -->
           <mat-menu #profileMenu="matMenu" class="custom-profile-menu">
             <!-- <div class="route-groups" *ngIf="isUserLogin === 'true'" > -->
-              <!-- <div class="d-flex gap-2 align-items-center"> -->
-                <!-- <div class="">
+            <!-- <div class="d-flex gap-2 align-items-center"> -->
+            <!-- <div class="">
                   <div *ngIf="userDetails?.main_image; else noImage">
                     <img
                       [src]="
@@ -89,34 +95,51 @@
                   <p class="margin-0 font-weight-600 font-size-18 color-242424" *ngIf="userDetails?.name"> {{userDetails?.name}} </p>
                   <p class="margin-0 font-weight-600 font-size-12 color-909090" *ngIf="userDetails?.name"> {{userDetails?.name}} </p>
                 </div> -->
-              <!-- </div> -->
+            <!-- </div> -->
             <!-- </div> -->
 
-            <div class="route-groups" *ngIf="showHideAdminUser === true"   routerLink="/admin/dashboard">
+            <div
+              class="route-groups"
+              *ngIf="showHideAdminUser === true"
+              (click)="routeToAdminPannel()"
+            >
               <div class="d-flex gap-2 align-items-center cursor-pointer">
                 <img src="assets/images/black_profile.svg" alt="Profile" />
-                <a [disableRipple]="true" mat-menu-item class="custom-btn a-custom-style">
+                <a
+                  [disableRipple]="true"
+                  mat-menu-item
+                  class="custom-btn a-custom-style"
+                >
                   {{ "header.admin_pannel" | translate }}
                 </a>
               </div>
             </div>
 
-            <div class="route-groups" *ngIf="isUserLogin === 'true'" >
-              <div routerLink="/myListing/profile" class="d-flex gap-2 align-items-center cursor-pointer">
+            <div class="route-groups" *ngIf="isUserLogin === 'true'">
+              <div
+                routerLink="/myListing/profile"
+                class="d-flex gap-2 align-items-center cursor-pointer"
+              >
                 <img src="assets/images/black_profile.svg" alt="Profile" />
-                <a [disableRipple]="true"  mat-menu-item class="a-custom-style"> 
+                <a [disableRipple]="true" mat-menu-item class="a-custom-style">
                   {{ "my_Listing.Personal_Information" | translate }}
                 </a>
               </div>
-              <div class="d-flex gap-2 align-items-center cursor-pointer" routerLink="/chat">
+              <div
+                class="d-flex gap-2 align-items-center cursor-pointer"
+                routerLink="/chat"
+              >
                 <img src="assets/images/black_chat.svg" alt="Profile" />
-                <a class="a-custom-style" [disableRipple]="true" mat-menu-item > 
+                <a class="a-custom-style" [disableRipple]="true" mat-menu-item>
                   {{ "header.Chat" | translate }}
                 </a>
               </div>
-              <div (click)="goToFavorites()"  class="d-flex gap-2 align-items-center cursor-pointer custom-border-bottom">
+              <div
+                (click)="goToFavorites()"
+                class="d-flex gap-2 align-items-center cursor-pointer custom-border-bottom"
+              >
                 <img src="assets/images/black_favourites.svg" alt="Profile" />
-                <a class="a-custom-style" [disableRipple]="true" mat-menu-item > 
+                <a class="a-custom-style" [disableRipple]="true" mat-menu-item>
                   {{ "my_Listing.Favorites" | translate }}
                 </a>
               </div>
@@ -127,31 +150,51 @@
                 </a>
               </div> -->
             </div>
-            <div class="route-groups" *ngIf="isUserLogin === 'true'" >
-              <div (click)="goToMyListings()"  class="d-flex gap-2 align-items-center cursor-pointer">
+            <div class="route-groups" *ngIf="isUserLogin === 'true'">
+              <div
+                (click)="goToMyListings()"
+                class="d-flex gap-2 align-items-center cursor-pointer"
+              >
                 <img src="assets/images/black_buy_sell.svg" alt="Listing" />
-                <a [disableRipple]="true" mat-menu-item class="a-custom-style"> 
+                <a [disableRipple]="true" mat-menu-item class="a-custom-style">
                   {{ "header.myListings" | translate }}
                 </a>
               </div>
-              
-              <div class="d-flex gap-2 align-items-center cursor-pointer"  (click)="goToBuyOrders()">
+
+              <div
+                class="d-flex gap-2 align-items-center cursor-pointer"
+                (click)="goToBuyOrders()"
+              >
                 <img src="assets/images/black_buy_sell.svg" alt="Listing" />
-                <a [disableRipple]="true" mat-menu-item class="a-custom-style"> 
+                <a [disableRipple]="true" mat-menu-item class="a-custom-style">
                   {{ "header.buyOrders" | translate }}
                 </a>
               </div>
-              <div class="d-flex gap-2 align-items-center cursor-pointer"  (click)="goToSellOrders()">
+              <div
+                class="d-flex gap-2 align-items-center cursor-pointer"
+                (click)="goToSellOrders()"
+              >
                 <img src="assets/images/black_buy_sell.svg" alt="Listing" />
-                <a [disableRipple]="true" mat-menu-item class="a-custom-style"> 
+                <a [disableRipple]="true" mat-menu-item class="a-custom-style">
                   {{ "header.sellOrders" | translate }}
                 </a>
               </div>
             </div>
-            <div class="route-groups" style="border-bottom: none !important;" *ngIf="isUserLogin === 'true'" >
-              <div class="d-flex gap-2 align-items-center cursor-pointer" (click)="logout()">
+            <div
+              class="route-groups"
+              style="border-bottom: none !important"
+              *ngIf="isUserLogin === 'true'"
+            >
+              <div
+                class="d-flex gap-2 align-items-center cursor-pointer"
+                (click)="logout()"
+              >
                 <img src="assets/images/black_sign_out.svg" alt="Listing" />
-                <button [disableRipple]="true" mat-menu-item class="a-custom-style">
+                <button
+                  [disableRipple]="true"
+                  mat-menu-item
+                  class="a-custom-style"
+                >
                   {{ "header.Sign_Out" | translate }}
                 </button>
               </div>
@@ -180,15 +223,28 @@
             class="custom-en-ar-btn"
             (click)="useLang('ar')"
           >
-           EN - <span [ngStyle]="{'color': selectedLang == 'en' ? '#6A6A6A' : '#242424'}"> AR </span>  
-             
+            EN -
+            <span
+              [ngStyle]="{
+                color: selectedLang == 'en' ? '#6A6A6A' : '#242424'
+              }"
+            >
+              AR
+            </span>
           </button>
           <button
             *ngIf="selectedLang === 'ar'"
             class="custom-en-ar-btn"
             (click)="useLang('en')"
           >
-             <span [ngStyle]="{'color': selectedLang == 'ar' ? '#6A6A6A' : '#242424'}"> En </span> - AR
+            <span
+              [ngStyle]="{
+                color: selectedLang == 'ar' ? '#6A6A6A' : '#242424'
+              }"
+            >
+              En
+            </span>
+            - AR
           </button>
         </div>
       </div>
@@ -217,7 +273,6 @@
         </svg>
       </button>
 
-      
       <div
         class="nav-overlay"
         [class.active]="isNavbarOpen"
@@ -229,32 +284,29 @@
         [ngClass]="{ 'rtl-layout-reverse': isRtl }"
         [class.show]="isNavbarOpen"
       >
-      <a href="/">
-        <img
-          class="logo-img sidebar-logo"
-          routerLink="/"
-          src="./assets/images/logo.svg"
-          alt="Cronosuq"
-          style="cursor: pointer"
-        />
-      </a>
-      <!-- For large screen Routes of Center label start here -->
-        <div class="header-content gap-4" *ngIf="!(isSearchForm || isShowSearchField) || isSmallScreenScreen" [ngClass]="{ 'rtl-layout-header-reverse': isRtl }">
-          
+        <a href="/">
+          <img
+            class="logo-img sidebar-logo"
+            routerLink="/"
+            src="./assets/images/logo.svg"
+            alt="Cronosuq"
+            style="cursor: pointer"
+          />
+        </a>
+        <!-- For large screen Routes of Center label start here -->
+        <div
+          class="header-content gap-4"
+          *ngIf="!(isSearchForm || isShowSearchField) || isSmallScreenScreen"
+          [ngClass]="{ 'rtl-layout-header-reverse': isRtl }"
+        >
           <a routerLink="/newArrivals" class="custom-btn position-relative">
             {{ "header.new_arrivals" | translate }}
-            <span
-              class="notification-dot"
-              *ngIf="isNewArrivalsProduct"
-            ></span>
+            <span class="notification-dot" *ngIf="isNewArrivalsProduct"></span>
           </a>
           <a class="custom-btn" routerLink="/product-list">
             {{ "header.buy_watch" | translate }}
           </a>
-          <a
-            class="custom-btn" 
-            routerLink="/new-product"
-          >
+          <a class="custom-btn" routerLink="/new-product">
             {{ "header.sell_watch" | translate }}
           </a>
           <!-- <a class="custom-btn" routerLink="/accessories/home">
@@ -262,19 +314,31 @@
           </a> -->
         </div>
 
-        <div class="header-content" *ngIf="isShowSearchField && !isSmallScreenScreen">
+        <div
+          class="header-content"
+          *ngIf="isShowSearchField && !isSmallScreenScreen"
+        >
           <div class="large-screen-search-Box">
-            <form class="d-flex flex-grow-1 ms-3" (ngSubmit)="onSearch(searchQuery)">
+            <form
+              class="d-flex flex-grow-1 ms-3"
+              (ngSubmit)="onSearch(searchQuery)"
+            >
               <div class="input-group">
-              <input
-                [(ngModel)]="searchQuery"
-                class="form-control me-2"
-                type="search"
-                placeholder="Search"
-                aria-label="Search"
-                (click)="onSearchInputClick()"
-              />
-              <button class="search-btn" (click)="onSearch(searchQuery)" type="submit">Search</button>
+                <input
+                  [(ngModel)]="searchQuery"
+                  class="form-control me-2"
+                  type="search"
+                  placeholder="Search"
+                  aria-label="Search"
+                  (click)="onSearchInputClick()"
+                />
+                <button
+                  class="search-btn"
+                  (click)="onSearch(searchQuery)"
+                  type="submit"
+                >
+                  Search
+                </button>
               </div>
             </form>
           </div>
@@ -286,18 +350,16 @@
           [ngClass]="{
             'position-absolute search-box-small-screen': isSmallScreen
           }"
-        >
-       
-        </div>
+        ></div>
         <div class="header-contact sidebar-acions gap-4">
-           <!-- Search for Large Screen Start Here -->
+          <!-- Search for Large Screen Start Here -->
           <img
             src="./assets/images/search-icon.svg"
-           (click)="isShowSearchForm()"
-           class="search-icon-for-mobile"
+            (click)="isShowSearchForm()"
+            class="search-icon-for-mobile"
             style="cursor: pointer"
           />
-             <!-- Search for Large Screen End Here -->
+          <!-- Search for Large Screen End Here -->
           <mat-menu #profileMenu="matMenu" class="custom-profile-menu">
             <button
               mat-menu-item
@@ -313,7 +375,11 @@
             >
               {{ "header.Logout" | translate }}
             </button>
-            <a  mat-menu-item  *ngIf="isUserLogin === 'true'" routerLink="/myListing"> 
+            <a
+              mat-menu-item
+              *ngIf="isUserLogin === 'true'"
+              routerLink="/myListing"
+            >
               {{ "header.settings" | translate }}
             </a>
           </mat-menu>
@@ -332,29 +398,42 @@
             *ngIf="isUserLogin === 'true'"
           />
 
-           <button
-              mat-menu-item
-              *ngIf="isUserLogin === 'false' || isUserLogin === null"
-              (click)="goToRegister()"
-              class="login-hover-btn"
-            >
-              {{ "header.Login" | translate }}
-            </button>
+          <button
+            mat-menu-item
+            *ngIf="isUserLogin === 'false' || isUserLogin === null"
+            (click)="goToRegister()"
+            class="login-hover-btn"
+          >
+            {{ "header.Login" | translate }}
+          </button>
 
           <button
             *ngIf="selectedLang === 'en'"
             class="custom-en-ar-btn"
             (click)="useLang('ar')"
           >
-           EN - <span [ngStyle]="{'color': selectedLang == 'en' ? '#6A6A6A' : '#242424'}"> AR </span>  
-             
+            EN -
+            <span
+              [ngStyle]="{
+                color: selectedLang == 'en' ? '#6A6A6A' : '#242424'
+              }"
+            >
+              AR
+            </span>
           </button>
           <button
             *ngIf="selectedLang === 'ar'"
             class="custom-en-ar-btn"
             (click)="useLang('en')"
           >
-             <span [ngStyle]="{'color': selectedLang == 'ar' ? '#6A6A6A' : '#242424'}"> En </span> - AR
+            <span
+              [ngStyle]="{
+                color: selectedLang == 'ar' ? '#6A6A6A' : '#242424'
+              }"
+            >
+              En
+            </span>
+            - AR
           </button>
         </div>
       </div>

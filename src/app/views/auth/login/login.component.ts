@@ -99,11 +99,26 @@ export class LoginComponent implements OnInit {
               );
             }
           } else {
+            const isAdmin = response.user.type === "chronosouq-user";
             localStorage.setItem("user_token", response.authorization.token);
             localStorage.setItem("isLoggedIn", "true");
             localStorage.setItem("userID", response.user.id);
-            const isAdmin = response.user.type === "admin";
             localStorage.setItem("userType", response.user.type);
+            if (
+              response.user.permissions !== undefined &&
+              response.user.permissions !== null
+            ) {
+              sessionStorage.setItem(
+                "permissions",
+                JSON.stringify(response.user.permissions)
+              );
+            }
+            if (
+              response.user.roles !== undefined &&
+              response.user.roles !== null
+            ) {
+              sessionStorage.setItem("roles", response.user.roles.join(","));
+            }
             if (isAdmin) {
               localStorage.setItem("isAdmin", "true");
             }
@@ -114,12 +129,11 @@ export class LoginComponent implements OnInit {
           }
         },
         (error) => {
-
-          if(error && error?.error?.error){
+          if (error && error?.error?.error) {
             this.alertService.showAlert("warning", `${error?.error?.error}`);
-          }else if(error && error?.error?.message){
+          } else if (error && error?.error?.message) {
             this.alertService.showAlert("warning", `${error?.error?.message}`);
-          }else{
+          } else {
             if (this.translateService.currentLang == "en") {
               this.alertService.showAlert(
                 "warning",
@@ -130,7 +144,8 @@ export class LoginComponent implements OnInit {
                 "warning",
                 "لقد أدخلت بريدًا إلكترونيًا أو كلمة مرور غير صحيحة"
               );
-            }          }
+            }
+          }
           console.error("Login error", error);
         }
       );

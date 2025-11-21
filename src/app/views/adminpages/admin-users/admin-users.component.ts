@@ -6,8 +6,9 @@ import { Router } from "@angular/router";
 import { MatDialog } from "@angular/material/dialog";
 import { HttpService } from "src/services/http/http.service";
 import { AlertsServicesService } from "src/services/alerts-service/alerts-services.service";
-import { Subscription } from 'rxjs';
+import { Subscription } from "rxjs";
 import { SidebarService } from "src/services/sidebar.service";
+import { PermissionCheckService } from "../../services/permission-check.service";
 
 export interface UserData {
   userName: string;
@@ -18,11 +19,11 @@ export interface UserData {
 }
 
 @Component({
-  selector: 'app-admin-users',
-  templateUrl: './admin-users.component.html',
-  styleUrls: ['./admin-users.component.css']
+  selector: "app-admin-users",
+  templateUrl: "./admin-users.component.html",
+  styleUrls: ["./admin-users.component.css"],
 })
- export class AdminUsersComponent implements OnInit, OnDestroy {
+export class AdminUsersComponent implements OnInit, OnDestroy {
   displayedColumns: string[] = [
     "name",
     "email",
@@ -31,6 +32,10 @@ export interface UserData {
     "type",
     "edit",
   ];
+  usersUpdatePermission = "admin.users.update";
+  usersDeletePermission = "admin.users.delete";
+  usersCreatePermission = "admin.users.create";
+  usersViewPermission = "admin.users.view";
   dataSource: MatTableDataSource<UserData>;
   selectedValue: string;
   allData: any;
@@ -52,7 +57,8 @@ export interface UserData {
     private http: HttpService,
     private toast: AlertsServicesService,
     private alertService: AlertsServicesService,
-    private sidebarService: SidebarService
+    private sidebarService: SidebarService,
+    private permissionCheckService: PermissionCheckService
   ) {
     this.dataSource = new MatTableDataSource([]);
   }
@@ -61,9 +67,15 @@ export interface UserData {
     this.allUser();
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
-    this.sidebarClickSubscription = this.sidebarService.sidebarClick$.subscribe(() => {
-      this.dialog.closeAll();
-    });
+    this.sidebarClickSubscription = this.sidebarService.sidebarClick$.subscribe(
+      () => {
+        this.dialog.closeAll();
+      }
+    );
+  }
+
+  doPermissionCheck(permission: string): boolean {
+    return this.permissionCheckService.checkPermission(permission);
   }
 
   ngAfterViewInit() {
@@ -86,15 +98,14 @@ export interface UserData {
     }
   }
 
-
   changeUserType(data) {
-    const formData={
-        user_id: data.id,
-        type: data.type === 'dealer' ? 'user' : 'dealer'
-    }
+    const formData = {
+      user_id: data.id,
+      type: data.type === "dealer" ? "user" : "dealer",
+    };
     this.http.changeUserType(formData).subscribe(
       (res) => {
-          this.alertService.showAlert("success", "User Typr Update Susseccfully");
+        this.alertService.showAlert("success", "User Typr Update Susseccfully");
         this.allUser();
       },
       (err) => {
@@ -107,7 +118,9 @@ export interface UserData {
     this.http.getAdminUsers().subscribe(
       (res) => {
         // Filter out users with type 'admin'
-        this.allData = res.data.filter((user: any) => user.type !== 'admin');
+        this.allData = res.data.filter(
+          (user: any) => user.type !== "chronosouq-user"
+        );
 
         // Set the filtered data to the data source
         this.dataSource = new MatTableDataSource(this.allData);
@@ -120,7 +133,6 @@ export interface UserData {
     );
   }
 
-
   isMeOrAdminOrDeveloper(id: any): boolean {
     return true;
   }
@@ -129,7 +141,5 @@ export interface UserData {
     return true;
   }
 
-
   deleteUser(data: any) {}
-
 }

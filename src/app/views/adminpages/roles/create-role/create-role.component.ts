@@ -38,7 +38,7 @@ export class CreateRoleComponent implements OnInit {
       category: "Brands",
     },
     {
-      name: "admin.brands.edit",
+      name: "admin.brands.update",
       label: "Edit",
       category: "Brands",
     },
@@ -60,7 +60,7 @@ export class CreateRoleComponent implements OnInit {
       category: "Category",
     },
     {
-      name: "admin.categories.edit",
+      name: "admin.categories.update",
       label: "Edit",
       category: "Category",
     },
@@ -77,7 +77,7 @@ export class CreateRoleComponent implements OnInit {
       category: "Products",
     },
     {
-      name: "admin.products.edit",
+      name: "admin.products.update",
       label: "Edit",
       category: "Products",
     },
@@ -94,7 +94,7 @@ export class CreateRoleComponent implements OnInit {
       category: "Users",
     },
     {
-      name: "admin.users.edit",
+      name: "admin.users.update",
       label: "Edit",
       category: "Users",
     },
@@ -111,7 +111,7 @@ export class CreateRoleComponent implements OnInit {
       category: "WOTD",
     },
     {
-      name: "admin.wotd.edit",
+      name: "admin.wotd.update",
       label: "Edit",
       category: "WOTD",
     },
@@ -162,7 +162,7 @@ export class CreateRoleComponent implements OnInit {
       category: "Roles",
     },
     {
-      name: "admin.roles.edit",
+      name: "admin.roles.update",
       label: "Edit",
       category: "Roles",
     },

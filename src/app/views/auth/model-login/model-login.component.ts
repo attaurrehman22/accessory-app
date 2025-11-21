@@ -73,21 +73,22 @@ export class ModelLoginComponent implements OnInit {
     });
   }
   gotoHome() {
-    console.log("LOG CALLING")
+    console.log("LOG CALLING");
     this.loginForm.markAllAsTouched();
     localStorage.removeItem("isLoggedIn");
     localStorage.removeItem("user_token");
+    sessionStorage.clear();
     if (this.loginForm.valid) {
       this.http.login(this.loginForm.value).subscribe(
         (response) => {
           if (response.message === "" || response.status === "failure") {
-            if(this.translateService.currentLang == 'en'){
+            if (this.translateService.currentLang == "en") {
               this.alertService.showAlert(
                 "warning",
                 "Please Enter your Email and Password"
               );
-            }else{
-               this.alertService.showAlert(
+            } else {
+              this.alertService.showAlert(
                 "warning",
                 "يرجى إدخال بريدك الإلكتروني وكلمة المرور"
               );
@@ -95,12 +96,26 @@ export class ModelLoginComponent implements OnInit {
           } else {
             localStorage.setItem("isLoggedIn", "true");
             localStorage.setItem("user_token", response.authorization.token);
-            localStorage.setItem('userType',response.user.type)
+            if (
+              response.user.permissions !== undefined &&
+              response.user.permissions !== null
+            ) {
+              sessionStorage.setItem(
+                "permissions",
+                JSON.stringify(response.user.permissions)
+              );
+            }
+            if (
+              response.user.roles !== undefined &&
+              response.user.roles !== null
+            ) {
+              sessionStorage.setItem("roles", response.user.roles.join(","));
+            }
+            localStorage.setItem("userType", response.user.type);
             localStorage.setItem("userID", response.user.id);
             if (this.isDialog === "dialog-box") {
-          
-                window.location.reload();
-          
+              window.location.reload();
+
               this.dialogRef.close(true);
             } else {
               // this.router.navigateByUrl("").then(() => {
@@ -113,22 +128,6 @@ export class ModelLoginComponent implements OnInit {
         },
         (error) => {
           if (error.message === "Unauthorized") {
-             if(this.translateService.currentLang == 'en'){
-              this.alertService.showAlert(
-                "warning",
-                "You entered an incorrect email or password"
-              );
-            }else{
-              this.alertService.showAlert(
-                "warning",
-                "لقد أدخلت بريدًا إلكترونيًا أو كلمة مرور غير صحيحة"
-              );
-            }
-          }else if(error && error?.error?.error){
-            this.alertService.showAlert("warning", `${error?.error?.error}`);
-          }else if(error && error?.error?.message){
-            this.alertService.showAlert("warning", `${error?.error?.message}`);
-          }else{
             if (this.translateService.currentLang == "en") {
               this.alertService.showAlert(
                 "warning",
@@ -139,13 +138,29 @@ export class ModelLoginComponent implements OnInit {
                 "warning",
                 "لقد أدخلت بريدًا إلكترونيًا أو كلمة مرور غير صحيحة"
               );
-            } 
+            }
+          } else if (error && error?.error?.error) {
+            this.alertService.showAlert("warning", `${error?.error?.error}`);
+          } else if (error && error?.error?.message) {
+            this.alertService.showAlert("warning", `${error?.error?.message}`);
+          } else {
+            if (this.translateService.currentLang == "en") {
+              this.alertService.showAlert(
+                "warning",
+                "You entered an incorrect email or password"
+              );
+            } else {
+              this.alertService.showAlert(
+                "warning",
+                "لقد أدخلت بريدًا إلكترونيًا أو كلمة مرور غير صحيحة"
+              );
+            }
           }
           console.error("Login error", error);
         }
       );
     } else {
-       if (this.translateService.currentLang == "en") {
+      if (this.translateService.currentLang == "en") {
         this.alertService.showAlert(
           "warning",
           "Please Enter your Email and Password"
@@ -171,10 +186,10 @@ export class ModelLoginComponent implements OnInit {
     //   }
     // });
     // this.router.navigate(['register'])
-    this.dialogRef.close('register');
+    this.dialogRef.close("register");
   }
 
-  closeAndMoveToLoginComp(){
+  closeAndMoveToLoginComp() {
     // this.router.navigate['/login']
     this.router.navigateByUrl("/login");
     this.dialogRef.close(false);

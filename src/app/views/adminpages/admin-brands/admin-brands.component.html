@@ -5,7 +5,9 @@
     </div>
     <div class="col-lg-12 col-md-12 col-sm-12">
       <div class="row">
-        <div class="col-8 col-lg-8 col-md-8 col-sm-6 d-flex gap-2 mat-form-fields-custom-deisgn">
+        <div
+          class="col-8 col-lg-8 col-md-8 col-sm-6 d-flex gap-2 mat-form-fields-custom-deisgn"
+        >
           <mat-form-field appearance="outline">
             <mat-label>Search</mat-label>
             <input
@@ -18,16 +20,13 @@
           <!-- &nbsp; -->
           <mat-form-field appearance="outline">
             <mat-label>Filtered By</mat-label>
-            <mat-select [(ngModel)]="selectedValue" (selectionChange)="filterBrands()" >
-              <mat-option value="allBrands">
-                All Brands
-              </mat-option>
-              <mat-option value="topBrands">
-                Top Brands
-              </mat-option>
-              <mat-option value="activeBrands">
-                Active Brands
-              </mat-option>
+            <mat-select
+              [(ngModel)]="selectedValue"
+              (selectionChange)="filterBrands()"
+            >
+              <mat-option value="allBrands"> All Brands </mat-option>
+              <mat-option value="topBrands"> Top Brands </mat-option>
+              <mat-option value="activeBrands"> Active Brands </mat-option>
             </mat-select>
           </mat-form-field>
         </div>
@@ -37,7 +36,7 @@
         >
           <button
             class="admin-add-btn"
-            [hidden]="!isAdmin()"
+            [hidden]="!doPermissionCheck(brandsCreatePermission)"
             (click)="openModal()"
           >
             Add Brand
@@ -48,9 +47,7 @@
         <table class="table admin-table" mat-table [dataSource]="dataSource">
           <!-- ID Column -->
           <ng-container class="column" matColumnDef="name">
-            <th mat-header-cell class="column"  *matHeaderCellDef>
-              Name
-            </th>
+            <th mat-header-cell class="column" *matHeaderCellDef>Name</th>
             <td mat-cell class="column" *matCellDef="let row">
               {{ row.name }}
             </td>
@@ -58,9 +55,7 @@
 
           <!-- First Name Column -->
           <ng-container class="column" matColumnDef="slug">
-            <th mat-header-cell class="column" *matHeaderCellDef>
-              Slug
-            </th>
+            <th mat-header-cell class="column" *matHeaderCellDef>Slug</th>
             <td mat-cell class="column" *matCellDef="let row; in">
               {{ row.slug }}
             </td>
@@ -77,18 +72,13 @@
           </ng-container>
 
           <ng-container class="column" matColumnDef="meta_title">
-            <th mat-header-cell class="column" *matHeaderCellDef>
-              Meta Title
-            </th>
+            <th mat-header-cell class="column" *matHeaderCellDef>Meta Title</th>
             <td mat-cell class="column" *matCellDef="let row; in">
               {{ row.meta_title }}
             </td>
           </ng-container>
 
-          <ng-container
-            class="column"
-            matColumnDef="meta_description"
-          >
+          <ng-container class="column" matColumnDef="meta_description">
             <th mat-header-cell class="column" *matHeaderCellDef>
               Meta Description
             </th>
@@ -98,65 +88,78 @@
           </ng-container>
 
           <ng-container class="column" matColumnDef="is_active">
-            <th mat-header-cell class="column" *matHeaderCellDef>
-              Is Active
-            </th>
+            <th mat-header-cell class="column" *matHeaderCellDef>Is Active</th>
             <td mat-cell class="column" *matCellDef="let row; in">
-              {{ row.is_active === 0 ? 'No' : 'Yes'}}
+              {{ row.is_active === 0 ? "No" : "Yes" }}
             </td>
           </ng-container>
 
           <ng-container class="column" matColumnDef="top_brand">
-            <th mat-header-cell class="column" *matHeaderCellDef>
-              Top Brand
-            </th>
+            <th mat-header-cell class="column" *matHeaderCellDef>Top Brand</th>
             <td mat-cell class="column" *matCellDef="let row; in">
-              {{ row.top_brand === 0 ? 'No' : 'Yes'}}
+              {{ row.top_brand === 0 ? "No" : "Yes" }}
             </td>
           </ng-container>
 
           <ng-container matColumnDef="edit">
             <th mat-header-cell *matHeaderCellDef>Actions</th>
             <td mat-cell *matCellDef="let row">
-              <button mat-icon-button color="primary"a
-                      (click)="editBrand(row)"
-                      matTooltip="Edit Brand">
+              <button
+                mat-icon-button
+                color="primary"
+                a
+                [hidden]="!doPermissionCheck(brandsUpdatePermission)"
+                (click)="editBrand(row)"
+                matTooltip="Edit Brand"
+              >
                 <mat-icon>edit</mat-icon>
               </button>
 
-              <button mat-icon-button color="warn"
-                      (click)="deleteBrand(row)"
-                      matTooltip="Delete Brand">
+              <button
+                mat-icon-button
+                color="warn"
+                [hidden]="!doPermissionCheck(brandsDeletePermission)"
+                (click)="deleteBrand(row)"
+                matTooltip="Delete Brand"
+              >
                 <mat-icon>delete</mat-icon>
               </button>
 
-              <button mat-icon-button
-                      (click)="activateDeactivateBrand(row)"
-                      [matTooltip]="row.is_active === 1 ? 'Deactivate Brand' : 'Activate Brand'">
+              <button
+                mat-icon-button
+                [hidden]="!doPermissionCheck(brandsUpdatePermission)"
+                (click)="activateDeactivateBrand(row)"
+                [matTooltip]="
+                  row.is_active === 1 ? 'Deactivate Brand' : 'Activate Brand'
+                "
+              >
                 <mat-icon>
-                  {{ row.is_active === 1 ? 'block' : 'check_circle' }}
+                  {{ row.is_active === 1 ? "block" : "check_circle" }}
                 </mat-icon>
               </button>
 
-              <button mat-icon-button
-                      (click)="topBrand(row)"
-                      [matTooltip]="row.top_brand === 1 ? 'Unmark as Top Brand' : 'Mark as Top Brand'">
+              <button
+                mat-icon-button
+                [hidden]="!doPermissionCheck(brandsUpdatePermission)"
+                (click)="topBrand(row)"
+                [matTooltip]="
+                  row.top_brand === 1
+                    ? 'Unmark as Top Brand'
+                    : 'Mark as Top Brand'
+                "
+              >
                 <mat-icon>
-                  {{ row.top_brand === 1 ? 'star' : 'star_border' }}
+                  {{ row.top_brand === 1 ? "star" : "star_border" }}
                 </mat-icon>
               </button>
             </td>
           </ng-container>
 
-
           <tr
             mat-header-row
             *matHeaderRowDef="displayedColumns; sticky: true"
           ></tr>
-          <tr
-            mat-row
-            *matRowDef="let row; columns: displayedColumns"
-          ></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
 
           <!-- Row shown when there is no matching data. -->
           <tr class="mat-row" *matNoDataRow>

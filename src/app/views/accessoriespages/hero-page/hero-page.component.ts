@@ -1,27 +1,35 @@
-import { ChangeDetectorRef, Component, computed, ElementRef, HostListener, Input, ViewChild } from '@angular/core';
-import { ModelLoginComponent } from '../../auth/model-login/model-login.component';
-import { NavigationEnd, Router } from '@angular/router';
-import { filter } from 'rxjs/operators';
-import { MatMenuTrigger } from '@angular/material/menu';
-import { LanguageService } from 'src/services/lang-service/language.service';
-import { SearchServiceService } from 'src/services/search-service/search-service.service';
-import { LoginStateService } from 'src/services/login-service/login-state.service';
-import { MatDialog } from '@angular/material/dialog';
-import { HttpService } from 'src/services/http/http.service';
-import { MatSidenav } from '@angular/material/sidenav';
+import {
+  ChangeDetectorRef,
+  Component,
+  computed,
+  ElementRef,
+  HostListener,
+  Input,
+  ViewChild,
+} from "@angular/core";
+import { ModelLoginComponent } from "../../auth/model-login/model-login.component";
+import { NavigationEnd, Router } from "@angular/router";
+import { filter } from "rxjs/operators";
+import { MatMenuTrigger } from "@angular/material/menu";
+import { LanguageService } from "src/services/lang-service/language.service";
+import { SearchServiceService } from "src/services/search-service/search-service.service";
+import { LoginStateService } from "src/services/login-service/login-state.service";
+import { MatDialog } from "@angular/material/dialog";
+import { HttpService } from "src/services/http/http.service";
+import { MatSidenav } from "@angular/material/sidenav";
 import { TranslateService } from "@ngx-translate/core";
-import { Subscription } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
-import { ShoppingCartComponent } from '../../modal/shopping-cart/shopping-cart.component';
-import { environment } from 'src/environments/environment';
+import { Subscription } from "rxjs";
+import { HttpClient } from "@angular/common/http";
+import { ShoppingCartComponent } from "../../modal/shopping-cart/shopping-cart.component";
+import { environment } from "src/environments/environment";
 
 @Component({
-  selector: 'app-hero-page',
-  templateUrl: './hero-page.component.html',
-  styleUrls: ['./hero-page.component.css']
+  selector: "app-hero-page",
+  templateUrl: "./hero-page.component.html",
+  styleUrls: ["./hero-page.component.css"],
 })
 export class HeroPageComponent {
-  apiUrl = environment.apipath+ '/'
+  apiUrl = environment.apipath + "/";
   isSmallScreen: boolean = false;
   isUserLogin: any = false;
   windowWidth: number = window.innerWidth;
@@ -34,8 +42,8 @@ export class HeroPageComponent {
   @Input() speed: number = 100;
   @Input() coins: boolean = false;
 
-  @ViewChild('container') containerRef!: ElementRef;
-  @ViewChild('slider') sliderRef!: ElementRef;
+  @ViewChild("container") containerRef!: ElementRef;
+  @ViewChild("slider") sliderRef!: ElementRef;
 
   visibleSlides: number = 3;
   slideMargin: number = 20;
@@ -47,61 +55,70 @@ export class HeroPageComponent {
   private position: number = 0;
   private apiSubscription!: Subscription;
   apipath = environment.apipath;
-  homeData: any = { slider: [] }
+  homeData: any = { slider: [] };
 
   isAdminUser = computed(() => this.loginStateService.isAdminUser());
   isUserLoggedIn = computed(() => this.loginStateService.isUserLoggedIn());
 
   apiData = {
-    "success": true,
-    "data": {
-        "title": "Welcome to Chronosouq \u2013 The Premier Platform for Luxury Watches in Saudi Arabia",
-        "introduction": "Discover a world of timeless elegance and precision craftsmanship. At Chronosouq, we bring together luxury watch enthusiasts, collectors, and sellers in one trusted marketplace, dedicated to the finest timepieces from around the globe. Whether you're looking to buy or sell, we offer an exclusive range of watches from top-tier brands such as Rolex, Omega, Patek Philippe, and more. With our platform, you can browse with confidence, knowing that every transaction is secure, transparent, and backed by our expert verification process. Start your journey today\u2014where luxury meets trust.Start your journey today\u2014where luxury meets trust",
-        "vision_title": "Your Trusted Source for Authentic Luxury Watches.",
-        "vision": "ChronoSouq is Saudi Arabia\u2019s premier marketplace for luxury watches, connecting buyers and sellers with ease. We bring authenticity, style, and prestige to your wrist with a trusted selection of the world\u2019s finest timepieces",
-        "description": {
-            "overview": "Whether you're looking to buy or sell, we offer an exclusive range of watches from top-tier brands such as Rolex, Omega, Patek Philippe, and more. With our platform, you can browse with confidence, knowing that every transaction is secure, transparent, and backed by our expert verification process.",
-            "protection_plan": {
-                "title": "ChronoSouq Protection Plan",
-                "items": [
-                    "Secure\/safe Payment via Escrow Service",
-                    "Worldwide Money-Back Guarantee",
-                    "Authenticity Guarantee",
-                    "Safe and Insured Delivery",
-                    "Chronosouq Quality Assurance Team",
-                    "24\/7 Customer Support"
-                ]
-            }
+    success: true,
+    data: {
+      title:
+        "Welcome to Chronosouq \u2013 The Premier Platform for Luxury Watches in Saudi Arabia",
+      introduction:
+        "Discover a world of timeless elegance and precision craftsmanship. At Chronosouq, we bring together luxury watch enthusiasts, collectors, and sellers in one trusted marketplace, dedicated to the finest timepieces from around the globe. Whether you're looking to buy or sell, we offer an exclusive range of watches from top-tier brands such as Rolex, Omega, Patek Philippe, and more. With our platform, you can browse with confidence, knowing that every transaction is secure, transparent, and backed by our expert verification process. Start your journey today\u2014where luxury meets trust.Start your journey today\u2014where luxury meets trust",
+      vision_title: "Your Trusted Source for Authentic Luxury Watches.",
+      vision:
+        "ChronoSouq is Saudi Arabia\u2019s premier marketplace for luxury watches, connecting buyers and sellers with ease. We bring authenticity, style, and prestige to your wrist with a trusted selection of the world\u2019s finest timepieces",
+      description: {
+        overview:
+          "Whether you're looking to buy or sell, we offer an exclusive range of watches from top-tier brands such as Rolex, Omega, Patek Philippe, and more. With our platform, you can browse with confidence, knowing that every transaction is secure, transparent, and backed by our expert verification process.",
+        protection_plan: {
+          title: "ChronoSouq Protection Plan",
+          items: [
+            "Secure/safe Payment via Escrow Service",
+            "Worldwide Money-Back Guarantee",
+            "Authenticity Guarantee",
+            "Safe and Insured Delivery",
+            "Chronosouq Quality Assurance Team",
+            "24/7 Customer Support",
+          ],
         },
-        "slider": [
-            {
-                "step": 1,
-                "title": "Welcome",
-                "description": "Explore our wide range of products and select the ones you are interested in.",
-                "image": "assets/images/background.svg"
-            },
-            {
-                "step": 2,
-                "title": "Second Slide",
-                "description": "Add the selected products to your cart for easy checkout.",
-                "image": "assets/images/background_1.svg"
-            },
-            {
-                "step": 3,
-                "title": "Third Slide",
-                "description": "Add the selected products to your cart for easy checkout.",
-                "image": "assets/images/background_2.svg"
-            },
-            {
-                "step": 4,
-                "title": "Fourth Slide",
-                "description": "Add the selected products to your cart for easy checkout.",
-                "image": "assets/images/background_3.svg"
-            }
-        ],
-        "footer": "Explore, buy, and sell the world's most coveted watches at Chronosouq Marketplace"
-    }
-}
+      },
+      slider: [
+        {
+          step: 1,
+          title: "Welcome",
+          description:
+            "Explore our wide range of products and select the ones you are interested in.",
+          image: "assets/images/background.svg",
+        },
+        {
+          step: 2,
+          title: "Second Slide",
+          description:
+            "Add the selected products to your cart for easy checkout.",
+          image: "assets/images/background_1.svg",
+        },
+        {
+          step: 3,
+          title: "Third Slide",
+          description:
+            "Add the selected products to your cart for easy checkout.",
+          image: "assets/images/background_2.svg",
+        },
+        {
+          step: 4,
+          title: "Fourth Slide",
+          description:
+            "Add the selected products to your cart for easy checkout.",
+          image: "assets/images/background_3.svg",
+        },
+      ],
+      footer:
+        "Explore, buy, and sell the world's most coveted watches at Chronosouq Marketplace",
+    },
+  };
 
   getSlideData() {
     this.http.getHomeData().subscribe(
@@ -115,12 +132,11 @@ export class HeroPageComponent {
   }
 
   goToCart() {
-    this.router.navigate(['/myListing'], 
-      { 
-        state: {
-          activeRouteType: 'cart'
-        }
-       });
+    this.router.navigate(["/myListing"], {
+      state: {
+        activeRouteType: "cart",
+      },
+    });
   }
 
   searchFilter: boolean = true;
@@ -134,9 +150,9 @@ export class HeroPageComponent {
   isRtl: boolean = false;
   selectedLang: string = "en";
 
-  @ViewChild('drawer') drawer: MatSidenav;
-  @ViewChild('header', { static: true }) headerRef: ElementRef;
-  @ViewChild('sidenav', { static: true }) sidenavRef: ElementRef;
+  @ViewChild("drawer") drawer: MatSidenav;
+  @ViewChild("header", { static: true }) headerRef: ElementRef;
+  @ViewChild("sidenav", { static: true }) sidenavRef: ElementRef;
 
   constructor(
     public translateService: TranslateService,
@@ -145,7 +161,9 @@ export class HeroPageComponent {
     private searchService: SearchServiceService,
     private loginStateService: LoginStateService,
     private cdRef: ChangeDetectorRef,
-    private dialog: MatDialog, private http: HttpService, private httpps: HttpClient
+    private dialog: MatDialog,
+    private http: HttpService,
+    private httpps: HttpClient
   ) {
     const languagevalues = this.supportLanguages.map((lang) => lang.value);
     this.translateService.addLangs(languagevalues);
@@ -169,9 +187,8 @@ export class HeroPageComponent {
     });
   }
 
-
-  @ViewChild('search2MenuTrigger') search2MenuTrigger: MatMenuTrigger;
-  @ViewChild('search3MenuTrigger') search3MenuTrigger: MatMenuTrigger;
+  @ViewChild("search2MenuTrigger") search2MenuTrigger: MatMenuTrigger;
+  @ViewChild("search3MenuTrigger") search3MenuTrigger: MatMenuTrigger;
   @HostListener("window:resize", ["$event"])
   onResize(event: any) {
     this.updateLayout();
@@ -192,15 +209,15 @@ export class HeroPageComponent {
   isShowSearchField: boolean = false;
 
   isShowSearchForm() {
-    this.isShowSearchField = !this.isShowSearchField
+    this.isShowSearchField = !this.isShowSearchField;
   }
 
   userToken: any;
 
-  @HostListener('window:resize', ['$event'])
+  @HostListener("window:resize", ["$event"])
   // onResize(): void {
 
-  // 
+  //
 
   // private getAllPopularModels(): void {
   //   // Assuming `http.getTopBrandsData()` returns the response you mentioned
@@ -215,8 +232,6 @@ export class HeroPageComponent {
 
   //         }).filter(img => img); // Ensure we don't include empty strings if there's no cover_image
 
-
-
   //         this.duplicatedImages = [...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images, ...this.images];
   //         this.animate(); // Start the animation after images are fetched
   //       }
@@ -226,7 +241,6 @@ export class HeroPageComponent {
   //     }
   //   );
   // }
-
   private updateLayout(): void {
     if (window.innerWidth < 768) {
       if (this.coins) {
@@ -268,7 +282,6 @@ export class HeroPageComponent {
   // }
 
   ngOnDestroy(): void {
-
     if (this.animationFrame) {
       cancelAnimationFrame(this.animationFrame);
     }
@@ -280,7 +293,7 @@ export class HeroPageComponent {
   ngOnInit() {
     // this.getAllPopularModels();
     this.updateLayout();
-    window.addEventListener('resize', () => {
+    window.addEventListener("resize", () => {
       this.windowWidth = window.innerWidth;
     });
     this.isSmallScreen = window.innerWidth <= 1500;
@@ -288,38 +301,34 @@ export class HeroPageComponent {
 
     this.userToken = localStorage.getItem("user_token");
     if (this.userToken) {
-      this.getUserDetails()
+      this.getUserDetails();
     }
 
     this.getSlideData();
 
-    this.router.events.pipe(
-      filter(event => event instanceof NavigationEnd)
-    ).subscribe(() => {
-      // Close the sidebar when a route change occurs
-      this.isNavbarOpen = false;
-    });
-
+    this.router.events
+      .pipe(filter((event) => event instanceof NavigationEnd))
+      .subscribe(() => {
+        // Close the sidebar when a route change occurs
+        this.isNavbarOpen = false;
+      });
 
     if (this.isUserLoggedIn()) {
       this.showHideUser = this.isUserLoggedIn();
       if (this.isAdminUser()) {
         this.showHideAdminUser = this.isAdminUser();
       } else {
-
       }
     } else {
-
     }
   }
 
-  userDetails: any
+  userDetails: any;
 
   getUserDetails() {
-    this.http.gtUserDetails().subscribe(
-      (res) => {
-        this.userDetails = res.user
-      })
+    this.http.gtUserDetails().subscribe((res) => {
+      this.userDetails = res.user;
+    });
   }
 
   routeToAdminPannel() {
@@ -331,7 +340,7 @@ export class HeroPageComponent {
       this.search3MenuTrigger.closeMenu();
     }
     this.searchService.changeSearchQuery(query);
-    this.router.navigate(['/product-list'], { queryParams: { query } });
+    this.router.navigate(["/product-list"], { queryParams: { query } });
 
     this.isShowSearchField = false;
     this.searchQuery = "";
@@ -360,6 +369,7 @@ export class HeroPageComponent {
     localStorage.removeItem("userID");
     localStorage.removeItem("isAdmin");
     localStorage.removeItem("userType");
+    sessionStorage.clear();
     this.isUserLogin = false;
     this.loginStateService.updateLoginStatus(false);
     localStorage.setItem("isAdmin", "false");
@@ -385,12 +395,12 @@ export class HeroPageComponent {
 
   routeToNewProduct() {
     let isUserLogin = localStorage.getItem("isLoggedIn");
-    if (isUserLogin == 'false') {
+    if (isUserLogin == "false") {
       this.loginFirst();
     }
 
     isUserLogin = localStorage.getItem("isLoggedIn");
-    if (isUserLogin != 'false') {
+    if (isUserLogin != "false") {
       this.router.navigate(["/new-product"]);
     }
   }
@@ -399,8 +409,6 @@ export class HeroPageComponent {
   openSearchForm() {
     this.isSearchForm = !this.isSearchForm;
   }
-
-
 
   isNavbarOpen = false;
 
@@ -413,48 +421,46 @@ export class HeroPageComponent {
   }
 
   userListing() {
-    this.router.navigate(['/myListing'])
+    this.router.navigate(["/myListing"]);
   }
 
-   goToFavorites(){
-      this.router.navigate(['myListing'], {
-        state:{activeRouteType:'Favorites'}
-      })
-    }
+  goToFavorites() {
+    this.router.navigate(["myListing"], {
+      state: { activeRouteType: "Favorites" },
+    });
+  }
 
-     goToBuyOrders(){
-      this.router.navigate(['myListing'], {
-        state:{activeRouteType:'buyOrders'}
-      })
-    }
+  goToBuyOrders() {
+    this.router.navigate(["myListing"], {
+      state: { activeRouteType: "buyOrders" },
+    });
+  }
 
-     goToSellOrders(){
-      this.router.navigate(['myListing'], {
-        state:{activeRouteType:'sellOrders'}
-      })
-    }
+  goToSellOrders() {
+    this.router.navigate(["myListing"], {
+      state: { activeRouteType: "sellOrders" },
+    });
+  }
 
-    goToMyListings(){
-      this.router.navigate(['myListing'], {
-        state:{activeRouteType:'myListings'}
-      })
-    }
-
+  goToMyListings() {
+    this.router.navigate(["myListing"], {
+      state: { activeRouteType: "myListings" },
+    });
+  }
 
   openCart() {
     // console.log("open cart");
     const dialogRef = this.dialog.open(ShoppingCartComponent, {
-      width: '600px', // Adjust as needed
+      width: "600px", // Adjust as needed
       position: {
-        right: '0',
-        top: '0',
+        right: "0",
+        top: "0",
       },
-      panelClass: 'custom-dialog-panel'
+      panelClass: "custom-dialog-panel",
     });
 
     dialogRef.afterClosed().subscribe((result) => {
       // handle result
     });
   }
-
 }

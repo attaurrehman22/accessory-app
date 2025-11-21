@@ -163,6 +163,8 @@ import { BuyOrderDetailsComponent } from "./views/website/my-listing/buy-order-d
 import { WatchInfoComponent } from "./views/website/my-listing/watch-info/watch-info.component";
 import { RolesComponent } from "./views/adminpages/roles/roles.component";
 import { CreateRoleComponent } from "./views/adminpages/roles/create-role/create-role.component";
+import { ChronosouqUsersComponent } from "./views/adminpages/chronosouq-users/chronosouq-users.component";
+import { CreateUserComponent } from "./views/adminpages/chronosouq-users/create-user/create-user.component";
 
 @NgModule({
   declarations: [
@@ -260,6 +262,8 @@ import { CreateRoleComponent } from "./views/adminpages/roles/create-role/create
     WatchInfoComponent,
     RolesComponent,
     CreateRoleComponent,
+    ChronosouqUsersComponent,
+    CreateUserComponent,
   ],
   imports: [
     MatSortModule,

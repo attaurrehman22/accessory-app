@@ -1,0 +1,217 @@
+/* AdminLTE Card Styling */
+.content {
+  padding: 1rem;
+}
+
+.card {
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0.125), 0 1px 3px rgba(0, 0, 0, 0.2);
+  margin-bottom: 1rem;
+  background-color: #ffffff;
+  border-radius: 0.25rem;
+}
+
+.card-header {
+  background-color: transparent;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+  padding: 0.75rem 1.25rem;
+  position: relative;
+  border-top-left-radius: 0.25rem;
+  border-top-right-radius: 0.25rem;
+}
+
+.card-title {
+  float: left;
+  font-size: 1.1rem;
+  font-weight: 400;
+  margin: 0;
+  line-height: 1.8rem;
+}
+
+.card-tools {
+  float: right;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.card-body {
+  flex: 1 1 auto;
+  padding: 1.25rem;
+}
+
+.card-body.table-responsive {
+  overflow-x: auto;
+}
+
+.card-body.p-0 {
+  padding: 0 !important;
+}
+
+.card-footer {
+  background-color: transparent;
+  border-top: 1px solid rgba(0, 0, 0, 0.125);
+  padding: 0.75rem 1.25rem;
+}
+
+/* Table Styling - AdminLTE */
+.table {
+  width: 100%;
+  margin-bottom: 0;
+  color: #212529;
+}
+
+.table thead th {
+  border-bottom: 2px solid #dee2e6;
+  border-top: 0;
+  font-weight: 600;
+}
+
+.table td,
+.table th {
+  padding: 0.75rem;
+  vertical-align: middle;
+}
+
+.table-hover tbody tr:hover {
+  background-color: rgba(0, 0, 0, 0.075);
+  cursor: pointer;
+}
+
+.text-nowrap {
+  white-space: nowrap;
+}
+
+/* Badge Styling - AdminLTE */
+.badge {
+  display: inline-block;
+  padding: 0.25em 0.6em;
+  font-size: 75%;
+  font-weight: 700;
+  line-height: 1;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  border-radius: 0.25rem;
+}
+
+.badge-primary {
+  color: #fff;
+  background-color: #007bff;
+}
+
+/* Roles Container Styling */
+.roles-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  align-items: center;
+}
+
+.role-badge {
+  margin: 0;
+  font-size: 0.75rem;
+  padding: 0.3em 0.7em;
+  font-weight: 600;
+  border-radius: 0.25rem;
+  display: inline-block;
+}
+
+/* Action Buttons */
+.btn-action {
+  padding: 4px 8px;
+  min-width: auto;
+  line-height: 1;
+}
+
+.btn-action mat-icon {
+  font-size: 18px;
+  width: 18px;
+  height: 18px;
+  line-height: 18px;
+}
+
+.btn-edit {
+  color: #007bff;
+}
+
+.btn-edit:hover {
+  background-color: rgba(0, 123, 255, 0.1);
+}
+
+.btn-delete {
+  color: #dc3545;
+}
+
+.btn-delete:hover {
+  background-color: rgba(220, 53, 69, 0.1);
+}
+
+.btn-view {
+  color: #17a2b8;
+}
+
+.btn-view:hover {
+  background-color: rgba(23, 162, 184, 0.1);
+}
+
+/* Strong text in table */
+strong {
+  color: #212529;
+  font-weight: 600;
+}
+
+/* Mat Paginator Styling */
+mat-paginator {
+  background: transparent !important;
+  border: none !important;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .card-tools {
+    flex-direction: column;
+    width: 100%;
+    gap: 0.5rem;
+  }
+
+  .card-tools .btn {
+    width: 100%;
+  }
+
+  .card-tools .input-group {
+    width: 100% !important;
+  }
+
+  .card-header {
+    padding-bottom: 1rem;
+  }
+
+  .card-title {
+    float: none;
+    margin-bottom: 0.5rem;
+  }
+
+  .roles-container {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+/* Text utilities */
+.text-center {
+  text-align: center;
+}
+
+.text-muted {
+  color: #6c757d !important;
+}
+
+.py-4 {
+  padding-top: 1.5rem !important;
+  padding-bottom: 1.5rem !important;
+}
+
+/* Button spacing */
+.mr-2 {
+  margin-right: 0.5rem !important;
+}

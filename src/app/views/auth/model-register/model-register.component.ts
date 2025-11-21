@@ -89,10 +89,10 @@ export class ModelRegisterComponent implements OnInit {
         username: this.username,
         email: this.email,
         password: this.password,
-        confirmpassword: this.confirmpassword
+        confirmpassword: this.confirmpassword,
       },
       {
-         validators: this._passwordMatchValidator()
+        validators: this._passwordMatchValidator(),
       }
     );
 
@@ -101,35 +101,32 @@ export class ModelRegisterComponent implements OnInit {
     }
   }
 
-   private _passwordMatchValidator() {
-        return (control: AbstractControl) => {
-          const password = control.get('password');
-          const confirmPassword = control.get('confirmpassword');
-    
-          if (!password || !confirmPassword) {
-            return null;
-          }
-    
-          if (confirmPassword.errors && !confirmPassword.errors['mismatch']) {
-            // If there's another error, skip overwriting it.
-            return null;
-          }
-    
-          if (password.value !== confirmPassword.value) {
-            confirmPassword.setErrors({ mismatch: true });
-          } else {
-            confirmPassword.setErrors(null);
-          }
-    
-          return null;
-        };
+  private _passwordMatchValidator() {
+    return (control: AbstractControl) => {
+      const password = control.get("password");
+      const confirmPassword = control.get("confirmpassword");
+
+      if (!password || !confirmPassword) {
+        return null;
       }
-  ngOnInit(): void {
-   
+
+      if (confirmPassword.errors && !confirmPassword.errors["mismatch"]) {
+        // If there's another error, skip overwriting it.
+        return null;
+      }
+
+      if (password.value !== confirmPassword.value) {
+        confirmPassword.setErrors({ mismatch: true });
+      } else {
+        confirmPassword.setErrors(null);
+      }
+
+      return null;
+    };
   }
+  ngOnInit(): void {}
 
   gotologin() {
-
     this.dialogRef.close();
     const dialogRef = this.dialog.open(ModelLoginComponent, {
       width: "600px",
@@ -144,24 +141,46 @@ export class ModelRegisterComponent implements OnInit {
 
   register() {
     this.registerForm.markAllAsTouched();
-    localStorage.removeItem("isLoggedIn")
-    localStorage.removeItem("user_token")
+    localStorage.removeItem("isLoggedIn");
+    localStorage.removeItem("user_token");
+    sessionStorage.clear();
     if (this.registerForm.valid) {
       this.http.register(this.registerForm).subscribe(
         (response) => {
           localStorage.setItem("isLoggedIn", "true");
           localStorage.setItem("user_token", response.authorisation.token);
-          localStorage.setItem('userType',response.user.type)
+          if (
+            response.user.permissions !== undefined &&
+            response.user.permissions !== null
+          ) {
+            sessionStorage.setItem(
+              "permissions",
+              JSON.stringify(response.user.permissions)
+            );
+          }
+          if (
+            response.user.roles !== undefined &&
+            response.user.roles !== null
+          ) {
+            sessionStorage.setItem("roles", response.user.roles.join(","));
+          }
+          localStorage.setItem("userType", response.user.type);
           localStorage.setItem("userID", response.user.id);
-            window.location.reload();
+          window.location.reload();
           this.dialogRef.close();
         },
         (error) => {
-           if (this.translateService.currentLang == "en") {
-        this.alertService.showAlert("warning", "Please Enter Valid Form Values");
-      }else{
-           this.alertService.showAlert("warning", "يرجى إدخال قيم صحيحة في النموذج");
-      }
+          if (this.translateService.currentLang == "en") {
+            this.alertService.showAlert(
+              "warning",
+              "Please Enter Valid Form Values"
+            );
+          } else {
+            this.alertService.showAlert(
+              "warning",
+              "يرجى إدخال قيم صحيحة في النموذج"
+            );
+          }
           console.error("Registration error", error);
         }
       );
@@ -174,7 +193,7 @@ export class ModelRegisterComponent implements OnInit {
     }
   }
 
-  closeAndMoveToLoginComp(){
+  closeAndMoveToLoginComp() {
     // this.router.navigate['/login']
     this.router.navigateByUrl("/login");
     this.dialogRef.close();

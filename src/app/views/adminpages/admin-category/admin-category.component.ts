@@ -7,6 +7,7 @@ import { Router } from "@angular/router";
 import { AlertsServicesService } from "src/services/alerts-service/alerts-services.service";
 import { HttpService } from "src/services/http/http.service";
 import { AdminCategoryProductComponent } from "../admin-category-product/admin-category-product.component";
+import { PermissionCheckService } from "../../services/permission-check.service";
 
 export interface UserData {
   userName: string;
@@ -17,9 +18,9 @@ export interface UserData {
 }
 
 @Component({
-  selector: 'app-admin-category',
-  templateUrl: './admin-category.component.html',
-  styleUrls: ['./admin-category.component.css']
+  selector: "app-admin-category",
+  templateUrl: "./admin-category.component.html",
+  styleUrls: ["./admin-category.component.css"],
 })
 export class AdminCategoryComponent {
   displayedColumns: string[] = [
@@ -30,6 +31,10 @@ export class AdminCategoryComponent {
     "price",
     "edit",
   ];
+  categoryUpdatePermission = "admin.categories.update";
+  categoryDeletePermission = "admin.categories.delete";
+  categoryCreatePermission = "admin.categories.create";
+  categoryViewPermission = "admin.categories.view";
   dataSource: MatTableDataSource<UserData>;
   selectedValue: string;
   allData: any;
@@ -46,9 +51,10 @@ export class AdminCategoryComponent {
   constructor(
     private router: Router,
     private dialog: MatDialog,
-    private http:HttpService,
+    private http: HttpService,
     private toast: AlertsServicesService,
-    private route: Router
+    private route: Router,
+    private permissionCheckService: PermissionCheckService
   ) {
     this.dataSource = new MatTableDataSource([]);
   }
@@ -62,6 +68,10 @@ export class AdminCategoryComponent {
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+  }
+
+  doPermissionCheck(permission: string): boolean {
+    return this.permissionCheckService.checkPermission(permission);
   }
 
   applyFilter(event: Event) {
@@ -88,9 +98,9 @@ export class AdminCategoryComponent {
   activateDeactivateCategory(data) {
     this.http.activateDeactivateAdminCategory(data.id).subscribe(
       (res) => {
-        if(res.data.is_active===true){
+        if (res.data.is_active === true) {
           this.toast.showAlert("success", "Category Activate Susseccfully");
-        }else{
+        } else {
           this.toast.showAlert("success", "Category De-activate Susseccfully");
         }
         this.allUser();
@@ -107,34 +117,24 @@ export class AdminCategoryComponent {
     // });
 
     const dialogRef = this.dialog.open(AdminCategoryProductComponent, {
-      width: '1000px',
-      height: 'auto',
-      data: { param: 'Create' },
+      width: "1000px",
+      height: "auto",
+      data: { param: "Create" },
     });
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-          this.allUser()
+        this.allUser();
       }
     });
   }
 
   allUser() {
-    this.http.getAdminCategory().subscribe(
-      (res)=>{
-        this.allData=res.data;
-        this.dataSource = new MatTableDataSource(this.allData);
-        this.dataSource.paginator = this.paginator;
-      }
-    )
-  }
-
-  isMeOrAdminOrDeveloper(id: any): boolean {
-    return true;
-  }
-
-  isAdmin(): boolean {
-    return true;
+    this.http.getAdminCategory().subscribe((res) => {
+      this.allData = res.data;
+      this.dataSource = new MatTableDataSource(this.allData);
+      this.dataSource.paginator = this.paginator;
+    });
   }
 
   editUser(data: any) {
@@ -143,15 +143,15 @@ export class AdminCategoryComponent {
     // });
 
     const dialogRef = this.dialog.open(AdminCategoryProductComponent, {
-      width: '1000px',
-      height: 'auto',
+      width: "1000px",
+      height: "auto",
 
-      data: { param: 'Edit',data: data },
+      data: { param: "Edit", data: data },
     });
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-          this.allUser()
+        this.allUser();
       }
     });
   }

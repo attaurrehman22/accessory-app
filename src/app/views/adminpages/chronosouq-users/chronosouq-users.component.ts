@@ -9,41 +9,41 @@ import { MatDialog } from "@angular/material/dialog";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatSort } from "@angular/material/sort";
 import { MatTableDataSource } from "@angular/material/table";
-import { Router } from "@angular/router";
 import { AlertsServicesService } from "src/services/alerts-service/alerts-services.service";
 import { HttpService } from "src/services/http/http.service";
 import { SidebarService } from "src/services/sidebar.service";
 import { Subscription } from "rxjs";
 import { ConfirmationModelComponent } from "../../modal/confirmation-model/confirmation-model.component";
-import { PermissionCheckService } from "../../services/permission-check.service";
+import { CreateUserComponent } from "./create-user/create-user.component";
 
-export interface RoleData {
+export interface UserData {
   id: number;
   name: string;
-  permissions: any[];
+  email: string;
+  type: string;
+  roles: any[];
   created_at: string;
   updated_at: string;
 }
 
 @Component({
-  selector: "app-roles",
-  templateUrl: "./roles.component.html",
-  styleUrls: ["./roles.component.css"],
+  selector: "app-chronosouq-users",
+  templateUrl: "./chronosouq-users.component.html",
+  styleUrl: "./chronosouq-users.component.css",
 })
-export class RolesComponent implements OnInit, AfterViewInit, OnDestroy {
+export class ChronosouqUsersComponent
+  implements OnInit, AfterViewInit, OnDestroy
+{
   displayedColumns: string[] = [
     "id",
     "name",
-    "permissions",
+    "email",
+    "roles",
     "created_at",
     "updated_at",
     "actions",
   ];
-  rolesUpdatePermission = "admin.roles.update";
-  rolesDeletePermission = "admin.roles.delete";
-  rolesCreatePermission = "admin.roles.create";
-  rolesViewPermission = "admin.roles.view";
-  dataSource: MatTableDataSource<RoleData>;
+  dataSource: MatTableDataSource<UserData>;
   allData: any[] = [];
   sidebarClickSubscription: Subscription;
 
@@ -51,12 +51,10 @@ export class RolesComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild(MatSort) sort: MatSort;
 
   constructor(
-    private router: Router,
     private dialog: MatDialog,
     private http: HttpService,
     private toast: AlertsServicesService,
-    private sidebarService: SidebarService,
-    private permissionCheckService: PermissionCheckService
+    private sidebarService: SidebarService
   ) {
     this.dataSource = new MatTableDataSource([]);
   }
@@ -69,14 +67,10 @@ export class RolesComponent implements OnInit, AfterViewInit, OnDestroy {
     );
   }
 
-  doPermissionCheck(permission: string): boolean {
-    return this.permissionCheckService.checkPermission(permission);
-  }
-
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
-    this.loadRoles();
+    this.loadUsers();
   }
 
   ngOnDestroy() {
@@ -94,7 +88,7 @@ export class RolesComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
-  getPaginatedData(): RoleData[] {
+  getPaginatedData(): UserData[] {
     if (!this.paginator) {
       return this.dataSource.filteredData;
     }
@@ -103,18 +97,18 @@ export class RolesComponent implements OnInit, AfterViewInit, OnDestroy {
     return this.dataSource.filteredData.slice(startIndex, endIndex);
   }
 
-  loadRoles() {
+  loadUsers() {
     this.http
-      .getAdminRoles(this.paginator.pageIndex + 1, this.paginator.pageSize)
+      .getChronosouqUsers(this.paginator.pageIndex + 1, this.paginator.pageSize)
       .subscribe(
         (res) => {
-          this.allData = res.data.data;
+          this.allData = res.data;
           this.dataSource = new MatTableDataSource(this.allData);
           this.dataSource.paginator = this.paginator;
           this.dataSource.sort = this.sort;
         },
         (error) => {
-          this.toast.showAlert("danger", "Failed to load roles");
+          this.toast.showAlert("danger", "Failed to load users");
         }
       );
   }
@@ -123,35 +117,62 @@ export class RolesComponent implements OnInit, AfterViewInit, OnDestroy {
     return true;
   }
 
-  createRole() {
-    this.router.navigate(["/admin/roles/create"]);
+  createUser() {
+    const dialogRef = this.dialog.open(CreateUserComponent, {
+      width: "600px",
+      disableClose: true,
+      data: {},
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.loadUsers();
+      }
+    });
   }
 
-  editRole(data: any) {
-    this.router.navigate(["/admin/roles/edit", data.id], { state: { data } });
+  editUser(data: any) {
+    const dialogRef = this.dialog.open(CreateUserComponent, {
+      width: "600px",
+      disableClose: true,
+      data: { user: data },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.loadUsers();
+      }
+    });
   }
 
-  deleteRole(data: RoleData) {
+  deleteUser(data: UserData) {
     const dialogRef = this.dialog.open(ConfirmationModelComponent, {
       width: "400px",
       data: {
-        title: "Delete Role",
-        message: `Are you sure you want to delete the role "${data.name}"? This action cannot be undone.`,
+        title: "Delete User",
+        message: `Are you sure you want to delete the user "${data.name}"? This action cannot be undone.`,
       },
     });
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this.http.deleteAdminRole(data.id).subscribe(
+        this.http.deleteChronosouqUser(data.id).subscribe(
           (res) => {
-            this.toast.showAlert("success", "Role deleted successfully");
-            this.loadRoles();
+            this.toast.showAlert("success", "User deleted successfully");
+            this.loadUsers();
           },
           (err) => {
-            this.toast.showAlert("warning", "Error deleting role");
+            this.toast.showAlert("warning", "Error deleting user");
           }
         );
       }
     });
+  }
+
+  getRoleNames(roles: any[]): string {
+    if (!roles || roles.length === 0) {
+      return "No roles assigned";
+    }
+    return roles.map((role) => role.name).join(", ");
   }
 }

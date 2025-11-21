@@ -91,6 +91,7 @@ export class AppComponent implements OnInit {
     "/admin/attribute-inventory",
     "/admin/roles",
     "/admin/roles/create",
+    "/admin/chronosouq-users",
   ];
   routesToHideforAdmin = [
     "/login",
@@ -198,6 +199,7 @@ export class AppComponent implements OnInit {
     localStorage.removeItem("Logged");
     localStorage.removeItem("user_token");
     localStorage.removeItem("isAdminUser");
+    sessionStorage.clear();
     this.router.navigate(["/login"]);
   }
 

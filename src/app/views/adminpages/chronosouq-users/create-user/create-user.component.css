@@ -1,0 +1,290 @@
+/* Dialog Container */
+.dialog-container {
+  display: flex;
+  flex-direction: column;
+  min-width: 500px;
+  max-width: 600px;
+}
+
+/* Dialog Header */
+.dialog-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 1.5rem 1rem 1.5rem;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.dialog-header h2 {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #343a40;
+}
+
+.header-icon {
+  color: #007bff;
+  font-size: 28px;
+  width: 28px;
+  height: 28px;
+}
+
+.close-button {
+  color: #6c757d;
+}
+
+.close-button:hover {
+  color: #dc3545;
+  background-color: rgba(220, 53, 69, 0.1);
+}
+
+/* Dialog Content */
+.dialog-content {
+  padding: 1.5rem !important;
+  max-height: 70vh;
+  overflow-y: auto;
+}
+
+/* Form Sections */
+.form-section {
+  margin-bottom: 2rem;
+}
+
+.form-section:last-child {
+  margin-bottom: 0;
+}
+
+.section-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #343a40;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid #e9ecef;
+}
+
+.section-title mat-icon {
+  color: #007bff;
+  font-size: 22px;
+  width: 22px;
+  height: 22px;
+}
+
+/* Form Rows */
+.form-row {
+  margin-bottom: 1rem;
+}
+
+.full-width {
+  width: 100%;
+}
+
+/* Material Form Fields */
+::ng-deep .dialog-content .mat-form-field {
+  width: 100%;
+}
+
+::ng-deep
+  .dialog-content
+  .mat-form-field-appearance-outline
+  .mat-form-field-outline {
+  color: rgba(0, 0, 0, 0.12);
+}
+
+::ng-deep
+  .dialog-content
+  .mat-form-field-appearance-outline.mat-focused
+  .mat-form-field-outline-thick {
+  color: #007bff;
+}
+
+::ng-deep
+  .dialog-content
+  .mat-form-field-appearance-outline.mat-form-field-invalid.mat-form-field-invalid
+  .mat-form-field-outline-thick {
+  color: #dc3545;
+}
+
+::ng-deep .dialog-content .mat-error {
+  font-size: 12px;
+  color: #dc3545;
+}
+
+::ng-deep .dialog-content .mat-hint {
+  font-size: 12px;
+  color: #6c757d;
+}
+
+/* Info Box */
+.info-box {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 1rem;
+  background-color: #e7f3ff;
+  border-left: 4px solid #007bff;
+  border-radius: 4px;
+  margin-top: 1rem;
+}
+
+.info-box mat-icon {
+  color: #007bff;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.info-content {
+  flex: 1;
+  font-size: 14px;
+  color: #495057;
+  line-height: 1.5;
+}
+
+.info-content strong {
+  color: #343a40;
+  font-weight: 600;
+}
+
+/* Role Permissions Count */
+.role-permissions-count {
+  font-size: 12px;
+  color: #6c757d;
+  margin-left: 8px;
+}
+
+/* Dialog Actions */
+.dialog-actions {
+  padding: 1rem 1.5rem;
+  border-top: 1px solid #e9ecef;
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+.dialog-actions button {
+  min-width: 120px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  justify-content: center;
+}
+
+.dialog-actions button mat-icon {
+  font-size: 18px;
+  width: 18px;
+  height: 18px;
+}
+
+.submit-button {
+  background-color: #007bff;
+  color: white;
+}
+
+.submit-button:disabled {
+  background-color: #6c757d;
+  opacity: 0.6;
+}
+
+/* Spinner */
+.spinner-border {
+  display: inline-block;
+  width: 1rem;
+  height: 1rem;
+  vertical-align: text-bottom;
+  border: 0.15em solid currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: spinner-border 0.75s linear infinite;
+}
+
+.spinner-border-sm {
+  width: 0.875rem;
+  height: 0.875rem;
+  border-width: 0.125em;
+}
+
+@keyframes spinner-border {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.mr-2 {
+  margin-right: 0.5rem;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+  .dialog-container {
+    min-width: 300px;
+    max-width: 100%;
+  }
+
+  .dialog-header {
+    padding: 1rem;
+  }
+
+  .dialog-header h2 {
+    font-size: 1.25rem;
+  }
+
+  .dialog-content {
+    padding: 1rem !important;
+  }
+
+  .dialog-actions {
+    padding: 1rem;
+    flex-direction: column;
+  }
+
+  .dialog-actions button {
+    width: 100%;
+  }
+}
+
+/* Scrollbar Styling */
+.dialog-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.dialog-content::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+.dialog-content::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 4px;
+}
+
+.dialog-content::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* Material Select Panel Customization */
+::ng-deep .mat-select-panel {
+  max-height: 300px !important;
+}
+
+::ng-deep .mat-option {
+  font-size: 14px;
+}
+
+::ng-deep .mat-option.mat-selected {
+  background-color: rgba(0, 123, 255, 0.1);
+}
+
+/* Password Toggle Button */
+::ng-deep .mat-form-field-suffix button {
+  color: #6c757d;
+}
+
+::ng-deep .mat-form-field-suffix button:hover {
+  color: #343a40;
+}

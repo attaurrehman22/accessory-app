@@ -1519,6 +1519,55 @@ export class HttpService implements OnInit {
     });
   }
 
+  // Chronosouq Users API methods
+  getChronosouqUsers(page: number = 1, perPage: number = 20): Observable<any> {
+    return this.http.get(
+      `${this.apiUrl}/api/admin/user/list?page=${page}&type=chronosouq-user&per_page=${perPage}`,
+      {
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${this.token}`,
+        },
+      }
+    );
+  }
+
+  getChronosouqUserDetails(id: number): Observable<any> {
+    return this.http.get(`${this.apiUrl}/api/admin/user/${id}`, {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+  }
+
+  createChronosouqUser(formData): Observable<any> {
+    return this.http.post(`${this.apiUrl}/api/admin/user/create`, formData, {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+  }
+
+  updateChronosouqUser(id: number, formData): Observable<any> {
+    return this.http.put(`${this.apiUrl}/api/admin/user/${id}`, formData, {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+  }
+
+  deleteChronosouqUser(id: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/api/admin/user/${id}`, {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+  }
+
   createShipment(formData): Observable<any> {
     return this.http.post(
       `${this.apiUrl}/api/order/create-shipment`,

@@ -19,6 +19,7 @@ import { AddEditPromotionComponent } from "../add-edit-promotion/add-edit-promot
 import { ConfirmationModelComponent } from "../../modal/confirmation-model/confirmation-model.component";
 import { RejectProductModalComponent } from "../../modal/reject-product-modal/reject-product-modal.component";
 import { environment } from "src/environments/environment";
+import { PermissionCheckService } from "../../services/permission-check.service";
 
 export interface UserData {
   // name: any;
@@ -56,7 +57,11 @@ export class AdminProductsComponent
     "isPromoteActive",
     "action",
   ];
-  apiUrl = environment.apipath+ '/'
+  apiUrl = environment.apipath + "/";
+  productsUpdatePermission = "admin.products.update";
+  productsDeletePermission = "admin.products.delete";
+  productsCreatePermission = "admin.products.create";
+  productsViewPermission = "admin.products.view";
   dataSource = new MatTableDataSource<any>();
   resultsLength = 0;
   pageSize = 5;
@@ -80,7 +85,8 @@ export class AdminProductsComponent
     private http: HttpService,
     private toast: AlertsServicesService,
     private route: Router,
-    private sidebarService: SidebarService
+    private sidebarService: SidebarService,
+    private permissionCheckService: PermissionCheckService
   ) {}
 
   ngOnInit(): void {
@@ -158,6 +164,10 @@ export class AdminProductsComponent
     }
   }
 
+  doPermissionCheck(permission: string): boolean {
+    return this.permissionCheckService.checkPermission(permission);
+  }
+
   ClearFilter() {
     this.category_ids = [];
     this.brand_ids = [];
@@ -209,7 +219,6 @@ export class AdminProductsComponent
           );
 
           if (matchedPromotion) {
-      
             // ✅ Merge matched promotion details into product
             product.promotion_id = matchedPromotion.promotion_id;
             product.promotion_type = matchedPromotion.promotion_type;
@@ -219,7 +228,7 @@ export class AdminProductsComponent
             product.end_date = matchedPromotion.end_date;
             product.discount = matchedPromotion.discount;
 
-            product.is_promoted =  1;
+            product.is_promoted = 1;
           }
 
           return product;
@@ -227,11 +236,14 @@ export class AdminProductsComponent
 
         const total = data.data.total;
 
-        const dummyArray = Array.from({ length: total - formattedData.length }, (_, i) => ({
-          __isDummy: true,
-          id: `dummy-${i + formattedData.length}`, // Optional unique ID
-          // You can add other placeholder fields if needed
-        }));
+        const dummyArray = Array.from(
+          { length: total - formattedData.length },
+          (_, i) => ({
+            __isDummy: true,
+            id: `dummy-${i + formattedData.length}`, // Optional unique ID
+            // You can add other placeholder fields if needed
+          })
+        );
 
         // ✅ Set DataSource
         this.dataSource.data = [...formattedData, ...dummyArray];
@@ -295,8 +307,7 @@ export class AdminProductsComponent
       data: { data: data },
     });
 
-    dialogRef.afterClosed().subscribe(
-      (param) => {
+    dialogRef.afterClosed().subscribe((param) => {
       if (param == true) {
         this.loadData();
       }
@@ -370,7 +381,6 @@ export class AdminProductsComponent
   }
 
   deletePromoteProduct(row) {
-
     const dialogRef = this.dialog.open(ConfirmationModelComponent, {
       width: "600px",
       data: {

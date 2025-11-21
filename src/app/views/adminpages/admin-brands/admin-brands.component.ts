@@ -1,4 +1,10 @@
-import { Component, ViewChild, OnInit, AfterViewInit, OnDestroy } from "@angular/core";
+import {
+  Component,
+  ViewChild,
+  OnInit,
+  AfterViewInit,
+  OnDestroy,
+} from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatSort } from "@angular/material/sort";
@@ -7,8 +13,9 @@ import { Router } from "@angular/router";
 import { AlertsServicesService } from "src/services/alerts-service/alerts-services.service";
 import { HttpService } from "src/services/http/http.service";
 import { AdminBrandsProductComponent } from "../admin-brands-product/admin-brands-product.component";
-import { Subscription } from 'rxjs';
+import { Subscription } from "rxjs";
 import { SidebarService } from "src/services/sidebar.service";
+import { PermissionCheckService } from "../../services/permission-check.service";
 
 export interface UserData {
   name: any;
@@ -36,6 +43,10 @@ export class AdminBrandsComponent implements OnInit, AfterViewInit, OnDestroy {
     "top_brand",
     "edit",
   ];
+  brandsUpdatePermission = "admin.brands.update";
+  brandsDeletePermission = "admin.brands.delete";
+  brandsCreatePermission = "admin.brands.create";
+  brandsViewPermission = "admin.brands.view";
   dataSource: MatTableDataSource<UserData>;
   selectedValue: string;
   allData: any;
@@ -56,7 +67,8 @@ export class AdminBrandsComponent implements OnInit, AfterViewInit, OnDestroy {
     private http: HttpService,
     private toast: AlertsServicesService,
     private route: Router,
-    private sidebarService: SidebarService
+    private sidebarService: SidebarService,
+    private permissionCheckService: PermissionCheckService
   ) {
     this.dataSource = new MatTableDataSource([]);
   }
@@ -66,11 +78,16 @@ export class AdminBrandsComponent implements OnInit, AfterViewInit, OnDestroy {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
 
-    this.sidebarClickSubscription = this.sidebarService.sidebarClick$.subscribe(() => {
-      this.dialog.closeAll();
-    });
+    this.sidebarClickSubscription = this.sidebarService.sidebarClick$.subscribe(
+      () => {
+        this.dialog.closeAll();
+      }
+    );
   }
 
+  doPermissionCheck(permission: string): boolean {
+    return this.permissionCheckService.checkPermission(permission);
+  }
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
@@ -93,10 +110,10 @@ export class AdminBrandsComponent implements OnInit, AfterViewInit, OnDestroy {
 
   openModal() {
     const dialogRef = this.dialog.open(AdminBrandsProductComponent, {
-      width: '1000px',
-      height: 'auto',
- 
-      data: { param: 'Create' },
+      width: "1000px",
+      height: "auto",
+
+      data: { param: "Create" },
     });
 
     dialogRef.afterClosed().subscribe((result) => {
@@ -119,7 +136,7 @@ export class AdminBrandsComponent implements OnInit, AfterViewInit, OnDestroy {
           }
           return product;
         });
-         this.allBrands=this.allData
+        this.allBrands = this.allData;
         this.dataSource = new MatTableDataSource(this.allData);
         this.dataSource.paginator = this.paginator;
       },
@@ -127,42 +144,33 @@ export class AdminBrandsComponent implements OnInit, AfterViewInit, OnDestroy {
     );
   }
 
-  allBrands:any;
+  allBrands: any;
 
-  filterBrands(){
-    if (this.selectedValue == 'allBrands') {
+  filterBrands() {
+    if (this.selectedValue == "allBrands") {
       this.allData = this.allBrands;
       this.dataSource = new MatTableDataSource(this.allData);
       this.dataSource.paginator = this.paginator;
-    } else if (this.selectedValue == 'topBrands') {
+    } else if (this.selectedValue == "topBrands") {
       this.allData = this.allBrands.filter(
         (brand: any) => brand.top_brand == 1
       );
       this.dataSource = new MatTableDataSource(this.allData);
-        this.dataSource.paginator = this.paginator;
+      this.dataSource.paginator = this.paginator;
     } else {
       this.allData = this.allBrands.filter(
         (brand: any) => brand.is_active == 1
       );
       this.dataSource = new MatTableDataSource(this.allData);
-        this.dataSource.paginator = this.paginator;
+      this.dataSource.paginator = this.paginator;
     }
-  }
-  
-
-  isMeOrAdminOrDeveloper(id: any): boolean {
-    return true;
-  }
-
-  isAdmin(): boolean {
-    return true;
   }
 
   editBrand(data: any) {
     const dialogRef = this.dialog.open(AdminBrandsProductComponent, {
-      width: '1700px',
-      height: 'auto',
-      data: { param: 'Edit', data: data },
+      width: "1700px",
+      height: "auto",
+      data: { param: "Edit", data: data },
     });
 
     dialogRef.afterClosed().subscribe((result) => {

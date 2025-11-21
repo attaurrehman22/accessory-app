@@ -9,6 +9,7 @@ import { ChangeDetectorRef } from "@angular/core"; // Import ChangeDetectorRef
 import { HttpService } from "src/services/http/http.service";
 import { SidebarService } from "src/services/sidebar.service";
 import { MatTableDataSource } from "@angular/material/table";
+import { PermissionCheckService } from "../../services/permission-check.service";
 import {
   UserStats,
   ProductStats,
@@ -34,6 +35,7 @@ import {
 export class AdminHomeComponent implements OnInit, OnDestroy {
   // Chart data and options
   Highcharts = Highcharts;
+  viewPermission = "admin.dashboard.view";
   usersChartOptions: PieChartOptions | null = null;
   productsChartOptions: PieChartOptions | null = null;
   ordersChartOptions: PieChartOptions | null = null;
@@ -131,7 +133,8 @@ export class AdminHomeComponent implements OnInit, OnDestroy {
     private toast: AlertsServicesService,
     private highchartsService: HighchartsServiceService,
     private cd: ChangeDetectorRef,
-    private http: HttpService
+    private http: HttpService,
+    private permissionCheckService: PermissionCheckService
   ) {}
   ngOnInit(): void {
     this.getDashboardDetails();
@@ -140,6 +143,17 @@ export class AdminHomeComponent implements OnInit, OnDestroy {
         this.dialog.closeAll();
       }
     );
+  }
+
+  doPermissionCheck() {
+    if (!this.permissionCheckService.checkPermission(this.viewPermission)) {
+      this.toast.showAlert(
+        "danger",
+        "You are not authorized to access this page"
+      );
+      return false;
+    }
+    return true;
   }
 
   ngOnDestroy() {

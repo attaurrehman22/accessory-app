@@ -1,4 +1,4 @@
-import { Component, ViewChild, OnInit, OnDestroy } from '@angular/core';
+import { Component, ViewChild, OnInit, OnDestroy } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatSort } from "@angular/material/sort";
@@ -6,11 +6,12 @@ import { MatTableDataSource } from "@angular/material/table";
 import { Router } from "@angular/router";
 import { AlertsServicesService } from "src/services/alerts-service/alerts-services.service";
 import { HttpService } from "src/services/http/http.service";
-import { AddProductWatchOfTheDayComponent } from '../add-product-watch-of-the-day/add-product-watch-of-the-day.component';
-import { Subscription } from 'rxjs';
-import { SidebarService } from 'src/services/sidebar.service';
-import { ConfirmationModelComponent } from '../../modal/confirmation-model/confirmation-model.component';
-import { environment } from 'src/environments/environment';
+import { AddProductWatchOfTheDayComponent } from "../add-product-watch-of-the-day/add-product-watch-of-the-day.component";
+import { Subscription } from "rxjs";
+import { SidebarService } from "src/services/sidebar.service";
+import { ConfirmationModelComponent } from "../../modal/confirmation-model/confirmation-model.component";
+import { environment } from "src/environments/environment";
+import { PermissionCheckService } from "../../services/permission-check.service";
 
 export interface UserData {
   name: any;
@@ -22,17 +23,17 @@ export interface UserData {
   model: any;
   is_active: any;
   top_brand: any;
-  published_date:any;
+  published_date: any;
 }
 
 @Component({
-  selector: 'app-watch-of-the-day',
-  templateUrl: './watch-of-the-day.component.html',
-  styleUrls: ['./watch-of-the-day.component.css']
+  selector: "app-watch-of-the-day",
+  templateUrl: "./watch-of-the-day.component.html",
+  styleUrls: ["./watch-of-the-day.component.css"],
 })
 export class WatchOfTheDayComponent implements OnInit, OnDestroy {
-  apiUrl = environment.apipath+ '/'
- displayedColumns: string[] = [
+  apiUrl = environment.apipath + "/";
+  displayedColumns: string[] = [
     "name",
     "slug",
     "brand",
@@ -45,6 +46,10 @@ export class WatchOfTheDayComponent implements OnInit, OnDestroy {
     // "top_brand",
     "edit",
   ];
+  watchOfTheDayUpdatePermission = "admin.watch.update";
+  watchOfTheDayDeletePermission = "admin.watch.delete";
+  watchOfTheDayCreatePermission = "admin.watch.create";
+  watchOfTheDayViewPermission = "admin.watch.view";
   dataSource: MatTableDataSource<UserData>;
   selectedValue: string;
   allData: any;
@@ -66,9 +71,10 @@ export class WatchOfTheDayComponent implements OnInit, OnDestroy {
     private dialog: MatDialog,
     private http: HttpService,
     private toast: AlertsServicesService,
-    private sidebarService: SidebarService
-    // private router: Router
-  ) {
+    private sidebarService: SidebarService,
+    private permissionCheckService: PermissionCheckService
+  ) // private router: Router
+  {
     this.dataSource = new MatTableDataSource([]);
   }
 
@@ -76,15 +82,21 @@ export class WatchOfTheDayComponent implements OnInit, OnDestroy {
     this.allUser();
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
-    this.sidebarClickSubscription = this.sidebarService.sidebarClick$.subscribe(() => {
-      this.dialog.closeAll();
-    });
+    this.sidebarClickSubscription = this.sidebarService.sidebarClick$.subscribe(
+      () => {
+        this.dialog.closeAll();
+      }
+    );
   }
 
   ngOnDestroy() {
     if (this.sidebarClickSubscription) {
       this.sidebarClickSubscription.unsubscribe();
     }
+  }
+
+  doPermissionCheck(permission: string): boolean {
+    return this.permissionCheckService.checkPermission(permission);
   }
 
   onPageChange(event: any) {
@@ -99,7 +111,9 @@ export class WatchOfTheDayComponent implements OnInit, OnDestroy {
   }
 
   applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value.trim().toLowerCase();
+    const filterValue = (event.target as HTMLInputElement).value
+      .trim()
+      .toLowerCase();
 
     // Custom filter to check every field
     this.dataSource.filterPredicate = (data: any, filter: string) => {
@@ -108,12 +122,16 @@ export class WatchOfTheDayComponent implements OnInit, OnDestroy {
         data.name.toLowerCase().includes(filter) ||
         data.watch_type.toLowerCase().includes(filter) ||
         (data.brand && data.brand.name.toLowerCase().includes(filter)) ||
-        (data.created_by && data.created_by.name.toLowerCase().includes(filter)) ||
+        (data.created_by &&
+          data.created_by.name.toLowerCase().includes(filter)) ||
         (data.price && data.price.toString().includes(filter)) ||
         // (data.model && data.model.toLowerCase().includes(filter)) ||
         // (data.is_active && data.is_active.toString().includes(filter)) ||
         // (data.top_brand && data.top_brand.toString().includes(filter)) ||
-        (data.categories && data.categories.some((category: any) => category.name.toLowerCase().includes(filter))) || // Categories
+        (data.categories &&
+          data.categories.some((category: any) =>
+            category.name.toLowerCase().includes(filter)
+          )) || // Categories
         (data.description && data.description.toLowerCase().includes(filter)) // Description
       );
     };
@@ -126,19 +144,17 @@ export class WatchOfTheDayComponent implements OnInit, OnDestroy {
     }
   }
 
-
   openModal() {
-         const dialogRef = this.dialog.open(AddProductWatchOfTheDayComponent, {
-          width: '1000px',
-          height: 'auto',
-        });
+    const dialogRef = this.dialog.open(AddProductWatchOfTheDayComponent, {
+      width: "1000px",
+      height: "auto",
+    });
 
-        dialogRef.afterClosed().subscribe(
-          (param) => {   
-            if(param){
-           this.allUser()
-            }
-        });
+    dialogRef.afterClosed().subscribe((param) => {
+      if (param) {
+        this.allUser();
+      }
+    });
   }
 
   allUser() {
@@ -146,19 +162,18 @@ export class WatchOfTheDayComponent implements OnInit, OnDestroy {
       (res) => {
         this.allData = res.data.data;
         this.totalItems = res.data.total;
-        this.allData = this.allData.map(
-          (product: any) => {
-            if (product.banner_img) {
-              product.banner_img = product.banner_img
-                .replace(/\\/g, "/")
-                .replace(/^\/+/, "");
-            }
-            if (product.with_out_attribute) {
-              product.with_out_attribute = product.with_out_attribute
-                .replace(/\\/g, "/")
-                .replace(/^\/+/, "");
-            }
-            return product;
+        this.allData = this.allData.map((product: any) => {
+          if (product.banner_img) {
+            product.banner_img = product.banner_img
+              .replace(/\\/g, "/")
+              .replace(/^\/+/, "");
+          }
+          if (product.with_out_attribute) {
+            product.with_out_attribute = product.with_out_attribute
+              .replace(/\\/g, "/")
+              .replace(/^\/+/, "");
+          }
+          return product;
         });
         this.dataSource = new MatTableDataSource(this.allData);
         this.dataSource.paginator = this.paginator;
@@ -179,35 +194,33 @@ export class WatchOfTheDayComponent implements OnInit, OnDestroy {
   }
 
   deleteProduct(data) {
-
-     const dialogRef = this.dialog.open(ConfirmationModelComponent, {
-          width: "700px",
-          data: { message: "Are you sure you want to remove from Watch of the day" },
-        });
-        dialogRef.afterClosed().subscribe((result) => {
-          if (result == true) {
-            this.http.removeWatchOfTheDay(data.id).subscribe(
-              (res) => {
-                this.toast.showAlert("success", "Product Remove Susseccfully");
-                this.allUser();
-              },
-              (err) => {
-                this.toast.showAlert("warning", "Error in removing Product");
-              }
-            );
+    const dialogRef = this.dialog.open(ConfirmationModelComponent, {
+      width: "700px",
+      data: {
+        message: "Are you sure you want to remove from Watch of the day",
+      },
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result == true) {
+        this.http.removeWatchOfTheDay(data.id).subscribe(
+          (res) => {
+            this.toast.showAlert("success", "Product Remove Susseccfully");
+            this.allUser();
+          },
+          (err) => {
+            this.toast.showAlert("warning", "Error in removing Product");
           }
-        });
-        
-   
+        );
+      }
+    });
   }
-
 
   activateProduct(data) {
     this.http.activateAdminProducts(data.id).subscribe(
       (res) => {
-        if(res.data.is_active===true){
+        if (res.data.is_active === true) {
           this.toast.showAlert("success", "Product add to Susseccfully");
-        }else{
+        } else {
           this.toast.showAlert("success", "Product De-activate Susseccfully");
         }
         this.allUser();
@@ -218,11 +231,10 @@ export class WatchOfTheDayComponent implements OnInit, OnDestroy {
     );
   }
 
-
   addPopularProduct(data) {
     this.http.topAdminPopularProducts(data.id).subscribe(
       (res) => {
-          this.toast.showAlert("success", "Product move on top Susseccfully");
+        this.toast.showAlert("success", "Product move on top Susseccfully");
 
         this.allUser();
       },
@@ -280,27 +292,26 @@ export class WatchOfTheDayComponent implements OnInit, OnDestroy {
     }
   }
 
-  editProduct(data){
+  editProduct(data) {
     const dialogRef = this.dialog.open(AddProductWatchOfTheDayComponent, {
-      width: '1000px',
-      height: 'auto',
-  
-      data:{ProductDetails:data,param:'Edit'}
+      width: "1000px",
+      height: "auto",
+
+      data: { ProductDetails: data, param: "Edit" },
     });
 
-    dialogRef.afterClosed().subscribe(
-      (param) => {
-      
-       this.allUser()
-     
+    dialogRef.afterClosed().subscribe((param) => {
+      this.allUser();
     });
   }
 
-  activateProductofWatchDay(data){
+  activateProductofWatchDay(data) {
     const dialogRef = this.dialog.open(ConfirmationModelComponent, {
       width: "700px",
-      data: { message: "Are you sure you want to activate this product for Watch of the day" },
-  
+      data: {
+        message:
+          "Are you sure you want to activate this product for Watch of the day",
+      },
     });
     dialogRef.afterClosed().subscribe((result) => {
       if (result == true) {
@@ -317,11 +328,13 @@ export class WatchOfTheDayComponent implements OnInit, OnDestroy {
     });
   }
 
-  deActivateProductofWatchDay(data){
+  deActivateProductofWatchDay(data) {
     const dialogRef = this.dialog.open(ConfirmationModelComponent, {
       width: "700px",
-      data: { message: "Are you sure you want to De-activate this product for Watch of the day" },
-  
+      data: {
+        message:
+          "Are you sure you want to De-activate this product for Watch of the day",
+      },
     });
     dialogRef.afterClosed().subscribe((result) => {
       if (result == true) {

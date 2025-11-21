@@ -4,15 +4,15 @@
       <div class="col-12">
         <div class="card">
           <div class="card-header">
-            <h3 class="card-title">Roles Management</h3>
+            <h3 class="card-title">Chronosouq Users Management</h3>
 
             <div class="card-tools">
               <button
                 class="btn btn-primary btn-sm mr-2"
-                [hidden]="!doPermissionCheck(rolesCreatePermission)"
-                (click)="createRole()"
+                [hidden]="!isAdmin()"
+                (click)="createUser()"
               >
-                <i class="fas fa-plus"></i> Add Role
+                <i class="fas fa-plus"></i> Add User
               </button>
               <div
                 class="input-group input-group-sm"
@@ -21,7 +21,7 @@
                 <input
                   type="text"
                   class="form-control float-right"
-                  placeholder="Search roles..."
+                  placeholder="Search users..."
                   (keyup)="applyFilter($event)"
                   #input
                 />
@@ -39,8 +39,9 @@
               <thead>
                 <tr>
                   <th>ID</th>
-                  <th>Role Name</th>
-                  <th>Permissions</th>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Assigned Roles</th>
                   <th>Created Date</th>
                   <th>Last Updated Date</th>
                   <th>Actions</th>
@@ -52,40 +53,52 @@
                   <td>
                     <strong>{{ row.name }}</strong>
                   </td>
+                  <td>{{ row.email }}</td>
                   <td>
-                    <span class="badge badge-info">{{
-                      row.permissions.length || 0
-                    }}</span>
+                    <div class="roles-container">
+                      <ng-container *ngIf="row.roles && row.roles.length > 0">
+                        <span
+                          *ngFor="let role of row.roles"
+                          class="badge badge-primary role-badge"
+                        >
+                          {{ role }}
+                        </span>
+                      </ng-container>
+                      <span
+                        *ngIf="!row.roles || row.roles.length === 0"
+                        class="text-muted"
+                      >
+                        No roles assigned
+                      </span>
+                    </div>
                   </td>
                   <td>{{ row.created_at | date : "medium" }}</td>
                   <td>{{ row.updated_at | date : "medium" }}</td>
                   <td>
                     <button
                       mat-icon-button
-                      [hidden]="!doPermissionCheck(rolesUpdatePermission)"
                       class="btn-action btn-edit"
-                      (click)="editRole(row)"
-                      matTooltip="Edit Role"
+                      (click)="editUser(row)"
+                      matTooltip="Edit User"
                     >
                       <mat-icon>edit</mat-icon>
                     </button>
                     <button
                       mat-icon-button
-                      [hidden]="!doPermissionCheck(rolesDeletePermission)"
                       class="btn-action btn-delete"
-                      (click)="deleteRole(row)"
-                      matTooltip="Delete Role"
+                      (click)="deleteUser(row)"
+                      matTooltip="Delete User"
                     >
                       <mat-icon>delete</mat-icon>
                     </button>
                   </td>
                 </tr>
                 <tr *ngIf="getPaginatedData().length === 0">
-                  <td colspan="6" class="text-center text-muted py-4">
+                  <td colspan="7" class="text-center text-muted py-4">
                     <span *ngIf="input.value"
-                      >No roles matching the filter "{{ input.value }}"</span
+                      >No users matching the filter "{{ input.value }}"</span
                     >
-                    <span *ngIf="!input.value">No roles available</span>
+                    <span *ngIf="!input.value">No users available</span>
                   </td>
                 </tr>
               </tbody>
