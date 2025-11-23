@@ -4,6 +4,7 @@ import {
   ViewChild,
   ElementRef,
   computed,
+  ChangeDetectorRef,
 } from "@angular/core";
 import { NavigationEnd, Router } from "@angular/router";
 import { TranslateService } from "@ngx-translate/core";
@@ -11,7 +12,6 @@ import { LanguageService } from "src/services/lang-service/language.service";
 import { MatSidenav } from "@angular/material/sidenav";
 import { SearchServiceService } from "src/services/search-service/search-service.service";
 import { LoginStateService } from "src/services/login-service/login-state.service";
-import { ChangeDetectorRef } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 import { ModelLoginComponent } from "../../auth/model-login/model-login.component";
 import { MatMenuTrigger } from "@angular/material/menu";
@@ -58,6 +58,8 @@ export class HeaderComponent {
   @ViewChild('drawer') drawer: MatSidenav; 
   @ViewChild('header', { static: true }) headerRef: ElementRef; 
   @ViewChild('sidenav', { static: true }) sidenavRef: ElementRef;
+  @ViewChild('smallScreenSearchInput', { static: false }) smallScreenSearchInput: ElementRef<HTMLInputElement>;
+  @ViewChild('largeScreenSearchInput', { static: false }) largeScreenSearchInput: ElementRef<HTMLInputElement>;
 
   constructor(
     public translateService: TranslateService,
@@ -115,7 +117,51 @@ export class HeaderComponent {
   
   isShowSearchForm(){
    this.isManuallyToggled = true;
-   this.isShowSearchField=!this.isShowSearchField
+   this.isShowSearchField=!this.isShowSearchField;
+   
+   // Focus the search input when search box opens
+   if (this.isShowSearchField) {
+     // Force change detection to render the input
+     this.cdRef.detectChanges();
+     
+     // Use requestAnimationFrame for better timing with DOM updates
+     requestAnimationFrame(() => {
+       setTimeout(() => {
+         this.focusSearchInput();
+       }, 50);
+     });
+     
+     // Fallback attempt in case first one doesn't work
+     setTimeout(() => {
+       this.focusSearchInput();
+     }, 200);
+   }
+  }
+
+  focusSearchInput() {
+    try {
+      if (this.isSmallScreenScreen) {
+        if (this.smallScreenSearchInput?.nativeElement) {
+          const input = this.smallScreenSearchInput.nativeElement;
+          input.focus();
+          // Ensure input is visible and focusable
+          if (document.activeElement !== input) {
+            input.focus();
+          }
+        }
+      } else {
+        if (this.largeScreenSearchInput?.nativeElement) {
+          const input = this.largeScreenSearchInput.nativeElement;
+          input.focus();
+          // Ensure input is visible and focusable
+          if (document.activeElement !== input) {
+            input.focus();
+          }
+        }
+      }
+    } catch (error) {
+      console.error('Error focusing search input:', error);
+    }
   }
 
   userToken:any;

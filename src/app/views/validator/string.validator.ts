@@ -71,7 +71,11 @@ export class StringValidator {
 
   static hasSpecialChar(control: AbstractControl): ValidationErrors | null {
     try {
-      let pattern = /[@$!&%|]/;
+      if (!control.value) {
+        return null;
+      }
+      // Check for at least one special character from a comprehensive set
+      let pattern = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~`]/;
       if (!pattern.test(control.value)) {
         return { hasSpecialChar: true };
       }
