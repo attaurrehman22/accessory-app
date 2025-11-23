@@ -170,7 +170,7 @@ export class ChangePasswordComponent implements OnInit{
                 }else{
                   this.alertService.showAlert('success', 'تم تغيير كلمة المرور بنجاح');
                 }
-                this.router.navigate(['/myListing/shipping']);
+                this.router.navigate(['/myprofile/shipping']);
               },
               error: (err) => {
                 console.error('Change password error', err);

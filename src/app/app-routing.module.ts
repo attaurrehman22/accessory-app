@@ -98,10 +98,10 @@ const routes: Routes = [
 
 
   {
-    path: 'myListing',
+    path: 'myprofile',
     component: MyListingDetailsComponent, // parent container (with sidebar)
     children: [
-      { path: '', redirectTo: 'profile', pathMatch: 'full' },
+      { path: '', component: ProfileComponent, pathMatch: 'full' },
       { path: 'profile', component: ProfileComponent },
       { path: 'shipping', component: ShippingAddressComponent },
       { path: 'message', component: MessageComponent },
@@ -118,7 +118,7 @@ const routes: Routes = [
   { path: 'forgotPassword', component:  ForgotPasswordComponent},
   { path: 'payment-callback', component:  MyListingDetailsComponent},
   {path:'payment-confirmation',component:PayoutConfirmationComponent},
-  {path:'myListing/summary',component:AccessorySummaryComponent},
+  {path:'myprofile/summary',component:AccessorySummaryComponent},
   {path:'chat',component:ChatComponent},
 ];
 

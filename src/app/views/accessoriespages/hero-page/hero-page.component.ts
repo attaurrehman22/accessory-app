@@ -115,7 +115,7 @@ export class HeroPageComponent {
   }
 
   goToCart() {
-    this.router.navigate(['/myListing'], 
+    this.router.navigate(['/myprofile'], 
       { 
         state: {
           activeRouteType: 'cart'
@@ -413,29 +413,29 @@ export class HeroPageComponent {
   }
 
   userListing() {
-    this.router.navigate(['/myListing'])
+    this.router.navigate(['/myprofile'])
   }
 
    goToFavorites(){
-      this.router.navigate(['myListing'], {
+      this.router.navigate(['myprofile'], {
         state:{activeRouteType:'Favorites'}
       })
     }
 
      goToBuyOrders(){
-      this.router.navigate(['myListing'], {
+      this.router.navigate(['myprofile'], {
         state:{activeRouteType:'buyOrders'}
       })
     }
 
      goToSellOrders(){
-      this.router.navigate(['myListing'], {
+      this.router.navigate(['myprofile'], {
         state:{activeRouteType:'sellOrders'}
       })
     }
 
     goToMyListings(){
-      this.router.navigate(['myListing'], {
+      this.router.navigate(['myprofile'], {
         state:{activeRouteType:'myListings'}
       })
     }

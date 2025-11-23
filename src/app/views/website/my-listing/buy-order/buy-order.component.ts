@@ -79,7 +79,7 @@ export class BuyOrderComponent implements OnInit{
   }
 
   detailsBuyListing(listing: any) {
-    this.router.navigate(['/myListing/buy/order/details'], { queryParams: { id: listing.id } });
+    this.router.navigate(['/myprofile/buy/order/details'], { queryParams: { id: listing.id } });
   }
 
 }

@@ -49,7 +49,7 @@ export class ShoppingCartComponent implements OnInit{
   }
 
   goToCart() {
-    this.router.navigate(['/myListing'], 
+    this.router.navigate(['/myprofile'], 
       { 
         state: {
           activeRouteType: 'cart'
@@ -61,6 +61,6 @@ export class ShoppingCartComponent implements OnInit{
     // this.http.confirmCartOrder().subscribe((res) => {
     //   this.alertService.showAlert("success", "Order confirmed");
     // });
-    this.router.navigate(['/myListing/summary'])
+    this.router.navigate(['/myprofile/summary'])
   }
 }

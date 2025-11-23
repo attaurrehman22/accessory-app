@@ -399,7 +399,7 @@ export class BuyOrderDetailsComponent implements OnInit{
   } 
 
   setActive(){
-    this.router.navigate(['/myListing/buy/order'])
+    this.router.navigate(['/myprofile/buy/order'])
   }
 
   routeToChat() {
