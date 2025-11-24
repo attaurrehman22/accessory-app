@@ -444,6 +444,17 @@ export class ChatComponent implements OnInit, AfterViewChecked {
       }
       this.userProfile.profile_image = this.userProfile?.profile_image?.replace(/\\/g, '');
       this.messages = res.messages;
+      
+      // Set isBuyerUser based on product owner if getProductDetails is available
+      if (this.getProductDetails?.created_by?.id) {
+        const useridd = localStorage.getItem("userID");
+        if (this.getProductDetails.created_by.id == useridd) {
+          this.isBuyerUser = false; // User is the seller
+        } else {
+          this.isBuyerUser = true; // User is the buyer
+        }
+      }
+      
       if (res.messages.length > 0) {
         let useridd = localStorage.getItem("userID");
         // this.reciever_ID = res.messages[1]?.receiver_id;
@@ -457,6 +468,8 @@ export class ChatComponent implements OnInit, AfterViewChecked {
 
       }
       let count_sen_rec = 0;
+      // Reset isBuyNowFromChatCheck and check all messages
+      this.isBuyNowFromChatCheck = false;
       this.messages.forEach((message) => {
         if (message.attachments) {
           try {
@@ -491,12 +504,9 @@ export class ChatComponent implements OnInit, AfterViewChecked {
           count_sen_rec++;
         }
 
-        if (message.action_type) {
-          if (message.action_type == "buy_now") {
-            this.isBuyNowFromChatCheck = true;
-          } else {
-            this.isBuyNowFromChatCheck = false;
-          }
+        // Check if any message has buy_now action_type
+        if (message.action_type == "buy_now") {
+          this.isBuyNowFromChatCheck = true;
         }
 
         if (message.action_type === "add_shipping") {
