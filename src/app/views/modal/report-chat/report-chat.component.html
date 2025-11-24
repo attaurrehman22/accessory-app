@@ -10,8 +10,8 @@
     <mat-form-field appearance="outline" class="full-width">
       <mat-label>Report Type</mat-label>
       <mat-select formControlName="reportType">
-        <mat-option *ngFor="let type of reportTypes" [value]="type.value">
-          {{ type.label }}
+        <mat-option *ngFor="let type of reportTypes" [value]="type">
+          {{ type }}
         </mat-option>
       </mat-select>
       <mat-error *ngIf="reportForm.get('reportType')?.hasError('required')">

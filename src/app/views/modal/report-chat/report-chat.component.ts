@@ -1,4 +1,4 @@
-import { Component, Inject, ElementRef, ViewChild } from "@angular/core";
+import { Component, Inject, ElementRef, ViewChild, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 import { TranslateService } from "@ngx-translate/core";
@@ -10,18 +10,28 @@ import { HttpService } from "src/services/http/http.service";
   templateUrl: "./report-chat.component.html",
   styleUrls: ["./report-chat.component.css"],
 })
-export class ReportChatComponent {
+export class ReportChatComponent implements OnInit{
+  ngOnInit(): void {
+    this.getReportTypes();
+  }
+
+  async getReportTypes(): Promise<void> {
+    const res: any = await this.http.getReportTypes().toPromise();
+    this.reportTypes = res.data.types;
+  }
+
   reportForm: FormGroup;
   supportLanguages = ["en", "ar", "fr", "ta", "hi"];
   currentLanguage: string;
   selectedFiles: File[] = [];
-  reportTypes = [
-    { value: "Product Issue", label: "Product Issue" },
-    { value: "Payment Issue", label: "Payment Issue" },
-    { value: "Fraud", label: "Fraud" },
-    { value: "Harassment", label: "Harassment" },
-    { value: "Other", label: "Other" },
-  ];
+  reportTypes: any[] = [];
+  // reportTypes = [
+  //   { value: "Product Issue", label: "Product Issue" },
+  //   { value: "Payment Issue", label: "Payment Issue" },
+  //   { value: "Fraud", label: "Fraud" },
+  //   { value: "Harassment", label: "Harassment" },
+  //   { value: "Other", label: "Other" },
+  // ];
 
   @ViewChild("fileInput") fileInput!: ElementRef;
 

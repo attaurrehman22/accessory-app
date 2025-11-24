@@ -433,6 +433,15 @@ export class HttpService implements OnInit {
     );
   }
 
+  getReportTypes(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/api/reports/types`, {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+  }
+
   // getAdminProducts(): Observable<any> {
   getAdminProducts( name,pageIndex: number, pageSize: number, sortField: string, sortDirection: string,category_ids:any[] ,brand_ids:any[] , watch_gender ,sort_by?: string,
     sort_order?: string): Observable<any> {
