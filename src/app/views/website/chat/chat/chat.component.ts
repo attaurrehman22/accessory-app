@@ -470,6 +470,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
       let count_sen_rec = 0;
       // Reset isBuyNowFromChatCheck and check all messages
       this.isBuyNowFromChatCheck = false;
+      this.isActionTypeMakePaymentToHideCustomOffer = false;
       this.messages.forEach((message) => {
         if (message.attachments) {
           try {

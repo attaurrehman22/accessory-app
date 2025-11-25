@@ -3,7 +3,7 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  apipath:"https://for-demo-api.chronosouq.com",
+  apipath:"https://demo-api.chronosouq.com",
   production: false,
   firebase: {
     apiKey: "YOUR_API_KEY",
@@ -14,7 +14,6 @@ export const environment = {
     appId: "YOUR_APP_ID"
   }
 };
-
 /*
  * For easier debugging in development mode, you can import the following file
  * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.

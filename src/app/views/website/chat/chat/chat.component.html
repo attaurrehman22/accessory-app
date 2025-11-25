@@ -345,8 +345,7 @@
                             !isCancelOffer &&
                             isCustomOffer &&
                             isOfferShowToUserandDealer &&
-                            message.action_type &&
-                            message.action_type !== 'make_payment'
+                            message.action_type
                           " class="col-md-12">
                           <div [ngClass]="{
                               'reverse-order-custom-offer':
@@ -444,14 +443,18 @@
                                   reversedMessages.length === 0 ||
                                   reversedMessages[
                                     reversedMessages.length - 1
-                                  ] !== message
+                                  ] !== message ||
+                                  isActionTypeMakePaymentToHideCustomOffer ||
+                                  message.action_type === 'make_payment'
                                 ">
                                 {{ "chat_com.cancel_offer" | translate }}
                               </button>
 
                               <!-- Edit Offer button -->
                               <button [disabled]="
-                                  reversedMessages.length == 1 && isBuyerUser
+                                  reversedMessages.length == 1 && isBuyerUser ||
+                                  isActionTypeMakePaymentToHideCustomOffer ||
+                                  message.action_type === 'make_payment'
                                 " (click)="editOffer(customOfferDetails)" *ngIf="!isOfferStatusAccepted"
                                 class="first-action-btn border-left smaall-screen-text">
                                 {{ "chat_com.edit_offer" | translate }}
@@ -489,7 +492,9 @@
                                     'You have update the offer' ||
                                   message.message ==
                                     'You have Updated the offer' ||
-                                  message.message == 'I have Updated the offer'
+                                  message.message == 'I have Updated the offer' ||
+                                  isActionTypeMakePaymentToHideCustomOffer ||
+                                  message.action_type === 'make_payment'
                                 " [ngClass]="{
                                   'display-none':
                                     message.message ==
@@ -511,7 +516,9 @@
                                   reversedMessages.length === 0 ||
                                   reversedMessages[
                                     reversedMessages.length - 1
-                                  ] !== message
+                                  ] !== message ||
+                                  isActionTypeMakePaymentToHideCustomOffer ||
+                                  message.action_type === 'make_payment'
                                 ">
                                 {{ "chat_com.make_payment" | translate }}
                               </button>
@@ -892,8 +899,7 @@
                         !isCancelOffer &&
                         isCustomOffer &&
                         isOfferShowToUserandDealer &&
-                        message.action_type &&
-                        message.action_type !== 'make_payment'
+                        message.action_type
                       " class="col-md-12">
                       <div [ngClass]="{
                           'reverse-order-custom-offer':
@@ -979,7 +985,9 @@
                             " (click)="cancelOfferStatus()" class="first-action-btn" [disabled]="
                               reversedMessages.length === 0 ||
                               reversedMessages[reversedMessages.length - 1] !==
-                                message
+                                message ||
+                              isActionTypeMakePaymentToHideCustomOffer ||
+                              message.action_type === 'make_payment'
                             ">
                             {{ "chat_com.cancel_offer" | translate }}
                           </button>
@@ -988,7 +996,9 @@
                           <!-- // show edit offer button start here -->
                           <!-- Edit Offer button -->
                           <button [disabled]="
-                              reversedMessages.length == 1 && isBuyerUser
+                              reversedMessages.length == 1 && isBuyerUser ||
+                              isActionTypeMakePaymentToHideCustomOffer ||
+                              message.action_type === 'make_payment'
                             " (click)="editOffer(customOfferDetails)" *ngIf="!isOfferStatusAccepted"
                             class="first-action-btn border-left">
                             {{ "chat_com.edit_offer" | translate }}
@@ -1019,7 +1029,9 @@
                               message.message == 'You have sent an offer' ||
                               message.message == 'You have update the offer' ||
                               message.message == 'You have Updated the offer' ||
-                              message.message == 'I have Updated the offer'
+                              message.message == 'I have Updated the offer' ||
+                              isActionTypeMakePaymentToHideCustomOffer ||
+                              message.action_type === 'make_payment'
                             " [ngClass]="{
                               'display-none':
                                 message.message == 'You have sent an offer' ||
@@ -1039,7 +1051,9 @@
                             (click)="makePayment()" [disabled]="
                               reversedMessages.length === 0 ||
                               reversedMessages[reversedMessages.length - 1] !==
-                                message
+                                message ||
+                              isActionTypeMakePaymentToHideCustomOffer ||
+                              message.action_type === 'make_payment'
                             ">
                             {{ "chat_com.make_payment" | translate }}
                           </button>
