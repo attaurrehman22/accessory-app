@@ -165,8 +165,8 @@
         <button
           mat-raised-button
           color="primary"
-          (click)="showActionDialog('under_review')"
-          *ngIf="report.status === 'Pending'"
+          (click)="showActionDialog('mark_under_review')"
+          *ngIf="normalizeStatus(report.status) === 'pending'"
         >
           <mat-icon>visibility</mat-icon>
           Mark as Under Review
@@ -176,7 +176,7 @@
           mat-raised-button
           color="accent"
           (click)="showActionDialog('request_info')"
-          *ngIf="report.status === 'Under Review' || report.status === 'Pending'"
+          *ngIf="normalizeStatus(report.status) === 'under review' || normalizeStatus(report.status) === 'pending'"
         >
           <mat-icon>info</mat-icon>
           Request More Info
@@ -186,7 +186,7 @@
           mat-raised-button
           color="warn"
           (click)="showActionDialog('warn_user')"
-          *ngIf="report.status === 'Under Review'"
+          *ngIf="normalizeStatus(report.status) === 'under review'"
         >
           <mat-icon>warning</mat-icon>
           Warn User
@@ -196,7 +196,7 @@
           mat-raised-button
           color="warn"
           (click)="showActionDialog('suspend_user')"
-          *ngIf="report.status === 'Under Review'"
+          *ngIf="normalizeStatus(report.status) === 'under review'"
         >
           <mat-icon>block</mat-icon>
           Suspend User
@@ -206,7 +206,7 @@
           mat-raised-button
           color="warn"
           (click)="showActionDialog('reject')"
-          *ngIf="report.status === 'Pending' || report.status === 'Under Review'"
+          *ngIf="normalizeStatus(report.status) === 'pending' || normalizeStatus(report.status) === 'under review'"
         >
           <mat-icon>cancel</mat-icon>
           Reject Report
@@ -216,7 +216,7 @@
           mat-raised-button
           color="primary"
           (click)="showActionDialog('resolve')"
-          *ngIf="report.status === 'Under Review'"
+          *ngIf="normalizeStatus(report.status) === 'under review'"
         >
           <mat-icon>check_circle</mat-icon>
           Resolve Report

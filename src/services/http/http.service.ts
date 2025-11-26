@@ -1787,18 +1787,29 @@ export class HttpService implements OnInit {
   }
 
   getAdminReportDetails(reportId: number): Observable<any> {
-    return this.http.get(`${this.apiUrl}/api/admin/reports/${reportId}`, {
+    return this.http.get(`${this.apiUrl}/api/admin/issue-reports/${reportId}`, {
       headers: {
-        Accept: "application/json",
+        Accept: "*/*",
         Authorization: `Bearer ${this.token}`,
       },
     });
   }
 
-  performReportAction(formData: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/api/admin/reports/${formData.report_id}/actions`, formData, {
+  performReportAction(reportId: number, actionData: {
+    action: string;
+    notes?: string;
+    meta?: any;
+  }): Observable<any> {
+    const payload = {
+      action: actionData.action,
+      notes: actionData.notes || "",
+      meta: actionData.meta || {}
+    };
+    
+    return this.http.post(`${this.apiUrl}/api/admin/issue-reports/${reportId}/actions`, payload, {
       headers: {
-        Accept: "application/json",
+        Accept: "*/*",
+        "Content-Type": "application/json",
         Authorization: `Bearer ${this.token}`,
       },
     });

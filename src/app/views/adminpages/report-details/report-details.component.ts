@@ -22,7 +22,7 @@ export class ReportDetailsComponent implements OnInit {
   supportLanguages = ["en", "ar", "fr", "ta", "hi"];
 
   actionTypes = [
-    { value: "under_review", label: "Mark as Under Review" },
+    { value: "mark_under_review", label: "Mark as Under Review" },
     { value: "request_info", label: "Request More Info" },
     { value: "warn_user", label: "Warn Reported User" },
     { value: "suspend_user", label: "Suspend User" },
@@ -51,12 +51,56 @@ export class ReportDetailsComponent implements OnInit {
   async loadReportDetails() {
     this.isLoading = true;
     try {
-      // TODO: Replace with actual API call when backend is ready
-      // const res: any = await this.http.getAdminReportDetails(this.data.reportId).toPromise();
-      // this.report = res.report || res.data;
+      const res: any = await this.http.getAdminReportDetails(this.data.reportId).toPromise();
       
-      // Dummy data for testing
-      await this.loadDummyReportDetails();
+      // Handle API response structure
+      if (res.success && res.data) {
+        this.report = res.data;
+        
+        // Map attachments if they are in the new format (array of objects with path and url)
+        if (this.report.attachments && Array.isArray(this.report.attachments)) {
+          this.report.attachments = this.report.attachments.map((att: any) => {
+            // If attachment is an object with url, use url; otherwise use path
+            if (typeof att === 'object' && att.url) {
+              return att.url;
+            } else if (typeof att === 'object' && att.path) {
+              return att.path;
+            } else if (typeof att === 'string') {
+              return att;
+            }
+            return att;
+          });
+        }
+        
+        // Normalize status - handle both "under_review" and "under review" formats
+        if (this.report.status) {
+          let status = this.report.status.toLowerCase();
+          // Replace underscores with spaces
+          status = status.replace(/_/g, ' ');
+          // Capitalize first letter of each word
+          status = status.split(' ').map(word => 
+            word.charAt(0).toUpperCase() + word.slice(1)
+          ).join(' ');
+          this.report.status = status;
+        }
+        // Normalize type - handle both "fraud" and other formats
+        if (this.report.type) {
+          let type = this.report.type.toLowerCase();
+          // Replace underscores with spaces
+          type = type.replace(/_/g, ' ');
+          // Capitalize first letter of each word
+          type = type.split(' ').map(word => 
+            word.charAt(0).toUpperCase() + word.slice(1)
+          ).join(' ');
+          this.report.type = type;
+        }
+      } else if (res.data) {
+        // Fallback if response doesn't have success flag
+        this.report = res.data;
+      } else {
+        this.report = res;
+      }
+      
       this.isLoading = false;
     } catch (err: any) {
       this.isLoading = false;
@@ -69,95 +113,10 @@ export class ReportDetailsComponent implements OnInit {
           this.alertService.showAlert("warning", "حدث خطأ أثناء تحميل تفاصيل التقرير، يرجى المحاولة مرة أخرى");
         }
       }
+      this.report = null;
     }
   }
 
-  loadDummyReportDetails() {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        // Get dummy report based on ID
-        const dummyReports: any = {
-          1: {
-            id: 1,
-            reporter_id: 101,
-            reported_user_id: 202,
-            order_id: 501,
-            type: "Fraud",
-            description: "Seller took payment but never shipped the watch. I paid on 15th January but haven't received any update or product. The seller is not responding to my messages and has blocked me.",
-            status: "Pending",
-            created_at: "2024-01-20T10:30:00Z",
-            updated_at: "2024-01-20T10:30:00Z",
-            reporter: { name: "John Doe", email: "john@example.com", type: "user", id: 101 },
-            reported_user: { name: "Jane Smith", email: "jane@example.com", type: "dealer", id: 202 },
-            order: { id: 501, status: "pending", product: { name: "Rolex Submariner", price: 8500 } },
-            attachments: ["proof1.png", "proof2.jpg"],
-            actions: []
-          },
-          2: {
-            id: 2,
-            reporter_id: 203,
-            reported_user_id: 101,
-            order_id: 502,
-            type: "Product Issue",
-            description: "The watch received is different from what was described. The condition is poor and doesn't match the photos. There are scratches that were not mentioned in the listing.",
-            status: "Under Review",
-            created_at: "2024-01-19T14:20:00Z",
-            updated_at: "2024-01-19T15:30:00Z",
-            reporter: { name: "Alice Johnson", email: "alice@example.com", type: "user", id: 203 },
-            reported_user: { name: "John Doe", email: "john@example.com", type: "dealer", id: 101 },
-            order: { id: 502, status: "delivered", product: { name: "Omega Speedmaster", price: 4200 } },
-            attachments: ["comparison.jpg"],
-            actions: [
-              {
-                id: 1,
-                action: "under_review",
-                notes: "Reviewing product images and comparing with listing description",
-                admin_id: 1,
-                admin: { name: "Admin User", id: 1 },
-                created_at: "2024-01-19T15:30:00Z"
-              }
-            ]
-          },
-          3: {
-            id: 3,
-            reporter_id: 202,
-            reported_user_id: 301,
-            order_id: null,
-            type: "Harassment",
-            description: "The buyer is sending inappropriate messages and threatening me. Please take action immediately.",
-            status: "Resolved",
-            created_at: "2024-01-18T09:15:00Z",
-            updated_at: "2024-01-18T16:00:00Z",
-            reporter: { name: "Jane Smith", email: "jane@example.com", type: "dealer", id: 202 },
-            reported_user: { name: "Bob Williams", email: "bob@example.com", type: "user", id: 301 },
-            order: null,
-            attachments: ["messages.png"],
-            actions: [
-              {
-                id: 2,
-                action: "warn_user",
-                notes: "User warned about inappropriate behavior",
-                admin_id: 1,
-                admin: { name: "Admin User", id: 1 },
-                created_at: "2024-01-18T10:00:00Z"
-              },
-              {
-                id: 3,
-                action: "resolve",
-                notes: "Issue resolved after warning the user",
-                admin_id: 1,
-                admin: { name: "Admin User", id: 1 },
-                created_at: "2024-01-18T16:00:00Z"
-              }
-            ]
-          }
-        };
-
-        this.report = dummyReports[this.data.reportId] || dummyReports[1];
-        resolve(null);
-      }, 300);
-    });
-  }
 
   showActionDialog(action: string) {
     this.selectedAction = action;
@@ -175,18 +134,22 @@ export class ReportDetailsComponent implements OnInit {
       return;
     }
 
-    const formData = {
-      report_id: this.report.id,
-      action: this.actionForm.value.action,
+    if (!this.report || !this.report.id) {
+      this.alertService.showAlert("warning", "Report ID is missing");
+      return;
+    }
+
+    // Use action value directly (already in API format)
+    const apiAction = this.actionForm.value.action;
+
+    const actionData = {
+      action: apiAction,
       notes: this.actionForm.value.notes || "",
+      meta: {}
     };
 
     try {
-      // TODO: Replace with actual API call when backend is ready
-      // const res: any = await this.http.performReportAction(formData).toPromise();
-      
-      // Simulate API call with dummy data
-      await this.simulateAction(formData);
+      const res: any = await this.http.performReportAction(this.report.id, actionData).toPromise();
       
       if (this.translateService.currentLang == "en") {
         this.alertService.showAlert("success", "Action performed successfully");
@@ -196,11 +159,15 @@ export class ReportDetailsComponent implements OnInit {
       
       this.showActionForm = false;
       this.actionForm.reset();
+      this.selectedAction = "";
+      
+      // Reload report details to get updated status and actions
       await this.loadReportDetails();
       this.dialogRef.close("updated");
     } catch (err: any) {
       if (err && err.error) {
-        this.alertService.showAlert("warning", `${err.error.message || "Error performing action"}`);
+        const errorMessage = err.error.message || err.error.error || "Error performing action";
+        this.alertService.showAlert("warning", errorMessage);
       } else {
         if (this.translateService.currentLang == "en") {
           this.alertService.showAlert("warning", "Error performing action. Please try again");
@@ -211,41 +178,6 @@ export class ReportDetailsComponent implements OnInit {
     }
   }
 
-  simulateAction(formData: any) {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        // Update report status based on action
-        const statusMap: any = {
-          "under_review": "Under Review",
-          "request_info": "Info Requested",
-          "warn_user": "Warned",
-          "suspend_user": "Suspended",
-          "reject": "Rejected",
-          "resolve": "Resolved"
-        };
-
-        if (this.report) {
-          this.report.status = statusMap[formData.action] || this.report.status;
-          
-          // Add action to history
-          if (!this.report.actions) {
-            this.report.actions = [];
-          }
-          
-          this.report.actions.push({
-            id: this.report.actions.length + 1,
-            action: formData.action,
-            notes: formData.notes,
-            admin_id: 1,
-            admin: { name: "Admin User", id: 1 },
-            created_at: new Date().toISOString()
-          });
-        }
-        
-        resolve(null);
-      }, 500);
-    });
-  }
 
   cancelAction() {
     this.showActionForm = false;
@@ -253,28 +185,45 @@ export class ReportDetailsComponent implements OnInit {
     this.selectedAction = "";
   }
 
+  // Helper method to normalize status for comparison
+  normalizeStatus(status: string): string {
+    if (!status) return "";
+    // Convert to lowercase and replace underscores with spaces
+    return status.toLowerCase().replace(/_/g, ' ').trim();
+  }
+
   getStatusClass(status: string): string {
+    if (!status) return "status-default";
+    // Normalize status to handle both "pending" and "Pending"
+    const normalizedStatus = status.charAt(0).toUpperCase() + status.slice(1).toLowerCase();
     const statusClasses: { [key: string]: string } = {
       Pending: "status-pending",
+      "Under review": "status-under-review",
       "Under Review": "status-under-review",
       Resolved: "status-resolved",
       Rejected: "status-rejected",
+      "Info requested": "status-info-requested",
       "Info Requested": "status-info-requested",
       Suspended: "status-suspended",
       Warned: "status-warned",
     };
-    return statusClasses[status] || "status-default";
+    return statusClasses[normalizedStatus] || statusClasses[status] || "status-default";
   }
 
   getTypeClass(type: string): string {
+    if (!type) return "type-default";
+    // Normalize type to handle both "fraud" and "Fraud"
+    const normalizedType = type.charAt(0).toUpperCase() + type.slice(1).toLowerCase();
     const typeClasses: { [key: string]: string } = {
+      "Product issue": "type-product",
       "Product Issue": "type-product",
+      "Payment issue": "type-payment",
       "Payment Issue": "type-payment",
       Fraud: "type-fraud",
       Harassment: "type-harassment",
       Other: "type-other",
     };
-    return typeClasses[type] || "type-default";
+    return typeClasses[normalizedType] || typeClasses[type] || "type-default";
   }
 
   formatDate(date: string): string {
@@ -290,23 +239,50 @@ export class ReportDetailsComponent implements OnInit {
 
   getAttachmentUrl(attachment: string): string {
     if (!attachment) return "";
-    if (attachment.startsWith("http")) return attachment;
+    // If attachment is already a full URL, return it
+    if (attachment.startsWith("http://") || attachment.startsWith("https://")) {
+      return attachment;
+    }
+    // Otherwise, prepend API URL
     return this.apiUrl + attachment;
   }
 
-  getAttachmentsList(): string[] {
-    if (!this.report.attachments) return [];
+  getAttachmentsList(): any[] {
+    if (!this.report || !this.report.attachments) return [];
+    
     if (Array.isArray(this.report.attachments)) {
-      return this.report.attachments;
+      // Handle both old format (strings) and new format (objects with path/url)
+      return this.report.attachments.map((att: any) => {
+        if (typeof att === 'object' && att.url) {
+          return att.url; // Use URL from API response
+        } else if (typeof att === 'object' && att.path) {
+          return att.path; // Use path if URL not available
+        } else if (typeof att === 'string') {
+          return att; // Already a string
+        }
+        return att;
+      });
     }
+    
     if (typeof this.report.attachments === "string") {
       try {
         const parsed = JSON.parse(this.report.attachments);
-        return Array.isArray(parsed) ? parsed : [this.report.attachments];
+        if (Array.isArray(parsed)) {
+          return parsed.map((att: any) => {
+            if (typeof att === 'object' && att.url) {
+              return att.url;
+            } else if (typeof att === 'object' && att.path) {
+              return att.path;
+            }
+            return att;
+          });
+        }
+        return [this.report.attachments];
       } catch {
         return [this.report.attachments];
       }
     }
+    
     return [];
   }
 
