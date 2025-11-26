@@ -80,7 +80,7 @@
                 <td mat-cell class="column" *matCellDef="let row; in">
                   <button (click)="changeUserType(row)">
                     <mat-icon>swap_horiz</mat-icon>
-                    <span *ngIf="row.type === 'admin'">Admin</span>
+                    <span *ngIf="row.type === 'chronosouq-user'">Admin</span>
                     <span *ngIf="row.type === 'dealer'">Change to User</span>
                     <span *ngIf="row.type === 'user'">Change to Dealer</span>
                     <span *ngIf="row.type === null">Change to User</span>

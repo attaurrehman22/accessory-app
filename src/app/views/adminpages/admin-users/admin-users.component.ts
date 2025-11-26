@@ -106,8 +106,8 @@ export interface UserData {
   allUser() {
     this.http.getAdminUsers().subscribe(
       (res) => {
-        // Filter out users with type 'admin'
-        this.allData = res.data.filter((user: any) => user.type !== 'admin');
+        // Filter out users with type 'chronosouq-user'
+        this.allData = res.data.filter((user: any) => user.type !== 'chronosouq-user');
 
         // Set the filtered data to the data source
         this.dataSource = new MatTableDataSource(this.allData);

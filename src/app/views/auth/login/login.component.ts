@@ -102,7 +102,7 @@ export class LoginComponent implements OnInit {
             localStorage.setItem("user_token", response.authorization.token);
             localStorage.setItem("isLoggedIn", "true");
             localStorage.setItem("userID", response.user.id);
-            const isAdmin = response.user.type === "admin";
+            const isAdmin = response.user.type === "chronosouq-user";
             localStorage.setItem("userType", response.user.type);
             if (isAdmin) {
               localStorage.setItem("isAdmin", "true");
@@ -173,7 +173,7 @@ export class LoginComponent implements OnInit {
       //       localStorage.setItem("userID", response.user.id);
       //       localStorage.setItem("userType", response.user.type);
 
-      //       if (response.user.type === "admin") {
+      //       if (response.user.type === "chronosouq-user") {
       //         localStorage.setItem("isAdmin", "true");
       //       }
 
