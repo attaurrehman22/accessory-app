@@ -52,6 +52,11 @@ export class AdminReportsComponent implements OnInit, OnDestroy {
 
   statusFilter: string = "All";
   typeFilter: string = "All";
+  dateFrom: string = "";
+  dateTo: string = "";
+  reporterIdFilter: number | null = null;
+  reportedUserIdFilter: number | null = null;
+  orderIdFilter: number | null = null;
 
   statusOptions = [
     { value: "All", label: "All Status" },
@@ -113,14 +118,63 @@ export class AdminReportsComponent implements OnInit, OnDestroy {
   async loadReports() {
     this.isLoading = true;
     try {
-      // TODO: Replace with actual API call when backend is ready
-      // const res: any = await this.http.getAdminReports(this.pageIndex + 1, this.pageSize).toPromise();
-      // this.allReports = res.reports || res.data || [];
-      // this.totalItems = res.total || res.meta?.total || this.allReports.length;
+      const filters: any = {
+        page: this.pageIndex + 1,
+        per_page: this.pageSize,
+      };
+
+      // Add status filter if not "All"
+      if (this.statusFilter && this.statusFilter !== "All") {
+        filters.status = this.statusFilter;
+      }
+
+      // Add type filter if not "All"
+      if (this.typeFilter && this.typeFilter !== "All") {
+        filters.type = this.typeFilter;
+      }
+
+      // Add date filters if available
+      if (this.dateFrom) {
+        filters.date_from = this.dateFrom;
+      }
+      if (this.dateTo) {
+        filters.date_to = this.dateTo;
+      }
+
+      // Add reporter_id filter if available
+      if (this.reporterIdFilter) {
+        filters.reporter_id = this.reporterIdFilter;
+      }
+
+      // Add reported_user_id filter if available
+      if (this.reportedUserIdFilter) {
+        filters.reported_user_id = this.reportedUserIdFilter;
+      }
+
+      // Add order_id filter if available
+      if (this.orderIdFilter) {
+        filters.order_id = this.orderIdFilter;
+      }
+
+      const res: any = await this.http.getAdminReports(filters).toPromise();
       
-      // Dummy data for testing
-      await this.loadDummyData();
-      this.applyFilters();
+      // Handle different response structures
+      if (res.data) {
+        this.allReports = Array.isArray(res.data) ? res.data : res.data.reports || res.data.data || [];
+        this.totalItems = res.data.total || res.data.meta?.total || res.total || this.allReports.length;
+      } else if (res.reports) {
+        this.allReports = Array.isArray(res.reports) ? res.reports : [];
+        this.totalItems = res.total || res.meta?.total || this.allReports.length;
+      } else if (Array.isArray(res)) {
+        this.allReports = res;
+        this.totalItems = res.length;
+      } else {
+        this.allReports = [];
+        this.totalItems = 0;
+      }
+
+      this.filteredReports = [...this.allReports];
+      this.dataSource.data = this.allReports;
     } catch (err: any) {
       if (err && err.error) {
         this.alertService.showAlert("warning", `${err.error.message || "Error loading reports"}`);
@@ -131,162 +185,15 @@ export class AdminReportsComponent implements OnInit, OnDestroy {
           this.alertService.showAlert("warning", "حدث خطأ أثناء تحميل التقارير، يرجى المحاولة مرة أخرى");
         }
       }
+      this.allReports = [];
+      this.filteredReports = [];
+      this.dataSource.data = [];
+      this.totalItems = 0;
     } finally {
       this.isLoading = false;
     }
   }
 
-  loadDummyData() {
-    // Simulate API delay
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        this.allReports = [
-          {
-            id: 1,
-            reporter_id: 101,
-            reported_user_id: 202,
-            order_id: 501,
-            type: "Fraud",
-            description: "Seller took payment but never shipped the watch. I paid on 15th January but haven't received any update or product.",
-            status: "Pending",
-            created_at: "2024-01-20T10:30:00Z",
-            reporter: { name: "John Doe", email: "john@example.com", type: "user" },
-            reported_user: { name: "Jane Smith", email: "jane@example.com", type: "dealer" },
-            order: { id: 501, status: "pending", product: { name: "Rolex Submariner" } },
-            attachments: ["proof1.png", "proof2.jpg"]
-          },
-          {
-            id: 2,
-            reporter_id: 203,
-            reported_user_id: 101,
-            order_id: 502,
-            type: "Product Issue",
-            description: "The watch received is different from what was described. The condition is poor and doesn't match the photos.",
-            status: "Under Review",
-            created_at: "2024-01-19T14:20:00Z",
-            reporter: { name: "Alice Johnson", email: "alice@example.com", type: "user" },
-            reported_user: { name: "John Doe", email: "john@example.com", type: "dealer" },
-            order: { id: 502, status: "delivered", product: { name: "Omega Speedmaster" } },
-            attachments: ["comparison.jpg"]
-          },
-          {
-            id: 3,
-            reporter_id: 202,
-            reported_user_id: 301,
-            order_id: null,
-            type: "Harassment",
-            description: "The buyer is sending inappropriate messages and threatening me. Please take action.",
-            status: "Resolved",
-            created_at: "2024-01-18T09:15:00Z",
-            reporter: { name: "Jane Smith", email: "jane@example.com", type: "dealer" },
-            reported_user: { name: "Bob Williams", email: "bob@example.com", type: "user" },
-            order: null,
-            attachments: ["messages.png"]
-          },
-          {
-            id: 4,
-            reporter_id: 301,
-            reported_user_id: 202,
-            order_id: 503,
-            type: "Payment Issue",
-            description: "Payment was deducted but order was cancelled. I haven't received my refund yet.",
-            status: "Info Requested",
-            created_at: "2024-01-17T16:45:00Z",
-            reporter: { name: "Bob Williams", email: "bob@example.com", type: "user" },
-            reported_user: { name: "Jane Smith", email: "jane@example.com", type: "dealer" },
-            order: { id: 503, status: "cancelled", product: { name: "Tag Heuer Carrera" } },
-            attachments: ["payment_receipt.pdf"]
-          },
-          {
-            id: 5,
-            reporter_id: 401,
-            reported_user_id: 203,
-            order_id: 504,
-            type: "Fraud",
-            description: "Seller is using fake product images and selling counterfeit watches.",
-            status: "Suspended",
-            created_at: "2024-01-16T11:30:00Z",
-            reporter: { name: "Charlie Brown", email: "charlie@example.com", type: "user" },
-            reported_user: { name: "Alice Johnson", email: "alice@example.com", type: "dealer" },
-            order: { id: 504, status: "pending", product: { name: "Patek Philippe" } },
-            attachments: ["fake1.jpg", "fake2.jpg", "authentic_comparison.png"]
-          },
-          {
-            id: 6,
-            reporter_id: 203,
-            reported_user_id: 401,
-            order_id: 505,
-            type: "Other",
-            description: "The seller is not responding to messages and ignoring my requests for product information.",
-            status: "Warned",
-            created_at: "2024-01-15T13:20:00Z",
-            reporter: { name: "Alice Johnson", email: "alice@example.com", type: "dealer" },
-            reported_user: { name: "Charlie Brown", email: "charlie@example.com", type: "user" },
-            order: { id: 505, status: "processing", product: { name: "Audemars Piguet" } },
-            attachments: []
-          },
-          {
-            id: 7,
-            reporter_id: 501,
-            reported_user_id: 202,
-            order_id: 506,
-            type: "Product Issue",
-            description: "The watch stopped working after 2 days. The seller is refusing to provide warranty or refund.",
-            status: "Rejected",
-            created_at: "2024-01-14T08:10:00Z",
-            reporter: { name: "David Lee", email: "david@example.com", type: "user" },
-            reported_user: { name: "Jane Smith", email: "jane@example.com", type: "dealer" },
-            order: { id: 506, status: "delivered", product: { name: "Breitling Navitimer" } },
-            attachments: ["video.mp4", "receipt.jpg"]
-          },
-          {
-            id: 8,
-            reporter_id: 202,
-            reported_user_id: 501,
-            order_id: 507,
-            type: "Payment Issue",
-            description: "Buyer is claiming payment issue but I have proof of successful payment. This seems like a false report.",
-            status: "Pending",
-            created_at: "2024-01-13T15:00:00Z",
-            reporter: { name: "Jane Smith", email: "jane@example.com", type: "dealer" },
-            reported_user: { name: "David Lee", email: "david@example.com", type: "user" },
-            order: { id: 507, status: "completed", product: { name: "IWC Portugieser" } },
-            attachments: ["payment_proof.pdf"]
-          },
-          {
-            id: 9,
-            reporter_id: 601,
-            reported_user_id: 203,
-            order_id: null,
-            type: "Harassment",
-            description: "The dealer is sending threatening messages and using abusive language.",
-            status: "Under Review",
-            created_at: "2024-01-12T12:30:00Z",
-            reporter: { name: "Emma Wilson", email: "emma@example.com", type: "user" },
-            reported_user: { name: "Alice Johnson", email: "alice@example.com", type: "dealer" },
-            order: null,
-            attachments: ["screenshots1.png", "screenshots2.png"]
-          },
-          {
-            id: 10,
-            reporter_id: 203,
-            reported_user_id: 601,
-            order_id: 508,
-            type: "Fraud",
-            description: "Buyer is trying to scam by claiming product not received when tracking shows delivered.",
-            status: "Resolved",
-            created_at: "2024-01-11T10:15:00Z",
-            reporter: { name: "Alice Johnson", email: "alice@example.com", type: "dealer" },
-            reported_user: { name: "Emma Wilson", email: "emma@example.com", type: "user" },
-            order: { id: 508, status: "delivered", product: { name: "Cartier Santos" } },
-            attachments: ["tracking_proof.pdf", "delivery_confirmation.jpg"]
-          }
-        ];
-        this.totalItems = this.allReports.length;
-        resolve(null);
-      }, 500); // Simulate network delay
-    });
-  }
 
   applyFilter(event?: Event) {
     const filterValue = event
@@ -308,26 +215,27 @@ export class AdminReportsComponent implements OnInit, OnDestroy {
   }
 
   applyFilters() {
-    let filtered = [...this.allReports];
-
-    // Apply status filter
-    if (this.statusFilter !== "All") {
-      filtered = filtered.filter((report) => report.status === this.statusFilter);
-    }
-
-    // Apply type filter
-    if (this.typeFilter !== "All") {
-      filtered = filtered.filter((report) => report.type === this.typeFilter);
-    }
-
-    this.filteredReports = filtered;
-    this.dataSource.data = filtered;
-    this.totalItems = filtered.length;
+    // Reload reports with filters from API
+    this.pageIndex = 0; // Reset to first page when filters change
+    this.loadReports();
   }
 
   onPageChange(event: PageEvent) {
     this.pageIndex = event.pageIndex;
     this.pageSize = event.pageSize;
+    this.loadReports();
+  }
+
+  // Method to clear all filters
+  clearFilters() {
+    this.statusFilter = "All";
+    this.typeFilter = "All";
+    this.dateFrom = "";
+    this.dateTo = "";
+    this.reporterIdFilter = null;
+    this.reportedUserIdFilter = null;
+    this.orderIdFilter = null;
+    this.pageIndex = 0;
     this.loadReports();
   }
 

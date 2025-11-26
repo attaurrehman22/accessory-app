@@ -1749,10 +1749,38 @@ export class HttpService implements OnInit {
 
   // -------------------------------------------- Admin Reports API --------------------------
 
-  getAdminReports(page: number = 1, perPage: number = 10): Observable<any> {
-    return this.http.get(`${this.apiUrl}/api/admin/reports?page=${page}&per_page=${perPage}`, {
+  getAdminReports(filters?: {
+    status?: string;
+    type?: string;
+    reporter_id?: number;
+    reported_user_id?: number;
+    order_id?: number;
+    date_from?: string;
+    date_to?: string;
+    page?: number;
+    per_page?: number;
+  }): Observable<any> {
+    let params = new HttpParams();
+    
+    if (filters) {
+      if (filters.status) params = params.set('status', filters.status);
+      if (filters.type) params = params.set('type', filters.type);
+      if (filters.reporter_id) params = params.set('reporter_id', filters.reporter_id.toString());
+      if (filters.reported_user_id) params = params.set('reported_user_id', filters.reported_user_id.toString());
+      if (filters.order_id) params = params.set('order_id', filters.order_id.toString());
+      if (filters.date_from) params = params.set('date_from', filters.date_from);
+      if (filters.date_to) params = params.set('date_to', filters.date_to);
+      if (filters.page) params = params.set('page', filters.page.toString());
+      if (filters.per_page) params = params.set('per_page', filters.per_page.toString());
+    }
+    
+    // Default pagination if not provided
+    if (!filters?.page) params = params.set('page', '1');
+    if (!filters?.per_page) params = params.set('per_page', '10');
+
+    return this.http.get(`${this.apiUrl}/api/admin/issue-reports?${params.toString()}`, {
       headers: {
-        Accept: "application/json",
+        Accept: "*/*",
         Authorization: `Bearer ${this.token}`,
       },
     });
