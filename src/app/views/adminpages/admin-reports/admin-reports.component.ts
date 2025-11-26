@@ -241,7 +241,8 @@ export class AdminReportsComponent implements OnInit, OnDestroy {
 
   viewDetails(report: any) {
     const dialogRef = this.dialog.open(ReportDetailsComponent, {
-      width: "900px",
+      width: "1400px",
+      maxWidth: "95vw",
       maxHeight: "90vh",
       data: { reportId: report.id },
     });

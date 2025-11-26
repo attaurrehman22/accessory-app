@@ -138,6 +138,112 @@
       </div>
     </div>
 
+    <!-- Chat Section -->
+    <div class="section chat-section" *ngIf="report">
+      <h3>Chat Messages</h3>
+      
+      <div *ngIf="isLoadingChat" class="loading-container">
+        <mat-spinner [diameter]="30"></mat-spinner>
+        <p>Loading chat...</p>
+      </div>
+
+      <div *ngIf="!isLoadingChat" class="chat-container">
+        <!-- Chat Messages -->
+        <div class="chat-messages-container" #chatContainer>
+          <div *ngFor="let message of getReversedChatMessages()" class="chat-message-wrapper">
+            <!-- System Generated Message (Centered) -->
+            <div *ngIf="isSystemMessage(message)" class="chat-message system-message">
+              <div class="message-content system-content">
+                <p>{{ message.message }}</p>
+                <small class="message-time">{{ formatChatTime(message.created_at) }}</small>
+              </div>
+            </div>
+
+            <!-- Buyer Message (Left Side - BTS) -->
+            <div *ngIf="!isSystemMessage(message) && isBuyerMessage(message)" class="chat-message buyer-message">
+              <div class="message-content buyer-content">
+                <p *ngIf="message.message">{{ message.message }}</p>
+                
+                <!-- Attachments -->
+                <div class="d-flex gap-2" *ngIf="message.attachments">
+                  <ng-container *ngIf="!isArray(message.attachments)">
+                    <ng-container [ngSwitch]="getAttachmentType(message.attachments)">
+                      <img *ngSwitchCase="'image'" [src]="getAttachmentUrl(message.attachments)" class="chat-attachment" alt="Attachment" />
+                      <video *ngSwitchCase="'video'" [src]="getAttachmentUrl(message.attachments)" class="chat-attachment" controls></video>
+                    </ng-container>
+                  </ng-container>
+                  <ng-container *ngIf="isArray(message.attachments)">
+                    <ng-container *ngFor="let attachment of message.attachments">
+                      <ng-container [ngSwitch]="getAttachmentType(attachment)">
+                        <img *ngSwitchCase="'image'" [src]="getAttachmentUrl(attachment)" class="chat-attachment" alt="Attachment" />
+                        <video *ngSwitchCase="'video'" [src]="getAttachmentUrl(attachment)" class="chat-attachment" controls></video>
+                      </ng-container>
+                    </ng-container>
+                  </ng-container>
+                </div>
+
+                <small class="message-time">{{ formatChatTime(message.created_at) }}</small>
+              </div>
+              <div class="message-label buyer-label">Buyer</div>
+            </div>
+
+            <!-- Seller Message (Right Side - STB) -->
+            <div *ngIf="!isSystemMessage(message) && isSellerMessage(message)" class="chat-message seller-message">
+              <div class="message-label seller-label">Seller</div>
+              <div class="message-content seller-content">
+                <p *ngIf="message.message">{{ message.message }}</p>
+                
+                <!-- Attachments -->
+                <div class="d-flex gap-2" *ngIf="message.attachments">
+                  <ng-container *ngIf="!isArray(message.attachments)">
+                    <ng-container [ngSwitch]="getAttachmentType(message.attachments)">
+                      <img *ngSwitchCase="'image'" [src]="getAttachmentUrl(message.attachments)" class="chat-attachment" alt="Attachment" />
+                      <video *ngSwitchCase="'video'" [src]="getAttachmentUrl(message.attachments)" class="chat-attachment" controls></video>
+                    </ng-container>
+                  </ng-container>
+                  <ng-container *ngIf="isArray(message.attachments)">
+                    <ng-container *ngFor="let attachment of message.attachments">
+                      <ng-container [ngSwitch]="getAttachmentType(attachment)">
+                        <img *ngSwitchCase="'image'" [src]="getAttachmentUrl(attachment)" class="chat-attachment" alt="Attachment" />
+                        <video *ngSwitchCase="'video'" [src]="getAttachmentUrl(attachment)" class="chat-attachment" controls></video>
+                      </ng-container>
+                    </ng-container>
+                  </ng-container>
+                </div>
+
+                <small class="message-time">{{ formatChatTime(message.created_at) }}</small>
+              </div>
+            </div>
+          </div>
+
+          <div *ngIf="chatMessages.length === 0" class="no-chat-messages">
+            <p>No messages found in this chat.</p>
+          </div>
+        </div>
+
+        <!-- Admin Message Input -->
+        <div class="admin-message-input">
+          <form [formGroup]="adminMessageForm" (ngSubmit)="sendAdminMessage()">
+            <div class="input-group">
+              <input
+                type="text"
+                class="form-control"
+                formControlName="message"
+                [(ngModel)]="adminMessage"
+                placeholder="Type your message as admin..."
+                maxlength="500"
+              />
+              <div class="character-count">{{ adminMessage.length }} / 500</div>
+              <button type="submit" class="btn btn-primary" style="background-color: #242424 !important;" [disabled]="adminMessageForm.invalid || !adminMessage.trim()">
+                <mat-icon>send</mat-icon>
+                Send
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
     <!-- Admin Actions History -->
     <div class="section" *ngIf="report.actions && report.actions.length > 0">
       <h3>Action History</h3>

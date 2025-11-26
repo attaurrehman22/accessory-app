@@ -1815,6 +1815,32 @@ export class HttpService implements OnInit {
     });
   }
 
+    // -------------------------------------------- Admin Chat API --------------------------
+    
+    // Get chat details for admin (using same endpoint as chat module)
+    getAdminChatDetails(chatId: number): Observable<any> {
+      return this.http.get(`${this.apiUrl}/api/messages/${chatId}`, {
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${this.token}`,
+        },
+      });
+    }
+
+    // Send message as admin (dummy endpoint - will be replaced later)
+    // sendAdminMessage(formData: FormData): Observable<any> {
+    //   // TODO: Replace with actual admin message endpoint when available
+    //   // For now, using dummy endpoint
+    //   return this.http.post(`${this.apiUrl}/api/admin/chat/send`, formData, {
+    //     headers: {
+    //       Accept: "application/json",
+    //       Authorization: `Bearer ${this.token}`,
+    //     },
+    //   });
+    // }
+
+    // -------------------------------------------- Admin Chat API End --------------------------
+
     // -------------------------------------------- Admin Reports API End --------------------------
 
     // -------------------------------------------- Admin Orders API --------------------------
