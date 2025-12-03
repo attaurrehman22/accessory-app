@@ -144,7 +144,7 @@ export class RegisterComponent implements OnInit {
               localStorage.setItem("user_token", response?.authorisation?.token);
               localStorage.setItem('userType',response?.user?.type)
               localStorage.setItem("userID", response?.user?.id);
-              const isAdmin = response?.user?.type === "chronosouq-user";
+              const isAdmin = response?.user?.type === "chronosouq-user" || response?.user?.type === "admin";
               if (isAdmin) {
                 localStorage.setItem("isAdmin", "true");
               }

@@ -1,4 +1,4 @@
 export const environment = {
-  apipath:"https://api.chronosouq.com",
+  apipath:"https://pre-demo.chronosouq.com",
   production: true
 };

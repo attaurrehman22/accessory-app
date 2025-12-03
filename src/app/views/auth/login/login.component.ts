@@ -102,7 +102,7 @@ export class LoginComponent implements OnInit {
             localStorage.setItem("user_token", response.authorization.token);
             localStorage.setItem("isLoggedIn", "true");
             localStorage.setItem("userID", response.user.id);
-            const isAdmin = response.user.type === "chronosouq-user";
+            const isAdmin = response.user.type === "chronosouq-user" || response.user.type === "admin";
             localStorage.setItem("userType", response.user.type);
             if (isAdmin) {
               localStorage.setItem("isAdmin", "true");
@@ -163,28 +163,6 @@ export class LoginComponent implements OnInit {
       const credential = GoogleAuthProvider.credentialFromResult(result);
       const token = credential?.accessToken;
       const user = result.user;
-
-      // ✅ Send Google token to your backend for verification
-      // this.http.googleLogin({ token }).subscribe(
-      //   (response) => {
-      //     if (response.status === "success") {
-      //       localStorage.setItem("user_token", response.authorization.token);
-      //       localStorage.setItem("isLoggedIn", "true");
-      //       localStorage.setItem("userID", response.user.id);
-      //       localStorage.setItem("userType", response.user.type);
-
-      //       if (response.user.type === "chronosouq-user") {
-      //         localStorage.setItem("isAdmin", "true");
-      //       }
-
-      //       this.router.navigateByUrl("").then(() => window.location.reload());
-      //     }
-      //   },
-      //   (error) => {
-      //     this.alertService.showAlert("warning", "Google sign-in failed");
-      //     console.error(error);
-      //   }
-      // );
     } catch (error) {
       this.alertService.showAlert("warning", "Google sign-in failed");
       console.error(error);
