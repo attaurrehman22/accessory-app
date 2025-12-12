@@ -60,25 +60,58 @@
   color: #212529;
 }
 
-.table thead th {
+.table thead th,
+.mat-header-cell {
   border-bottom: 2px solid #dee2e6;
   border-top: 0;
   font-weight: 600;
+  background-color: #f8f9fa;
 }
 
 .table td,
-.table th {
+.table th,
+.mat-cell,
+.mat-header-cell {
   padding: 0.75rem;
   vertical-align: middle;
 }
 
-.table-hover tbody tr:hover {
+.table-hover tbody tr:hover,
+.mat-row:hover {
   background-color: rgba(0, 0, 0, 0.075);
   cursor: pointer;
 }
 
 .text-nowrap {
   white-space: nowrap;
+}
+
+/* Mat-Table Specific Styles */
+.mat-table {
+  width: 100%;
+  background: transparent;
+}
+
+.mat-header-row {
+  min-height: 56px;
+}
+
+.mat-row {
+  min-height: 48px;
+  border-bottom: 1px solid #dee2e6;
+}
+
+.mat-cell {
+  color: #212529;
+}
+
+/* No Data Row */
+.mat-row.mat-no-data {
+  background-color: transparent;
+}
+
+.mat-cell.text-center {
+  text-align: center;
 }
 
 /* Badge Styling - AdminLTE */

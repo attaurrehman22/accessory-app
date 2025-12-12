@@ -101,27 +101,27 @@ export class CreateRoleComponent implements OnInit {
 
     // WOTD (Watch of the Day)
     {
-      name: "admin.wotd.view",
+      name: "admin.watch.view",
       label: "View",
       category: "WOTD",
     },
     {
-      name: "admin.wotd.create",
+      name: "admin.watch.create",
       label: "Create",
       category: "WOTD",
     },
     {
-      name: "admin.wotd.update",
+      name: "admin.watch.update",
       label: "Edit",
       category: "WOTD",
     },
     {
-      name: "admin.wotd.delete",
+      name: "admin.watch.delete",
       label: "Delete",
       category: "WOTD",
     },
     {
-      name: "admin.wotd.deactivate",
+      name: "admin.watch.deactivate",
       label: "Deactivate",
       category: "WOTD",
     },
@@ -133,8 +133,8 @@ export class CreateRoleComponent implements OnInit {
       category: "VAT",
     },
     {
-      name: "admin.vat.create",
-      label: "Create",
+      name: "admin.vat.update",
+      label: "Update",
       category: "VAT",
     },
 

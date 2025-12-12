@@ -73,6 +73,18 @@
             </a>
           </li>
 
+          <li class="nav-item" *ngIf="doPermissionCheck(vatViewPermission)">
+            <a
+              routerLink="/admin/vat"
+              routerLinkActive="active"
+              class="nav-link"
+              (click)="onMenuItemClick()"
+            >
+              <mat-icon>percent</mat-icon>
+              <p>VAT</p>
+            </a>
+          </li>
+
           <li
             class="nav-item"
             *ngIf="doPermissionCheck(watchOfTheDayViewPermission)"

@@ -43,7 +43,7 @@ export type OrderStatus =
   | "awaiting_confirmation";
 
 export interface Order {
-  orderID: string;
+  orderID: number | null;
   buyerName: string;
   sellerName: string;
   orderStatus: OrderStatus;
@@ -52,7 +52,7 @@ export interface Order {
 }
 
 export interface OrderFilters {
-  orderId: string;
+  orderId: number | null;
   buyerName: string;
   sellerName: string;
   orderStatus: string;
@@ -101,37 +101,115 @@ export interface PieChartOptions {
 
 export interface ColumnChartOptions {
   chart: {
-    type: "column";
+    type: "column" | "bar";
     height: number;
-    margin: number[];
+    margin?: number[];
+    marginLeft?: number;
+    marginRight?: number;
+    marginTop?: number;
+    marginBottom?: number;
+    spacingLeft?: number;
+    spacingRight?: number;
+    spacingTop?: number;
+    spacingBottom?: number;
   };
   title: {
     text: string;
   };
   xAxis: {
-    categories: string[];
+    categories?: string[];
+    min?: number;
     title: {
-      text: string;
+      text: string | null;
+      align?: string;
+      style?: {
+        fontSize?: string;
+        fontWeight?: string;
+      };
     };
+    labels?: {
+      enabled?: boolean;
+      overflow?: string;
+      style?: {
+        fontSize?: string;
+        color?: string;
+      };
+    };
+    gridLineWidth?: number;
+    gridLineColor?: string;
+    lineWidth?: number;
   };
   yAxis: {
-    min: number;
+    categories?: string[];
+    min?: number;
     title: {
-      text: string;
+      text: string | null;
     };
+    labels?: {
+      enabled?: boolean;
+      align?: string;
+      x?: number;
+      y?: number;
+      style?: {
+        fontSize?: string;
+        whiteSpace?: string;
+        fontWeight?: string;
+        color?: string;
+      };
+      overflow?: string;
+      useHTML?: boolean;
+    };
+    gridLineWidth?: number;
+    lineWidth?: number;
+    tickWidth?: number;
   };
   tooltip: {
+    backgroundColor?: string;
+    borderColor?: string;
+    borderRadius?: number;
+    shadow?: boolean;
     headerFormat: string;
     pointFormat: string;
-    footerFormat: string;
-    shared: boolean;
+    footerFormat?: string;
+    shared?: boolean;
     useHTML: boolean;
+    padding?: number;
   };
   plotOptions: {
-    column: {
-      pointPadding: number;
-      borderWidth: number;
+    column?: {
+      pointPadding?: number;
+      borderWidth?: number;
     };
+    bar?: {
+      dataLabels?: {
+        enabled: boolean;
+        inside?: boolean;
+        align?: string;
+        format: string;
+        style?: {
+          fontSize?: string;
+          fontWeight?: string;
+          color?: string;
+          textOutline?: string;
+        };
+        x?: number;
+      };
+      borderWidth?: number;
+      borderRadius?: number;
+      pointWidth?: number;
+      groupPadding?: number;
+      pointPadding?: number;
+    };
+    series?: {
+      pointPadding?: number;
+      groupPadding?: number;
+    };
+  };
+  legend?: {
+    enabled: boolean;
+  };
+  credits?: {
+    enabled: boolean;
   };
   series: Array<{
     name: string;

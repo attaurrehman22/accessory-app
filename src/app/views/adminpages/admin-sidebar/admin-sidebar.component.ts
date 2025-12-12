@@ -22,6 +22,7 @@ export class AdminSidebarComponent implements OnInit {
   watchOfTheDayViewPermission = "admin.watch.view";
   chronosouqUsersViewPermission = "admin.chronosouq-users.view";
   rolesViewPermission = "admin.roles.view";
+  vatViewPermission = "admin.vat.view";
   constructor(
     public route: Router,
     private translateService: TranslateService,

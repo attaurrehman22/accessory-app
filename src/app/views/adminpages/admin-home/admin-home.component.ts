@@ -4,11 +4,8 @@ import { Subscription, forkJoin, of } from "rxjs";
 import { catchError, finalize } from "rxjs/operators";
 import { AlertsServicesService } from "src/services/alerts-service/alerts-services.service";
 import * as Highcharts from "highcharts";
-import { HighchartsServiceService } from "src/services/highcharts-service/highcharts-service.service";
-import { ChangeDetectorRef } from "@angular/core"; // Import ChangeDetectorRef
 import { HttpService } from "src/services/http/http.service";
 import { SidebarService } from "src/services/sidebar.service";
-import { MatTableDataSource } from "@angular/material/table";
 import { PermissionCheckService } from "../../services/permission-check.service";
 import {
   UserStats,
@@ -17,14 +14,7 @@ import {
   RevenueStats,
   Order,
   OrderFilters,
-  OrderStatus,
-  PieChartOptions,
   ColumnChartOptions,
-  DashboardData,
-  LoadingStates,
-  LegacyCardData,
-  LegacyDashboardDetails,
-  ApiResponse,
 } from "./dashboard.types";
 
 @Component({
@@ -36,24 +26,14 @@ export class AdminHomeComponent implements OnInit, OnDestroy {
   // Chart data and options
   Highcharts = Highcharts;
   viewPermission = "admin.dashboard.view";
-  usersChartOptions: PieChartOptions | null = null;
-  productsChartOptions: PieChartOptions | null = null;
-  ordersChartOptions: PieChartOptions | null = null;
   brandsChartOptions: ColumnChartOptions | null = null;
 
   // Loading and error states
   isLoading = false;
   hasError = false;
   errorMessage = "";
-  loadingStates: LoadingStates = {
-    users: false,
-    products: false,
-    orders: false,
-    revenue: false,
-    brands: false,
-  };
 
-  // Dashboard statistics - using interfaces
+  // Dashboard statistics
   userStats: UserStats = {
     totalUsers: 0,
     privateSellers: 0,
@@ -85,44 +65,16 @@ export class AdminHomeComponent implements OnInit, OnDestroy {
   };
 
   // Orders table
-  ordersDisplayedColumns: string[] = [
-    "orderId",
-    "buyerName",
-    "sellerName",
-    "orderStatus",
-    "orderCreatedAt",
-  ];
-  ordersDataSource = new MatTableDataSource<Order>([]);
   filteredOrders: Order[] = [];
   allOrders: Order[] = [];
 
   // Filters
   filters: OrderFilters = {
-    orderId: "",
+    orderId: null,
     buyerName: "",
     sellerName: "",
     orderStatus: "",
     createdDate: "",
-  };
-
-  displayedColumns: string[] = ["id", "name", "email"];
-  dataSource = [
-    { id: 1, name: "John Doe", email: "john@example.com" },
-    { id: 2, name: "Jane Smith", email: "jane@example.com" },
-    { id: 3, name: "Bob Johnson", email: "bob@example.com" },
-  ];
-  linechart: any; // Will be typed when we know the structure
-  dashboarddetails: LegacyDashboardDetails = {
-    totalNumberOfBrands: 0,
-    totalNumberOfBrandsWithActiveSubscription: 0,
-    totalNumberOfCatagory: 0,
-    activeBrandsCount: 0,
-    topBrandsCount: 0,
-    totalNumberOfUsers: 0,
-    totalNumberOfUsersWithActiveSubscription: 0,
-    totalNumberOfUsersWithSubscription: 0,
-    totalNumberOfUsersWithoutSubscription: 0,
-    totalNumberOfProducts: 0,
   };
 
   sidebarClickSubscription: Subscription;
@@ -131,11 +83,10 @@ export class AdminHomeComponent implements OnInit, OnDestroy {
     private dialog: MatDialog,
     private sidebarService: SidebarService,
     private toast: AlertsServicesService,
-    private highchartsService: HighchartsServiceService,
-    private cd: ChangeDetectorRef,
     private http: HttpService,
     private permissionCheckService: PermissionCheckService
   ) {}
+
   ngOnInit(): void {
     this.getDashboardDetails();
     this.sidebarClickSubscription = this.sidebarService.sidebarClick$.subscribe(
@@ -213,7 +164,6 @@ export class AdminHomeComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (data) => {
           this.processDashboardData(data);
-          this.setupCharts();
         },
         error: (error) => {
           console.error("Dashboard loading error:", error);
@@ -229,7 +179,7 @@ export class AdminHomeComponent implements OnInit, OnDestroy {
     // Process users data
     if (data.users) {
       this.userStats = {
-        totalUsers: data.users.data?.total_registered_users || 0, // Using dummy value as requested
+        totalUsers: data.users.data?.total_registered_users || 0,
         privateSellers: data.users.data?.private_sellers || 0,
         dealers: data.users.data?.dealers || 0,
       };
@@ -273,265 +223,124 @@ export class AdminHomeComponent implements OnInit, OnDestroy {
     }
 
     // Process brands data
-    if (data.brands) {
-      this.brandsChartOptions = data.brands.data?.totalNumberOfBrands || 0;
+    if (data.brands && data.brands.data) {
+      // You can set up brands chart data here if needed
+      this.setupBrandsChart(data);
     }
   }
 
-  loadHighcharts() {
-    // Keep the existing linechart for compatibility if needed
-    this.linechart = this.highchartsService.getLineChartOptions();
-    this.cd.detectChanges();
-  }
-
-  // Initialize dummy data for all components
+  // Initialize orders table data
   initializeOrdersTableData() {
     this.filteredOrders = [...this.allOrders];
-    this.ordersDataSource.data = this.filteredOrders;
   }
 
-  // Setup all chart configurations
-  setupCharts() {
-    try {
-      this.setupUsersChart();
-      this.setupProductsChart();
-      this.setupOrdersChart();
-      this.setupBrandsChart();
-    } catch (error) {
-      console.error("Error setting up charts:", error);
-    }
-  }
+  // Setup brands chart (horizontal bar chart)
+  setupBrandsChart(data: any): void {
+    const brandNames = Object.keys(data.brands.data) || [];
+    const brandValues = (Object.values(data.brands.data) || []) as number[];
 
-  // Users pie chart (Private Sellers vs Dealers)
-  setupUsersChart(): void {
-    this.usersChartOptions = {
-      chart: {
-        type: "pie",
-        height: 200,
-        margin: [20, 20, 20, 20],
-      },
-      title: {
-        text: "",
-      },
-      tooltip: {
-        pointFormat: "{series.name}: <b>{point.y}</b>",
-      },
-      plotOptions: {
-        pie: {
-          allowPointSelect: true,
-          cursor: "pointer",
-          dataLabels: {
-            enabled: true,
-            format: "{point.name}: {point.y}",
-            style: {
-              fontSize: "12px",
-              fontWeight: "bold",
-            },
-          },
-          showInLegend: false,
-        },
-      },
-      series: [
-        {
-          name: "Users",
-          colorByPoint: true,
-          data: [
-            {
-              name: "Private Sellers",
-              y: this.userStats.privateSellers,
-              color: "#3498db",
-            },
-            {
-              name: "Dealers",
-              y: this.userStats.dealers,
-              color: "#e74c3c",
-            },
-          ],
-        },
-      ],
-    };
-  }
+    // Calculate dynamic height based on number of brands
+    const numberOfBrands = brandNames.length || 6;
+    const barHeight = 35; // Height per bar
+    const dynamicHeight = Math.max(300, numberOfBrands * barHeight + 60);
 
-  // Products pie chart (Active, Inactive, Sold)
-  setupProductsChart(): void {
-    this.productsChartOptions = {
-      chart: {
-        type: "pie",
-        height: 200,
-        margin: [20, 20, 20, 20],
-      },
-      title: {
-        text: "",
-      },
-      tooltip: {
-        pointFormat: "{series.name}: <b>{point.y}</b>",
-      },
-      plotOptions: {
-        pie: {
-          allowPointSelect: true,
-          cursor: "pointer",
-          dataLabels: {
-            enabled: true,
-            format: "{point.name}: {point.y}",
-            style: {
-              fontSize: "12px",
-              fontWeight: "bold",
-            },
-          },
-          showInLegend: false,
-        },
-      },
-      series: [
-        {
-          name: "Listings",
-          colorByPoint: true,
-          data: [
-            {
-              name: "Active",
-              y: this.productStats.activeProducts,
-              color: "#2ecc71",
-            },
-            {
-              name: "Inactive",
-              y: this.productStats.inactiveProducts,
-              color: "#f39c12",
-            },
-            {
-              name: "Sold",
-              y: this.productStats.soldProducts,
-              color: "#9b59b6",
-            },
-          ],
-        },
-      ],
-    };
-  }
-
-  // Orders pie chart (Different order types)
-  setupOrdersChart(): void {
-    this.ordersChartOptions = {
-      chart: {
-        type: "pie",
-        height: 200,
-        margin: [20, 20, 20, 20],
-      },
-      title: {
-        text: "",
-      },
-      tooltip: {
-        pointFormat: "{series.name}: <b>{point.y}</b>",
-      },
-      plotOptions: {
-        pie: {
-          allowPointSelect: true,
-          cursor: "pointer",
-          dataLabels: {
-            enabled: true,
-            format: "{point.name}: {point.y}",
-            style: {
-              fontSize: "12px",
-              fontWeight: "bold",
-            },
-          },
-          showInLegend: false,
-        },
-      },
-      series: [
-        {
-          name: "Orders",
-          colorByPoint: true,
-          data: [
-            {
-              name: "Initiated Orders",
-              y: this.orderStats.initiatedOrders,
-              color: "#3498db",
-            },
-            {
-              name: "Preparing Shipment Orders",
-              y: this.orderStats.preparingShipmentOrders,
-              color: "#e74c3c",
-            },
-            {
-              name: "Confirmed Orders",
-              y: this.orderStats.confirmedOrders,
-              color: "#2ecc71",
-            },
-            {
-              name: "Cancelled Orders",
-              y: this.orderStats.cancelledOrders,
-              color: "#f39c12",
-            },
-            {
-              name: "Delivery In Progress Orders",
-              y: this.orderStats.deliveryInProgressOrders,
-              color: "#9b59b6",
-            },
-            {
-              name: "Awaiting Confirmation Orders",
-              y: this.orderStats.awaitingConfirmationOrders,
-              color: "#e74c3c",
-            },
-            {
-              name: "Delivered Orders",
-              y: this.revenueStats.deliveredOrders,
-              color: "#2ecc71",
-            },
-          ],
-        },
-      ],
-    };
-  }
-
-  // Brands bar chart
-  setupBrandsChart(): void {
     this.brandsChartOptions = {
       chart: {
-        type: "column",
-        height: 400,
-        margin: [20, 20, 20, 20],
+        type: "bar",
+        height: dynamicHeight,
+        spacingLeft: 0,
+        spacingRight: 40,
+        spacingTop: 10,
+        spacingBottom: 10,
+        marginLeft: 120, // Space for brand names on left
+        marginRight: 40,
       },
       title: {
         text: "",
       },
       xAxis: {
-        categories: [
-          "TechDeals Inc",
-          "ElectroMart",
-          "GadgetWorld",
-          "SmartTech",
-          "DigitalHub",
-          "TechZone",
-        ],
-        title: {
-          text: "Brands",
-        },
-      },
-      yAxis: {
         min: 0,
         title: {
-          text: "Number of Orders",
+          text: null,
         },
+        labels: {
+          enabled: true,
+          style: {
+            fontSize: "10px",
+            color: "#6c757d",
+          },
+        },
+        gridLineWidth: 1,
+        gridLineColor: "#e9ecef",
+        lineWidth: 0,
+      },
+      yAxis: {
+        categories: brandNames,
+        title: {
+          text: null,
+        },
+        labels: {
+          enabled: true,
+          align: "right",
+          x: -8,
+          y: 4,
+          style: {
+            fontSize: "12px",
+            fontWeight: "500",
+            color: "#495057",
+            whiteSpace: "nowrap",
+          },
+          useHTML: false,
+        },
+        lineWidth: 0,
+        gridLineWidth: 0,
+        tickWidth: 0,
       },
       tooltip: {
-        headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-        pointFormat:
-          '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-          '<td style="padding:0"><b>{point.y}</b></td></tr>',
-        footerFormat: "</table>",
-        shared: true,
+        backgroundColor: "#fff",
+        borderColor: "#007bff",
+        borderRadius: 6,
+        shadow: true,
         useHTML: true,
+        headerFormat:
+          '<div style="font-size:11px;font-weight:bold;margin-bottom:4px">{point.key}</div>',
+        pointFormat:
+          '<div style="font-size:12px">Orders: <b style="color:#007bff">{point.y}</b></div>',
+        padding: 10,
       },
       plotOptions: {
-        column: {
-          pointPadding: 0.2,
+        bar: {
+          dataLabels: {
+            enabled: true,
+            inside: false,
+            align: "right",
+            format: "{point.y}",
+            style: {
+              fontSize: "11px",
+              fontWeight: "bold",
+              color: "#495057",
+              textOutline: "none",
+            },
+            x: 8,
+          },
           borderWidth: 0,
+          borderRadius: 3,
+          pointWidth: 20,
+          groupPadding: 0.1,
+          pointPadding: 0.2,
         },
+      },
+      legend: {
+        enabled: false,
+      },
+      credits: {
+        enabled: false,
       },
       series: [
         {
           name: "Orders",
-          data: [45, 38, 32, 28, 22, 18],
-          color: "#3498db",
+          data: brandValues,
+          color: "#007bff",
         },
       ],
     };
@@ -547,52 +356,94 @@ export class AdminHomeComponent implements OnInit, OnDestroy {
     this.filteredOrders = this.allOrders.filter((order: Order) => {
       let matches = true;
 
-      if (
-        this.filters.orderId &&
-        !order.orderID
-          .toLowerCase()
-          .includes(this.filters.orderId.toLowerCase())
-      ) {
-        matches = false;
+      // Filter by Order ID
+      if (this.filters.orderId) {
+        const orderId = order.orderID;
+        if (orderId !== this.filters.orderId) {
+          matches = false;
+        }
       }
 
-      if (
-        this.filters.buyerName &&
-        !order.buyerName
-          .toLowerCase()
-          .includes(this.filters.buyerName.toLowerCase())
-      ) {
-        matches = false;
+      // Filter by Buyer Name
+      if (this.filters.buyerName && this.filters.buyerName.trim()) {
+        const buyerName = order.buyerName?.toLowerCase() || "";
+        const filterValue = this.filters.buyerName.toLowerCase().trim();
+        if (!buyerName.includes(filterValue)) {
+          matches = false;
+        }
       }
 
-      if (
-        this.filters.sellerName &&
-        !order.sellerName
-          .toLowerCase()
-          .includes(this.filters.sellerName.toLowerCase())
-      ) {
-        matches = false;
+      // Filter by Seller Name
+      if (this.filters.sellerName && this.filters.sellerName.trim()) {
+        const sellerName = order.sellerName?.toLowerCase() || "";
+        const filterValue = this.filters.sellerName.toLowerCase().trim();
+        if (!sellerName.includes(filterValue)) {
+          matches = false;
+        }
       }
 
-      if (
-        this.filters.orderStatus &&
-        order.orderStatus !== this.filters.orderStatus
-      ) {
-        matches = false;
+      // Filter by Order Status
+      if (this.filters.orderStatus && this.filters.orderStatus.trim()) {
+        const orderStatus = order.orderStatus?.toLowerCase() || "";
+        const filterValue = this.filters.orderStatus.toLowerCase().trim();
+        if (orderStatus !== filterValue) {
+          matches = false;
+        }
       }
 
-      if (this.filters.createdDate) {
-        const orderDate = new Date(order.createdAt || order.orderCreatedAt)
-          .toISOString()
-          .split("T")[0];
-        if (orderDate !== this.filters.createdDate) {
+      // Filter by Created Date
+      if (this.filters.createdDate && this.filters.createdDate.trim()) {
+        const orderDate = new Date(order.createdAt || order.orderCreatedAt);
+        const filterDate = new Date(this.filters.createdDate);
+
+        // Compare only the date parts (ignore time)
+        const orderDateStr = orderDate.toISOString().split("T")[0];
+        const filterDateStr = filterDate.toISOString().split("T")[0];
+
+        if (orderDateStr !== filterDateStr) {
           matches = false;
         }
       }
 
       return matches;
     });
+  }
 
-    this.ordersDataSource.data = this.filteredOrders;
+  // Clear all filters
+  clearFilters(): void {
+    this.filters = {
+      orderId: null,
+      buyerName: "",
+      sellerName: "",
+      orderStatus: "",
+      createdDate: "",
+    };
+    this.filteredOrders = [...this.allOrders];
+  }
+
+  // Get CSS class for order status badge
+  getStatusClass(status: string): string {
+    const statusLower = status?.toLowerCase() || "";
+
+    switch (statusLower) {
+      case "initiated":
+        return "badge-initiated";
+      case "confirmed":
+        return "badge-confirmed";
+      case "preparing":
+      case "preparing_shipment":
+        return "badge-preparing";
+      case "in_transit":
+      case "delivery_in_progress":
+        return "badge-in_transit";
+      case "delivered":
+        return "badge-delivered";
+      case "cancelled":
+        return "badge-cancelled";
+      case "pending":
+        return "badge-pending";
+      default:
+        return "badge-secondary";
+    }
   }
 }

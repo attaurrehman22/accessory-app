@@ -1,371 +1,666 @@
-/* Dashboard Container */
-.dashboard-container {
-  padding: 20px;
-  background-color: #f8f9fa;
-  min-height: 100vh;
+/* AdminLTE Dashboard Styling */
+.content {
+  padding: 1rem;
 }
 
-/* Loading State */
-.loading-container {
+/* Page Title */
+.page-title {
   display: flex;
-  justify-content: center;
   align-items: center;
-  min-height: 400px;
-  background: white;
-  border-radius: 12px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  gap: 12px;
+  font-size: 1.75rem;
+  font-weight: 600;
+  color: #343a40;
+  margin-bottom: 0;
 }
 
-.loading-content {
+.page-icon {
+  font-size: 32px;
+  width: 32px;
+  height: 32px;
+  color: #007bff;
+}
+
+/* Small Box - AdminLTE Style */
+.small-box {
+  border-radius: 0.25rem;
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0.125), 0 1px 3px rgba(0, 0, 0, 0.2);
+  display: block;
+  margin-bottom: 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+.small-box > .inner {
+  padding: 10px;
+  color: #ffffff;
+}
+
+.small-box > .inner h3 {
+  font-size: 38px;
+  font-weight: bold;
+  margin: 0 0 10px 0;
+  padding: 0;
+  white-space: nowrap;
+  color: #ffffff;
+}
+
+.small-box > .inner p {
+  font-size: 16px;
+  margin: 0;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.small-box .icon {
+  color: rgba(0, 0, 0, 0.15);
+  z-index: 0;
+}
+
+.small-box .icon > mat-icon {
+  font-size: 90px;
+  position: absolute;
+  right: 15px;
+  top: 15px;
+  transition: all 0.3s linear;
+  width: 90px;
+  height: 90px;
+}
+
+.small-box:hover .icon > mat-icon {
+  font-size: 95px;
+}
+
+/* Small Box Color Variants */
+.bg-info {
+  background-color: #17a2b8 !important;
+  color: #fff !important;
+}
+
+.bg-primary {
+  background-color: #007bff !important;
+  color: #fff !important;
+}
+
+.bg-warning {
+  background-color: #ffc107 !important;
+  color: #1f2d3d !important;
+}
+
+.bg-warning > .inner h3,
+.bg-warning > .inner p {
+  color: #1f2d3d !important;
+}
+
+.bg-success {
+  background-color: #28a745 !important;
+  color: #fff !important;
+}
+
+.bg-success-light {
+  background-color: #48c774 !important;
+  color: #fff !important;
+}
+
+.bg-secondary {
+  background-color: #6c757d !important;
+  color: #fff !important;
+}
+
+.bg-purple {
+  background-color: #6f42c1 !important;
+  color: #fff !important;
+}
+
+.bg-teal {
+  background-color: #20c997 !important;
+  color: #fff !important;
+}
+
+.bg-danger {
+  background-color: #dc3545 !important;
+  color: #fff !important;
+}
+
+/* Info Box - AdminLTE Style */
+.info-box {
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0.125), 0 1px 3px rgba(0, 0, 0, 0.2);
+  border-radius: 0.25rem;
+  background-color: #ffffff;
+  display: flex;
+  margin-bottom: 1rem;
+  min-height: 80px;
+  padding: 0.5rem;
+  position: relative;
+  width: 100%;
+}
+
+.info-box-icon {
+  border-radius: 0.25rem;
+  align-items: center;
+  display: flex;
+  font-size: 1.875rem;
+  justify-content: center;
   text-align: center;
+  width: 70px;
+  color: #ffffff;
+}
+
+.info-box-icon > mat-icon {
+  font-size: 32px;
+  width: 32px;
+  height: 32px;
+}
+
+.info-box-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  line-height: 1.2;
+  flex: 1;
+  padding: 0 10px;
+}
+
+.info-box-text {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 0.875rem;
+  color: #6c757d;
+  text-transform: uppercase;
+}
+
+.info-box-number {
+  display: block;
+  font-weight: 700;
+  font-size: 1.5rem;
+  color: #212529;
+  margin-top: 0.25rem;
+}
+
+/* Card Styling - AdminLTE */
+.card {
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0.125), 0 1px 3px rgba(0, 0, 0, 0.2);
+  margin-bottom: 1rem;
+  background-color: #ffffff;
+  border-radius: 0.25rem;
+}
+
+.card-header {
+  background-color: transparent;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+  padding: 0.75rem 1.25rem;
+  position: relative;
+  border-top-left-radius: 0.25rem;
+  border-top-right-radius: 0.25rem;
+}
+
+.card-title {
+  display: flex;
+  align-items: center;
+  float: left;
+  font-size: 1.1rem;
+  font-weight: 400;
+  margin: 0;
+  line-height: 1.8rem;
+}
+
+.card-title .mr-2 {
+  margin-right: 0.5rem;
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+}
+
+.card-tools {
+  float: right;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.btn-tool {
   color: #6c757d;
 }
 
-.loading-content p {
-  margin-top: 16px;
-  font-size: 16px;
-  font-weight: 500;
+.btn-tool:hover {
+  color: #007bff;
 }
 
-/* Error State */
-.error-container {
+.card-body {
+  flex: 1 1 auto;
+  padding: 1.25rem;
+}
+
+.card-footer {
+  background-color: transparent;
+  border-top: 1px solid rgba(0, 0, 0, 0.125);
+  padding: 0.75rem 1.25rem;
+}
+
+/* Filters Container */
+.filters-container {
+  background-color: #f8f9fa;
+  padding: 1rem;
+  border-radius: 0.25rem;
+  border: 1px solid #dee2e6;
+}
+
+.filter-field {
+  font-size: 0.875rem;
+}
+
+::ng-deep .filter-field .mat-form-field-wrapper {
+  padding-bottom: 0;
+  margin-bottom: 0;
+}
+
+::ng-deep .filter-field .mat-form-field-infix {
+  padding: 0.5rem 0;
+}
+
+::ng-deep
+  .filter-field
+  .mat-form-field-appearance-outline
+  .mat-form-field-outline {
+  color: rgba(0, 0, 0, 0.12);
+}
+
+::ng-deep
+  .filter-field
+  .mat-form-field-appearance-outline.mat-focused
+  .mat-form-field-outline-thick {
+  color: #007bff;
+}
+
+.search-btn {
+  height: 56px;
+  min-width: 100px;
+}
+
+.clear-btn {
+  height: 56px;
+  width: 56px;
+  color: #dc3545;
+  flex-shrink: 0;
+}
+
+.clear-btn:hover {
+  background-color: rgba(220, 53, 69, 0.1);
+}
+
+/* Compact filters for smaller space */
+@media (max-width: 1199px) {
+  .filter-field {
+    font-size: 0.8125rem;
+  }
+
+  ::ng-deep .filter-field .mat-form-field-infix {
+    padding: 0.4rem 0;
+  }
+}
+
+/* Table Styling - AdminLTE */
+.table {
+  width: 100%;
+  margin-bottom: 0;
+  color: #212529;
+}
+
+.table thead th {
+  border-bottom: 2px solid #dee2e6;
+  border-top: 0;
+  font-weight: 600;
+  background-color: #f8f9fa;
+  padding: 0.75rem;
+  vertical-align: middle;
+}
+
+.table td,
+.table th {
+  padding: 0.75rem;
+  vertical-align: middle;
+}
+
+.table-hover tbody tr:hover {
+  background-color: rgba(0, 0, 0, 0.075);
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+  background-color: rgba(0, 0, 0, 0.025);
+}
+
+.text-nowrap {
+  white-space: nowrap;
+}
+
+.table-responsive {
+  overflow-x: auto;
+}
+
+/* Badge Styling - AdminLTE */
+.badge {
+  display: inline-block;
+  padding: 0.35em 0.65em;
+  font-size: 85%;
+  font-weight: 700;
+  line-height: 1;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  border-radius: 0.25rem;
+}
+
+.badge-initiated {
+  color: #fff;
+  background-color: #17a2b8;
+}
+
+.badge-confirmed {
+  color: #fff;
+  background-color: #28a745;
+}
+
+.badge-preparing {
+  color: #1f2d3d;
+  background-color: #ffc107;
+}
+
+.badge-in_transit {
+  color: #fff;
+  background-color: #007bff;
+}
+
+.badge-delivered {
+  color: #fff;
+  background-color: #20c997;
+}
+
+.badge-cancelled {
+  color: #fff;
+  background-color: #dc3545;
+}
+
+.badge-pending {
+  color: #856404;
+  background-color: #fff3cd;
+}
+
+/* Chart Container */
+.chart-container {
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 400px;
-  background: white;
-  border-radius: 12px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.error-content {
-  text-align: center;
-  color: #dc3545;
-  max-width: 400px;
+/* Horizontal Chart Container for Brands */
+.chart-container-horizontal {
+  width: 100%;
+  height: auto;
+  overflow: visible;
+  position: relative;
+  padding: 0;
+}
+
+.chart-responsive {
+  width: 100% !important;
+  height: auto !important;
+  display: block;
+}
+
+.chart-card-body {
+  padding: 0.75rem 1rem !important;
+  overflow: visible;
+}
+
+/* Height matching for table card */
+.h-100 {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.h-100 .card-body {
+  flex: 1;
+  overflow: hidden;
+}
+
+@media (max-width: 991px) {
+  .chart-card-body .chart-container-horizontal {
+    max-height: 500px;
+    min-height: 350px;
+  }
+}
+
+/* Icons */
+.small-icon {
+  font-size: 16px;
+  width: 16px;
+  height: 16px;
+  color: #6c757d;
+}
+
+.empty-icon {
+  font-size: 48px;
+  width: 48px;
+  height: 48px;
+  color: #6c757d;
+  opacity: 0.5;
 }
 
 .error-icon {
   font-size: 64px;
   width: 64px;
   height: 64px;
-  margin-bottom: 16px;
   color: #dc3545;
 }
 
-.error-content h3 {
-  margin-bottom: 12px;
-  color: #dc3545;
-  font-size: 24px;
-  font-weight: 600;
-}
-
-.error-content p {
-  margin-bottom: 24px;
-  color: #6c757d;
-  font-size: 16px;
-  line-height: 1.5;
-}
-
-.error-content button {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-}
-
-/* Dashboard Cards */
-.dashboard-card {
-  background: white;
-  border-radius: 12px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  margin-bottom: 20px;
-  overflow: hidden;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.dashboard-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
-}
-
-.card-header {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
-  padding: 15px 20px;
-  border-bottom: none;
-}
-
-.card-title {
-  margin: 0;
-  font-size: 18px;
-  font-weight: 600;
-}
-
-.card-body {
-  padding: 20px;
-}
-
-/* Chart Container */
-.chart-container {
-  margin-bottom: 15px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-}
-
-.chart-container highcharts-chart {
-  width: 100% !important;
-  display: flex;
-  justify-content: center;
-}
-
-/* Total Count Display */
-.total-count {
+/* Utility Classes */
+.text-center {
   text-align: center;
-  padding: 10px;
-  background: #f8f9fa;
-  border-radius: 8px;
-  border-left: 4px solid #667eea;
 }
 
-.count-label {
-  font-size: 14px;
-  color: #6c757d;
+.text-muted {
+  color: #6c757d !important;
+}
+
+.text-primary {
+  color: #007bff !important;
+}
+
+.text-danger {
+  color: #dc3545 !important;
+}
+
+.py-4 {
+  padding-top: 1.5rem !important;
+  padding-bottom: 1.5rem !important;
+}
+
+.py-5 {
+  padding-top: 3rem !important;
+  padding-bottom: 3rem !important;
+}
+
+.mt-2 {
+  margin-top: 0.5rem !important;
+}
+
+.mt-3 {
+  margin-top: 1rem !important;
+}
+
+.mb-0 {
+  margin-bottom: 0 !important;
+}
+
+.mb-2 {
+  margin-bottom: 0.5rem !important;
+}
+
+.mb-3 {
+  margin-bottom: 1rem !important;
+}
+
+.mr-1 {
+  margin-right: 0.25rem !important;
+}
+
+.mr-2 {
+  margin-right: 0.5rem !important;
+}
+
+.ml-2 {
+  margin-left: 0.5rem !important;
+}
+
+.mx-auto {
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+.d-flex {
+  display: flex !important;
+}
+
+.align-items-center {
+  align-items: center !important;
+}
+
+.align-items-start {
+  align-items: flex-start !important;
+}
+
+.float-right {
+  float: right !important;
+}
+
+.clearfix::after {
   display: block;
-  margin-bottom: 5px;
+  clear: both;
+  content: "";
 }
 
-.count-value {
-  font-size: 24px;
-  font-weight: bold;
-  color: #495057;
-}
-
-/* Revenue Stats */
-.revenue-stats {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.revenue-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 12px 15px;
-  border-radius: 8px;
-  border-left: 4px solid;
-}
-
-.revenue-item.confirmed {
-  background: #d4edda;
-  border-left-color: #28a745;
-}
-
-.revenue-item.delivered {
-  background: #cce5ff;
-  border-left-color: #007bff;
-}
-
-.revenue-item.pending {
-  background: #fff3cd;
-  border-left-color: #ffc107;
-}
-
-.revenue-item.dispute {
-  background: #f8d7da;
-  border-left-color: #dc3545;
-}
-
-.revenue-label {
-  font-size: 14px;
-  color: #495057;
-  font-weight: 500;
-}
-
-.revenue-value {
-  font-size: 18px;
-  font-weight: bold;
-  color: #212529;
-}
-
-/* Filters Container */
-.filters-container {
-  background: #f8f9fa;
-  padding: 20px;
-  border-radius: 8px;
-  margin-bottom: 20px;
-}
-
-.filter-field {
+.full-width {
   width: 100%;
-  font-size: 14px;
-}
-
-.search-btn {
-  height: 56px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-/* Orders Table */
-.table-responsive {
-  overflow-x: auto;
-}
-
-.orders-table {
-  width: 100%;
-  background: white;
-}
-
-.orders-table th {
-  background: #f8f9fa;
-  color: #495057;
-  font-weight: 600;
-  border-bottom: 2px solid #dee2e6;
-}
-
-.orders-table td {
-  border-bottom: 1px solid #dee2e6;
-  padding: 12px 8px;
-}
-
-/* Status Badges */
-.status-badge {
-  padding: 4px 12px;
-  border-radius: 20px;
-  font-size: 12px;
-  font-weight: 500;
-  text-transform: uppercase;
-}
-
-.status-pending {
-  background: #fff3cd;
-  color: #856404;
-}
-
-.status-confirmed {
-  background: #d1ecf1;
-  color: #0c5460;
-}
-
-.status-shipped {
-  background: #cce5ff;
-  color: #004085;
-}
-
-.status-delivered {
-  background: #d4edda;
-  color: #155724;
-}
-
-.status-cancelled {
-  background: #f8d7da;
-  color: #721c24;
-}
-
-.status-dispute {
-  background: #f5c6cb;
-  color: #721c24;
 }
 
 /* Responsive Design */
 @media (max-width: 768px) {
-  .dashboard-container {
-    padding: 10px;
+  .small-box > .inner h3 {
+    font-size: 28px;
   }
 
-  .revenue-stats {
-    gap: 8px;
+  .small-box .icon > mat-icon {
+    font-size: 70px;
+    width: 70px;
+    height: 70px;
   }
 
-  .revenue-item {
-    padding: 8px 12px;
+  .info-box {
+    flex-direction: column;
+    text-align: center;
   }
 
-  .filters-container .row {
-    margin: 0;
+  .info-box-icon {
+    width: 100%;
+    padding: 1rem 0;
   }
 
-  .filters-container .col-md-2 {
-    margin-bottom: 10px;
+  .info-box-content {
+    padding: 0.5rem;
+  }
+
+  .page-title {
+    font-size: 1.5rem;
+  }
+
+  .search-btn {
+    width: 100%;
+    margin-bottom: 0.5rem;
+  }
+
+  .clear-btn {
+    width: 100%;
   }
 }
 
-/* Legacy styles (keeping for compatibility) */
-.dashboard {
-  background-color: #f0f0f0;
+@media (max-width: 576px) {
+  .col-6 {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
 }
 
-.card {
-  margin: 20px;
-  width: calc(25% - 40px);
-  height: 150px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 24px;
-  font-weight: bold;
+/* Loading Spinner */
+::ng-deep .mat-spinner circle {
+  stroke: #007bff;
 }
 
-.card-border-blue {
-  border: 5px solid #3498db;
+/* Highcharts Label Overrides for Horizontal Bar Chart */
+::ng-deep .chart-container-horizontal .highcharts-container {
+  width: 100% !important;
+  height: auto !important;
+  overflow: visible !important;
 }
 
-.card-border-red {
-  border: 5px solid #e74c3c;
+::ng-deep .chart-container-horizontal svg {
+  width: 100% !important;
+  height: auto !important;
+  overflow: visible !important;
 }
 
-.card-border-green {
-  border: 5px solid #2ecc71;
+::ng-deep .chart-container-horizontal .highcharts-root {
+  width: 100% !important;
+  overflow: visible !important;
 }
 
-.card-border-purple {
-  border: 5px solid #9b59b6;
+/* Y-axis labels (brand names on left) - CRITICAL */
+::ng-deep .chart-container-horizontal .highcharts-yaxis-labels {
+  overflow: visible !important;
 }
 
-.circle {
-  margin: 20px;
-  width: 150px;
-  height: 150px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 36px;
-  font-weight: bold;
-  color: white;
-  background-color: #3498db;
-  border-radius: 50%;
+::ng-deep .chart-container-horizontal .highcharts-yaxis-labels text {
+  overflow: visible !important;
+  text-overflow: clip !important;
 }
 
-table {
-  width: 100%;
+/* X-axis labels (numbers at bottom) */
+::ng-deep .chart-container-horizontal .highcharts-xaxis-labels text {
+  overflow: visible !important;
 }
 
-th,
-td {
-  padding: 8px;
-  text-align: left;
-  border-bottom: 1px solid #ddd;
+/* Data labels on bars */
+::ng-deep .chart-container-horizontal .highcharts-data-labels {
+  overflow: visible !important;
 }
 
-th {
-  background-color: #f2f2f2;
+::ng-deep .chart-container-horizontal .highcharts-data-label text {
+  overflow: visible !important;
 }
 
-.dashBoard-card {
-  border-radius: 15px;
-  border: 3px solid whitesmoke;
-  border-left: 5px solid red;
+/* Ensure plot area doesn't clip */
+::ng-deep .chart-container-horizontal .highcharts-plot-background {
+  overflow: visible !important;
 }
 
-.center {
-  display: flex;
-  justify-content: center;
-  margin-top: 5%;
+::ng-deep .chart-container-horizontal .highcharts-plot-border {
+  overflow: visible !important;
 }
 
-.cardDataColor {
-  color: #4f4dd3;
+/* Grid lines styling */
+::ng-deep .chart-container-horizontal .highcharts-grid-line {
+  stroke: #e9ecef;
+  stroke-width: 1;
+}
+
+/* Remove clipping that hides Y-axis labels */
+::ng-deep .chart-container-horizontal .highcharts-yaxis {
+  overflow: visible !important;
+}
+
+/* Ensure labels container is visible */
+::ng-deep .chart-container-horizontal .highcharts-axis-labels {
+  overflow: visible !important;
 }

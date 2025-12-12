@@ -75,6 +75,10 @@ export class HeaderComponent {
       route: "/admin/users",
     },
     {
+      permission: "admin.vat.view",
+      route: "/admin/vat",
+    },
+    {
       permission: "admin.watch.view",
       route: "/admin/watchOfDay",
     },
@@ -228,12 +232,12 @@ export class HeaderComponent {
   }
 
   routeToAdminPannel() {
-    this.adminPermissionToRouteMatch.forEach((item) => {
+    for (const item of this.adminPermissionToRouteMatch) {
       if (this.permissionCheckService.checkPermission(item.permission)) {
         this.router.navigate([item.route]);
         return;
       }
-    });
+    }
   }
 
   isSearchActive: boolean = true;

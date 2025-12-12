@@ -677,7 +677,7 @@ export class HttpService implements OnInit {
   }
 
   getAdminDashboardOrdersByBrand(): Observable<any> {
-    return this.http.get(`${this.apiUrl}/api/admin/reports/orders-by-brand`, {
+    return this.http.get(`${this.apiUrl}/api/admin/reports/orders-by-brands`, {
       headers: {
         Accept: "application/json",
         Authorization: `Bearer ${this.token}`,
@@ -1990,4 +1990,35 @@ export class HttpService implements OnInit {
   }
 
   // ------------------------------ Public Accessories Cart APIs End here ------------------------------
+
+  // ------------------------------ VAT Management APIs Start here ------------------------------
+
+  getCurrentVat(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/api/admin/vat/active`, {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+  }
+
+  getVatHistory(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/api/admin/vat/history`, {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+  }
+
+  updateVat(formData): Observable<any> {
+    return this.http.put(`${this.apiUrl}/api/admin/vat/settings/1`, formData, {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+  }
+
+  // ------------------------------ VAT Management APIs End here ------------------------------
 }

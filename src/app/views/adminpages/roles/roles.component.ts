@@ -44,8 +44,11 @@ export class RolesComponent implements OnInit, AfterViewInit, OnDestroy {
   rolesCreatePermission = "admin.roles.create";
   rolesViewPermission = "admin.roles.view";
   dataSource: MatTableDataSource<RoleData>;
-  allData: any[] = [];
+  totalRecords: number = 0;
+  pageSize: number = 5;
+  pageIndex: number = 0;
   sidebarClickSubscription: Subscription;
+  paginatorSubscription: Subscription;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -74,49 +77,57 @@ export class RolesComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
+    // Set up sorting (client-side on current page data)
     this.dataSource.sort = this.sort;
-    this.loadRoles();
+
+    // Use setTimeout to ensure view is fully initialized
+    setTimeout(() => {
+      // Listen to paginator events for server-side pagination
+      if (this.paginator) {
+        this.paginatorSubscription = this.paginator.page.subscribe(() => {
+          this.pageIndex = this.paginator.pageIndex;
+          this.pageSize = this.paginator.pageSize;
+          this.loadRoles();
+        });
+      }
+
+      // Load initial data after setting up subscriptions
+      this.loadRoles();
+    });
   }
 
   ngOnDestroy() {
     if (this.sidebarClickSubscription) {
       this.sidebarClickSubscription.unsubscribe();
     }
+    if (this.paginatorSubscription) {
+      this.paginatorSubscription.unsubscribe();
+    }
   }
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
+    // Apply filter on current page data (client-side)
     this.dataSource.filter = filterValue.trim().toLowerCase();
-
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    }
-  }
-
-  getPaginatedData(): RoleData[] {
-    if (!this.paginator) {
-      return this.dataSource.filteredData;
-    }
-    const startIndex = this.paginator.pageIndex * this.paginator.pageSize;
-    const endIndex = startIndex + this.paginator.pageSize;
-    return this.dataSource.filteredData.slice(startIndex, endIndex);
   }
 
   loadRoles() {
-    this.http
-      .getAdminRoles(this.paginator.pageIndex + 1, this.paginator.pageSize)
-      .subscribe(
-        (res) => {
-          this.allData = res.data.data;
-          this.dataSource = new MatTableDataSource(this.allData);
-          this.dataSource.paginator = this.paginator;
-          this.dataSource.sort = this.sort;
-        },
-        (error) => {
-          this.toast.showAlert("danger", "Failed to load roles");
-        }
-      );
+    // Server-side pagination: send current page and pageSize to API
+    const page = this.pageIndex + 1; // API expects 1-based page numbering
+    const perPage = this.pageSize;
+
+    this.http.getAdminRoles(page, perPage).subscribe(
+      (res) => {
+        // Update table data with current page results
+        this.dataSource.data = res.data.data;
+
+        // Update total records count (bound to paginator via HTML [length] binding)
+        this.totalRecords = res.data.total || res.data.data.length;
+      },
+      (error) => {
+        this.toast.showAlert("danger", "Failed to load roles");
+      }
+    );
   }
 
   isAdmin(): boolean {

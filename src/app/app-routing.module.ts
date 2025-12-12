@@ -52,6 +52,7 @@ import { BuyOrderDetailsComponent } from "./views/website/my-listing/buy-order-d
 import { RolesComponent } from "./views/adminpages/roles/roles.component";
 import { CreateRoleComponent } from "./views/adminpages/roles/create-role/create-role.component";
 import { ChronosouqUsersComponent } from "./views/adminpages/chronosouq-users/chronosouq-users.component";
+import { AdminVatComponent } from "./views/adminpages/admin-vat/admin-vat.component";
 
 const routes: Routes = [
   { path: "login", component: LoginComponent },
@@ -187,6 +188,11 @@ const routes: Routes = [
     canActivate: [adminGuard],
     path: "admin/roles/edit/:id",
     component: CreateRoleComponent,
+  },
+  {
+    canActivate: [adminGuard],
+    path: "admin/vat",
+    component: AdminVatComponent,
   },
 
   { path: "accessories/home", component: AccessoriesHomeComponent },

@@ -165,6 +165,7 @@ import { RolesComponent } from "./views/adminpages/roles/roles.component";
 import { CreateRoleComponent } from "./views/adminpages/roles/create-role/create-role.component";
 import { ChronosouqUsersComponent } from "./views/adminpages/chronosouq-users/chronosouq-users.component";
 import { CreateUserComponent } from "./views/adminpages/chronosouq-users/create-user/create-user.component";
+import { AdminVatComponent } from "./views/adminpages/admin-vat/admin-vat.component";
 
 @NgModule({
   declarations: [
@@ -264,6 +265,7 @@ import { CreateUserComponent } from "./views/adminpages/chronosouq-users/create-
     CreateRoleComponent,
     ChronosouqUsersComponent,
     CreateUserComponent,
+    AdminVatComponent,
   ],
   imports: [
     MatSortModule,

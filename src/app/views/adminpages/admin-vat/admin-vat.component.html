@@ -1,0 +1,271 @@
+<div class="content">
+  <div class="container-fluid">
+    <!-- Page Header -->
+    <div class="row mb-3">
+      <div class="col-12">
+        <h1 class="page-title">
+          <mat-icon class="page-icon">percent</mat-icon>
+          VAT Management
+        </h1>
+        <p class="page-subtitle">
+          Manage Value Added Tax (VAT) percentage for future product listings
+        </p>
+      </div>
+    </div>
+
+    <!-- Loading State -->
+    <div *ngIf="isLoading" class="row">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-body text-center py-5">
+            <mat-spinner diameter="50" class="mx-auto"></mat-spinner>
+            <p class="mt-3 text-muted">Loading VAT data...</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div *ngIf="!isLoading">
+      <!-- Current VAT Information Card -->
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <div class="card card-primary card-outline">
+            <div class="card-header">
+              <h3 class="card-title">
+                <mat-icon class="mr-2">info</mat-icon>
+                Current VAT Configuration
+              </h3>
+            </div>
+            <div class="card-body">
+              <div *ngIf="currentVat" class="vat-info">
+                <div class="info-row">
+                  <span class="info-label">
+                    <mat-icon>percent</mat-icon>
+                    Current VAT Rate:
+                  </span>
+                  <span class="info-value vat-percentage">
+                    {{ currentVat.vat_percentage }}%
+                  </span>
+                </div>
+
+                <div class="info-row">
+                  <span class="info-label">
+                    <mat-icon>calendar_today</mat-icon>
+                    Last Modified:
+                  </span>
+                  <span class="info-value">
+                    {{ currentVat.updated_at | date : "medium" }}
+                  </span>
+                </div>
+
+                <div class="info-row">
+                  <span class="info-label">
+                    <mat-icon>person</mat-icon>
+                    Modified By:
+                  </span>
+                  <span class="info-value">
+                    {{ currentVat.updated_by_name || "System" }}
+                  </span>
+                </div>
+              </div>
+
+              <div *ngIf="!currentVat" class="text-center text-muted py-4">
+                <mat-icon class="empty-icon">info_outline</mat-icon>
+                <p class="mt-2">No VAT rate has been set yet.</p>
+                <p class="small">
+                  Use the form below to set the initial VAT rate.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Update VAT Form Card -->
+        <div class="col-md-6 mb-3">
+          <div class="card card-success card-outline">
+            <div class="card-header">
+              <h3 class="card-title">
+                <mat-icon class="mr-2">edit</mat-icon>
+                Update VAT Rate
+              </h3>
+            </div>
+            <div class="card-body">
+              <form [formGroup]="vatForm" (ngSubmit)="onSubmit()">
+                <mat-form-field appearance="outline" class="full-width">
+                  <mat-label>VAT Percentage (%)</mat-label>
+                  <input
+                    matInput
+                    type="number"
+                    formControlName="percentage"
+                    placeholder="Enter VAT percentage (e.g., 5, 10, 15)"
+                    min="0"
+                    max="100"
+                    step="0.01"
+                    required
+                    [readonly]="!canUpdate"
+                  />
+                  <mat-icon matPrefix>percent</mat-icon>
+                  <mat-hint>Enter a value between 0 and 100</mat-hint>
+                  <mat-error *ngIf="percentage?.hasError('required')">
+                    VAT percentage is required
+                  </mat-error>
+                  <mat-error *ngIf="percentage?.hasError('min')">
+                    VAT percentage cannot be less than 0
+                  </mat-error>
+                  <mat-error *ngIf="percentage?.hasError('max')">
+                    VAT percentage cannot exceed 100
+                  </mat-error>
+                  <mat-error *ngIf="percentage?.hasError('pattern')">
+                    Please enter a valid number with up to 2 decimal places
+                  </mat-error>
+                </mat-form-field>
+
+                <div class="alert alert-warning">
+                  <mat-icon class="alert-icon">warning</mat-icon>
+                  <span>
+                    <strong>Important:</strong> Changing the VAT rate will only
+                    affect new product listings created after this change.
+                    Existing listings will retain their original VAT rate.
+                  </span>
+                </div>
+
+                <div class="form-actions">
+                  <button
+                    mat-raised-button
+                    color="primary"
+                    type="submit"
+                    [disabled]="isSubmitting || !canUpdate || vatForm.invalid"
+                    class="btn-submit"
+                  >
+                    <mat-icon *ngIf="!isSubmitting">save</mat-icon>
+                    <mat-spinner
+                      *ngIf="isSubmitting"
+                      diameter="20"
+                      class="button-spinner"
+                    ></mat-spinner>
+                    {{ isSubmitting ? "Updating..." : "Update VAT" }}
+                  </button>
+
+                  <button
+                    mat-raised-button
+                    type="button"
+                    (click)="onReset()"
+                    [disabled]="isSubmitting || !canUpdate"
+                    class="btn-reset"
+                  >
+                    <mat-icon>refresh</mat-icon>
+                    Reset
+                  </button>
+                </div>
+
+                <div *ngIf="!canUpdate" class="alert alert-danger mt-3 mb-0">
+                  <mat-icon class="alert-icon">lock</mat-icon>
+                  <span>
+                    You do not have permission to update VAT rates. Contact your
+                    administrator if you need access.
+                  </span>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- VAT History Card -->
+      <div class="row">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">
+                <mat-icon class="mr-2">history</mat-icon>
+                VAT Change History
+              </h3>
+              <div class="card-tools">
+                <button
+                  mat-icon-button
+                  (click)="loadVatHistory()"
+                  matTooltip="Refresh history"
+                  [disabled]="isLoadingHistory"
+                >
+                  <mat-icon>refresh</mat-icon>
+                </button>
+              </div>
+            </div>
+            <div class="card-body table-responsive p-0">
+              <!-- Loading State for History -->
+              <div *ngIf="isLoadingHistory" class="text-center py-4">
+                <mat-spinner diameter="40" class="mx-auto"></mat-spinner>
+                <p class="mt-3 text-muted">Loading history...</p>
+              </div>
+
+              <!-- History Table -->
+              <table
+                *ngIf="!isLoadingHistory"
+                class="table table-hover table-striped text-nowrap"
+              >
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Old VAT Percentage</th>
+                    <th>New VAT Percentage</th>
+                    <th>Updated By</th>
+                    <th>Date & Time</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let vat of vatHistory">
+                    <td>
+                      <span class="badge badge-secondary">{{ vat.id }}</span>
+                    </td>
+                    <td>
+                      <strong class="text-primary"
+                        >{{ vat.old_vat_percentage || 0 }}%</strong
+                      >
+                    </td>
+                    <td>
+                      <strong class="text-primary"
+                        >{{ vat.new_vat_percentage || 0 }}%</strong
+                      >
+                    </td>
+                    <td>
+                      <div class="d-flex align-items-center">
+                        <mat-icon class="mr-1 small-icon">person</mat-icon>
+                        {{
+                          vat.updated_by_name || vat.changed_by.name || "System"
+                        }}
+                      </div>
+                    </td>
+                    <td>
+                      <div class="d-flex align-items-center">
+                        <mat-icon class="mr-1 small-icon">schedule</mat-icon>
+                        {{ vat.created_at | date : "medium" }}
+                      </div>
+                    </td>
+                  </tr>
+
+                  <tr *ngIf="vatHistory.length === 0">
+                    <td colspan="4" class="text-center text-muted py-4">
+                      <mat-icon class="empty-icon">inbox</mat-icon>
+                      <p class="mt-2">No VAT history available</p>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div
+              *ngIf="!isLoadingHistory && vatHistory.length > 0"
+              class="card-footer clearfix"
+            >
+              <div class="float-right">
+                <span class="text-muted">
+                  Total Records: {{ vatHistory.length }}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

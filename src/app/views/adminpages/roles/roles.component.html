@@ -35,67 +35,109 @@
           </div>
           <!-- /.card-header -->
           <div class="card-body table-responsive p-0">
-            <table class="table table-hover text-nowrap">
-              <thead>
-                <tr>
-                  <th>ID</th>
-                  <th>Role Name</th>
-                  <th>Permissions</th>
-                  <th>Created Date</th>
-                  <th>Last Updated Date</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let row of getPaginatedData()">
-                  <td>{{ row.id }}</td>
-                  <td>
-                    <strong>{{ row.name }}</strong>
-                  </td>
-                  <td>
-                    <span class="badge badge-info">{{
-                      row.permissions.length || 0
-                    }}</span>
-                  </td>
-                  <td>{{ row.created_at | date : "medium" }}</td>
-                  <td>{{ row.updated_at | date : "medium" }}</td>
-                  <td>
-                    <button
-                      mat-icon-button
-                      [hidden]="!doPermissionCheck(rolesUpdatePermission)"
-                      class="btn-action btn-edit"
-                      (click)="editRole(row)"
-                      matTooltip="Edit Role"
-                    >
-                      <mat-icon>edit</mat-icon>
-                    </button>
-                    <button
-                      mat-icon-button
-                      [hidden]="!doPermissionCheck(rolesDeletePermission)"
-                      class="btn-action btn-delete"
-                      (click)="deleteRole(row)"
-                      matTooltip="Delete Role"
-                    >
-                      <mat-icon>delete</mat-icon>
-                    </button>
-                  </td>
-                </tr>
-                <tr *ngIf="getPaginatedData().length === 0">
-                  <td colspan="6" class="text-center text-muted py-4">
-                    <span *ngIf="input.value"
-                      >No roles matching the filter "{{ input.value }}"</span
-                    >
-                    <span *ngIf="!input.value">No roles available</span>
-                  </td>
-                </tr>
-              </tbody>
+            <table
+              mat-table
+              [dataSource]="dataSource"
+              matSort
+              class="table table-hover text-nowrap"
+            >
+              <!-- ID Column -->
+              <ng-container matColumnDef="id">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
+                <td mat-cell *matCellDef="let row">{{ row.id }}</td>
+              </ng-container>
+
+              <!-- Name Column -->
+              <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                  Role Name
+                </th>
+                <td mat-cell *matCellDef="let row">
+                  <strong>{{ row.name }}</strong>
+                </td>
+              </ng-container>
+
+              <!-- Permissions Column -->
+              <ng-container matColumnDef="permissions">
+                <th mat-header-cell *matHeaderCellDef>Permissions</th>
+                <td mat-cell *matCellDef="let row">
+                  <span class="badge badge-info">{{
+                    row.permissions.length || 0
+                  }}</span>
+                </td>
+              </ng-container>
+
+              <!-- Created Date Column -->
+              <ng-container matColumnDef="created_at">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                  Created Date
+                </th>
+                <td mat-cell *matCellDef="let row">
+                  {{ row.created_at | date : "medium" }}
+                </td>
+              </ng-container>
+
+              <!-- Updated Date Column -->
+              <ng-container matColumnDef="updated_at">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                  Last Updated Date
+                </th>
+                <td mat-cell *matCellDef="let row">
+                  {{ row.updated_at | date : "medium" }}
+                </td>
+              </ng-container>
+
+              <!-- Actions Column -->
+              <ng-container matColumnDef="actions">
+                <th mat-header-cell *matHeaderCellDef>Actions</th>
+                <td mat-cell *matCellDef="let row">
+                  <button
+                    mat-icon-button
+                    [hidden]="!doPermissionCheck(rolesUpdatePermission)"
+                    class="btn-action btn-edit"
+                    (click)="editRole(row)"
+                    matTooltip="Edit Role"
+                  >
+                    <mat-icon>edit</mat-icon>
+                  </button>
+                  <button
+                    mat-icon-button
+                    [hidden]="!doPermissionCheck(rolesDeletePermission)"
+                    class="btn-action btn-delete"
+                    (click)="deleteRole(row)"
+                    matTooltip="Delete Role"
+                  >
+                    <mat-icon>delete</mat-icon>
+                  </button>
+                </td>
+              </ng-container>
+
+              <!-- Table Rows -->
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+
+              <!-- No Data Row -->
+              <tr class="mat-row" *matNoDataRow>
+                <td
+                  class="mat-cell text-center text-muted py-4"
+                  [attr.colspan]="displayedColumns.length"
+                >
+                  <span *ngIf="input.value"
+                    >No roles matching the filter "{{ input.value }}"</span
+                  >
+                  <span *ngIf="!input.value">No roles available</span>
+                </td>
+              </tr>
             </table>
           </div>
           <!-- /.card-body -->
           <div class="card-footer clearfix">
             <mat-paginator
               #paginator
-              [pageSizeOptions]="[5, 10, 20]"
+              [length]="totalRecords"
+              [pageSize]="pageSize"
+              [pageIndex]="pageIndex"
+              [pageSizeOptions]="[5, 10, 20, 50]"
               showFirstLastButtons
             ></mat-paginator>
           </div>
