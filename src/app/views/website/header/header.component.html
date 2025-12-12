@@ -38,11 +38,13 @@
             >
               <div class="input-group">
                 <input
+                  #smallScreenSearchInput
                   [(ngModel)]="searchQuery"
                   class="form-control me-2"
                   type="search"
                   placeholder="Search "
                   aria-label="Search"
+                  (click)="onSearchInputClick()"
                   (click)="onSearchInputClick()"
                 />
                 <button
@@ -117,7 +119,7 @@
 
             <div class="route-groups" *ngIf="isUserLogin === 'true'">
               <div
-                routerLink="/myListing/profile"
+                routerLink="/myprofile"
                 class="d-flex gap-2 align-items-center cursor-pointer"
               >
                 <img src="assets/images/black_profile.svg" alt="Profile" />
@@ -325,6 +327,7 @@
             >
               <div class="input-group">
                 <input
+                  #largeScreenSearchInput
                   [(ngModel)]="searchQuery"
                   class="form-control me-2"
                   type="search"
@@ -378,7 +381,7 @@
             <a
               mat-menu-item
               *ngIf="isUserLogin === 'true'"
-              routerLink="/myListing"
+              routerLink="/myprofile"
             >
               {{ "header.settings" | translate }}
             </a>

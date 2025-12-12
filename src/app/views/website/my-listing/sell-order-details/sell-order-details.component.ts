@@ -683,7 +683,7 @@ export class SellOrderDetailsComponent implements OnInit {
 
 
   setActive() {
-    this.router.navigate(['/myListing/sell/order'])
+    this.router.navigate(['/myprofile/sell/order'])
   }
 
   routeToChat() {

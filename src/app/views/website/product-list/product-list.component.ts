@@ -1,6 +1,7 @@
 import { Component, ElementRef, HostListener, OnInit, ViewChild } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { TranslateService } from "@ngx-translate/core";
+import { Observable } from "rxjs";
 import { environment } from "src/environments/environment";
 import { HttpService } from "src/services/http/http.service";
 import { LanguageService } from "src/services/lang-service/language.service";
@@ -30,37 +31,46 @@ export class ProductListComponent implements OnInit {
   beminprice:number=0
   bemaxprice:number=0
 
-  getFilteredData(){
-    this.http.getFilteredData().subscribe(
-      (res)=>{
-        this.categories=res.top_categories;
-        if(res?.min_price){
-          this.min=Math.round(res.min_price);
-          this.currentValue = this.min; 
-          this.beminprice=this.min
-        }else{
-          this.min = 1000;
-        }
-        if(res?.max_price){
-          this.max=Math.round(res.max_price);
-          this.bemaxprice=this.max
-        }else{
-          this.max = 3000;
-        }
+  async getFilteredData() {
+    try {
+      const res: any = await this.http.getFilteredData().toPromise();
+  
+      this.categories = res.top_categories;
+  
+      if (res?.min_price) {
+        this.min = Math.round(res.min_price);
+        this.currentValue = this.min;
+        this.beminprice = this.min;
+      } else {
+        this.min = 1000;
+        this.currentValue = this.min;
+        this.beminprice = this.min;
       }
-    )
+  
+      if (res?.max_price) {
+        this.max = Math.round(res.max_price);
+        this.bemaxprice = this.max;
+      } else {
+        this.max = 3000;
+        this.bemaxprice = this.max;
+      }
+  
+    } catch (err) {
+      console.error(err);
+    }
   }
+  
 
   isFiltereredSearchQueryIsShow:boolean=false;
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     this.getAllCategories();
-    this.getFilteredData()
+    await this.getFilteredData(); // Wait for min/max prices to be set
     this.isUserLogin = localStorage.getItem("isLoggedIn");
     if (this.isUserLogin === "true") {
       this.getWishList();
     }
-    this.route.queryParams.subscribe((params) => {
+    this.route.queryParams.subscribe(async (params) => {
       this.searchQuery = params['query'] || '';  // Read query parameter, or default to an empty string
       if(this.searchQuery){
          this.isFiltereredSearchQueryIsShow=true;
@@ -68,6 +78,10 @@ export class ProductListComponent implements OnInit {
       this.featured = params['name'] === 'featured';  // Check if 'name' is 'featured' and set the flag
       if(this.featured){
         this.watchTypes[1].selected = true;
+      }
+      // Ensure getFilteredData is complete before applying filters
+      if (!this.min || !this.max) {
+        await this.getFilteredData();
       }
       this.applyFilters();
     });
@@ -114,12 +128,15 @@ export class ProductListComponent implements OnInit {
   }
 
   wishList: any;
-  getWishList() {
-    this.http.getWishList().subscribe((res) => {
+  async getWishList() {
+    try {
+      const res: any = await this.http.getWishList().toPromise();
       this.wishList = res?.data;
-    });
+    } catch (err) {
+      console.error(err);
+    }
   }
-
+  
   addWishList(watch) {
     const formData = {
       product_id: watch.id,
@@ -131,23 +148,24 @@ export class ProductListComponent implements OnInit {
     });
   }
 
-  getAllCategories() {
-    this.http.getCategoryDropDown().subscribe(
-      (res) => {
-        this.categories = res?.data;
-      },
-      (err) => {}
-    );
-  }
+  async getAllCategories() {
+    try {
+      const res: any = await this.http.getCategoryDropDown().toPromise();
+      this.categories = res?.data;
+    } catch (err) {
+      console.error(err);
+    }
+  }  
 
   clearFilters(){
     this.isFiltereredOptionIsShow=false
     this.categories.forEach(category => (category.selected = false));
     this.watchTypes.forEach(type => (type.selected = false));
-    // this.priceRange = { from: 200, to: 50000 };
-      // Optionally, update slider UI if used
-    this.currentValue = 200; // Update the "From" value on the slider
-    // this.currentPercentage = 0
+    // Reset to backend values (beminprice and bemaxprice)
+    this.min = this.beminprice;
+    this.max = this.bemaxprice;
+    this.currentValue = this.beminprice; // Reset to backend min price
+    // Reset slider percentages based on backend values
     this.minPercentage = 0; // Left thumb position (percentage)
     this.maxPercentage = 100; // Right thumb position (percentage)
     this.removeSearchQuery();
@@ -323,7 +341,7 @@ export class ProductListComponent implements OnInit {
     });
   }
 
-  priceRange = { from: 200, to: 50000 };
+  priceRange = { from: 0, to: 0 };
 
 
   isShowFilters:boolean=false;
@@ -332,8 +350,8 @@ export class ProductListComponent implements OnInit {
    this.isShowFilters=!this.isShowFilters;
   }
 
-  min = 200; 
-  max = 50000;
+  min = 0; 
+  max = 0;
   currentValue = this.min; 
   minPercentage = 0; // Left thumb position (percentage)
   maxPercentage = 100; // Right thumb position (percentage)
@@ -375,3 +393,4 @@ export class ProductListComponent implements OnInit {
   }
 
 }
+

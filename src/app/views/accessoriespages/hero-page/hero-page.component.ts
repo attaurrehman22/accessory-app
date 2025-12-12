@@ -21,6 +21,7 @@ import { TranslateService } from "@ngx-translate/core";
 import { Subscription } from "rxjs";
 import { HttpClient } from "@angular/common/http";
 import { ShoppingCartComponent } from "../../modal/shopping-cart/shopping-cart.component";
+import { AlertsServicesService } from "src/services/alerts-service/alerts-services.service";
 import { environment } from "src/environments/environment";
 
 @Component({
@@ -132,7 +133,7 @@ export class HeroPageComponent {
   }
 
   goToCart() {
-    this.router.navigate(["/myListing"], {
+    this.router.navigate(["/myprofile"], {
       state: {
         activeRouteType: "cart",
       },
@@ -163,7 +164,8 @@ export class HeroPageComponent {
     private cdRef: ChangeDetectorRef,
     private dialog: MatDialog,
     private http: HttpService,
-    private httpps: HttpClient
+    private httpps: HttpClient,
+    private alertService: AlertsServicesService
   ) {
     const languagevalues = this.supportLanguages.map((lang) => lang.value);
     this.translateService.addLangs(languagevalues);
@@ -336,11 +338,22 @@ export class HeroPageComponent {
   }
 
   onSearch(query: string) {
+    // Validate if search query is empty or just whitespace
+    if (!query || !query.trim()) {
+      this.alertService.showAlert(
+        "warning",
+        this.translateService.instant("header.search_empty_error")
+      );
+      return;
+    }
+
     if (this.search3MenuTrigger && this.search3MenuTrigger.menuOpen) {
       this.search3MenuTrigger.closeMenu();
     }
-    this.searchService.changeSearchQuery(query);
-    this.router.navigate(["/product-list"], { queryParams: { query } });
+    this.searchService.changeSearchQuery(query.trim());
+    this.router.navigate(["/product-list"], {
+      queryParams: { query: query.trim() },
+    });
 
     this.isShowSearchField = false;
     this.searchQuery = "";
@@ -421,29 +434,29 @@ export class HeroPageComponent {
   }
 
   userListing() {
-    this.router.navigate(["/myListing"]);
+    this.router.navigate(["/myprofile"]);
   }
 
   goToFavorites() {
-    this.router.navigate(["myListing"], {
+    this.router.navigate(["myprofile"], {
       state: { activeRouteType: "Favorites" },
     });
   }
 
   goToBuyOrders() {
-    this.router.navigate(["myListing"], {
+    this.router.navigate(["myprofile"], {
       state: { activeRouteType: "buyOrders" },
     });
   }
 
   goToSellOrders() {
-    this.router.navigate(["myListing"], {
+    this.router.navigate(["myprofile"], {
       state: { activeRouteType: "sellOrders" },
     });
   }
 
   goToMyListings() {
-    this.router.navigate(["myListing"], {
+    this.router.navigate(["myprofile"], {
       state: { activeRouteType: "myListings" },
     });
   }

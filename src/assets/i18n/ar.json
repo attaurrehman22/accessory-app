@@ -28,6 +28,7 @@
     "myListings": "قوائمي",
     "Sign_Out": "تسجيل الخروج",
     "cart": "عربة التسوق",
+    "search_empty_error": "يرجى إدخال كلمة البحث",
     "Watch-Straps": "- أحزمة الساعات",
     "Snake-Skin-Watch-Straps": "أحزمة ساعات من جلد الأفعى",
     "Snake-Skin-Watch-Straps-para": "أحزمتنا المصنوعة من جلد الأفعى مصنوعة من جلد أفعى نقي مستورد من مزارع مسجلة في الصين وفيتنام. هذه الأحزمة ليست من الجلد المطبوع أو المحفور، بل هي جلد طبيعي نادر بنسبة 100٪.",
@@ -65,8 +66,11 @@
     "password": "كلمة المرور",
     "enter_password": "أدخل كلمة المرور",
     "password_required": "أدخل كلمة المرور",
-    "password_minlength": "يجب أن تحتوي كلمة المرور على 6 أحرف على الأقل",
+    "password_minlength": "يجب أن تحتوي كلمة المرور على 10 أحرف على الأقل",
     "password_maxlength": "لا يمكن أن تتجاوز كلمة المرور 30 حرفًا",
+    "password_uppercase_required": "يجب أن تحتوي كلمة المرور على حرف كبير واحد على الأقل",
+    "password_number_required": "يجب أن تحتوي كلمة المرور على رقم واحد على الأقل",
+    "password_special_char_required": "يجب أن تحتوي كلمة المرور على حرف خاص واحد على الأقل",
     "confirm_password": "تأكيد كلمة المرور",
     "confirm_password_required": "أدخل تأكيد كلمة المرور",
     "password_mismatch": "كلمة المرور وتأكيد كلمة المرور غير متطابقين",
@@ -308,6 +312,7 @@
     "reference_number": "رقم المرجع"
   },
   "create_product_listing": {
+    "serial_no_invalid": "يجب أن يحتوي الرقم التسلسلي على أحرف وأرقام فقط.",
     "Images": "الصور",
     "label": "إنشاء قائمة المنتج",
     "listing_details": "تفاصيل الإدراج",

@@ -86,7 +86,7 @@ export class SellOrderComponent implements OnInit{
   }
 
   detailListing(listing: any) {
-    this.router.navigate(['/myListing/sell/order/details'], { queryParams: { id: listing.id } });
+    this.router.navigate(['/myprofile/sell/order/details'], { queryParams: { id: listing.id } });
   }
   
 }

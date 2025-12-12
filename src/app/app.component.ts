@@ -92,6 +92,11 @@ export class AppComponent implements OnInit {
     "/admin/roles",
     "/admin/roles/create",
     "/admin/chronosouq-users",
+    ,
+    "/admin/reports",
+    "/admin/report-details",
+    "/admin/orders",
+    "/admin/order-details",
   ];
   routesToHideforAdmin = [
     "/login",

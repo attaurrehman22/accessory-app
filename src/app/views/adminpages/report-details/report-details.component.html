@@ -1,0 +1,363 @@
+<div class="report-details-container">
+  <div class="header-section">
+    <h2>Report Details</h2>
+    <button mat-icon-button (click)="close()" class="close-btn">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <div *ngIf="isLoading" class="loading-container">
+    <mat-spinner></mat-spinner>
+    <p>Loading report details...</p>
+  </div>
+
+  <div *ngIf="!isLoading && report" class="report-content">
+    <!-- Report Overview -->
+    <div class="section">
+      <h3>Report Overview</h3>
+      <div class="info-grid">
+        <div class="info-item">
+          <label>Report ID:</label>
+          <span>{{ report.id }}</span>
+        </div>
+        <div class="info-item">
+          <label>Type:</label>
+          <span [class]="'badge ' + getTypeClass(report.type)">{{ report.type }}</span>
+        </div>
+        <div class="info-item">
+          <label>Status:</label>
+          <span [class]="'badge ' + getStatusClass(report.status)">{{ report.status }}</span>
+        </div>
+        <div class="info-item">
+          <label>Created At:</label>
+          <span>{{ formatDate(report.created_at) }}</span>
+        </div>
+        <div class="info-item" *ngIf="report.order_id">
+          <label>Order ID:</label>
+          <span>{{ report.order_id }}</span>
+        </div>
+        <div class="info-item" *ngIf="report.updated_at">
+          <label>Last Updated:</label>
+          <span>{{ formatDate(report.updated_at) }}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Reporter Information -->
+    <div class="section">
+      <h3>Reporter Information</h3>
+      <div class="info-grid">
+        <div class="info-item">
+          <label>Name:</label>
+          <span>{{ report.reporter?.name || report.reporter_name || ('User #' + report.reporter_id) }}</span>
+        </div>
+        <div class="info-item">
+          <label>User ID:</label>
+          <span>{{ report.reporter_id }}</span>
+        </div>
+        <div class="info-item" *ngIf="report.reporter?.email">
+          <label>Email:</label>
+          <span>{{ report.reporter.email }}</span>
+        </div>
+        <div class="info-item" *ngIf="report.reporter?.type">
+          <label>Role:</label>
+          <span>{{ report.reporter.type }}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Reported User Information -->
+    <div class="section">
+      <h3>Reported User Information</h3>
+      <div class="info-grid">
+        <div class="info-item">
+          <label>Name:</label>
+          <span>{{ report.reported_user?.name || report.reported_user_name || ('User #' + report.reported_user_id) }}</span>
+        </div>
+        <div class="info-item">
+          <label>User ID:</label>
+          <span>{{ report.reported_user_id }}</span>
+        </div>
+        <div class="info-item" *ngIf="report.reported_user?.email">
+          <label>Email:</label>
+          <span>{{ report.reported_user.email }}</span>
+        </div>
+        <div class="info-item" *ngIf="report.reported_user?.type">
+          <label>Role:</label>
+          <span>{{ report.reported_user.type }}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Order Information -->
+    <div class="section" *ngIf="report.order_id && report.order">
+      <h3>Related Order Information</h3>
+      <div class="info-grid">
+        <div class="info-item">
+          <label>Order ID:</label>
+          <span>{{ report.order.id || report.order_id }}</span>
+        </div>
+        <div class="info-item" *ngIf="report.order?.status">
+          <label>Order Status:</label>
+          <span>{{ report.order.status }}</span>
+        </div>
+        <div class="info-item" *ngIf="report.order?.product">
+          <label>Product:</label>
+          <span>{{ report.order.product.name || "N/A" }}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Description -->
+    <div class="section">
+      <h3>Description</h3>
+      <div class="description-box">
+        <p>{{ report.description }}</p>
+      </div>
+    </div>
+
+    <!-- Attachments -->
+    <div class="section" *ngIf="hasAttachments()">
+      <h3>Attachments</h3>
+      <div class="attachments-grid">
+        <div *ngFor="let attachment of getAttachmentsList()" class="attachment-item">
+          <img
+            *ngIf="isImage(attachment)"
+            [src]="getAttachmentUrl(attachment)"
+            alt="Attachment"
+            class="attachment-image"
+            (click)="openImage(getAttachmentUrl(attachment))"
+          />
+          <div *ngIf="!isImage(attachment)" class="attachment-file">
+            <mat-icon>description</mat-icon>
+            <a [href]="getAttachmentUrl(attachment)" target="_blank" class="file-link">
+              {{ getFileName(attachment) }}
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Chat Section -->
+    <div class="section chat-section" *ngIf="report">
+      <h3>Chat Messages</h3>
+      
+      <div *ngIf="isLoadingChat" class="loading-container">
+        <mat-spinner [diameter]="30"></mat-spinner>
+        <p>Loading chat...</p>
+      </div>
+
+      <div *ngIf="!isLoadingChat" class="chat-container">
+        <!-- Chat Messages -->
+        <div class="chat-messages-container" #chatContainer>
+          <div *ngFor="let message of getReversedChatMessages()" class="chat-message-wrapper">
+            <!-- System Generated Message (Centered) -->
+            <div *ngIf="isSystemMessage(message)" class="chat-message system-message">
+              <div class="message-content system-content">
+                <p>{{ message.message }}</p>
+                <small class="message-time">{{ formatChatTime(message.created_at) }}</small>
+              </div>
+            </div>
+
+            <!-- Buyer Message (Left Side - BTS) -->
+            <div *ngIf="!isSystemMessage(message) && isBuyerMessage(message)" class="chat-message buyer-message">
+              <div class="message-content buyer-content">
+                <p *ngIf="message.message">{{ message.message }}</p>
+                
+                <!-- Attachments -->
+                <div class="d-flex gap-2" *ngIf="message.attachments">
+                  <ng-container *ngIf="!isArray(message.attachments)">
+                    <ng-container [ngSwitch]="getAttachmentType(message.attachments)">
+                      <img *ngSwitchCase="'image'" [src]="getAttachmentUrl(message.attachments)" class="chat-attachment" alt="Attachment" />
+                      <video *ngSwitchCase="'video'" [src]="getAttachmentUrl(message.attachments)" class="chat-attachment" controls></video>
+                    </ng-container>
+                  </ng-container>
+                  <ng-container *ngIf="isArray(message.attachments)">
+                    <ng-container *ngFor="let attachment of message.attachments">
+                      <ng-container [ngSwitch]="getAttachmentType(attachment)">
+                        <img *ngSwitchCase="'image'" [src]="getAttachmentUrl(attachment)" class="chat-attachment" alt="Attachment" />
+                        <video *ngSwitchCase="'video'" [src]="getAttachmentUrl(attachment)" class="chat-attachment" controls></video>
+                      </ng-container>
+                    </ng-container>
+                  </ng-container>
+                </div>
+
+                <small class="message-time">{{ formatChatTime(message.created_at) }}</small>
+              </div>
+              <div class="message-label buyer-label">Buyer</div>
+            </div>
+
+            <!-- Seller Message (Right Side - STB) -->
+            <div *ngIf="!isSystemMessage(message) && isSellerMessage(message)" class="chat-message seller-message">
+              <div class="message-label seller-label">Seller</div>
+              <div class="message-content seller-content">
+                <p *ngIf="message.message">{{ message.message }}</p>
+                
+                <!-- Attachments -->
+                <div class="d-flex gap-2" *ngIf="message.attachments">
+                  <ng-container *ngIf="!isArray(message.attachments)">
+                    <ng-container [ngSwitch]="getAttachmentType(message.attachments)">
+                      <img *ngSwitchCase="'image'" [src]="getAttachmentUrl(message.attachments)" class="chat-attachment" alt="Attachment" />
+                      <video *ngSwitchCase="'video'" [src]="getAttachmentUrl(message.attachments)" class="chat-attachment" controls></video>
+                    </ng-container>
+                  </ng-container>
+                  <ng-container *ngIf="isArray(message.attachments)">
+                    <ng-container *ngFor="let attachment of message.attachments">
+                      <ng-container [ngSwitch]="getAttachmentType(attachment)">
+                        <img *ngSwitchCase="'image'" [src]="getAttachmentUrl(attachment)" class="chat-attachment" alt="Attachment" />
+                        <video *ngSwitchCase="'video'" [src]="getAttachmentUrl(attachment)" class="chat-attachment" controls></video>
+                      </ng-container>
+                    </ng-container>
+                  </ng-container>
+                </div>
+
+                <small class="message-time">{{ formatChatTime(message.created_at) }}</small>
+              </div>
+            </div>
+          </div>
+
+          <div *ngIf="chatMessages.length === 0" class="no-chat-messages">
+            <p>No messages found in this chat.</p>
+          </div>
+        </div>
+
+        <!-- Admin Message Input -->
+        <div class="admin-message-input">
+          <form [formGroup]="adminMessageForm" (ngSubmit)="sendAdminMessage()">
+            <div class="input-group">
+              <input
+                type="text"
+                class="form-control"
+                formControlName="message"
+                [(ngModel)]="adminMessage"
+                placeholder="Type your message as admin..."
+                maxlength="500"
+              />
+              <div class="character-count">{{ adminMessage.length }} / 500</div>
+              <button type="submit" class="btn btn-primary" style="background-color: #242424 !important;" [disabled]="adminMessageForm.invalid || !adminMessage.trim()">
+                <mat-icon>send</mat-icon>
+                Send
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Admin Actions History -->
+    <div class="section" *ngIf="report.actions && report.actions.length > 0">
+      <h3>Action History</h3>
+      <div class="actions-history">
+        <div *ngFor="let action of report.actions" class="action-item">
+          <div class="action-header">
+            <span class="action-type">{{ action.action }}</span>
+            <span class="action-date">{{ formatDate(action.created_at) }}</span>
+          </div>
+          <div class="action-admin" *ngIf="action.admin">
+            <small>By: {{ action.admin.name || ('Admin #' + action.admin_id) }}</small>
+          </div>
+          <div class="action-notes" *ngIf="action.notes">
+            <p>{{ action.notes }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Admin Actions -->
+    <div class="section actions-section">
+      <h3>Admin Actions</h3>
+      
+      <div *ngIf="!showActionForm" class="action-buttons">
+        <button
+          mat-raised-button
+          color="primary"
+          (click)="showActionDialog('mark_under_review')"
+          *ngIf="normalizeStatus(report.status) === 'pending'"
+        >
+          <mat-icon>visibility</mat-icon>
+          Mark as Under Review
+        </button>
+
+        <button
+          mat-raised-button
+          color="accent"
+          (click)="showActionDialog('request_info')"
+          *ngIf="normalizeStatus(report.status) === 'under review' || normalizeStatus(report.status) === 'pending'"
+        >
+          <mat-icon>info</mat-icon>
+          Request More Info
+        </button>
+
+        <button
+          mat-raised-button
+          color="warn"
+          (click)="showActionDialog('warn_user')"
+          *ngIf="normalizeStatus(report.status) === 'under review'"
+        >
+          <mat-icon>warning</mat-icon>
+          Warn User
+        </button>
+
+        <button
+          mat-raised-button
+          color="warn"
+          (click)="showActionDialog('suspend_user')"
+          *ngIf="normalizeStatus(report.status) === 'under review'"
+        >
+          <mat-icon>block</mat-icon>
+          Suspend User
+        </button>
+
+        <button
+          mat-raised-button
+          color="warn"
+          (click)="showActionDialog('reject')"
+          *ngIf="normalizeStatus(report.status) === 'pending' || normalizeStatus(report.status) === 'under review'"
+        >
+          <mat-icon>cancel</mat-icon>
+          Reject Report
+        </button>
+
+        <button
+          mat-raised-button
+          color="primary"
+          (click)="showActionDialog('resolve')"
+          *ngIf="normalizeStatus(report.status) === 'under review'"
+        >
+          <mat-icon>check_circle</mat-icon>
+          Resolve Report
+        </button>
+      </div>
+
+      <!-- Action Form -->
+      <div *ngIf="showActionForm" class="action-form">
+        <form [formGroup]="actionForm" (ngSubmit)="submitAction()">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Action</mat-label>
+            <mat-select formControlName="action">
+              <mat-option *ngFor="let action of actionTypes" [value]="action.value">
+                {{ action.label }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Notes (Optional)</mat-label>
+            <textarea
+              matInput
+              formControlName="notes"
+              rows="4"
+              placeholder="Add any notes or comments about this action"
+            ></textarea>
+          </mat-form-field>
+
+          <div class="form-actions">
+            <button mat-button type="button" (click)="cancelAction()">Cancel</button>
+            <button mat-raised-button color="primary" type="submit">Submit Action</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+

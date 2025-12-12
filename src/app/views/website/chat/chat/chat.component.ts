@@ -9,6 +9,7 @@ import { AlertsServicesService } from "src/services/alerts-service/alerts-servic
 import { AddShippingComponent } from "src/app/views/modal/add-shipping/add-shipping.component";
 import { ConfirmationModelComponent } from "src/app/views/modal/confirmation-model/confirmation-model.component";
 import { ModelLoginComponent } from "src/app/views/auth/model-login/model-login.component";
+import { ReportChatComponent } from "src/app/views/modal/report-chat/report-chat.component";
 import { TranslateService } from "@ngx-translate/core";
 import { LanguageService } from "src/services/lang-service/language.service";
 import { environment } from "src/environments/environment";
@@ -294,6 +295,57 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     console.log("After Calling",this.filteredChats)
   }
 
+  reportChat(){
+    // Get the reported user ID - the opposite party in the chat
+    let reportedUserId = this.reciever_ID;
+    
+    // If reciever_ID is not available, try to get it from UserNameOFMessenger
+    if (!reportedUserId && this.UserNameOFMessenger) {
+      reportedUserId = this.UserNameOFMessenger?.id || this.UserNameOFMessenger;
+    }
+    
+    // If still not available, try to get from current chat context
+    if (!reportedUserId && this.messages && this.messages.length > 0) {
+      const currentUserId = localStorage.getItem("userID");
+      const firstMessage = this.messages[0];
+      reportedUserId = firstMessage.sender_id === currentUserId 
+        ? firstMessage.receiver_id 
+        : firstMessage.sender_id;
+    }
+
+    if(reportedUserId == localStorage.getItem("userID")){
+      if(this.reciever_ID != localStorage.getItem("userID")){
+        reportedUserId = this.reciever_ID;
+      }
+    }
+
+    if (!reportedUserId) {
+      if (this.translateService.currentLang == "en") {
+        this.alertService.showAlert("warning", "Unable to identify the user to report. Please try again later.");
+      } else {
+        this.alertService.showAlert("warning", "تعذر تحديد المستخدم للإبلاغ عنه. يرجى المحاولة مرة أخرى لاحقًا.");
+      }
+      return;
+    }
+
+    const dialogRef = this.dialog.open(ReportChatComponent, {
+      width: "600px",
+      data: {
+        reportedUserId: reportedUserId,
+        orderId: null, // Can be populated if order ID is available
+        chatId: this.chat_id,
+        productId: this.messages[0].product_id,
+
+      },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        // Report was submitted successfully
+        console.log("Report submitted successfully");
+      }
+    });
+  }
 
   async getLatestMessage() {
     try {
@@ -392,6 +444,17 @@ export class ChatComponent implements OnInit, AfterViewChecked {
       }
       this.userProfile.profile_image = this.userProfile?.profile_image?.replace(/\\/g, '');
       this.messages = res.messages;
+      
+      // Set isBuyerUser based on product owner if getProductDetails is available
+      if (this.getProductDetails?.created_by?.id) {
+        const useridd = localStorage.getItem("userID");
+        if (this.getProductDetails.created_by.id == useridd) {
+          this.isBuyerUser = false; // User is the seller
+        } else {
+          this.isBuyerUser = true; // User is the buyer
+        }
+      }
+      
       if (res.messages.length > 0) {
         let useridd = localStorage.getItem("userID");
         // this.reciever_ID = res.messages[1]?.receiver_id;
@@ -405,6 +468,9 @@ export class ChatComponent implements OnInit, AfterViewChecked {
 
       }
       let count_sen_rec = 0;
+      // Reset isBuyNowFromChatCheck and check all messages
+      this.isBuyNowFromChatCheck = false;
+      this.isActionTypeMakePaymentToHideCustomOffer = false;
       this.messages.forEach((message) => {
         if (message.attachments) {
           try {
@@ -439,12 +505,9 @@ export class ChatComponent implements OnInit, AfterViewChecked {
           count_sen_rec++;
         }
 
-        if (message.action_type) {
-          if (message.action_type == "buy_now") {
-            this.isBuyNowFromChatCheck = true;
-          } else {
-            this.isBuyNowFromChatCheck = false;
-          }
+        // Check if any message has buy_now action_type
+        if (message.action_type == "buy_now") {
+          this.isBuyNowFromChatCheck = true;
         }
 
         if (message.action_type === "add_shipping") {

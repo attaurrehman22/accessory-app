@@ -278,7 +278,7 @@ export class AccessorieDetailComponent implements OnInit {
     if (userLogin && this.isUserLogin == "true") {
       this.isBuy = true;
       this.addtoCart();
-      this.router.navigate(["/myListing/summary"]);
+      this.router.navigate(["/myprofile/summary"]);
     } else {
       this.loginFirst();
     }

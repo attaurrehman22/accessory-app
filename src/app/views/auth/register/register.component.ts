@@ -14,6 +14,7 @@ import {
   notsame1,
   userEmailExists,
 } from "../../validator/string.validator";
+import { StringValidator } from "../../validator/string.validator";
 import { UserService } from "src/services/users/user.service";
 import { HttpService } from "src/services/http/http.service";
 import { AlertsServicesService } from "src/services/alerts-service/alerts-services.service";
@@ -46,8 +47,11 @@ export class RegisterComponent implements OnInit {
 
   password = new FormControl("", [
     Validators.required,
-    Validators.minLength(6),
+    Validators.minLength(10),
     Validators.maxLength(30),
+    StringValidator.hasUpperCase,
+    StringValidator.hasDigit,
+    StringValidator.hasSpecialChar,
   ]);
 
   confirmpassword = new FormControl("", {
@@ -154,6 +158,10 @@ export class RegisterComponent implements OnInit {
             }
             localStorage.setItem("userType", response?.user?.type);
             localStorage.setItem("userID", response?.user?.id);
+            const isAdmin = response?.user?.type === "chronosouq-user";
+            if (isAdmin) {
+              localStorage.setItem("isAdmin", "true");
+            }
             // this.router.navigateByUrl("");
             this.router.navigateByUrl("").then(() => {
               window.location.reload();

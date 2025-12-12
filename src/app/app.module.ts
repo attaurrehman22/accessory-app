@@ -80,7 +80,6 @@ import { CarouselModule } from "primeng/carousel";
 import { ButtonModule } from "primeng/button";
 import { TagModule } from "primeng/tag";
 import { MatExpansionModule } from "@angular/material/expansion";
-import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 import { AdminPageHeaderComponent } from "./views/adminpages/admin-page-header/admin-page-header.component";
 import { PositiveNumberDirective } from "src/directives/positiveNumberDirective/positive-number.directive";
 import { MatRadioModule } from "@angular/material/radio";
@@ -105,6 +104,7 @@ import { AddProductWatchOfTheDayComponent } from "./views/adminpages/add-product
 import { SkeletonLoaderComponent } from "./views/modal/skeleton-loader/skeleton-loader.component";
 import { SafeHtmlPipe } from "./views/pipes/safe-html.pipe";
 import { MatTabsModule } from "@angular/material/tabs";
+import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 import { AccessoriesProductsComponent } from "./views/adminpages/accessories-products/accessories-products.component";
 import { CreateAccessoriesProductComponent } from "./views/adminpages/create-accessories-product/create-accessories-product.component";
 import { UsernameValidationDirective } from "./views/directives/username-validation/username-validation.directive";
@@ -166,6 +166,11 @@ import { CreateRoleComponent } from "./views/adminpages/roles/create-role/create
 import { ChronosouqUsersComponent } from "./views/adminpages/chronosouq-users/chronosouq-users.component";
 import { CreateUserComponent } from "./views/adminpages/chronosouq-users/create-user/create-user.component";
 import { AdminVatComponent } from "./views/adminpages/admin-vat/admin-vat.component";
+import { ReportChatComponent } from "./views/modal/report-chat/report-chat.component";
+import { AdminReportsComponent } from "./views/adminpages/admin-reports/admin-reports.component";
+import { ReportDetailsComponent } from "./views/adminpages/report-details/report-details.component";
+import { AdminOrdersComponent } from "./views/adminpages/admin-orders/admin-orders.component";
+import { AdminOrderDetailsComponent } from "./views/adminpages/admin-order-details/admin-order-details.component";
 
 @NgModule({
   declarations: [
@@ -266,6 +271,11 @@ import { AdminVatComponent } from "./views/adminpages/admin-vat/admin-vat.compon
     ChronosouqUsersComponent,
     CreateUserComponent,
     AdminVatComponent,
+    ReportChatComponent,
+    AdminReportsComponent,
+    ReportDetailsComponent,
+    AdminOrdersComponent,
+    AdminOrderDetailsComponent,
   ],
   imports: [
     MatSortModule,
@@ -304,16 +314,14 @@ import { AdminVatComponent } from "./views/adminpages/admin-vat/admin-vat.compon
     NgImageSliderModule,
     MatExpansionModule,
     ColorPickerModule,
+    MatProgressSpinnerModule,
     BidiModule,
     HighchartsChartModule,
     MatTabsModule,
     DragDropModule,
     NgxImageZoomModule,
-    BidiModule,
-    HighchartsChartModule,
     MatOptionModule,
     MatAutocompleteModule,
-    MatProgressSpinnerModule,
     // MatExpansionModule,
     TranslateModule.forRoot({
       loader: {

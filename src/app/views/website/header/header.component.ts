@@ -4,6 +4,7 @@ import {
   ViewChild,
   ElementRef,
   computed,
+  ChangeDetectorRef,
 } from "@angular/core";
 import { NavigationEnd, Router } from "@angular/router";
 import { TranslateService } from "@ngx-translate/core";
@@ -11,7 +12,6 @@ import { LanguageService } from "src/services/lang-service/language.service";
 import { MatSidenav } from "@angular/material/sidenav";
 import { SearchServiceService } from "src/services/search-service/search-service.service";
 import { LoginStateService } from "src/services/login-service/login-state.service";
-import { ChangeDetectorRef } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 import { ModelLoginComponent } from "../../auth/model-login/model-login.component";
 import { MatMenuTrigger } from "@angular/material/menu";
@@ -22,6 +22,7 @@ import { HttpService } from "src/services/http/http.service";
 import { filter } from "rxjs/operators";
 import { ShoppingCartComponent } from "../../modal/shopping-cart/shopping-cart.component";
 import { MessageServiceService } from "src/services/search-show-hide/message-service.service";
+import { AlertsServicesService } from "src/services/alerts-service/alerts-services.service";
 import { environment } from "src/environments/environment";
 import { PermissionCheckService } from "../../services/permission-check.service";
 
@@ -95,6 +96,10 @@ export class HeaderComponent {
   @ViewChild("drawer") drawer: MatSidenav;
   @ViewChild("header", { static: true }) headerRef: ElementRef;
   @ViewChild("sidenav", { static: true }) sidenavRef: ElementRef;
+  @ViewChild("smallScreenSearchInput", { static: false })
+  smallScreenSearchInput: ElementRef<HTMLInputElement>;
+  @ViewChild("largeScreenSearchInput", { static: false })
+  largeScreenSearchInput: ElementRef<HTMLInputElement>;
 
   constructor(
     public translateService: TranslateService,
@@ -106,7 +111,8 @@ export class HeaderComponent {
     private dialog: MatDialog,
     private http: HttpService,
     private searchShowHide: MessageServiceService,
-    private permissionCheckService: PermissionCheckService
+    private permissionCheckService: PermissionCheckService,
+    private alertService: AlertsServicesService
   ) {
     const languagevalues = this.supportLanguages.map((lang) => lang.value);
     this.translateService.addLangs(languagevalues);
@@ -154,6 +160,50 @@ export class HeaderComponent {
   isShowSearchForm() {
     this.isManuallyToggled = true;
     this.isShowSearchField = !this.isShowSearchField;
+
+    // Focus the search input when search box opens
+    if (this.isShowSearchField) {
+      // Force change detection to render the input
+      this.cdRef.detectChanges();
+
+      // Use requestAnimationFrame for better timing with DOM updates
+      requestAnimationFrame(() => {
+        setTimeout(() => {
+          this.focusSearchInput();
+        }, 50);
+      });
+
+      // Fallback attempt in case first one doesn't work
+      setTimeout(() => {
+        this.focusSearchInput();
+      }, 200);
+    }
+  }
+
+  focusSearchInput() {
+    try {
+      if (this.isSmallScreenScreen) {
+        if (this.smallScreenSearchInput?.nativeElement) {
+          const input = this.smallScreenSearchInput.nativeElement;
+          input.focus();
+          // Ensure input is visible and focusable
+          if (document.activeElement !== input) {
+            input.focus();
+          }
+        }
+      } else {
+        if (this.largeScreenSearchInput?.nativeElement) {
+          const input = this.largeScreenSearchInput.nativeElement;
+          input.focus();
+          // Ensure input is visible and focusable
+          if (document.activeElement !== input) {
+            input.focus();
+          }
+        }
+      }
+    } catch (error) {
+      console.error("Error focusing search input:", error);
+    }
   }
 
   userToken: any;
@@ -248,13 +298,24 @@ export class HeaderComponent {
   }
 
   onSearch(query: string) {
+    // Validate if search query is empty or just whitespace
+    if (!query || !query.trim()) {
+      this.alertService.showAlert(
+        "warning",
+        this.translateService.instant("header.search_empty_error")
+      );
+      return;
+    }
+
     this.isSearchActive = true;
     this.isManuallyToggled = true;
     if (this.search3MenuTrigger && this.search3MenuTrigger.menuOpen) {
       this.search3MenuTrigger.closeMenu();
     }
-    this.searchService.changeSearchQuery(query);
-    this.router.navigate(["/product-list"], { queryParams: { query } });
+    this.searchService.changeSearchQuery(query.trim());
+    this.router.navigate(["/product-list"], {
+      queryParams: { query: query.trim() },
+    });
 
     this.isShowSearchField = false;
     this.searchQuery = "";
@@ -335,7 +396,7 @@ export class HeaderComponent {
   }
 
   userListing() {
-    this.router.navigate(["/myListing"]);
+    this.router.navigate(["/myprofile"]);
   }
 
   openCart() {
@@ -355,23 +416,23 @@ export class HeaderComponent {
   }
 
   goToFavorites() {
-    this.router.navigate(["myListing/favorite"]);
+    this.router.navigate(["myprofile/favorite"]);
   }
 
   goToBuyOrders() {
-    this.router.navigate(["myListing/buy/order"]);
+    this.router.navigate(["myprofile/buy/order"]);
   }
 
   goToSellOrders() {
-    this.router.navigate(["myListing/sell/order"]);
+    this.router.navigate(["myprofile/sell/order"]);
   }
 
   goToMyListings() {
-    this.router.navigate(["myListing/listing"]);
+    this.router.navigate(["myprofile/listing"]);
   }
 
   goToCart() {
-    this.router.navigate(["/myListing"], {
+    this.router.navigate(["/myprofile"], {
       state: {
         activeRouteType: "cart",
       },

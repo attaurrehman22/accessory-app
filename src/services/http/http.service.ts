@@ -460,6 +460,15 @@ export class HttpService implements OnInit {
     );
   }
 
+  getReportTypes(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/api/reports/types`, {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+  }
+
   // getAdminProducts(): Observable<any> {
   getAdminProducts(
     name,
@@ -1851,6 +1860,35 @@ export class HttpService implements OnInit {
 
   // ----------------------------------  create Accesries end ------------------------------
 
+  // ------------------------------ VAT Management APIs Start here ------------------------------
+
+  getCurrentVat(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/api/admin/vat/active`, {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+  }
+
+  getVatHistory(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/api/admin/vat/history`, {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+  }
+
+  updateVat(formData): Observable<any> {
+    return this.http.put(`${this.apiUrl}/api/admin/vat/settings/1`, formData, {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+  }
+
   // ------------------------------ Public Accessories APIs Start here ------------------------------
 
   getPublicAccessories(queryString: any): Observable<any> {
@@ -1991,10 +2029,10 @@ export class HttpService implements OnInit {
 
   // ------------------------------ Public Accessories Cart APIs End here ------------------------------
 
-  // ------------------------------ VAT Management APIs Start here ------------------------------
+  // -------------------------------------------- Report Chat API --------------------------
 
-  getCurrentVat(): Observable<any> {
-    return this.http.get(`${this.apiUrl}/api/admin/vat/active`, {
+  submitReport(formData: FormData): Observable<any> {
+    return this.http.post(`${this.apiUrl}/api/reports/submit`, formData, {
       headers: {
         Accept: "application/json",
         Authorization: `Bearer ${this.token}`,
@@ -2002,8 +2040,99 @@ export class HttpService implements OnInit {
     });
   }
 
-  getVatHistory(): Observable<any> {
-    return this.http.get(`${this.apiUrl}/api/admin/vat/history`, {
+  // -------------------------------------------- Report Chat API End --------------------------
+
+  // -------------------------------------------- Admin Reports API --------------------------
+
+  getAdminReports(filters?: {
+    status?: string;
+    type?: string;
+    reporter_id?: number;
+    reported_user_id?: number;
+    order_id?: number;
+    date_from?: string;
+    date_to?: string;
+    page?: number;
+    per_page?: number;
+  }): Observable<any> {
+    let params = new HttpParams();
+
+    if (filters) {
+      if (filters.status) params = params.set("status", filters.status);
+      if (filters.type) params = params.set("type", filters.type);
+      if (filters.reporter_id)
+        params = params.set("reporter_id", filters.reporter_id.toString());
+      if (filters.reported_user_id)
+        params = params.set(
+          "reported_user_id",
+          filters.reported_user_id.toString()
+        );
+      if (filters.order_id)
+        params = params.set("order_id", filters.order_id.toString());
+      if (filters.date_from)
+        params = params.set("date_from", filters.date_from);
+      if (filters.date_to) params = params.set("date_to", filters.date_to);
+      if (filters.page) params = params.set("page", filters.page.toString());
+      if (filters.per_page)
+        params = params.set("per_page", filters.per_page.toString());
+    }
+
+    // Default pagination if not provided
+    if (!filters?.page) params = params.set("page", "1");
+    if (!filters?.per_page) params = params.set("per_page", "10");
+
+    return this.http.get(
+      `${this.apiUrl}/api/admin/issue-reports?${params.toString()}`,
+      {
+        headers: {
+          Accept: "*/*",
+          Authorization: `Bearer ${this.token}`,
+        },
+      }
+    );
+  }
+
+  getAdminReportDetails(reportId: number): Observable<any> {
+    return this.http.get(`${this.apiUrl}/api/admin/issue-reports/${reportId}`, {
+      headers: {
+        Accept: "*/*",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+  }
+
+  performReportAction(
+    reportId: number,
+    actionData: {
+      action: string;
+      notes?: string;
+      meta?: any;
+    }
+  ): Observable<any> {
+    const payload = {
+      action: actionData.action,
+      notes: actionData.notes || "",
+      meta: actionData.meta || {},
+    };
+
+    return this.http.post(
+      `${this.apiUrl}/api/admin/issue-reports/${reportId}/actions`,
+      payload,
+      {
+        headers: {
+          Accept: "*/*",
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${this.token}`,
+        },
+      }
+    );
+  }
+
+  // -------------------------------------------- Admin Chat API --------------------------
+
+  // Get chat details for admin (using same endpoint as chat module)
+  getAdminChatDetails(chatId: number): Observable<any> {
+    return this.http.get(`${this.apiUrl}/api/messages/${chatId}`, {
       headers: {
         Accept: "application/json",
         Authorization: `Bearer ${this.token}`,
@@ -2011,8 +2140,37 @@ export class HttpService implements OnInit {
     });
   }
 
-  updateVat(formData): Observable<any> {
-    return this.http.put(`${this.apiUrl}/api/admin/vat/settings/1`, formData, {
+  // Send message as admin (dummy endpoint - will be replaced later)
+  // sendAdminMessage(formData: FormData): Observable<any> {
+  //   // TODO: Replace with actual admin message endpoint when available
+  //   // For now, using dummy endpoint
+  //   return this.http.post(`${this.apiUrl}/api/admin/chat/send`, formData, {
+  //     headers: {
+  //       Accept: "application/json",
+  //       Authorization: `Bearer ${this.token}`,
+  //     },
+  //   });
+  // }
+
+  // -------------------------------------------- Admin Chat API End --------------------------
+
+  // -------------------------------------------- Admin Reports API End --------------------------
+
+  // -------------------------------------------- Admin Orders API --------------------------
+  getAdminOrders(page: number = 1, perPage: number = 10): Observable<any> {
+    return this.http.get(
+      `${this.apiUrl}/api/admin/orders?page=${page}&per_page=${perPage}`,
+      {
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${this.token}`,
+        },
+      }
+    );
+  }
+
+  getAdminOrderDetails(orderId: number): Observable<any> {
+    return this.http.get(`${this.apiUrl}/api/admin/orders/${orderId}`, {
       headers: {
         Accept: "application/json",
         Authorization: `Bearer ${this.token}`,
@@ -2020,5 +2178,30 @@ export class HttpService implements OnInit {
     });
   }
 
-  // ------------------------------ VAT Management APIs End here ------------------------------
+  performAdminOrderAction(formData: any): Observable<any> {
+    return this.http.post(
+      `${this.apiUrl}/api/admin/orders/${formData.order_id}/actions`,
+      formData,
+      {
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${this.token}`,
+        },
+      }
+    );
+  }
+
+  sendAdminMessage(formData: FormData): Observable<any> {
+    return this.http.post(
+      `${this.apiUrl}/api/admin/orders/send-message`,
+      formData,
+      {
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${this.token}`,
+        },
+      }
+    );
+  }
+  // -------------------------------------------- Admin Orders API End --------------------------
 }

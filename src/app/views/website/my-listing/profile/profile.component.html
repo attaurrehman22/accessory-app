@@ -2,8 +2,8 @@
   <div *ngIf="!isLoading; else skeletonLoader" class="row" [ngClass]="{ 'reverse-order-profile': translateService.currentLang !== 'en' }">
     <!-- Left Sidebar -->
     <div class="col-lg-3 col-md-4 mb-4">
-      <div class="card profile-card text-center p-3" style="position: relative;cursor: pointer;" routerLink="/myListing/shipping">
-        <img src="../../../../../assets/images/mingcute_edit-line.svg" routerLink="/myListing/shipping" style="height: 24px;width: 24px;align-self: end;top: 15px;position: absolute;cursor: pointer;" />
+      <div class="card profile-card text-center p-3" style="position: relative;cursor: pointer;" routerLink="/myprofile/shipping">
+        <img src="../../../../../assets/images/mingcute_edit-line.svg" routerLink="/myprofile/shipping" style="height: 24px;width: 24px;align-self: end;top: 15px;position: absolute;cursor: pointer;" />
         <img
         *ngIf="profile; else noProfile"
         [src]="apiUrl + profile"

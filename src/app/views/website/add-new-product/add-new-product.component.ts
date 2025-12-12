@@ -509,7 +509,7 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
 //     }
 //   }
 
-onImagesSelected(event: Event) {
+async onImagesSelected(event: Event) {
   const files = (event.target as HTMLInputElement).files;
   if (files && files.length > 0) {
     if (this.allImages.length + files.length > 10) {
@@ -521,11 +521,23 @@ onImagesSelected(event: Event) {
     }
     
     const invalidFiles: string[] = []; // ❌ invalid files list
+    const lowResolutionFiles: string[] = []; // ❌ low resolution files list
 
-    Array.from(files).forEach((file: File) => {
+    for (const file of Array.from(files)) {
       if (!file.type.startsWith("image/")) {
-        invalidFiles.push(file.name); // invalid files collect karo
-        return;
+        invalidFiles.push(file.name);
+        continue;
+      }
+
+      // Validate image resolution
+      const resolutionCheck = await this.validateImageResolution(file);
+      if (!resolutionCheck.valid) {
+        if (resolutionCheck.width !== undefined && resolutionCheck.height !== undefined) {
+          lowResolutionFiles.push(`${file.name} (${resolutionCheck.width}x${resolutionCheck.height}px)`);
+        } else {
+          invalidFiles.push(file.name);
+        }
+        continue;
       }
 
       const reader = new FileReader();
@@ -554,14 +566,36 @@ onImagesSelected(event: Event) {
       };
 
       reader.readAsDataURL(file);
-    });
+    }
 
-    // ✅ Agar invalid files hain to ek hi alert show karo
+    // ✅ Show alerts for invalid files
     if (invalidFiles.length > 0) {
-      this.alertService.showAlert(
-        "warning",
-        `These files are not images and were skipped:\n\n${invalidFiles.join("\n")}`
-      );
+      if (this.translateService.currentLang == "en") {
+        this.alertService.showAlert(
+          "warning",
+          `These files are not valid images and were skipped:\n\n${invalidFiles.join("\n")}`
+        );
+      } else {
+        this.alertService.showAlert(
+          "warning",
+          `هذه الملفات ليست صورًا صالحة وتم تخطيها:\n\n${invalidFiles.join("\n")}`
+        );
+      }
+    }
+
+    // ✅ Show alerts for low resolution files
+    if (lowResolutionFiles.length > 0) {
+      if (this.translateService.currentLang == "en") {
+        this.alertService.showAlert(
+          "warning",
+          `These images have low resolution (minimum 300x300px required) and were skipped:\n\n${lowResolutionFiles.join("\n")}`
+        );
+      } else {
+        this.alertService.showAlert(
+          "warning",
+          `هذه الصور ذات دقة منخفضة (الحد الأدنى 300x300 بكسل مطلوب) وتم تخطيها:\n\n${lowResolutionFiles.join("\n")}`
+        );
+      }
     }
   }
 }
@@ -571,6 +605,30 @@ private generateUniqueName(file: File): string {
   const extension = file.name.split(".").pop(); // original extension
   const uuid = crypto.randomUUID(); // browser supported unique ID
   return `${uuid}.${extension}`;
+}
+
+// ✅ Image resolution validation helper
+private validateImageResolution(file: File): Promise<{ valid: boolean; width?: number; height?: number }> {
+  return new Promise((resolve) => {
+    const reader = new FileReader();
+    reader.onload = (e: any) => {
+      const img = new Image();
+      img.onload = () => {
+        const minWidth = 300;
+        const minHeight = 300;
+        const isValid = img.width >= minWidth && img.height >= minHeight;
+        resolve({ valid: isValid, width: img.width, height: img.height });
+      };
+      img.onerror = () => {
+        resolve({ valid: false });
+      };
+      img.src = e.target.result;
+    };
+    reader.onerror = () => {
+      resolve({ valid: false });
+    };
+    reader.readAsDataURL(file);
+  });
 }
 
 
@@ -1642,7 +1700,7 @@ onUnknownChange(event: MatCheckboxChange): void {
     this.otherImagesInput.nativeElement.click();
   }
 
-  onCoverImageSelected(event: Event) {
+  async onCoverImageSelected(event: Event) {
     const file = (event.target as HTMLInputElement).files?.[0];
 
     if (file) {
@@ -1660,6 +1718,37 @@ onUnknownChange(event: MatCheckboxChange): void {
             "warning",
             "نوع الملف غير صالح. يرجى اختيار صورة بإحدى الصيغ التالية: jpeg، png، jpg، gif، svg."
           );
+        }
+        return;
+      }
+
+      // Validate image resolution
+      const resolutionCheck = await this.validateImageResolution(file);
+      if (!resolutionCheck.valid) {
+        if (resolutionCheck.width !== undefined && resolutionCheck.height !== undefined) {
+          if (this.translateService.currentLang == "en") {
+            this.alertService.showAlert(
+              "warning",
+              `Image resolution is too low (${resolutionCheck.width}x${resolutionCheck.height}px). Minimum resolution required is 300x300 pixels.`
+            );
+          } else {
+            this.alertService.showAlert(
+              "warning",
+              `دقة الصورة منخفضة جدًا (${resolutionCheck.width}x${resolutionCheck.height} بكسل). الحد الأدنى المطلوب هو 300x300 بكسل.`
+            );
+          }
+        } else {
+          if (this.translateService.currentLang == "en") {
+            this.alertService.showAlert(
+              "warning",
+              "Invalid image file. Please select a valid image."
+            );
+          } else {
+            this.alertService.showAlert(
+              "warning",
+              "ملف صورة غير صالح. يرجى اختيار صورة صالحة."
+            );
+          }
         }
         return;
       }

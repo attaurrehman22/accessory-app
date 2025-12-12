@@ -482,9 +482,9 @@ export class BuyProductComponentComponent implements OnInit {
     }
 
     if(OrderTypeval == 'buy'){
-      this.router.navigate(["/myListing/buy/order/details"],{ queryParams: { id: this.productDetails.id } })
+      this.router.navigate(["/myprofile/buy/order/details"],{ queryParams: { id: this.productDetails.id } })
     }else{
-      this.router.navigate(["/myListing/sell/order"])
+      this.router.navigate(["/myprofile/sell/order"])
     }
 
     // this.router.navigate(["/myListing"], {
@@ -544,9 +544,9 @@ export class BuyProductComponentComponent implements OnInit {
           });
         } else if (result == "viewOrder") {
           if(OrderTypeval == 'buy'){
-            this.router.navigate(["/myListing/buy/order/details"],{ queryParams: { id: this.productDetails.id } })
+            this.router.navigate(["/myprofile/buy/order/details"],{ queryParams: { id: this.productDetails.id } })
           }else{
-            this.router.navigate(["/myListing/sell/order"])
+            this.router.navigate(["/myprofile/sell/order"])
           }
           // this.router.navigate(["/myListing"], {
           //   state: {
@@ -636,9 +636,9 @@ export class BuyProductComponentComponent implements OnInit {
                       });
                     } else if (result == "viewOrder") {
                       if(OrderTypeval == 'buy'){
-                        this.router.navigate(["/myListing/buy/order/details"],{ queryParams: { id: this.productDetails.id } })
+                        this.router.navigate(["/myprofile/buy/order/details"],{ queryParams: { id: this.productDetails.id } })
                       }else{
-                        this.router.navigate(["/myListing/sell/order"])
+                        this.router.navigate(["/myprofile/sell/order"])
                       }
                       // this.router.navigate(["/myListing"], {
                       //   state: {

@@ -132,7 +132,20 @@ export class LoginComponent implements OnInit {
           if (error && error?.error?.error) {
             this.alertService.showAlert("warning", `${error?.error?.error}`);
           } else if (error && error?.error?.message) {
-            this.alertService.showAlert("warning", `${error?.error?.message}`);
+            if (
+              `${error?.error?.message}` == "Unauthorized" ||
+              `${error?.error?.message}` == "unauthorized"
+            ) {
+              this.alertService.showAlert(
+                "warning",
+                "Please enter a valid email and password. If you don't have an account, please proceed to register."
+              );
+            } else {
+              this.alertService.showAlert(
+                "warning",
+                `${error?.error?.message}`
+              );
+            }
           } else {
             if (this.translateService.currentLang == "en") {
               this.alertService.showAlert(
@@ -182,7 +195,7 @@ export class LoginComponent implements OnInit {
       //       localStorage.setItem("userID", response.user.id);
       //       localStorage.setItem("userType", response.user.type);
 
-      //       if (response.user.type === "admin") {
+      //       if (response.user.type === "chronosouq-user") {
       //         localStorage.setItem("isAdmin", "true");
       //       }
 

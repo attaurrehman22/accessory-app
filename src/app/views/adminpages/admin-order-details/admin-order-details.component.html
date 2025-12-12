@@ -1,0 +1,348 @@
+<div class="admin-order-details-container">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>Order Details</h2>
+    <button mat-icon-button (click)="close()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <div *ngIf="isLoading" class="loading-container">
+    <mat-spinner></mat-spinner>
+    <p>Loading order details...</p>
+  </div>
+
+  <div *ngIf="!isLoading && order" class="order-details-content">
+    <!-- Product Information Section -->
+    <div class="card mb-3">
+      <div class="card-body">
+        <div class="d-flex align-items-center" style="background: #f9fafb; padding: 16px; border-radius: 8px;">
+          <img
+            *ngIf="order.product?.main_image"
+            [src]="apiUrl + order.product.main_image"
+            alt="Product"
+            style="width: 64px; height: 64px; object-fit: contain; margin-right: 16px;"
+          />
+          <div class="flex-grow-1">
+            <h4 class="mb-1">{{ order.product?.title || "N/A" }}</h4>
+            <p class="mb-0 text-muted">
+              {{ order.product?.currency || "SR" }} {{ order.product?.price || "N/A" }}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Order ID Section -->
+    <div class="card mb-3">
+      <div class="card-body">
+        <div class="d-flex justify-content-between align-items-center">
+          <div>
+            <p class="text-muted mb-1" style="font-size: 14px;">Order ID</p>
+            <h3 class="mb-0" style="font-weight: 700;">{{ order.id }}</h3>
+          </div>
+          <div class="d-flex gap-2">
+            <button mat-raised-button color="primary" (click)="showActionDialog('send_message')">
+              <mat-icon>message</mat-icon>
+              Send Message
+            </button>
+            <button mat-raised-button (click)="showActionDialog('update_status')">
+              <mat-icon>update</mat-icon>
+              Update Status
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Order Status Timeline -->
+    <div class="card mb-3">
+      <div class="card-body">
+        <h5 class="mb-3">Order Status</h5>
+        <div class="order-status-timeline">
+          <ul class="list-group">
+            <li
+              *ngFor="let status of orderStatuses; let i = index"
+              class="list-group-item d-flex align-items-start"
+              style="border: none; background: transparent; padding: 12px 0;"
+            >
+              <div class="status-indicator me-3">
+              <div
+                class="status-circle"
+                [class.active]="status.active"
+                [class.completed]="isStatusCompleted(i)"
+              >
+                <mat-icon *ngIf="shouldShowCheckIcon(status, i)">
+                  check
+                </mat-icon>
+              </div>
+                <div
+                  class="status-line"
+                  *ngIf="i !== orderStatuses.length - 1"
+                  [class.active]="status.active"
+                ></div>
+              </div>
+              <div class="flex-grow-1">
+                <p class="mb-1" [class.font-weight-bold]="status.active">
+                  {{ status.label }}
+                  <span *ngIf="status.time" class="text-muted" style="font-size: 12px;">
+                    ({{ status.time }})
+                  </span>
+                </p>
+                <p class="text-muted mb-0" style="font-size: 14px;">
+                  {{ status.description }}
+                </p>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Buyer and Seller Information -->
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-body">
+            <h6 class="mb-3">Buyer Information</h6>
+            <div class="d-flex align-items-center">
+              <div
+                *ngIf="order.buyer?.profile_image"
+                class="user-avatar me-3"
+              >
+                <img [src]="apiUrl + order.buyer.profile_image" alt="Buyer" />
+              </div>
+              <div
+                *ngIf="!order.buyer?.profile_image"
+                class="user-avatar-initials me-3"
+              >
+                {{ getInitials(order.buyer?.name) }}
+              </div>
+              <div>
+                <p class="mb-1 font-weight-bold">{{ order.buyer?.name || ("User #" + order.buyer_id) }}</p>
+                <p class="text-muted mb-0" style="font-size: 14px;">{{ order.buyer?.email || "N/A" }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-body">
+            <h6 class="mb-3">Seller Information</h6>
+            <div class="d-flex align-items-center">
+              <div
+                *ngIf="order.seller?.profile_image"
+                class="user-avatar me-3"
+              >
+                <img [src]="apiUrl + order.seller.profile_image" alt="Seller" />
+              </div>
+              <div
+                *ngIf="!order.seller?.profile_image"
+                class="user-avatar-initials me-3"
+              >
+                {{ getInitials(order.seller?.name) }}
+              </div>
+              <div>
+                <p class="mb-1 font-weight-bold">{{ order.seller?.name || ("User #" + order.seller_id) }}</p>
+                <p class="text-muted mb-0" style="font-size: 14px;">{{ order.seller?.email || "N/A" }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Chat History Section -->
+    <div class="card mb-3">
+      <div class="card-body">
+        <h5 class="mb-3">Chat History</h5>
+        <div
+          class="chat-container"
+          #chatContainer
+          style="height: 400px; overflow-y: auto; border: 1px solid #e0e0e0; border-radius: 8px; padding: 16px;"
+        >
+          <div *ngIf="isLoadingChat" class="text-center">
+            <mat-spinner diameter="30"></mat-spinner>
+          </div>
+          <div *ngIf="!isLoadingChat && chatHistory.length === 0" class="text-center text-muted">
+            <p>No chat messages yet</p>
+          </div>
+          <div *ngIf="!isLoadingChat && chatHistory.length > 0">
+            <div
+              *ngFor="let message of chatHistory"
+              class="message-item mb-3"
+              [class.admin-message]="message.is_admin"
+            >
+              <div class="d-flex align-items-start">
+                <div
+                  *ngIf="message.sender?.profile_image && !message.is_admin"
+                  class="message-avatar me-2"
+                >
+                  <img [src]="apiUrl + message.sender.profile_image" alt="User" />
+                </div>
+                <div
+                  *ngIf="!message.sender?.profile_image && !message.is_admin"
+                  class="message-avatar-initials me-2"
+                >
+                  {{ getInitials(message.sender?.name) }}
+                </div>
+                <div
+                  *ngIf="message.is_admin"
+                  class="message-avatar-admin me-2"
+                >
+                  <mat-icon>admin_panel_settings</mat-icon>
+                </div>
+                <div class="flex-grow-1">
+                  <div class="message-bubble" [class.admin-bubble]="message.is_admin">
+                    <p class="mb-1" *ngIf="message.message">{{ message.message }}</p>
+                    <div class="d-flex gap-2" *ngIf="message.attachments">
+                      <ng-container *ngIf="!isArray(message.attachments)">
+                        <ng-container [ngSwitch]="getAttachmentType(message.attachments)">
+                          <img
+                            *ngSwitchCase="'image'"
+                            [src]="apiUrl + message.attachments"
+                            class="attachment-image"
+                            alt="Attachment"
+                          />
+                          <video
+                            *ngSwitchCase="'video'"
+                            [src]="apiUrl + message.attachments"
+                            class="attachment-video"
+                            controls
+                          ></video>
+                        </ng-container>
+                      </ng-container>
+                      <ng-container *ngIf="isArray(message.attachments)">
+                        <ng-container *ngFor="let attachment of message.attachments">
+                          <ng-container [ngSwitch]="getAttachmentType(attachment)">
+                            <img
+                              *ngSwitchCase="'image'"
+                              [src]="apiUrl + attachment"
+                              class="attachment-image"
+                              alt="Attachment"
+                            />
+                            <video
+                              *ngSwitchCase="'video'"
+                              [src]="apiUrl + attachment"
+                              class="attachment-video"
+                              controls
+                            ></video>
+                          </ng-container>
+                        </ng-container>
+                      </ng-container>
+                    </div>
+                    <small class="text-muted" style="font-size: 11px;">
+                      {{ formatTime(message.created_at) }}
+                    </small>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Admin Message Input -->
+        <div class="admin-message-input mt-3">
+          <div class="d-flex align-items-center gap-2">
+            <button mat-icon-button (click)="uploadImages()" matTooltip="Attach Files">
+              <mat-icon>attach_file</mat-icon>
+            </button>
+            <input
+              #fileInput
+              type="file"
+              accept="image/*,video/*"
+              (change)="onFileSelected($event)"
+              style="display: none"
+              multiple
+            />
+            <div *ngIf="selectedImages.length > 0" class="selected-images d-flex gap-2 mb-2">
+              <div
+                *ngFor="let img of selectedImages; let i = index"
+                class="image-preview"
+              >
+                <img [src]="getImagePreviewUrl(img)" alt="Preview" />
+                <button mat-icon-button (click)="removeImage(i)" class="remove-btn">
+                  <mat-icon>close</mat-icon>
+                </button>
+              </div>
+            </div>
+            <input
+              type="text"
+              class="form-control flex-grow-1"
+              [(ngModel)]="newMessage"
+              placeholder="Type a message..."
+              (keyup.enter)="sendMessage()"
+            />
+            <button mat-raised-button color="primary" (click)="sendMessage()">
+              <mat-icon>send</mat-icon>
+              Send
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Admin Actions Section -->
+    <div class="card">
+      <div class="card-body">
+        <h5 class="mb-3">Admin Actions</h5>
+        <div class="d-flex flex-wrap gap-2">
+          <button mat-raised-button color="primary" (click)="showActionDialog('send_message')">
+            <mat-icon>message</mat-icon>
+            Send Message
+          </button>
+          <button mat-raised-button (click)="showActionDialog('update_status')">
+            <mat-icon>update</mat-icon>
+            Update Status
+          </button>
+          <button mat-raised-button color="warn" (click)="showActionDialog('cancel_order')">
+            <mat-icon>cancel</mat-icon>
+            Cancel Order
+          </button>
+          <button mat-raised-button color="accent" (click)="showActionDialog('refund')">
+            <mat-icon>payment</mat-icon>
+            Process Refund
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Action Form Modal -->
+  <div *ngIf="showActionForm" class="action-form-overlay" (click)="cancelAction()">
+    <div class="action-form-modal" (click)="$event.stopPropagation()">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <h5>Admin Action</h5>
+        <button mat-icon-button (click)="cancelAction()">
+          <mat-icon>close</mat-icon>
+        </button>
+      </div>
+      <form [formGroup]="actionForm" (ngSubmit)="submitAction()">
+        <mat-form-field appearance="outline" class="w-100 mb-3" *ngIf="selectedAction === 'update_status'">
+          <mat-label>New Status</mat-label>
+          <mat-select formControlName="status">
+            <mat-option *ngFor="let status of statusOptions" [value]="status.value">
+              {{ status.label }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="w-100 mb-3" *ngIf="selectedAction === 'send_message'">
+          <mat-label>Message</mat-label>
+          <textarea matInput formControlName="message" rows="4" placeholder="Enter your message..."></textarea>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="w-100 mb-3">
+          <mat-label>Notes (Optional)</mat-label>
+          <textarea matInput formControlName="notes" rows="3" placeholder="Add any additional notes..."></textarea>
+        </mat-form-field>
+
+        <div class="d-flex justify-content-end gap-2">
+          <button mat-button (click)="cancelAction()">Cancel</button>
+          <button mat-raised-button color="primary" type="submit">Submit</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+

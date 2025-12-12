@@ -140,17 +140,17 @@ userName:any;
     const key = section.titleKey;
 
     if(key == buyOrdersKey){
-      this.router.navigate(['myListing/buy/order'])
+      this.router.navigate(['myprofile/buy/order'])
     }else if(key == sellOrdersKey){
-      this.router.navigate(['myListing/sell/order'])
+      this.router.navigate(['myprofile/sell/order'])
     }
     else if(key == myListingsKey){
       // this.router.navigate(["/new-product"], {
       //   state: { productID: section.id },
       // });
-      this.router.navigate(['/myListing/listing'])
+      this.router.navigate(['/myprofile/listing'])
     }else if(key == favoritesKey){
-      this.router.navigate(['myListing/favorite'])
+      this.router.navigate(['myprofile/favorite'])
     }
   }
 
@@ -188,16 +188,16 @@ userName:any;
     const key = section.titleKey;
 
     if(key == buyOrdersKey){
-      this.router.navigate(['/myListing/buy/order/details'], { queryParams: { id: section.id } });
+      this.router.navigate(['/myprofile/buy/order/details'], { queryParams: { id: section.id } });
     }else if(key == sellOrdersKey){
-      this.router.navigate(['/myListing/sell/order/details'], { queryParams: { id: section.id } });
+      this.router.navigate(['/myprofile/sell/order/details'], { queryParams: { id: section.id } });
     }
     else if(key == myListingsKey){
       this.router.navigate(["/new-product"], {
         state: { productID: section.id },
       });
     }else if(key == favoritesKey){
-      this.router.navigate(['myListing/favorite'])
+      this.router.navigate(['myprofile/favorite'])
     }
   }
 

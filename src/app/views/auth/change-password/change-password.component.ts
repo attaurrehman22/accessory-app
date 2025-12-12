@@ -7,6 +7,7 @@ import {
   Validators,
 } from "@angular/forms";
 import { notsame1 } from "../../validator/string.validator";
+import { StringValidator } from "../../validator/string.validator";
 import { TranslateService } from "@ngx-translate/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { AlertsServicesService } from "src/services/alerts-service/alerts-services.service";
@@ -43,8 +44,11 @@ export class ChangePasswordComponent implements OnInit{
   ]);
    new_password = new FormControl("", [
     Validators.required,
-    Validators.minLength(6),
+    Validators.minLength(10),
     Validators.maxLength(30),
+    StringValidator.hasUpperCase,
+    StringValidator.hasDigit,
+    StringValidator.hasSpecialChar,
   ]);
   new_password_confirmation = new FormControl("", {
     validators: [Validators.required, notsame1()],
@@ -170,7 +174,7 @@ export class ChangePasswordComponent implements OnInit{
                 }else{
                   this.alertService.showAlert('success', 'تم تغيير كلمة المرور بنجاح');
                 }
-                this.router.navigate(['/myListing/shipping']);
+                this.router.navigate(['/myprofile/shipping']);
               },
               error: (err) => {
                 console.error('Change password error', err);

@@ -59,7 +59,7 @@ export class AccessorySummaryComponent implements OnInit {
  
   goBack() {
     // Handle back navigation
-    this.router.navigate(['/myListing'], 
+    this.router.navigate(['/myprofile'], 
       { 
         state: {
           activeRouteType: 'cart'
@@ -173,7 +173,7 @@ export class AccessorySummaryComponent implements OnInit {
             
             // Redirect to cart page if we're on payment callback route
             if (window.location.pathname.includes('payment-callback')) {
-              this.router.navigate(['/myListing'], { 
+              this.router.navigate(['/myprofile'], { 
                 state: { activeRouteType: 'cart' } 
               });
             }
@@ -182,7 +182,7 @@ export class AccessorySummaryComponent implements OnInit {
             
             // Redirect to cart page if we're on payment callback route
             if (window.location.pathname.includes('payment-callback')) {
-              this.router.navigate(['/myListing'], { 
+              this.router.navigate(['/myprofile'], { 
                 state: { activeRouteType: 'cart' } 
               });
             }
@@ -200,7 +200,7 @@ export class AccessorySummaryComponent implements OnInit {
           
           // Redirect to cart page if we're on payment callback route
           if (window.location.pathname.includes('payment-callback')) {
-            this.router.navigate(['/myListing'], { 
+            this.router.navigate(['/myprofile'], { 
               state: { activeRouteType: 'cart' } 
             });
           }
@@ -209,7 +209,7 @@ export class AccessorySummaryComponent implements OnInit {
     } else {
       // No payment ID found, redirect to cart page
       if (window.location.pathname.includes('payment-callback')) {
-        this.router.navigate(['/myListing'], { 
+        this.router.navigate(['/myprofile'], { 
           state: { activeRouteType: 'cart' } 
         });
       }

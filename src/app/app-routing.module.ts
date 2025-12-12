@@ -53,6 +53,8 @@ import { RolesComponent } from "./views/adminpages/roles/roles.component";
 import { CreateRoleComponent } from "./views/adminpages/roles/create-role/create-role.component";
 import { ChronosouqUsersComponent } from "./views/adminpages/chronosouq-users/chronosouq-users.component";
 import { AdminVatComponent } from "./views/adminpages/admin-vat/admin-vat.component";
+import { AdminReportsComponent } from "./views/adminpages/admin-reports/admin-reports.component";
+import { AdminOrdersComponent } from "./views/adminpages/admin-orders/admin-orders.component";
 
 const routes: Routes = [
   { path: "login", component: LoginComponent },
@@ -194,6 +196,16 @@ const routes: Routes = [
     path: "admin/vat",
     component: AdminVatComponent,
   },
+  {
+    canActivate: [adminGuard],
+    path: "admin/reports",
+    component: AdminReportsComponent,
+  },
+  {
+    canActivate: [adminGuard],
+    path: "admin/orders",
+    component: AdminOrdersComponent,
+  },
 
   { path: "accessories/home", component: AccessoriesHomeComponent },
   { path: "accessories/details", component: AccessorieDetailComponent },
@@ -203,10 +215,10 @@ const routes: Routes = [
   // { path: 'myListing', component:  MyListingDetailsComponent},
 
   {
-    path: "myListing",
+    path: "myprofile",
     component: MyListingDetailsComponent, // parent container (with sidebar)
     children: [
-      { path: "", redirectTo: "profile", pathMatch: "full" },
+      { path: "", component: ProfileComponent, pathMatch: "full" },
       { path: "profile", component: ProfileComponent },
       { path: "shipping", component: ShippingAddressComponent },
       { path: "message", component: MessageComponent },
@@ -222,7 +234,7 @@ const routes: Routes = [
   { path: "forgotPassword", component: ForgotPasswordComponent },
   { path: "payment-callback", component: MyListingDetailsComponent },
   { path: "payment-confirmation", component: PayoutConfirmationComponent },
-  { path: "myListing/summary", component: AccessorySummaryComponent },
+  { path: "myprofile/summary", component: AccessorySummaryComponent },
   { path: "chat", component: ChatComponent },
 ];
 
