@@ -223,10 +223,12 @@
       <label for="street" class="form-label">{{ "my_Listing.Street" | translate }}</label>
       <input type="text" id="street" class="form-control"
         placeholder='{{ "my_Listing.Enter_street_Place" | translate }}' formControlName="street" />
-      <!-- <div class="" *ngIf="billingForm.get('street').hasError('required') && billingForm.get('street').touched">
-          <small class="text-danger">{{ "my_Listing.Street_is_required" | translate }}</small>
-        </div> -->
-
+      <div class="" *ngIf="billingForm.get('street').hasError('required') && billingForm.get('street').touched">
+        <small class="text-danger">{{ "my_Listing.Street_is_required" | translate }}</small>
+      </div>
+      <div class="" *ngIf="billingForm.get('street').hasError('pattern') && billingForm.get('street').touched">
+        <small class="text-danger">{{ "create_product_listing.Street_patt" | translate }}</small>
+      </div>
       <div class="" *ngIf="billingForm.get('street').hasError('maxlength')">
         <small class="text-danger">{{ "my_Listing.Cannot_exceed_limit_of_80_character" | translate }}</small>
       </div>
@@ -235,7 +237,9 @@
       <label for="street2" class="form-label">{{ "create_product_listing.Street_Line_two" | translate }}</label>
       <input type="text" id="street2" class="form-control"
         placeholder='{{ "my_Listing.Enter_street_line_addres" | translate }}' formControlName="street_line_2" />
-
+      <div class="" *ngIf="billingForm.get('street_line_2').hasError('pattern') && billingForm.get('street_line_2').touched">
+        <small class="text-danger">{{ "create_product_listing.Street_Line_two_patt" | translate }}</small>
+      </div>
       <div class="" *ngIf="billingForm.get('street_line_2').hasError('maxlength')">
         <small class="text-danger">{{ "my_Listing.Cannot_exceed_limit_of_80_character" | translate }}</small>
       </div>
@@ -264,10 +268,9 @@
       <label for="billing_address" class="form-label">{{ "my_Listing.Billing_Address" | translate }}</label>
       <input type="text" id="billing_address" class="form-control"
         placeholder='{{ "my_Listing.Enter_Billing_address" | translate }}' formControlName="billing_address" />
-      <!-- <div class="" *ngIf="billingForm.get('billing_address').hasError('required') && billingForm.get('billing_address').touched">
-          <small class="text-danger">{{ "my_Listing.Billing_address_required" | translate }}</small>
-        </div> -->
-
+      <div class="" *ngIf="billingForm.get('billing_address').hasError('required') && billingForm.get('billing_address').touched">
+        <small class="text-danger">{{ "my_Listing.Billing_address_required" | translate }}</small>
+      </div>
       <div class="" *ngIf="billingForm.get('billing_address').hasError('maxlength')">
         <small class="text-danger">{{ "my_Listing.Cannot_exceed_limit_120_character" | translate }}</small>
       </div>
