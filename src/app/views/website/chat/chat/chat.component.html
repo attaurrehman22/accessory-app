@@ -1,4 +1,4 @@
-<ng-container *ngIf="(userProfile || filteredChats?.length); else chatSkeleton">
+<ng-container *ngIf="!isLoading; else chatSkeleton">
 <div class="global-main-wraper mt-5">
   <div class="row" [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }">
     <!-- Left Sidebar: Contacts list -->

@@ -43,6 +43,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
   chat_id: any;
   noImageName: any = "Kamran Ghulam";
   noMessageDetails: any;
+  isLoading: boolean = true;
 
   constructor(
     private http: HttpService,
@@ -105,14 +106,16 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     this.userID = localStorage.getItem('userID');
     if (!this.user_id) {
       this.loginFirst();
+      this.isLoading = false; // Mark loading as complete if user not logged in
       return;
     }
     
     try {
       // Initialize profile and chats first
+      this.isLoading = true; // Set loading to true before fetching data
       console.log("history", history)
       await this.getProfileDetails();
-      await this.getLatestMessage();
+      await this.getLatestMessage(true); // Pass true to indicate initial load
 
       if(history?.state?.firstMessage){
         await this.getDetailsofProduct(history?.state?.product_ID);
@@ -198,7 +201,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
       
       if (history?.state?.chat) {
         console.log("calling this line 185")
-        await this.getLatestMessage();
+        await this.getLatestMessage(false); // Not initial load
         await this.getDetailsofProduct(history?.state?.chat.product_id);
         this.chat_id = history?.state?.chat.chat_id;
         await this.getChatDetails();
@@ -232,12 +235,12 @@ export class ChatComponent implements OnInit, AfterViewChecked {
         if(history?.state?.firstMessage){
 
         }else{
-          await this.getLatestMessage();
+          await this.getLatestMessage(false); // Not initial load
           await this.getDetailsofProduct(this.productDeatils?.id);
         }
       } else {
         console.log("calling this line 218")
-        await this.getLatestMessage();
+        await this.getLatestMessage(false); // Not initial load
       }
 
       // Set up interval for periodic updates
@@ -254,6 +257,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
 
     } catch (err) {
       console.error("Error in ngOnInit:", err);
+      this.isLoading = false; // Mark loading as complete even on error
     }
   }
 
@@ -347,7 +351,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     });
   }
 
-  async getLatestMessage() {
+  async getLatestMessage(isInitialLoad: boolean = false) {
     try {
       const res: any = await this.http.getChatsWithLatestMessage().toPromise();
       this.chats = res.chats.map((chat) => {
@@ -355,8 +359,16 @@ export class ChatComponent implements OnInit, AfterViewChecked {
         return chat;
       });
       this.filteredChats = this.chats;
+      // Only update loading state on initial load, not on interval updates
+      if (isInitialLoad) {
+        this.isLoading = false;
+      }
       return res;
     } catch (err: any) {
+      // Only update loading state on initial load, not on interval updates
+      if (isInitialLoad) {
+        this.isLoading = false;
+      }
       if (err && err.error) {
         this.alertService.showAlert("warning", `${err.error.message}`);
       } else {
