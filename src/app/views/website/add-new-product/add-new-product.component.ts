@@ -2496,6 +2496,7 @@ onUnknownChange(event: MatCheckboxChange): void {
         );
       }
     } else if (Param === "billinginformation") {
+      this.billingForm.markAllAsTouched();
       if (this.billingForm.valid) {
         // const isUpdate = this.selectedOptionsList.includes("billinginformation") ? "1" : "0";
         let isUpdate;
