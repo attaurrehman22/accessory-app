@@ -44,7 +44,9 @@
                   type="search"
                   placeholder="Search "
                   aria-label="Search"
+                  maxlength="50"
                   (click)="onSearchInputClick()"
+                  (input)="onSearchInputChange($event)"
                 />
                 <button class="search-btn" (click)="onSearch(searchQuery)" type="submit">Search</button>
               </div>
@@ -274,7 +276,9 @@
                 type="search"
                 placeholder="Search"
                 aria-label="Search"
+                maxlength="50"
                 (click)="onSearchInputClick()"
+                (input)="onSearchInputChange($event)"
               />
               <button class="search-btn" (click)="onSearch(searchQuery)" type="submit">Search</button>
               </div>

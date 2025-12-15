@@ -253,10 +253,26 @@ onSearchInputClick() {
     this.isManuallyToggled=true;
 }
 
+onSearchInputChange(event: any) {
+  const value = event.target.value;
+  if (value.length > 50) {
+    this.searchQuery = value.substring(0, 50);
+    this.alertService.showAlert('warning', this.translateService.instant('header.search_max_length_error') || 'Maximum 50 characters allowed');
+  }
+}
+
   onSearch(query: string) {
     // Validate if search query is empty or just whitespace
     if (!query || !query.trim()) {
       this.alertService.showAlert('warning', this.translateService.instant('header.search_empty_error'));
+      return;
+    }
+
+    // Validate maximum length
+    const trimmedQuery = query.trim();
+    if (trimmedQuery.length > 50) {
+      this.alertService.showAlert('warning', this.translateService.instant('header.search_max_length_error') || 'Maximum 50 characters allowed');
+      this.searchQuery = trimmedQuery.substring(0, 50);
       return;
     }
 
@@ -265,8 +281,8 @@ onSearchInputClick() {
     if (this.search3MenuTrigger && this.search3MenuTrigger.menuOpen) {
       this.search3MenuTrigger.closeMenu();
     }
-    this.searchService.changeSearchQuery(query.trim());  
-    this.router.navigate(['/product-list'], { queryParams: { query: query.trim() } }); 
+    this.searchService.changeSearchQuery(trimmedQuery);  
+    this.router.navigate(['/product-list'], { queryParams: { query: trimmedQuery } }); 
 
     this.isShowSearchField=false;
     this.searchQuery="";
