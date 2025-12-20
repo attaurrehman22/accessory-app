@@ -31,8 +31,9 @@
     <div class="col-md-6">
       <div class="zoom-container custom-zoom">
         <lib-ngx-image-zoom
-            [thumbImage]=myThumbnail
-            [fullImage]=myFullresImage
+            *ngIf="selectedType === 'image'"
+            [thumbImage]="myThumbnail"
+            [fullImage]="myFullresImage"
             [enableScrollZoom]="true"
             [enableLens]="true"
             [lensWidth]="200"
