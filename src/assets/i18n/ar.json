@@ -435,7 +435,7 @@
     "case_diameter_placeholder": "أدخل القطر",
     "case_diameter_required": "القطر مطلوب",
     "case_diameter_invalid": "يجب أن يكون قطر العلبة 1 رقمًا صالحًا مع خانتين عشريتين.",
-    "ref_number_invalid": "يجب أن يكون رقم المرجع رقمًا صالحًا يحتوي على ما يصل إلى 10 أرقام قبل العلامة العشرية و5 أرقام بعدها.",
+    "ref_number_invalid": "يمكن أن يحتوي رقم المرجع فقط على أحرف (A-Z، a-z) وأرقام (0-9).",
     "other_diameter": "القطر الآخر",
     "other_diameter_placeholder": "أدخل القطر الآخر",
     "other_diameter_required": "القطر الآخر مطلوب",

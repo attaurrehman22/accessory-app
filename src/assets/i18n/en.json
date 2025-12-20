@@ -492,7 +492,7 @@
     "case_diameter_placeholder": "Enter Diameter",
     "case_diameter_required": "Diameter is required",
     "case_diameter_invalid": "Case diameter must be 1 to 99.",
-    "ref_number_invalid": "Reference Number must be a valid number with up to 10 digits before and 5 digits after the decimal.",
+    "ref_number_invalid": "Reference Number can only contain letters (A-Z, a-z) and numbers (0-9).",
     "other_diameter": "Other Diameter",
     "other_diameter_placeholder": "Enter Other Diameter",
     "other_diameter_required": "Other Diameter is required",

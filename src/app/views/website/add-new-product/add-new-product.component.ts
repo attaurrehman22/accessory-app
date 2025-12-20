@@ -152,7 +152,7 @@ export class AddNewProductComponent implements OnInit, CanComponentDeactivate {
   // Watch Form Details
 
   decimalPattern = "^[1-9][0-9]?$";
-   refPattern = "^[0-9]{1,10}(\\.[0-9]{1,5})?$";
+   refPattern = "^[a-zA-Z0-9]*$"; // Allow A-Z, a-z, and 0-9
 
   reference_number = new FormControl("", [
     Validators.pattern(this.refPattern), // Only alphanumeric characters (letters and numbers)
