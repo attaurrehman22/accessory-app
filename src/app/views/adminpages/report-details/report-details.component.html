@@ -22,11 +22,15 @@
         </div>
         <div class="info-item">
           <label>Type:</label>
-          <span [class]="'badge ' + getTypeClass(report.type)">{{ report.type }}</span>
+          <span [class]="'badge ' + getTypeClass(report.type)">{{
+            report.type
+          }}</span>
         </div>
         <div class="info-item">
           <label>Status:</label>
-          <span [class]="'badge ' + getStatusClass(report.status)">{{ report.status }}</span>
+          <span [class]="'badge ' + getStatusClass(report.status)">{{
+            report.status
+          }}</span>
         </div>
         <div class="info-item">
           <label>Created At:</label>
@@ -49,7 +53,11 @@
       <div class="info-grid">
         <div class="info-item">
           <label>Name:</label>
-          <span>{{ report.reporter?.name || report.reporter_name || ('User #' + report.reporter_id) }}</span>
+          <span>{{
+            report.reporter?.name ||
+              report.reporter_name ||
+              "User #" + report.reporter_id
+          }}</span>
         </div>
         <div class="info-item">
           <label>User ID:</label>
@@ -72,7 +80,11 @@
       <div class="info-grid">
         <div class="info-item">
           <label>Name:</label>
-          <span>{{ report.reported_user?.name || report.reported_user_name || ('User #' + report.reported_user_id) }}</span>
+          <span>{{
+            report.reported_user?.name ||
+              report.reported_user_name ||
+              "User #" + report.reported_user_id
+          }}</span>
         </div>
         <div class="info-item">
           <label>User ID:</label>
@@ -120,7 +132,10 @@
     <div class="section" *ngIf="hasAttachments()">
       <h3>Attachments</h3>
       <div class="attachments-grid">
-        <div *ngFor="let attachment of getAttachmentsList()" class="attachment-item">
+        <div
+          *ngFor="let attachment of getAttachmentsList()"
+          class="attachment-item"
+        >
           <img
             *ngIf="isImage(attachment)"
             [src]="getAttachmentUrl(attachment)"
@@ -130,7 +145,11 @@
           />
           <div *ngIf="!isImage(attachment)" class="attachment-file">
             <mat-icon>description</mat-icon>
-            <a [href]="getAttachmentUrl(attachment)" target="_blank" class="file-link">
+            <a
+              [href]="getAttachmentUrl(attachment)"
+              target="_blank"
+              class="file-link"
+            >
               {{ getFileName(attachment) }}
             </a>
           </div>
@@ -141,7 +160,7 @@
     <!-- Chat Section -->
     <div class="section chat-section" *ngIf="report">
       <h3>Chat Messages</h3>
-      
+
       <div *ngIf="isLoadingChat" class="loading-container">
         <mat-spinner [diameter]="30"></mat-spinner>
         <p>Loading chat...</p>
@@ -150,68 +169,134 @@
       <div *ngIf="!isLoadingChat" class="chat-container">
         <!-- Chat Messages -->
         <div class="chat-messages-container" #chatContainer>
-          <div *ngFor="let message of getReversedChatMessages()" class="chat-message-wrapper">
+          <div
+            *ngFor="let message of getReversedChatMessages()"
+            class="chat-message-wrapper"
+          >
             <!-- System Generated Message (Centered) -->
-            <div *ngIf="isSystemMessage(message)" class="chat-message system-message">
+            <div
+              *ngIf="isSystemMessage(message)"
+              class="chat-message system-message"
+            >
               <div class="message-content system-content">
                 <p>{{ message.message }}</p>
-                <small class="message-time">{{ formatChatTime(message.created_at) }}</small>
+                <small class="message-time">{{
+                  formatChatTime(message.created_at)
+                }}</small>
               </div>
             </div>
 
             <!-- Buyer Message (Left Side - BTS) -->
-            <div *ngIf="!isSystemMessage(message) && isBuyerMessage(message)" class="chat-message buyer-message">
+            <div
+              *ngIf="!isSystemMessage(message) && isBuyerMessage(message)"
+              class="chat-message buyer-message"
+            >
               <div class="message-content buyer-content">
                 <p *ngIf="message.message">{{ message.message }}</p>
-                
+
                 <!-- Attachments -->
                 <div class="d-flex gap-2" *ngIf="message.attachments">
                   <ng-container *ngIf="!isArray(message.attachments)">
-                    <ng-container [ngSwitch]="getAttachmentType(message.attachments)">
-                      <img *ngSwitchCase="'image'" [src]="getAttachmentUrl(message.attachments)" class="chat-attachment" alt="Attachment" />
-                      <video *ngSwitchCase="'video'" [src]="getAttachmentUrl(message.attachments)" class="chat-attachment" controls></video>
+                    <ng-container
+                      [ngSwitch]="getAttachmentType(message.attachments)"
+                    >
+                      <img
+                        *ngSwitchCase="'image'"
+                        [src]="getAttachmentUrl(message.attachments)"
+                        class="chat-attachment"
+                        alt="Attachment"
+                      />
+                      <video
+                        *ngSwitchCase="'video'"
+                        [src]="getAttachmentUrl(message.attachments)"
+                        class="chat-attachment"
+                        controls
+                      ></video>
                     </ng-container>
                   </ng-container>
                   <ng-container *ngIf="isArray(message.attachments)">
-                    <ng-container *ngFor="let attachment of message.attachments">
+                    <ng-container
+                      *ngFor="let attachment of message.attachments"
+                    >
                       <ng-container [ngSwitch]="getAttachmentType(attachment)">
-                        <img *ngSwitchCase="'image'" [src]="getAttachmentUrl(attachment)" class="chat-attachment" alt="Attachment" />
-                        <video *ngSwitchCase="'video'" [src]="getAttachmentUrl(attachment)" class="chat-attachment" controls></video>
+                        <img
+                          *ngSwitchCase="'image'"
+                          [src]="getAttachmentUrl(attachment)"
+                          class="chat-attachment"
+                          alt="Attachment"
+                        />
+                        <video
+                          *ngSwitchCase="'video'"
+                          [src]="getAttachmentUrl(attachment)"
+                          class="chat-attachment"
+                          controls
+                        ></video>
                       </ng-container>
                     </ng-container>
                   </ng-container>
                 </div>
 
-                <small class="message-time">{{ formatChatTime(message.created_at) }}</small>
+                <small class="message-time">{{
+                  formatChatTime(message.created_at)
+                }}</small>
               </div>
               <div class="message-label buyer-label">Buyer</div>
             </div>
 
             <!-- Seller Message (Right Side - STB) -->
-            <div *ngIf="!isSystemMessage(message) && isSellerMessage(message)" class="chat-message seller-message">
+            <div
+              *ngIf="!isSystemMessage(message) && isSellerMessage(message)"
+              class="chat-message seller-message"
+            >
               <div class="message-label seller-label">Seller</div>
               <div class="message-content seller-content">
                 <p *ngIf="message.message">{{ message.message }}</p>
-                
+
                 <!-- Attachments -->
                 <div class="d-flex gap-2" *ngIf="message.attachments">
                   <ng-container *ngIf="!isArray(message.attachments)">
-                    <ng-container [ngSwitch]="getAttachmentType(message.attachments)">
-                      <img *ngSwitchCase="'image'" [src]="getAttachmentUrl(message.attachments)" class="chat-attachment" alt="Attachment" />
-                      <video *ngSwitchCase="'video'" [src]="getAttachmentUrl(message.attachments)" class="chat-attachment" controls></video>
+                    <ng-container
+                      [ngSwitch]="getAttachmentType(message.attachments)"
+                    >
+                      <img
+                        *ngSwitchCase="'image'"
+                        [src]="getAttachmentUrl(message.attachments)"
+                        class="chat-attachment"
+                        alt="Attachment"
+                      />
+                      <video
+                        *ngSwitchCase="'video'"
+                        [src]="getAttachmentUrl(message.attachments)"
+                        class="chat-attachment"
+                        controls
+                      ></video>
                     </ng-container>
                   </ng-container>
                   <ng-container *ngIf="isArray(message.attachments)">
-                    <ng-container *ngFor="let attachment of message.attachments">
+                    <ng-container
+                      *ngFor="let attachment of message.attachments"
+                    >
                       <ng-container [ngSwitch]="getAttachmentType(attachment)">
-                        <img *ngSwitchCase="'image'" [src]="getAttachmentUrl(attachment)" class="chat-attachment" alt="Attachment" />
-                        <video *ngSwitchCase="'video'" [src]="getAttachmentUrl(attachment)" class="chat-attachment" controls></video>
+                        <img
+                          *ngSwitchCase="'image'"
+                          [src]="getAttachmentUrl(attachment)"
+                          class="chat-attachment"
+                          alt="Attachment"
+                        />
+                        <video
+                          *ngSwitchCase="'video'"
+                          [src]="getAttachmentUrl(attachment)"
+                          class="chat-attachment"
+                          controls
+                        ></video>
                       </ng-container>
                     </ng-container>
                   </ng-container>
                 </div>
 
-                <small class="message-time">{{ formatChatTime(message.created_at) }}</small>
+                <small class="message-time">{{
+                  formatChatTime(message.created_at)
+                }}</small>
               </div>
             </div>
           </div>
@@ -224,17 +309,40 @@
         <!-- Admin Message Input -->
         <div class="admin-message-input">
           <form [formGroup]="adminMessageForm" (ngSubmit)="sendAdminMessage()">
+            <div class="recipient-select-container">
+              <mat-form-field appearance="outline" class="recipient-select">
+                <mat-label>Send To</mat-label>
+                <mat-select formControlName="recipient">
+                  <mat-option
+                    *ngFor="let option of recipientOptions"
+                    [value]="option.value"
+                  >
+                    {{ option.label }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
             <div class="input-group">
               <input
                 type="text"
                 class="form-control"
                 formControlName="message"
-                [(ngModel)]="adminMessage"
                 placeholder="Type your message as admin..."
                 maxlength="500"
               />
-              <div class="character-count">{{ adminMessage.length }} / 500</div>
-              <button type="submit" class="btn btn-primary" style="background-color: #242424 !important;" [disabled]="adminMessageForm.invalid || !adminMessage.trim()">
+              <div class="character-count">
+                {{ (adminMessageForm.get("message")?.value || "").length }} /
+                500
+              </div>
+              <button
+                type="submit"
+                class="btn btn-primary"
+                style="background-color: #242424 !important"
+                [disabled]="
+                  adminMessageForm.invalid ||
+                  !adminMessageForm.get('message')?.value?.trim()
+                "
+              >
                 <mat-icon>send</mat-icon>
                 Send
               </button>
@@ -254,7 +362,9 @@
             <span class="action-date">{{ formatDate(action.created_at) }}</span>
           </div>
           <div class="action-admin" *ngIf="action.admin">
-            <small>By: {{ action.admin.name || ('Admin #' + action.admin_id) }}</small>
+            <small
+              >By: {{ action.admin.name || "Admin #" + action.admin_id }}</small
+            >
           </div>
           <div class="action-notes" *ngIf="action.notes">
             <p>{{ action.notes }}</p>
@@ -266,67 +376,91 @@
     <!-- Admin Actions -->
     <div class="section actions-section">
       <h3>Admin Actions</h3>
-      
+
       <div *ngIf="!showActionForm" class="action-buttons">
-        <button
-          mat-raised-button
-          color="primary"
-          (click)="showActionDialog('mark_under_review')"
-          *ngIf="normalizeStatus(report.status) === 'pending'"
+        <ng-container
+          *ngIf="
+            normalizeStatus(report.status) === 'pending' ||
+            normalizeStatus(report.status) === 'under review'
+          "
         >
-          <mat-icon>visibility</mat-icon>
-          Mark as Under Review
-        </button>
+          <button
+            mat-raised-button
+            color="primary"
+            (click)="showActionDialog('mark_under_review')"
+            *ngIf="normalizeStatus(report.status) === 'pending'"
+          >
+            <mat-icon>visibility</mat-icon>
+            Mark as Under Review
+          </button>
 
-        <button
-          mat-raised-button
-          color="accent"
-          (click)="showActionDialog('request_info')"
-          *ngIf="normalizeStatus(report.status) === 'under review' || normalizeStatus(report.status) === 'pending'"
-        >
-          <mat-icon>info</mat-icon>
-          Request More Info
-        </button>
+          <button
+            mat-raised-button
+            color="accent"
+            (click)="showActionDialog('request_more_info')"
+            *ngIf="
+              normalizeStatus(report.status) === 'under review' ||
+              normalizeStatus(report.status) === 'pending'
+            "
+          >
+            <mat-icon>info</mat-icon>
+            Request More Info
+          </button>
 
-        <button
-          mat-raised-button
-          color="warn"
-          (click)="showActionDialog('warn_user')"
-          *ngIf="normalizeStatus(report.status) === 'under review'"
-        >
-          <mat-icon>warning</mat-icon>
-          Warn User
-        </button>
+          <button
+            mat-raised-button
+            color="warn"
+            (click)="showActionDialog('warn_user')"
+            *ngIf="normalizeStatus(report.status) === 'under review'"
+          >
+            <mat-icon>warning</mat-icon>
+            Warn User
+          </button>
 
-        <button
-          mat-raised-button
-          color="warn"
-          (click)="showActionDialog('suspend_user')"
-          *ngIf="normalizeStatus(report.status) === 'under review'"
-        >
-          <mat-icon>block</mat-icon>
-          Suspend User
-        </button>
+          <button
+            mat-raised-button
+            color="warn"
+            (click)="showActionDialog('suspend_user')"
+            *ngIf="normalizeStatus(report.status) === 'under review'"
+          >
+            <mat-icon>block</mat-icon>
+            Suspend User
+          </button>
 
-        <button
-          mat-raised-button
-          color="warn"
-          (click)="showActionDialog('reject')"
-          *ngIf="normalizeStatus(report.status) === 'pending' || normalizeStatus(report.status) === 'under review'"
-        >
-          <mat-icon>cancel</mat-icon>
-          Reject Report
-        </button>
+          <button
+            mat-raised-button
+            color="warn"
+            (click)="showActionDialog('reject')"
+            *ngIf="
+              normalizeStatus(report.status) === 'pending' ||
+              normalizeStatus(report.status) === 'under review'
+            "
+          >
+            <mat-icon>cancel</mat-icon>
+            Reject Report
+          </button>
 
-        <button
-          mat-raised-button
-          color="primary"
-          (click)="showActionDialog('resolve')"
-          *ngIf="normalizeStatus(report.status) === 'under review'"
+          <button
+            mat-raised-button
+            color="primary"
+            (click)="showActionDialog('resolve')"
+            *ngIf="normalizeStatus(report.status) === 'under review'"
+          >
+            <mat-icon>check_circle</mat-icon>
+            Resolve Report
+          </button>
+        </ng-container>
+        <ng-container
+          *ngIf="
+            normalizeStatus(report.status) !== 'pending' &&
+            normalizeStatus(report.status) !== 'under review'
+          "
         >
-          <mat-icon>check_circle</mat-icon>
-          Resolve Report
-        </button>
+          <div class="no-actions-available">
+            <span class="report-status-label">Report Status: </span>
+            <span class="report-status-value">{{ report.status }}</span>
+          </div>
+        </ng-container>
       </div>
 
       <!-- Action Form -->
@@ -335,7 +469,10 @@
           <mat-form-field appearance="outline" class="full-width">
             <mat-label>Action</mat-label>
             <mat-select formControlName="action">
-              <mat-option *ngFor="let action of actionTypes" [value]="action.value">
+              <mat-option
+                *ngFor="let action of actionTypes"
+                [value]="action.value"
+              >
                 {{ action.label }}
               </mat-option>
             </mat-select>
@@ -352,12 +489,15 @@
           </mat-form-field>
 
           <div class="form-actions">
-            <button mat-button type="button" (click)="cancelAction()">Cancel</button>
-            <button mat-raised-button color="primary" type="submit">Submit Action</button>
+            <button mat-button type="button" (click)="cancelAction()">
+              Cancel
+            </button>
+            <button mat-raised-button color="primary" type="submit">
+              Submit Action
+            </button>
           </div>
         </form>
       </div>
     </div>
   </div>
 </div>
-

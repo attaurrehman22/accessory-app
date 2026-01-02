@@ -1,4 +1,10 @@
-import { Component, OnInit, Inject, ViewChild, ElementRef } from "@angular/core";
+import {
+  Component,
+  OnInit,
+  Inject,
+  ViewChild,
+  ElementRef,
+} from "@angular/core";
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { HttpService } from "src/services/http/http.service";
@@ -66,84 +72,43 @@ export class AdminOrderDetailsComponent implements OnInit {
 
   async ngOnInit() {
     await this.loadOrderDetails();
-    await this.loadChatHistory();
   }
 
   async loadOrderDetails() {
     this.isLoading = true;
     try {
-      // TODO: Replace with actual API call when backend is ready
-      // const res: any = await this.http.getAdminOrderDetails(this.data.orderId).toPromise();
-      // this.order = res.order || res.data;
-
-      // Dummy data for testing
-      await this.loadDummyOrderDetails();
-      this.initializeOrderStatuses();
-      this.isLoading = false;
+      this.http.getAdminOrderDetails(this.data.orderId).subscribe(
+        (res: any) => {
+          this.order = res.order || res.data;
+          this.initializeOrderStatuses();
+          this.isLoading = false;
+          this.loadChatHistory();
+        },
+        (err: any) => {
+          this.isLoading = false;
+        }
+      );
     } catch (err: any) {
       this.isLoading = false;
       if (err && err.error) {
-        this.alertService.showAlert("warning", `${err.error.message || "Error loading order details"}`);
+        this.alertService.showAlert(
+          "warning",
+          `${err.error.message || "Error loading order details"}`
+        );
       } else {
         if (this.translateService.currentLang == "en") {
-          this.alertService.showAlert("warning", "Error loading order details. Please try again");
+          this.alertService.showAlert(
+            "warning",
+            "Error loading order details. Please try again"
+          );
         } else {
-          this.alertService.showAlert("warning", "حدث خطأ أثناء تحميل تفاصيل الطلب، يرجى المحاولة مرة أخرى");
+          this.alertService.showAlert(
+            "warning",
+            "حدث خطأ أثناء تحميل تفاصيل الطلب، يرجى المحاولة مرة أخرى"
+          );
         }
       }
     }
-  }
-
-  loadDummyOrderDetails() {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        this.order = {
-          id: 3354654654526,
-          buyer_id: 101,
-          seller_id: 202,
-          product_id: 501,
-          chat_id: 12345,
-          status: "awaiting_confirmation",
-          created_at: "2024-01-20T10:30:00Z",
-          updated_at: "2024-01-20T10:30:00Z",
-          buyer: {
-            id: 101,
-            name: "John Doe",
-            email: "john@example.com",
-            profile_image: "user1.jpg",
-          },
-          seller: {
-            id: 202,
-            name: "Jane Smith",
-            email: "jane@example.com",
-            profile_image: "user2.jpg",
-          },
-          product: {
-            id: 501,
-            title: "Rolex Speedmaster in a good condition but in low price",
-            price: 2500,
-            currency: "SR",
-            main_image: "watch1.jpg",
-            serial_no: "RS-2024-001",
-          },
-          order_history: [
-            {
-              id: 1,
-              old_status: null,
-              new_status: "initiated",
-              created_at: "2024-01-20T10:30:00Z",
-            },
-            {
-              id: 2,
-              old_status: "initiated",
-              new_status: "awaiting_confirmation",
-              created_at: "2024-01-20T10:35:00Z",
-            },
-          ],
-        };
-        resolve(null);
-      }, 300);
-    });
   }
 
   initializeOrderStatuses() {
@@ -217,11 +182,13 @@ export class AdminOrderDetailsComponent implements OnInit {
     if (this.order?.order_history) {
       this.order.order_history.forEach((history: any) => {
         const statusIndex = this.orderStatuses.findIndex(
-          (s) => s.status === history.new_status
+          (s) => s.status === history.new_status.toLowerCase()
         );
         if (statusIndex !== -1) {
           this.orderStatuses[statusIndex].active = true;
-          this.orderStatuses[statusIndex].time = moment(history.created_at).fromNow();
+          this.orderStatuses[statusIndex].time = moment(
+            history.created_at
+          ).fromNow();
         }
       });
     }
@@ -235,58 +202,37 @@ export class AdminOrderDetailsComponent implements OnInit {
     }
   }
 
-  async loadChatHistory() {
+  loadChatHistory() {
     if (!this.order?.chat_id) {
       return;
     }
 
     this.isLoadingChat = true;
-    try {
-      // TODO: Replace with actual API call when backend is ready
-      // const res: any = await this.http.getChatsDetails(this.order.chat_id).toPromise();
-      // this.chatHistory = res.messages || [];
-
-      // Dummy chat history
-      await this.loadDummyChatHistory();
-      this.isLoadingChat = false;
-      setTimeout(() => this.scrollToBottom(), 100);
-    } catch (err: any) {
-      this.isLoadingChat = false;
-      console.error("Error loading chat history:", err);
-    }
+    this.http.getAdminChatHistory(this.order.chat_id).subscribe(
+      (res: any) => {
+        const messages = res.chat_history || res.data.messages || [];
+        // Sort messages chronologically (earliest first)
+        this.chatHistory = this.sortMessagesByDate(messages);
+        this.isLoadingChat = false;
+        setTimeout(() => this.scrollToTop(), 100);
+      },
+      (err: any) => {
+        this.isLoadingChat = false;
+        if (err && err.error) {
+          this.alertService.showAlert(
+            "warning",
+            `${err.error.message || "Error loading chat history"}`
+          );
+        }
+      }
+    );
   }
 
-  loadDummyChatHistory() {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        this.chatHistory = [
-          {
-            id: 1,
-            sender_id: this.order.buyer_id,
-            receiver_id: this.order.seller_id,
-            message: "Hello, I'm interested in this watch.",
-            created_at: "2024-01-20T10:25:00Z",
-            sender: this.order.buyer,
-          },
-          {
-            id: 2,
-            sender_id: this.order.seller_id,
-            receiver_id: this.order.buyer_id,
-            message: "Hi! Yes, it's available. Would you like to proceed?",
-            created_at: "2024-01-20T10:26:00Z",
-            sender: this.order.seller,
-          },
-          {
-            id: 3,
-            sender_id: this.order.buyer_id,
-            receiver_id: this.order.seller_id,
-            message: "Yes, I'll buy it now.",
-            created_at: "2024-01-20T10:30:00Z",
-            sender: this.order.buyer,
-          },
-        ];
-        resolve(null);
-      }, 200);
+  sortMessagesByDate(messages: any[]): any[] {
+    return [...messages].sort((a, b) => {
+      const dateA = new Date(a.created_at || a.createdAt || 0).getTime();
+      const dateB = new Date(b.created_at || b.createdAt || 0).getTime();
+      return dateA - dateB; // Ascending order (earliest first)
     });
   }
 
@@ -302,7 +248,10 @@ export class AdminOrderDetailsComponent implements OnInit {
   async submitAction() {
     if (this.actionForm.invalid) {
       if (this.translateService.currentLang == "en") {
-        this.alertService.showAlert("warning", "Please fill all required fields");
+        this.alertService.showAlert(
+          "warning",
+          "Please fill all required fields"
+        );
       } else {
         this.alertService.showAlert("warning", "يرجى ملء جميع الحقول المطلوبة");
       }
@@ -332,12 +281,21 @@ export class AdminOrderDetailsComponent implements OnInit {
       }
     } catch (err: any) {
       if (err && err.error) {
-        this.alertService.showAlert("warning", `${err.error.message || "Error performing action"}`);
+        this.alertService.showAlert(
+          "warning",
+          `${err.error.message || "Error performing action"}`
+        );
       } else {
         if (this.translateService.currentLang == "en") {
-          this.alertService.showAlert("warning", "Error performing action. Please try again");
+          this.alertService.showAlert(
+            "warning",
+            "Error performing action. Please try again"
+          );
         } else {
-          this.alertService.showAlert("warning", "حدث خطأ أثناء تنفيذ الإجراء، يرجى المحاولة مرة أخرى");
+          this.alertService.showAlert(
+            "warning",
+            "حدث خطأ أثناء تنفيذ الإجراء، يرجى المحاولة مرة أخرى"
+          );
         }
       }
     }
@@ -352,7 +310,7 @@ export class AdminOrderDetailsComponent implements OnInit {
         }
         if (formData.action === "send_message") {
           // Add message to chat history
-          this.chatHistory.push({
+          const newMessage = {
             id: this.chatHistory.length + 1,
             sender_id: "admin",
             receiver_id: this.order.buyer_id,
@@ -360,7 +318,12 @@ export class AdminOrderDetailsComponent implements OnInit {
             created_at: new Date().toISOString(),
             sender: { name: "Admin", id: "admin" },
             is_admin: true,
-          });
+          };
+          // Add message and re-sort chronologically
+          this.chatHistory = this.sortMessagesByDate([
+            ...this.chatHistory,
+            newMessage,
+          ]);
         }
         resolve(null);
       }, 500);
@@ -398,7 +361,7 @@ export class AdminOrderDetailsComponent implements OnInit {
       // await this.http.sendAdminMessage(formData).toPromise();
 
       // Simulate sending message
-      this.chatHistory.push({
+      const newMessage = {
         id: this.chatHistory.length + 1,
         sender_id: "admin",
         receiver_id: this.order.buyer_id,
@@ -406,14 +369,23 @@ export class AdminOrderDetailsComponent implements OnInit {
         created_at: new Date().toISOString(),
         sender: { name: "Admin", id: "admin" },
         is_admin: true,
-      });
+      };
+
+      // Add message and re-sort chronologically
+      this.chatHistory = this.sortMessagesByDate([
+        ...this.chatHistory,
+        newMessage,
+      ]);
 
       this.newMessage = "";
       this.selectedImages = [];
-      setTimeout(() => this.scrollToBottom(), 100);
+      setTimeout(() => this.scrollToTop(), 100);
     } catch (err: any) {
       if (err && err.error) {
-        this.alertService.showAlert("warning", `${err.error.message || "Error sending message"}`);
+        this.alertService.showAlert(
+          "warning",
+          `${err.error.message || "Error sending message"}`
+        );
       }
     }
   }
@@ -438,6 +410,60 @@ export class AdminOrderDetailsComponent implements OnInit {
       const container = this.chatContainer.nativeElement;
       container.scrollTop = container.scrollHeight;
     }
+  }
+
+  scrollToTop() {
+    if (this.chatContainer?.nativeElement) {
+      const container = this.chatContainer.nativeElement;
+      container.scrollTop = 0;
+    }
+  }
+
+  isBuyerMessage(message: any): boolean {
+    if (!message || !this.order) return false;
+    // Check if sender_id matches buyer_id
+    return (
+      message.sender_id === this.order.buyer_id ||
+      (message.sender && message.sender.id === this.order.buyer_id)
+    );
+  }
+
+  isSellerMessage(message: any): boolean {
+    if (!message || !this.order) return false;
+    // Check if sender_id matches seller_id
+    return (
+      message.sender_id === this.order.seller_id ||
+      (message.sender && message.sender.id === this.order.seller_id)
+    );
+  }
+
+  isAdminMessage(message: any): boolean {
+    return (
+      message.is_admin === true ||
+      message.sender_id === "admin" ||
+      (message.sender && message.sender.id === "admin")
+    );
+  }
+
+  isSystemMessage(message: any): boolean {
+    return (
+      message.is_system_generated === 1 ||
+      message.is_system_generated === true ||
+      message.action_type !== null
+    );
+  }
+
+  getMessageSenderName(message: any): string {
+    if (this.isAdminMessage(message)) {
+      return "Admin";
+    }
+    if (this.isBuyerMessage(message)) {
+      return this.order?.buyer?.name || `Buyer #${this.order?.buyer_id}`;
+    }
+    if (this.isSellerMessage(message)) {
+      return this.order?.seller?.name || `Seller #${this.order?.seller_id}`;
+    }
+    return message.sender?.name || "Unknown";
   }
 
   formatTime(date: string): string {
@@ -475,19 +501,68 @@ export class AdminOrderDetailsComponent implements OnInit {
     return Array.isArray(attachments);
   }
 
-  getAttachmentType(attachment: string): "image" | "video" | "unknown" {
-    const lower = attachment.toLowerCase();
-    if (lower.endsWith(".jpg") || lower.endsWith(".jpeg") || lower.endsWith(".png") || lower.endsWith(".gif")) {
+  getAttachmentType(attachment: string | any): "image" | "video" | "unknown" {
+    if (!attachment) return "unknown";
+    const attachmentPath =
+      typeof attachment === "string"
+        ? attachment
+        : attachment.url || attachment.path || "";
+    const lower = attachmentPath.toLowerCase();
+    if (
+      lower.endsWith(".jpg") ||
+      lower.endsWith(".jpeg") ||
+      lower.endsWith(".png") ||
+      lower.endsWith(".gif") ||
+      lower.endsWith(".webp")
+    ) {
       return "image";
     }
-    if (lower.endsWith(".mp4") || lower.endsWith(".webm") || lower.endsWith(".ogg")) {
+    if (
+      lower.endsWith(".mp4") ||
+      lower.endsWith(".webm") ||
+      lower.endsWith(".ogg")
+    ) {
       return "video";
     }
     return "unknown";
+  }
+
+  getAttachmentUrl(attachment: string | any): string {
+    if (!attachment) return "";
+
+    // If attachment is an object with url or path
+    if (typeof attachment === "object") {
+      if (attachment.url) {
+        // If already a full URL, return it
+        if (
+          attachment.url.startsWith("http://") ||
+          attachment.url.startsWith("https://")
+        ) {
+          return attachment.url;
+        }
+        return this.apiUrl + attachment.url;
+      }
+      if (attachment.path) {
+        return this.apiUrl + attachment.path;
+      }
+      return "";
+    }
+
+    // If attachment is already a full URL, return it
+    if (typeof attachment === "string") {
+      if (
+        attachment.startsWith("http://") ||
+        attachment.startsWith("https://")
+      ) {
+        return attachment;
+      }
+      return this.apiUrl + attachment;
+    }
+
+    return "";
   }
 
   close() {
     this.dialogRef.close();
   }
 }
-

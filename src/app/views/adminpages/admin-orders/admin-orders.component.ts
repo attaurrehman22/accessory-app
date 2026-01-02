@@ -101,96 +101,25 @@ export class AdminOrdersComponent implements OnInit, OnDestroy {
     }
   }
 
-  async loadOrders() {
+  loadOrders() {
     this.isLoading = true;
-    try {
-      // TODO: Replace with actual API call when backend is ready
-      // const res: any = await this.http.getAdminOrders(this.pageIndex + 1, this.pageSize).toPromise();
-      // this.allOrders = res.orders || res.data || [];
-      // this.totalItems = res.total || res.meta?.total || this.allOrders.length;
-
-      // Dummy data for testing
-      await this.loadDummyData();
-      this.applyFilters();
-    } catch (err: any) {
-      if (err && err.error) {
-        this.alertService.showAlert("warning", `${err.error.message || "Error loading orders"}`);
-      } else {
-        if (this.translateService.currentLang == "en") {
-          this.alertService.showAlert("warning", "Error loading orders. Please try again");
-        } else {
-          this.alertService.showAlert("warning", "حدث خطأ أثناء تحميل الطلبات، يرجى المحاولة مرة أخرى");
-        }
+    this.http.getAdminOrders(this.pageIndex + 1, this.pageSize).subscribe(
+      (res: any) => {
+        this.allOrders = res.orders || res.data || [];
+        this.totalItems = res.total || res.meta?.total || this.allOrders.length;
+        this.applyFilters();
+        this.isLoading = false;
+      },
+      (err: any) => {
+        this.isLoading = false;
+        const errorMessage =
+          err?.error?.message ||
+          (this.translateService.currentLang === "en"
+            ? "Error loading orders. Please try again"
+            : "حدث خطأ أثناء تحميل الطلبات، يرجى المحاولة مرة أخرى");
+        this.alertService.showAlert("warning", errorMessage);
       }
-    } finally {
-      this.isLoading = false;
-    }
-  }
-
-  loadDummyData() {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        this.allOrders = [
-          {
-            id: 3354654654526,
-            buyer_id: 101,
-            seller_id: 202,
-            product_id: 501,
-            status: "awaiting_confirmation",
-            created_at: "2024-01-20T10:30:00Z",
-            buyer: { name: "John Doe", email: "john@example.com" },
-            seller: { name: "Jane Smith", email: "jane@example.com" },
-            product: { title: "Rolex Speedmaster", price: 2500, main_image: "watch1.jpg" },
-          },
-          {
-            id: 3354654654527,
-            buyer_id: 203,
-            seller_id: 101,
-            product_id: 502,
-            status: "make_payment",
-            created_at: "2024-01-19T14:20:00Z",
-            buyer: { name: "Alice Johnson", email: "alice@example.com" },
-            seller: { name: "John Doe", email: "john@example.com" },
-            product: { title: "Omega Seamaster", price: 3200, main_image: "watch2.jpg" },
-          },
-          {
-            id: 3354654654528,
-            buyer_id: 202,
-            seller_id: 301,
-            product_id: 503,
-            status: "delivery_in_progress",
-            created_at: "2024-01-18T09:15:00Z",
-            buyer: { name: "Jane Smith", email: "jane@example.com" },
-            seller: { name: "Bob Williams", email: "bob@example.com" },
-            product: { title: "Tag Heuer Carrera", price: 1800, main_image: "watch3.jpg" },
-          },
-          {
-            id: 3354654654529,
-            buyer_id: 301,
-            seller_id: 202,
-            product_id: 504,
-            status: "order_completed",
-            created_at: "2024-01-17T16:45:00Z",
-            buyer: { name: "Bob Williams", email: "bob@example.com" },
-            seller: { name: "Jane Smith", email: "jane@example.com" },
-            product: { title: "Patek Philippe", price: 15000, main_image: "watch4.jpg" },
-          },
-          {
-            id: 3354654654530,
-            buyer_id: 401,
-            seller_id: 203,
-            product_id: 505,
-            status: "order_canceled",
-            created_at: "2024-01-16T11:30:00Z",
-            buyer: { name: "Charlie Brown", email: "charlie@example.com" },
-            seller: { name: "Alice Johnson", email: "alice@example.com" },
-            product: { title: "Audemars Piguet", price: 12000, main_image: "watch5.jpg" },
-          },
-        ];
-        this.totalItems = this.allOrders.length;
-        resolve(null);
-      }, 500);
-    });
+    );
   }
 
   applyFilters() {
@@ -202,10 +131,7 @@ export class AdminOrdersComponent implements OnInit, OnDestroy {
     }
 
     this.filteredOrders = filtered;
-    this.dataSource.data = this.filteredOrders.slice(
-      this.pageIndex * this.pageSize,
-      (this.pageIndex + 1) * this.pageSize
-    );
+    this.dataSource.data = this.filteredOrders;
   }
 
   onStatusFilterChange() {
@@ -267,4 +193,3 @@ export class AdminOrdersComponent implements OnInit, OnDestroy {
     });
   }
 }
-

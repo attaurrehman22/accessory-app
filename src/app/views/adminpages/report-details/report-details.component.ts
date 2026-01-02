@@ -1,4 +1,10 @@
-import { Component, Inject, OnInit, ViewChild, ElementRef } from "@angular/core";
+import {
+  Component,
+  Inject,
+  OnInit,
+  ViewChild,
+  ElementRef,
+} from "@angular/core";
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 import { HttpService } from "src/services/http/http.service";
 import { AlertsServicesService } from "src/services/alerts-service/alerts-services.service";
@@ -28,10 +34,11 @@ export class ReportDetailsComponent implements OnInit {
   adminMessage: string = "";
   adminMessageForm: FormGroup;
   currentUserId: string | null = null;
+  recipientOptions: Array<{ value: string; label: string }> = [];
 
   // Two-way binding for admin message
   get adminMessageValue() {
-    return this.adminMessageForm.get('message')?.value || '';
+    return this.adminMessageForm.get("message")?.value || "";
   }
 
   set adminMessageValue(value: string) {
@@ -43,7 +50,7 @@ export class ReportDetailsComponent implements OnInit {
 
   actionTypes = [
     { value: "mark_under_review", label: "Mark as Under Review" },
-    { value: "request_info", label: "Request More Info" },
+    { value: "request_more_info", label: "Request More Info" },
     { value: "warn_user", label: "Warn Reported User" },
     { value: "suspend_user", label: "Suspend User" },
     { value: "reject", label: "Reject Report" },
@@ -67,11 +74,12 @@ export class ReportDetailsComponent implements OnInit {
 
     this.adminMessageForm = this.fb.group({
       message: ["", [Validators.required, Validators.maxLength(500)]],
+      recipient: ["reporter", Validators.required],
     });
 
     // Sync form value with adminMessage
-    this.adminMessageForm.get('message')?.valueChanges.subscribe(value => {
-      this.adminMessage = value || '';
+    this.adminMessageForm.get("message")?.valueChanges.subscribe((value) => {
+      this.adminMessage = value || "";
     });
 
     this.currentUserId = localStorage.getItem("userID");
@@ -84,47 +92,51 @@ export class ReportDetailsComponent implements OnInit {
   async loadReportDetails() {
     this.isLoading = true;
     try {
-      const res: any = await this.http.getAdminReportDetails(this.data.reportId).toPromise();
-      
+      const res: any = await this.http
+        .getAdminReportDetails(this.data.reportId)
+        .toPromise();
+
       // Handle API response structure
       if (res.success && res.data) {
         this.report = res.data;
-        
+
         // Map attachments if they are in the new format (array of objects with path and url)
         if (this.report.attachments && Array.isArray(this.report.attachments)) {
           this.report.attachments = this.report.attachments.map((att: any) => {
             // If attachment is an object with url, use url; otherwise use path
-            if (typeof att === 'object' && att.url) {
+            if (typeof att === "object" && att.url) {
               return att.url;
-            } else if (typeof att === 'object' && att.path) {
+            } else if (typeof att === "object" && att.path) {
               return att.path;
-            } else if (typeof att === 'string') {
+            } else if (typeof att === "string") {
               return att;
             }
             return att;
           });
         }
-        
+
         // Normalize status - handle both "under_review" and "under review" formats
         if (this.report.status) {
           let status = this.report.status.toLowerCase();
           // Replace underscores with spaces
-          status = status.replace(/_/g, ' ');
+          status = status.replace(/_/g, " ");
           // Capitalize first letter of each word
-          status = status.split(' ').map(word => 
-            word.charAt(0).toUpperCase() + word.slice(1)
-          ).join(' ');
+          status = status
+            .split(" ")
+            .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+            .join(" ");
           this.report.status = status;
         }
         // Normalize type - handle both "fraud" and other formats
         if (this.report.type) {
           let type = this.report.type.toLowerCase();
           // Replace underscores with spaces
-          type = type.replace(/_/g, ' ');
+          type = type.replace(/_/g, " ");
           // Capitalize first letter of each word
-          type = type.split(' ').map(word => 
-            word.charAt(0).toUpperCase() + word.slice(1)
-          ).join(' ');
+          type = type
+            .split(" ")
+            .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+            .join(" ");
           this.report.type = type;
         }
       } else if (res.data) {
@@ -133,9 +145,12 @@ export class ReportDetailsComponent implements OnInit {
       } else {
         this.report = res;
       }
-      
+
       // Check for chat_id after report is loaded
       if (this.report) {
+        // Initialize recipient options based on report data
+        this.initializeRecipientOptions();
+
         // Try to get chat_id from report directly, or from order object
         if (this.report.chat_id) {
           this.chatId = this.report.chat_id;
@@ -146,33 +161,41 @@ export class ReportDetailsComponent implements OnInit {
           // For now, we'll try to use order_id as chat_id if no chat_id is available
           // This is a fallback - ideally chat_id should be in the report response
         }
-        
+
         // Load chat - for now always load dummy data for testing
         // TODO: Uncomment when API is ready
         // if (this.chatId) {
         //   await this.loadChatDetails();
         // }
-        
+
         // For testing: Always load dummy chat data
         await this.loadChatDetails();
       }
-      
+
       this.isLoading = false;
     } catch (err: any) {
       this.isLoading = false;
       if (err && err.error) {
-        this.alertService.showAlert("warning", `${err.error.message || "Error loading report details"}`);
+        this.alertService.showAlert(
+          "warning",
+          `${err.error.message || "Error loading report details"}`
+        );
       } else {
         if (this.translateService.currentLang == "en") {
-          this.alertService.showAlert("warning", "Error loading report details. Please try again");
+          this.alertService.showAlert(
+            "warning",
+            "Error loading report details. Please try again"
+          );
         } else {
-          this.alertService.showAlert("warning", "حدث خطأ أثناء تحميل تفاصيل التقرير، يرجى المحاولة مرة أخرى");
+          this.alertService.showAlert(
+            "warning",
+            "حدث خطأ أثناء تحميل تفاصيل التقرير، يرجى المحاولة مرة أخرى"
+          );
         }
       }
       this.report = null;
     }
   }
-
 
   showActionDialog(action: string) {
     this.selectedAction = action;
@@ -201,39 +224,47 @@ export class ReportDetailsComponent implements OnInit {
     const actionData = {
       action: apiAction,
       notes: this.actionForm.value.notes || "",
-      meta: {}
+      meta: {},
     };
 
     try {
-      const res: any = await this.http.performReportAction(this.report.id, actionData).toPromise();
-      
+      const res: any = await this.http
+        .performReportAction(this.report.id, actionData)
+        .toPromise();
+
       if (this.translateService.currentLang == "en") {
         this.alertService.showAlert("success", "Action performed successfully");
       } else {
         this.alertService.showAlert("success", "تم تنفيذ الإجراء بنجاح");
       }
-      
+
       this.showActionForm = false;
       this.actionForm.reset();
       this.selectedAction = "";
-      
+
       // Reload report details to get updated status and actions
       await this.loadReportDetails();
       this.dialogRef.close("updated");
     } catch (err: any) {
       if (err && err.error) {
-        const errorMessage = err.error.message || err.error.error || "Error performing action";
+        const errorMessage =
+          err.error.message || err.error.error || "Error performing action";
         this.alertService.showAlert("warning", errorMessage);
       } else {
         if (this.translateService.currentLang == "en") {
-          this.alertService.showAlert("warning", "Error performing action. Please try again");
+          this.alertService.showAlert(
+            "warning",
+            "Error performing action. Please try again"
+          );
         } else {
-          this.alertService.showAlert("warning", "حدث خطأ أثناء تنفيذ الإجراء، يرجى المحاولة مرة أخرى");
+          this.alertService.showAlert(
+            "warning",
+            "حدث خطأ أثناء تنفيذ الإجراء، يرجى المحاولة مرة أخرى"
+          );
         }
       }
     }
   }
-
 
   cancelAction() {
     this.showActionForm = false;
@@ -245,13 +276,14 @@ export class ReportDetailsComponent implements OnInit {
   normalizeStatus(status: string): string {
     if (!status) return "";
     // Convert to lowercase and replace underscores with spaces
-    return status.toLowerCase().replace(/_/g, ' ').trim();
+    return status.toLowerCase().replace(/_/g, " ").trim();
   }
 
   getStatusClass(status: string): string {
     if (!status) return "status-default";
     // Normalize status to handle both "pending" and "Pending"
-    const normalizedStatus = status.charAt(0).toUpperCase() + status.slice(1).toLowerCase();
+    const normalizedStatus =
+      status.charAt(0).toUpperCase() + status.slice(1).toLowerCase();
     const statusClasses: { [key: string]: string } = {
       Pending: "status-pending",
       "Under review": "status-under-review",
@@ -263,13 +295,18 @@ export class ReportDetailsComponent implements OnInit {
       Suspended: "status-suspended",
       Warned: "status-warned",
     };
-    return statusClasses[normalizedStatus] || statusClasses[status] || "status-default";
+    return (
+      statusClasses[normalizedStatus] ||
+      statusClasses[status] ||
+      "status-default"
+    );
   }
 
   getTypeClass(type: string): string {
     if (!type) return "type-default";
     // Normalize type to handle both "fraud" and "Fraud"
-    const normalizedType = type.charAt(0).toUpperCase() + type.slice(1).toLowerCase();
+    const normalizedType =
+      type.charAt(0).toUpperCase() + type.slice(1).toLowerCase();
     const typeClasses: { [key: string]: string } = {
       "Product issue": "type-product",
       "Product Issue": "type-product",
@@ -305,29 +342,29 @@ export class ReportDetailsComponent implements OnInit {
 
   getAttachmentsList(): any[] {
     if (!this.report || !this.report.attachments) return [];
-    
+
     if (Array.isArray(this.report.attachments)) {
       // Handle both old format (strings) and new format (objects with path/url)
       return this.report.attachments.map((att: any) => {
-        if (typeof att === 'object' && att.url) {
+        if (typeof att === "object" && att.url) {
           return att.url; // Use URL from API response
-        } else if (typeof att === 'object' && att.path) {
+        } else if (typeof att === "object" && att.path) {
           return att.path; // Use path if URL not available
-        } else if (typeof att === 'string') {
+        } else if (typeof att === "string") {
           return att; // Already a string
         }
         return att;
       });
     }
-    
+
     if (typeof this.report.attachments === "string") {
       try {
         const parsed = JSON.parse(this.report.attachments);
         if (Array.isArray(parsed)) {
           return parsed.map((att: any) => {
-            if (typeof att === 'object' && att.url) {
+            if (typeof att === "object" && att.url) {
               return att.url;
-            } else if (typeof att === 'object' && att.path) {
+            } else if (typeof att === "object" && att.path) {
               return att.path;
             }
             return att;
@@ -338,7 +375,7 @@ export class ReportDetailsComponent implements OnInit {
         return [this.report.attachments];
       }
     }
-    
+
     return [];
   }
 
@@ -377,15 +414,15 @@ export class ReportDetailsComponent implements OnInit {
       this.loadDummyChatData();
       return;
     }
-    
+
     this.isLoadingChat = true;
     try {
       // TODO: Uncomment when API is ready
       // const res: any = await this.http.getAdminChatDetails(this.chatId).toPromise();
-      
+
       // For now, using dummy data
       this.loadDummyChatData();
-      
+
       // Uncomment below when API is ready
       /*
       if (res.success && res.messages) {
@@ -407,7 +444,7 @@ export class ReportDetailsComponent implements OnInit {
         this.chatProfile = res.profile;
       }
       */
-      
+
       this.isLoadingChat = false;
       // Scroll to bottom after messages load
       setTimeout(() => this.scrollChatToBottom(), 100);
@@ -439,7 +476,8 @@ export class ReportDetailsComponent implements OnInit {
         product_id: 292,
         folder: null,
         attachments: null,
-        message: "Hello, I'm interested in this product. Can you provide more details?",
+        message:
+          "Hello, I'm interested in this product. Can you provide more details?",
         read_at: "2025-11-26 18:11:40",
         action_type: null,
         is_system_generated: 0,
@@ -450,7 +488,7 @@ export class ReportDetailsComponent implements OnInit {
         valid_until: null,
         ship_price: null,
         source: "buy_now",
-        days: null
+        days: null,
       },
       {
         id: 534,
@@ -459,7 +497,8 @@ export class ReportDetailsComponent implements OnInit {
         product_id: 292,
         folder: null,
         attachments: null,
-        message: "Buyer have initiated the order. Please confirm watch availability by adding shipping cost.",
+        message:
+          "Buyer have initiated the order. Please confirm watch availability by adding shipping cost.",
         read_at: "2025-11-26 18:11:35",
         action_type: "buy_now",
         is_system_generated: 1,
@@ -470,7 +509,7 @@ export class ReportDetailsComponent implements OnInit {
         valid_until: null,
         ship_price: null,
         source: "buy_now",
-        days: null
+        days: null,
       },
       {
         id: 533,
@@ -479,7 +518,8 @@ export class ReportDetailsComponent implements OnInit {
         product_id: 292,
         folder: null,
         attachments: null,
-        message: "Sure! The product is available. I can ship it within 2-3 business days.",
+        message:
+          "Sure! The product is available. I can ship it within 2-3 business days.",
         read_at: "2025-11-26 18:12:15",
         action_type: null,
         is_system_generated: 0,
@@ -490,7 +530,7 @@ export class ReportDetailsComponent implements OnInit {
         valid_until: null,
         ship_price: null,
         source: "chat",
-        days: null
+        days: null,
       },
       {
         id: 532,
@@ -501,8 +541,8 @@ export class ReportDetailsComponent implements OnInit {
         attachments: [
           {
             path: "reports/1763924354/1763924354_692359829149b.png",
-            url: "https://api.chronosouq.com/reports/1763924354/1763924354_692359829149b.png"
-          }
+            url: "https://api.chronosouq.com/reports/1763924354/1763924354_692359829149b.png",
+          },
         ],
         message: "Here's a photo of what I'm looking for",
         read_at: "2025-11-26 18:13:20",
@@ -515,7 +555,7 @@ export class ReportDetailsComponent implements OnInit {
         valid_until: null,
         ship_price: null,
         source: "chat",
-        days: null
+        days: null,
       },
       {
         id: 531,
@@ -524,7 +564,8 @@ export class ReportDetailsComponent implements OnInit {
         product_id: 292,
         folder: null,
         attachments: null,
-        message: "Perfect! That matches our product. Would you like to proceed with the purchase?",
+        message:
+          "Perfect! That matches our product. Would you like to proceed with the purchase?",
         read_at: "2025-11-26 18:14:05",
         action_type: null,
         is_system_generated: 0,
@@ -535,7 +576,7 @@ export class ReportDetailsComponent implements OnInit {
         valid_until: null,
         ship_price: null,
         source: "chat",
-        days: null
+        days: null,
       },
       {
         id: 530,
@@ -544,7 +585,8 @@ export class ReportDetailsComponent implements OnInit {
         product_id: 292,
         folder: null,
         attachments: null,
-        message: "Yes, I would like to buy it. What's the total price including shipping?",
+        message:
+          "Yes, I would like to buy it. What's the total price including shipping?",
         read_at: "2025-11-26 18:15:30",
         action_type: null,
         is_system_generated: 0,
@@ -555,7 +597,7 @@ export class ReportDetailsComponent implements OnInit {
         valid_until: null,
         ship_price: null,
         source: "chat",
-        days: null
+        days: null,
       },
       {
         id: 529,
@@ -564,7 +606,8 @@ export class ReportDetailsComponent implements OnInit {
         product_id: 292,
         folder: null,
         attachments: null,
-        message: "The total price is $500 including shipping. Payment can be made through the platform.",
+        message:
+          "The total price is $500 including shipping. Payment can be made through the platform.",
         read_at: "2025-11-26 18:16:45",
         action_type: null,
         is_system_generated: 0,
@@ -575,8 +618,8 @@ export class ReportDetailsComponent implements OnInit {
         valid_until: null,
         ship_price: null,
         source: "chat",
-        days: null
-      }
+        days: null,
+      },
     ];
 
     // Dummy profile data
@@ -600,7 +643,7 @@ export class ReportDetailsComponent implements OnInit {
       language: null,
       occupation: null,
       about_me: null,
-      profile_image: null
+      profile_image: null,
     };
 
     this.isLoadingChat = false;
@@ -622,11 +665,11 @@ export class ReportDetailsComponent implements OnInit {
   isBuyerMessage(message: any): boolean {
     // BTS = Buyer to Seller (left side)
     // STB = Seller to Buyer (right side)
-    return message.direction === 'BTS';
+    return message.direction === "BTS";
   }
 
   isSellerMessage(message: any): boolean {
-    return message.direction === 'STB';
+    return message.direction === "STB";
   }
 
   isSystemMessage(message: any): boolean {
@@ -649,20 +692,70 @@ export class ReportDetailsComponent implements OnInit {
     });
   }
 
-  getAttachmentType(attachment: string): 'image' | 'video' | 'unknown' {
-    if (!attachment) return 'unknown';
-    const lower = attachment.toLowerCase();
-    if (lower.endsWith('.jpg') || lower.endsWith('.jpeg') || lower.endsWith('.png') || lower.endsWith('.gif')) {
-      return 'image';
+  getAttachmentType(attachment: string): "image" | "video" | "unknown" {
+    if (!attachment) return "unknown";
+    const lower = String(attachment).toLowerCase();
+    if (
+      lower.endsWith(".jpg") ||
+      lower.endsWith(".jpeg") ||
+      lower.endsWith(".png") ||
+      lower.endsWith(".gif")
+    ) {
+      return "image";
     }
-    if (lower.endsWith('.mp4') || lower.endsWith('.webm') || lower.endsWith('.ogg')) {
-      return 'video';
+    if (
+      lower.endsWith(".mp4") ||
+      lower.endsWith(".webm") ||
+      lower.endsWith(".ogg")
+    ) {
+      return "video";
     }
-    return 'unknown';
+    return "unknown";
   }
 
   isArray(attachments: any): boolean {
     return Array.isArray(attachments);
+  }
+
+  initializeRecipientOptions() {
+    this.recipientOptions = [];
+
+    const reporterName =
+      this.report.reporter?.name ||
+      this.report.reporter_name ||
+      `User #${this.report.reporter_id}`;
+    const reportedUserName =
+      this.report.reported_user?.name ||
+      this.report.reported_user_name ||
+      `User #${this.report.reported_user_id}`;
+
+    if (this.report.reporter_id) {
+      this.recipientOptions.push({
+        value: "reporter",
+        label: `Reporter (${reporterName})`,
+      });
+    }
+
+    if (this.report.reported_user_id) {
+      this.recipientOptions.push({
+        value: "reported_user",
+        label: `Reported User (${reportedUserName})`,
+      });
+    }
+
+    if (this.report.reporter_id && this.report.reported_user_id) {
+      this.recipientOptions.push({
+        value: "both",
+        label: "Both (Reporter & Reported User)",
+      });
+    }
+
+    // Set default recipient if options are available
+    if (this.recipientOptions.length > 0) {
+      this.adminMessageForm.patchValue({
+        recipient: this.recipientOptions[0].value,
+      });
+    }
   }
 
   async sendAdminMessage() {
@@ -680,39 +773,68 @@ export class ReportDetailsComponent implements OnInit {
       return;
     }
 
-    const formData = new FormData();
-    formData.append("message", this.adminMessage.trim());
-    formData.append("chat_id", this.chatId.toString());
-    // Add receiver_id - we can use reporter_id or reported_user_id
-    if (this.report.reporter_id) {
-      formData.append("receiver_id", this.report.reporter_id.toString());
-    } else if (this.report.reported_user_id) {
-      formData.append("receiver_id", this.report.reported_user_id.toString());
+    const recipient = this.adminMessageForm.value.recipient;
+    const receiverIds: number[] = [];
+
+    // Determine receiver IDs based on selected recipient
+    if (recipient === "reporter" && this.report.reporter_id) {
+      receiverIds.push(this.report.reporter_id);
+    } else if (recipient === "reported_user" && this.report.reported_user_id) {
+      receiverIds.push(this.report.reported_user_id);
+    } else if (recipient === "both") {
+      if (this.report.reporter_id) {
+        receiverIds.push(this.report.reporter_id);
+      }
+      if (this.report.reported_user_id) {
+        receiverIds.push(this.report.reported_user_id);
+      }
     }
 
+    if (receiverIds.length === 0) {
+      this.alertService.showAlert("warning", "No valid recipient selected");
+      return;
+    }
+
+    // Send message to each recipient
+    const sendPromises = receiverIds.map((receiverId) => {
+      const formData = new FormData();
+      formData.append("message", this.adminMessage.trim());
+      formData.append("chat_id", this.chatId.toString());
+      formData.append("receiver_id", receiverId.toString());
+      return this.http.sendAdminMessage(formData).toPromise();
+    });
+
     try {
-      const res: any = await this.http.sendAdminMessage(formData).toPromise();
-      
+      await Promise.all(sendPromises);
+
       if (this.translateService.currentLang == "en") {
         this.alertService.showAlert("success", "Message sent successfully");
       } else {
         this.alertService.showAlert("success", "تم إرسال الرسالة بنجاح");
       }
-      
+
       this.adminMessage = "";
-      this.adminMessageForm.reset();
-      
+      this.adminMessageForm.patchValue({ message: "" });
+      // Keep the recipient selection
+
       // Reload chat to get updated messages
       await this.loadChatDetails();
     } catch (err: any) {
       if (err && err.error) {
-        const errorMessage = err.error.message || err.error.error || "Error sending message";
+        const errorMessage =
+          err.error.message || err.error.error || "Error sending message";
         this.alertService.showAlert("warning", errorMessage);
       } else {
         if (this.translateService.currentLang == "en") {
-          this.alertService.showAlert("warning", "Error sending message. Please try again");
+          this.alertService.showAlert(
+            "warning",
+            "Error sending message. Please try again"
+          );
         } else {
-          this.alertService.showAlert("warning", "حدث خطأ أثناء إرسال الرسالة، يرجى المحاولة مرة أخرى");
+          this.alertService.showAlert(
+            "warning",
+            "حدث خطأ أثناء إرسال الرسالة، يرجى المحاولة مرة أخرى"
+          );
         }
       }
     }
@@ -722,4 +844,3 @@ export class ReportDetailsComponent implements OnInit {
     this.dialogRef.close();
   }
 }
-

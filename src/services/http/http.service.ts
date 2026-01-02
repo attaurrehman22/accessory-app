@@ -2178,6 +2178,15 @@ export class HttpService implements OnInit {
     });
   }
 
+  getAdminChatHistory(chatId: number): Observable<any> {
+    return this.http.get(`${this.apiUrl}/api/admin/orders/chat/${chatId}`, {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+  }
+
   performAdminOrderAction(formData: any): Observable<any> {
     return this.http.post(
       `${this.apiUrl}/api/admin/orders/${formData.order_id}/actions`,

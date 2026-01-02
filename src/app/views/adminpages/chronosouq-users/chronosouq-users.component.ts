@@ -117,7 +117,7 @@ export class ChronosouqUsersComponent
 
         // Update total records count (bound to paginator via HTML [length] binding)
         this.totalRecords =
-          res.data.total ||
+          res.meta.total ||
           (res.data.data ? res.data.data.length : res.data.length);
       },
       (error) => {

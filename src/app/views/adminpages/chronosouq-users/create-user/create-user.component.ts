@@ -192,6 +192,11 @@ export class CreateUserComponent implements OnInit {
           this.dialogRef.close(true);
         },
         (error) => {
+          if (error.error.error.email) {
+            this.alertService.showAlert("danger", error.error.error.email[0]);
+            this.isSubmitting = false;
+            return;
+          }
           this.alertService.showAlert(
             "danger",
             error?.error?.message || "Failed to create user"

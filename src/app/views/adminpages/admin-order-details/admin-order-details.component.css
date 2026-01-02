@@ -150,16 +150,61 @@
 }
 
 .message-bubble {
-  background-color: #e1f7d5;
   padding: 10px 14px;
   border-radius: 12px;
-  max-width: 70%;
   word-wrap: break-word;
+  position: relative;
+}
+
+.message-bubble.buyer-bubble {
+  background-color: #e3f2fd;
+  color: #333;
+  border-top-left-radius: 4px;
+  max-width: 70%;
+}
+
+.message-bubble.seller-bubble {
+  background-color: #f1f8e9;
+  color: #333;
+  border-top-right-radius: 4px;
+  max-width: 70%;
+  margin-left: auto;
 }
 
 .message-bubble.admin-bubble {
   background-color: #007bff;
   color: white;
+  max-width: 70%;
+}
+
+.message-bubble.system-bubble {
+  background-color: #fff3cd;
+  color: #856404;
+  border: 1px solid #ffeaa7;
+  max-width: 80%;
+  margin: 0 auto;
+}
+
+.message-item.buyer-message {
+  display: flex;
+  align-items: flex-start;
+}
+
+.message-item.seller-message {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-end;
+}
+
+.message-item.admin-message {
+  display: flex;
+  align-items: flex-start;
+}
+
+.message-item.system-message {
+  display: flex;
+  justify-content: center;
+  margin: 12px 0;
 }
 
 .attachment-image {
@@ -315,4 +360,3 @@
 .card-body {
   padding: 16px;
 }
-
