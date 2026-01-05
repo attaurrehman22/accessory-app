@@ -1,0 +1,311 @@
+<div class="d-flex justify-content-between align-items-center mb-3 filtered-div">
+  <div class="d-flex gap-2 align-items-center">
+    <img routerLink="/myprofile/reports" src="../../../../assets/images/prev_btn.svg" alt="img" class="global-back-to-icon-style" />
+    <p class="global-label-style-for-profiling">{{ "my_Listing.Report_Details" | translate }}</p>
+  </div>
+</div>
+
+<!-- Skeleton Loading -->
+<div *ngIf="isLoading" class="col-md-12">
+  <div class="card mb-3">
+    <div class="card-body">
+      <div class="skeleton-text-large mb-3"></div>
+      <div class="skeleton-text-medium mb-2"></div>
+      <div class="skeleton-text-small"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Report Details -->
+<div *ngIf="!isLoading && reportDetails" class="col-md-12">
+  <div class="card mb-3">
+    <div class="card-header d-flex justify-content-between align-items-center">
+      <div>
+        <h5 class="mb-0">Report #{{ reportDetails.id }}</h5>
+        <small class="text-muted">Created: {{ formatDate(reportDetails.created_at) }}</small>
+      </div>
+      <div class="d-flex align-items-center gap-2">
+        <span class="badge" [ngClass]="getStatusClass(reportDetails.status)">
+          {{ formatStatusLabel(reportDetails.status) }}
+        </span>
+        <!-- Time Remaining -->
+        <span *ngIf="timeRemaining && !timeRemaining.is_expired" class="badge badge-warning">
+          <i class="fas fa-clock"></i> {{ timeRemainingText }}
+        </span>
+        <span *ngIf="timeRemaining && timeRemaining.is_expired" class="badge badge-danger">
+          <i class="fas fa-exclamation-circle"></i> Expired
+        </span>
+      </div>
+    </div>
+    <div class="card-body">
+      <!-- General Message -->
+      <div class="mb-3" *ngIf="reportDetails.general_message">
+        <div class="alert alert-info" role="alert">
+          <i class="fas fa-info-circle me-2"></i>
+          {{ reportDetails.general_message }}
+        </div>
+      </div>
+
+      <!-- User Specific Message -->
+      <div class="mb-3" *ngIf="getUserMessage()">
+        <div class="alert alert-primary" role="alert">
+          <i class="fas fa-comment me-2"></i>
+          {{ getUserMessage() }}
+        </div>
+      </div>
+      <!-- Report Information -->
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <label class="form-label font-weight-600">Report Type</label>
+          <p class="mb-0">{{ formatTypeLabel(reportDetails.type) }}</p>
+        </div>
+        <div class="col-md-6 mb-3" *ngIf="reportDetails.order_id">
+          <label class="form-label font-weight-600">Order ID</label>
+          <p class="mb-0">{{ reportDetails.order_id }}</p>
+        </div>
+      </div>
+
+      <!-- Description -->
+      <div class="mb-3">
+        <label class="form-label font-weight-600">Description</label>
+        <div class="description-box p-3" style="background-color: #f8f9fa; border-radius: 8px; border-left: 4px solid #242424;">
+          <p class="mb-0">{{ reportDetails.description }}</p>
+        </div>
+      </div>
+
+      <!-- Reported User -->
+      <div class="mb-3" *ngIf="reportDetails.reported_user || reportDetails.reported_user_id">
+        <label class="form-label font-weight-600">Reported User</label>
+        <p class="mb-0">{{ reportDetails.reported_user?.name || ('User #' + reportDetails.reported_user_id) }}</p>
+      </div>
+
+      <!-- Attachments -->
+      <div class="mb-3" *ngIf="reportDetails.attachments && reportDetails.attachments.length > 0">
+        <label class="form-label font-weight-600">Attachments</label>
+        <div class="d-flex flex-wrap gap-2">
+          <div *ngFor="let attachment of reportDetails.attachments" class="attachment-item">
+            <a [href]="apiUrl + attachment" target="_blank" class="btn btn-sm btn-outline-primary">
+              <i class="fas fa-file"></i> View Attachment
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Proof Submissions -->
+      <div class="mb-3" *ngIf="reportDetails.proof_submissions && reportDetails.proof_submissions.length > 0">
+        <label class="form-label font-weight-600">Proof Submissions</label>
+        <div *ngFor="let submission of reportDetails.proof_submissions" class="proof-submission-card mb-3 p-3" style="background-color: #f8f9fa; border-radius: 8px; border-left: 4px solid #28a745;">
+          <div class="d-flex justify-content-between align-items-start mb-2">
+            <div>
+              <strong>Submitted by:</strong> 
+              <span class="badge" [ngClass]="submission.submitted_by === 'reporter' ? 'badge-primary' : 'badge-success'">
+                {{ submission.submitted_by === 'reporter' ? 'Reporter' : 'Counter Party' }}
+              </span>
+            </div>
+            <small class="text-muted">{{ formatDateTime(submission.submitted_at) }}</small>
+          </div>
+          <div *ngIf="submission.notes" class="mb-2">
+            <small><strong>Notes:</strong> {{ submission.notes }}</small>
+          </div>
+          <div class="d-flex flex-wrap gap-2">
+            <div *ngFor="let proof of submission.proof_attachments" class="attachment-item">
+              <a [href]="apiUrl + proof" target="_blank" class="btn btn-sm btn-outline-success">
+                <i class="fas fa-file"></i> View Proof
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Legacy Proof Attachments (for backward compatibility) -->
+      <div class="mb-3" *ngIf="reportDetails.proof_attachments && reportDetails.proof_attachments.length > 0 && (!reportDetails.proof_submissions || reportDetails.proof_submissions.length === 0)">
+        <label class="form-label font-weight-600">Proof Attachments</label>
+        <div class="d-flex flex-wrap gap-2">
+          <div *ngFor="let proof of reportDetails.proof_attachments" class="attachment-item">
+            <a [href]="apiUrl + proof" target="_blank" class="btn btn-sm btn-outline-success">
+              <i class="fas fa-check-circle"></i> View Proof
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Order Information -->
+      <div class="mb-3" *ngIf="reportDetails.order">
+        <label class="form-label font-weight-600">Order Information</label>
+        <div class="order-info-box p-3" style="background-color: #f8f9fa; border-radius: 8px;">
+          <div class="row">
+            <div class="col-md-6">
+              <strong>Order ID:</strong> {{ reportDetails.order.order_id || reportDetails.order.id }}
+            </div>
+            <div class="col-md-6">
+              <strong>Status:</strong> 
+              <span class="badge" [ngClass]="getStatusClass(reportDetails.order.status)">
+                {{ reportDetails.order.status }}
+              </span>
+            </div>
+            <div class="col-md-6 mt-2" *ngIf="reportDetails.order.final_price">
+              <strong>Final Price:</strong> {{ reportDetails.order.final_price }}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- User Information -->
+      <div class="row mb-3">
+        <div class="col-md-6" *ngIf="reportDetails.reporter">
+          <label class="form-label font-weight-600">Reporter</label>
+          <div class="user-info-box p-2" style="background-color: #f8f9fa; border-radius: 8px;">
+            <p class="mb-1"><strong>{{ reportDetails.reporter.name }}</strong></p>
+            <small class="text-muted">{{ reportDetails.reporter.email }}</small>
+            <span class="badge badge-info ms-2" *ngIf="reportDetails.reporter.type">
+              {{ reportDetails.reporter.type }}
+            </span>
+          </div>
+        </div>
+        <div class="col-md-6" *ngIf="reportDetails.reported_user">
+          <label class="form-label font-weight-600">Reported User</label>
+          <div class="user-info-box p-2" style="background-color: #f8f9fa; border-radius: 8px;">
+            <p class="mb-1"><strong>{{ reportDetails.reported_user.name }}</strong></p>
+            <small class="text-muted">{{ reportDetails.reported_user.email }}</small>
+            <span class="badge badge-info ms-2" *ngIf="reportDetails.reported_user.type">
+              {{ reportDetails.reported_user.type }}
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Submit Proof Section (Only for Counter Party) -->
+      <div class="mb-3" *ngIf="canSubmitProof()">
+        <label class="form-label font-weight-600">Submit Proof</label>
+        <div class="alert alert-warning" role="alert" *ngIf="timeRemaining && !timeRemaining.is_expired">
+          <i class="fas fa-exclamation-triangle me-2"></i>
+          Please submit your proof within {{ timeRemainingText }}. Failure to submit proof may result in automatic resolution in favor of the reporter.
+        </div>
+        <div class="file-upload-section">
+          <input
+            #proofFileInput
+            type="file"
+            multiple
+            accept="image/*,.pdf,.doc,.docx"
+            (change)="onProofFileSelected($event)"
+            style="display: none"
+          />
+          <button
+            type="button"
+            (click)="uploadProofFiles()"
+            class="btn btn-outline-primary btn-sm me-2"
+            [disabled]="timeRemaining?.is_expired"
+          >
+            <i class="fas fa-upload"></i> Choose Files
+          </button>
+          
+          <div *ngIf="selectedProofFiles.length > 0" class="mt-2">
+            <div *ngFor="let file of selectedProofFiles; let i = index" class="d-flex align-items-center mb-1">
+              <span class="me-2">{{ file.name }}</span>
+              <button
+                type="button"
+                (click)="removeProofFile(i)"
+                class="btn btn-sm btn-outline-danger"
+              >
+                <i class="fas fa-times"></i>
+              </button>
+            </div>
+            <button
+              type="button"
+              (click)="submitProof()"
+              [disabled]="isSubmittingProof || timeRemaining?.is_expired"
+              class="btn btn-primary btn-sm mt-2"
+            >
+              <i class="fas fa-paper-plane"></i> Submit Proof
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Actions History Timeline -->
+      <div class="mb-3" *ngIf="reportDetails.actions_history && reportDetails.actions_history.length > 0">
+        <label class="form-label font-weight-600">Actions History</label>
+        <div class="timeline">
+          <div *ngFor="let action of reportDetails.actions_history" class="timeline-item mb-3 p-3" style="background-color: #f8f9fa; border-radius: 8px; border-left: 4px solid #242424;">
+            <div class="d-flex justify-content-between align-items-start">
+              <div>
+                <strong>{{ action.action_label }}</strong>
+                <p class="mb-1 mt-1">{{ action.notes || 'No notes' }}</p>
+                <small class="text-muted">{{ formatDateTime(action.created_at) }}</small>
+              </div>
+              <span class="badge badge-secondary" *ngIf="action.admin">
+                By: {{ action.admin.name }}
+              </span>
+            </div>
+            <div *ngIf="action.meta" class="mt-2">
+              <small class="text-muted" *ngIf="action.meta.proof_attachments">
+                Proof attachments: {{ action.meta.proof_attachments.length }} file(s)
+              </small>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Available Actions (Dynamic from API) -->
+      <div class="mb-3" *ngIf="reportDetails.available_actions && reportDetails.available_actions.length > 0">
+        <label class="form-label font-weight-600">Available Actions</label>
+        <div class="d-flex flex-wrap gap-2">
+          <button
+            *ngFor="let action of reportDetails.available_actions"
+            (click)="performAction(action)"
+            [class]="getActionButtonClass(action.action)"
+            [disabled]="action.action === 'submit_proof' && timeRemaining?.is_expired"
+          >
+            <i [class]="getActionIcon(action.action)"></i> {{ action.label }}
+          </button>
+        </div>
+      </div>
+
+      <!-- Legacy Actions (for backward compatibility) -->
+      <div class="d-flex gap-2 mt-4" *ngIf="(!reportDetails.available_actions || reportDetails.available_actions.length === 0)">
+        <button
+          *ngIf="canCancelReport()"
+          (click)="cancelReport()"
+          class="btn btn-outline-danger"
+        >
+          <i class="fas fa-times"></i> Cancel Report
+        </button>
+        <button
+          *ngIf="canRequestManualReview()"
+          (click)="requestManualReview()"
+          class="btn btn-outline-primary"
+        >
+          <i class="fas fa-user-check"></i> Request Manual Review
+        </button>
+        <button
+          *ngIf="canMarkProofInvalid()"
+          (click)="markProofInvalid()"
+          class="btn btn-outline-warning"
+        >
+          <i class="fas fa-times-circle"></i> Mark Proof as Invalid
+        </button>
+        <button
+          (click)="checkResponseTimeout()"
+          class="btn btn-outline-info"
+        >
+          <i class="fas fa-clock"></i> Check Response Timeout
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- No Report Found -->
+<div *ngIf="!isLoading && !reportDetails" class="empty-state-container">
+  <div class="empty-state-content">
+    <div class="empty-state-text">
+      <h3 class="empty-state-title">{{ "my_Listing.Report_Not_Found" | translate }}</h3>
+      <p class="empty-state-description">
+        {{ "my_Listing.Report_Not_Found_Description" | translate }}
+      </p>
+      <button class="btn btn-primary mt-3" routerLink="/myprofile/reports">
+        <i class="fas fa-arrow-left me-2"></i> Back to Reports
+      </button>
+    </div>
+  </div>
+</div>

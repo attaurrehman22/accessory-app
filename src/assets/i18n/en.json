@@ -731,7 +731,13 @@
     "Tips_To_Get_Started": "Tips to Get Started",
     "Tip_1": "Create a listing to start selling your products.",
     "Tip_2": "Browse products to find the perfect item for your needs.",
-    "Tip_3": "Chat with sellers to negotiate the best price for your products."
+    "Tip_3": "Chat with sellers to negotiate the best price for your products.",
+    "My_Reports": "My Reports",
+    "No_Reports": "No Reports Yet",
+    "No_Reports_Description": "You haven't submitted any reports yet. Reports help us maintain a safe and trustworthy platform.",
+    "Report_Details": "Report Details",
+    "Report_Not_Found": "Report Not Found",
+    "Report_Not_Found_Description": "The report you're looking for doesn't exist or you don't have permission to view it."
   },
   "accessory_details": {
     "LUG-Width": "LUG Width:",

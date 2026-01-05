@@ -51,6 +51,8 @@ import { SellOrderDetailsComponent } from './views/website/my-listing/sell-order
 import { BuyOrderDetailsComponent } from './views/website/my-listing/buy-order-details/buy-order-details.component';
 import { AdminReportsComponent } from './views/adminpages/admin-reports/admin-reports.component';
 import { AdminOrdersComponent } from './views/adminpages/admin-orders/admin-orders.component';
+import { ReportsComponent } from './views/website/my-listing/reports/reports.component';
+import { ReportDetailsComponent } from './views/website/my-listing/report-details/report-details.component';
 
 
 const routes: Routes = [
@@ -111,6 +113,8 @@ const routes: Routes = [
       { path: 'sell/order/details', component: SellOrderDetailsComponent },
       { path: 'buy/order', component: BuyOrderComponent },
       { path: 'buy/order/details', component: BuyOrderDetailsComponent },
+      { path: 'reports', component: ReportsComponent },
+      { path: 'reports/:id', component: ReportDetailsComponent },
     ],
   },
 

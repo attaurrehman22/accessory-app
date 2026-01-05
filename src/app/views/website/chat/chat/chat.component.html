@@ -781,7 +781,7 @@
             <div class="route-groups">
               <div class="d-flex gap-1 align-items-center cursor-pointer flex-column p-2">
     
-                <button class="unread-btn" (click)="reportChat()">
+                <button class="unread-btn" (click)="reportChat()" [disabled]="!isReportChatEnabled">
                   Report Chat
                 </button>
     

@@ -9,9 +9,9 @@
   <form [formGroup]="reportForm" (ngSubmit)="onSubmit()" class="mt-3 mat-form-fields-custom-deisgn">
     <mat-form-field appearance="outline" class="full-width">
       <mat-label>Report Type</mat-label>
-      <mat-select formControlName="reportType">
+      <mat-select formControlName="reportType" [required]="true">
         <mat-option *ngFor="let type of reportTypes" [value]="type">
-          {{ type }}
+          {{ formatReportTypeLabel(type) }}
         </mat-option>
       </mat-select>
       <mat-error *ngIf="reportForm.get('reportType')?.hasError('required')">
@@ -19,12 +19,19 @@
       </mat-error>
     </mat-form-field>
 
-    <mat-form-field appearance="outline" class="full-width" *ngIf="!data.chatId">
+    <!-- Order ID will be auto-fetched if chatId is available, otherwise show manual input -->
+    <mat-form-field appearance="outline" class="full-width" *ngIf="!data?.chatId">
       <mat-label>Order ID (Optional)</mat-label>
       <input matInput type="text" formControlName="orderId" placeholder="Enter order ID if applicable" />
     </mat-form-field>
 
-    <mat-form-field appearance="outline" class="full-width" *ngIf="!data.chatId">
+    <!-- Show order ID if fetched automatically -->
+    <div *ngIf="data?.chatId && reportForm.value.orderId" class="mb-3">
+      <label class="form-label">Order ID</label>
+      <p class="text-muted">{{ reportForm.value.orderId }}</p>
+    </div>
+
+    <mat-form-field appearance="outline" class="full-width" *ngIf="!data?.chatId">
       <mat-label>Reported User ID</mat-label>
       <input matInput type="text" formControlName="reportedUserId" [readonly]="true" />
       <mat-error *ngIf="reportForm.get('reportedUserId')?.hasError('required')">

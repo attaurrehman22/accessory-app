@@ -299,9 +299,117 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     console.log("After Calling",this.filteredChats)
   }
 
-  reportChat(){
+  async checkReportChatAvailability(): Promise<void> {
+    try {
+      // First, fetch order ID from chat_id
+      if (this.chat_id) {
+        const orderRes: any = await this.http.getOrderByChatId(this.chat_id).toPromise();
+        console.log("Order Response:", orderRes);
+        
+        if (orderRes && orderRes.id) {
+          this.orderId = orderRes.id;
+          console.log("Order ID found:", this.orderId);
+          
+          // Now check allowed methods
+          try {
+            const methodsRes: any = await this.http.getAllowedMethods(this.orderId).toPromise();
+            console.log("Allowed Methods Response:", methodsRes);
+            
+            if (methodsRes && methodsRes.data) {
+              this.allowedMethods = Array.isArray(methodsRes.data) ? methodsRes.data : 
+                                   (methodsRes.data.methods || methodsRes.data.allowed_methods || []);
+              
+              console.log("Allowed Methods Array:", this.allowedMethods);
+              
+              // Check if report_chat is in allowed methods
+              // Support multiple response formats
+              this.isReportChatEnabled = 
+                this.allowedMethods.includes('report_chat') || 
+                this.allowedMethods.some((method: any) => {
+                  if (typeof method === 'string') {
+                    return method === 'report_chat' || method.toLowerCase().includes('report');
+                  } else if (typeof method === 'object') {
+                    return method.name === 'report_chat' || 
+                           method.method === 'report_chat' ||
+                           method.type === 'report_chat';
+                  }
+                  return false;
+                });
+              
+              console.log("Is Report Chat Enabled:", this.isReportChatEnabled);
+            } else {
+              // If allowed methods API doesn't return data, enable report chat if order exists
+              console.log("Allowed methods data not found, enabling report chat by default");
+              this.isReportChatEnabled = true;
+            }
+          } catch (methodsErr) {
+            console.error("Error fetching allowed methods:", methodsErr);
+            // If allowed methods API fails, enable report chat if order exists
+            // This allows report chat to work even if allowed methods API is not working
+            console.log("Allowed methods API failed, enabling report chat by default");
+            this.isReportChatEnabled = true;
+          }
+        } else {
+          this.orderId = null;
+          this.isReportChatEnabled = false;
+          console.log("Order ID not found in response");
+        }
+      } else {
+        this.orderId = null;
+        this.isReportChatEnabled = false;
+        console.log("Chat ID not available");
+      }
+    } catch (err) {
+      console.error("Error checking report chat availability:", err);
+      this.orderId = null;
+      this.isReportChatEnabled = false;
+      // Don't show error to user, just disable the feature
+    }
+  }
+
+  async reportChat(){
+    // If orderId is available, allow report chat even if isReportChatEnabled is false
+    // This ensures modal opens if order exists
+    if (!this.isReportChatEnabled && !this.orderId) {
+      if (this.translateService.currentLang == "en") {
+        this.alertService.showAlert("warning", "Report chat is not available for this order.");
+      } else {
+        this.alertService.showAlert("warning", "تقرير الدردشة غير متاح لهذا الطلب.");
+      }
+      return;
+    }
+    
+    // If orderId exists but isReportChatEnabled is false, try to enable it
+    if (this.orderId && !this.isReportChatEnabled) {
+      console.log("Order ID exists but report chat is disabled, enabling it");
+      this.isReportChatEnabled = true;
+    }
+
     // Get the reported user ID - the opposite party in the chat
     let reportedUserId = this.reciever_ID;
+    const currentUserId = localStorage.getItem("userID");
+    
+    // Try to get reportedUserId from order if available
+    if (!reportedUserId && this.orderId && this.chat_id) {
+      try {
+        const orderRes: any = await this.http.getOrderByChatId(this.chat_id).toPromise();
+        if (orderRes) {
+          // If current user is buyer, report seller (product owner)
+          // If current user is seller, report buyer
+          if (orderRes.buyer_id && orderRes.buyer_id.toString() === currentUserId) {
+            // Current user is buyer, so report seller (product owner)
+            if (this.getProductDetails && this.getProductDetails.created_by) {
+              reportedUserId = this.getProductDetails.created_by.id;
+            }
+          } else if (orderRes.buyer_id) {
+            // Current user is seller, so report buyer
+            reportedUserId = orderRes.buyer_id;
+          }
+        }
+      } catch (err) {
+        console.error("Error fetching order for reportedUserId:", err);
+      }
+    }
     
     // If reciever_ID is not available, try to get it from UserNameOFMessenger
     if (!reportedUserId && this.UserNameOFMessenger) {
@@ -310,20 +418,34 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     
     // If still not available, try to get from current chat context
     if (!reportedUserId && this.messages && this.messages.length > 0) {
-      const currentUserId = localStorage.getItem("userID");
       const firstMessage = this.messages[0];
       reportedUserId = firstMessage.sender_id === currentUserId 
         ? firstMessage.receiver_id 
         : firstMessage.sender_id;
     }
 
-    if(reportedUserId == localStorage.getItem("userID")){
-      if(this.reciever_ID != localStorage.getItem("userID")){
+    // If still not available, try to get from product details
+    if (!reportedUserId && this.getProductDetails) {
+      if (this.getProductDetails.created_by) {
+        const productOwnerId = this.getProductDetails.created_by.id;
+        if (productOwnerId && productOwnerId.toString() !== currentUserId) {
+          reportedUserId = productOwnerId;
+        }
+      }
+    }
+
+    if(reportedUserId == currentUserId){
+      if(this.reciever_ID && this.reciever_ID != currentUserId){
         reportedUserId = this.reciever_ID;
       }
     }
 
+    console.log("Report Chat - Current User ID:", currentUserId);
+    console.log("Report Chat - Reported User ID:", reportedUserId);
+    console.log("Report Chat - Order ID:", this.orderId);
+
     if (!reportedUserId) {
+      console.error("Unable to identify reported user ID");
       if (this.translateService.currentLang == "en") {
         this.alertService.showAlert("warning", "Unable to identify the user to report. Please try again later.");
       } else {
@@ -336,10 +458,10 @@ export class ChatComponent implements OnInit, AfterViewChecked {
       width: "600px",
       data: {
         reportedUserId: reportedUserId,
-        orderId: null, // Can be populated if order ID is available
+        orderId: this.orderId,
         chatId: this.chat_id,
-        productId: this.messages[0].product_id,
-
+        productId: this.messages[0]?.product_id,
+        allowedMethods: this.allowedMethods,
       },
     });
 
@@ -393,6 +515,11 @@ export class ChatComponent implements OnInit, AfterViewChecked {
   user_id: any;
   chat_id_for_remove_unread_count: any;
   userCity: any;
+  
+  // Report chat related
+  orderId: number | null = null;
+  isReportChatEnabled: boolean = false;
+  allowedMethods: any[] = [];
 
   getInitialsofUsername(name) {
     if (!name) {
@@ -478,6 +605,11 @@ export class ChatComponent implements OnInit, AfterViewChecked {
           this.reciever_ID = res.messages[0]?.sender_id;
         }
 
+      }
+
+      // Fetch order ID and check allowed methods for report chat
+      if (this.chat_id) {
+        await this.checkReportChatAvailability();
       }
       let count_sen_rec = 0;
       // Reset isBuyNowFromChatCheck and check all messages
