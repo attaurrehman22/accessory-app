@@ -57,7 +57,6 @@ export class ReportsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.loadReportTypes();
     this.loadReports();
   }
 
@@ -65,31 +64,37 @@ export class ReportsComponent implements OnInit, OnDestroy {
     // Cleanup if needed
   }
 
-  async loadReportTypes(): Promise<void> {
-    try {
-      const res: any = await this.http.getReportTypesAndStatuses().toPromise();
-      if (res.success && res.data) {
-        // Map types
-        this.typeOptions = [
-          { value: "All", label: "All Types" },
-          ...res.data.types.map((type: string) => ({
-            value: type,
-            label: this.formatTypeLabel(type)
-          }))
-        ];
+  // Extract unique types and statuses from reports list
+  extractFiltersFromReports(reports: any[]): void {
+    const uniqueTypes = new Set<string>();
+    const uniqueStatuses = new Set<string>();
 
-        // Map statuses
-        this.statusOptions = [
-          { value: "All", label: "All Status" },
-          ...res.data.statuses.map((status: string) => ({
-            value: status,
-            label: this.formatStatusLabel(status)
-          }))
-        ];
+    reports.forEach((report: any) => {
+      if (report.type) {
+        uniqueTypes.add(report.type);
       }
-    } catch (err) {
-      console.error("Error loading report types:", err);
-    }
+      if (report.status) {
+        uniqueStatuses.add(report.status);
+      }
+    });
+
+    // Build type options
+    this.typeOptions = [
+      { value: "All", label: "All Types" },
+      ...Array.from(uniqueTypes).map((type: string) => ({
+        value: type,
+        label: this.formatTypeLabel(type)
+      }))
+    ];
+
+    // Build status options
+    this.statusOptions = [
+      { value: "All", label: "All Status" },
+      ...Array.from(uniqueStatuses).map((status: string) => ({
+        value: status,
+        label: this.formatStatusLabel(status)
+      }))
+    ];
   }
 
   formatTypeLabel(type: string): string {
@@ -147,6 +152,16 @@ export class ReportsComponent implements OnInit, OnDestroy {
         this.reports = [];
         this.totalItems = 0;
       }
+
+      // Extract filter options from reports (similar to Report Chat Modal approach)
+      // Instead of calling getReportTypesAndStatuses(), extract from actual reports
+      if (this.reports.length > 0) {
+        this.extractFiltersFromReports(this.reports);
+      } else {
+        // If no reports, initialize with empty options
+        this.typeOptions = [{ value: "All", label: "All Types" }];
+        this.statusOptions = [{ value: "All", label: "All Status" }];
+      }
     } catch (err: any) {
       if (err && err.error) {
         this.alertService.showAlert("warning", `${err.error.message || "Error loading reports"}`);
@@ -182,6 +197,19 @@ export class ReportsComponent implements OnInit, OnDestroy {
   onPageChange(event: any): void {
     this.pageIndex = event.pageIndex;
     this.pageSize = event.pageSize;
+    this.loadReports();
+  }
+
+  onRefresh(): void {
+    // Clear all filters
+    this.statusFilter = "All";
+    this.typeFilter = "All";
+    this.dateFrom = "";
+    this.dateTo = "";
+    this.orderIdFilter = null;
+    this.pageIndex = 0;
+    
+    // Reload reports with cleared filters
     this.loadReports();
   }
 
