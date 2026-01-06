@@ -138,20 +138,20 @@ export class ReportChatComponent implements OnInit{
         this.orderId = res.id.toString();
         // Also set in form for display
         this.reportForm.patchValue({
-          orderId: res.order_id || res.id
+          orderId: res.id
         });
         // Update data object so getReportTypes can use it
         if (!this.data.orderId) {
           this.data.orderId = res.id;
         }
-      } else if (res && res.order_id) {
+      } else if (res && res.id) {
         // Fallback: if order_id is directly available
-        this.orderId = res.order_id;
+        this.orderId = res.id;
         this.reportForm.patchValue({
-          orderId: res.order_id
+          orderId: res.id
         });
         if (!this.data.orderId) {
-          this.data.orderId = res.order_id;
+          this.data.orderId = res.id;
         }
       }
     } catch (err: any) {
@@ -255,8 +255,8 @@ export class ReportChatComponent implements OnInit{
     if (this.data?.chatId && !orderId) {
       try {
         const orderRes: any = await this.http.getOrderByChatId(this.data.chatId).toPromise();
-        if (orderRes && orderRes.order_id) {
-          orderId = orderRes.order_id;
+        if (orderRes && orderRes.id) {
+          orderId = orderRes.id;
         }
       } catch (err) {
         console.error("Error fetching order ID:", err);
