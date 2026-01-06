@@ -106,8 +106,10 @@
             <ng-template #noImage>
               <div
                 class="watch-placeholder me-3 d-flex align-items-center justify-content-center"
+                [ngClass]="{ 'report-icon-placeholder': section?.type === 'report' }"
               >
-                {{ section?.itemTitle?.slice(0, 2) | uppercase }}
+                <i *ngIf="section?.type === 'report'" class="fas fa-flag" style="font-size: 24px; color: #dc3545;"></i>
+                <span *ngIf="section?.type !== 'report'">{{ section?.itemTitle?.slice(0, 2) | uppercase }}</span>
               </div>
             </ng-template>              
               <div>
