@@ -24,7 +24,7 @@
     <div>
       <input type="date" class="form-control form-control-sm" [(ngModel)]="dateTo" (change)="onDateFilterChange()" placeholder="To Date" style="width: 150px" />
     </div>
-    <button class="btn btn-sm btn-primary" (click)="onRefresh()" [disabled]="isLoading">
+    <button class="refresh-button" (click)="onRefresh()" [disabled]="isLoading">
       <i class="fas fa-sync-alt"></i> Refresh
     </button>
   </div>

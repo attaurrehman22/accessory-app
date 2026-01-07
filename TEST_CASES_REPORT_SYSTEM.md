@@ -56,6 +56,7 @@ Body: FormData
 
 ---
 
+
 ### Test Case 1.2: Submit Payment Delay Report (Seller)
 **Scenario:** Seller ko payment delay ka issue hai
 
@@ -74,6 +75,8 @@ Body: FormData
 
 ---
 
+
+
 ### Test Case 1.3: Submit Delivery Delay Report (Buyer)
 **Scenario:** Buyer ko delivery delay ka issue hai
 
@@ -87,6 +90,7 @@ Body: FormData
 - ✅ Seller ko notification: "Upload shipping proof within 6 hours"
 
 ---
+
 
 ### Test Case 1.4: Submit Fraud Report (Seller)
 **Scenario:** Seller buyer ko fraud report karta hai
@@ -102,6 +106,7 @@ Body: FormData
 
 ---
 
+
 ### Test Case 1.5: Submit Report Without Required Fields
 **Scenario:** Validation testing
 
@@ -115,6 +120,7 @@ Body: FormData
 - ✅ Form submit nahi hoga
 
 ---
+
 
 ## 2. Report Listing
 
@@ -143,6 +149,7 @@ GET /api/reports/list?page=1&per_page=10
 
 ---
 
+
 ### Test Case 2.2: Filter Reports by Status
 **Scenario:** User sirf pending reports dekhna chahta hai
 
@@ -162,6 +169,7 @@ GET /api/reports/list?status=pending&page=1&per_page=10
 
 ---
 
+
 ### Test Case 2.3: Filter Reports by Type
 **Scenario:** User sirf payment_issue reports dekhna chahta hai
 
@@ -178,6 +186,7 @@ GET /api/reports/list?type=payment_issue&page=1&per_page=10
 ```
 
 ---
+
 
 ### Test Case 2.4: Filter by Date Range
 **Scenario:** User specific date range ke reports dekhna chahta hai
@@ -197,6 +206,7 @@ GET /api/reports/list?date_from=2024-01-01&date_to=2024-01-31&page=1&per_page=10
 
 ---
 
+
 ### Test Case 2.5: Pagination
 **Scenario:** User next page dekhna chahta hai
 
@@ -211,6 +221,7 @@ GET /api/reports/list?date_from=2024-01-01&date_to=2024-01-31&page=1&per_page=10
 
 ---
 
+
 ### Test Case 2.6: Empty State
 **Scenario:** User ka koi report nahi hai
 
@@ -223,6 +234,7 @@ GET /api/reports/list?date_from=2024-01-01&date_to=2024-01-31&page=1&per_page=10
 - ✅ Helpful description
 
 ---
+
 
 ## 3. Report Details View
 
@@ -256,6 +268,7 @@ GET /api/reports/{id}
 ```
 
 ---
+
 
 ### Test Case 3.2: View Report Details (Counter Party)
 **Scenario:** Counter party (reported user) report details dekhna chahta hai
@@ -361,6 +374,7 @@ Body: FormData
 
 ---
 
+
 ### Test Case 4.4: Remove Selected Files Before Submit
 **Scenario:** User selected files ko remove karta hai
 
@@ -401,6 +415,8 @@ Body: { "report_id": 1 }
 
 ---
 
+
+
 ### Test Case 5.2: Cancel Report - Cancel Action
 **Scenario:** User cancel action ko cancel karta hai
 
@@ -427,6 +443,8 @@ Body: { "report_id": 1 }
 - ✅ Ya disabled state mein hoga
 
 ---
+
+0000000000000000000000000000000000-------------------0000000000000000000000000000000000000000000000000000000000000000000000000
 
 ## 6. Mark Proof Invalid
 

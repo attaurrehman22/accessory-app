@@ -90,5 +90,16 @@
   margin-bottom: 24px;
 }
 
+.refresh-button {
+  background-color: #242424;
+  color: #ffffff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
 
+.refresh-button:hover {
+  background-color: #1a1a1a;
+}
 
