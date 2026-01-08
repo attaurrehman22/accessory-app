@@ -136,17 +136,8 @@ export class ReportDetailsComponent implements OnInit {
           });
         }
         
-        // Normalize status - handle both "under_review" and "under review" formats
-        if (this.report.status) {
-          let status = this.report.status.toLowerCase();
-          // Replace underscores with spaces
-          status = status.replace(/_/g, ' ');
-          // Capitalize first letter of each word
-          status = status.split(' ').map(word => 
-            word.charAt(0).toUpperCase() + word.slice(1)
-          ).join(' ');
-          this.report.status = status;
-        }
+        // Keep status as is (pending, rejected, resolved) - no need to normalize
+        // Status is already in correct format from API
         // Normalize type - handle both "fraud" and other formats
         if (this.report.type) {
           let type = this.report.type.toLowerCase();
@@ -178,14 +169,17 @@ export class ReportDetailsComponent implements OnInit {
           // This is a fallback - ideally chat_id should be in the report response
         }
         
-        // Load chat - for now always load dummy data for testing
-        // TODO: Uncomment when API is ready
-        // if (this.chatId) {
-        //   await this.loadChatDetails();
-        // }
-        
-        // For testing: Always load dummy chat data
-        await this.loadChatDetails();
+        // Use chats from API response if available
+        if (this.chats && this.chats.length > 0) {
+          this.chatMessages = this.chats;
+          this.isLoadingChat = false;
+        } else if (this.chatId) {
+          // Fallback: Load chat details if chatId is available
+          await this.loadChatDetails();
+        } else {
+          this.chatMessages = [];
+          this.isLoadingChat = false;
+        }
       }
       
       this.isLoading = false;
@@ -698,7 +692,9 @@ export class ReportDetailsComponent implements OnInit {
   }
 
   getReversedChatMessages() {
-    return this.chatMessages ? [...this.chatMessages].reverse() : [];
+    // Use chats from API if available, otherwise use chatMessages
+    const messages = this.chats && this.chats.length > 0 ? this.chats : this.chatMessages;
+    return messages ? [...messages].reverse() : [];
   }
 
   isBuyerMessage(message: any): boolean {
@@ -712,7 +708,38 @@ export class ReportDetailsComponent implements OnInit {
   }
 
   isSystemMessage(message: any): boolean {
-    return message.is_system_generated === 1;
+    return message.is_system_generated === 1 || message.is_system_generated === true;
+  }
+
+  // Helper methods for proofs
+  getProofAttachments(proof: any): any[] {
+    if (!proof || !proof.proof_attachments) return [];
+    return Array.isArray(proof.proof_attachments) ? proof.proof_attachments : [];
+  }
+
+  getProofAttachmentUrl(attachment: any): string {
+    if (typeof attachment === 'string') {
+      return this.apiUrl + attachment;
+    } else if (attachment && attachment.url) {
+      return attachment.url;
+    } else if (attachment && attachment.path) {
+      return this.apiUrl + attachment.path;
+    }
+    return '';
+  }
+
+  formatActionType(actionType: string): string {
+    if (!actionType) return '';
+    // Format action types for display
+    const actionMap: any = {
+      'buy_now': 'Buy Now',
+      'payment_issue': 'Payment Issue Reported',
+      'delivery_delay': 'Delivery Delay Reported',
+      'mark_sold': 'Marked as Sold',
+      'update_offer': 'Offer Updated',
+      'cancel_offer': 'Offer Cancelled'
+    };
+    return actionMap[actionType] || actionType.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
   }
 
   formatChatTime(date: string): string {

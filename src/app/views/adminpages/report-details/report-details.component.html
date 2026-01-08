@@ -139,7 +139,7 @@
     </div>
 
     <!-- Chat Section -->
-    <div class="section chat-section" *ngIf="report">
+    <div class="section chat-section" *ngIf="report && (chats.length > 0 || chatMessages.length > 0)">
       <h3>Chat Messages</h3>
       
       <div *ngIf="isLoadingChat" class="loading-container">
@@ -154,7 +154,10 @@
             <!-- System Generated Message (Centered) -->
             <div *ngIf="isSystemMessage(message)" class="chat-message system-message">
               <div class="message-content system-content">
-                <p>{{ message.message }}</p>
+                <p *ngIf="message.message">{{ message.message }}</p>
+                <p *ngIf="!message.message && message.action_type">
+                  <strong>{{ formatActionType(message.action_type) }}</strong>
+                </p>
                 <small class="message-time">{{ formatChatTime(message.created_at) }}</small>
               </div>
             </div>
@@ -216,7 +219,7 @@
             </div>
           </div>
 
-          <div *ngIf="chatMessages.length === 0" class="no-chat-messages">
+          <div *ngIf="chatMessages.length === 0 && chats.length === 0" class="no-chat-messages">
             <p>No messages found in this chat.</p>
           </div>
         </div>
@@ -263,69 +266,111 @@
       </div>
     </div>
 
+    <!-- Proofs Section -->
+    <div class="section" *ngIf="proofs && proofs.length > 0">
+      <h3>Proof Submissions</h3>
+      <div class="proofs-container">
+        <div *ngFor="let proof of proofs" class="proof-item">
+          <div class="proof-header">
+            <div class="proof-user-info">
+              <strong>{{ proof.submitted_by?.name || 'User #' + proof.submitted_by?.id }}</strong>
+              <span class="proof-role">({{ proof.user_role === 'reporter' ? 'Reporter' : 'Reported User' }})</span>
+            </div>
+            <span class="proof-date">{{ formatDate(proof.submitted_at) }}</span>
+          </div>
+          <div class="proof-notes" *ngIf="proof.notes">
+            <p>{{ proof.notes }}</p>
+          </div>
+          <div class="proof-attachments" *ngIf="proof.proof_attachments && proof.proof_attachments.length > 0">
+            <div class="attachments-grid">
+              <div *ngFor="let attachment of proof.proof_attachments" class="attachment-item">
+                <img
+                  *ngIf="isImage(attachment.url || attachment.path || attachment)"
+                  [src]="getAttachmentUrl(attachment.url || attachment.path || attachment)"
+                  alt="Proof Attachment"
+                  class="attachment-image"
+                  (click)="openImage(getAttachmentUrl(attachment.url || attachment.path || attachment))"
+                />
+                <div *ngIf="!isImage(attachment.url || attachment.path || attachment)" class="attachment-file">
+                  <mat-icon>description</mat-icon>
+                  <a [href]="getAttachmentUrl(attachment.url || attachment.path || attachment)" target="_blank" class="file-link">
+                    {{ getFileName(attachment.url || attachment.path || attachment) }}
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- History Section -->
+    <div class="section" *ngIf="history && history.length > 0">
+      <h3>Report History</h3>
+      <div class="history-container">
+        <div *ngFor="let item of history" class="history-item">
+          <div class="history-header">
+            <span class="history-action">{{ item.action_label || item.action }}</span>
+            <span class="history-date">{{ formatDate(item.created_at) }}</span>
+          </div>
+          <div class="history-admin" *ngIf="item.admin">
+            <small>By: {{ item.admin.name || ('Admin #' + item.admin.id) }}</small>
+          </div>
+          <div class="history-notes" *ngIf="item.notes">
+            <p>{{ item.notes }}</p>
+          </div>
+          <div class="history-meta" *ngIf="item.meta">
+            <small *ngIf="item.meta.submitted_by">Submitted by: {{ item.meta.submitted_by }}</small>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- Admin Actions -->
     <div class="section actions-section">
       <h3>Admin Actions</h3>
       
-      <div *ngIf="!showActionForm" class="action-buttons">
+      <div *ngIf="!showActionForm && !showStatusChangeForm" class="action-buttons">
+        <!-- Status Change Button -->
         <button
           mat-raised-button
           color="primary"
-          (click)="showActionDialog('mark_under_review')"
+          (click)="showStatusChangeDialog()"
+        >
+          <mat-icon>swap_horiz</mat-icon>
+          Change Status
+        </button>
+
+        <!-- Reject Report -->
+        <button
+          mat-raised-button
+          color="warn"
+          (click)="showActionDialog('reject_report')"
           *ngIf="normalizeStatus(report.status) === 'pending'"
-        >
-          <mat-icon>visibility</mat-icon>
-          Mark as Under Review
-        </button>
-
-        <button
-          mat-raised-button
-          color="accent"
-          (click)="showActionDialog('request_info')"
-          *ngIf="normalizeStatus(report.status) === 'under review' || normalizeStatus(report.status) === 'pending'"
-        >
-          <mat-icon>info</mat-icon>
-          Request More Info
-        </button>
-
-        <button
-          mat-raised-button
-          color="warn"
-          (click)="showActionDialog('warn_user')"
-          *ngIf="normalizeStatus(report.status) === 'under review'"
-        >
-          <mat-icon>warning</mat-icon>
-          Warn User
-        </button>
-
-        <button
-          mat-raised-button
-          color="warn"
-          (click)="showActionDialog('suspend_user')"
-          *ngIf="normalizeStatus(report.status) === 'under review'"
-        >
-          <mat-icon>block</mat-icon>
-          Suspend User
-        </button>
-
-        <button
-          mat-raised-button
-          color="warn"
-          (click)="showActionDialog('reject')"
-          *ngIf="normalizeStatus(report.status) === 'pending' || normalizeStatus(report.status) === 'under review'"
         >
           <mat-icon>cancel</mat-icon>
           Reject Report
         </button>
 
+        <!-- Resolve Report -->
         <button
           mat-raised-button
           color="primary"
-          (click)="showActionDialog('resolve')"
-          *ngIf="normalizeStatus(report.status) === 'under review'"
+          (click)="showActionDialog('resolve_report')"
+          *ngIf="normalizeStatus(report.status) === 'pending'"
         >
           <mat-icon>check_circle</mat-icon>
           Resolve Report
+        </button>
+
+        <!-- Add Note -->
+        <button
+          mat-raised-button
+          color="accent"
+          (click)="showActionDialog('add_note')"
+        >
+          <mat-icon>note_add</mat-icon>
+          Add Note
         </button>
       </div>
 
@@ -354,6 +399,35 @@
           <div class="form-actions">
             <button mat-button type="button" (click)="cancelAction()">Cancel</button>
             <button mat-raised-button color="primary" type="submit">Submit Action</button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Status Change Form -->
+      <div *ngIf="showStatusChangeForm" class="action-form">
+        <form [formGroup]="statusChangeForm" (ngSubmit)="submitStatusChange()">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Status</mat-label>
+            <mat-select formControlName="status">
+              <mat-option *ngFor="let status of statusOptions" [value]="status.value">
+                {{ status.label }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Notes (Optional)</mat-label>
+            <textarea
+              matInput
+              formControlName="notes"
+              rows="4"
+              placeholder="Add any notes about this status change"
+            ></textarea>
+          </mat-form-field>
+
+          <div class="form-actions">
+            <button mat-button type="button" (click)="cancelStatusChange()">Cancel</button>
+            <button mat-raised-button color="primary" type="submit">Change Status</button>
           </div>
         </form>
       </div>
