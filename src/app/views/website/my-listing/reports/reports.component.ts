@@ -218,12 +218,9 @@ export class ReportsComponent implements OnInit, OnDestroy {
   }
 
   getStatusClass(status: string): string {
+    // Updated: Only 3 statuses now - pending, rejected, resolved
     const statusMap: any = {
       'pending': 'status-pending',
-      'under_review': 'status-review',
-      'info_requested': 'status-info',
-      'warned': 'status-warned',
-      'suspended': 'status-suspended',
       'rejected': 'status-rejected',
       'resolved': 'status-resolved'
     };

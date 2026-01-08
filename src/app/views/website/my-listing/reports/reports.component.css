@@ -97,6 +97,9 @@
   padding: 10px 20px;
   border-radius: 5px;
   cursor: pointer;
+  height: 30px;
+    font-size: 12px;
+    font-weight: 400;
 }
 
 .refresh-button:hover {

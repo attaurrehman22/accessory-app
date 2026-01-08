@@ -1808,6 +1808,16 @@ export class HttpService implements OnInit {
     });
   }
 
+  // New API: Add proof multiple times (for pending reports)
+  addProof(formData: FormData): Observable<any> {
+    return this.http.post(`${this.apiUrl}/api/reports/add-proof`, formData, {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+  }
+
   cancelReport(reportId: number): Observable<any> {
     return this.http.post(`${this.apiUrl}/api/reports/cancel`, { report_id: reportId }, {
       headers: {
@@ -1941,6 +1951,27 @@ export class HttpService implements OnInit {
     };
     
     return this.http.post(`${this.apiUrl}/api/admin/issue-reports/${reportId}/actions`, payload, {
+      headers: {
+        Accept: "*/*",
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+  }
+
+  // New API: Change report status (Admin)
+  changeReportStatus(reportId: number, statusData: {
+    status: string; // pending, rejected, or resolved
+    notes?: string;
+    meta?: any;
+  }): Observable<any> {
+    const payload = {
+      status: statusData.status,
+      notes: statusData.notes || "",
+      meta: statusData.meta || {}
+    };
+    
+    return this.http.post(`${this.apiUrl}/api/admin/issue-reports/${reportId}/change-status`, payload, {
       headers: {
         Accept: "*/*",
         "Content-Type": "application/json",

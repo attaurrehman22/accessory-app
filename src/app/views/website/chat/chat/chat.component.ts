@@ -944,8 +944,23 @@ export class ChatComponent implements OnInit, AfterViewChecked {
       await this.getChatDetails();
       await this.getLatestMessage();
     } catch (err: any) {
+      // Handle pending report blocking
       if (err && err.error) {
-        this.alertService.showAlert("warning", `${err.error.message}`);
+        const errorMessage = err.error.message || err.error.error || '';
+        // Check if error is due to pending report blocking
+        if (errorMessage.toLowerCase().includes('pending report') || 
+            errorMessage.toLowerCase().includes('action blocked') ||
+            err.error.error === 'Action blocked') {
+          if (this.translateService.currentLang == "en") {
+            this.alertService.showAlert("warning", 
+              "Cannot perform this action. There is a pending report on this order. Please wait until the report is resolved.");
+          } else {
+            this.alertService.showAlert("warning", 
+              "لا يمكن تنفيذ هذا الإجراء. يوجد تقرير معلق على هذا الطلب. يرجى الانتظار حتى يتم حل التقرير.");
+          }
+        } else {
+          this.alertService.showAlert("warning", errorMessage);
+        }
       } else {
         if (this.translateService.currentLang == "en") {
           this.alertService.showAlert(
@@ -1139,8 +1154,25 @@ export class ChatComponent implements OnInit, AfterViewChecked {
       }
       await this.getChatDetails();
       await this.getLatestMessage();
-    } catch (err) {
+    } catch (err: any) {
       console.error("Error in buyNowFromChat:", err);
+      // Handle pending report blocking
+      if (err && err.error) {
+        const errorMessage = err.error.message || err.error.error || '';
+        if (errorMessage.toLowerCase().includes('pending report') || 
+            errorMessage.toLowerCase().includes('action blocked') ||
+            err.error.error === 'Action blocked') {
+          if (this.translateService.currentLang == "en") {
+            this.alertService.showAlert("warning", 
+              "Cannot perform this action. There is a pending report on this order. Please wait until the report is resolved.");
+          } else {
+            this.alertService.showAlert("warning", 
+              "لا يمكن تنفيذ هذا الإجراء. يوجد تقرير معلق على هذا الطلب. يرجى الانتظار حتى يتم حل التقرير.");
+          }
+        } else {
+          this.alertService.showAlert("warning", errorMessage);
+        }
+      }
     }
   }
 

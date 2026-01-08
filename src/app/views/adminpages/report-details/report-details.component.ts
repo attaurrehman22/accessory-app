@@ -29,6 +29,11 @@ export class ReportDetailsComponent implements OnInit {
   adminMessageForm: FormGroup;
   currentUserId: string | null = null;
 
+  // New properties for enhanced report details
+  chats: any[] = [];
+  proofs: any[] = [];
+  history: any[] = [];
+
   // Two-way binding for admin message
   get adminMessageValue() {
     return this.adminMessageForm.get('message')?.value || '';
@@ -41,14 +46,22 @@ export class ReportDetailsComponent implements OnInit {
 
   supportLanguages = ["en", "ar", "fr", "ta", "hi"];
 
+  // Updated: Only 3 statuses and simplified actions
   actionTypes = [
-    { value: "mark_under_review", label: "Mark as Under Review" },
-    { value: "request_info", label: "Request More Info" },
-    { value: "warn_user", label: "Warn Reported User" },
-    { value: "suspend_user", label: "Suspend User" },
-    { value: "reject", label: "Reject Report" },
-    { value: "resolve", label: "Resolve Report" },
+    { value: "reject_report", label: "Reject Report" },
+    { value: "resolve_report", label: "Resolve Report" },
+    { value: "add_note", label: "Add Note" },
   ];
+
+  // Status change options
+  statusOptions = [
+    { value: "pending", label: "Pending" },
+    { value: "rejected", label: "Rejected" },
+    { value: "resolved", label: "Resolved" },
+  ];
+  
+  showStatusChangeForm: boolean = false;
+  statusChangeForm: FormGroup;
 
   @ViewChild("chatContainer") chatContainer: ElementRef;
 
@@ -63,6 +76,12 @@ export class ReportDetailsComponent implements OnInit {
     this.actionForm = this.fb.group({
       action: ["", Validators.required],
       notes: [""],
+    });
+
+    this.statusChangeForm = this.fb.group({
+      status: ["", Validators.required],
+      notes: [""],
+      meta: [{}],
     });
 
     this.adminMessageForm = this.fb.group({
@@ -86,9 +105,21 @@ export class ReportDetailsComponent implements OnInit {
     try {
       const res: any = await this.http.getAdminReportDetails(this.data.reportId).toPromise();
       
-      // Handle API response structure
+      // Handle API response structure - Updated for new format
       if (res.success && res.data) {
-        this.report = res.data;
+        // New structure: data.report, data.chats, data.proofs, data.history
+        if (res.data.report) {
+          this.report = res.data.report;
+          this.chats = res.data.chats || [];
+          this.proofs = res.data.proofs || [];
+          this.history = res.data.history || [];
+        } else {
+          // Fallback: old structure where data is directly the report
+          this.report = res.data;
+          this.chats = [];
+          this.proofs = [];
+          this.history = [];
+        }
         
         // Map attachments if they are in the new format (array of objects with path and url)
         if (this.report.attachments && Array.isArray(this.report.attachments)) {
@@ -180,6 +211,63 @@ export class ReportDetailsComponent implements OnInit {
     this.showActionForm = true;
   }
 
+  showStatusChangeDialog(): void {
+    if (this.report && this.report.status) {
+      this.statusChangeForm.patchValue({ status: this.report.status.toLowerCase() });
+    }
+    this.showStatusChangeForm = true;
+  }
+
+  async submitStatusChange(): Promise<void> {
+    if (this.statusChangeForm.invalid || !this.report || !this.report.id) {
+      if (this.translateService.currentLang == "en") {
+        this.alertService.showAlert("warning", "Please select a status");
+      } else {
+        this.alertService.showAlert("warning", "يرجى اختيار حالة");
+      }
+      return;
+    }
+
+    try {
+      const statusData = {
+        status: this.statusChangeForm.value.status,
+        notes: this.statusChangeForm.value.notes || "",
+        meta: this.statusChangeForm.value.meta || {}
+      };
+
+      const res: any = await this.http.changeReportStatus(this.report.id, statusData).toPromise();
+      
+      if (this.translateService.currentLang == "en") {
+        this.alertService.showAlert("success", "Report status changed successfully");
+      } else {
+        this.alertService.showAlert("success", "تم تغيير حالة التقرير بنجاح");
+      }
+      
+      this.showStatusChangeForm = false;
+      this.statusChangeForm.reset();
+      
+      // Reload report details
+      await this.loadReportDetails();
+      this.dialogRef.close("updated");
+    } catch (err: any) {
+      if (err && err.error) {
+        const errorMessage = err.error.message || err.error.error || "Error changing status";
+        this.alertService.showAlert("warning", errorMessage);
+      } else {
+        if (this.translateService.currentLang == "en") {
+          this.alertService.showAlert("warning", "Error changing status. Please try again");
+        } else {
+          this.alertService.showAlert("warning", "حدث خطأ أثناء تغيير الحالة، يرجى المحاولة مرة أخرى");
+        }
+      }
+    }
+  }
+
+  cancelStatusChange(): void {
+    this.showStatusChangeForm = false;
+    this.statusChangeForm.reset();
+  }
+
   async submitAction() {
     if (this.actionForm.invalid) {
       if (this.translateService.currentLang == "en") {
@@ -250,20 +338,14 @@ export class ReportDetailsComponent implements OnInit {
 
   getStatusClass(status: string): string {
     if (!status) return "status-default";
-    // Normalize status to handle both "pending" and "Pending"
-    const normalizedStatus = status.charAt(0).toUpperCase() + status.slice(1).toLowerCase();
+    // Updated: Only 3 statuses now - pending, rejected, resolved
+    const normalizedStatus = status.toLowerCase().trim();
     const statusClasses: { [key: string]: string } = {
-      Pending: "status-pending",
-      "Under review": "status-under-review",
-      "Under Review": "status-under-review",
-      Resolved: "status-resolved",
-      Rejected: "status-rejected",
-      "Info requested": "status-info-requested",
-      "Info Requested": "status-info-requested",
-      Suspended: "status-suspended",
-      Warned: "status-warned",
+      'pending': "status-pending",
+      'rejected': "status-rejected",
+      'resolved': "status-resolved",
     };
-    return statusClasses[normalizedStatus] || statusClasses[status] || "status-default";
+    return statusClasses[normalizedStatus] || "status-default";
   }
 
   getTypeClass(type: string): string {

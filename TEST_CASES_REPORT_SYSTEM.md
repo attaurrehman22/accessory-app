@@ -444,7 +444,6 @@ Body: { "report_id": 1 }
 
 ---
 
-0000000000000000000000000000000000-------------------0000000000000000000000000000000000000000000000000000000000000000000000000
 
 ## 6. Mark Proof Invalid
 
@@ -491,6 +490,7 @@ Body: {
 
 ---
 
+
 ## 7. Time Remaining Countdown
 
 ### Test Case 7.1: View Time Remaining
@@ -507,6 +507,7 @@ Body: {
 
 ---
 
+
 ### Test Case 7.2: Time Expired
 **Scenario:** 6 hours expire ho gaye hain
 
@@ -519,6 +520,7 @@ Body: {
 - ✅ Warning messages show honge
 
 ---
+
 
 ### Test Case 7.3: Countdown Updates
 **Scenario:** Countdown real-time update ho raha hai
@@ -533,6 +535,7 @@ Body: {
 - ✅ Hours update honge jab minutes 0 ho jayenge
 
 ---
+
 
 ## 8. Actions History
 
@@ -569,6 +572,7 @@ Body: {
 
 ---
 
+
 ## 9. Real-time Updates
 
 ### Test Case 9.1: Automatic Status Updates
@@ -602,6 +606,7 @@ Body: {
 
 ---
 
+
 ## 10. Error Handling
 
 ### Test Case 10.1: Network Error
@@ -617,6 +622,8 @@ Body: {
 - ✅ Retry option available hoga
 
 ---
+
+0000000000000000000000000000000000-------------------0000000000000000000000000000000000000000000000000000000000000000000000000
 
 ### Test Case 10.2: Unauthorized Access
 **Scenario:** User unauthorized report access karta hai

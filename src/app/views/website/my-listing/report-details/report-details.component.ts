@@ -190,12 +190,9 @@ export class ReportDetailsComponent implements OnInit, OnDestroy {
   }
 
   getStatusClass(status: string): string {
+    // Updated: Only 3 statuses now - pending, rejected, resolved
     const statusMap: any = {
       'pending': 'status-pending',
-      'under_review': 'status-review',
-      'info_requested': 'status-info',
-      'warned': 'status-warned',
-      'suspended': 'status-suspended',
       'rejected': 'status-rejected',
       'resolved': 'status-resolved'
     };
@@ -223,11 +220,22 @@ export class ReportDetailsComponent implements OnInit, OnDestroy {
   }
 
   async submitProof(): Promise<void> {
+    // Updated: Use new addProof API for pending reports (allows multiple submissions)
+    if (!this.reportDetails || this.reportDetails.status !== 'pending') {
+      if (this.translateService.currentLang == "en") {
+        this.alertService.showAlert("warning", "Proof can only be added to pending reports");
+      } else {
+        this.alertService.showAlert("warning", "يمكن إضافة الإثبات فقط للتقارير المعلقة");
+      }
+      return;
+    }
+
+    // Notes are optional, but files are required
     if (this.selectedProofFiles.length === 0) {
       if (this.translateService.currentLang == "en") {
-        this.alertService.showAlert("warning", "Please select at least one file");
+        this.alertService.showAlert("warning", "Please select at least one file or add notes");
       } else {
-        this.alertService.showAlert("warning", "يرجى اختيار ملف واحد على الأقل");
+        this.alertService.showAlert("warning", "يرجى اختيار ملف واحد على الأقل أو إضافة ملاحظات");
       }
       return;
     }
@@ -237,28 +245,30 @@ export class ReportDetailsComponent implements OnInit, OnDestroy {
       const formData = new FormData();
       formData.append("report_id", this.reportId.toString());
       
+      // Add files if selected
       this.selectedProofFiles.forEach((file) => {
         formData.append("proof_attachments[]", file);
       });
 
-      const res: any = await this.http.submitReportProof(formData).toPromise();
+      // Use new addProof API (allows multiple submissions for pending reports)
+      const res: any = await this.http.addProof(formData).toPromise();
       
       if (this.translateService.currentLang == "en") {
-        this.alertService.showAlert("success", "Proof submitted successfully");
+        this.alertService.showAlert("success", "Proof added successfully");
       } else {
-        this.alertService.showAlert("success", "تم إرسال الإثبات بنجاح");
+        this.alertService.showAlert("success", "تم إضافة الإثبات بنجاح");
       }
       
       this.selectedProofFiles = [];
       await this.loadReportDetails();
     } catch (err: any) {
       if (err && err.error) {
-        this.alertService.showAlert("warning", `${err.error.message || "Error submitting proof"}`);
+        this.alertService.showAlert("warning", `${err.error.message || "Error adding proof"}`);
       } else {
         if (this.translateService.currentLang == "en") {
-          this.alertService.showAlert("warning", "Error in submitting proof. Please try again");
+          this.alertService.showAlert("warning", "Error in adding proof. Please try again");
         } else {
-          this.alertService.showAlert("warning", "حدث خطأ أثناء إرسال الإثبات، يرجى المحاولة مرة أخرى");
+          this.alertService.showAlert("warning", "حدث خطأ أثناء إضافة الإثبات، يرجى المحاولة مرة أخرى");
         }
       }
     } finally {
@@ -372,10 +382,8 @@ export class ReportDetailsComponent implements OnInit, OnDestroy {
 
   canSubmitProof(): boolean {
     if (!this.reportDetails) return false;
-    // Only counter party can submit proof
-    return this.reportDetails.user_role === 'counter_party' && 
-           (this.reportDetails.status === 'info_requested' || this.reportDetails.status === 'pending') &&
-           !this.timeRemaining?.is_expired;
+    // Updated: Both reporter and reported user can add proof multiple times for pending reports
+    return this.reportDetails.status === 'pending';
   }
 
   canRequestManualReview(): boolean {
