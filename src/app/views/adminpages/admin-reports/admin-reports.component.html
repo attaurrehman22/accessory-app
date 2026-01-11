@@ -39,7 +39,7 @@
 
           <button
             mat-raised-button
-            color="primary"
+            class="admin-refresh-btn"
             (click)="loadReports()"
             [disabled]="isLoading"
           >
@@ -130,23 +130,6 @@
             </td>
           </ng-container>
 
-          <!-- Actions Column -->
-          <ng-container class="column" matColumnDef="actions">
-            <th mat-header-cell class="column" *matHeaderCellDef>
-              Actions
-            </th>
-            <td mat-cell class="column" *matCellDef="let row">
-              <button
-                mat-icon-button
-                color="primary"
-                (click)="viewDetails(row)"
-                matTooltip="View Details"
-              >
-                <mat-icon>visibility</mat-icon>
-              </button>
-            </td>
-          </ng-container>
-
           <tr
             mat-header-row
             *matHeaderRowDef="displayedColumns; sticky: true"
@@ -154,6 +137,8 @@
           <tr
             mat-row
             *matRowDef="let row; columns: displayedColumns"
+            (click)="viewDetails(row)"
+            style="cursor: pointer;"
           ></tr>
 
           <!-- Row shown when there is no matching data. -->

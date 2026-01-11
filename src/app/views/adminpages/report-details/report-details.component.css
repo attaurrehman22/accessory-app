@@ -699,3 +699,150 @@
   background: #555;
 }
 
+/* Admin Action Buttons - Theme Colors */
+.admin-action-btn {
+  background-color: #242424 !important;
+  color: #ffffff !important;
+  border-radius: 8px !important;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 20px;
+  height: 48px;
+}
+
+.admin-action-btn:hover:not(:disabled) {
+  background-color: #1a1a1a !important;
+}
+
+.admin-action-btn-danger {
+  background-color: #dc3545 !important;
+}
+
+.admin-action-btn-danger:hover:not(:disabled) {
+  background-color: #c82333 !important;
+}
+
+.admin-submit-btn {
+  background-color: #242424 !important;
+  color: #ffffff !important;
+  border-radius: 8px !important;
+  padding: 0 20px;
+  height: 48px;
+}
+
+.admin-submit-btn:hover:not(:disabled) {
+  background-color: #1a1a1a !important;
+}
+
+.admin-cancel-btn {
+  color: #242424 !important;
+  border: 1px solid #242424 !important;
+  border-radius: 8px !important;
+  padding: 0 20px;
+  height: 48px;
+}
+
+.admin-cancel-btn:hover {
+  background-color: #f5f5f5 !important;
+}
+
+/* Update Chat Colors to Match Theme */
+.buyer-content {
+  max-width: 70%;
+  background: #f8f8f8;
+  padding: 10px 14px;
+  border-radius: 12px 12px 12px 4px;
+  border-left: 3px solid #242424;
+  word-wrap: break-word;
+}
+
+.seller-content {
+  max-width: 70%;
+  background: #f0f0f0;
+  padding: 10px 14px;
+  border-radius: 12px 12px 4px 12px;
+  border-right: 3px solid #242424;
+  word-wrap: break-word;
+  text-align: right;
+}
+
+.input-group .form-control:focus {
+  border-color: #242424;
+  box-shadow: 0 0 0 2px rgba(36, 36, 36, 0.1);
+}
+
+.input-group .btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 20px;
+  border-radius: 20px;
+  border: none;
+  background: #242424;
+  color: white;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background 0.3s;
+}
+
+.input-group .btn:hover:not(:disabled) {
+  background: #1a1a1a;
+}
+
+.input-group .btn:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+/* Update Section Backgrounds */
+.section {
+  background: #ffffff;
+  border-radius: 8px;
+  padding: 20px;
+  border: 1px solid #e0e0e0;
+}
+
+.actions-section {
+  background: #ffffff;
+  border: 1px solid #e0e0e0;
+}
+
+.chat-section {
+  background: #ffffff;
+  border: 1px solid #e0e0e0;
+}
+
+.action-form {
+  margin-top: 16px;
+  padding: 16px;
+  background: #ffffff;
+  border-radius: 8px;
+  border: 1px solid #e0e0e0;
+}
+
+/* Admin Chat Send Button */
+.admin-chat-send-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 20px;
+  border-radius: 20px;
+  border: none;
+  background: #242424 !important;
+  color: white !important;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background 0.3s;
+}
+
+.admin-chat-send-btn:hover:not(:disabled) {
+  background: #1a1a1a !important;
+}
+
+.admin-chat-send-btn:disabled {
+  background: #ccc !important;
+  cursor: not-allowed;
+  color: #ffffff !important;
+}
+

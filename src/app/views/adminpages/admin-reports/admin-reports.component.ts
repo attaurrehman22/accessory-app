@@ -39,7 +39,6 @@ export class AdminReportsComponent implements OnInit, OnDestroy {
     "type",
     "status",
     "created_at",
-    "actions",
   ];
 
   dataSource: MatTableDataSource<ReportData>;

@@ -23,45 +23,53 @@
   display: inline-block;
 }
 
-/* Status Badges */
+/* Status Badges - Enhanced Visibility */
 .status-pending {
-  background-color: #fff3cd;
-  color: #856404;
+  background-color: #ffc107 !important;
+  color: #000000 !important;
+  font-weight: 600;
 }
 
 .status-under-review {
-  background-color: #cfe2ff;
-  color: #084298;
+  background-color: #0d6efd !important;
+  color: #ffffff !important;
+  font-weight: 600;
 }
 
 .status-resolved {
-  background-color: #d1e7dd;
-  color: #0f5132;
+  background-color: #28a745 !important;
+  color: #ffffff !important;
+  font-weight: 600;
 }
 
 .status-rejected {
-  background-color: #f8d7da;
-  color: #842029;
+  background-color: #dc3545 !important;
+  color: #ffffff !important;
+  font-weight: 600;
 }
 
 .status-info-requested {
-  background-color: #d4edda;
-  color: #155724;
+  background-color: #17a2b8 !important;
+  color: #ffffff !important;
+  font-weight: 600;
 }
 
 .status-suspended {
-  background-color: #f8d7da;
-  color: #842029;
+  background-color: #dc3545 !important;
+  color: #ffffff !important;
+  font-weight: 600;
 }
 
 .status-warned {
-  background-color: #fff3cd;
-  color: #856404;
+  background-color: #ff9800 !important;
+  color: #ffffff !important;
+  font-weight: 600;
 }
 
 .status-default {
-  background-color: #e9ecef;
-  color: #495057;
+  background-color: #6c757d !important;
+  color: #ffffff !important;
+  font-weight: 600;
 }
 
 /* Type Badges */
@@ -118,5 +126,32 @@
 
 .mat-form-fields-custom-deisgn {
   margin-bottom: 16px;
+}
+
+/* Admin Reports Theme Buttons */
+.admin-refresh-btn {
+  background-color: #242424 !important;
+  color: #ffffff !important;
+  border-radius: 8px !important;
+  height: 48px;
+  padding: 0 15px 0 15px;
+}
+
+.admin-refresh-btn:hover:not(:disabled) {
+  background-color: #1a1a1a !important;
+}
+
+.admin-refresh-btn:disabled {
+  background-color: #909090 !important;
+  color: #ffffff !important;
+  cursor: not-allowed;
+}
+
+.admin-view-btn {
+  color: #242424 !important;
+}
+
+.admin-view-btn:hover {
+  background-color: #f5f5f5 !important;
 }
 
