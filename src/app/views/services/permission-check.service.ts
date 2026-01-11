@@ -7,7 +7,7 @@ export class PermissionCheckService {
   constructor() {}
 
   checkPermission(permission: string): boolean {
-    const permissions = sessionStorage.getItem("permissions");
+    const permissions = localStorage.getItem("permissions");
     return permissions ? JSON.parse(permissions).includes(permission) : false;
   }
 }

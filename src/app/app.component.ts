@@ -6,6 +6,7 @@ import { AlertsServicesService } from "src/services/alerts-service/alerts-servic
 import { LoaderService } from "./loader.service";
 import { SearchServiceService } from "src/services/search-service/search-service.service";
 import { MessageServiceService } from "src/services/search-show-hide/message-service.service";
+import { HttpService } from "src/services/http/http.service";
 import mediumZoom from "medium-zoom";
 @Component({
   selector: "app-root",
@@ -116,6 +117,9 @@ export class AppComponent implements OnInit {
     // Initialize alert position on component load
     this.updateAlertPosition();
 
+    // Restore permissions if user is logged in but permissions are missing
+    this.restorePermissionsIfNeeded();
+
     // this.isLoading$.subscribe(isLoading => {
     //   console.log('Loading Status:', isLoading);
     // });
@@ -136,6 +140,52 @@ export class AppComponent implements OnInit {
     });
   }
 
+  /**
+   * Restores user permissions from API if user is logged in but permissions are missing
+   * This handles the case where sessionStorage was cleared but user is still authenticated
+   */
+  private restorePermissionsIfNeeded(): void {
+    const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+    const userToken = localStorage.getItem("user_token");
+    const storedPermissions = localStorage.getItem("permissions");
+
+    // If user is logged in but permissions are missing, fetch them from API
+    if (isLoggedIn && userToken && !storedPermissions) {
+      this.http.gtUserDetails().subscribe(
+        (response) => {
+          if (response && response.user) {
+            // Store permissions in localStorage
+            if (
+              response.user.permissions !== undefined &&
+              response.user.permissions !== null
+            ) {
+              localStorage.setItem(
+                "permissions",
+                JSON.stringify(response.user.permissions)
+              );
+            }
+            // Store roles in localStorage
+            if (
+              response.user.roles !== undefined &&
+              response.user.roles !== null
+            ) {
+              localStorage.setItem("roles", response.user.roles.join(","));
+            }
+            // Update admin status if needed
+            const isAdmin = response.user.type === "chronosouq-user";
+            if (isAdmin) {
+              localStorage.setItem("isAdmin", "true");
+            }
+          }
+        },
+        (error) => {
+          // Silently fail - user might not have valid token anymore
+          console.error("Failed to restore permissions:", error);
+        }
+      );
+    }
+  }
+
   isLoading$ = this.loaderService.isLoading;
   supportLanguages = ["en", "ar", "fr", "ta", "hi"];
 
@@ -144,7 +194,8 @@ export class AppComponent implements OnInit {
     private router: Router,
     public alertService: AlertsServicesService,
     public loaderService: LoaderService,
-    private searchShowHide: MessageServiceService
+    private searchShowHide: MessageServiceService,
+    private http: HttpService
   ) {
     this.translateService.addLangs(this.supportLanguages);
     this.translateService.setDefaultLang("en");
@@ -204,6 +255,8 @@ export class AppComponent implements OnInit {
     localStorage.removeItem("Logged");
     localStorage.removeItem("user_token");
     localStorage.removeItem("isAdminUser");
+    localStorage.removeItem("permissions");
+    localStorage.removeItem("roles");
     sessionStorage.clear();
     this.router.navigate(["/login"]);
   }

@@ -382,6 +382,8 @@ export class HeroPageComponent {
     localStorage.removeItem("userID");
     localStorage.removeItem("isAdmin");
     localStorage.removeItem("userType");
+    localStorage.removeItem("permissions");
+    localStorage.removeItem("roles");
     sessionStorage.clear();
     this.isUserLogin = false;
     this.loginStateService.updateLoginStatus(false);

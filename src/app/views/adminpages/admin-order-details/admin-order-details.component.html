@@ -175,7 +175,7 @@
     </div>
 
     <!-- Chat History Section -->
-    <div class="card mb-3">
+    <!-- <div class="card mb-3">
       <div class="card-body">
         <h5 class="mb-3">Chat History</h5>
         <div
@@ -207,8 +207,8 @@
               [class.admin-message]="isAdminMessage(message)"
               [class.system-message]="isSystemMessage(message)"
             >
-              <!-- System Generated Message (Centered) -->
-              <div
+              <-- System Generated Message (Centered) -->
+    <!-- <div
                 *ngIf="isSystemMessage(message)"
                 class="d-flex justify-content-center"
               >
@@ -222,7 +222,6 @@
                 </div>
               </div>
 
-              <!-- Buyer Message (Left Side) -->
               <div
                 *ngIf="!isSystemMessage(message) && isBuyerMessage(message)"
                 class="d-flex align-items-start"
@@ -305,8 +304,6 @@
                   </div>
                 </div>
               </div>
-
-              <!-- Seller Message (Right Side) -->
               <div
                 *ngIf="!isSystemMessage(message) && isSellerMessage(message)"
                 class="d-flex align-items-start justify-content-end"
@@ -393,7 +390,6 @@
                 </div>
               </div>
 
-              <!-- Admin Message (Distinct Style) -->
               <div
                 *ngIf="!isSystemMessage(message) && isAdminMessage(message)"
                 class="d-flex align-items-start"
@@ -471,7 +467,6 @@
           </div>
         </div>
 
-        <!-- Admin Message Input -->
         <div class="admin-message-input mt-3">
           <div class="d-flex align-items-center gap-2">
             <button
@@ -521,7 +516,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
 
     <!-- Admin Actions Section -->
     <div class="card">

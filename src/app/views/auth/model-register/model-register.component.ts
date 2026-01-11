@@ -153,7 +153,7 @@ export class ModelRegisterComponent implements OnInit {
             response.user.permissions !== undefined &&
             response.user.permissions !== null
           ) {
-            sessionStorage.setItem(
+            localStorage.setItem(
               "permissions",
               JSON.stringify(response.user.permissions)
             );
@@ -162,7 +162,7 @@ export class ModelRegisterComponent implements OnInit {
             response.user.roles !== undefined &&
             response.user.roles !== null
           ) {
-            sessionStorage.setItem("roles", response.user.roles.join(","));
+            localStorage.setItem("roles", response.user.roles.join(","));
           }
           localStorage.setItem("userType", response.user.type);
           localStorage.setItem("userID", response.user.id);

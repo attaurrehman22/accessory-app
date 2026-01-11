@@ -25,6 +25,8 @@ export class AdminPageHeaderComponent {
     localStorage.removeItem("userID");
     localStorage.removeItem("isAdmin");
     localStorage.removeItem("userType");
+    localStorage.removeItem("permissions");
+    localStorage.removeItem("roles");
     sessionStorage.clear();
     this.loginStateService.updateLoginStatus(false);
     localStorage.setItem("isAdmin", "false");
