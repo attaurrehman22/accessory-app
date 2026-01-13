@@ -97,6 +97,9 @@ export class ReportDetailsComponent implements OnInit, OnDestroy {
       // Process available actions
       if (!this.reportDetails.available_actions) {
         this.reportDetails.available_actions = [];
+      }else {
+        // if the action have view_details then remove it
+        this.reportDetails.available_actions = this.reportDetails.available_actions.filter((action: any) => action.action !== 'view_details');
       }
     } catch (err: any) {
       if (err && err.error) {
