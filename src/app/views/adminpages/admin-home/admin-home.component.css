@@ -394,7 +394,7 @@
   align-items: center;
 }
 
-/* Horizontal Chart Container for Brands */
+/* Chart Container for Brands (Vertical) */
 .chart-container-horizontal {
   width: 100%;
   height: auto;
@@ -598,7 +598,7 @@
   stroke: #007bff;
 }
 
-/* Highcharts Label Overrides for Horizontal Bar Chart */
+/* Highcharts Label Overrides for Vertical Column Chart */
 ::ng-deep .chart-container-horizontal .highcharts-container {
   width: 100% !important;
   height: auto !important;
@@ -616,18 +616,22 @@
   overflow: visible !important;
 }
 
-/* Y-axis labels (brand names on left) - CRITICAL */
+/* X-axis labels (brand names at bottom) */
+::ng-deep .chart-container-horizontal .highcharts-xaxis-labels {
+  overflow: visible !important;
+}
+
+::ng-deep .chart-container-horizontal .highcharts-xaxis-labels text {
+  overflow: visible !important;
+  text-overflow: clip !important;
+}
+
+/* Y-axis labels (numbers on left) */
 ::ng-deep .chart-container-horizontal .highcharts-yaxis-labels {
   overflow: visible !important;
 }
 
 ::ng-deep .chart-container-horizontal .highcharts-yaxis-labels text {
-  overflow: visible !important;
-  text-overflow: clip !important;
-}
-
-/* X-axis labels (numbers at bottom) */
-::ng-deep .chart-container-horizontal .highcharts-xaxis-labels text {
   overflow: visible !important;
 }
 
@@ -655,12 +659,58 @@
   stroke-width: 1;
 }
 
-/* Remove clipping that hides Y-axis labels */
-::ng-deep .chart-container-horizontal .highcharts-yaxis {
-  overflow: visible !important;
-}
-
 /* Ensure labels container is visible */
 ::ng-deep .chart-container-horizontal .highcharts-axis-labels {
   overflow: visible !important;
+}
+
+/* Mat Table Styling */
+.admin-table {
+  width: 100%;
+  background-color: #ffffff;
+}
+
+.admin-table th {
+  background-color: #f8f9fa;
+  font-weight: 600;
+  color: #212529;
+  border-bottom: 2px solid #dee2e6;
+  padding: 0.75rem;
+}
+
+.admin-table td {
+  padding: 0.75rem;
+  border-bottom: 1px solid #dee2e6;
+}
+
+.admin-table tr:hover {
+  background-color: rgba(0, 0, 0, 0.025);
+}
+
+.admin-table tr.mat-row {
+  height: auto;
+}
+
+.admin-table tr.mat-header-row {
+  height: auto;
+}
+
+/* Mat Paginator Styling */
+::ng-deep .mat-mdc-paginator {
+  background-color: #ffffff;
+  border-top: 1px solid #dee2e6;
+}
+
+::ng-deep .mat-mdc-paginator-container {
+  padding: 0.75rem 1.25rem;
+}
+
+::ng-deep .mat-mdc-paginator-page-size-label {
+  margin-right: 0.5rem;
+  color: #6c757d;
+}
+
+::ng-deep .mat-mdc-paginator-range-label {
+  margin: 0 1rem;
+  color: #6c757d;
 }

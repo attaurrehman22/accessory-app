@@ -130,8 +130,11 @@ export interface ColumnChartOptions {
     labels?: {
       enabled?: boolean;
       overflow?: string;
+      rotation?: number;
+      align?: string;
       style?: {
         fontSize?: string;
+        fontWeight?: string;
         color?: string;
       };
     };
@@ -160,6 +163,7 @@ export interface ColumnChartOptions {
       useHTML?: boolean;
     };
     gridLineWidth?: number;
+    gridLineColor?: string;
     lineWidth?: number;
     tickWidth?: number;
   };
@@ -177,8 +181,25 @@ export interface ColumnChartOptions {
   };
   plotOptions: {
     column?: {
-      pointPadding?: number;
+      dataLabels?: {
+        enabled: boolean;
+        inside?: boolean;
+        align?: string;
+        format: string;
+        style?: {
+          fontSize?: string;
+          fontWeight?: string;
+          color?: string;
+          textOutline?: string;
+        };
+        x?: number;
+        y?: number;
+      };
       borderWidth?: number;
+      borderRadius?: number;
+      pointWidth?: number | null;
+      groupPadding?: number;
+      pointPadding?: number;
     };
     bar?: {
       dataLabels?: {

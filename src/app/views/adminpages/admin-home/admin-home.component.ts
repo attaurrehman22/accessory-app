@@ -1,5 +1,7 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
+import { Component, OnInit, OnDestroy, ViewChild } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
+import { MatTableDataSource } from "@angular/material/table";
+import { MatPaginator, PageEvent } from "@angular/material/paginator";
 import { Subscription, forkJoin, of } from "rxjs";
 import { catchError, finalize } from "rxjs/operators";
 import { AlertsServicesService } from "src/services/alerts-service/alerts-services.service";
@@ -77,8 +79,21 @@ export class AdminHomeComponent implements OnInit, OnDestroy {
     createdDate: "",
   };
 
-  sidebarClickSubscription: Subscription;
+  // Paginated Table - Subscribers
+  displayedColumns: string[] = ["email"];
+  paginatedTableDataSource: MatTableDataSource<any> = new MatTableDataSource(
+    []
+  );
+  paginatedTableLoading = false;
+  paginatedTablePageIndex = 0;
+  paginatedTablePageSize = 5;
+  paginatedTableTotalItems = 0;
+  paginatedTablePageSizeOptions = [5, 10, 25, 50];
 
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+
+  sidebarClickSubscription: Subscription;
+  subscribersCount = 0;
   constructor(
     private dialog: MatDialog,
     private sidebarService: SidebarService,
@@ -89,6 +104,7 @@ export class AdminHomeComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.getDashboardDetails();
+    this.loadPaginatedTableData();
     this.sidebarClickSubscription = this.sidebarService.sidebarClick$.subscribe(
       () => {
         this.dialog.closeAll();
@@ -234,31 +250,49 @@ export class AdminHomeComponent implements OnInit, OnDestroy {
     this.filteredOrders = [...this.allOrders];
   }
 
-  // Setup brands chart (horizontal bar chart)
+  // Setup brands chart (vertical column chart)
   setupBrandsChart(data: any): void {
     const brandNames = Object.keys(data.brands.data) || [];
     const brandValues = (Object.values(data.brands.data) || []) as number[];
 
-    // Calculate dynamic height based on number of brands
-    const numberOfBrands = brandNames.length || 6;
-    const barHeight = 35; // Height per bar
-    const dynamicHeight = Math.max(300, numberOfBrands * barHeight + 60);
+    // Fixed height for vertical chart
+    const chartHeight = 400;
 
     this.brandsChartOptions = {
       chart: {
-        type: "bar",
-        height: dynamicHeight,
-        spacingLeft: 0,
-        spacingRight: 40,
+        type: "column",
+        height: chartHeight,
+        spacingLeft: 10,
+        spacingRight: 10,
         spacingTop: 10,
         spacingBottom: 10,
-        marginLeft: 120, // Space for brand names on left
+        marginLeft: 50,
         marginRight: 40,
+        marginTop: 20,
+        marginBottom: 80,
       },
       title: {
         text: "",
       },
       xAxis: {
+        categories: brandNames,
+        title: {
+          text: null,
+        },
+        labels: {
+          enabled: true,
+          style: {
+            fontSize: "11px",
+            fontWeight: "500",
+            color: "#495057",
+          },
+          rotation: -45,
+          align: "right",
+        },
+        lineWidth: 0,
+        gridLineWidth: 0,
+      },
+      yAxis: {
         min: 0,
         title: {
           text: null,
@@ -274,28 +308,6 @@ export class AdminHomeComponent implements OnInit, OnDestroy {
         gridLineColor: "#e9ecef",
         lineWidth: 0,
       },
-      yAxis: {
-        categories: brandNames,
-        title: {
-          text: null,
-        },
-        labels: {
-          enabled: true,
-          align: "right",
-          x: -8,
-          y: 4,
-          style: {
-            fontSize: "12px",
-            fontWeight: "500",
-            color: "#495057",
-            whiteSpace: "nowrap",
-          },
-          useHTML: false,
-        },
-        lineWidth: 0,
-        gridLineWidth: 0,
-        tickWidth: 0,
-      },
       tooltip: {
         backgroundColor: "#fff",
         borderColor: "#007bff",
@@ -309,11 +321,11 @@ export class AdminHomeComponent implements OnInit, OnDestroy {
         padding: 10,
       },
       plotOptions: {
-        bar: {
+        column: {
           dataLabels: {
             enabled: true,
             inside: false,
-            align: "right",
+            align: "center",
             format: "{point.y}",
             style: {
               fontSize: "11px",
@@ -321,11 +333,11 @@ export class AdminHomeComponent implements OnInit, OnDestroy {
               color: "#495057",
               textOutline: "none",
             },
-            x: 8,
+            y: -5,
           },
           borderWidth: 0,
           borderRadius: 3,
-          pointWidth: 20,
+          pointWidth: null,
           groupPadding: 0.1,
           pointPadding: 0.2,
         },
@@ -445,5 +457,45 @@ export class AdminHomeComponent implements OnInit, OnDestroy {
       default:
         return "badge-secondary";
     }
+  }
+
+  // Load paginated table data - Subscribers
+  loadPaginatedTableData(): void {
+    this.paginatedTableLoading = true;
+    this.http
+      .getSubscribers(
+        this.paginatedTablePageIndex + 1,
+        this.paginatedTablePageSize
+      )
+      .pipe(
+        catchError((error) => {
+          console.error("Error loading subscribers data:", error);
+          this.toast.showAlert("danger", "Failed to load subscribers data");
+          this.paginatedTableLoading = false;
+          return of(null);
+        })
+      )
+      .subscribe({
+        next: (response: any) => {
+          if (response) {
+            const subscribers = response.data.data || [];
+            this.paginatedTableDataSource.data = subscribers;
+            this.paginatedTableTotalItems = this.subscribersCount =
+              response.data.total || subscribers.length;
+          }
+          this.paginatedTableLoading = false;
+        },
+        error: (error) => {
+          console.error("Subscribers table loading error:", error);
+          this.paginatedTableLoading = false;
+        },
+      });
+  }
+
+  // Handle pagination events
+  onPaginatedTablePageChange(event: PageEvent): void {
+    this.paginatedTablePageIndex = event.pageIndex;
+    this.paginatedTablePageSize = event.pageSize;
+    this.loadPaginatedTableData();
   }
 }

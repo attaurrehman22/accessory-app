@@ -2213,4 +2213,18 @@ export class HttpService implements OnInit {
     );
   }
   // -------------------------------------------- Admin Orders API End --------------------------
+
+  // -------------------------------------------- Admin Subscribers API --------------------------
+  getSubscribers(page: number = 1, perPage: number = 5): Observable<any> {
+    return this.http.get(
+      `${this.apiUrl}/api/subscribers?page=${page}&per_page=${perPage}`,
+      {
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${this.token}`,
+        },
+      }
+    );
+  }
+  // -------------------------------------------- Admin Subscribers API End --------------------------
 }
