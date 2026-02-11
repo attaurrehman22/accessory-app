@@ -74,7 +74,7 @@ export class RegisterComponent implements OnInit {
     private formBuilder: FormBuilder,
     private http: HttpService,
     public router: Router,
-    public translateService: TranslateService
+    public translateService: TranslateService,
   ) {
     this.translateService.addLangs(this.supportLanguages);
     this.translateService.setDefaultLang("ar");
@@ -91,7 +91,7 @@ export class RegisterComponent implements OnInit {
       },
       {
         validators: this._passwordMatchValidator(),
-      }
+      },
     );
 
     if (this.supportLanguages.includes(browserlang)) {
@@ -147,7 +147,7 @@ export class RegisterComponent implements OnInit {
             ) {
               localStorage.setItem(
                 "permissions",
-                JSON.stringify(response.user.permissions)
+                JSON.stringify(response.user.permissions),
               );
             }
             if (
@@ -176,7 +176,7 @@ export class RegisterComponent implements OnInit {
           } else {
             this.alertService.showAlert("warning", "Error in Register");
           }
-        }
+        },
       );
     } else {
       // if (this.translateService.currentLang == "en") {

@@ -89,7 +89,7 @@ export class HttpService implements OnInit {
 
   getProductsByCategory(queryString: any) {
     return this.http.get(
-      `${this.apiUrl}/api/search-product-by/?${queryString}`
+      `${this.apiUrl}/api/search-product-by/?${queryString}`,
     );
   }
 
@@ -201,10 +201,10 @@ export class HttpService implements OnInit {
 
   getSimilarProductsByIDwithPage(
     productId: number,
-    page: number = 1
+    page: number = 1,
   ): Observable<any> {
     return this.http.get(
-      `${this.apiUrl}/api/products/${productId}/similar?page=${page}`
+      `${this.apiUrl}/api/products/${productId}/similar?page=${page}`,
     );
   }
 
@@ -308,7 +308,7 @@ export class HttpService implements OnInit {
           Accept: "application/json",
           Authorization: `Bearer ${this.token}`,
         },
-      }
+      },
     );
   }
 
@@ -321,7 +321,7 @@ export class HttpService implements OnInit {
           Accept: "application/json",
           Authorization: `Bearer ${this.token}`,
         },
-      }
+      },
     );
   }
 
@@ -334,7 +334,7 @@ export class HttpService implements OnInit {
           Accept: "application/json",
           Authorization: `Bearer ${this.token}`,
         },
-      }
+      },
     );
   }
 
@@ -347,7 +347,7 @@ export class HttpService implements OnInit {
           Accept: "application/json",
           Authorization: `Bearer ${this.token}`,
         },
-      }
+      },
     );
   }
 
@@ -359,7 +359,7 @@ export class HttpService implements OnInit {
           Accept: "application/json",
           Authorization: `Bearer ${this.token}`,
         },
-      }
+      },
     );
   }
 
@@ -372,13 +372,13 @@ export class HttpService implements OnInit {
           Accept: "application/json",
           Authorization: `Bearer ${this.token}`,
         },
-      }
+      },
     );
   }
 
   getAdminUsers(
     pageIndex: number = 0,
-    pageSize: number = 100
+    pageSize: number = 100,
   ): Observable<any> {
     let pageSize2 = 100;
     return this.http.get(
@@ -390,7 +390,7 @@ export class HttpService implements OnInit {
           Accept: "application/json",
           Authorization: `Bearer ${this.token}`,
         },
-      }
+      },
     );
   }
 
@@ -403,7 +403,7 @@ export class HttpService implements OnInit {
           Accept: "application/json",
           Authorization: `Bearer ${this.token}`,
         },
-      }
+      },
     );
   }
 
@@ -434,7 +434,7 @@ export class HttpService implements OnInit {
           Accept: "application/json",
           Authorization: `Bearer ${this.token}`,
         },
-      }
+      },
     );
   }
 
@@ -456,7 +456,7 @@ export class HttpService implements OnInit {
           Accept: "application/json",
           Authorization: `Bearer ${this.token}`,
         },
-      }
+      },
     );
   }
 
@@ -480,7 +480,7 @@ export class HttpService implements OnInit {
     brand_ids: any[],
     watch_gender,
     sort_by?: string,
-    sort_order?: string
+    sort_order?: string,
   ): Observable<any> {
     let params = new HttpParams()
       .set("page", pageIndex.toString())
@@ -556,7 +556,7 @@ export class HttpService implements OnInit {
           Accept: "application/json",
           Authorization: `Bearer ${this.token}`,
         },
-      }
+      },
     );
   }
 
@@ -569,7 +569,7 @@ export class HttpService implements OnInit {
           Accept: "application/json",
           Authorization: `Bearer ${this.token}`,
         },
-      }
+      },
     );
   }
 
@@ -619,7 +619,7 @@ export class HttpService implements OnInit {
           Accept: "application/json",
           Authorization: `Bearer ${this.token}`,
         },
-      }
+      },
     );
   }
 
@@ -632,7 +632,7 @@ export class HttpService implements OnInit {
           Accept: "application/json",
           Authorization: `Bearer ${this.token}`,
         },
-      }
+      },
     );
   }
 
@@ -645,7 +645,7 @@ export class HttpService implements OnInit {
           Accept: "application/json",
           Authorization: `Bearer ${this.token}`,
         },
-      }
+      },
     );
   }
 
@@ -720,7 +720,7 @@ export class HttpService implements OnInit {
           Accept: "application/json",
           Authorization: `Bearer ${this.token}`,
         },
-      }
+      },
     );
   }
 
@@ -751,7 +751,7 @@ export class HttpService implements OnInit {
           Accept: "application/json",
           Authorization: `Bearer ${this.token}`,
         },
-      }
+      },
     );
   }
 
@@ -764,7 +764,7 @@ export class HttpService implements OnInit {
           Accept: "application/json",
           Authorization: `Bearer ${this.token}`,
         },
-      }
+      },
     );
   }
 
@@ -776,7 +776,7 @@ export class HttpService implements OnInit {
           Accept: "application/json",
           Authorization: `Bearer ${this.token}`,
         },
-      }
+      },
     );
   }
 
@@ -798,7 +798,7 @@ export class HttpService implements OnInit {
           Accept: "application/json",
           Authorization: `Bearer ${this.token}`,
         },
-      }
+      },
     );
   }
 
@@ -811,7 +811,7 @@ export class HttpService implements OnInit {
           Accept: "application/json",
           Authorization: `Bearer ${this.token}`,
         },
-      }
+      },
     );
   }
 
@@ -823,7 +823,7 @@ export class HttpService implements OnInit {
           Accept: "application/json",
           Authorization: `Bearer ${this.token}`,
         },
-      }
+      },
     );
   }
 
@@ -890,7 +890,7 @@ export class HttpService implements OnInit {
           Accept: "application/json",
           Authorization: `Bearer ${this.token}`,
         },
-      }
+      },
     );
   }
 
@@ -1002,7 +1002,7 @@ export class HttpService implements OnInit {
           Accept: "application/json",
           Authorization: `Bearer ${this.token}`,
         },
-      }
+      },
     );
   }
 
@@ -1015,7 +1015,7 @@ export class HttpService implements OnInit {
           Accept: "application/json",
           Authorization: `Bearer ${this.token}`,
         },
-      }
+      },
     );
   }
 
@@ -1072,7 +1072,7 @@ export class HttpService implements OnInit {
           Accept: "application/json",
           Authorization: `Bearer ${this.token}`,
         },
-      }
+      },
     );
   }
 
@@ -1094,7 +1094,7 @@ export class HttpService implements OnInit {
           Accept: "application/json",
           Authorization: `Bearer ${this.token}`,
         },
-      }
+      },
     );
   }
 
@@ -1125,14 +1125,14 @@ export class HttpService implements OnInit {
           Accept: "application/json",
           Authorization: `Bearer ${this.token}`,
         },
-      }
+      },
     );
   }
 
   deleteAdminAttributesInventory(
     attributeID,
     InventoryID,
-    attributeValueID
+    attributeValueID,
   ): Observable<any> {
     return this.http.delete(
       `${this.apiUrl}/api/attribute-inventory/${attributeID}/${InventoryID}/${attributeValueID}`,
@@ -1141,7 +1141,7 @@ export class HttpService implements OnInit {
           Accept: "application/json",
           Authorization: `Bearer ${this.token}`,
         },
-      }
+      },
     );
   }
 
@@ -1194,7 +1194,7 @@ export class HttpService implements OnInit {
           Accept: "application/json",
           Authorization: `Bearer ${this.token}`,
         },
-      }
+      },
     );
   }
 
@@ -1207,7 +1207,7 @@ export class HttpService implements OnInit {
           Accept: "application/json",
           Authorization: `Bearer ${this.token}`,
         },
-      }
+      },
     );
   }
 
@@ -1220,7 +1220,7 @@ export class HttpService implements OnInit {
           Accept: "application/json",
           Authorization: `Bearer ${this.token}`,
         },
-      }
+      },
     );
   }
 
@@ -1233,7 +1233,7 @@ export class HttpService implements OnInit {
           Accept: "application/json",
           Authorization: `Bearer ${this.token}`,
         },
-      }
+      },
     );
   }
 
@@ -1246,7 +1246,7 @@ export class HttpService implements OnInit {
           Accept: "application/json",
           Authorization: `Bearer ${this.token}`,
         },
-      }
+      },
     );
   }
 
@@ -1259,7 +1259,7 @@ export class HttpService implements OnInit {
           Accept: "application/json",
           Authorization: `Bearer ${this.token}`,
         },
-      }
+      },
     );
   }
 
@@ -1271,7 +1271,7 @@ export class HttpService implements OnInit {
           Accept: "application/json",
           Authorization: `Bearer ${this.token}`,
         },
-      }
+      },
     );
   }
 
@@ -1363,7 +1363,7 @@ export class HttpService implements OnInit {
           Accept: "application/json",
           Authorization: `Bearer ${this.token}`,
         },
-      }
+      },
     );
   }
 
@@ -1394,7 +1394,7 @@ export class HttpService implements OnInit {
           Accept: "application/json",
           Authorization: `Bearer ${this.token}`,
         },
-      }
+      },
     );
   }
 
@@ -1406,7 +1406,7 @@ export class HttpService implements OnInit {
           Accept: "application/json",
           Authorization: `Bearer ${this.token}`,
         },
-      }
+      },
     );
   }
 
@@ -1431,7 +1431,7 @@ export class HttpService implements OnInit {
           Accept: "application/json",
           Authorization: `Bearer ${this.token}`,
         },
-      }
+      },
     );
   }
 
@@ -1497,7 +1497,7 @@ export class HttpService implements OnInit {
           Accept: "application/json",
           Authorization: `Bearer ${this.token}`,
         },
-      }
+      },
     );
   }
 
@@ -1537,7 +1537,7 @@ export class HttpService implements OnInit {
           Accept: "application/json",
           Authorization: `Bearer ${this.token}`,
         },
-      }
+      },
     );
   }
 
@@ -1586,7 +1586,7 @@ export class HttpService implements OnInit {
           Accept: "application/json",
           Authorization: `Bearer ${this.token}`,
         },
-      }
+      },
     );
   }
 
@@ -1608,7 +1608,7 @@ export class HttpService implements OnInit {
           Accept: "application/json",
           Authorization: `Bearer ${this.token}`,
         },
-      }
+      },
     );
   }
 
@@ -1677,7 +1677,7 @@ export class HttpService implements OnInit {
           Accept: "application/json",
           Authorization: `Bearer ${this.token}`,
         },
-      }
+      },
     );
   }
 
@@ -1689,7 +1689,7 @@ export class HttpService implements OnInit {
           Accept: "application/json",
           Authorization: `Bearer ${this.token}`,
         },
-      }
+      },
     );
   }
 
@@ -1702,7 +1702,7 @@ export class HttpService implements OnInit {
           Accept: "application/json",
           Authorization: `Bearer ${this.token}`,
         },
-      }
+      },
     );
   }
 
@@ -1715,7 +1715,7 @@ export class HttpService implements OnInit {
           Accept: "application/json",
           Authorization: `Bearer ${this.token}`,
         },
-      }
+      },
     );
   }
 
@@ -1728,7 +1728,7 @@ export class HttpService implements OnInit {
           Accept: "application/json",
           Authorization: `Bearer ${this.token}`,
         },
-      }
+      },
     );
   }
 
@@ -1741,7 +1741,7 @@ export class HttpService implements OnInit {
           Accept: "application/json",
           Authorization: `Bearer ${this.token}`,
         },
-      }
+      },
     );
   }
 
@@ -1754,7 +1754,7 @@ export class HttpService implements OnInit {
           Accept: "application/json",
           Authorization: `Bearer ${this.token}`,
         },
-      }
+      },
     );
   }
 
@@ -1776,7 +1776,7 @@ export class HttpService implements OnInit {
           Accept: "application/json",
           Authorization: `Bearer ${this.token}`,
         },
-      }
+      },
     );
   }
 
@@ -1789,7 +1789,7 @@ export class HttpService implements OnInit {
           Accept: "application/json",
           Authorization: `Bearer ${this.token}`,
         },
-      }
+      },
     );
   }
 
@@ -1802,7 +1802,7 @@ export class HttpService implements OnInit {
           Accept: "application/json",
           Authorization: `Bearer ${this.token}`,
         },
-      }
+      },
     );
   }
 
@@ -1815,7 +1815,7 @@ export class HttpService implements OnInit {
           Accept: "application/json",
           Authorization: `Bearer ${this.token}`,
         },
-      }
+      },
     );
   }
 
@@ -1828,7 +1828,7 @@ export class HttpService implements OnInit {
           Accept: "application/json",
           Authorization: `Bearer ${this.token}`,
         },
-      }
+      },
     );
   }
 
@@ -1841,7 +1841,7 @@ export class HttpService implements OnInit {
           Accept: "application/json",
           Authorization: `Bearer ${this.token}`,
         },
-      }
+      },
     );
   }
 
@@ -1854,7 +1854,7 @@ export class HttpService implements OnInit {
           Accept: "application/json",
           Authorization: `Bearer ${this.token}`,
         },
-      }
+      },
     );
   }
 
@@ -1898,7 +1898,7 @@ export class HttpService implements OnInit {
         headers: {
           Accept: "application/json",
         },
-      }
+      },
     );
   }
 
@@ -1927,7 +1927,7 @@ export class HttpService implements OnInit {
           Accept: "application/json",
           Authorization: `Bearer ${this.token}`,
         },
-      }
+      },
     );
   }
 
@@ -1939,7 +1939,7 @@ export class HttpService implements OnInit {
           Accept: "application/json",
           Authorization: `Bearer ${this.token}`,
         },
-      }
+      },
     );
   }
 
@@ -1961,7 +1961,7 @@ export class HttpService implements OnInit {
           Accept: "application/json",
           Authorization: `Bearer ${this.token}`,
         },
-      }
+      },
     );
   }
 
@@ -2023,7 +2023,7 @@ export class HttpService implements OnInit {
           Accept: "application/json",
           Authorization: `Bearer ${this.token}`,
         },
-      }
+      },
     );
   }
 
@@ -2038,6 +2038,230 @@ export class HttpService implements OnInit {
         Authorization: `Bearer ${this.token}`,
       },
     });
+  }
+
+  // -------------------------------------------- User Reports API --------------------------
+
+  getUserReports(filters?: {
+    status?: string;
+    type?: string;
+    order_id?: number;
+    date_from?: string;
+    date_to?: string;
+    page?: number;
+    per_page?: number;
+  }): Observable<any> {
+    let params = new HttpParams();
+
+    if (filters) {
+      if (filters.status) params = params.set("status", filters.status);
+      if (filters.type) params = params.set("type", filters.type);
+      if (filters.order_id)
+        params = params.set("order_id", filters.order_id.toString());
+      if (filters.date_from)
+        params = params.set("date_from", filters.date_from);
+      if (filters.date_to) params = params.set("date_to", filters.date_to);
+      if (filters.page) params = params.set("page", filters.page.toString());
+      if (filters.per_page)
+        params = params.set("per_page", filters.per_page.toString());
+    }
+
+    // Default pagination if not provided
+    if (!filters?.page) params = params.set("page", "1");
+    if (!filters?.per_page) params = params.set("per_page", "10");
+
+    return this.http.get(
+      `${this.apiUrl}/api/reports/list?${params.toString()}`,
+      {
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${this.token}`,
+        },
+      },
+    );
+  }
+
+  getUserReportDetails(reportId: number): Observable<any> {
+    return this.http.get(`${this.apiUrl}/api/reports/${reportId}`, {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+  }
+
+  getReportTypesAndStatuses(): Observable<any> {
+    // Try /reports/types first (as per new API), fallback to /reports/type for backward compatibility
+    return this.http.get(`${this.apiUrl}/api/reports/types`, {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+  }
+
+  submitReportProof(formData: FormData): Observable<any> {
+    return this.http.post(`${this.apiUrl}/api/reports/submit-proof`, formData, {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+  }
+
+  // New API: Add proof multiple times (for pending reports)
+  addProof(formData: FormData): Observable<any> {
+    return this.http.post(`${this.apiUrl}/api/reports/add-proof`, formData, {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+  }
+
+  cancelReport(reportId: number): Observable<any> {
+    return this.http.post(
+      `${this.apiUrl}/api/reports/cancel`,
+      { report_id: reportId },
+      {
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${this.token}`,
+        },
+      },
+    );
+  }
+
+  requestManualReview(reportId: number): Observable<any> {
+    return this.http.post(
+      `${this.apiUrl}/api/reports/manual-review`,
+      { report_id: reportId },
+      {
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${this.token}`,
+        },
+      },
+    );
+  }
+
+  checkResponseTimeout(reportId: number): Observable<any> {
+    return this.http.post(
+      `${this.apiUrl}/api/reports/check-response-timeout`,
+      { report_id: reportId },
+      {
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${this.token}`,
+        },
+      },
+    );
+  }
+
+  markProofInvalid(reportId: number, reason: string): Observable<any> {
+    return this.http.post(
+      `${this.apiUrl}/api/reports/mark-proof-invalid`,
+      {
+        report_id: reportId,
+        reason: reason,
+      },
+      {
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${this.token}`,
+        },
+      },
+    );
+  }
+
+  rejectReport(reportId: number, reason: string): Observable<any> {
+    return this.http.post(
+      `${this.apiUrl}/api/reports/reject-report`,
+      {
+        report_id: reportId,
+        reason: reason,
+      },
+      {
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${this.token}`,
+        },
+      },
+    );
+  }
+
+  // -------------------------------------------- Order API --------------------------
+
+  getOrderByChatId(chatId: string): Observable<any> {
+    return this.http.get(
+      `${this.apiUrl}/api/order/get-order-by-chat-id?chat_id=${chatId}`,
+      {
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${this.token}`,
+        },
+      },
+    );
+  }
+
+  getAllowedMethods(orderId: number): Observable<any> {
+    return this.http.get(
+      `${this.apiUrl}/api/orders/${orderId}/allowed-methods`,
+      {
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${this.token}`,
+        },
+      },
+    );
+  }
+
+  // -------------------------------------------- User Reports API --------------------------
+
+  getUserReports(filters?: {
+    status?: string;
+    type?: string;
+    order_id?: number;
+    date_from?: string;
+    date_to?: string;
+    page?: number;
+    per_page?: number;
+  }): Observable<any> {
+    let params = new HttpParams();
+
+    if (filters) {
+      if (filters.status) params = params.set("status", filters.status);
+      if (filters.type) params = params.set("type", filters.type);
+      if (filters.reporter_id)
+        params = params.set("reporter_id", filters.reporter_id.toString());
+      if (filters.reported_user_id)
+        params = params.set(
+          "reported_user_id",
+          filters.reported_user_id.toString(),
+        );
+      if (filters.order_id)
+        params = params.set("order_id", filters.order_id.toString());
+      if (filters.date_from)
+        params = params.set("date_from", filters.date_from);
+      if (filters.date_to) params = params.set("date_to", filters.date_to);
+      if (filters.page) params = params.set("page", filters.page.toString());
+      if (filters.per_page)
+        params = params.set("per_page", filters.per_page.toString());
+    }
+
+    // Default pagination if not provided
+    if (!filters?.page) params = params.set("page", "1");
+    if (!filters?.per_page) params = params.set("per_page", "10");
+
+    return this.http.get(
+      `${this.apiUrl}/api/admin/issue-reports?${params.toString()}`,
+      {
+        headers: {
+          Accept: "*/*",
+          Authorization: `Bearer ${this.token}`,
+        },
+      },
+    );
   }
 
   // -------------------------------------------- Report Chat API End --------------------------
@@ -2065,7 +2289,7 @@ export class HttpService implements OnInit {
       if (filters.reported_user_id)
         params = params.set(
           "reported_user_id",
-          filters.reported_user_id.toString()
+          filters.reported_user_id.toString(),
         );
       if (filters.order_id)
         params = params.set("order_id", filters.order_id.toString());
@@ -2088,7 +2312,7 @@ export class HttpService implements OnInit {
           Accept: "*/*",
           Authorization: `Bearer ${this.token}`,
         },
-      }
+      },
     );
   }
 
@@ -2107,7 +2331,7 @@ export class HttpService implements OnInit {
       action: string;
       notes?: string;
       meta?: any;
-    }
+    },
   ): Observable<any> {
     const payload = {
       action: actionData.action,
@@ -2124,7 +2348,35 @@ export class HttpService implements OnInit {
           "Content-Type": "application/json",
           Authorization: `Bearer ${this.token}`,
         },
-      }
+      },
+    );
+  }
+
+  // New API: Change report status (Admin)
+  changeReportStatus(
+    reportId: number,
+    statusData: {
+      status: string; // pending, rejected, or resolved
+      notes?: string;
+      meta?: any;
+    },
+  ): Observable<any> {
+    const payload = {
+      status: statusData.status,
+      notes: statusData.notes || "",
+      meta: statusData.meta || {},
+    };
+
+    return this.http.post(
+      `${this.apiUrl}/api/admin/issue-reports/${reportId}/change-status`,
+      payload,
+      {
+        headers: {
+          Accept: "*/*",
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${this.token}`,
+        },
+      },
     );
   }
 
@@ -2165,7 +2417,7 @@ export class HttpService implements OnInit {
           Accept: "application/json",
           Authorization: `Bearer ${this.token}`,
         },
-      }
+      },
     );
   }
 
@@ -2196,7 +2448,7 @@ export class HttpService implements OnInit {
           Accept: "application/json",
           Authorization: `Bearer ${this.token}`,
         },
-      }
+      },
     );
   }
 
@@ -2209,7 +2461,7 @@ export class HttpService implements OnInit {
           Accept: "application/json",
           Authorization: `Bearer ${this.token}`,
         },
-      }
+      },
     );
   }
   // -------------------------------------------- Admin Orders API End --------------------------
@@ -2223,7 +2475,7 @@ export class HttpService implements OnInit {
           Accept: "application/json",
           Authorization: `Bearer ${this.token}`,
         },
-      }
+      },
     );
   }
   // -------------------------------------------- Admin Subscribers API End --------------------------

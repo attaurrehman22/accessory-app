@@ -37,11 +37,18 @@ export class ShippingAddressComponent implements OnInit {
   password = new FormControl("")
   profile_image = new FormControl("")
   // date_of_birth: ["", [this.noFutureDateValidator]],
-  billing_address = new FormControl(null, [Validators.maxLength(120)]);
+  billing_address = new FormControl(null, [Validators.required, Validators.maxLength(120)]);
   // first_name = new FormControl([],[Validators.maxLength(50)]);
   // last_name = new FormControl("", [Validators.maxLength(50)]);
-  street = new FormControl("", [Validators.maxLength(80)]);
-  street_line_2 = new FormControl("", [Validators.maxLength(80)]);
+  street = new FormControl("", [
+    Validators.required, // Ensures the field is not empty
+    Validators.pattern("^[a-zA-Z0-9 ]*$"), // Allows only alphanumeric characters and spaces (A-Z, a-z, 0-9, space)
+    Validators.maxLength(80), // Limits the input to 80 characters
+  ]);
+  street_line_2 = new FormControl("", [
+    Validators.pattern("^[a-zA-Z0-9 ]*$"), // Allows only alphanumeric characters and spaces (A-Z, a-z, 0-9, space)
+    Validators.maxLength(80), // Limits the input to 80 characters
+  ]);
   zip_code = new FormControl("", [
 
     Validators.pattern("^[0-9]*$"),

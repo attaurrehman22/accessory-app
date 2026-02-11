@@ -73,6 +73,13 @@ export class MyListingDetailsComponent implements OnInit {
       black_icon: "assets/images/black_favourites.svg",
       white_icon: "assets/images/white_favourites.svg",
     },
+    {
+      label: "Reports",
+      arabicLabel: "التقارير",
+      route: '/myprofile/reports',
+      black_icon: "assets/images/black_mylisting.svg",
+      white_icon: "assets/images/white_buy_sell.svg",
+    },
     // {
     //   label: "Cart Items",
     //   arabicLabel: "المفضلة",

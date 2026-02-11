@@ -34,6 +34,11 @@ export class ReportDetailsComponent implements OnInit {
   adminMessage: string = "";
   adminMessageForm: FormGroup;
   currentUserId: string | null = null;
+
+  // New properties for enhanced report details
+  chats: any[] = [];
+  proofs: any[] = [];
+  history: any[] = [];
   recipientOptions: Array<{ value: string; label: string }> = [];
 
   // Two-way binding for admin message
@@ -48,14 +53,22 @@ export class ReportDetailsComponent implements OnInit {
 
   supportLanguages = ["en", "ar", "fr", "ta", "hi"];
 
+  // Updated: Only 3 statuses and simplified actions
   actionTypes = [
-    { value: "mark_under_review", label: "Mark as Under Review" },
-    { value: "request_more_info", label: "Request More Info" },
-    { value: "warn_user", label: "Warn Reported User" },
-    { value: "suspend_user", label: "Suspend User" },
-    { value: "reject", label: "Reject Report" },
-    { value: "resolve", label: "Resolve Report" },
+    { value: "reject_report", label: "Reject Report" },
+    { value: "resolve_report", label: "Resolve Report" },
+    { value: "add_note", label: "Add Note" },
   ];
+
+  // Status change options
+  statusOptions = [
+    { value: "pending", label: "Pending" },
+    { value: "rejected", label: "Rejected" },
+    { value: "resolved", label: "Resolved" },
+  ];
+
+  showStatusChangeForm: boolean = false;
+  statusChangeForm: FormGroup;
 
   @ViewChild("chatContainer") chatContainer: ElementRef;
 
@@ -65,11 +78,17 @@ export class ReportDetailsComponent implements OnInit {
     private http: HttpService,
     private alertService: AlertsServicesService,
     public translateService: TranslateService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
   ) {
     this.actionForm = this.fb.group({
       action: ["", Validators.required],
       notes: [""],
+    });
+
+    this.statusChangeForm = this.fb.group({
+      status: ["", Validators.required],
+      notes: [""],
+      meta: [{}],
     });
 
     this.adminMessageForm = this.fb.group({
@@ -98,7 +117,19 @@ export class ReportDetailsComponent implements OnInit {
 
       // Handle API response structure
       if (res.success && res.data) {
-        this.report = res.data;
+        // New structure: data.report, data.chats, data.proofs, data.history
+        if (res.data.report) {
+          this.report = res.data.report;
+          this.chats = res.data.chats || [];
+          this.proofs = res.data.proofs || [];
+          this.history = res.data.history || [];
+        } else {
+          // Fallback: old structure where data is directly the report
+          this.report = res.data;
+          this.chats = [];
+          this.proofs = [];
+          this.history = [];
+        }
 
         // Map attachments if they are in the new format (array of objects with path and url)
         if (this.report.attachments && Array.isArray(this.report.attachments)) {
@@ -162,14 +193,17 @@ export class ReportDetailsComponent implements OnInit {
           // This is a fallback - ideally chat_id should be in the report response
         }
 
-        // Load chat - for now always load dummy data for testing
-        // TODO: Uncomment when API is ready
-        // if (this.chatId) {
-        //   await this.loadChatDetails();
-        // }
-
-        // For testing: Always load dummy chat data
-        await this.loadChatDetails();
+        // Use chats from API response if available
+        if (this.chats && this.chats.length > 0) {
+          this.chatMessages = this.chats;
+          this.isLoadingChat = false;
+        } else if (this.chatId) {
+          // Fallback: Load chat details if chatId is available
+          await this.loadChatDetails();
+        } else {
+          this.chatMessages = [];
+          this.isLoadingChat = false;
+        }
       }
 
       this.isLoading = false;
@@ -178,18 +212,18 @@ export class ReportDetailsComponent implements OnInit {
       if (err && err.error) {
         this.alertService.showAlert(
           "warning",
-          `${err.error.message || "Error loading report details"}`
+          `${err.error.message || "Error loading report details"}`,
         );
       } else {
         if (this.translateService.currentLang == "en") {
           this.alertService.showAlert(
             "warning",
-            "Error loading report details. Please try again"
+            "Error loading report details. Please try again",
           );
         } else {
           this.alertService.showAlert(
             "warning",
-            "حدث خطأ أثناء تحميل تفاصيل التقرير، يرجى المحاولة مرة أخرى"
+            "حدث خطأ أثناء تحميل تفاصيل التقرير، يرجى المحاولة مرة أخرى",
           );
         }
       }
@@ -201,6 +235,77 @@ export class ReportDetailsComponent implements OnInit {
     this.selectedAction = action;
     this.actionForm.patchValue({ action: action });
     this.showActionForm = true;
+  }
+
+  showStatusChangeDialog(): void {
+    if (this.report && this.report.status) {
+      this.statusChangeForm.patchValue({
+        status: this.report.status.toLowerCase(),
+      });
+    }
+    this.showStatusChangeForm = true;
+  }
+
+  async submitStatusChange(): Promise<void> {
+    if (this.statusChangeForm.invalid || !this.report || !this.report.id) {
+      if (this.translateService.currentLang == "en") {
+        this.alertService.showAlert("warning", "Please select a status");
+      } else {
+        this.alertService.showAlert("warning", "يرجى اختيار حالة");
+      }
+      return;
+    }
+
+    try {
+      const statusData = {
+        status: this.statusChangeForm.value.status,
+        notes: this.statusChangeForm.value.notes || "",
+        meta: this.statusChangeForm.value.meta || {},
+      };
+
+      const res: any = await this.http
+        .changeReportStatus(this.report.id, statusData)
+        .toPromise();
+
+      if (this.translateService.currentLang == "en") {
+        this.alertService.showAlert(
+          "success",
+          "Report status changed successfully",
+        );
+      } else {
+        this.alertService.showAlert("success", "تم تغيير حالة التقرير بنجاح");
+      }
+
+      this.showStatusChangeForm = false;
+      this.statusChangeForm.reset();
+
+      // Reload report details
+      await this.loadReportDetails();
+      this.dialogRef.close("updated");
+    } catch (err: any) {
+      if (err && err.error) {
+        const errorMessage =
+          err.error.message || err.error.error || "Error changing status";
+        this.alertService.showAlert("warning", errorMessage);
+      } else {
+        if (this.translateService.currentLang == "en") {
+          this.alertService.showAlert(
+            "warning",
+            "Error changing status. Please try again",
+          );
+        } else {
+          this.alertService.showAlert(
+            "warning",
+            "حدث خطأ أثناء تغيير الحالة، يرجى المحاولة مرة أخرى",
+          );
+        }
+      }
+    }
+  }
+
+  cancelStatusChange(): void {
+    this.showStatusChangeForm = false;
+    this.statusChangeForm.reset();
   }
 
   async submitAction() {
@@ -254,12 +359,12 @@ export class ReportDetailsComponent implements OnInit {
         if (this.translateService.currentLang == "en") {
           this.alertService.showAlert(
             "warning",
-            "Error performing action. Please try again"
+            "Error performing action. Please try again",
           );
         } else {
           this.alertService.showAlert(
             "warning",
-            "حدث خطأ أثناء تنفيذ الإجراء، يرجى المحاولة مرة أخرى"
+            "حدث خطأ أثناء تنفيذ الإجراء، يرجى المحاولة مرة أخرى",
           );
         }
       }
@@ -281,25 +386,14 @@ export class ReportDetailsComponent implements OnInit {
 
   getStatusClass(status: string): string {
     if (!status) return "status-default";
-    // Normalize status to handle both "pending" and "Pending"
-    const normalizedStatus =
-      status.charAt(0).toUpperCase() + status.slice(1).toLowerCase();
+    // Updated: Only 3 statuses now - pending, rejected, resolved
+    const normalizedStatus = status.toLowerCase().trim();
     const statusClasses: { [key: string]: string } = {
-      Pending: "status-pending",
-      "Under review": "status-under-review",
-      "Under Review": "status-under-review",
-      Resolved: "status-resolved",
-      Rejected: "status-rejected",
-      "Info requested": "status-info-requested",
-      "Info Requested": "status-info-requested",
-      Suspended: "status-suspended",
-      Warned: "status-warned",
+      pending: "status-pending",
+      rejected: "status-rejected",
+      resolved: "status-resolved",
     };
-    return (
-      statusClasses[normalizedStatus] ||
-      statusClasses[status] ||
-      "status-default"
-    );
+    return statusClasses[normalizedStatus] || "status-default";
   }
 
   getTypeClass(type: string): string {
@@ -659,7 +753,10 @@ export class ReportDetailsComponent implements OnInit {
   }
 
   getReversedChatMessages() {
-    return this.chatMessages ? [...this.chatMessages].reverse() : [];
+    // Use chats from API if available, otherwise use chatMessages
+    const messages =
+      this.chats && this.chats.length > 0 ? this.chats : this.chatMessages;
+    return messages ? [...messages].reverse() : [];
   }
 
   isBuyerMessage(message: any): boolean {
@@ -673,7 +770,45 @@ export class ReportDetailsComponent implements OnInit {
   }
 
   isSystemMessage(message: any): boolean {
-    return message.is_system_generated === 1;
+    return (
+      message.is_system_generated === 1 || message.is_system_generated === true
+    );
+  }
+
+  // Helper methods for proofs
+  getProofAttachments(proof: any): any[] {
+    if (!proof || !proof.proof_attachments) return [];
+    return Array.isArray(proof.proof_attachments)
+      ? proof.proof_attachments
+      : [];
+  }
+
+  getProofAttachmentUrl(attachment: any): string {
+    if (typeof attachment === "string") {
+      return this.apiUrl + attachment;
+    } else if (attachment && attachment.url) {
+      return attachment.url;
+    } else if (attachment && attachment.path) {
+      return this.apiUrl + attachment.path;
+    }
+    return "";
+  }
+
+  formatActionType(actionType: string): string {
+    if (!actionType) return "";
+    // Format action types for display
+    const actionMap: any = {
+      buy_now: "Buy Now",
+      payment_issue: "Payment Issue Reported",
+      delivery_delay: "Delivery Delay Reported",
+      mark_sold: "Marked as Sold",
+      update_offer: "Offer Updated",
+      cancel_offer: "Offer Cancelled",
+    };
+    return (
+      actionMap[actionType] ||
+      actionType.replace(/_/g, " ").replace(/\b\w/g, (l) => l.toUpperCase())
+    );
   }
 
   formatChatTime(date: string): string {
@@ -828,12 +963,12 @@ export class ReportDetailsComponent implements OnInit {
         if (this.translateService.currentLang == "en") {
           this.alertService.showAlert(
             "warning",
-            "Error sending message. Please try again"
+            "Error sending message. Please try again",
           );
         } else {
           this.alertService.showAlert(
             "warning",
-            "حدث خطأ أثناء إرسال الرسالة، يرجى المحاولة مرة أخرى"
+            "حدث خطأ أثناء إرسال الرسالة، يرجى المحاولة مرة أخرى",
           );
         }
       }

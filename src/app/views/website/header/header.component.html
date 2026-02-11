@@ -20,7 +20,7 @@
           class="header-content gap-4"
           *ngIf="isSearchForm"
           [ngClass]="{
-            'position-absolute search-box-small-screen': isSmallScreen
+            'position-absolute search-box-small-screen': isSmallScreen,
           }"
         ></div>
         <div class="header-contact header-contact-lg mat-menu-nav">
@@ -44,8 +44,9 @@
                   type="search"
                   placeholder="Search "
                   aria-label="Search"
+                  maxlength="50"
                   (click)="onSearchInputClick()"
-                  (click)="onSearchInputClick()"
+                  (input)="onSearchInputChange($event)"
                 />
                 <button
                   class="search-btn"
@@ -228,7 +229,7 @@
             EN -
             <span
               [ngStyle]="{
-                color: selectedLang == 'en' ? '#6A6A6A' : '#242424'
+                color: selectedLang == 'en' ? '#6A6A6A' : '#242424',
               }"
             >
               AR
@@ -241,7 +242,7 @@
           >
             <span
               [ngStyle]="{
-                color: selectedLang == 'ar' ? '#6A6A6A' : '#242424'
+                color: selectedLang == 'ar' ? '#6A6A6A' : '#242424',
               }"
             >
               En
@@ -333,7 +334,9 @@
                   type="search"
                   placeholder="Search"
                   aria-label="Search"
+                  maxlength="50"
                   (click)="onSearchInputClick()"
+                  (input)="onSearchInputChange($event)"
                 />
                 <button
                   class="search-btn"
@@ -351,7 +354,7 @@
           class="header-content gap-4"
           *ngIf="isSearchForm"
           [ngClass]="{
-            'position-absolute search-box-small-screen': isSmallScreen
+            'position-absolute search-box-small-screen': isSmallScreen,
           }"
         ></div>
         <div class="header-contact sidebar-acions gap-4">
@@ -418,7 +421,7 @@
             EN -
             <span
               [ngStyle]="{
-                color: selectedLang == 'en' ? '#6A6A6A' : '#242424'
+                color: selectedLang == 'en' ? '#6A6A6A' : '#242424',
               }"
             >
               AR
@@ -431,7 +434,7 @@
           >
             <span
               [ngStyle]="{
-                color: selectedLang == 'ar' ? '#6A6A6A' : '#242424'
+                color: selectedLang == 'ar' ? '#6A6A6A' : '#242424',
               }"
             >
               En

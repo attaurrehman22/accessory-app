@@ -39,7 +39,6 @@ export class AdminReportsComponent implements OnInit, OnDestroy {
     "type",
     "status",
     "created_at",
-    "actions",
   ];
 
   dataSource: MatTableDataSource<ReportData>;
@@ -255,16 +254,14 @@ export class AdminReportsComponent implements OnInit, OnDestroy {
   }
 
   getStatusClass(status: string): string {
+    // Updated: Only 3 statuses now - pending, rejected, resolved
+    const normalizedStatus = status ? status.toLowerCase().trim() : '';
     const statusClasses: { [key: string]: string } = {
-      Pending: "status-pending",
-      "Under Review": "status-under-review",
-      Resolved: "status-resolved",
-      Rejected: "status-rejected",
-      "Info Requested": "status-info-requested",
-      Suspended: "status-suspended",
-      Warned: "status-warned",
+      'pending': "status-pending",
+      'rejected': "status-rejected",
+      'resolved': "status-resolved",
     };
-    return statusClasses[status] || "status-default";
+    return statusClasses[normalizedStatus] || "status-default";
   }
 
   getTypeClass(type: string): string {

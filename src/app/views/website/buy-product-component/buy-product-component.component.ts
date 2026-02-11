@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef } from "@angular/core";
+import { Component, OnInit, ViewChild, ElementRef, ChangeDetectorRef } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 import { ActivatedRoute, Router } from "@angular/router";
 import { AlertsServicesService } from "src/services/alerts-service/alerts-services.service";
@@ -116,7 +116,8 @@ export class BuyProductComponentComponent implements OnInit {
     private dialog: MatDialog,
     public translateService: TranslateService,
     private languageService: LanguageService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private cdr: ChangeDetectorRef
   ) {
     this.translateService.addLangs(this.supportLanguages);
     const savedLang = this.languageService.getCurrentLanguage();
@@ -136,21 +137,41 @@ export class BuyProductComponentComponent implements OnInit {
   selectedType: string = "image";
 
   swapImages(clickedItem: { url: string; type: string }): void {
-
     if (clickedItem.type === "image") {
-      this.selectedImage = clickedItem.url; // Extract only the URL
-      this.selectedType = "image"; // Set the selected type to 'image'
-      this.myThumbnail = this.apiUrl + clickedItem.url;
-      this.myFullresImage = this.apiUrl + clickedItem.url;
-      if (this.myThumbnail === this.myFullresImage) {
-        // Add a timestamp or random parameter to force a new image load
-        this.myThumbnail = this.myThumbnail + '?t=' + new Date().getTime();
-      }
+      const imageUrl = this.apiUrl + clickedItem.url;
+      
+      // Update image URLs immediately for instant display
+      // Since thumbnails are already loaded, the main image should load quickly from cache
+      this.myThumbnail = imageUrl;
+      this.myFullresImage = imageUrl;
+      
+      // Immediately update the selected image
+      this.selectedImage = clickedItem.url;
+      this.selectedType = "image";
+      
+      // Force change detection to update the view immediately
+      this.cdr.detectChanges();
+      
+      // Preload the image in background to ensure smooth transition (if not already cached)
+      const img = new Image();
+      img.src = imageUrl;
     }
     if (clickedItem.type === "video") {
+      this.selectedImage = clickedItem.url;
+      this.selectedType = "video";
+      this.cdr.detectChanges();
+    }
+  }
 
-      this.selectedImage = clickedItem.url; // Extract only the URL
-      this.selectedType = "video"; // Set the selected type to 'video'
+  // Preload all thumbnail images for faster swapping
+  preloadThumbnailImages(): void {
+    if (this.thumbnails && this.thumbnails.length > 0) {
+      this.thumbnails.forEach((item) => {
+        if (item.type === 'image') {
+          const img = new Image();
+          img.src = this.apiUrl + item.url;
+        }
+      });
     }
   }
 
@@ -313,10 +334,8 @@ export class BuyProductComponentComponent implements OnInit {
         this.selectedImage = this.thumbnails[0].url; // Store only the URL
         this.myThumbnail = this.apiUrl + this.selectedImage;
         this.myFullresImage = this.apiUrl + this.selectedImage;
-        if (this.myThumbnail === this.myFullresImage) {
-          // Add a timestamp or random parameter to force a new image load
-          this.myThumbnail = this.myThumbnail + '?t=' + new Date().getTime();
-        }
+        // Preload all thumbnail images for faster swapping
+        this.preloadThumbnailImages();
       }
 
 

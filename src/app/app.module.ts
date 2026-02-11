@@ -171,6 +171,8 @@ import { AdminReportsComponent } from "./views/adminpages/admin-reports/admin-re
 import { ReportDetailsComponent } from "./views/adminpages/report-details/report-details.component";
 import { AdminOrdersComponent } from "./views/adminpages/admin-orders/admin-orders.component";
 import { AdminOrderDetailsComponent } from "./views/adminpages/admin-order-details/admin-order-details.component";
+import { ReportsComponent } from "./views/website/my-listing/reports/reports.component";
+import { ReportDetailsComponent as UserReportDetailsComponent } from "./views/website/my-listing/report-details/report-details.component";
 
 @NgModule({
   declarations: [
@@ -276,6 +278,8 @@ import { AdminOrderDetailsComponent } from "./views/adminpages/admin-order-detai
     ReportDetailsComponent,
     AdminOrdersComponent,
     AdminOrderDetailsComponent,
+    ReportsComponent,
+    UserReportDetailsComponent,
   ],
   imports: [
     MatSortModule,

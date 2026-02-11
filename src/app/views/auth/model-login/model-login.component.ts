@@ -113,7 +113,7 @@ export class ModelLoginComponent implements OnInit {
             }
             localStorage.setItem("userType", response.user.type);
             localStorage.setItem("userID", response.user.id);
-            const isAdmin = response.user.type === "chronosouq-user";
+            const isAdmin = response.user.type === "chronosouq-user" || response.user.type === "admin";
             if (isAdmin) {
               localStorage.setItem("isAdmin", "true");
             }

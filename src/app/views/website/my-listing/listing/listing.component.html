@@ -80,7 +80,7 @@
             </h6>
             <!-- <span class="badge" [ngClass]="listing.statusClass">{{ listing.status || "In Process" }}</span> -->
             <span class="badge">{{
-              listing?.is_listing_completed == 0 ? "Draft" : listing?.sale_status == "for_sale" ? "Active" : listing?.sale_status == "reserved" ? 'Reserved': "N/A"
+              listing?.is_listing_completed == 0 ? "Draft" : listing?.is_listing_completed == 1 && listing?.sale_status == "for_sale" ? "Active" : listing?.sale_status == "reserved" ? 'Reserved': "N/A"
             }}</span>
           </div>
         </div>

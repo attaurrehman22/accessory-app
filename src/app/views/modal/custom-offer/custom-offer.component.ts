@@ -217,11 +217,24 @@ export class CustomOfferComponent {
             this.dialogRef.close(this.offerForm.value);
           },
           (err) => {
-            if (err && err.error && err.error.error) {
-              this.alertService.showAlert("warning", err.error.error);
+            if (err && err.error) {
+              const errorMessage = err.error.message || err.error.error || '';
+              // Check if error is due to pending report blocking
+              if (errorMessage.toLowerCase().includes('pending report') || 
+                  errorMessage.toLowerCase().includes('cannot create offer') ||
+                  err.error.error === 'Action blocked') {
+                if (this.translateService.currentLang == "en") {
+                  this.alertService.showAlert("warning", 
+                    "Cannot create offer. There is a pending report on this order. Please wait until the report is resolved.");
+                } else {
+                  this.alertService.showAlert("warning", 
+                    "لا يمكن إنشاء عرض. يوجد تقرير معلق على هذا الطلب. يرجى الانتظار حتى يتم حل التقرير.");
+                }
+              } else {
+                this.alertService.showAlert("warning", errorMessage || "Something went wrong!");
+              }
             } else {
-              const errorMessage =
-                err.error?.message || "Something went wrong!";
+              const errorMessage = err.error?.message || "Something went wrong!";
               this.alertService.showAlert("warning", errorMessage);
             }
           }

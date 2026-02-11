@@ -58,7 +58,7 @@ export class AdminUsersComponent implements OnInit, OnDestroy {
     private toast: AlertsServicesService,
     private alertService: AlertsServicesService,
     private sidebarService: SidebarService,
-    private permissionCheckService: PermissionCheckService
+    private permissionCheckService: PermissionCheckService,
   ) {
     this.dataSource = new MatTableDataSource([]);
   }
@@ -70,7 +70,7 @@ export class AdminUsersComponent implements OnInit, OnDestroy {
     this.sidebarClickSubscription = this.sidebarService.sidebarClick$.subscribe(
       () => {
         this.dialog.closeAll();
-      }
+      },
     );
   }
 
@@ -110,7 +110,7 @@ export class AdminUsersComponent implements OnInit, OnDestroy {
       },
       (err) => {
         this.alertService.showAlert("warning", "Error in Updating User Type");
-      }
+      },
     );
   }
 
@@ -119,7 +119,7 @@ export class AdminUsersComponent implements OnInit, OnDestroy {
       (res) => {
         // Filter out users with type 'admin'
         this.allData = res.data.filter(
-          (user: any) => user.type !== "chronosouq-user"
+          (user: any) => user.type !== "chronosouq-user",
         );
 
         // Set the filtered data to the data source
@@ -129,7 +129,7 @@ export class AdminUsersComponent implements OnInit, OnDestroy {
       (err) => {
         // Handle error if needed
         console.error(err);
-      }
+      },
     );
   }
 

@@ -1,0 +1,126 @@
+<div class="d-flex justify-content-between align-items-center mb-3 filtered-div">
+  <div class="d-flex gap-2 align-items-center">
+    <img routerLink="/myprofile" src="../../../../assets/images/prev_btn.svg" alt="img" class="global-back-to-icon-style" />
+    <p class="global-label-style-for-profiling">{{ "my_Listing.My_Reports" | translate }}</p>
+  </div>
+  <div class="d-flex justify-content-between align-items-center gap-2 filtered-btn-div">
+    <div>
+      <select class="form-select form-select-sm" [(ngModel)]="statusFilter" (change)="onStatusFilterChange()" style="width: 150px">
+        <option *ngFor="let status of statusOptions" [value]="status.value">
+          {{ status.label }}
+        </option>
+      </select>
+    </div>
+    <div>
+      <select class="form-select form-select-sm" [(ngModel)]="typeFilter" (change)="onTypeFilterChange()" style="width: 150px">
+        <option *ngFor="let type of typeOptions" [value]="type.value">
+          {{ type.label }}
+        </option>
+      </select>
+    </div>
+    <div>
+      <input type="date" class="form-control form-control-sm" [(ngModel)]="dateFrom" (change)="onDateFilterChange()" placeholder="From Date" style="width: 150px" />
+    </div>
+    <div>
+      <input type="date" class="form-control form-control-sm" [(ngModel)]="dateTo" (change)="onDateFilterChange()" placeholder="To Date" style="width: 150px" />
+    </div>
+    <button class="refresh-button" (click)="onRefresh()" [disabled]="isLoading">
+      <i class="fas fa-sync-alt"></i> Refresh
+    </button>
+  </div>
+</div>
+
+<!-- Skeleton Loading -->
+<div *ngIf="isLoading" class="col-md-12 d-flex flex-wrap">
+  <div class="listing-div col-md-6" *ngFor="let item of [1,2,3,4]">
+    <div class="card mb-3">
+      <div class="card-body d-flex align-items-center">
+        <div class="col-11 d-flex align-items-center">
+          <div class="main_image_div">
+            <div class="skeleton-image"></div>
+          </div>
+          <div class="main_image_content_div pl-2 pr-2" style="width: 100%">
+            <div class="skeleton-text-small mb-2" style="width: 40%"></div>
+            <div class="skeleton-text-medium mb-2"></div>
+            <div class="skeleton-text-large"></div>
+          </div>
+        </div>
+        <div class="col-1 d-flex justify-content-end">
+          <div class="skeleton-badge"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Reports List -->
+<div *ngIf="!isLoading && (reports.length > 0)" class="col-md-12 d-flex flex-wrap list-cards" [ngClass]="{ 'arabic-list-cards': translateService.currentLang !== 'en' }">
+  <div class="listing-div col-md-6" *ngFor="let report of reports">
+    <div class="card mb-3">
+      <div class="card-body d-flex align-items-center">
+        <div class="col-11 d-flex align-items-center card-hover-change-color" (click)="viewReportDetails(report)">
+          <div class="main_image_div">
+            <div class="report-icon-div">
+              <i class="fas fa-flag" style="font-size: 24px; color: #dc3545;"></i>
+            </div>
+          </div>
+          <div class="main_image_content_div mx-2" style="width: 100%">
+            <small class="text-muted mobile-label mobile-label-arabic listing-id-label">
+              Report ID <span class="span-listing-id-label">{{ report.id || "N/A" }}</span> | 
+              Created <span class="span-listing-id-label">{{ formatDate(report.created_at) }}</span>
+            </small>
+            <h6 class="mt-1 mb-1 mobile-label listing-concate-label">
+              {{ formatTypeLabel(report.type) }}
+            </h6>
+            <div class="d-flex align-items-center gap-2 mt-1">
+              <span class="badge" [ngClass]="getStatusClass(report.status)">
+                {{ formatStatusLabel(report.status) }}
+              </span>
+              <small class="text-muted" *ngIf="report.order_id">
+                Order ID: {{ report.order_id }}
+              </small>
+            </div>
+            <p class="text-muted mt-1 mb-0" style="font-size: 12px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+              {{ report.description?.substring(0, 60) }}{{ report.description?.length > 60 ? '...' : '' }}
+            </p>
+          </div>
+        </div>
+        <div class="col-1 d-flex justify-content-end">
+          <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="More options">
+            <mat-icon>more_vert</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item (click)="viewReportDetails(report)">
+              <mat-icon>info</mat-icon>
+              <span>View Details</span>
+            </button>
+          </mat-menu>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Pagination -->
+<div *ngIf="!isLoading && reports.length > 0" class="d-flex justify-content-end mt-3">
+  <mat-paginator
+    [length]="totalItems"
+    [pageSize]="pageSize"
+    [pageIndex]="pageIndex"
+    [pageSizeOptions]="[5, 10, 20, 50]"
+    (page)="onPageChange($event)"
+    showFirstLastButtons>
+  </mat-paginator>
+</div>
+
+<!-- No Reports Template -->
+<div *ngIf="!isLoading && (!reports || reports.length === 0)" class="empty-state-container">
+  <div class="empty-state-content">
+    <div class="empty-state-text">
+      <h3 class="empty-state-title">{{ "my_Listing.No_Reports" | translate }}</h3>
+      <p class="empty-state-description">
+        {{ "my_Listing.No_Reports_Description" | translate }}
+      </p>
+    </div>
+  </div>
+</div>

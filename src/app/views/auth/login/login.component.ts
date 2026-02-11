@@ -44,7 +44,7 @@ export class LoginComponent implements OnInit {
     private fb: FormBuilder,
     private http: HttpService,
     public translateService: TranslateService,
-    private loginStateService: LoginStateService
+    private loginStateService: LoginStateService,
   ) {
     this.translateService.addLangs(this.supportLanguages);
     this.translateService.setDefaultLang("ar");
@@ -90,12 +90,12 @@ export class LoginComponent implements OnInit {
             if (this.translateService.currentLang == "en") {
               this.alertService.showAlert(
                 "warning",
-                "Please Enter your Email and Password"
+                "Please Enter your Email and Password",
               );
             } else {
               this.alertService.showAlert(
                 "warning",
-                "يرجى إدخال بريدك الإلكتروني وكلمة المرور"
+                "يرجى إدخال بريدك الإلكتروني وكلمة المرور",
               );
             }
           } else {
@@ -110,7 +110,7 @@ export class LoginComponent implements OnInit {
             ) {
               localStorage.setItem(
                 "permissions",
-                JSON.stringify(response.user.permissions)
+                JSON.stringify(response.user.permissions),
               );
             }
             if (
@@ -138,40 +138,40 @@ export class LoginComponent implements OnInit {
             ) {
               this.alertService.showAlert(
                 "warning",
-                "Please enter a valid email and password. If you don't have an account, please proceed to register."
+                "Please enter a valid email and password. If you don't have an account, please proceed to register.",
               );
             } else {
               this.alertService.showAlert(
                 "warning",
-                `${error?.error?.message}`
+                `${error?.error?.message}`,
               );
             }
           } else {
             if (this.translateService.currentLang == "en") {
               this.alertService.showAlert(
                 "warning",
-                "You entered an incorrect email or password"
+                "You entered an incorrect email or password",
               );
             } else {
               this.alertService.showAlert(
                 "warning",
-                "لقد أدخلت بريدًا إلكترونيًا أو كلمة مرور غير صحيحة"
+                "لقد أدخلت بريدًا إلكترونيًا أو كلمة مرور غير صحيحة",
               );
             }
           }
           console.error("Login error", error);
-        }
+        },
       );
     } else {
       if (this.translateService.currentLang == "en") {
         this.alertService.showAlert(
           "warning",
-          "Please Enter your Email and Password"
+          "Please Enter your Email and Password",
         );
       } else {
         this.alertService.showAlert(
           "warning",
-          "يرجى إدخال بريدك الإلكتروني وكلمة المرور"
+          "يرجى إدخال بريدك الإلكتروني وكلمة المرور",
         );
       }
     }
@@ -185,28 +185,6 @@ export class LoginComponent implements OnInit {
       const credential = GoogleAuthProvider.credentialFromResult(result);
       const token = credential?.accessToken;
       const user = result.user;
-
-      // ✅ Send Google token to your backend for verification
-      // this.http.googleLogin({ token }).subscribe(
-      //   (response) => {
-      //     if (response.status === "success") {
-      //       localStorage.setItem("user_token", response.authorization.token);
-      //       localStorage.setItem("isLoggedIn", "true");
-      //       localStorage.setItem("userID", response.user.id);
-      //       localStorage.setItem("userType", response.user.type);
-
-      //       if (response.user.type === "chronosouq-user") {
-      //         localStorage.setItem("isAdmin", "true");
-      //       }
-
-      //       this.router.navigateByUrl("").then(() => window.location.reload());
-      //     }
-      //   },
-      //   (error) => {
-      //     this.alertService.showAlert("warning", "Google sign-in failed");
-      //     console.error(error);
-      //   }
-      // );
     } catch (error) {
       this.alertService.showAlert("warning", "Google sign-in failed");
       console.error(error);

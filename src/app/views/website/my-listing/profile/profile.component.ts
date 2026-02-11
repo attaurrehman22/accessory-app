@@ -84,11 +84,61 @@ userName:any;
   
         // ✅ Final structured list
         this.sections = [...buyOrders, ...sellOrders, ...myListings, ...favorites];
+        
+        // Load first report for Reporting card
+        this.loadFirstReport();
+        
         this.isLoading=false;
         console.log("this.sections:", this.sections);
       }
       
     )
+  }
+
+  async loadFirstReport(): Promise<void> {
+    try {
+      const res: any = await this.http.getUserReports({ page: 1, per_page: 1 }).toPromise();
+      
+      if (res && res.data) {
+        const reports = Array.isArray(res.data) ? res.data : res.data.data || res.data.reports || [];
+        
+        if (reports.length > 0) {
+          const firstReport = reports[0];
+          
+          // Format report type label
+          const formatTypeLabel = (type: string): string => {
+            if (!type) return 'N/A';
+            return type.split('_').map(word => 
+              word.charAt(0).toUpperCase() + word.slice(1)
+            ).join(' ');
+          };
+
+          // Format status label
+          const formatStatusLabel = (status: string): string => {
+            if (!status) return 'N/A';
+            return status.split('_').map(word => 
+              word.charAt(0).toUpperCase() + word.slice(1)
+            ).join(' ');
+          };
+
+          const reportSection = {
+            id: firstReport.id,
+            titleKey: 'profile.reports',
+            image: '', // Reports don't have product images, use placeholder
+            itemTitle: formatTypeLabel(firstReport.type) || 'Report',
+            itemDesc: `Report ID: ${firstReport.id || 'N/A'} | ${this.timeAgo(firstReport.created_at)}`,
+            status: formatStatusLabel(firstReport.status) || 'Pending',
+            type: 'report' // Add type to identify it's a report
+          };
+
+          // Add report section to sections array
+          this.sections.push(reportSection);
+        }
+      }
+    } catch (err) {
+      console.error("Error loading first report:", err);
+      // Don't show error to user, just log it
+    }
   }
 
 
@@ -137,6 +187,7 @@ userName:any;
     const sellOrdersKey = 'profile.sell_orders';
     const myListingsKey = 'profile.my_listings';
     const favoritesKey = 'profile.favorites';
+    const reportsKey = 'profile.reports';
     const key = section.titleKey;
 
     if(key == buyOrdersKey){
@@ -151,6 +202,8 @@ userName:any;
       this.router.navigate(['/myprofile/listing'])
     }else if(key == favoritesKey){
       this.router.navigate(['myprofile/favorite'])
+    }else if(key == reportsKey || section.type === 'report'){
+      this.router.navigate(['/myprofile/reports'])
     }
   }
 
@@ -185,6 +238,7 @@ userName:any;
     const sellOrdersKey = 'profile.sell_orders';
     const myListingsKey = 'profile.my_listings';
     const favoritesKey = 'profile.favorites';
+    const reportsKey = 'profile.reports';
     const key = section.titleKey;
 
     if(key == buyOrdersKey){
@@ -198,6 +252,8 @@ userName:any;
       });
     }else if(key == favoritesKey){
       this.router.navigate(['myprofile/favorite'])
+    }else if(key == reportsKey || section.type === 'report'){
+      this.router.navigate(['/myprofile/reports', section.id])
     }
   }
 

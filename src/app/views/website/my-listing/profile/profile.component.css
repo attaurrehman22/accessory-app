@@ -159,6 +159,12 @@
   }
 }
 
+.report-icon-placeholder {
+  background-color: #f8f8f8;
+  border: 2px solid #dc3545;
+  border-radius: 8px;
+}
+
 .watch-placeholder {
   width: 60px;
   height: 60px;
