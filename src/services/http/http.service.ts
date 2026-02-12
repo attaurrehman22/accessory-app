@@ -2042,44 +2042,44 @@ export class HttpService implements OnInit {
 
   // -------------------------------------------- User Reports API --------------------------
 
-  getUserReports(filters?: {
-    status?: string;
-    type?: string;
-    order_id?: number;
-    date_from?: string;
-    date_to?: string;
-    page?: number;
-    per_page?: number;
-  }): Observable<any> {
-    let params = new HttpParams();
+  // getUserReports(filters?: {
+  //   status?: string;
+  //   type?: string;
+  //   order_id?: number;
+  //   date_from?: string;
+  //   date_to?: string;
+  //   page?: number;
+  //   per_page?: number;
+  // }): Observable<any> {
+  //   let params = new HttpParams();
 
-    if (filters) {
-      if (filters.status) params = params.set("status", filters.status);
-      if (filters.type) params = params.set("type", filters.type);
-      if (filters.order_id)
-        params = params.set("order_id", filters.order_id.toString());
-      if (filters.date_from)
-        params = params.set("date_from", filters.date_from);
-      if (filters.date_to) params = params.set("date_to", filters.date_to);
-      if (filters.page) params = params.set("page", filters.page.toString());
-      if (filters.per_page)
-        params = params.set("per_page", filters.per_page.toString());
-    }
+  //   if (filters) {
+  //     if (filters.status) params = params.set("status", filters.status);
+  //     if (filters.type) params = params.set("type", filters.type);
+  //     if (filters.order_id)
+  //       params = params.set("order_id", filters.order_id.toString());
+  //     if (filters.date_from)
+  //       params = params.set("date_from", filters.date_from);
+  //     if (filters.date_to) params = params.set("date_to", filters.date_to);
+  //     if (filters.page) params = params.set("page", filters.page.toString());
+  //     if (filters.per_page)
+  //       params = params.set("per_page", filters.per_page.toString());
+  //   }
 
-    // Default pagination if not provided
-    if (!filters?.page) params = params.set("page", "1");
-    if (!filters?.per_page) params = params.set("per_page", "10");
+  //   // Default pagination if not provided
+  //   if (!filters?.page) params = params.set("page", "1");
+  //   if (!filters?.per_page) params = params.set("per_page", "10");
 
-    return this.http.get(
-      `${this.apiUrl}/api/reports/list?${params.toString()}`,
-      {
-        headers: {
-          Accept: "application/json",
-          Authorization: `Bearer ${this.token}`,
-        },
-      },
-    );
-  }
+  //   return this.http.get(
+  //     `${this.apiUrl}/api/reports/list?${params.toString()}`,
+  //     {
+  //       headers: {
+  //         Accept: "application/json",
+  //         Authorization: `Bearer ${this.token}`,
+  //       },
+  //     },
+  //   );
+  // }
 
   getUserReportDetails(reportId: number): Observable<any> {
     return this.http.get(`${this.apiUrl}/api/reports/${reportId}`, {
@@ -2226,6 +2226,8 @@ export class HttpService implements OnInit {
     date_to?: string;
     page?: number;
     per_page?: number;
+    reporter_id?: number;
+    reported_user_id?: number;
   }): Observable<any> {
     let params = new HttpParams();
 
