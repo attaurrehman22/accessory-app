@@ -3,7 +3,7 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  apipath: "https://pre-demo.chronosouq.com",
+  apipath: "https://api.chronosouq.com",
   production: false,
   firebase: {
     apiKey: "YOUR_API_KEY",
