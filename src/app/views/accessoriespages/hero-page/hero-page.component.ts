@@ -29,6 +29,9 @@ import { environment } from "src/environments/environment";
   styleUrls: ["./hero-page.component.css"],
 })
 export class HeroPageComponent {
+  /** When true, only the top nav is rendered (for accessory routes outside the home hero). */
+  @Input() headerOnly = false;
+
   apiUrl = environment.apipath + "/";
   isSmallScreen: boolean = false;
   isUserLogin: any = false;
@@ -307,7 +310,11 @@ export class HeroPageComponent {
       this.getUserDetails();
     }
 
-    this.getSlideData();
+    if (!this.headerOnly) {
+      this.getSlideData();
+    } else {
+      this.sliderLoading = false;
+    }
 
     this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))

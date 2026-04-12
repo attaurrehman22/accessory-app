@@ -1,5 +1,9 @@
-<div class="container-fluid p-0 m-0" style="position: relative;">
-    <div class="col-md-12" style="position: absolute;z-index: 9999;">
+<div
+  class="container-fluid p-0 m-0"
+  style="position: relative;"
+  [ngClass]="{ 'hero-page--header-only': headerOnly }"
+>
+    <div class="col-md-12 hero-header-strip" style="position: absolute; z-index: 9999;">
         <header>
             <nav class="navbar navbar-expand-lg">
               <div
@@ -317,7 +321,11 @@
             </nav>
         </header>
     </div>
-    <div class="col-md-12 d-flex flex-wrap hero-page" [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }">
+    <div
+      *ngIf="!headerOnly"
+      class="col-md-12 d-flex flex-wrap hero-page"
+      [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }"
+    >
         <div class="col-md-6 accessories-details-section" style="height: 945px !important;">
            <div [ngClass]="windowWidth >= 992 ? 'container' : 'container-fluid'">
             <p class="watch-straps-title">{{ "header.Watch-Straps" | translate }}</p>

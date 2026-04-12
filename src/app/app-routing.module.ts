@@ -118,7 +118,6 @@ const routes: Routes = [
     path: "admin/vat",
     component: AdminVatComponent,
   },
-  { path: "", pathMatch: "full", component: AccessoriesHomeComponent },
   { path: "accessories/details", component: AccessorieDetailComponent },
 
   { path: "change-password", component: ChangePasswordComponent },

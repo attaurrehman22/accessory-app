@@ -4,6 +4,17 @@
   border: none !important;
 }
 
+/* Nav-only mode (detail & other /accessories/* routes): bar in document flow + solid bg */
+.hero-page--header-only .hero-header-strip {
+  position: relative !important;
+  width: 100%;
+}
+
+.hero-page--header-only header .navbar {
+  background-color: #242424;
+  min-height: 73px;
+}
+
 .hero-page {
     width: 100%;
     height: 975px;
