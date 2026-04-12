@@ -14,7 +14,6 @@ import { Subscription } from "rxjs";
 import { AlertsServicesService } from "src/services/alerts-service/alerts-services.service";
 import { HttpService } from "src/services/http/http.service";
 import { SidebarService } from "src/services/sidebar.service";
-import { AdminAddProductComponent } from "../admin-add-product/admin-add-product.component";
 import { environment } from "src/environments/environment";
 import { AccessoryAttachImagesComponent } from "../accessory-attach-images/accessory-attach-images.component";
 

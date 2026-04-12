@@ -1,7 +1,6 @@
 import {
   ChangeDetectorRef,
   Component,
-  computed,
   ElementRef,
   HostListener,
   Input,
@@ -57,9 +56,6 @@ export class HeroPageComponent {
   private apiSubscription!: Subscription;
   apipath = environment.apipath;
   homeData: any = { slider: [] };
-
-  isAdminUser = computed(() => this.loginStateService.isAdminUser());
-  isUserLoggedIn = computed(() => this.loginStateService.isUserLoggedIn());
 
   apiData = {
     success: true,
@@ -315,10 +311,10 @@ export class HeroPageComponent {
         this.isNavbarOpen = false;
       });
 
-    if (this.isUserLoggedIn()) {
-      this.showHideUser = this.isUserLoggedIn();
-      if (this.isAdminUser()) {
-        this.showHideAdminUser = this.isAdminUser();
+    if (this.loginStateService.isUserLoggedIn()) {
+      this.showHideUser = this.loginStateService.isUserLoggedIn();
+      if (this.loginStateService.isAdminUser()) {
+        this.showHideAdminUser = this.loginStateService.isAdminUser();
       } else {
       }
     } else {

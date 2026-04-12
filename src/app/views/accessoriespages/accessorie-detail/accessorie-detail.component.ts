@@ -102,42 +102,135 @@ export class AccessorieDetailComponent implements OnInit {
     this.initializeComponent();
   }
 
+  /** Built from main + additional for description tab gallery */
+  galleryImages: { url: string }[] = [];
+
+  /**
+   * API may return the accessory object directly, or wrapped in `accessory` / `data`.
+   */
+  private normalizeAccessoryPayload(raw: any): any | null {
+    const p = raw?.accessory ?? raw?.data ?? raw;
+    if (!p || typeof p !== "object") {
+      return null;
+    }
+
+    if (p.main_image != null) {
+      p.main_image = String(p.main_image).replace(/\\/g, "");
+    }
+
+    if (p.additional_images != null) {
+      if (Array.isArray(p.additional_images)) {
+        p.additional_images = p.additional_images.map((x: any) =>
+          String(x).replace(/\\/g, ""),
+        );
+      } else if (typeof p.additional_images === "string") {
+        try {
+          const parsed = JSON.parse(p.additional_images);
+          p.additional_images = Array.isArray(parsed)
+            ? parsed.map((x: any) => String(x).replace(/\\/g, ""))
+            : [];
+        } catch {
+          p.additional_images = [];
+        }
+      } else {
+        p.additional_images = [];
+      }
+    }
+
+    if (p.images && Array.isArray(p.images)) {
+      p.images = p.images.map((image: any) => ({
+        url: String(image.image ?? image.url ?? "").replace(/\\/g, ""),
+        type: "image",
+        title_en: image.title_en,
+        title_ar: image.title_ar,
+        description_en: image.description_en,
+        description_ar: image.description_ar,
+        background_color: image.background_color,
+      }));
+    }
+
+    return p;
+  }
+
+  private buildGalleryImages(p: any): { url: string }[] {
+    const out: { url: string }[] = [];
+    const seen = new Set<string>();
+
+    const push = (rel: string | null | undefined) => {
+      if (rel == null || rel === "") {
+        return;
+      }
+      const u = String(rel).replace(/\\/g, "");
+      if (!seen.has(u)) {
+        seen.add(u);
+        out.push({ url: u });
+      }
+    };
+
+    push(p?.main_image);
+    const extra = p?.additional_images;
+    if (Array.isArray(extra)) {
+      extra.forEach((x) => push(x));
+    }
+
+    return out;
+  }
+
+  formatMoney(v: any): string {
+    if (v == null || v === "") {
+      return "—";
+    }
+    const n = parseFloat(String(v));
+    return Number.isFinite(n) ? n.toFixed(2) : "—";
+  }
+
+  /** Legacy inventories price, else min_price / max_price from flat accessory payload. */
+  getDetailPriceDisplay(): string {
+    const p = this.productDetails;
+    if (!p) {
+      return "—";
+    }
+    if (p.inventories?.length) {
+      return this.formatMoney(p.inventories[0]?.sale_price);
+    }
+    const minN = parseFloat(String(p.min_price ?? "0"));
+    const maxN = parseFloat(String(p.max_price ?? p.min_price ?? "0"));
+    const minStr = this.formatMoney(p.min_price);
+    if (
+      Number.isFinite(minN) &&
+      Number.isFinite(maxN) &&
+      Math.abs(maxN - minN) > 0.001
+    ) {
+      return `${minStr} – ${this.formatMoney(p.max_price)}`;
+    }
+    return minStr;
+  }
+
   async fetchProductDetails() {
     try {
       const res = await this.http
         .getPublicAccessoriesByID(this.ProductID)
         .toPromise();
-      // this.isDealer = res.typeOfProduct;
-      this.productDetails = res.accessory;
-      this.isReviewsCount = res.accessory.views_count;
-      if (this.productDetails?.additional_images) {
-        this.productDetails.additional_images = JSON.parse(
-          this.productDetails.additional_images
-        );
-      }
+      this.productDetails = this.normalizeAccessoryPayload(res);
+      this.isReviewsCount = this.productDetails?.views_count;
 
-      if (this.productDetails?.main_image) {
-        this.productDetails.main_image = this.productDetails.main_image.replace(
-          /\\/g,
-          ""
-        );
-      }
-
-      if (this.productDetails?.images) {
-        this.productDetails.images = this.productDetails.images.map(
-          (image) => ({
-            url: image.image.replace(/\\/g, ""),
-            type: "image",
-            title_en: image.title_en,
-            title_ar: image.title_ar,
-            description_en: image.description_en,
-            description_ar: image.description_ar,
-            background_color: image.background_color,
-          })
-        );
+      if (this.productDetails) {
+        this.galleryImages = this.buildGalleryImages(this.productDetails);
+        if (
+          !this.galleryImages.length &&
+          this.productDetails.images?.length
+        ) {
+          this.galleryImages = this.productDetails.images.map((i: any) => ({
+            url: String(i.url ?? "").replace(/\\/g, ""),
+          }));
+        }
+      } else {
+        this.galleryImages = [];
       }
     } catch (err) {
       console.error("Error fetching product details:", err);
+      this.productDetails = null;
+      this.galleryImages = [];
     }
   }
 
@@ -148,13 +241,26 @@ export class AccessorieDetailComponent implements OnInit {
         if (this.productDetails?.main_image) {
           this.productMainImage = this.productDetails.main_image;
         }
-        if (this.productDetails?.additional_images) {
-          this.thumbnails = this.productDetails.additional_images.map(
-            (image) => ({
-              url: image.replace(/\\/g, ""),
-              type: "image",
-            })
+        if (
+          this.productDetails?.additional_images?.length ||
+          this.productDetails?.main_image
+        ) {
+          const thumbs: { url: string; type: string }[] = [];
+          const seen = new Set<string>();
+          const add = (rel: string) => {
+            const u = String(rel).replace(/\\/g, "");
+            if (u && !seen.has(u)) {
+              seen.add(u);
+              thumbs.push({ url: u, type: "image" });
+            }
+          };
+          if (this.productDetails.main_image) {
+            add(this.productDetails.main_image);
+          }
+          (this.productDetails.additional_images || []).forEach((img: string) =>
+            add(img),
           );
+          this.thumbnails = thumbs;
         }
         // if(this.productDetails?.images){
         //   this.thumbnails = this.productDetails.images.map((image) => ({
@@ -211,14 +317,22 @@ export class AccessorieDetailComponent implements OnInit {
       const res = await this.http
         .getPublicSimilarAccessoriesByID(this.ProductID)
         .toPromise();
-      this.similarWatchesList = res.similar_accessories.map((product: any) => {
+      const rawList =
+        res?.similar_accessories ??
+        res?.data?.data ??
+        res?.data ??
+        (Array.isArray(res) ? res : []);
+      const list = Array.isArray(rawList) ? rawList : [];
+      this.similarWatchesList = list.map((product: any) => {
+        const img =
+          product.main_image ?? product.image ?? product.cover_image ?? null;
         return {
           ...product,
-          main_image: product.image ? product.image.replace(/\\/g, "") : null,
+          main_image: img ? String(img).replace(/\\/g, "") : null,
         };
       });
 
-      this.totalPages = res?.data?.last_page;
+      this.totalPages = res?.data?.last_page ?? res?.last_page ?? 1;
     } catch (err) {
       console.error("Error fetching similar products:", err);
     }
@@ -231,15 +345,18 @@ export class AccessorieDetailComponent implements OnInit {
         const res = await this.http
           .getPublicSimilarAccessoriesByID(this.ProductID)
           .toPromise();
-        const newWatches = res.data.data.map((product: any) => ({
-          ...product,
-          // main_image: product.main_image.replace(/\\/g, ""),
-          main_image: product.main_image
-            ? product.main_image.replace(/\\/g, "")
-            : null,
-        }));
+        const pageRows = res?.data?.data ?? res?.data ?? [];
+        const rows = Array.isArray(pageRows) ? pageRows : [];
+        const newWatches = rows.map((product: any) => {
+          const img =
+            product.main_image ?? product.image ?? product.cover_image ?? null;
+          return {
+            ...product,
+            main_image: img ? String(img).replace(/\\/g, "") : null,
+          };
+        });
         this.similarWatchesList = [...this.similarWatchesList, ...newWatches];
-        this.totalPages = res?.data?.last_page;
+        this.totalPages = res?.data?.last_page ?? res?.last_page ?? this.totalPages;
       } catch (err) {
         console.error("Error loading more watches:", err);
       }
@@ -264,7 +381,10 @@ export class AccessorieDetailComponent implements OnInit {
 
   getWishList() {
     this.http.getAccessoryWishList().subscribe((res: any) => {
-      this.wishList = res.data.map((item: any) => item.id); // extract only the IDs
+      const rows = res?.data;
+      this.wishList = Array.isArray(rows)
+        ? rows.map((item: any) => item.id)
+        : [];
     });
   }
 

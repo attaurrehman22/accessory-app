@@ -1,22 +1,15 @@
-<!-- <lib-ngx-image-zoom
-    [thumbImage]=myThumbnail
-    [fullImage]=myFullresImage
-></lib-ngx-image-zoom> -->
-
-
-<div *ngIf="!showHeader" class="">
+<!-- <div *ngIf="!showHeader" class="">
   <app-admin-page-header></app-admin-page-header>
-</div>
+</div> -->
 
-<div *ngIf="showHeader" (click)="closeSearchBox()">
+<!-- <div *ngIf="showHeader" (click)="closeSearchBox()">
   <app-header *ngIf="!hideaccessoriesHeader"></app-header>
   <router-outlet></router-outlet>
   <app-footer-component></app-footer-component>
   <div *ngIf="loaderService.isLoading | async" class="loader">
     Loading...
   </div>
-  
-</div>
+</div> -->
 
 <div
   *ngIf="alertService.alert$ | async as alert"
@@ -37,6 +30,5 @@
     <button type="button" class="btn-close" (click)="closeAlert()" aria-label="Close"></button>
   </div>
 </div>
-
 
 <router-outlet></router-outlet>

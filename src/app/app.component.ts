@@ -66,7 +66,11 @@ export class AppComponent implements OnInit {
   showSecondFooter: boolean = true;
   hideaccessoriesHeader: boolean = false;
 
-  routesToHideforAccessriesUser = ["/accessories/home", "accessories/details"];
+  routesToHideforAccessriesUser = [
+    "/",
+    "/accessories/home",
+    "/accessories/details",
+  ];
 
   routesToHideforUser = [
     "/admin/dashboard",

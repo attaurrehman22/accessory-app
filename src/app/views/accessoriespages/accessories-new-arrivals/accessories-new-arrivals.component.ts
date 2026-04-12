@@ -49,32 +49,8 @@ export class AccessoriesNewArrivalsComponent implements OnInit{
     }
   }
 
-  categories = [
-    {
-      id: 1,
-      name: "Python"
-    },
-    {
-      id: 2,
-      name: "Snake"
-    },
-    {
-      id: 3,
-      name: "Leather"
-    },
-    {
-      id: 4,
-      name: "Leather two"
-    },  
-    {
-      id: 5,
-      name: "Leather three"
-    },
-    {
-      id: 6,
-      name: "Leather four"
-    },
-  ];
+  /** Category checkboxes for sidebar filters — filled from API payload (embedded categories on each accessory). */
+  filterCategories: { id: number; name: string; selected?: boolean }[] = [];
 
   isFiltereredOptionIsShow:boolean=false;
   min = 200; 
@@ -129,7 +105,7 @@ export class AccessoriesNewArrivalsComponent implements OnInit{
     this.currentValue=this.min;
     this.beminprice=1000;
     this.bemaxprice=3000;
-    this.categories.forEach((category:any) => (category.selected = false));
+    this.filterCategories.forEach((c) => (c.selected = false));
     this.currentValue = 200; // Update the "From" value on the slider
     this.minPercentage = 0; // Left thumb position (percentage)
     this.maxPercentage = 100; // Right thumb position (percentage)
@@ -154,15 +130,12 @@ export class AccessoriesNewArrivalsComponent implements OnInit{
       this.queryString += `max_price=${this.max}`;
     }
     
-    if (this.categories?.length > 0) {
-      this.categories.forEach((id:any, index:any) => {
-        if(id?.selected){
-          this.queryString += "&"; 
-          this.queryString += `category_ids[]=${id.id}`;
-          // if (index < this.categories?.length - 1) {
-          //   this.queryString += "&"; // Add an "&" if it's not the last element
-          // }
-        }     
+    if (this.filterCategories?.length > 0) {
+      this.filterCategories.forEach((c) => {
+        if (c?.selected) {
+          this.queryString += "&";
+          this.queryString += `category_ids[]=${c.id}`;
+        }
       });
     }
    
@@ -180,7 +153,10 @@ export class AccessoriesNewArrivalsComponent implements OnInit{
 
   getWishList() {
     this.http.getAccessoryWishList().subscribe((res: any) => {
-      this.wishList = res.data.map((item: any) => item.id); // extract only the IDs
+      const rows = res?.data;
+      this.wishList = Array.isArray(rows)
+        ? rows.map((item: any) => item.id)
+        : [];
     });
   }
 
@@ -201,38 +177,104 @@ export class AccessoriesNewArrivalsComponent implements OnInit{
       );
     }
   }  
-  // Fetch accessories from API
+  /**
+   * API may return a bare array, or legacy `{ data: [] }`, `{ groups: [...] }`.
+   */
+  private normalizeAccessoriesResponse(res: any): any[] {
+    if (Array.isArray(res)) {
+      return res;
+    }
+    if (Array.isArray(res?.data)) {
+      return res.data;
+    }
+    if (Array.isArray(res?.groups)) {
+      return res.groups.reduce((acc: any[], g: any) => {
+        return acc.concat(g.accessories || []);
+      }, []);
+    }
+    return [];
+  }
+
+  /** Unique categories for sidebar checkboxes from embedded `categories` on each accessory. */
+  private buildFilterCategoriesFromAccessories(accessories: any[]): void {
+    const map = new Map<
+      number,
+      { id: number; name: string; selected: boolean }
+    >();
+    accessories.forEach((a) => {
+      const cats = a?.categories;
+      if (!Array.isArray(cats)) {
+        return;
+      }
+      cats.forEach((c: any) => {
+        const id = c?.id;
+        if (id != null && !map.has(id)) {
+          map.set(id, {
+            id,
+            name: c.name ?? `Category ${id}`,
+            selected: false,
+          });
+        }
+      });
+    });
+    this.filterCategories = Array.from(map.values()).sort((a, b) =>
+      a.name.localeCompare(b.name),
+    );
+  }
+
+  // Fetch accessories from API (flat list of accessories)
   getAccessories() {
     this.loading = true;
-    this.http.getPublicAccessories(this.queryString).subscribe((res:any)=>{
-      console.log(res);
-      this.showList = res.groups || [];
-      this.setupFilterButtons();
-      this.selectBtn('All');
-      this.loading = false;
-    })
+    this.error = "";
+    this.http.getPublicAccessories(this.queryString).subscribe({
+      next: (res: any) => {
+        const list = this.normalizeAccessoriesResponse(res);
+        this.showList = list;
+        this.buildFilterCategoriesFromAccessories(list);
+        this.setupFilterButtons();
+        this.selectBtn("All");
+        this.loading = false;
+      },
+      error: () => {
+        this.loading = false;
+        this.error = "Failed to load accessories.";
+        this.showList = [];
+        this.filteredList = [];
+        this.filterBtn = ["All"];
+        this.filterCategories = [];
+      },
+    });
   }
 
-  // Setup filter buttons from groups
+  /** Horizontal chips: unique category names from loaded accessories. */
   setupFilterButtons() {
-    this.filterBtn = this.showList.map((group: any) => group.group_name);
-    this.filterBtn.unshift("All");
+    const names = new Set<string>();
+    this.showList.forEach((a: any) => {
+      const cats = a?.categories;
+      if (!Array.isArray(cats)) {
+        return;
+      }
+      cats.forEach((c: any) => {
+        if (c?.name) {
+          names.add(String(c.name));
+        }
+      });
+    });
+    this.filterBtn = ["All", ...Array.from(names).sort((a, b) => a.localeCompare(b))];
   }
 
-  // Handle filter button selection
+  /** Filter grid by selected category chip (matches any embedded category name). */
   selectBtn(btn: string) {
     this.selectedBtn = btn;
-    
+
     if (btn === "All") {
-      // Show all accessories from all groups
-      this.filteredList = this.showList.reduce((acc: any[], group: any) => {
-        return acc.concat(group.accessories);
-      }, []);
-    } else {
-      // Show accessories from selected group only
-      const selectedGroup = this.showList.find((group: any) => group.group_name === btn);
-      this.filteredList = selectedGroup ? selectedGroup.accessories : [];
+      this.filteredList = [...this.showList];
+      return;
     }
+
+    this.filteredList = this.showList.filter((a: any) =>
+      (a.categories || []).some((c: any) => c?.name === btn),
+    );
   }
 
   // Scroll functionality
@@ -250,38 +292,28 @@ export class AccessoriesNewArrivalsComponent implements OnInit{
     });
   }
 
-  // Helper method to get display price for an accessory
   getDisplayPrice(accessory: any): string {
-    // if (accessory.inventories && accessory.inventories.length > 0) {
-    //   const inventory = accessory.inventories[0];
-    //   return inventory.offer_price || inventory.sale_price || '0';
-    // }
-    // return accessory.min_price || '0';
-
-    if (accessory.inventories && accessory.inventories.length > 0) {
+    if (accessory?.inventories?.length) {
       const inventory = accessory.inventories[0];
-      const price = inventory.offer_price || inventory.sale_price || '0';
-      return parseFloat(price).toFixed(2);
+      const price = inventory.offer_price || inventory.sale_price || "0";
+      return parseFloat(String(price)).toFixed(2);
     }
-    const minPrice = accessory.min_price || '0';
-    return parseFloat(minPrice).toFixed(2);
-    
+    return parseFloat(String(accessory?.min_price ?? "0")).toFixed(2);
   }
 
-  // Helper method to get display title for an accessory
   getDisplayTitle(accessory: any): string {
-    if (accessory.inventories && accessory.inventories.length > 0) {
-      return accessory.inventories[0].title || accessory.name;
+    if (accessory?.inventories?.length && accessory.inventories[0].title) {
+      return accessory.inventories[0].title;
     }
-    return accessory.name;
+    return accessory?.name ?? "";
   }
 
-  // Helper method to get display brand for an accessory
   getDisplayBrand(accessory: any): string {
-    if (accessory.inventories && accessory.inventories.length > 0) {
-      return accessory.inventories[0].brand || accessory.brand;
+    if (accessory?.inventories?.length && accessory.inventories[0].brand) {
+      return accessory.inventories[0].brand;
     }
-    return accessory.brand;
+    const b = accessory?.brand;
+    return b != null && String(b).trim() !== "" ? String(b) : "—";
   }
 
   // Helper method to get main image

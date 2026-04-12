@@ -27,7 +27,7 @@
             background: #f8f8f8;
           " class="img-fluid" alt="Selected Watch" controls></video>
         <div [ngClass]="{ 'reverse-order': translateService.currentLang !== 'en' }" class="featured-card">
-          <div *ngIf="productDetails?.feature_item === 1" class="featured-card-featred">
+          <div *ngIf="productDetails?.popular_item === 'yes' || productDetails?.feature_item === 1" class="featured-card-featred">
             <p style="margin: 0">Featured</p>
           </div>
           <div class="featured-card-heart-sec">
@@ -110,10 +110,10 @@
           <p class="routes-styl" style="cursor: pointer" routerLink="/">
             Home /
           </p>
-          <p *ngIf="productDetails?.categories" class="routes-styl-active">
+          <p *ngIf="productDetails?.categories?.length" class="routes-styl-active">
             {{ productDetails?.categories[0]?.name }} /
           </p>
-          <p *ngIf="productDetails?.inventories" class="routes-styl-active">
+          <p *ngIf="productDetails?.inventories?.length" class="routes-styl-active">
             {{ productDetails?.inventories[0]?.title }} /
           </p>
           <p *ngIf="productDetails?.name" class="routes-styl-active">
@@ -123,7 +123,7 @@
 
         <div class="d-flex flex-wrap">
           <p class="brand-name-title margin-0">
-            {{ productDetails?.name }} - {{ productDetails?.brand }}
+            {{ productDetails?.name }} — {{ productDetails?.brand || "—" }}
           </p>
         </div>
 
@@ -131,10 +131,10 @@
           <p class="header-highligted-color brand-name-title margin-0">
             <img src="../../../../assets/images/Saudi_Riyal_Symbol-2.svg" style="height: 30px !important"
               class="sar-icon-style" alt="SAR" />
-            {{ productDetails?.inventories[0]?.sale_price }}
+            {{ getDetailPriceDisplay() }}
           </p>
 
-          <div class="d-flex flex-column mt-3">
+          <div class="d-flex flex-column mt-3" *ngIf="lugWidth?.length">
             <p class="header-highligted-color font-wight-400 font-size-16 margin-0" style="padding-bottom: 7px">
               {{ "accessory_details.LUG-Width" | translate }}
             </p>
@@ -145,18 +145,18 @@
             </div>
           </div>
 
-          <div *ngIf="productDetails?.inventories" class="d-flex flex-column mt-3">
+          <div *ngIf="productDetails?.inventories?.length" class="d-flex flex-column mt-3">
             <p class="header-highligted-color font-wight-400 font-size-16 margin-0" style="padding-bottom: 7px">
               {{ "accessory_details.Buckle-Connector" | translate }}
             </p>
             <div class="d-flex flex-wrap gap-2">
-              <button *ngFor="let buckle of productDetails?.inventories[0].attribute_values | slice:0:5" class="condition-btn">
+              <button *ngFor="let buckle of productDetails?.inventories[0]?.attribute_values | slice:0:5" class="condition-btn">
                 {{ buckle.color }}
               </button>
             </div>
           </div>
 
-          <div class="d-flex flex-column mt-3">
+          <div *ngIf="productDetails?.inventories?.length" class="d-flex flex-column mt-3">
             <p class="header-highligted-color font-wight-400 font-size-16 margin-0" style="padding-bottom: 7px">
               {{ "accessory_details.Length" | translate }}
             </p>
@@ -167,7 +167,7 @@
             </div>
           </div>
 
-          <div class="d-flex flex-column mt-3">
+          <div *ngIf="productDetails?.inventories?.[0]?.attribute_values?.length" class="d-flex flex-column mt-3">
             <p class="header-highligted-color font-wight-400 font-size-16 margin-0" style="padding-bottom: 7px">
               {{ "accessory_details.Color" | translate }}
             </p>
@@ -242,27 +242,41 @@
               </div>
 
               <div class="col-12 d-flex flex-wrap" [ngClass]="{ 'reverse-order-for-images': translateService.currentLang !== 'en' }">
-                <div *ngFor="let image of productDetails?.images" class="col-md-6 d-flex flex-wrap mb-2"
-                  style="border-radius: 16px">
-                  <img [src]="apiUrl + image.url" style="
-                    object-fit: cover;
-                    height: 100%;
-                    width: 100%;
-                    border: none;
-                    border-radius: 16px;
-                  " class="img-fluid" alt="Selected Watch" />
-
-                  <div class="text-div" [ngStyle]="{'background-color': image.background_color}">
-                    <p *ngIf="translateService.currentLang === 'en'" class="font-size-16 font-wight-700 margin-0">{{
-                      image.title_en }}</p>
-                    <p *ngIf="translateService.currentLang === 'ar'" class="font-size-16 font-wight-700 margin-0">{{
-                      image.title_ar }}</p>
-                    <p *ngIf="translateService.currentLang === 'en'" class="font-size-14 font-wight-400 margin-0">{{
-                      image.description_en }}</p>
-                    <p *ngIf="translateService.currentLang === 'ar'" class="font-size-14 font-wight-400 margin-0">{{
-                      image.description_ar }}</p>
+                <ng-container *ngIf="galleryImages?.length; else legacyDetailImages">
+                  <div *ngFor="let image of galleryImages" class="col-md-6 d-flex flex-wrap mb-2"
+                    style="border-radius: 16px">
+                    <img [src]="apiUrl + image.url" style="
+                      object-fit: cover;
+                      height: 100%;
+                      width: 100%;
+                      border: none;
+                      border-radius: 16px;
+                    " class="img-fluid" alt="Selected Watch" />
                   </div>
-                </div>
+                </ng-container>
+                <ng-template #legacyDetailImages>
+                  <div *ngFor="let image of productDetails?.images" class="col-md-6 d-flex flex-wrap mb-2"
+                    style="border-radius: 16px">
+                    <img [src]="apiUrl + image.url" style="
+                      object-fit: cover;
+                      height: 100%;
+                      width: 100%;
+                      border: none;
+                      border-radius: 16px;
+                    " class="img-fluid" alt="Selected Watch" />
+
+                    <div class="text-div" [ngStyle]="{'background-color': image.background_color}">
+                      <p *ngIf="translateService.currentLang === 'en'" class="font-size-16 font-wight-700 margin-0">{{
+                        image.title_en }}</p>
+                      <p *ngIf="translateService.currentLang === 'ar'" class="font-size-16 font-wight-700 margin-0">{{
+                        image.title_ar }}</p>
+                      <p *ngIf="translateService.currentLang === 'en'" class="font-size-14 font-wight-400 margin-0">{{
+                        image.description_en }}</p>
+                      <p *ngIf="translateService.currentLang === 'ar'" class="font-size-14 font-wight-400 margin-0">{{
+                        image.description_ar }}</p>
+                    </div>
+                  </div>
+                </ng-template>
               </div>
             </div>
           </div>
@@ -296,7 +310,7 @@
             </a>
             <div class="card-body d-flex flex-column">
               <p class="text-muted small mb-1">
-                {{ watch.categories.name }} | {{ watch.model_number || "N/A" }}
+                {{ watch.categories?.[0]?.name || watch.categories?.name }} | {{ watch.model_number || "N/A" }}
               </p>
 
               <h6 class="card-title fw-semibold mb-3">{{ watch.name }}</h6>
@@ -306,7 +320,7 @@
                   <small class="text-muted d-block">Exclusive Shipping</small>
                   <span class="fw-bold"><img src="../../../../assets/images/Saudi_Riyal_Symbol-2.svg"
                       class="sar-icon-style" alt="SAR" />
-                    {{ watch.price || "123" }}</span>
+                    {{ formatMoney(watch.min_price ?? watch.price) }}</span>
                   <!-- Change currency if needed -->
                 </div>
                 <div class="d-flex flex-column align-items-center">
@@ -324,11 +338,11 @@
           </div>
           <div class="heart-icon">
             <div class="featured-icon">
-              <div *ngIf="watch?.feature_item === 1" class="featured-promoted-class-badge">
+              <div *ngIf="watch?.popular_item === 'yes' || watch?.feature_item === 1" class="featured-promoted-class-badge">
                 <!-- Featured -->
               </div>
 
-              <div *ngIf="watch?.feature_item !== 1 && watch.is_promoted === 1" class="featured-promoted-class-badge">
+              <div *ngIf="watch?.feature_item !== 1 && watch?.popular_item !== 'yes' && watch.is_promoted === 1" class="featured-promoted-class-badge">
                 <!-- Promoted -->
               </div>
             </div>

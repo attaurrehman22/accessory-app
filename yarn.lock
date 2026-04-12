@@ -3457,17 +3457,10 @@
   dependencies:
     "@types/node" "*"
 
-"@types/node@*", "@types/node@^12.11.1", "@types/node@>=10.0.0":
+"@types/node@*", "@types/node@^12.11.1", "@types/node@^18.0.0 || >=20.0.0", "@types/node@>=10.0.0", "@types/node@>=18":
   version "12.11.1"
   resolved "https://registry.npmjs.org/@types/node/-/node-12.11.1.tgz"
   integrity sha512-TJtwsqZ39pqcljJpajeoofYRfeZ7/I/OMUQ5pR4q5wOKf2ocrUvBAZUMhWsOvKx3dVc/aaV5GluBivt0sWqA5A==
-
-"@types/node@^18.0.0 || >=20.0.0":
-  version "22.2.0"
-  resolved "https://registry.npmjs.org/@types/node/-/node-22.2.0.tgz"
-  integrity sha512-bm6EG6/pCpkxDf/0gDNDdtDILMOHgaQBVOJGdwsqClnxA3xL6jtMv76rLBc006RVMWbmaf0xbmom4Z/5o2nRkQ==
-  dependencies:
-    undici-types "~6.13.0"
 
 "@types/node@>=12.12.47":
   version "22.13.14"
@@ -3482,13 +3475,6 @@
   integrity sha512-Zs/Ollc1SJ8nKUAgc7ivOEdIBM8JAKgrqqUYi2J997JuKO7/tpQC+WCetQ1sypiKCQWHdvdg9wBNpUPEWZae7w==
   dependencies:
     undici-types "~6.20.0"
-
-"@types/node@>=18":
-  version "24.10.0"
-  resolved "https://registry.npmjs.org/@types/node/-/node-24.10.0.tgz"
-  integrity sha512-qzQZRBqkFsYyaSWXuEHc2WR9c0a0CXwiE5FWUvn7ZM+vdy1uZLfCunD38UzhuB7YN/J11ndbDBcTmOdxJo9Q7A==
-  dependencies:
-    undici-types "~7.16.0"
 
 "@types/q@^0.0.32":
   version "0.0.32"
@@ -9817,20 +9803,10 @@ ua-parser-js@^0.7.30:
   resolved "https://registry.npmjs.org/ua-parser-js/-/ua-parser-js-0.7.38.tgz"
   integrity sha512-fYmIy7fKTSFAhG3fuPlubeGaMoAd6r0rSnfEsO5nEY55i26KSLt9EH7PLQiiqPUhNqYIJvSkTy1oArIcXAbPbA==
 
-undici-types@~6.13.0:
-  version "6.13.0"
-  resolved "https://registry.npmjs.org/undici-types/-/undici-types-6.13.0.tgz"
-  integrity sha512-xtFJHudx8S2DSoujjMd1WeWvn7KKWFRESZTMeL1RptAYERu29D6jphMjjY+vn96jvN3kVPDNxU/E13VTaXj6jg==
-
 undici-types@~6.20.0:
   version "6.20.0"
   resolved "https://registry.npmjs.org/undici-types/-/undici-types-6.20.0.tgz"
   integrity sha512-Ny6QZ2Nju20vw1SRHe3d9jVu6gJ+4e3+MMpqu7pqE5HT6WsTSlce++GQmK5UXS8mzV8DSYHrQH+Xrf2jVcuKNg==
-
-undici-types@~7.16.0:
-  version "7.16.0"
-  resolved "https://registry.npmjs.org/undici-types/-/undici-types-7.16.0.tgz"
-  integrity sha512-Zz+aZWSj8LE6zoxD+xrjh4VfkIG8Ya6LvYkZqtUQGJPZjYl53ypCaUwWqo7eI0x66KBGeRo+mlBEkMSeSZ38Nw==
 
 undici@6.11.1:
   version "6.11.1"

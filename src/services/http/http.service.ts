@@ -1893,7 +1893,7 @@ export class HttpService implements OnInit {
 
   getPublicAccessories(queryString: any): Observable<any> {
     return this.http.get(
-      `${this.apiUrl}/api/accessories-by-groups?${queryString}`,
+      `${this.apiUrl}/api/accessories?${queryString}`,
       {
         headers: {
           Accept: "application/json",
@@ -1903,7 +1903,7 @@ export class HttpService implements OnInit {
   }
 
   getPublicAccessoriesByID(ID: any): Observable<any> {
-    return this.http.get(`${this.apiUrl}/api/accessories-product-by-id/${ID}`, {
+    return this.http.get(`${this.apiUrl}/api/accessories/${ID}`, {
       headers: {
         Accept: "application/json",
       },

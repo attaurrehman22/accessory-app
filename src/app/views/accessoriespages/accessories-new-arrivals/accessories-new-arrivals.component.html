@@ -37,8 +37,11 @@
       </button>
     </div>
 
-    <div [ngClass]="{ 'reverse-filter-order': translateService.currentLang !== 'en' }"
-     *ngIf="isShowFilters" class="filter-Div p-3 border rounded">
+    <div
+      [ngClass]="{ 'reverse-filter-order': translateService.currentLang !== 'en' }"
+      [class.d-none]="!isShowFilters"
+      class="filter-Div p-3 border rounded"
+    >
       <div class="filters-top-header">
         <h5 class="mb-3">{{ "product_listing.filters" | translate }}</h5>
         <button
@@ -59,13 +62,15 @@
         <div class="row mt-2">
           <div
             class="col-md-4 d-flex flex-wrap"
-            *ngFor="let category of categories | slice : 0 : 8"
+            *ngFor="let category of filterCategories | slice : 0 : 24"
           >
             <div class="form-check d-flex flex-wrap">
               <input
                 type="checkbox"
                 class="form-check-input"
                 [id]="'category-' + category.id"
+                [name]="'category-' + category.id"
+                [ngModelOptions]="{ standalone: true }"
                 [(ngModel)]="category.selected"
               />
               <label class="form-check-label" [for]="'category-' + category.id">
