@@ -1,3 +1,4 @@
+import { animate, style, transition, trigger } from "@angular/animations";
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { TranslateService } from "@ngx-translate/core";
@@ -13,6 +14,17 @@ import { MatDialog } from "@angular/material/dialog";
   selector: "app-accessorie-detail",
   templateUrl: "./accessorie-detail.component.html",
   styleUrls: ["./accessorie-detail.component.css"],
+  animations: [
+    trigger("detailEnter", [
+      transition(":enter", [
+        style({ opacity: 0, transform: "translateY(14px)" }),
+        animate(
+          "480ms cubic-bezier(0.22, 1, 0.36, 1)",
+          style({ opacity: 1, transform: "none" }),
+        ),
+      ]),
+    ]),
+  ],
 })
 export class AccessorieDetailComponent implements OnInit {
   apiUrl = environment.apipath + "/";
@@ -34,6 +46,8 @@ export class AccessorieDetailComponent implements OnInit {
   apipath = environment.apipath;
   myThumbnail: any;
   myFullresImage: any;
+  /** Shown until product + similar data finish loading */
+  productLoading = true;
 
   increment() {
     this.quantity++;
@@ -235,6 +249,7 @@ export class AccessorieDetailComponent implements OnInit {
   }
 
   async initializeComponent() {
+    this.productLoading = true;
     try {
       await this.fetchProductDetails();
       if (this.productDetails) {
@@ -292,6 +307,8 @@ export class AccessorieDetailComponent implements OnInit {
       await this.getAllSimilarProducts();
     } catch (err) {
       console.error("Error initializing component:", err);
+    } finally {
+      this.productLoading = false;
     }
   }
 

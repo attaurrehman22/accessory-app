@@ -142,10 +142,17 @@
       </button>
     </div>
 
-    <!-- Loading State -->
-    <div *ngIf="loading" class="row d-flex justify-content-center align-items-center mt-5">
-      <div class="spinner-border text-primary" role="status">
-        <span class="visually-hidden">Loading...</span>
+    <!-- Loading: skeleton grid -->
+    <div *ngIf="loading" class="row d-flex flex-wrap align-items-stretch mt-4 ar-na-skeleton-wrap" aria-busy="true" aria-label="Loading products">
+      <div class="custom-col" *ngFor="let _ of skeletonSlots">
+        <div class="ar-na-skeleton-card rounded-4 border-0 h-100">
+          <div class="ar-na-skel-img"></div>
+          <div class="p-3">
+            <div class="ar-na-skel-line ar-na-skel-line--sm mb-2"></div>
+            <div class="ar-na-skel-line ar-na-skel-line--md mb-3"></div>
+            <div class="ar-na-skel-line ar-na-skel-line--lg"></div>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -161,7 +168,7 @@
       *ngIf="!loading && !error && filteredList.length > 0"
       class="row d-flex flex-wrap align-items-center"
     >
-      <div class="custom-col" *ngFor="let accessory of filteredList">
+      <div class="custom-col" *ngFor="let accessory of filteredList; trackBy: trackByAccessoryId" @cardEnter>
         <div class="card shadow-sm rounded-4 border-0 h-100">
           <div class="position-relative card-img-div">
             <a

@@ -1,0 +1,4 @@
+/* Optional: reduce layout shift while child animations run */
+:host {
+  display: block;
+}

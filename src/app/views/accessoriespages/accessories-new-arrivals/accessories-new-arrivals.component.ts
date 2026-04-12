@@ -1,3 +1,4 @@
+import { animate, style, transition, trigger } from "@angular/animations";
 import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpService } from 'src/services/http/http.service';
@@ -8,7 +9,18 @@ import { LanguageService } from 'src/services/lang-service/language.service';
 @Component({
   selector: 'app-accessories-new-arrivals',
   templateUrl: './accessories-new-arrivals.component.html',
-  styleUrls: ['./accessories-new-arrivals.component.css']
+  styleUrls: ['./accessories-new-arrivals.component.css'],
+  animations: [
+    trigger("cardEnter", [
+      transition(":enter", [
+        style({ opacity: 0, transform: "translateY(16px)" }),
+        animate(
+          "420ms cubic-bezier(0.22, 1, 0.36, 1)",
+          style({ opacity: 1, transform: "none" }),
+        ),
+      ]),
+    ]),
+  ],
 })
 export class AccessoriesNewArrivalsComponent implements OnInit{
   // Properties for data management
@@ -18,6 +30,8 @@ export class AccessoriesNewArrivalsComponent implements OnInit{
   filteredList: any[] = [];
   loading: boolean = false;
   error: string = '';
+  /** Placeholder count for skeleton grid */
+  skeletonSlots = [0, 1, 2, 3, 4, 5, 6, 7];
   supportLanguages = ["en", "ar", "fr", "ta", "hi"];
   currentLanguage: string;
 
@@ -331,5 +345,9 @@ export class AccessoriesNewArrivalsComponent implements OnInit{
 
   openFilters(){
    this.isShowFilters=!this.isShowFilters;
+  }
+
+  trackByAccessoryId(_index: number, item: any): string | number {
+    return item?.id ?? _index;
   }
 }

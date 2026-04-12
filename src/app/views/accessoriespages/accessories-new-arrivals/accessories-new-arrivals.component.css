@@ -382,8 +382,65 @@
 
 /* ----------------------------------- Filtered CSS End here ----------------------------------- */
 
+/* Skeleton loading (new arrivals grid) */
+.ar-na-skeleton-wrap {
+  min-height: 280px;
+}
 
+.ar-na-skeleton-card {
+  background: #fff;
+  box-shadow: 0 0.125rem 0.35rem rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+}
 
+.ar-na-skel-img {
+  height: 220px;
+  background: linear-gradient(
+    90deg,
+    #ececec 0%,
+    #f6f6f6 50%,
+    #ececec 100%
+  );
+  background-size: 200% 100%;
+  animation: arNaShimmer 1.35s ease-in-out infinite;
+}
+
+.ar-na-skel-line {
+  height: 12px;
+  border-radius: 6px;
+  background: #e8e8e8;
+  animation: arNaPulse 1.2s ease-in-out infinite;
+}
+
+.ar-na-skel-line--sm {
+  width: 40%;
+}
+.ar-na-skel-line--md {
+  width: 75%;
+}
+.ar-na-skel-line--lg {
+  width: 55%;
+  height: 14px;
+}
+
+@keyframes arNaShimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+@keyframes arNaPulse {
+  0%,
+  100% {
+    opacity: 0.65;
+  }
+  50% {
+    opacity: 1;
+  }
+}
 
 
 

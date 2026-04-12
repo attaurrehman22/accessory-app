@@ -56,6 +56,8 @@ export class HeroPageComponent {
   private apiSubscription!: Subscription;
   apipath = environment.apipath;
   homeData: any = { slider: [] };
+  /** True until getHomeData() completes (hero slider area skeleton). */
+  sliderLoading = true;
 
   apiData = {
     success: true,
@@ -118,12 +120,15 @@ export class HeroPageComponent {
   };
 
   getSlideData() {
+    this.sliderLoading = true;
     this.http.getHomeData().subscribe(
       (res) => {
         this.homeData = this.apiData.data;
+        this.sliderLoading = false;
       },
       (err) => {
         this.homeData = { slider: [] };
+        this.sliderLoading = false;
       }
     );
   }
