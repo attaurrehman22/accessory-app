@@ -232,6 +232,13 @@ export class AppComponent implements OnInit {
 
   private computeAccessoryHeaderBar(url: string): boolean {
     const path = url.split("?")[0];
+    if (path === "/myprofile/summary") {
+      return true;
+    }
+    // show also on register and login pages
+    if (path === "/login" || path === "/register") {
+      return true;
+    }
     return path.startsWith("/accessories/") && path !== "/accessories/home";
   }
 
