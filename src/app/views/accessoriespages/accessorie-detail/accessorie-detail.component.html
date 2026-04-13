@@ -225,7 +225,7 @@
               </button>
             </div>
           </div>
-          <div class="mt-4">
+          <div class="mt-4" *ngIf="!currentProductInCart">
             <button class="buy-btn" (click)="buyandGoToOrderDetails()">
               {{ "buy_product.buy" | translate }}
             </button>
@@ -358,7 +358,11 @@
                   </div>
                 </div>
               </div>
-              <button class="add-to-cart-btn mt-2" (click)="addtoCartById(watch.id)">
+              <button
+                *ngIf="!isAccessoryInCart(watch.id)"
+                class="add-to-cart-btn mt-2"
+                (click)="addtoCartById(watch.id)"
+              >
                 {{ "accessory_details.Add-to-Cart" | translate }}
               </button>
             </div>

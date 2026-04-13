@@ -49,6 +49,10 @@ export class AccessorieDetailComponent implements OnInit {
   /** Shown until product + similar data finish loading */
   productLoading = true;
 
+  /** True when this accessory is already in the user's cart (GET /api/accessory-cart). */
+  currentProductInCart = false;
+  private readonly cartAccessoryIds = new Set<string>();
+
   increment() {
     this.quantity++;
   }
@@ -310,6 +314,54 @@ export class AccessorieDetailComponent implements OnInit {
     } finally {
       this.productLoading = false;
     }
+    this.refreshCartPresence();
+  }
+
+  /** Loads cart and hides Buy / Add to cart when this product (or similar ids) are present. */
+  refreshCartPresence(): void {
+    if (localStorage.getItem("user_token") && this.isUserLogin === "true") {
+      this.http.getCartList().subscribe({
+        next: (res: any) => {
+          this.cartAccessoryIds.clear();
+          for (const it of res?.items ?? []) {
+            const id = it?.accessory?.id;
+            if (id != null) {
+              this.cartAccessoryIds.add(String(id));
+            }
+          }
+          this.updateCurrentProductInCartFlag();
+        },
+        error: () => {
+          this.cartAccessoryIds.clear();
+          this.currentProductInCart = false;
+        },
+      });
+    } else {
+      this.cartAccessoryIds.clear();
+      this.currentProductInCart = false;
+    }
+  }
+
+  private updateCurrentProductInCartFlag(): void {
+    const pid = this.productDetails?.id ?? this.ProductID;
+    this.currentProductInCart =
+      pid != null && this.cartAccessoryIds.has(String(pid));
+  }
+
+  /** For similar-products cards: hide Add to cart when that accessory is in cart. */
+  isAccessoryInCart(accessoryId: any): boolean {
+    if (accessoryId == null) {
+      return false;
+    }
+    return this.cartAccessoryIds.has(String(accessoryId));
+  }
+
+  private markAccessoryInCart(accessoryId: any): void {
+    if (accessoryId == null) {
+      return;
+    }
+    this.cartAccessoryIds.add(String(accessoryId));
+    this.updateCurrentProductInCartFlag();
   }
 
   swapImages(clickedItem: { url: string; type: string }): void {
@@ -448,6 +500,7 @@ export class AccessorieDetailComponent implements OnInit {
       };
       this.http.addtoCart(formData).subscribe(
         (res: any) => {
+          this.markAccessoryInCart(this.productDetails?.id ?? this.ProductID);
           if (!this.isBuy) {
             this.alertService.showAlert(
               "success",
@@ -477,6 +530,7 @@ export class AccessorieDetailComponent implements OnInit {
       };
       this.http.addtoCart(formData).subscribe(
         (res: any) => {
+          this.markAccessoryInCart(ID);
           this.alertService.showAlert(
             "success",
             "Accessory added to cart successfully"
