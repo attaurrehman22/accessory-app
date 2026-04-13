@@ -4,15 +4,45 @@
   border: none !important;
 }
 
-/* Nav-only mode (detail & other /accessories/* routes): bar in document flow + solid bg */
+/* Nav-only mode (non-home routes): same layout as home, transparent bar + dark UI (#242424) */
 .hero-page--header-only .hero-header-strip {
   position: relative !important;
   width: 100%;
 }
 
 .hero-page--header-only header .navbar {
-  background-color: #242424;
+  background: none !important;
+  background-color: transparent !important;
   min-height: 73px;
+}
+
+.hero-page--header-only header .custom-btn,
+.hero-page--header-only header .login-hover-btn {
+  color: #242424 !important;
+}
+
+.hero-page--header-only header .custom-en-ar-btn,
+.hero-page--header-only header .custom-en-ar-btn span {
+  color: #242424 !important;
+}
+
+.hero-page--header-only .navbar-toggler-icon path {
+  fill: #242424 !important;
+}
+
+/* White SVG assets (search, profile, cart, logo) → dark #242424 tone */
+.hero-page--header-only header .logo img,
+.hero-page--header-only header .header-contact img,
+.hero-page--header-only header .header-contact-lg img,
+.hero-page--header-only header .sidebar-acions img {
+  filter: brightness(0);
+  opacity: 0.92;
+}
+
+@media screen and (max-width: 991px) {
+  .hero-page--header-only .navbar-collapse.collapse.show .custom-btn {
+    color: #242424 !important;
+  }
 }
 
 .hero-page {
