@@ -30,26 +30,21 @@
           <p class="font-size-18 font-wight-700 color-242424 margin-0">Items</p>
           <div *ngFor="let item of cartItems" class="accessory-custom-card  p-3 mb-2 d-flex align-items-center">
             <div class="col-md-8 d-flex align-items-center">
-              <img [src]="apiUrl+item.accessory.main_image" alt="product" class="img-thumbnail me-3" style="width: 80px; height: 80px;">
+              <img *ngIf="item?.accessory?.main_image" [src]="apiUrl + item.accessory.main_image" alt="product" class="img-thumbnail me-3" style="width: 80px; height: 80px;">
               <div class="flex-grow-1">
-                <p class="font-size-18 font-wight-600 color-242424 margin-0">{{ item.accessory.name }}</p>
-                <p class="mb-1 font-size-14 font-wight-400 color-242424 margin-0">
-                  <span class="font-size-14 font-wight-400 color-6a6a6a margin-0">
-                    LUG Width
-                  </span>
-                  {{lugWidth[0]}} |
-                  <span class="font-size-14 font-wight-400 color-6a6a6a margin-0">
-                    Buckle/Connector
-                  </span>
-                  {{Buckle[0].color}} |
-                    <span class="font-size-14 font-wight-400 color-6a6a6a  margin-0">
-                      Length
-                    </span>
-                    {{Length[0].title}} |
-                  <span class="font-size-14 font-wight-400 color-6a6a6a margin-0">
-                    Color
-                  </span>
-                  {{ Color[0].color }}
+                <p class="font-size-18 font-wight-600 color-242424 margin-0">{{ item?.accessory?.name }}</p>
+                <p class="mb-1 font-size-14 font-wight-400 color-242424 margin-0" *ngIf="attributeLine(item)">
+                  {{ attributeLine(item) }}
+                </p>
+                <p class="mb-1 font-size-14 font-wight-400 color-242424 margin-0" *ngIf="!attributeLine(item) && (lugWidth?.length || Buckle?.length || Length?.length || Color?.length)">
+                  <span class="font-size-14 font-wight-400 color-6a6a6a margin-0">LUG Width</span>
+                  {{ lugWidth?.[0] ?? '—' }} |
+                  <span class="font-size-14 font-wight-400 color-6a6a6a margin-0">Buckle/Connector</span>
+                  {{ Buckle?.[0]?.color ?? '—' }} |
+                  <span class="font-size-14 font-wight-400 color-6a6a6a margin-0">Length</span>
+                  {{ Length?.[0]?.title ?? '—' }} |
+                  <span class="font-size-14 font-wight-400 color-6a6a6a margin-0">Color</span>
+                  {{ Color?.[0]?.color ?? '—' }}
                 </p>
                 <p class="mb-0 font-size-14 font-wight-400 color-6a6a6a margin-0">Price: 
                   <span class="font-size-14 font-wight-600 color-242424 margin-0">

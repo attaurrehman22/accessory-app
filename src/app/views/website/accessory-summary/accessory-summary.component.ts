@@ -15,43 +15,87 @@ export class AccessorySummaryComponent implements OnInit {
   totalAmount = 361.50;
   shippingCharges = 25.50;
   totalPayout = 386.00;
-  lugWidth=[];
-  Buckle=[];
-  Length=[];
-  Color:any;
+  lugWidth: string[] = [];
+  Buckle: any[] = [];
+  Length: any[] = [];
+  Color: any[] = [];
+
   ngOnInit(): void {
     this.getCartList();
   }
-  cartItems:any;
+
+  cartItems: any[] = [];
+
   getCartList() {
     this.http.getCartList().subscribe((res) => {
-      this.cartItems = res.items;
-      this.totalAmount = res.total_amount ? res.total_amount : 0;
-      this.shippingCharges = res.shipping_charges ? res.shipping_charges : 0;
-      this.totalPayout = res.total_amount ? res.total_amount : 0;
-      if(this.cartItems){
-        this.cartItems = this.cartItems?.map((item: any) => {
-          item.accessory.main_image = item.accessory.main_image.replace(/\\/g, "");
-          return item;
-        });
-        this.Buckle = res?.items[0]?.accessory?.inventories[0]?.attribute_values;
-        this.Length = res?.items[0]?.accessory?.inventories;
-        this.Color = res?.items[0]?.accessory?.inventories[0]?.attribute_values;
-        Object.values(res?.items[0]?.accessory?.attributes || {}).forEach(attrObj => {
-          if (attrObj && typeof attrObj === 'object') {
+      const items = res?.items ?? [];
+      this.cartItems = items;
+      this.totalAmount = res?.total_amount ?? 0;
+      this.shippingCharges = res?.shipping_charges ?? 0;
+      this.totalPayout = res?.total_amount ?? 0;
+
+      this.cartItems = this.cartItems.map((item: any) => {
+        if (item?.accessory?.main_image) {
+          item.accessory.main_image = String(item.accessory.main_image).replace(
+            /\\/g,
+            ""
+          );
+        }
+        return item;
+      });
+
+      this.lugWidth = [];
+      const first = res?.items?.[0]?.accessory;
+      const inv = first?.inventories;
+      if (Array.isArray(inv) && inv.length > 0) {
+        this.Buckle = inv[0]?.attribute_values ?? [];
+        this.Length = inv;
+        this.Color = inv[0]?.attribute_values ?? [];
+        Object.values(first?.attributes || {}).forEach((attrObj: any) => {
+          if (attrObj && typeof attrObj === "object") {
             this.lugWidth.push(...Object.keys(attrObj));
           }
         });
-
-        // this.cartItems = this.cartItems?.map((item: any) => {
-        //   item.accessory.additional_images = item.accessory.additional_images.map((image: any) => {
-        //     image.image = image.image.replace(/\\/g, "");
-        //     return image;
-        //   });
-        //   return item;
-        // });
+      } else {
+        this.Buckle = [];
+        this.Length = [];
+        this.Color = [];
       }
     });
+  }
+
+  /** Categories / attributes / short description (flat accessory API). */
+  attributeLine(item: any): string {
+    const acc = item?.accessory;
+    if (!acc) {
+      return "";
+    }
+    const parts: string[] = [];
+    if (Array.isArray(acc.categories) && acc.categories.length) {
+      for (const c of acc.categories) {
+        const seg = [c.group, c.sub_group, c.name].filter(Boolean).join(" ");
+        if (seg) {
+          parts.push(seg);
+        }
+      }
+    }
+    if (Array.isArray(acc.attributes) && acc.attributes.length) {
+      for (const a of acc.attributes) {
+        if (typeof a === "string") {
+          parts.push(a);
+        } else if (a?.name && a?.value) {
+          parts.push(`${a.name} ${a.value}`);
+        }
+      }
+    }
+    if (parts.length) {
+      return parts.join(" | ");
+    }
+    if (acc.description) {
+      const d = String(acc.description);
+      return d.slice(0, 120) + (d.length > 120 ? "…" : "");
+    }
+    return "";
   }
 
   constructor(private http:HttpService,private alertService:AlertsServicesService,private router:Router){}
