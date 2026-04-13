@@ -1,6 +1,6 @@
 
 <div class="footer">
-  <div style="display: flex;justify-content: space-between;flex-wrap: wrap;width: 100%;margin-top: 25px;" [ngClass]="{'reverse-order': translateService.currentLang !== 'en'}">
+  <div style="display: flex;justify-content: space-between;flex-wrap: wrap;width: 100%;margin-top: 25px;" [ngClass]="{'reverse-order': isRtl}">
     <div class="footer-logo">
       <img src="./assets/images/footer-logo.png" />
       <p class="header-stl">{{ "footer.all_rights_reserved" | translate }}</p>

@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, DestroyRef, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TranslateService } from '@ngx-translate/core';
 import { LanguageService } from 'src/services/lang-service/language.service';
 
@@ -8,35 +9,26 @@ import { LanguageService } from 'src/services/lang-service/language.service';
   styleUrls: ['./footer-component.component.css']
 })
 export class FooterComponentComponent {
+  isRtl = false;
+  selectedLang = "en";
 
-  supportLanguages = [
-    {name:"English",value:"en"},
-    {name:"العربية",value:"ar"},
-    {name:"Français",value:"fr"},
-    {name:"தமிழ்",value:"ta"},
-    {name:"हिन्दी",value:"hi"},
-  ];
+  private readonly destroyRef = inject(DestroyRef);
 
-  isRtl: boolean = false; 
-  selectedLang: string = "en";
-
-  constructor(public translateService: TranslateService,
-    private languageService:LanguageService
+  constructor(
+    public translateService: TranslateService,
+    private languageService: LanguageService
   ) {
-    const supportedLanguages = ["en", "ar"];
-    this.translateService.addLangs(supportedLanguages);
-    this.translateService.setDefaultLang('en');
+    const initial = this.languageService.getCurrentLanguage();
+    this.selectedLang = initial;
+    this.isRtl = initial !== "en";
 
-    const browserLang = this.translateService.getBrowserLang();
-    if (supportedLanguages.includes(browserLang)) {
-      this.translateService.use(browserLang);
-    }
-
-    this.languageService.currentLang$.subscribe(lang => {
-      this.translateService.use(lang);
-      this.isRtl = lang !== 'en';
-      this.selectedLang = lang;
-    });
+    this.languageService.currentLang$
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((lang) => {
+        this.translateService.use(lang);
+        this.isRtl = lang !== "en";
+        this.selectedLang = lang;
+      });
   }
 
   useLang(lang: string) {
