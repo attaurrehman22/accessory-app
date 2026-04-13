@@ -372,7 +372,7 @@
   }
   
   ::ng-deep lib-ngx-image-zoom .ngxImageZoomThumbnail {
-    max-width: 555px !important;   
+    max-width: 630px !important;   
     max-height: 485px !important;
     object-fit: cover;
     border-radius: 16px;
