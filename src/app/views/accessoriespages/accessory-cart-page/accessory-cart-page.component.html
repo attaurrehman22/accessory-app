@@ -11,11 +11,7 @@
         </h1>
       </div>
       <div class="col-auto">
-        <button
-          type="button"
-          class="btn btn-link cart-remove-link p-0 text-decoration-none"
-          (click)="removeSelected()"
-        >
+        <button type="button" class="btn btn-link cart-remove-link p-0 text-decoration-none" (click)="removeSelected()">
           {{ "accessory_details.Remove-Selected" | translate }}
         </button>
       </div>
@@ -30,25 +26,14 @@
 
     <div *ngIf="cartItems.length > 0" class="row g-4">
       <div class="col-lg-8">
-        <div
-          class="cart-line-card mb-3"
-          *ngFor="let item of cartItems; trackBy: trackByItemId"
-        >
+        <div class="cart-line-card mb-3" *ngFor="let item of cartItems; trackBy: trackByItemId">
           <div class="row g-3 align-items-center">
-            <div class="col-auto">
-              <input
-                type="checkbox"
-                class="form-check-input cart-checkbox"
-                [checked]="isSelected(item.item_id)"
-                (change)="toggleItem(item.item_id, $any($event.target).checked)"
-              />
+            <div class="col-auto cart-checkbox-container">
+              <input type="checkbox" class="form-check-input cart-checkbox" [checked]="isSelected(item.item_id)"
+                (change)="toggleItem(item.item_id, $any($event.target).checked)" />
             </div>
             <div class="col-auto">
-              <img
-                [src]="imageSrc(item)"
-                class="cart-thumb"
-                alt=""
-              />
+              <img [src]="imageSrc(item)" class="cart-thumb" alt="" />
             </div>
             <div class="col min-w-0">
               <p class="cart-attr-line mb-1 small text-muted" *ngIf="attributeLine(item)">
@@ -68,34 +53,24 @@
                   {{ "accessory_details.Quantity" | translate }}
                 </span>
                 <div class="d-inline-flex align-items-center cart-qty-control">
-                  <button
-                    type="button"
-                    class="btn cart-qty-btn"
+                  <button type="button" class="btn cart-qty-btn"
                     [disabled]="updatingItemId === item.item_id || item.quantity <= 1"
-                    (click)="changeQuantity(item, -1)"
-                  >
+                    (click)="changeQuantity(item, -1)">
                     −
                   </button>
                   <span class="cart-qty-value">{{ item.quantity }}</span>
-                  <button
-                    type="button"
-                    class="btn cart-qty-btn"
-                    [disabled]="updatingItemId === item.item_id"
-                    (click)="changeQuantity(item, 1)"
-                  >
+                  <button type="button" class="btn cart-qty-btn" [disabled]="updatingItemId === item.item_id"
+                    (click)="changeQuantity(item, 1)">
                     +
                   </button>
                 </div>
               </div>
             </div>
-            <div class="col-auto">
-              <button
-                type="button"
-                class="btn btn-link cart-delete-btn p-0"
-                (click)="removeLine(item)"
-                aria-label="Remove"
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#dc3545" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <div class="col-auto cart-delete-btn-container">
+              <button type="button" class="btn btn-link cart-delete-btn p-0" (click)="removeLine(item)"
+                aria-label="Remove">
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none"
+                  stroke="#dc3545" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                   <polyline points="3 6 5 6 21 6"></polyline>
                   <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
                   <line x1="10" y1="11" x2="10" y2="17"></line>
@@ -121,11 +96,7 @@
             <span>{{ "accessory_details.Estimated-Payout" | translate }}</span>
             <span>SAR {{ formatMoney(totalAmount) }}</span>
           </div>
-          <button
-            type="button"
-            class="btn btn-dark w-100 cart-checkout-btn"
-            (click)="goCheckout()"
-          >
+          <button type="button" class="btn btn-dark w-100 cart-checkout-btn" (click)="goCheckout()">
             {{ "accessory_details.Checkout" | translate }}
           </button>
         </div>

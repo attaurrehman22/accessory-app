@@ -2,6 +2,14 @@
   min-height: 60vh;
 }
 
+.cart-checkbox-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 65px;
+  width: 30px;
+}
+
 .cart-title {
   font-size: 1.5rem;
   font-weight: 700;
