@@ -459,6 +459,11 @@ a {
   backdrop-filter: blur(10px);
 }
 
+/* Material/CDK overlays sit below app chrome by default; hero header uses z-index 9999 */
+.cdk-overlay-container {
+  z-index: 10050 !important;
+}
+
 .cdk-overlay-backdrop.cdk-overlay-backdrop-showing {
   backdrop-filter: blur(10px) !important;
 }
