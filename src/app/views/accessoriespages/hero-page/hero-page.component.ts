@@ -296,8 +296,16 @@ export class HeroPageComponent {
     }
   }
 
+  showAccessoryHeaderBar = false;
+
+  private computeAccessoryHeaderBar(url: string): boolean {
+    const path = url.split("?")[0];
+    return path.startsWith("/accessories/") && path !== "/accessories/home";
+  }
+
   ngOnInit() {
     // this.getAllPopularModels();
+    this.showAccessoryHeaderBar = this.computeAccessoryHeaderBar(this.router.url);
     this.updateLayout();
     window.addEventListener("resize", () => {
       this.windowWidth = window.innerWidth;
