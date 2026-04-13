@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Optional } from '@angular/core';
 import { Router } from '@angular/router';
+import { MatDialogRef } from '@angular/material/dialog';
 import { environment } from 'src/environments/environment';
 import { AlertsServicesService } from 'src/services/alerts-service/alerts-services.service';
 import { HttpService } from 'src/services/http/http.service';
@@ -11,7 +12,12 @@ import { HttpService } from 'src/services/http/http.service';
 })
 export class ShoppingCartComponent implements OnInit{
   apiUrl = environment.apipath + "/";
-  constructor(private router: Router,private http: HttpService,private alertService: AlertsServicesService) {}
+  constructor(
+    private router: Router,
+    private http: HttpService,
+    private alertService: AlertsServicesService,
+    @Optional() private dialogRef: MatDialogRef<ShoppingCartComponent>
+  ) {}
 
   ngOnInit(): void {
     this.getCartList();
@@ -49,12 +55,8 @@ export class ShoppingCartComponent implements OnInit{
   }
 
   goToCart() {
-    this.router.navigate(['/myprofile'], 
-      { 
-        state: {
-          activeRouteType: 'cart'
-        }
-       });
+    this.dialogRef?.close();
+    this.router.navigate(['/accessories/cart']);
   }
 
   goToCheckout() {

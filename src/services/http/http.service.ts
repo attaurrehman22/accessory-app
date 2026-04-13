@@ -2005,6 +2005,15 @@ export class HttpService implements OnInit {
     });
   }
 
+  deleteAllCart(): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/api/accessory-cart/clear`, {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+  }
+
   deleteCart(ID): Observable<any> {
     return this.http.delete(`${this.apiUrl}/api/accessory-cart/item/${ID}`, {
       headers: {

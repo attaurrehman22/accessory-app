@@ -99,6 +99,7 @@ import { AccessoriesHomeComponent } from "./views/accessoriespages/accessories-h
 import { HeroPageComponent } from "./views/accessoriespages/hero-page/hero-page.component";
 import { AccessoriesNewArrivalsComponent } from "./views/accessoriespages/accessories-new-arrivals/accessories-new-arrivals.component";
 import { AccessorieDetailComponent } from "./views/accessoriespages/accessorie-detail/accessorie-detail.component";
+import { AccessoryCartPageComponent } from "./views/accessoriespages/accessory-cart-page/accessory-cart-page.component";
 import { ShoppingCartComponent } from "./views/modal/shopping-cart/shopping-cart.component";
 import { AccessoryCategoriesComponent } from "./views/adminpages/accessory-categories/accessory-categories.component";
 import { AddAccessoryCategoryComponent } from "./views/adminpages/add-accessory-category/add-accessory-category.component";
@@ -176,6 +177,7 @@ import { ReportDetailsComponent as UserReportDetailsComponent } from "./views/we
     HeroPageComponent,
     AccessoriesNewArrivalsComponent,
     AccessorieDetailComponent,
+    AccessoryCartPageComponent,
     ShoppingCartComponent,
     AccessoryCategoriesComponent,
     AddAccessoryCategoryComponent,

@@ -12,6 +12,7 @@ import { CreateAccessoriesProductComponent } from "./views/adminpages/create-acc
 import { adminGuard } from "./guards/admin.guard";
 import { AccessoriesHomeComponent } from "./views/accessoriespages/accessories-home/accessories-home.component";
 import { AccessorieDetailComponent } from "./views/accessoriespages/accessorie-detail/accessorie-detail.component";
+import { AccessoryCartPageComponent } from "./views/accessoriespages/accessory-cart-page/accessory-cart-page.component";
 import { AccessoryCategoriesComponent } from "./views/adminpages/accessory-categories/accessory-categories.component";
 import { AccessoryCategoryGroupComponent } from "./views/adminpages/accessory-category-group/accessory-category-group.component";
 import { AccessorySubCategoryGroupComponent } from "./views/adminpages/accessory-sub-category-group/accessory-sub-category-group.component";
@@ -118,6 +119,7 @@ const routes: Routes = [
     path: "admin/vat",
     component: AdminVatComponent,
   },
+  { path: "accessories/cart", component: AccessoryCartPageComponent },
   { path: "accessories/details", component: AccessorieDetailComponent },
 
   { path: "change-password", component: ChangePasswordComponent },
