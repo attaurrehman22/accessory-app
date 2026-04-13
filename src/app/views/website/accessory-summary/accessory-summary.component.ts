@@ -11,6 +11,9 @@ import { HttpService } from 'src/services/http/http.service';
 })
 export class AccessorySummaryComponent implements OnInit {
   apiUrl = environment.apipath + '/';
+  /** From GET /api/me (gtUserDetails). */
+  profileUser: any = null;
+
   order_id: any;
   totalAmount = 361.50;
   shippingCharges = 25.50;
@@ -22,6 +25,32 @@ export class AccessorySummaryComponent implements OnInit {
 
   ngOnInit(): void {
     this.getCartList();
+    this.loadProfile();
+  }
+
+  loadProfile(): void {
+    this.http.gtUserDetails().subscribe({
+      next: (res: any) => {
+        this.profileUser = res?.user ?? null;
+      },
+      error: () => {
+        this.profileUser = null;
+      },
+    });
+  }
+
+  displayName(): string {
+    const u = this.profileUser;
+    if (!u) {
+      return "—";
+    }
+    if (u.name && String(u.name).trim()) {
+      return String(u.name).trim();
+    }
+    const parts = [u.first_name, u.last_name].filter(
+      (x: any) => x && String(x).trim()
+    );
+    return parts.length ? parts.join(" ") : "—";
   }
 
   cartItems: any[] = [];

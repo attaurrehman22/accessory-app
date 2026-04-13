@@ -4,22 +4,24 @@
         <p class="font-size-24 font-wight-700 color-242424 margin-0">Summary</p>
         <p class="font-size-16 font-wight-400 color-909090">Review your information and items before making a purchase.</p>
   
-        <!-- Billing Info -->
+        <!-- Billing Info (GET /api/me via gtUserDetails) -->
         <div class="mb-4 custom-border-card ">
           <p class="font-size-18 font-wight-700 color-242424 margin-0">Billing Information</p>
           <div class="p-3" style="background: #F7F7F8;border-radius: 16px;margin-top: 10px;">
             <div class="row">
               <div class="col-md-9">
-                <p class="font-size-16 font-wight-400 color-909090 margin-0">Billing Address </p>
-                <p class="font-size-16 font-wight-600 color-242424 margin-0">Rest assured, each watch will undergo verification by our team</p>
-                <p class="font-size-16 font-wight-400 color-909090 margin-0">city </p>
-                <p class="font-size-16 font-wight-600 color-242424 margin-0">Hayil</p>
+                <p class="font-size-16 font-wight-400 color-909090 margin-0">Billing Address</p>
+                <p class="font-size-16 font-wight-600 color-242424 margin-0">{{ displayName() }}</p>
+                <p class="font-size-16 font-wight-400 color-909090 margin-0">City</p>
+                <p class="font-size-16 font-wight-600 color-242424 margin-0">{{ profileUser?.city || '—' }}</p>
               </div>
               <div class="col-md-3 text-md-end">
-                <p class="font-size-16 font-wight-400 color-909090 margin-0">Street </p> 
-                <p class="font-size-16 font-wight-600 color-242424 margin-0">Admin</p>
-                <p class="font-size-16 font-wight-400 color-909090 margin-0">Zip Code</p> 
-                <p class="font-size-16 font-wight-600 color-242424 margin-0"> 42000</p>
+                <p class="font-size-16 font-wight-400 color-909090 margin-0">Country</p>
+                <p class="font-size-16 font-wight-600 color-242424 margin-0">{{ profileUser?.country || '—' }}</p>
+                <p class="font-size-16 font-wight-400 color-909090 margin-0">Email</p>
+                <p class="font-size-16 font-wight-600 color-242424 margin-0">{{ profileUser?.email || '—' }}</p>
+                <p class="font-size-16 font-wight-400 color-909090 margin-0">Phone</p>
+                <p class="font-size-16 font-wight-600 color-242424 margin-0">{{ profileUser?.phone_number || '—' }}</p>
               </div>
             </div>
           </div>
