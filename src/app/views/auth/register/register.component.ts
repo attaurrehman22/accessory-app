@@ -131,7 +131,6 @@ export class RegisterComponent implements OnInit {
 
   register() {
     this.registerForm.markAllAsTouched();
-
     if (this.registerForm.valid) {
       this.http.register(this.registerForm).subscribe(
         (response) => {

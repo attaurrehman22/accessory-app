@@ -84,7 +84,9 @@ export class LoginComponent implements OnInit {
   gotoHome() {
     this.loginForm.markAllAsTouched();
     if (this.loginForm.valid) {
-      this.http.login(this.loginForm.value).subscribe(
+      this.http
+        .login({ ...this.loginForm.value, is_mobile: false })
+        .subscribe(
         (response) => {
           if (response.errorMessage || response.status === "failure") {
             if (this.translateService.currentLang == "en") {

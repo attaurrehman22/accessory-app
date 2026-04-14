@@ -36,6 +36,10 @@ export class HttpService implements OnInit {
     formdate.append("name", FormControl.get("username").value);
     formdate.append("email", FormControl.get("email").value);
     formdate.append("password", FormControl.get("password").value);
+    const isMobileRaw = FormControl.get("is_mobile")?.value;
+    const isMobile =
+      isMobileRaw === true || isMobileRaw === "true" || isMobileRaw === 1;
+    formdate.append("is_mobile", isMobile ? "true" : "false");
 
     return this.http.post(`${this.apiUrl}/api/register`, formdate);
   }
@@ -45,9 +49,14 @@ export class HttpService implements OnInit {
       "Content-Type": "application/x-www-form-urlencoded",
     });
 
+    const isMobileRaw = formData?.is_mobile;
+    const isMobile =
+      isMobileRaw === true || isMobileRaw === "true" || isMobileRaw === 1;
+
     const body = new HttpParams()
       .set("email", formData.email)
-      .set("password", formData.password);
+      .set("password", formData.password)
+      .set("is_mobile", isMobile ? "true" : "false");
 
     return this.http.post(`${this.apiUrl}/api/login`, body.toString(), {
       headers,

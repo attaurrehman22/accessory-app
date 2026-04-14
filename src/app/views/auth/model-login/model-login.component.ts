@@ -79,7 +79,9 @@ export class ModelLoginComponent implements OnInit {
     localStorage.removeItem("user_token");
     sessionStorage.clear();
     if (this.loginForm.valid) {
-      this.http.login(this.loginForm.value).subscribe(
+      this.http
+        .login({ ...this.loginForm.value, is_mobile: false })
+        .subscribe(
         (response) => {
           if (response.message === "" || response.status === "failure") {
             if (this.translateService.currentLang == "en") {
