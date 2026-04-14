@@ -79,7 +79,7 @@ export class AppComponent implements OnInit {
   ];
 
   routesToHideforUser = [
-    "/admin/dashboard",
+    "/admin/group",
     "/admin/products",
     "/admin/add-product",
     "/admin/brands",
@@ -92,7 +92,6 @@ export class AppComponent implements OnInit {
     "/admin/accessories/add",
     "/admin/top/brands",
     "/admin/accessory/categories",
-    "/admin/group",
     "/admin/sub-group",
     "/admin/attributes",
     "/admin/attribute-values",
@@ -103,7 +102,6 @@ export class AppComponent implements OnInit {
     "/admin/roles",
     "/admin/roles/create",
     "/admin/chronosouq-users",
-    ,
     "/admin/reports",
     "/admin/report-details",
     "/admin/orders",

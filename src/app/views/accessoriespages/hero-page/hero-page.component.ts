@@ -350,7 +350,7 @@ export class HeroPageComponent {
   }
 
   routeToAdminPannel() {
-    this.router.navigate(["/admin/dashboard"]);
+    this.router.navigate(["/admin/group"]);
   }
 
   onSearch(query: string) {

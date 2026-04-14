@@ -62,7 +62,7 @@
               {{ "header.Login" | translate }}
             </button>
 
-            <div class="route-groups" *ngIf="showHideAdminUser === true"   routerLink="/admin/dashboard">
+            <div class="route-groups" *ngIf="showHideAdminUser === true"   routerLink="/admin/group">
               <div class="d-flex gap-2 align-items-center cursor-pointer">
                 <img src="assets/images/black_profile.svg" alt="Profile" />
                 <a [disableRipple]="true" mat-menu-item class="custom-btn a-custom-style">
@@ -246,7 +246,7 @@
                     <!-- <a
                       class="custom-btn"
                       *ngIf="showHideAdminUser === true"
-                      routerLink="/admin/dashboard"
+                      routerLink="/admin/group"
                     >
                       {{ "header.admin_pannel" | translate }}
                     </a> -->
@@ -442,7 +442,7 @@
       <div
         class="route-groups"
         *ngIf="showHideAdminUser === true"
-        routerLink="/admin/dashboard"
+        routerLink="/admin/group"
       >
         <div class="d-flex gap-2 align-items-center cursor-pointer">
           <img src="assets/images/black_profile.svg" alt="Profile" />

@@ -1,7 +1,6 @@
 import { Component, HostListener, OnInit } from "@angular/core";
-import { NavigationEnd, Router } from "@angular/router";
+import { Router } from "@angular/router";
 import { TranslateService } from "@ngx-translate/core";
-import { filter } from "rxjs/operators";
 import { AlertsServicesService } from "src/services/alerts-service/alerts-services.service";
 import { SidebarService } from "src/services/sidebar.service";
 import { PermissionCheckService } from "../../services/permission-check.service";
@@ -12,18 +11,6 @@ import { PermissionCheckService } from "../../services/permission-check.service"
 })
 export class AdminSidebarComponent implements OnInit {
   toogle: boolean = true;
-  /** Open by default so Accessories links are visible without an extra click */
-  isAccRoutShow = true;
-  accessoriesRoutes: any;
-  dashboardViewPermission = "admin.dashboard.view";
-  productsViewPermission = "admin.products.view";
-  brandsViewPermission = "admin.brands.view";
-  categoryViewPermission = "admin.categories.view";
-  usersViewPermission = "admin.users.view";
-  watchOfTheDayViewPermission = "admin.watch.view";
-  chronosouqUsersViewPermission = "admin.chronosouq-users.view";
-  rolesViewPermission = "admin.roles.view";
-  vatViewPermission = "admin.vat.view";
   constructor(
     public route: Router,
     private translateService: TranslateService,
@@ -35,32 +22,6 @@ export class AdminSidebarComponent implements OnInit {
 
   ngOnInit(): void {
     this.checkScreenSize();
-    this.initializeAccessoriesRoutes();
-    this.setupRouteListener();
-    this.updateAccRouteVisibility(this.router.url);
-  }
-
-  private initializeAccessoriesRoutes(): void {
-    this.accessoriesRoutes = [
-      "/admin/accessories",
-      "/admin/accessory/categories",
-      "/admin/group",
-      "/admin/sub-group",
-      "/admin/attributes",
-      "/admin/attribute-values",
-      "/admin/inventory",
-      "/admin/attribute-listing",
-      "/admin/images-listing",
-      "/admin/attribute-inventory",
-    ];
-  }
-
-  private setupRouteListener(): void {
-    this.router.events
-      .pipe(filter((event) => event instanceof NavigationEnd))
-      .subscribe((event: NavigationEnd) => {
-        this.updateAccRouteVisibility(event.urlAfterRedirects);
-      });
   }
 
   isActive(route: string): boolean {
@@ -86,20 +47,6 @@ export class AdminSidebarComponent implements OnInit {
 
   onMenuItemClick(): void {
     this.sidebarService.emitSidebarClick();
-  }
-
-  toggleAccessoriesMenu(): void {
-    this.isAccRoutShow = !this.isAccRoutShow;
-    this.sidebarService.emitSidebarClick();
-  }
-
-  updateAccRouteVisibility(currentUrl: string): void {
-    const isAccessoriesRoute = this.accessoriesRoutes.some((route) =>
-      currentUrl.includes(route)
-    );
-    if (isAccessoriesRoute) {
-      this.isAccRoutShow = true;
-    }
   }
 
   isDeveloper(): boolean {

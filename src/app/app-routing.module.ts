@@ -51,7 +51,7 @@ const routes: Routes = [
     canActivate: [adminGuard],
     component: AdminPageHeaderComponent,
     children: [
-      { path: "", pathMatch: "full", redirectTo: "dashboard" },
+      { path: "", pathMatch: "full", redirectTo: "group" },
       { path: "dashboard", component: AdminHomeComponent },
       { path: "users", component: AdminUsersComponent },
       { path: "accessories/add", component: CreateAccessoriesProductComponent },

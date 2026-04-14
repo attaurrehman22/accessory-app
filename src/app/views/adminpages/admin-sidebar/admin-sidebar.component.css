@@ -101,11 +101,28 @@
   background-color: rgba(0, 0, 0, 0.02);
 }
 
-.accessories-submenu.show {
-  max-height: 1000px; /* Adjust this value based on your content */
+.accessories-submenu.show,
+.accessories-submenu.accessories-submenu--always-open {
+  max-height: 1000px;
   transition: max-height 0.5s ease-in;
   margin: 0 0 0 15px;
   width: calc(250px - 2rem);
+}
+
+.accessories-section-label {
+  cursor: default;
+  pointer-events: none;
+  opacity: 0.95;
+}
+
+.accessories-section-label:hover {
+  background-color: transparent !important;
+  color: #ffffff !important;
+}
+
+.accessories-section-label:hover mat-icon,
+.accessories-section-label:hover p {
+  color: #ffffff !important;
 }
 
 .accessories-submenu .nav-link {
