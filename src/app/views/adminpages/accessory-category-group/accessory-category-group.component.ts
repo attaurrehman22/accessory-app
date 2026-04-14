@@ -48,13 +48,6 @@ export class AccessoryCategoryGroupComponent implements OnInit {
 
   ngOnInit(): void {
     this.getAllAccessoryCategories();
-    this.dataSource.filterPredicate = (data: any, filter: string): boolean => {
-      const dataStr = Object.values(data)
-        .join(' ')
-        .toLowerCase();
-      return dataStr.includes(filter);
-    };
-
   }
 
   getAllAccessoryCategories() {
@@ -89,8 +82,13 @@ export class AccessoryCategoryGroupComponent implements OnInit {
   filterCategories() {}
 
   applyFilter(event: Event) {
-  const filterValue = (event.target as HTMLInputElement).value.trim().toLowerCase();
-  this.dataSource.filter = filterValue;
+    const filterValue = (event.target as HTMLInputElement).value
+      .trim()
+      .toLowerCase();
+    if (!this.dataSource) {
+      return;
+    }
+    this.dataSource.filter = filterValue;
   }
 
   editCategory(data) {

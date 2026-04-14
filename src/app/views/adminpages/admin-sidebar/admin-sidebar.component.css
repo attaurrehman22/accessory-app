@@ -94,19 +94,17 @@
   transform: rotate(180deg);
 }
 
-.accessories-submenu {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.3s ease-out;
-  background-color: rgba(0, 0, 0, 0.02);
-}
-
-.accessories-submenu.show,
-.accessories-submenu.accessories-submenu--always-open {
-  max-height: 1000px;
-  transition: max-height 0.5s ease-in;
+/* AdminLTE hides ALL nested .nav-treeview except .menu-open > .nav-treeview (direct child only).
+   Our Accessories links sit in a nested ul, so they stay display:none unless overridden below. */
+.accessories-sidebar-root .accessories-submenu.accessories-submenu--always-open {
+  display: block !important;
+  max-height: none !important;
+  overflow: visible !important;
   margin: 0 0 0 15px;
   width: calc(250px - 2rem);
+  background-color: rgba(0, 0, 0, 0.08);
+  list-style: none;
+  padding: 0.25rem 0 0.5rem;
 }
 
 .accessories-section-label {
