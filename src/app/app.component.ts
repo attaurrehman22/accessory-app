@@ -69,6 +69,9 @@ export class AppComponent implements OnInit {
   /** Same nav as home hero, on accessory routes outside `/` (e.g. product detail). */
   showAccessoryHeaderBar = false;
 
+  /** Hide public footer when using admin layout (`/admin/...`). */
+  isAdminRoute = false;
+
   routesToHideforAccessriesUser = [
     "/",
     "/accessories/home",
@@ -132,10 +135,12 @@ export class AppComponent implements OnInit {
     // });
 
     this.showAccessoryHeaderBar = this.computeAccessoryHeaderBar(this.router.url);
+    this.isAdminRoute = this.computeIsAdminRoute(this.router.url);
 
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         const currentRoute = this.router.url;
+        this.isAdminRoute = this.computeIsAdminRoute(currentRoute);
         this.showAccessoryHeaderBar =
           this.computeAccessoryHeaderBar(currentRoute);
         this.hideaccessoriesHeader =
@@ -232,6 +237,9 @@ export class AppComponent implements OnInit {
 
   private computeAccessoryHeaderBar(url: string): boolean {
     const path = url.split("?")[0];
+    if (path.startsWith("/admin/")) {
+      return false;
+    }
     if (path === "/myprofile/summary") {
       return true;
     }
@@ -240,6 +248,10 @@ export class AppComponent implements OnInit {
       return true;
     }
     return path.startsWith("/accessories/") && path !== "/accessories/home";
+  }
+
+  private computeIsAdminRoute(url: string): boolean {
+    return url.split("?")[0].startsWith("/admin/");
   }
 
   useLang(lang: string) {

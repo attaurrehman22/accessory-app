@@ -37,6 +37,7 @@ import { ChronosouqUsersComponent } from "./views/adminpages/chronosouq-users/ch
 import { AdminVatComponent } from "./views/adminpages/admin-vat/admin-vat.component";
 import { ReportsComponent } from "./views/website/my-listing/reports/reports.component";
 import { ReportDetailsComponent } from "./views/website/my-listing/report-details/report-details.component";
+import { AdminPageHeaderComponent } from "./views/adminpages/admin-page-header/admin-page-header.component";
 
 const routes: Routes = [
   { path: "login", component: LoginComponent },
@@ -44,80 +45,29 @@ const routes: Routes = [
   // Root URL must use pathMatch: 'full' or the empty path may not activate reliably.
   { path: "accessories/home", pathMatch: "full", redirectTo: "/" },
   { path: "", pathMatch: "full", component: AccessoriesHomeComponent },
+  /** Admin shell: navbar + sidebar (AdminPageHeaderComponent) + child router-outlet */
   {
+    path: "admin",
     canActivate: [adminGuard],
-    path: "admin/dashboard",
-    component: AdminHomeComponent,
-  },
-  {
-    canActivate: [adminGuard],
-    path: "admin/users",
-    component: AdminUsersComponent,
-  },
-  {
-    canActivate: [adminGuard],
-    path: "admin/accessories",
-    component: AccessoriesProductsComponent,
-  },
-  {
-    canActivate: [adminGuard],
-    path: "admin/accessories/add",
-    component: CreateAccessoriesProductComponent,
-  },
-  {
-    canActivate: [adminGuard],
-    path: "admin/accessory/categories",
-    component: AccessoryCategoriesComponent,
-  },
-  {
-    canActivate: [adminGuard],
-    path: "admin/group",
-    component: AccessoryCategoryGroupComponent,
-  },
-  {
-    canActivate: [adminGuard],
-    path: "admin/sub-group",
-    component: AccessorySubCategoryGroupComponent,
-  },
-  {
-    canActivate: [adminGuard],
-    path: "admin/attributes",
-    component: AttributeComponent,
-  },
-  {
-    canActivate: [adminGuard],
-    path: "admin/attribute-values",
-    component: AttributeValuesComponent,
-  },
-  {
-    canActivate: [adminGuard],
-    path: "admin/inventory",
-    component: InventoriesComponent,
-  },
-  {
-    canActivate: [adminGuard],
-    path: "admin/attribute-listing",
-    component: AttributeListingComponent,
-  },
-  {
-    canActivate: [adminGuard],
-    path: "admin/images-listing",
-    component: AccessoryImagesListingComponent,
-  },
-  {
-    canActivate: [adminGuard],
-    path: "admin/attribute-inventory",
-    component: AttributeInventoryComponent,
-  },
-  {
-    canActivate: [adminGuard],
-    path: "admin/chronosouq-users",
-    component: ChronosouqUsersComponent,
-  },
-  {
-    canActivate: [adminGuard],
-    path: "admin/vat",
-    component: AdminVatComponent,
+    component: AdminPageHeaderComponent,
+    children: [
+      { path: "", pathMatch: "full", redirectTo: "dashboard" },
+      { path: "dashboard", component: AdminHomeComponent },
+      { path: "users", component: AdminUsersComponent },
+      { path: "accessories/add", component: CreateAccessoriesProductComponent },
+      { path: "accessories", component: AccessoriesProductsComponent },
+      { path: "accessory/categories", component: AccessoryCategoriesComponent },
+      { path: "group", component: AccessoryCategoryGroupComponent },
+      { path: "sub-group", component: AccessorySubCategoryGroupComponent },
+      { path: "attributes", component: AttributeComponent },
+      { path: "attribute-values", component: AttributeValuesComponent },
+      { path: "inventory", component: InventoriesComponent },
+      { path: "attribute-listing", component: AttributeListingComponent },
+      { path: "images-listing", component: AccessoryImagesListingComponent },
+      { path: "attribute-inventory", component: AttributeInventoryComponent },
+      { path: "chronosouq-users", component: ChronosouqUsersComponent },
+      { path: "vat", component: AdminVatComponent },
+    ],
   },
   { path: "accessories/cart", component: AccessoryCartPageComponent },
   { path: "accessories/details", component: AccessorieDetailComponent },

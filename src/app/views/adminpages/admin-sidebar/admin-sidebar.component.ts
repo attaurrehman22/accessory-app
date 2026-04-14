@@ -12,7 +12,8 @@ import { PermissionCheckService } from "../../services/permission-check.service"
 })
 export class AdminSidebarComponent implements OnInit {
   toogle: boolean = true;
-  isAccRoutShow: boolean = false;
+  /** Open by default so Accessories links are visible without an extra click */
+  isAccRoutShow = true;
   accessoriesRoutes: any;
   dashboardViewPermission = "admin.dashboard.view";
   productsViewPermission = "admin.products.view";
@@ -98,8 +99,6 @@ export class AdminSidebarComponent implements OnInit {
     );
     if (isAccessoriesRoute) {
       this.isAccRoutShow = true;
-    } else {
-      this.isAccRoutShow = false;
     }
   }
 

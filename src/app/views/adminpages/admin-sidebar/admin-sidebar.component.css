@@ -112,6 +112,12 @@
   padding-left: 0.5rem;
 }
 
+/* Nested tree under Accessories */
+.nav-sidebar .accessories-submenu.nav-treeview {
+  padding-left: 0;
+  margin-left: 0;
+}
+
 /* Responsive styles */
 @media (max-width: 660px) {
   .sidebar {

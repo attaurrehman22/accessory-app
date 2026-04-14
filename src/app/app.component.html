@@ -34,5 +34,5 @@
 <app-hero-page *ngIf="showAccessoryHeaderBar" [headerOnly]="true"></app-hero-page>
 <router-outlet></router-outlet>
 @defer (on idle) {
-  <app-footer-component></app-footer-component>
+  <app-footer-component *ngIf="!isAdminRoute"></app-footer-component>
 }

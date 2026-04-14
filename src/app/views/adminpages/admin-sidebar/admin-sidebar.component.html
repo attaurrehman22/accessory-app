@@ -148,11 +148,12 @@
             </a>
           </li>
 
-          <!-- Accessories Dropdown -->
+          <!-- Accessories: valid nested ul (no div inside ul) -->
           <li class="nav-item">
             <a
               class="nav-link"
-              (click)="toggleAccessoriesMenu()"
+              href="#"
+              (click)="toggleAccessoriesMenu(); $event.preventDefault()"
               [class.active]="isAccRoutShow"
             >
               <mat-icon>style</mat-icon>
@@ -165,10 +166,7 @@
                 </mat-icon>
               </p>
             </a>
-          </li>
-
-          <!-- Accessories Submenu -->
-          <div class="accessories-submenu" [class.show]="isAccRoutShow">
+            <ul class="nav nav-treeview accessories-submenu" [class.show]="isAccRoutShow">
             <li class="nav-item">
               <a
                 routerLink="/admin/group"
@@ -288,7 +286,8 @@
                 <p>Attribute Inventory</p>
               </a>
             </li>
-          </div>
+            </ul>
+          </li>
         </ul>
       </li>
     </ul>
